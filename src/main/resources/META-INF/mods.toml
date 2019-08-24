@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+issueTrackerURL="https://github.com/daedalus4096/PrimalMagic/issues"
+
+[[mods]]
+modId="primalmagic"
+version="${file.jarVersion}"
+displayName="Primal Magic"
+#updateJSONURL=""
+#displayURL=""
+credits=""
+authors="Daedalus4096"
+description='''Harness the magic of the primal sources of the land.'''
+
+[[dependencies.primalmagic]]
+    modId="forge"
+    mandatory=true
+    versionRange="[28,)"
+    ordering="NONE"
+    side="BOTH"
