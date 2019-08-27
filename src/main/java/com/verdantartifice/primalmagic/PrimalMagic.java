@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagic.common.command.PrimalMagicCommand;
+import com.verdantartifice.primalmagic.common.init.InitCapabilities;
 import com.verdantartifice.primalmagic.common.misc.ItemGroupPM;
 
 import net.minecraft.item.ItemGroup;
@@ -28,6 +29,7 @@ public class PrimalMagic {
 
     private void preInit(FMLCommonSetupEvent event) {
         LOGGER.info("Hello from Primal Magic pre-init!");
+        InitCapabilities.initCapabilities();    // TODO move to proxy
     }
     
     private void serverStarting(FMLServerStartingEvent event) {

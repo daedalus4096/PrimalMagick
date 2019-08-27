@@ -1,7 +1,11 @@
 package com.verdantartifice.primalmagic.common.command;
 
+import java.util.Set;
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -44,17 +48,39 @@ public class PrimalMagicCommand {
     }
     
     private static int listResearch(CommandSource source, ServerPlayerEntity target) {
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.list", target.getName(), "DOOM"), true);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else {
+            Set<String> researchSet = knowledge.getResearchSet();
+            String[] researchList = researchSet.toArray(new String[researchSet.size()]);
+            String output = String.join(", ", researchList);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.list", target.getName(), output), true);
+        }
         return 0;
     }
     
     private static int resetResearch(CommandSource source, ServerPlayerEntity target) {
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.reset", target.getName()), true);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else {
+            knowledge.clear();
+            knowledge.sync(target);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.reset", target.getName()), true);
+        }
         return 0;
     }
     
     private static int grantResearch(CommandSource source, ServerPlayerEntity target, ITextComponent research) {
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), research.getString()), true);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else {
+            knowledge.addResearch(research.getString());
+            knowledge.sync(target);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), research.getString()), true);
+        }
         return 0;
     }
 }
