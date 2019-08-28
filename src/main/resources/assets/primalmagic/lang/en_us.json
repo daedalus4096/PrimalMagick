@@ -1,6 +1,8 @@
 {
     "block.primalmagic.marble_raw": "Marble",
     
+    "item.primalmagic.debug_tablet": "Debug Tablet",
+    
     "commands.primalmagic.help.1": "You can also use /pm instead of /primalmagic.",
     "commands.primalmagic.help.2": "Use this to list a player's research:",
     "commands.primalmagic.help.3": "  /primalmagic research <player> list",

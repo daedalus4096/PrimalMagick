@@ -19,5 +19,6 @@ public class RegistrationEvents {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         InitItems.initBlockItems(event.getRegistry());
+        InitItems.initItems(event.getRegistry());
     }
 }
