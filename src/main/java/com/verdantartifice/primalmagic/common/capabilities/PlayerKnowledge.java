@@ -10,6 +10,8 @@ import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -145,8 +147,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
 
     @Override
     public void sync(ServerPlayerEntity player) {
-        // TODO Auto-generated method stub
-        
+        PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
     }
     
     public static class Provider implements ICapabilitySerializable<CompoundNBT> {
