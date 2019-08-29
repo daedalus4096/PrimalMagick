@@ -1,11 +1,14 @@
 package com.verdantartifice.primalmagic.common.capabilities;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -27,6 +30,7 @@ import net.minecraftforge.common.util.LazyOptional;
 public class PlayerKnowledge implements IPlayerKnowledge {
     private final Set<String> research = new HashSet<>();
     private final Map<String, Integer> stages = new HashMap<>();
+    private final Map<String, Set<ResearchFlag>> flags = new HashMap<>();
 
     @Override
     public CompoundNBT serializeNBT() {
@@ -38,6 +42,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             tag.putString("key", res);
             if (this.stages.containsKey(res)) {
                 tag.putInt("stage", this.stages.get(res).intValue());
+            }
+            Set<ResearchFlag> researchFlags = this.flags.get(res);
+            if (researchFlags != null) {
+                String str = Arrays.stream(researchFlags.toArray(new ResearchFlag[researchFlags.size()]))
+                                   .map(t -> t.name())
+                                   .collect(Collectors.joining(","));
+                if (str != null && !str.isEmpty()) {
+                    tag.putString("flags", str);
+                }
             }
             researchList.add(tag);
         }
@@ -63,6 +76,16 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 if (stage > 0) {
                     this.stages.put(key, Integer.valueOf(stage));
                 }
+                String flagStr = tag.getString("flags");
+                if (flagStr != null && !flagStr.isEmpty()) {
+                    for (String flagName : flagStr.split(",")) {
+                        ResearchFlag flag = null;
+                        try {
+                            flag = ResearchFlag.valueOf(flagName);
+                        } catch (Exception e) {}
+                        this.addResearchFlag(key, flag);
+                    }
+                }
             }
         }
     }
@@ -71,6 +94,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     public void clear() {
         this.research.clear();
         this.stages.clear();
+        this.flags.clear();
     }
     
     @Override
@@ -143,6 +167,38 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         } else {
             return false;
         }
+    }
+    
+    @Override
+    public boolean addResearchFlag(String research, ResearchFlag flag) {
+        if (flag == null) {
+            return false;
+        }
+        Set<ResearchFlag> researchFlags = this.flags.get(research);
+        if (researchFlags == null) {
+            researchFlags = EnumSet.noneOf(ResearchFlag.class);
+            this.flags.put(research, researchFlags);
+        }
+        return researchFlags.add(flag);
+    }
+    
+    @Override
+    public boolean removeResearchFlag(String research, ResearchFlag flag) {
+        Set<ResearchFlag> researchFlags = this.flags.get(research);
+        if (researchFlags != null) {
+            boolean retVal = researchFlags.remove(flag);
+            if (researchFlags.isEmpty()) {
+                this.flags.remove(research);
+            }
+            return retVal;
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean hasResearchFlag(String research, ResearchFlag flag) {
+        Set<ResearchFlag> researchFlags = this.flags.get(research);
+        return researchFlags != null && researchFlags.contains(flag);
     }
 
     @Override

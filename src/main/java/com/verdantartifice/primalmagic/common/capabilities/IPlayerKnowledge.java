@@ -23,11 +23,21 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
     public boolean setResearchStage(String research, int newStage);
     public boolean removeResearch(String research);
     
+    public boolean addResearchFlag(String research, ResearchFlag flag);
+    public boolean removeResearchFlag(String research, ResearchFlag flag);
+    public boolean hasResearchFlag(String research, ResearchFlag flag);
+    
     public void sync(ServerPlayerEntity player);
     
     public static enum ResearchStatus {
         UNKNOWN,
         IN_PROGRESS,
         COMPLETE
+    }
+    
+    public static enum ResearchFlag {
+        NEW,
+        UPDATED,
+        POPUP
     }
 }
