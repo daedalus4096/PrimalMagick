@@ -47,4 +47,13 @@ public class ResearchDiscipline {
     public Collection<ResearchEntry> getEntries() {
         return Collections.unmodifiableCollection(this.entries.values());
     }
+    
+    public boolean addEntry(@Nullable ResearchEntry entry) {
+        if (entry == null || this.entries.containsKey(entry.getKey())) {
+            return false;
+        } else {
+            this.entries.put(entry.getKey(), entry);
+            return true;
+        }
+    }
 }
