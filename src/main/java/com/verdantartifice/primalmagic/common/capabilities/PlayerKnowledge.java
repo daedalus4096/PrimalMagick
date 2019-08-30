@@ -15,6 +15,8 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
+import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -105,8 +107,16 @@ public class PlayerKnowledge implements IPlayerKnowledge {
 
     @Override
     public ResearchStatus getResearchStatus(String research) {
-        // TODO Auto-generated method stub
-        return ResearchStatus.UNKNOWN;
+        if (!this.isResearchKnown(research)) {
+            return ResearchStatus.UNKNOWN;
+        } else {
+            ResearchEntry entry = ResearchDisciplines.getEntry(research);
+            if (entry == null || entry.getStages().isEmpty() || this.getResearchStage(research) > entry.getStages().size()) {
+                return ResearchStatus.COMPLETE;
+            } else {
+                return ResearchStatus.IN_PROGRESS;
+            }
+        }
     }
 
     @Override
