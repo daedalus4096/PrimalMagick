@@ -6,6 +6,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -76,6 +77,8 @@ public class PrimalMagicCommand {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
         if (knowledge == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else if (ResearchDisciplines.getEntry(research.getString()) == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant.noexist", research.getString()).applyTextStyle(TextFormatting.RED), true);
         } else {
             knowledge.addResearch(research.getString());
             knowledge.sync(target);

@@ -18,6 +18,7 @@
     "commands.primalmagic.research.list": "All research for %s: %s",
     "commands.primalmagic.research.reset": "Resetting all research for %s",
     "commands.primalmagic.research.grant": "Granting research to %s: %s",
+    "commands.primalmagic.research.grant.noexist": "Reseach %s does not exist",
     "commands.primalmagic.error": "Error executing command",
     
     "itemGroup.primalmagic": "Primal Magic"
