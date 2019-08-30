@@ -1,0 +1,15 @@
+{
+    "entries": [
+        {
+            "key": "FIRST_STEPS",
+            "name": "primalmagic.research.first_steps.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.first_steps.text.stage.1"
+                }
+            ],
+            "addenda": []
+        }
+    ]
+}

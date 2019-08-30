@@ -8,8 +8,11 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.util.ResourceLocation;
+
 public class ResearchDisciplines {
     protected static final Map<String, ResearchDiscipline> DISCIPLINES = new HashMap<>();
+    protected static final Map<String, ResourceLocation> DATA_FILES = new HashMap<>();
     
     @Nullable
     public static ResearchDiscipline getDiscipline(String key) {
@@ -21,8 +24,24 @@ public class ResearchDisciplines {
         return Collections.unmodifiableCollection(DISCIPLINES.values());
     }
     
+    @Nonnull
+    public static Collection<ResourceLocation> getAllDataFileLocations() {
+        return Collections.unmodifiableCollection(DATA_FILES.values());
+    }
+    
     @Nullable
-    public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable String unlockResearchKey) {
+    public static ResearchEntry getEntry(String key) {
+        for (ResearchDiscipline discipline : getAllDisciplines()) {
+            ResearchEntry entry = discipline.getEntry(key);
+            if (entry != null) {
+                return entry;
+            }
+        }
+        return null;
+    }
+    
+    @Nullable
+    public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey) {
         if (key == null || DISCIPLINES.containsKey(key)) {
             return null;
         } else {
@@ -31,6 +50,12 @@ public class ResearchDisciplines {
                 DISCIPLINES.put(key, discipline);
             }
             return discipline;
+        }
+    }
+    
+    public static void registerResearchLocation(ResourceLocation location) {
+        if (location != null && !DATA_FILES.containsKey(location.toString())) {
+            DATA_FILES.put(location.toString(), location);
         }
     }
 }

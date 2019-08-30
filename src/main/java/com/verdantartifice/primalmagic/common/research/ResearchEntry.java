@@ -2,34 +2,71 @@ package com.verdantartifice.primalmagic.common.research;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 public class ResearchEntry {
     protected String key;
-    protected String categoryKey;
+    protected String disciplineKey;
     protected String nameTranslationKey;
-    protected Set<String> parentKeys = new HashSet<>();
+    protected CompoundResearchKey parentResearch;
     protected List<ResearchStage> stages = new ArrayList<>();
     protected List<ResearchAddendum> addenda = new ArrayList<>();
     
-    protected ResearchEntry(@Nonnull String key, @Nonnull String categoryKey, @Nonnull String nameTranslationKey) {
+    protected ResearchEntry(@Nonnull String key, @Nonnull String disciplineKey, @Nonnull String nameTranslationKey) {
         this.key = key;
-        this.categoryKey = categoryKey;
+        this.disciplineKey = disciplineKey;
         this.nameTranslationKey = nameTranslationKey;
     }
     
     @Nullable
-    public static ResearchEntry create(@Nullable String key, @Nullable String categoryKey, @Nullable String nameTranslationKey) {
-        if (key == null || categoryKey == null || nameTranslationKey == null) {
+    public static ResearchEntry create(@Nullable String key, @Nullable String disciplineKey, @Nullable String nameTranslationKey) {
+        if (key == null || disciplineKey == null || nameTranslationKey == null) {
             return null;
         } else {
-            return new ResearchEntry(key, categoryKey, nameTranslationKey);
+            return new ResearchEntry(key, disciplineKey, nameTranslationKey);
         }
+    }
+    
+    @Nonnull
+    public static ResearchEntry parse(JsonObject obj) throws Exception {
+        ResearchEntry entry = create(
+            obj.getAsJsonPrimitive("key").getAsString(),
+            obj.getAsJsonPrimitive("discipline").getAsString(),
+            obj.getAsJsonPrimitive("name").getAsString()
+        );
+        if (entry == null) {
+            throw new Exception("Invalid entry data in research JSON");
+        }
+        
+        if (obj.has("parents")) {
+            JsonArray parentArray = obj.get("parents").getAsJsonArray();
+            List<SimpleResearchKey> keyList = new ArrayList<>();
+            for (JsonElement element : parentArray) {
+                String str = element.getAsString();
+                SimpleResearchKey simpleKey = SimpleResearchKey.parse(str);
+                keyList.add(simpleKey);
+            }
+            entry.parentResearch = CompoundResearchKey.from(true, keyList.toArray(new SimpleResearchKey[keyList.size()]));
+        }
+        
+        for (JsonElement element : obj.get("stages").getAsJsonArray()) {
+            entry.stages.add(ResearchStage.parse(element.getAsJsonObject()));
+        }
+        
+        if (obj.has("addenda")) {
+            for (JsonElement element : obj.get("addenda").getAsJsonArray()) {
+                entry.addenda.add(ResearchAddendum.parse(element.getAsJsonObject()));
+            }
+        }
+        
+        return entry;
     }
     
     @Nonnull
@@ -38,8 +75,8 @@ public class ResearchEntry {
     }
     
     @Nonnull
-    public String getCategoryKey() {
-        return this.categoryKey;
+    public String getDisciplineKey() {
+        return this.disciplineKey;
     }
     
     @Nonnull
@@ -47,13 +84,9 @@ public class ResearchEntry {
         return this.nameTranslationKey;
     }
     
-    @Nonnull
-    public Set<String> getParentKeys() {
-        return Collections.unmodifiableSet(this.parentKeys);
-    }
-    
-    public boolean addParentKey(@Nullable String key) {
-        return (key == null) ? false : this.parentKeys.add(key);
+    @Nullable
+    public CompoundResearchKey getParentResearch() {
+        return this.parentResearch;
     }
     
     @Nonnull

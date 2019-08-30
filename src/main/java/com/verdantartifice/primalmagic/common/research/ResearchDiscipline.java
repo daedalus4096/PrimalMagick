@@ -10,16 +10,16 @@ import javax.annotation.Nullable;
 
 public class ResearchDiscipline {
     protected String key;
-    protected String unlockResearchKey;
+    protected CompoundResearchKey unlockResearchKey;
     protected Map<String, ResearchEntry> entries = new HashMap<>();
     
-    protected ResearchDiscipline(@Nonnull String key, @Nullable String unlockResearchKey) {
+    protected ResearchDiscipline(@Nonnull String key, @Nullable CompoundResearchKey unlockResearchKey) {
         this.key = key;
         this.unlockResearchKey = unlockResearchKey;
     }
     
     @Nullable
-    public static ResearchDiscipline create(@Nullable String key, @Nullable String unlockResearchKey) {
+    public static ResearchDiscipline create(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey) {
         return (key == null) ? null : new ResearchDiscipline(key, unlockResearchKey);
     }
     
@@ -34,7 +34,7 @@ public class ResearchDiscipline {
     }
     
     @Nullable
-    public String getUnlockResearchKey() {
+    public CompoundResearchKey getUnlockResearchKey() {
         return this.unlockResearchKey;
     }
     

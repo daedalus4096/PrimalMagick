@@ -5,6 +5,9 @@
     
     "primalmagic.research_discipline.BASICS": "Fundamentals",
     
+    "primalmagic.research.first_steps.title": "First Steps",
+    "primalmagic.research.first_steps.text.stage.1": "Lorem ipsum",
+    
     "commands.primalmagic.help.1": "You can also use /pm instead of /primalmagic.",
     "commands.primalmagic.help.2": "Use this to list a player's research:",
     "commands.primalmagic.help.3": "  /primalmagic research <player> list",
