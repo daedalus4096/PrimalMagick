@@ -3,15 +3,33 @@ package com.verdantartifice.primalmagic.common.research;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import javax.annotation.Nullable;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchManager {
+    public static boolean hasPrerequisites(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+        if (player == null) {
+            return false;
+        }
+        if (key == null) {
+            return true;
+        }
+        ResearchEntry entry = ResearchDisciplines.getEntry(key);
+        if (entry == null || entry.getParentResearch() == null) {
+            return true;
+        } else {
+            return entry.getParentResearch().isKnownByStrict(player);
+        }
+    }
+    
     public static void parseAllResearch() {
         JsonParser parser = new JsonParser();
         for (ResourceLocation location : ResearchDisciplines.getAllDataFileLocations()) {
