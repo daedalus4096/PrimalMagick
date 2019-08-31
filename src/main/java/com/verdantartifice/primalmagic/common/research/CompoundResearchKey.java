@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,6 +52,18 @@ public class CompoundResearchKey {
         } else {
             return CompoundResearchKey.from(SimpleResearchKey.parse(keyStr));
         }
+    }
+    
+    @Nonnull
+    public static CompoundResearchKey parse(@Nullable JsonArray jsonArray) throws Exception {
+        CompoundResearchKey retVal = new CompoundResearchKey(true);
+        for (JsonElement element : jsonArray) {
+            SimpleResearchKey simpleKey = SimpleResearchKey.parse(element.getAsString());
+            if (simpleKey != null) {
+                retVal.keys.add(simpleKey);
+            }
+        }
+        return retVal;
     }
     
     @Nullable

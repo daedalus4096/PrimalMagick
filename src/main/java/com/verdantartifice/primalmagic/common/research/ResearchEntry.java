@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -47,14 +46,7 @@ public class ResearchEntry {
         }
         
         if (obj.has("parents")) {
-            JsonArray parentArray = obj.get("parents").getAsJsonArray();
-            List<SimpleResearchKey> keyList = new ArrayList<>();
-            for (JsonElement element : parentArray) {
-                String str = element.getAsString();
-                SimpleResearchKey simpleKey = SimpleResearchKey.parse(str);
-                keyList.add(simpleKey);
-            }
-            entry.parentResearch = CompoundResearchKey.from(true, keyList.toArray(new SimpleResearchKey[keyList.size()]));
+            entry.parentResearch = CompoundResearchKey.parse(obj.get("parents").getAsJsonArray());
         }
         
         for (JsonElement element : obj.get("stages").getAsJsonArray()) {
