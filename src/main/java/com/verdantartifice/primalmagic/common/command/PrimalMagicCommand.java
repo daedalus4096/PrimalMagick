@@ -1,12 +1,14 @@
 package com.verdantartifice.primalmagic.common.command;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -53,8 +55,11 @@ public class PrimalMagicCommand {
         if (knowledge == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
         } else {
-            Set<String> researchSet = knowledge.getResearchSet();
-            String[] researchList = researchSet.toArray(new String[researchSet.size()]);
+            Set<SimpleResearchKey> researchSet = knowledge.getResearchSet();
+            String[] researchList = researchSet.stream()
+                                        .map(k -> k.getRootKey())
+                                        .collect(Collectors.toSet())
+                                        .toArray(new String[researchSet.size()]);
             String output = String.join(", ", researchList);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.list", target.getName(), output), true);
         }
@@ -75,12 +80,13 @@ public class PrimalMagicCommand {
     
     private static int grantResearch(CommandSource source, ServerPlayerEntity target, ITextComponent research) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        SimpleResearchKey key = SimpleResearchKey.parse(research.getString());
         if (knowledge == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
-        } else if (ResearchDisciplines.getEntry(research.getString()) == null) {
+        } else if (ResearchDisciplines.getEntry(key) == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant.noexist", research.getString()).applyTextStyle(TextFormatting.RED), true);
         } else {
-            knowledge.addResearch(research.getString());
+            knowledge.addResearch(key);
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), research.getString()), true);
         }

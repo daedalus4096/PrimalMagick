@@ -12,32 +12,34 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class ResearchEntry {
-    protected String key;
+    protected SimpleResearchKey key;
     protected String disciplineKey;
     protected String nameTranslationKey;
     protected CompoundResearchKey parentResearch;
     protected List<ResearchStage> stages = new ArrayList<>();
     protected List<ResearchAddendum> addenda = new ArrayList<>();
     
-    protected ResearchEntry(@Nonnull String key, @Nonnull String disciplineKey, @Nonnull String nameTranslationKey) {
+    protected ResearchEntry(@Nonnull SimpleResearchKey key, @Nonnull String disciplineKey, @Nonnull String nameTranslationKey) {
         this.key = key;
         this.disciplineKey = disciplineKey;
         this.nameTranslationKey = nameTranslationKey;
     }
     
     @Nullable
-    public static ResearchEntry create(@Nullable String key, @Nullable String disciplineKey, @Nullable String nameTranslationKey) {
+    public static ResearchEntry create(@Nullable SimpleResearchKey key, @Nullable String disciplineKey, @Nullable String nameTranslationKey) {
         if (key == null || disciplineKey == null || nameTranslationKey == null) {
             return null;
         } else {
-            return new ResearchEntry(key, disciplineKey, nameTranslationKey);
+            // ResearchEntry main keys should never have a stage
+            SimpleResearchKey newKey = SimpleResearchKey.parse(key.getRootKey());
+            return new ResearchEntry(newKey, disciplineKey, nameTranslationKey);
         }
     }
     
     @Nonnull
     public static ResearchEntry parse(JsonObject obj) throws Exception {
         ResearchEntry entry = create(
-            obj.getAsJsonPrimitive("key").getAsString(),
+            SimpleResearchKey.parse(obj.getAsJsonPrimitive("key").getAsString()),
             obj.getAsJsonPrimitive("discipline").getAsString(),
             obj.getAsJsonPrimitive("name").getAsString()
         );
@@ -70,7 +72,7 @@ public class ResearchEntry {
     }
     
     @Nonnull
-    public String getKey() {
+    public SimpleResearchKey getKey() {
         return this.key;
     }
     

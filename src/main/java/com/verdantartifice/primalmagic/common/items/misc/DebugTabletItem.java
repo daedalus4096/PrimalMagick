@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagic.common.items.misc;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.items.base.ItemPM;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -23,8 +25,11 @@ public class DebugTabletItem extends ItemPM {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(playerIn);
         if (knowledge != null) {
-            Set<String> researchSet = knowledge.getResearchSet();
-            String[] researchList = researchSet.toArray(new String[researchSet.size()]);
+            Set<SimpleResearchKey> researchSet = knowledge.getResearchSet();
+            String[] researchList = researchSet.stream()
+                                        .map(k -> k.getRootKey())
+                                        .collect(Collectors.toSet())
+                                        .toArray(new String[researchSet.size()]);
             String output = String.join(", ", researchList);
             PrimalMagic.LOGGER.info("Checking {}-side knowledge for {}: {}", (worldIn.isRemote ? "client" : "server"), playerIn.getName().getString(), output);
         }

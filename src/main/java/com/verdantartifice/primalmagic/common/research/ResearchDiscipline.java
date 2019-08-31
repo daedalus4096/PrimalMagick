@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 public class ResearchDiscipline {
     protected String key;
     protected CompoundResearchKey unlockResearchKey;
-    protected Map<String, ResearchEntry> entries = new HashMap<>();
+    protected Map<SimpleResearchKey, ResearchEntry> entries = new HashMap<>();
     
     protected ResearchDiscipline(@Nonnull String key, @Nullable CompoundResearchKey unlockResearchKey) {
         this.key = key;
@@ -39,7 +39,7 @@ public class ResearchDiscipline {
     }
     
     @Nullable
-    public ResearchEntry getEntry(String key) {
+    public ResearchEntry getEntry(SimpleResearchKey key) {
         return this.entries.get(key);
     }
     

@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -12,20 +14,20 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
     public void clear();
     
     @Nonnull
-    public Set<String> getResearchSet();
+    public Set<SimpleResearchKey> getResearchSet();
     
-    public ResearchStatus getResearchStatus(String research);
-    public boolean isResearchComplete(String research);
-    public boolean isResearchKnown(String research);
-    public int getResearchStage(String research);
+    public ResearchStatus getResearchStatus(SimpleResearchKey research);
+    public boolean isResearchComplete(SimpleResearchKey research);
+    public boolean isResearchKnown(SimpleResearchKey research);
+    public int getResearchStage(SimpleResearchKey research);
     
-    public boolean addResearch(String research);
-    public boolean setResearchStage(String research, int newStage);
-    public boolean removeResearch(String research);
+    public boolean addResearch(SimpleResearchKey research);
+    public boolean setResearchStage(SimpleResearchKey research, int newStage);
+    public boolean removeResearch(SimpleResearchKey research);
     
-    public boolean addResearchFlag(String research, ResearchFlag flag);
-    public boolean removeResearchFlag(String research, ResearchFlag flag);
-    public boolean hasResearchFlag(String research, ResearchFlag flag);
+    public boolean addResearchFlag(SimpleResearchKey research, ResearchFlag flag);
+    public boolean removeResearchFlag(SimpleResearchKey research, ResearchFlag flag);
+    public boolean hasResearchFlag(SimpleResearchKey research, ResearchFlag flag);
     
     public void sync(ServerPlayerEntity player);
     

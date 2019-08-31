@@ -6,6 +6,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -24,7 +26,6 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -71,12 +72,12 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         ListNBT researchList = nbt.getList("research", 10);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundNBT tag = researchList.getCompound(index);
-            String key = tag.getString("key");
-            if (key != null && !this.isResearchKnown(key)) {
-                this.research.add(key);
+            SimpleResearchKey keyObj = SimpleResearchKey.parse(tag.getString("key"));
+            if (keyObj != null && !this.isResearchKnown(keyObj)) {
+                this.research.add(keyObj.getRootKey());
                 int stage = tag.getInt("stage");
                 if (stage > 0) {
-                    this.stages.put(key, Integer.valueOf(stage));
+                    this.stages.put(keyObj.getRootKey(), Integer.valueOf(stage));
                 }
                 String flagStr = tag.getString("flags");
                 if (flagStr != null && !flagStr.isEmpty()) {
@@ -85,7 +86,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                         try {
                             flag = ResearchFlag.valueOf(flagName);
                         } catch (Exception e) {}
-                        this.addResearchFlag(key, flag);
+                        this.addResearchFlag(keyObj, flag);
                     }
                 }
             }
@@ -101,12 +102,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     @Override
     @Nonnull
-    public Set<String> getResearchSet() {
-        return Collections.unmodifiableSet(this.research);
+    public Set<SimpleResearchKey> getResearchSet() {
+        return Collections.unmodifiableSet(this.research.stream()
+                                            .map(s -> SimpleResearchKey.parse(s))
+                                            .filter(Objects::nonNull)
+                                            .collect(Collectors.toSet()));
     }
 
     @Override
-    public ResearchStatus getResearchStatus(String research) {
+    public ResearchStatus getResearchStatus(SimpleResearchKey research) {
         if (!this.isResearchKnown(research)) {
             return ResearchStatus.UNKNOWN;
         } else {
@@ -120,39 +124,38 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean isResearchComplete(String research) {
+    public boolean isResearchComplete(SimpleResearchKey research) {
         return (this.getResearchStatus(research) == ResearchStatus.COMPLETE);
     }
 
     @Override
-    public boolean isResearchKnown(String research) {
+    public boolean isResearchKnown(SimpleResearchKey research) {
         if (research == null) {
             return false;
         }
-        if ("".equals(research)) {
+        if ("".equals(research.getRootKey())) {
             return true;
         }
-        String[] tokens = research.split("@");
-        if (tokens.length > 1 && this.getResearchStage(tokens[0]) < MathHelper.getInt(tokens[1], 0)) {
+        if (research.hasStage() && this.getResearchStage(research) < research.getStage()) {
             return false;
         } else {
-            return this.research.contains(tokens[0]);
+            return this.research.contains(research.getRootKey());
         }
     }
 
     @Override
-    public int getResearchStage(String research) {
-        if (research == null || !this.research.contains(research)) {
+    public int getResearchStage(SimpleResearchKey research) {
+        if (research == null || research.getRootKey().isEmpty() || !this.research.contains(research.getRootKey())) {
             return -1;
         } else {
-            return this.stages.getOrDefault(research, Integer.valueOf(0)).intValue();
+            return this.stages.getOrDefault(research.getRootKey(), Integer.valueOf(0)).intValue();
         }
     }
 
     @Override
-    public boolean addResearch(String research) {
+    public boolean addResearch(SimpleResearchKey research) {
         if (!this.isResearchKnown(research)) {
-            this.research.add(research);
+            this.research.add(research.getRootKey());
             return true;
         } else {
             return false;
@@ -160,19 +163,19 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean setResearchStage(String research, int newStage) {
-        if (research == null || !this.research.contains(research) || newStage <= 0) {
+    public boolean setResearchStage(SimpleResearchKey research, int newStage) {
+        if (research == null || research.getRootKey().isEmpty() || !this.research.contains(research.getRootKey()) || newStage <= 0) {
             return false;
         } else {
-            this.stages.put(research, Integer.valueOf(newStage));
+            this.stages.put(research.getRootKey(), Integer.valueOf(newStage));
             return true;
         }
     }
 
     @Override
-    public boolean removeResearch(String research) {
+    public boolean removeResearch(SimpleResearchKey research) {
         if (this.isResearchKnown(research)) {
-            this.research.remove(research);
+            this.research.remove(research.getRootKey());
             return true;
         } else {
             return false;
@@ -180,25 +183,25 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean addResearchFlag(String research, ResearchFlag flag) {
+    public boolean addResearchFlag(SimpleResearchKey research, ResearchFlag flag) {
         if (flag == null) {
             return false;
         }
-        Set<ResearchFlag> researchFlags = this.flags.get(research);
+        Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
         if (researchFlags == null) {
             researchFlags = EnumSet.noneOf(ResearchFlag.class);
-            this.flags.put(research, researchFlags);
+            this.flags.put(research.getRootKey(), researchFlags);
         }
         return researchFlags.add(flag);
     }
     
     @Override
-    public boolean removeResearchFlag(String research, ResearchFlag flag) {
-        Set<ResearchFlag> researchFlags = this.flags.get(research);
+    public boolean removeResearchFlag(SimpleResearchKey research, ResearchFlag flag) {
+        Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
         if (researchFlags != null) {
             boolean retVal = researchFlags.remove(flag);
             if (researchFlags.isEmpty()) {
-                this.flags.remove(research);
+                this.flags.remove(research.getRootKey());
             }
             return retVal;
         }
@@ -206,8 +209,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean hasResearchFlag(String research, ResearchFlag flag) {
-        Set<ResearchFlag> researchFlags = this.flags.get(research);
+    public boolean hasResearchFlag(SimpleResearchKey research, ResearchFlag flag) {
+        Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
         return researchFlags != null && researchFlags.contains(flag);
     }
 

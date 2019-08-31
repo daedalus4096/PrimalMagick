@@ -30,7 +30,7 @@ public class ResearchDisciplines {
     }
     
     @Nullable
-    public static ResearchEntry getEntry(String key) {
+    public static ResearchEntry getEntry(SimpleResearchKey key) {
         for (ResearchDiscipline discipline : getAllDisciplines()) {
             ResearchEntry entry = discipline.getEntry(key);
             if (entry != null) {
