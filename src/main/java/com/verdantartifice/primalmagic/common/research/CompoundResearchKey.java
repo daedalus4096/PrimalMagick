@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
+import net.minecraft.entity.player.PlayerEntity;
+
 public class CompoundResearchKey {
     protected List<SimpleResearchKey> keys = new ArrayList<>();
     protected boolean requireAll;
@@ -21,7 +23,7 @@ public class CompoundResearchKey {
     }
     
     protected CompoundResearchKey(boolean requireAll, @Nonnull SimpleResearchKey key) {
-        this.requireAll = requireAll;
+        this(requireAll);
         this.keys.add(key);
     }
     
@@ -73,6 +75,42 @@ public class CompoundResearchKey {
     
     public boolean getRequireAll() {
         return this.requireAll;
+    }
+    
+    public boolean isKnownBy(@Nullable PlayerEntity player) {
+        if (this.requireAll) {
+            for (SimpleResearchKey simpleKey : this.keys) {
+                if (!simpleKey.isKnownBy(player)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            for (SimpleResearchKey simpleKey : this.keys) {
+                if (simpleKey.isKnownBy(player)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+    
+    public boolean isKnownByStrict(@Nullable PlayerEntity player) {
+        if (this.requireAll) {
+            for (SimpleResearchKey simpleKey : this.keys) {
+                if (!simpleKey.isKnownByStrict(player)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            for (SimpleResearchKey simpleKey : this.keys) {
+                if (simpleKey.isKnownByStrict(player)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
     
     @Override

@@ -13,6 +13,6 @@ public class PrimalMagicCapabilities {
     
     @Nullable
     public static IPlayerKnowledge getKnowledge(@Nonnull PlayerEntity player) {
-        return player.getCapability(KNOWLEDGE, null).orElse(null);  // FIXME
+        return player.getCapability(KNOWLEDGE, null).orElse(null);
     }
 }

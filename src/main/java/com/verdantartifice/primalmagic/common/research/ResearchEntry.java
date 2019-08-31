@@ -31,8 +31,7 @@ public class ResearchEntry {
             return null;
         } else {
             // ResearchEntry main keys should never have a stage
-            SimpleResearchKey newKey = SimpleResearchKey.parse(key.getRootKey());
-            return new ResearchEntry(newKey, disciplineKey, nameTranslationKey);
+            return new ResearchEntry(key.stripStage(), disciplineKey, nameTranslationKey);
         }
     }
     

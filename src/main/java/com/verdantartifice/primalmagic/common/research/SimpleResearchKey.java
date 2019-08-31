@@ -3,6 +3,10 @@ package com.verdantartifice.primalmagic.common.research;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 
 public class SimpleResearchKey {
@@ -37,6 +41,41 @@ public class SimpleResearchKey {
     
     public int getStage() {
         return this.hasStage() ? this.stage.intValue() : -1;
+    }
+    
+    @Nonnull
+    public SimpleResearchKey stripStage() {
+        return new SimpleResearchKey(this.rootKey, null);
+    }
+    
+    public boolean isKnownBy(@Nullable PlayerEntity player) {
+        if (player == null) {
+            return false;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        } else {
+            return knowledge.isResearchKnown(this);
+        }
+    }
+    
+    public boolean isKnownByStrict(@Nullable PlayerEntity player) {
+        if (player == null) {
+            return false;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        }
+        if (this.hasStage()) {
+            if (!knowledge.isResearchKnown(this)) {
+                return false;
+            }
+        } else if (!knowledge.isResearchComplete(this)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
