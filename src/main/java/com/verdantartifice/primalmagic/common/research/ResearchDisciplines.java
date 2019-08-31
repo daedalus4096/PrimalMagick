@@ -30,17 +30,6 @@ public class ResearchDisciplines {
     }
     
     @Nullable
-    public static ResearchEntry getEntry(SimpleResearchKey key) {
-        for (ResearchDiscipline discipline : getAllDisciplines()) {
-            ResearchEntry entry = discipline.getEntry(key);
-            if (entry != null) {
-                return entry;
-            }
-        }
-        return null;
-    }
-    
-    @Nullable
     public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey) {
         if (key == null || DISCIPLINES.containsKey(key)) {
             return null;

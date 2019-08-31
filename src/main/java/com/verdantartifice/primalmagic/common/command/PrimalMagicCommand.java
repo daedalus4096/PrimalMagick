@@ -7,7 +7,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
-import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.command.CommandSource;
@@ -83,7 +83,7 @@ public class PrimalMagicCommand {
         SimpleResearchKey key = SimpleResearchKey.parse(research.getString());
         if (knowledge == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
-        } else if (ResearchDisciplines.getEntry(key) == null) {
+        } else if (ResearchEntries.getEntry(key) == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant.noexist", research.getString()).applyTextStyle(TextFormatting.RED), true);
         } else {
             knowledge.addResearch(key);

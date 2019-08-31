@@ -35,7 +35,7 @@ public class ResearchManager {
         if (key == null) {
             return true;
         }
-        ResearchEntry entry = ResearchDisciplines.getEntry(key);
+        ResearchEntry entry = ResearchEntries.getEntry(key);
         if (entry == null || entry.getParentResearch() == null) {
             return true;
         } else {
