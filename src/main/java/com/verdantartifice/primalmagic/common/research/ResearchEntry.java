@@ -35,7 +35,7 @@ public class ResearchEntry {
     }
     
     @Nonnull
-    public static ResearchEntry parse(JsonObject obj) throws Exception {
+    public static ResearchEntry parse(@Nonnull JsonObject obj) throws Exception {
         ResearchEntry entry = create(
             SimpleResearchKey.parse(obj.getAsJsonPrimitive("key").getAsString()),
             obj.getAsJsonPrimitive("discipline").getAsString(),

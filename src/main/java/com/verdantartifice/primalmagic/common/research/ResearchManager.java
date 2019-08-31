@@ -2,6 +2,9 @@ package com.verdantartifice.primalmagic.common.research;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -15,6 +18,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchManager {
+    private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
+    
+    public static Set<Integer> getAllCraftingReferences() {
+        return Collections.unmodifiableSet(CRAFTING_REFERENCES);
+    }
+    
+    public static boolean addCraftingReference(int reference) {
+        return CRAFTING_REFERENCES.add(Integer.valueOf(reference));
+    }
+    
     public static boolean hasPrerequisites(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
         if (player == null) {
             return false;
@@ -31,6 +44,7 @@ public class ResearchManager {
     }
     
     public static void parseAllResearch() {
+        CRAFTING_REFERENCES.clear();
         JsonParser parser = new JsonParser();
         for (ResourceLocation location : ResearchDisciplines.getAllDataFileLocations()) {
             String locStr = "/data/" + location.getNamespace() + "/" + location.getPath();

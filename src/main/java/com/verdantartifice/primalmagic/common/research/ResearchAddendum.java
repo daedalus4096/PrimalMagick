@@ -27,7 +27,7 @@ public class ResearchAddendum {
     }
     
     @Nonnull
-    public static ResearchAddendum parse(JsonObject obj) throws Exception {
+    public static ResearchAddendum parse(@Nonnull JsonObject obj) throws Exception {
         ResearchAddendum addendum = create(obj.getAsJsonPrimitive("text").getAsString());
         if (addendum == null) {
             throw new Exception("Illegal addendum text in research JSON");

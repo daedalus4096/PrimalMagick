@@ -42,4 +42,9 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
         UPDATED,
         POPUP
     }
+    
+    public static enum KnowledgeType {
+        OBSERVATION,
+        THEORY
+    }
 }
