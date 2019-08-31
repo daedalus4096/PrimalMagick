@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.command;
+package com.verdantartifice.primalmagic.common.commands;
 
 import java.util.Set;
 import java.util.stream.Collectors;
