@@ -29,6 +29,9 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
     public boolean removeResearchFlag(SimpleResearchKey research, ResearchFlag flag);
     public boolean hasResearchFlag(SimpleResearchKey research, ResearchFlag flag);
     
+    @Nonnull
+    public Set<ResearchFlag> getResearchFlags(SimpleResearchKey research);
+    
     public void sync(ServerPlayerEntity player);
     
     public static enum ResearchStatus {

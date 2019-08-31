@@ -31,6 +31,9 @@ public class PrimalMagicCommand {
                     .then(Commands.literal("grant")
                         .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return grantResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
                     )
+                    .then(Commands.literal("details")
+                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return detailResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                    )
                 )
             )
         );
@@ -84,11 +87,35 @@ public class PrimalMagicCommand {
         if (knowledge == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
         } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant.noexist", key.toString()).applyTextStyle(TextFormatting.RED), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.noexist", key.toString()).applyTextStyle(TextFormatting.RED), true);
         } else {
             knowledge.addResearch(key);
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), key.toString()), true);
+        }
+        return 0;
+    }
+    
+    private static int detailResearch(CommandSource source, ServerPlayerEntity target, ResearchInput input) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        SimpleResearchKey key = input.getKey();
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else if (ResearchEntries.getEntry(key) == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.noexist", key.toString()).applyTextStyle(TextFormatting.RED), true);
+        } else {
+            IPlayerKnowledge.ResearchStatus status = knowledge.getResearchStatus(key);
+            int stage = knowledge.getResearchStage(key);
+            Set<IPlayerKnowledge.ResearchFlag> flagSet = knowledge.getResearchFlags(key);
+            String[] flagStrs = flagSet.stream()
+                                    .map(f -> f.name())
+                                    .collect(Collectors.toSet())
+                                    .toArray(new String[flagSet.size()]);
+            String flagOutput = (flagStrs.length == 0) ? "none" : String.join(", ", flagStrs);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.details.1", key.toString(), target.getName()), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.details.2", status.name()), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.details.3", stage), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.details.4", flagOutput), true);
         }
         return 0;
     }

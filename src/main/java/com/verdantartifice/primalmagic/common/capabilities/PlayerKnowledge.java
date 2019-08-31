@@ -213,6 +213,12 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
         return researchFlags != null && researchFlags.contains(flag);
     }
+    
+    @Override
+    @Nonnull
+    public Set<ResearchFlag> getResearchFlags(SimpleResearchKey research) {
+        return Collections.unmodifiableSet(this.flags.getOrDefault(research.getRootKey(), EnumSet.noneOf(ResearchFlag.class)));
+    }
 
     @Override
     public void sync(ServerPlayerEntity player) {

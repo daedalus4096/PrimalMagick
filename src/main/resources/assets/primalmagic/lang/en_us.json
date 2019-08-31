@@ -18,7 +18,11 @@
     "commands.primalmagic.research.list": "All research for %s: %s",
     "commands.primalmagic.research.reset": "Resetting all research for %s",
     "commands.primalmagic.research.grant": "Granting research to %s: %s",
-    "commands.primalmagic.research.grant.noexist": "Reseach %s does not exist",
+    "commands.primalmagic.research.details.1": "Research %s of player %s:",
+    "commands.primalmagic.research.details.2": "  Status: %s",
+    "commands.primalmagic.research.details.3": "  Current stage: %d",
+    "commands.primalmagic.research.details.4": "  Flags: %s",
+    "commands.primalmagic.research.noexist": "Reseach %s does not exist",
     "commands.primalmagic.error": "Error executing command",
     
     "itemGroup.primalmagic": "Primal Magic"
