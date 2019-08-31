@@ -54,7 +54,7 @@ public class CompoundResearchKey {
         }
     }
     
-    @Nonnull
+    @Nullable
     public static CompoundResearchKey parse(@Nullable JsonArray jsonArray) throws Exception {
         CompoundResearchKey retVal = new CompoundResearchKey(true);
         for (JsonElement element : jsonArray) {
@@ -63,7 +63,7 @@ public class CompoundResearchKey {
                 retVal.keys.add(simpleKey);
             }
         }
-        return retVal;
+        return retVal.keys.isEmpty() ? null : retVal;
     }
     
     @Nullable
@@ -124,6 +124,14 @@ public class CompoundResearchKey {
                 }
             }
             return false;
+        }
+    }
+    
+    public boolean contains(@Nullable SimpleResearchKey simpleKey) {
+        if (simpleKey == null) {
+            return false;
+        } else {
+            return this.keys.contains(simpleKey);
         }
     }
     

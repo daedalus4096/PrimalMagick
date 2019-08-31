@@ -105,4 +105,8 @@ public class ResearchStage {
     public CompoundResearchKey getRequiredResearch() {
         return this.requiredResearch;
     }
+    
+    public boolean hasPrerequisites() {
+        return !this.mustObtain.isEmpty() || !this.mustCraft.isEmpty() || !this.requiredKnowledge.isEmpty() || this.requiredResearch != null;
+    }
 }

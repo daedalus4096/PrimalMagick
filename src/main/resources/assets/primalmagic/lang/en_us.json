@@ -22,8 +22,12 @@
     "commands.primalmagic.research.details.2": "  Status: %s",
     "commands.primalmagic.research.details.3": "  Current stage: %d",
     "commands.primalmagic.research.details.4": "  Flags: %s",
+    "commands.primalmagic.research.progress.success": "Research %s progressed from stage %d to stage %d",
+    "commands.primalmagic.research.progress.failure": "Failed to progress research %s from stage %d",
     "commands.primalmagic.research.noexist": "Reseach %s does not exist",
     "commands.primalmagic.error": "Error executing command",
+    
+    "event.primalmagic.add_addendum": "Addendum added to %s",
     
     "itemGroup.primalmagic": "Primal Magic"
 }

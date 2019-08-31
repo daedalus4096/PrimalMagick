@@ -4,7 +4,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
@@ -13,12 +15,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class ResearchManager {
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
+    private static final Map<String, Boolean> SYNC_LIST = new ConcurrentHashMap<>();
+    
+    public static boolean noFlags = false;
     
     public static Set<Integer> getAllCraftingReferences() {
         return Collections.unmodifiableSet(CRAFTING_REFERENCES);
@@ -26,6 +35,11 @@ public class ResearchManager {
     
     public static boolean addCraftingReference(int reference) {
         return CRAFTING_REFERENCES.add(Integer.valueOf(reference));
+    }
+    
+    @Nullable
+    public static Boolean popSyncList(@Nullable String name) {
+        return SYNC_LIST.remove(name);
     }
     
     public static boolean hasPrerequisites(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
@@ -41,6 +55,87 @@ public class ResearchManager {
         } else {
             return entry.getParentResearch().isKnownByStrict(player);
         }
+    }
+    
+    public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+        return progressResearch(player, key, true);
+    }
+    
+    public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync) {
+        if (player == null || key == null) {
+            return false;
+        }
+        
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        }
+        if (knowledge.isResearchComplete(key) || !hasPrerequisites(player, key)) {
+            return false;
+        }
+        
+        if (!knowledge.isResearchKnown(key)) {
+            knowledge.addResearch(key);
+        }
+        
+        ResearchEntry entry = ResearchEntries.getEntry(key);
+        boolean popups;
+        if (entry != null) {
+            popups = true;
+            ResearchStage currentStage = null;
+            if (!entry.getStages().isEmpty()) {
+                int cs = knowledge.getResearchStage(key);
+                if (cs > 0) {
+                    cs = Math.min(cs, entry.getStages().size());
+                    currentStage = entry.getStages().get(cs - 1);
+                }
+                if (entry.getStages().size() == 1 && cs == 0 && !entry.getStages().get(0).hasPrerequisites()) {
+                    cs++;
+                } else if (entry.getStages().size() > 1 && cs == (entry.getStages().size() - 1) && !entry.getStages().get(cs).hasPrerequisites()) {
+                    cs++;
+                }
+                knowledge.setResearchStage(key, Math.min(entry.getStages().size() + 1, cs + 1));
+                popups = (cs >= entry.getStages().size());
+                
+                if (popups) {
+                    cs = Math.min(cs, entry.getStages().size());
+                    currentStage = entry.getStages().get(cs - 1);
+                }
+                
+                if (currentStage != null) {
+                    // TODO process attunement grants
+                }
+            }
+            if (popups) {
+                if (sync) {
+                    knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
+                    if (!noFlags) {
+                        knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
+                    } else {
+                        noFlags = false;
+                    }
+                }
+                for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
+                    if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
+                        for (ResearchAddendum addendum : searchEntry.getAddenda()) {
+                            if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key)) {
+                                ITextComponent nameComp = new TranslationTextComponent(searchEntry.getNameTranslationKey());
+                                player.sendMessage(new TranslationTextComponent("event.primalmagic.add_addendum", nameComp));
+                                knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (sync) {
+            SYNC_LIST.put(player.getName().getString(), Boolean.valueOf(true));
+            if (entry != null) {
+                player.giveExperiencePoints(5);
+            }
+        }
+        
+        return true;
     }
     
     public static void parseAllResearch() {

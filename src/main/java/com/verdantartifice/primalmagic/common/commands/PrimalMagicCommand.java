@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchInput;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.command.CommandSource;
@@ -33,6 +34,9 @@ public class PrimalMagicCommand {
                     )
                     .then(Commands.literal("details")
                         .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return detailResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                    )
+                    .then(Commands.literal("progress")
+                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return progressResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
                     )
                 )
             )
@@ -116,6 +120,25 @@ public class PrimalMagicCommand {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.details.2", status.name()), true);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.details.3", stage), true);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.details.4", flagOutput), true);
+        }
+        return 0;
+    }
+    
+    private static int progressResearch(CommandSource source, ServerPlayerEntity target, ResearchInput input) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        SimpleResearchKey key = input.getKey();
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else if (ResearchEntries.getEntry(key) == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.noexist", key.toString()).applyTextStyle(TextFormatting.RED), true);
+        } else {
+            int oldStage = knowledge.getResearchStage(key);
+            if (ResearchManager.progressResearch(target, key)) {
+                int newStage = knowledge.getResearchStage(key);
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.progress.success", key.toString(), oldStage, newStage), true);
+            } else {
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.progress.failure", key.toString(), oldStage), true);
+            }
         }
         return 0;
     }
