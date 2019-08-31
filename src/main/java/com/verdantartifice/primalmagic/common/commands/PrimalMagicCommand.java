@@ -7,15 +7,15 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
+import com.verdantartifice.primalmagic.common.commands.arguments.ResearchInput;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.command.arguments.MessageArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -29,7 +29,7 @@ public class PrimalMagicCommand {
                     .then(Commands.literal("list").executes((context) -> { return listResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("reset").executes((context) -> { return resetResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("grant")
-                        .then(Commands.argument("research", MessageArgument.message()).executes((context) -> { return grantResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), MessageArgument.getMessage(context, "research")); }))
+                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return grantResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
                     )
                 )
             )
@@ -78,17 +78,17 @@ public class PrimalMagicCommand {
         return 0;
     }
     
-    private static int grantResearch(CommandSource source, ServerPlayerEntity target, ITextComponent research) {
+    private static int grantResearch(CommandSource source, ServerPlayerEntity target, ResearchInput input) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
-        SimpleResearchKey key = SimpleResearchKey.parse(research.getString());
+        SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
         } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant.noexist", research.getString()).applyTextStyle(TextFormatting.RED), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant.noexist", key.toString()).applyTextStyle(TextFormatting.RED), true);
         } else {
             knowledge.addResearch(key);
             knowledge.sync(target);
-            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), research.getString()), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), key.toString()), true);
         }
         return 0;
     }

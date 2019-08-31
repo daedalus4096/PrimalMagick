@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagic.common.commands.PrimalMagicCommand;
 import com.verdantartifice.primalmagic.common.misc.ItemGroupPM;
 import com.verdantartifice.primalmagic.proxy.ClientProxy;
 import com.verdantartifice.primalmagic.proxy.IProxyPM;
@@ -35,6 +34,6 @@ public class PrimalMagic {
     }
     
     private void serverStarting(FMLServerStartingEvent event) {
-        PrimalMagicCommand.register(event.getCommandDispatcher());
+        proxy.serverStarting(event);
     }
 }
