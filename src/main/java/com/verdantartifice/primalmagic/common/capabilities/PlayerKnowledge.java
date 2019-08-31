@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
-import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
@@ -114,7 +114,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (!this.isResearchKnown(research)) {
             return ResearchStatus.UNKNOWN;
         } else {
-            ResearchEntry entry = ResearchDisciplines.getEntry(research);
+            ResearchEntry entry = ResearchEntries.getEntry(research);
             if (entry == null || entry.getStages().isEmpty() || this.getResearchStage(research) > entry.getStages().size()) {
                 return ResearchStatus.COMPLETE;
             } else {
