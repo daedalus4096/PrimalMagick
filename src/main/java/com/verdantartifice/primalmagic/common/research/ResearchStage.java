@@ -19,8 +19,8 @@ import net.minecraft.util.ResourceLocation;
 public class ResearchStage {
     protected String textTranslationKey;
     protected List<ResourceLocation> recipes = new ArrayList<>();
-    protected List<Object> mustObtain = new ArrayList<>();
-    protected List<Object> mustCraft = new ArrayList<>();
+    protected List<Object> mustObtain = new ArrayList<>();  // Either a specific ItemStack or a tag ResourceLocation
+    protected List<Object> mustCraft = new ArrayList<>();   // Either a specific ItemStack or a tag ResourceLocation
     protected List<Integer> craftReference = new ArrayList<>();
     protected List<Knowledge> requiredKnowledge = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
@@ -52,7 +52,7 @@ public class ResearchStage {
             for (Object craftObj : stage.mustCraft) {
                 int code = (craftObj instanceof ItemStack) ? 
                         ItemUtils.getHashCode((ItemStack)craftObj) :
-                        ("oredict:" + craftObj.toString()).hashCode();
+                        ("tag:" + craftObj.toString()).hashCode();
                 references.add(Integer.valueOf(code));
                 ResearchManager.addCraftingReference(code);
             }

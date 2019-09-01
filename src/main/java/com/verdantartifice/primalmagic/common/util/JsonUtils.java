@@ -41,10 +41,10 @@ public class JsonUtils {
             try {
                 String str = element.getAsString();
                 str = str.replace("'", "\"");
-                if (str.startsWith("oredict:")) {
-                    String[] tokens = str.split(":");
-                    if (tokens.length > 1) {
-                        retVal.add(tokens[1]);
+                if (str.startsWith("tag:")) {
+                    String[] tokens = str.split(":", 2);
+                    if (tokens.length > 1 && !tokens[1].isEmpty()) {
+                        retVal.add(new ResourceLocation(tokens[1]));
                     }
                 } else {
                     ItemStack stack = ItemUtils.parseItemStack(str);
