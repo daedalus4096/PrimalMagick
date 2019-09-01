@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
+import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -34,6 +35,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Set<String> research = new HashSet<>();
     private final Map<String, Integer> stages = new HashMap<>();
     private final Map<String, Set<ResearchFlag>> flags = new HashMap<>();
+    private final Map<String, Integer> knowledge = new HashMap<>();
 
     @Override
     public CompoundNBT serializeNBT() {
@@ -58,6 +60,20 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             researchList.add(tag);
         }
         rootTag.put("research", researchList);
+        
+        ListNBT knowledgeList = new ListNBT();
+        for (String knowledgeKey : this.knowledge.keySet()) {
+            if (knowledgeKey != null && !knowledgeKey.isEmpty()) {
+                Integer points = this.knowledge.get(knowledgeKey);
+                if (points != null && points.intValue() > 0) {
+                    CompoundNBT tag = new CompoundNBT();
+                    tag.putString("key", knowledgeKey);
+                    tag.putInt("value", points);
+                    knowledgeList.add(tag);
+                }
+            }
+        }
+        rootTag.put("knowledge", knowledgeList);
         
         return rootTag;
     }
@@ -91,6 +107,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 }
             }
         }
+        ListNBT knowledgeList = nbt.getList("knowledge", 10);
+        for (int index = 0; index < knowledgeList.size(); index++) {
+            CompoundNBT tag = knowledgeList.getCompound(index);
+            String key = tag.getString("key");
+            int points = tag.getInt("value");
+            if (key != null && !key.isEmpty()) {
+                this.knowledge.put(key, Integer.valueOf(points));
+            }
+        }
     }
 
     @Override
@@ -98,6 +123,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.research.clear();
         this.stages.clear();
         this.flags.clear();
+        this.knowledge.clear();
     }
     
     @Override
@@ -218,6 +244,39 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Nonnull
     public Set<ResearchFlag> getResearchFlags(SimpleResearchKey research) {
         return Collections.unmodifiableSet(this.flags.getOrDefault(research.getRootKey(), EnumSet.noneOf(ResearchFlag.class)));
+    }
+    
+    @Nonnull
+    private String makeKnowledgeKey(@Nonnull KnowledgeType type, @Nonnull ResearchDiscipline discipline) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(type.name());
+        builder.append("_");
+        builder.append(discipline.getKey());
+        return builder.toString();
+    }
+    
+    @Override
+    public boolean addKnowledge(KnowledgeType type, ResearchDiscipline discipline, int amount) {
+        if (type == null || discipline == null) {
+            return false;
+        }
+        int points = this.getKnowledgeRaw(type, discipline) + amount;
+        if (points < 0) {
+            return false;
+        } else {
+            this.knowledge.put(this.makeKnowledgeKey(type, discipline), Integer.valueOf(points));
+            return true;
+        }
+    }
+    
+    @Override
+    public int getKnowledge(KnowledgeType type, ResearchDiscipline discipline) {
+        return (int)Math.floor((double)this.getKnowledgeRaw(type, discipline) / (double)type.getProgression());
+    }
+    
+    @Override
+    public int getKnowledgeRaw(KnowledgeType type, ResearchDiscipline discipline) {
+        return this.knowledge.getOrDefault(this.makeKnowledgeKey(type, discipline), Integer.valueOf(0)).intValue();
     }
 
     @Override

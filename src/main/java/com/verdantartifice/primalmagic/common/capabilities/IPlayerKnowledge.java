@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -32,6 +33,10 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
     @Nonnull
     public Set<ResearchFlag> getResearchFlags(SimpleResearchKey research);
     
+    public boolean addKnowledge(KnowledgeType type, ResearchDiscipline discipline, int amount);
+    public int getKnowledge(KnowledgeType type, ResearchDiscipline discipline);
+    public int getKnowledgeRaw(KnowledgeType type, ResearchDiscipline discipline);
+    
     public void sync(ServerPlayerEntity player);
     
     public static enum ResearchStatus {
@@ -47,7 +52,17 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
     }
     
     public static enum KnowledgeType {
-        OBSERVATION,
-        THEORY
+        OBSERVATION(16),
+        THEORY(32);
+        
+        private short progression;
+        
+        private KnowledgeType(int progression) {
+            this.progression = (short)progression;
+        }
+        
+        public int getProgression() {
+            return this.progression;
+        }
     }
 }
