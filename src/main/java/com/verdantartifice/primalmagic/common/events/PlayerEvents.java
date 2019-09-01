@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagic.common.events;
 
-import java.util.Set;
-
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
