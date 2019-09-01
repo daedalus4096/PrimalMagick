@@ -8,29 +8,28 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import com.verdantartifice.primalmagic.common.research.ResearchEntries;
-import com.verdantartifice.primalmagic.common.research.ResearchEntry;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 
-public class ResearchArgument implements ArgumentType<ResearchInput> {
-    public static ResearchArgument research() {
-        return new ResearchArgument();
+public class KnowledgeTypeArgument implements ArgumentType<KnowledgeTypeInput> {
+    public static KnowledgeTypeArgument knowledgeType() {
+        return new KnowledgeTypeArgument();
     }
-
+    
     @Override
-    public ResearchInput parse(StringReader reader) throws CommandSyntaxException {
-        ResearchParser parser = (new ResearchParser(reader)).parse();
-        return new ResearchInput(parser.getKey());
+    public KnowledgeTypeInput parse(StringReader reader) throws CommandSyntaxException {
+        KnowledgeTypeParser parser = (new KnowledgeTypeParser(reader)).parse();
+        return new KnowledgeTypeInput(parser.getType());
     }
 
-    public static <S> ResearchInput getResearch(CommandContext<S> context, String name) {
-        return context.getArgument(name, ResearchInput.class);
+    public static <S> KnowledgeTypeInput getKnowledgeType(CommandContext<S> context, String name) {
+        return context.getArgument(name, KnowledgeTypeInput.class);
     }
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         String remaining = builder.getRemaining().toUpperCase();
-        for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
-            String key = entry.getKey().getRootKey().toUpperCase();
+        for (IPlayerKnowledge.KnowledgeType type : IPlayerKnowledge.KnowledgeType.values()) {
+            String key = type.name().toUpperCase();
             if (key.startsWith(remaining)) {
                 builder.suggest(key);
             }

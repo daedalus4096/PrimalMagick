@@ -7,8 +7,14 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.commands.arguments.DisciplineArgument;
+import com.verdantartifice.primalmagic.common.commands.arguments.DisciplineInput;
+import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeArgument;
+import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeInput;
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchInput;
+import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -37,6 +43,15 @@ public class PrimalMagicCommand {
                     )
                     .then(Commands.literal("progress")
                         .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return progressResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                    )
+                )
+            )
+            .then(Commands.literal("knowledge")
+                .then(Commands.argument("target", EntityArgument.player())
+                    .then(Commands.literal("get")
+                        .then(Commands.argument("knowledge_type", KnowledgeTypeArgument.knowledgeType())
+                            .then(Commands.argument("discipline", DisciplineArgument.discipline()).executes((context) -> { return getKnowledge(context.getSource(), EntityArgument.getPlayer(context, "target"), KnowledgeTypeArgument.getKnowledgeType(context, "knowledge_type"), DisciplineArgument.getDiscipline(context, "discipline")); }))
+                        )
                     )
                 )
             )
@@ -138,6 +153,26 @@ public class PrimalMagicCommand {
                 source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.progress.success", key.toString(), oldStage, newStage), true);
             } else {
                 source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.progress.failure", key.toString(), oldStage), true);
+            }
+        }
+        return 0;
+    }
+    
+    private static int getKnowledge(CommandSource source, ServerPlayerEntity target, KnowledgeTypeInput knowledgeTypeInput, DisciplineInput disciplineInput) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
+        String disciplineKey = disciplineInput.getDisciplineKey();
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else if (type == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge_type.noexist").applyTextStyle(TextFormatting.RED), true);
+        } else {
+            ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(disciplineKey);
+            if (discipline == null) {
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.discipline.noexist", disciplineKey).applyTextStyle(TextFormatting.RED), true);
+            } else {
+                int levels = knowledge.getKnowledge(type, discipline);
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.get", levels, discipline.getKey(), type.name()), true);
             }
         }
         return 0;
