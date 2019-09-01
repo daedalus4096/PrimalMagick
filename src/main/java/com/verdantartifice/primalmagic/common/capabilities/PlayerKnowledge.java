@@ -84,7 +84,9 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             return;
         }
         
-        this.clear();
+        this.clearResearch();
+        this.clearKnowledge();
+        
         ListNBT researchList = nbt.getList("research", 10);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundNBT tag = researchList.getCompound(index);
@@ -119,10 +121,14 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public void clear() {
+    public void clearResearch() {
         this.research.clear();
         this.stages.clear();
         this.flags.clear();
+    }
+    
+    @Override
+    public void clearKnowledge() {
         this.knowledge.clear();
     }
     

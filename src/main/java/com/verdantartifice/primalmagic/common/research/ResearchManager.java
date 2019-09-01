@@ -175,12 +175,32 @@ public class ResearchManager {
             }
         }
         if (sync) {
-            SYNC_LIST.put(player.getName().getString(), Boolean.valueOf(true));
+            SYNC_LIST.put(player.getName().getString(), Boolean.TRUE);
             if (entry != null) {
                 player.giveExperiencePoints(5);
             }
         }
         
+        return true;
+    }
+    
+    public static boolean addKnowledge(PlayerEntity player, IPlayerKnowledge.KnowledgeType type, ResearchDiscipline discipline, int points) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        }
+        int levelsBefore = knowledge.getKnowledge(type, discipline);
+        boolean success = knowledge.addKnowledge(type, discipline, points);
+        if (!success) {
+            return false;
+        }
+        if (points > 0) {
+            int levelsAfter = knowledge.getKnowledge(type, discipline);
+            for (int index = 0; index < (levelsAfter - levelsBefore); index++) {
+                // TODO send knowledge gain packet to player
+            }
+        }
+        SYNC_LIST.put(player.getName().getString(), Boolean.TRUE);
         return true;
     }
     

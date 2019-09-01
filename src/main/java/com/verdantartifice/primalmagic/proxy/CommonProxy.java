@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.proxy;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.commands.PrimalMagicCommand;
 import com.verdantartifice.primalmagic.common.commands.arguments.DisciplineArgument;
+import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeAmountArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
 import com.verdantartifice.primalmagic.common.init.InitCapabilities;
@@ -28,6 +29,7 @@ public class CommonProxy implements IProxyPM {
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "research")).toString(), ResearchArgument.class, new ArgumentSerializer<>(ResearchArgument::research));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "discipline")).toString(), DisciplineArgument.class, new ArgumentSerializer<>(DisciplineArgument::discipline));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "knowledge_type")).toString(), KnowledgeTypeArgument.class, new ArgumentSerializer<>(KnowledgeTypeArgument::knowledgeType));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "knowledge_amount").toString()), KnowledgeAmountArgument.class, new ArgumentSerializer<>(KnowledgeAmountArgument::amount));
         PrimalMagicCommand.register(event.getCommandDispatcher());
     }
 }

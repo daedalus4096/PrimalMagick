@@ -4,11 +4,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.commands.arguments.DisciplineArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.DisciplineInput;
+import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeAmountArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeInput;
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
@@ -48,9 +50,17 @@ public class PrimalMagicCommand {
             )
             .then(Commands.literal("knowledge")
                 .then(Commands.argument("target", EntityArgument.player())
+                    .then(Commands.literal("reset").executes((context) -> { return resetKnowledge(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("get")
                         .then(Commands.argument("knowledge_type", KnowledgeTypeArgument.knowledgeType())
                             .then(Commands.argument("discipline", DisciplineArgument.discipline()).executes((context) -> { return getKnowledge(context.getSource(), EntityArgument.getPlayer(context, "target"), KnowledgeTypeArgument.getKnowledgeType(context, "knowledge_type"), DisciplineArgument.getDiscipline(context, "discipline")); }))
+                        )
+                    )
+                    .then(Commands.literal("add")
+                        .then(Commands.argument("knowledge_type", KnowledgeTypeArgument.knowledgeType())
+                            .then(Commands.argument("discipline", DisciplineArgument.discipline())
+                                .then(Commands.argument("points", KnowledgeAmountArgument.amount()).executes((context) -> { return addKnowledge(context.getSource(), EntityArgument.getPlayer(context, "target"), KnowledgeTypeArgument.getKnowledgeType(context, "knowledge_type"), DisciplineArgument.getDiscipline(context, "discipline"), IntegerArgumentType.getInteger(context, "points")); }))
+                            )
                         )
                     )
                 )
@@ -93,7 +103,7 @@ public class PrimalMagicCommand {
         if (knowledge == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
         } else {
-            knowledge.clear();
+            knowledge.clearResearch();
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.reset", target.getName()), true);
         }
@@ -158,6 +168,18 @@ public class PrimalMagicCommand {
         return 0;
     }
     
+    private static int resetKnowledge(CommandSource source, ServerPlayerEntity target) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else {
+            knowledge.clearKnowledge();
+            knowledge.sync(target);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.reset", target.getName()), true);
+        }
+        return 0;
+    }
+    
     private static int getKnowledge(CommandSource source, ServerPlayerEntity target, KnowledgeTypeInput knowledgeTypeInput, DisciplineInput disciplineInput) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
         IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
@@ -172,7 +194,31 @@ public class PrimalMagicCommand {
                 source.sendFeedback(new TranslationTextComponent("commands.primalmagic.discipline.noexist", disciplineKey).applyTextStyle(TextFormatting.RED), true);
             } else {
                 int levels = knowledge.getKnowledge(type, discipline);
-                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.get", levels, discipline.getKey(), type.name()), true);
+                int points = knowledge.getKnowledgeRaw(type, discipline);
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.get", target.getName().getString(), levels, discipline.getKey(), type.name(), points), true);
+            }
+        }
+        return 0;
+    }
+    
+    private static int addKnowledge(CommandSource source, ServerPlayerEntity target, KnowledgeTypeInput knowledgeTypeInput, DisciplineInput disciplineInput, int points) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
+        String disciplineKey = disciplineInput.getDisciplineKey();
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else if (type == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge_type.noexist").applyTextStyle(TextFormatting.RED), true);
+        } else {
+            ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(disciplineKey);
+            if (discipline == null) {
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.discipline.noexist", disciplineKey).applyTextStyle(TextFormatting.RED), true);
+            } else {
+                if (ResearchManager.addKnowledge(target, type, discipline, points)) {
+                    source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.success", points, discipline.getKey(), type.name(), target.getName().getString()), true);
+                } else {
+                    source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.failure", target.getName().getString()), true);
+                }
             }
         }
         return 0;

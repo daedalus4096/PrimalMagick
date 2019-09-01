@@ -12,7 +12,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
-    public void clear();
+    public void clearResearch();
+    public void clearKnowledge();
     
     @Nonnull
     public Set<SimpleResearchKey> getResearchSet();
