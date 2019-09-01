@@ -93,7 +93,7 @@ public class PrimalMagicCommand {
         } else if (ResearchEntries.getEntry(key) == null) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.noexist", key.toString()).applyTextStyle(TextFormatting.RED), true);
         } else {
-            knowledge.addResearch(key);
+            ResearchManager.forceGrantWithAllParents(target, key);
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), key.toString()), true);
         }

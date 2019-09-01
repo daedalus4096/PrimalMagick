@@ -57,6 +57,52 @@ public class ResearchManager {
         }
     }
     
+    public static boolean completeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+        return completeResearch(player, key, true);
+    }
+    
+    public static boolean completeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync) {
+        boolean retVal = false;
+        while (progressResearch(player, key, sync)) {
+            retVal = true;
+        }
+        return retVal;
+    }
+    
+    public static void forceGrantWithAllParents(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+        if (player != null && key != null) {
+            key = key.stripStage();
+            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+            if (knowledge != null && !knowledge.isResearchComplete(key)) {
+                ResearchEntry entry = ResearchEntries.getEntry(key);
+                if (entry != null) {
+                    if (entry.getParentResearch() != null) {
+                        for (SimpleResearchKey parentKey : entry.getParentResearch().getKeys()) {
+                            forceGrantWithAllParents(player, parentKey);
+                        }
+                    }
+                    for (ResearchStage stage : entry.getStages()) {
+                        if (stage.getRequiredResearch() != null) {
+                            for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
+                                completeResearch(player, requiredKey);
+                            }
+                        }
+                    }
+                }
+                completeResearch(player, key);
+                
+                for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
+                    for (ResearchStage searchStage : searchEntry.getStages()) {
+                        if (searchStage.getRequiredResearch() != null && searchStage.getRequiredResearch().contains(key)) {
+                            knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
         return progressResearch(player, key, true);
     }
