@@ -10,9 +10,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -108,5 +112,45 @@ public class ResearchStage {
     
     public boolean hasPrerequisites() {
         return !this.mustObtain.isEmpty() || !this.mustCraft.isEmpty() || !this.requiredKnowledge.isEmpty() || this.requiredResearch != null;
+    }
+    
+    public boolean arePrerequisitesMet(@Nullable PlayerEntity player) {
+        if (player == null) {
+            return false;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        }
+        
+        // Check if player is carrying must-obtain items
+        for (Object obtainObj : this.mustObtain) {
+            if (obtainObj instanceof ItemStack && !InventoryUtils.isPlayerCarrying(player, (ItemStack)obtainObj)) {
+                return false;
+            } else if (obtainObj instanceof ResourceLocation && !InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obtainObj)) {
+                return false;
+            }
+        }
+        
+        // Check if player knows research for must-craft items
+        for (Integer craftRef : this.craftReference) {
+            if (!knowledge.isResearchKnown(SimpleResearchKey.parse("#" + craftRef.intValue()))) {
+                return false;
+            }
+        }
+        
+        // Check if player has required knowledge
+        for (Knowledge knowPacket : this.requiredKnowledge) {
+            if (knowledge.getKnowledge(knowPacket.getType(), knowPacket.getDiscipline()) < knowPacket.getAmount()) {
+                return false;
+            }
+        }
+        
+        // Check if player has required research
+        if (this.requiredResearch != null && !this.requiredResearch.isKnownByStrict(player)) {
+            return false;
+        }
+        
+        return true;
     }
 }
