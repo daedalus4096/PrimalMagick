@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.init;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.base.BlockItemPM;
 import com.verdantartifice.primalmagic.common.items.misc.DebugTabletItem;
+import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -14,5 +15,6 @@ public class InitItems {
     
     public static void initItems(IForgeRegistry<Item> registry) {
         registry.register(new DebugTabletItem());
+        registry.register(new GrimoireItem());
     }
 }

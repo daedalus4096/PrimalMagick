@@ -8,4 +8,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(PrimalMagic.MODID)
 public class ItemsPM {
     public static final Item DEBUG_TABLET = null;
+    public static final Item GRIMOIRE = null;
 }
