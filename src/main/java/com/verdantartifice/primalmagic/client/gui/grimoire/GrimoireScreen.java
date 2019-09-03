@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireDisciplineButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireEntryButton;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -29,6 +31,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         super(screenContainer, inv, titleIn);
         this.xSize = 256;
         this.ySize = 181;
+    }
+    
+    public PlayerInventory getPlayerInventory() {
+        return this.playerInventory;
     }
     
     @Override
@@ -52,11 +58,16 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             int index = 0;
             for (ResearchDiscipline discipline : this.buildDisciplineList()) {
                 String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getString();
-                this.addButton(new GrimoireDisciplineButton(this.left + 23, this.top + 11 + (index * 24), 135, 18, text, this, discipline));
+                this.addButton(new GrimoireDisciplineButton(this.left + 23, this.top + 11 + (index * 24), text, this, discipline));
                 index++;
             }
         } else if (this.container.getTopic() instanceof ResearchDiscipline) {
-            // TODO render entry index
+            int index = 0;
+            for (ResearchEntry entry : this.buildEntryList((ResearchDiscipline)this.container.getTopic())) {
+                String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getString();
+                this.addButton(new GrimoireEntryButton(this.left + 23, this.top + 11 + (index * 24), text, this, entry));
+                index++;
+            }
         } else if (this.container.getTopic() instanceof ResearchStage) {
             // TODO render stage details
         }
@@ -86,5 +97,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         return ResearchDisciplines.getAllDisciplines().stream()
                                     .sorted(Comparator.comparing(d -> (new TranslationTextComponent(d.getNameTranslationKey())).getString()))
                                     .collect(Collectors.toList());
+    }
+    
+    private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
+        return discipline.getEntries().stream()
+                .sorted(Comparator.comparing(e -> (new TranslationTextComponent(e.getNameTranslationKey())).getString()))
+                .collect(Collectors.toList());
     }
 }
