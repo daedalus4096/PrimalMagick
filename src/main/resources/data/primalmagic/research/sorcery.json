@@ -1,0 +1,15 @@
+{
+    "entries": [
+        {
+            "key": "BASIC_SORCERY",
+            "name": "primalmagic.research.basic_sorcery.title",
+            "discipline": "SORCERY",
+            "stages": [
+                {
+                    "text": "primalmagic.research.basic_sorcery.text.stage.1"
+                }
+            ],
+            "addenda": []
+        }
+    ]
+}

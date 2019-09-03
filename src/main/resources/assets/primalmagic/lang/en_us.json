@@ -5,9 +5,23 @@
     "item.primalmagic.grimoire": "Grimoire",
     
     "primalmagic.research_discipline.BASICS": "Fundamentals",
+    "primalmagic.research_discipline.ALCHEMY": "Alchemy",
+    "primalmagic.research_discipline.SORCERY": "Sorcery",
     
     "primalmagic.research.first_steps.title": "First Steps",
-    "primalmagic.research.first_steps.text.stage.1": "Lorem ipsum",
+    "primalmagic.research.first_steps.text.stage.1": "First steps: Lorem ipsum",
+    
+    "primalmagic.research.unlock_alchemy.title": "Introduction to Alchemy",
+    "primalmagic.research.unlock_alchemy.text.stage.1": "For alchemy: Lorem ipsum",
+    
+    "primalmagic.research.unlock_sorcery.title": "Introduction to Sorcery",
+    "primalmagic.research.unlock_sorcery.text.stage.1": "For sorcery: Lorem ipsum",
+    
+    "primalmagic.research.basic_alchemy.title": "Basic Alchemy",
+    "primalmagic.research.basic_alchemy.text.stage.1": "Basic alchemy: Lorem ipsum",
+    
+    "primalmagic.research.basic_sorcery.title": "Basic Sorcery",
+    "primalmagic.research.basic_sorcery.text.stage.1": "Basic sorcery: Lorem ipsum",
     
     "commands.primalmagic.help.1": "You can also use /pm instead of /primalmagic.",
     "commands.primalmagic.help.2": "Use this to list a player's research:",
