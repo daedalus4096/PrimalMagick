@@ -7,21 +7,36 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import net.minecraft.client.gui.widget.button.Button;
 
 public class GrimoireEntryButton extends Button {
+    protected GrimoireScreen screen;
+    protected ResearchEntry entry;
 
     public GrimoireEntryButton(int widthIn, int heightIn, String text, GrimoireScreen screen, ResearchEntry entry) {
-        super(widthIn, heightIn, 135, 18, text, new Handler(text));
+        super(widthIn, heightIn, 135, 18, text, new Handler());
+        this.screen = screen;
+        this.entry = entry;
+    }
+    
+    public GrimoireScreen getScreen() {
+        return this.screen;
+    }
+    
+    public ResearchEntry getEntry() {
+        return this.entry;
     }
 
     private static class Handler implements IPressable {
-        private String message;
-        
-        public Handler(String message) {
-            this.message = message;
-        }
-        
         @Override
-        public void onPress(Button p_onPress_1_) {
-            PrimalMagic.LOGGER.info("Pressed button for {}", this.message);
+        public void onPress(Button button) {
+            if (button instanceof GrimoireEntryButton) {
+                GrimoireEntryButton geb = (GrimoireEntryButton)button;
+                PrimalMagic.LOGGER.info("Pressed button for {}", geb.getMessage());
+                geb.getScreen().getContainer().setTopic(geb.getEntry());
+                geb.getScreen().getMinecraft().displayGuiScreen(new GrimoireScreen(
+                    geb.getScreen().getContainer(),
+                    geb.getScreen().getPlayerInventory(),
+                    geb.getScreen().getTitle()
+                ));
+            }
         }
     }
 

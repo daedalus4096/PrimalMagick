@@ -50,5 +50,7 @@
     
     "event.primalmagic.add_addendum": "Addendum added to %s",
     
+    "primalmagic.grimoire.addendum_header": "Addendum %d",
+    
     "itemGroup.primalmagic": "Primal Magic"
 }
