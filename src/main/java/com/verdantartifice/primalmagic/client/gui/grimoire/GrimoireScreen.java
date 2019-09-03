@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import org.lwjgl.opengl.GL11;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireDisciplineButton;
@@ -29,7 +31,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
-    private static final PageImage IMAGE_LINE = PageImage.parse("primalmagic:textures/gui/grimoire.png:10:10:95:6:1");
+    private static final PageImage IMAGE_LINE = PageImage.parse("primalmagic:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     
     protected int left;
@@ -152,9 +154,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     protected void drawPage(Page page, int side, int x, int y, int mouseX, int mouseY) {
         // Draw page title if applicable
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         if (this.currentPage == 0 && side == 0) {
-            // TODO Draw line above title
-            // TODO Draw line below title
+            this.blit(x + 4, y - 7, 24, 184, 96, 4);
+            this.blit(x + 4, y + 10, 24, 184, 96, 4);
             String headerTextKey;
             if (this.container.getTopic() instanceof ResearchEntry) {
                 headerTextKey = ((ResearchEntry)this.container.getTopic()).getNameTranslationKey();
@@ -180,6 +184,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // Render page contents
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         for (Object content : page.contents) {
             if (content instanceof String) {
                 String contentStr = (String)content;
