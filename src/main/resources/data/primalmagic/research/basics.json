@@ -32,6 +32,94 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "UNLOCK_ENCHANTMENT",
+            "name": "primalmagic.research.unlock_enchantment.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.unlock_enchantment.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "UNLOCK_RUNEWORKING",
+            "name": "primalmagic.research.unlock_runeworking.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.unlock_runeworking.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "UNLOCK_RITUAL",
+            "name": "primalmagic.research.unlock_ritual.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.unlock_ritual.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_EARTH",
+            "name": "primalmagic.research.source_earth.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_earth.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_SEA",
+            "name": "primalmagic.research.source_sea.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_sea.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_SKY",
+            "name": "primalmagic.research.source_sky.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_sky.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_SUN",
+            "name": "primalmagic.research.source_sun.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_sun.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_MOON",
+            "name": "primalmagic.research.source_moon.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_moon.text.stage.1"
+                }
+            ],
+            "addenda": []
         }
     ]
 }

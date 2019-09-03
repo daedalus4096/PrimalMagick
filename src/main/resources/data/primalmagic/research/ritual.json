@@ -1,0 +1,15 @@
+{
+    "entries": [
+        {
+            "key": "BASIC_RITUAL",
+            "name": "primalmagic.research.basic_ritual.title",
+            "discipline": "RITUAL",
+            "stages": [
+                {
+                    "text": "primalmagic.research.basic_ritual.text.stage.1"
+                }
+            ],
+            "addenda": []
+        }
+    ]
+}

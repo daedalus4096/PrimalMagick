@@ -19,11 +19,17 @@ public class InitResearch {
         ResearchDisciplines.registerDiscipline("BASICS", null);
         ResearchDisciplines.registerDiscipline("ALCHEMY", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_ALCHEMY")));
         ResearchDisciplines.registerDiscipline("SORCERY", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_SORCERY")));
+        ResearchDisciplines.registerDiscipline("ENCHANTMENT", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_ENCHANTMENT")));
+        ResearchDisciplines.registerDiscipline("RUNEWORKING", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RUNEWORKING")));
+        ResearchDisciplines.registerDiscipline("RITUAL", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RITUAL")));
     }
     
     private static void initResearchFiles() {
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/basics"));
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/alchemy"));
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/sorcery"));
+        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/enchantment"));
+        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/runeworking"));
+        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/ritual"));
     }
 }

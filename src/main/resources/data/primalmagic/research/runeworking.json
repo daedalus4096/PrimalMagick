@@ -1,0 +1,15 @@
+{
+    "entries": [
+        {
+            "key": "BASIC_RUNEWORKING",
+            "name": "primalmagic.research.basic_runeworking.title",
+            "discipline": "RUNEWORKING",
+            "stages": [
+                {
+                    "text": "primalmagic.research.basic_runeworking.text.stage.1"
+                }
+            ],
+            "addenda": []
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "entries": [
+        {
+            "key": "BASIC_ENCHANTMENT",
+            "name": "primalmagic.research.basic_enchantment.title",
+            "discipline": "ENCHANTMENT",
+            "stages": [
+                {
+                    "text": "primalmagic.research.basic_enchantment.text.stage.1"
+                }
+            ],
+            "addenda": []
+        }
+    ]
+}
