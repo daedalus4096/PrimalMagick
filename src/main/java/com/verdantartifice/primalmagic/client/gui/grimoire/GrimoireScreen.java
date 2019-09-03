@@ -64,28 +64,61 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         if (this.knowledge == null) {
             throw new IllegalStateException("No knowledge provider found for player");
         }
+        this.initPages();
         this.initButtons();
     }
     
-    protected void initButtons() {
+    protected void initPages() {
         this.buttons.clear();
         this.pages.clear();
         if (this.container.getTopic() == null) {
-            int index = 0;
-            for (ResearchDiscipline discipline : this.buildDisciplineList()) {
-                String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getString();
-                this.addButton(new GrimoireDisciplineButton(this.left + 23, this.top + 11 + (index * 24), text, this, discipline));
-                index++;
-            }
+            this.parseIndexPages();
         } else if (this.container.getTopic() instanceof ResearchDiscipline) {
-            int index = 0;
-            for (ResearchEntry entry : this.buildEntryList((ResearchDiscipline)this.container.getTopic())) {
-                String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getString();
-                this.addButton(new GrimoireEntryButton(this.left + 23, this.top + 11 + (index * 24), text, this, entry));
-                index++;
-            }
+            this.parseDisciplinePages((ResearchDiscipline)this.container.getTopic());
         } else if (this.container.getTopic() instanceof ResearchEntry) {
-            this.parsePages((ResearchEntry)this.container.getTopic());
+            this.parseEntryPages((ResearchEntry)this.container.getTopic());
+        }
+    }
+    
+    protected void initButtons() {
+        int current = 0;
+        for (Page page : this.pages) {
+            if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
+                this.initPageButtons(page, current % 2, this.left + 23, this.top + 9);
+            }
+            current++;
+            if (current > this.currentPage + 1) {
+                break;
+            }
+        }
+    }
+
+    private void initPageButtons(Page page, int side, int x, int y) {
+        if (!page.hasButtons) {
+            return;
+        }
+        
+        // Make room for page title if applicable
+        if (this.currentPage == 0 && side == 0) {
+            y += 28;
+        }
+        if (side == 1) {
+            y += 4;
+        }
+        
+        // Place buttons
+        for (Object content : page.contents) {
+            if (content instanceof ResearchDiscipline) {
+                ResearchDiscipline discipline = (ResearchDiscipline)content;
+                String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getFormattedText();
+                this.addButton(new GrimoireDisciplineButton(x + (side * 152), y, text, this, discipline));
+                y += 24;
+            } else if (content instanceof ResearchEntry) {
+                ResearchEntry entry = (ResearchEntry)content;
+                String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
+                this.addButton(new GrimoireEntryButton(x + (side * 152), y, text, this, entry));
+                y += 24;
+            }
         }
     }
 
@@ -118,13 +151,19 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     protected void drawPage(Page page, int side, int x, int y, int mouseX, int mouseY) {
-        ResearchEntry entry = (ResearchEntry)this.container.getTopic();
-        
-        // Draw entry title if applicable
+        // Draw page title if applicable
         if (this.currentPage == 0 && side == 0) {
             // TODO Draw line above title
             // TODO Draw line below title
-            String headerText = new TranslationTextComponent(entry.getNameTranslationKey()).getFormattedText();
+            String headerTextKey;
+            if (this.container.getTopic() instanceof ResearchEntry) {
+                headerTextKey = ((ResearchEntry)this.container.getTopic()).getNameTranslationKey();
+            } else if (this.container.getTopic() instanceof ResearchDiscipline) {
+                headerTextKey = ((ResearchDiscipline)this.container.getTopic()).getNameTranslationKey();
+            } else {
+                headerTextKey = "primalmagic.grimoire.index_header";
+            }
+            String headerText = new TranslationTextComponent(headerTextKey).getFormattedText();
             int offset = this.font.getStringWidth(headerText);
             int indent = 140;
             if (offset <= 140) {
@@ -183,8 +222,56 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 .collect(Collectors.toList());
     }
     
-    protected void parsePages(ResearchEntry entry) {
-        this.pages.clear();
+    protected void parseIndexPages() {
+        List<ResearchDiscipline> disciplines = this.buildDisciplineList();
+        if (disciplines.isEmpty()) {
+            return;
+        }
+        
+        int heightRemaining = 182;
+        Page tempPage = new Page();
+        for (ResearchDiscipline discipline : disciplines) {
+            tempPage.contents.add(discipline);
+            tempPage.hasButtons = true;
+            heightRemaining -= 24;
+            if (heightRemaining < 24 && !tempPage.contents.isEmpty()) {
+                heightRemaining = 210;
+                this.pages.add(tempPage.copy());
+                tempPage = new Page();
+            }
+        }
+        if (!tempPage.contents.isEmpty()) {
+            this.pages.add(tempPage.copy());
+        }
+    }
+    
+    protected void parseDisciplinePages(ResearchDiscipline discipline) {
+        if (discipline == null) {
+            return;
+        }
+        List<ResearchEntry> entries = this.buildEntryList(discipline);
+        if (entries.isEmpty()) {
+            return;
+        }
+        
+        int heightRemaining = 182;
+        Page tempPage = new Page();
+        for (ResearchEntry entry : entries) {
+            tempPage.contents.add(entry);
+            tempPage.hasButtons = true;
+            heightRemaining -= 24;
+            if (heightRemaining < 24 && !tempPage.contents.isEmpty()) {
+                heightRemaining = 210;
+                this.pages.add(tempPage.copy());
+                tempPage = new Page();
+            }
+        }
+        if (!tempPage.contents.isEmpty()) {
+            this.pages.add(tempPage.copy());
+        }
+    }
+    
+    protected void parseEntryPages(ResearchEntry entry) {
         if (entry == null || entry.getStages().isEmpty()) {
             return;
         }
@@ -352,12 +439,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     protected static class Page {
         public List<Object> contents = new ArrayList<>();
+        public boolean hasButtons = false;
         
         private Page() {}
         
         public Page copy() {
             Page p = new Page();
             p.contents.addAll(this.contents);
+            p.hasButtons = this.hasButtons;
             return p;
         }
     }
