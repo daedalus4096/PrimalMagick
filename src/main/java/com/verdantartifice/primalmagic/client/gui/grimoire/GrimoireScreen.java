@@ -8,8 +8,11 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireBackButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireDisciplineButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireEntryButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoirePageButton;
@@ -33,6 +36,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagic:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     
+    public static final List<Object> HISTORY = new ArrayList<>();
+    
     protected int scaledLeft;
     protected int scaledTop;
     protected int currentPage = 0;
@@ -41,6 +46,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     protected GrimoirePageButton nextPageButton;
     protected GrimoirePageButton prevPageButton;
+    protected GrimoireBackButton backButton;
     
     public GrimoireScreen(GrimoireContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
@@ -97,8 +103,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         this.nextPageButton = new GrimoirePageButton(this.guiLeft + 262, this.guiTop + 190, this, true);
         this.prevPageButton = new GrimoirePageButton(this.guiLeft - 16, this.guiTop + 190, this, false);
+        this.backButton = new GrimoireBackButton(this.guiLeft + 118, this.guiTop + 190, this);
         this.addButton(this.nextPageButton);
         this.addButton(this.prevPageButton);
+        this.addButton(this.backButton);
         this.updateNavButtonVisibility();
     }
 
@@ -464,9 +472,32 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
     }
     
+    public void goBack() {
+        if (!HISTORY.isEmpty()) {
+            Object lastTopic = HISTORY.remove(HISTORY.size() - 1);
+            this.container.setTopic(lastTopic);
+            this.getMinecraft().displayGuiScreen(new GrimoireScreen(this.container, this.playerInventory, this.title));
+        }
+    }
+    
     protected void updateNavButtonVisibility() {
         this.prevPageButton.visible = (this.currentPage >= 2);
         this.nextPageButton.visible = (this.currentPage < this.pages.size() - 2);
+        this.backButton.visible = !HISTORY.isEmpty();
+    }
+    
+    @Override
+    public void onClose() {
+        HISTORY.clear();
+        super.onClose();
+    }
+    
+    @Override
+    public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+        if (p_keyPressed_1_ == GLFW.GLFW_KEY_ESCAPE) {
+            HISTORY.clear();
+        }
+        return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
     }
     
     protected static class Page {
