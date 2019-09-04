@@ -36,7 +36,6 @@ public class GrimoireBackButton extends Button {
         public void onPress(Button button) {
             if (button instanceof GrimoireBackButton) {
                 GrimoireBackButton gbb = (GrimoireBackButton)button;
-                PrimalMagic.LOGGER.info("Pushing back button");
                 gbb.getScreen().goBack();
             }
         }

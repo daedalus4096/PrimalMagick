@@ -29,7 +29,6 @@ public class GrimoireDisciplineButton extends Button {
         public void onPress(Button button) {
             if (button instanceof GrimoireDisciplineButton) {
                 GrimoireDisciplineButton gdb = (GrimoireDisciplineButton)button;
-                PrimalMagic.LOGGER.info("Pressed button for {}", gdb.getMessage());
                 GrimoireScreen.HISTORY.add(gdb.getScreen().getContainer().getTopic());
                 gdb.getScreen().getContainer().setTopic(gdb.getDiscipline());
                 gdb.getScreen().getMinecraft().displayGuiScreen(new GrimoireScreen(

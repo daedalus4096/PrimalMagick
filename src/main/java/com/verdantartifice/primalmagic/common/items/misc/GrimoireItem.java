@@ -28,7 +28,6 @@ public class GrimoireItem extends ItemPM implements INamedContainerProvider {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity) {
-            PrimalMagic.LOGGER.info("Opening grimoire GUI");
             NetworkHooks.openGui((ServerPlayerEntity)playerIn, this);
         }
         return new ActionResult<ItemStack>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));

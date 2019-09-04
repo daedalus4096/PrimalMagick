@@ -42,7 +42,6 @@ public class GrimoirePageButton extends Button {
         public void onPress(Button button) {
             if (button instanceof GrimoirePageButton) {
                 GrimoirePageButton gpb = (GrimoirePageButton)button;
-                PrimalMagic.LOGGER.info("Pushing " + (gpb.isNext() ? "next" : "previous") + " button");
                 if (gpb.isNext()) {
                     gpb.getScreen().nextPage();
                 } else {

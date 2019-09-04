@@ -29,7 +29,6 @@ public class GrimoireEntryButton extends Button {
         public void onPress(Button button) {
             if (button instanceof GrimoireEntryButton) {
                 GrimoireEntryButton geb = (GrimoireEntryButton)button;
-                PrimalMagic.LOGGER.info("Pressed button for {}", geb.getMessage());
                 GrimoireScreen.HISTORY.add(geb.getScreen().getContainer().getTopic());
                 geb.getScreen().getContainer().setTopic(geb.getEntry());
                 geb.getScreen().getMinecraft().displayGuiScreen(new GrimoireScreen(
