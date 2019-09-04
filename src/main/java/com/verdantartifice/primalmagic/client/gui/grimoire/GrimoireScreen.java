@@ -8,12 +8,11 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireDisciplineButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireEntryButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoirePageButton;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
@@ -34,8 +33,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagic:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     
-    protected int left;
-    protected int top;
+    protected int scaledLeft;
+    protected int scaledTop;
     protected int currentPage = 0;
     protected List<Page> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
@@ -60,8 +59,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     @Override
     protected void init() {
         super.init();
-        this.left = (int)(this.width - this.xSize * SCALE) / 2;
-        this.top = (int)(this.height - this.ySize * SCALE) / 2;
+        this.scaledLeft = (int)(this.width - this.xSize * SCALE) / 2;
+        this.scaledTop = (int)(this.height - this.ySize * SCALE) / 2;
         this.knowledge = PrimalMagicCapabilities.getKnowledge(this.getMinecraft().player);
         if (this.knowledge == null) {
             throw new IllegalStateException("No knowledge provider found for player");
@@ -71,7 +70,6 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     protected void initPages() {
-        this.buttons.clear();
         this.pages.clear();
         if (this.container.getTopic() == null) {
             this.parseIndexPages();
@@ -84,15 +82,18 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     protected void initButtons() {
         int current = 0;
+        this.buttons.clear();
         for (Page page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
-                this.initPageButtons(page, current % 2, this.left + 23, this.top + 9);
+                this.initPageButtons(page, current % 2, this.scaledLeft + 23, this.scaledTop + 9);
             }
             current++;
             if (current > this.currentPage + 1) {
                 break;
             }
         }
+        this.addButton(new GrimoirePageButton(this.guiLeft + 262, this.guiTop + 190, this, true));
+        this.addButton(new GrimoirePageButton(this.guiLeft - 16, this.guiTop + 190, this, false));
     }
 
     private void initPageButtons(Page page, int side, int x, int y) {
@@ -155,7 +156,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected void drawPage(Page page, int side, int x, int y, int mouseX, int mouseY) {
         // Draw page title if applicable
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         if (this.currentPage == 0 && side == 0) {
             this.blit(x + 4, y - 7, 24, 184, 96, 4);
             this.blit(x + 4, y + 10, 24, 184, 96, 4);
@@ -185,7 +186,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         
         // Render page contents
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         for (Object content : page.contents) {
             if (content instanceof String) {
                 String contentStr = (String)content;
@@ -440,6 +441,18 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         if (!tempPage.contents.isEmpty()) {
             this.pages.add(tempPage.copy());
+        }
+    }
+    
+    public void nextPage() {
+        if (this.currentPage < this.pages.size() - 2) {
+            this.currentPage += 2;
+        }
+    }
+    
+    public void prevPage() {
+        if (this.currentPage >= 2) {
+            this.currentPage -= 2;
         }
     }
     
