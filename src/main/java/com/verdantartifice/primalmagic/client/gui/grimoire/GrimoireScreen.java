@@ -39,6 +39,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected List<Page> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
     
+    protected GrimoirePageButton nextPageButton;
+    protected GrimoirePageButton prevPageButton;
+    
     public GrimoireScreen(GrimoireContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         this.xSize = 256;
@@ -92,8 +95,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 break;
             }
         }
-        this.addButton(new GrimoirePageButton(this.guiLeft + 262, this.guiTop + 190, this, true));
-        this.addButton(new GrimoirePageButton(this.guiLeft - 16, this.guiTop + 190, this, false));
+        this.nextPageButton = new GrimoirePageButton(this.guiLeft + 262, this.guiTop + 190, this, true);
+        this.prevPageButton = new GrimoirePageButton(this.guiLeft - 16, this.guiTop + 190, this, false);
+        this.addButton(this.nextPageButton);
+        this.addButton(this.prevPageButton);
+        this.updateNavButtonVisibility();
     }
 
     private void initPageButtons(Page page, int side, int x, int y) {
@@ -447,13 +453,20 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     public void nextPage() {
         if (this.currentPage < this.pages.size() - 2) {
             this.currentPage += 2;
+            this.updateNavButtonVisibility();
         }
     }
     
     public void prevPage() {
         if (this.currentPage >= 2) {
             this.currentPage -= 2;
+            this.updateNavButtonVisibility();
         }
+    }
+    
+    protected void updateNavButtonVisibility() {
+        this.prevPageButton.visible = (this.currentPage >= 2);
+        this.nextPageButton.visible = (this.currentPage < this.pages.size() - 2);
     }
     
     protected static class Page {
