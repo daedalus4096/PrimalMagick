@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 public class GrimoirePageButton extends Button {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
@@ -33,8 +34,18 @@ public class GrimoirePageButton extends Button {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(TEXTURE);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        // TODO bob scale when hovered
-        this.blit(this.x, this.y, this.isNext ? this.width : 0, 185, this.width, this.height);
+        if (this.isHovered()) {
+            float scaleMod = MathHelper.sin(mc.player.ticksExisted / 3.0F) * 0.2F + 0.1F;
+            GlStateManager.pushMatrix();
+            int dx = this.width / 2;
+            int dy = this.height / 2;
+            GlStateManager.translatef(this.x + dx, this.y + dy, 0.0F);
+            GlStateManager.scalef(1.0F + scaleMod, 1.0F + scaleMod, 1.0F);
+            this.blit(-dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
+            GlStateManager.popMatrix();
+        } else {
+            this.blit(this.x, this.y, this.isNext ? 12 : 0, 185, this.width, this.height);
+        }
     }
 
     private static class Handler implements IPressable {
