@@ -92,6 +92,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected void initButtons() {
         int current = 0;
         this.buttons.clear();
+        this.children.clear();
         for (Page page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
                 this.initPageButtons(page, current % 2, this.scaledLeft + 23, this.scaledTop + 9);
@@ -119,7 +120,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         if (this.currentPage == 0 && side == 0) {
             y += 28;
         }
-        if (side == 1) {
+        if (this.currentPage > 0 || side == 1) {
             y += 4;
         }
         
@@ -461,6 +462,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     public void nextPage() {
         if (this.currentPage < this.pages.size() - 2) {
             this.currentPage += 2;
+            if (this.container.getTopic() == null || this.container.getTopic() instanceof ResearchDiscipline) {
+                this.initButtons();
+            }
             this.updateNavButtonVisibility();
         }
     }
@@ -468,6 +472,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     public void prevPage() {
         if (this.currentPage >= 2) {
             this.currentPage -= 2;
+            if (this.container.getTopic() == null || this.container.getTopic() instanceof ResearchDiscipline) {
+                this.initButtons();
+            }
             this.updateNavButtonVisibility();
         }
     }
