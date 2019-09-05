@@ -39,9 +39,20 @@ public class GrimoireEntryButton extends Button {
         if (this.isHovered()) {
             int alpha = 0x22;
             int color = (alpha << 24);
-            this.drawRect(this.x, this.y, this.x + this.width, this.y + this.height, color);
+            this.drawRect(this.x - 5, this.y, this.x + this.width + 5, this.y + this.height, color);
         }
-        mc.fontRenderer.drawString(this.getMessage(), this.x, this.y, Color.BLACK.getRGB());
+        int strWidth = mc.fontRenderer.getStringWidth(this.getMessage());
+        int dy = (this.height - mc.fontRenderer.FONT_HEIGHT) / 2;
+        if (strWidth <= this.width) {
+            mc.fontRenderer.drawString(this.getMessage(), this.x, this.y + dy, Color.BLACK.getRGB());
+        } else {
+            float scale = (float)this.width / (float)strWidth;
+            GlStateManager.pushMatrix();
+            GlStateManager.translatef(this.x, this.y + dy + (1.0F * scale), 0.0F);
+            GlStateManager.scalef(scale, scale, scale);
+            mc.fontRenderer.drawString(this.getMessage(), 0, 0, Color.BLACK.getRGB());
+            GlStateManager.popMatrix();
+        }
         GlStateManager.popMatrix();
     }
     
