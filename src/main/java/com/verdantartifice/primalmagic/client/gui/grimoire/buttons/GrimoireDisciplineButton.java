@@ -5,18 +5,12 @@ import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 
 import net.minecraft.client.gui.widget.button.Button;
 
-public class GrimoireDisciplineButton extends Button {
-    protected GrimoireScreen screen;
+public class GrimoireDisciplineButton extends GrimoireTopicButton {
     protected ResearchDiscipline discipline;
 
     public GrimoireDisciplineButton(int widthIn, int heightIn, String text, GrimoireScreen screen, ResearchDiscipline discipline) {
-        super(widthIn, heightIn, 135, 18, text, new Handler());
-        this.screen = screen;
+        super(widthIn, heightIn, 135, 18, text, screen, new Handler());
         this.discipline = discipline;
-    }
-    
-    public GrimoireScreen getScreen() {
-        return this.screen;
     }
     
     public ResearchDiscipline getDiscipline() {
