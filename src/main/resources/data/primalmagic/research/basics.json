@@ -12,6 +12,28 @@
             "addenda": []
         },
         {
+            "key": "KNOWLEDGE_TYPES",
+            "name": "primalmagic.research.knowledge_types.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.knowledge_types.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "THEORYCRAFTING",
+            "name": "primalmagic.research.theorycrafting.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.theorycrafting.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "UNLOCK_ALCHEMY",
             "name": "primalmagic.research.unlock_alchemy.title",
             "discipline": "BASICS",
@@ -67,6 +89,17 @@
             "addenda": []
         },
         {
+            "key": "UNLOCK_MAGITECH",
+            "name": "primalmagic.research.unlock_magitech.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.unlock_magitech.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SOURCE_EARTH",
             "name": "primalmagic.research.source_earth.title",
             "discipline": "BASICS",
@@ -117,6 +150,50 @@
             "stages": [
                 {
                     "text": "primalmagic.research.source_moon.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_BLOOD",
+            "name": "primalmagic.research.source_blood.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_blood.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_INFERNAL",
+            "name": "primalmagic.research.source_infernal.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_infernal.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_VOID",
+            "name": "primalmagic.research.source_void.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_void.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SOURCE_HALLOWED",
+            "name": "primalmagic.research.source_hallowed.title",
+            "discipline": "BASICS",
+            "stages": [
+                {
+                    "text": "primalmagic.research.source_hallowed.text.stage.1"
                 }
             ],
             "addenda": []

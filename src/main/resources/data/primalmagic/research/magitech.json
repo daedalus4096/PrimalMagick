@@ -1,0 +1,15 @@
+{
+    "entries": [
+        {
+            "key": "BASIC_MAGITECH",
+            "name": "primalmagic.research.basic_magitech.title",
+            "discipline": "MAGITECH",
+            "stages": [
+                {
+                    "text": "primalmagic.research.basic_magitech.text.stage.1"
+                }
+            ],
+            "addenda": []
+        }
+    ]
+}

@@ -22,6 +22,7 @@ public class InitResearch {
         ResearchDisciplines.registerDiscipline("ENCHANTMENT", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_ENCHANTMENT")));
         ResearchDisciplines.registerDiscipline("RUNEWORKING", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RUNEWORKING")));
         ResearchDisciplines.registerDiscipline("RITUAL", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RITUAL")));
+        ResearchDisciplines.registerDiscipline("MAGITECH", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_MAGITECH")));
     }
     
     private static void initResearchFiles() {
@@ -31,5 +32,6 @@ public class InitResearch {
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/enchantment"));
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/runeworking"));
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/ritual"));
+        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/magitech"));
     }
 }
