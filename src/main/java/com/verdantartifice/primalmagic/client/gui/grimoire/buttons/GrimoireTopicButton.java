@@ -5,8 +5,11 @@ import java.awt.Color;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.widget.button.Button;
 
 public abstract class GrimoireTopicButton extends Button {
@@ -45,5 +48,10 @@ public abstract class GrimoireTopicButton extends Button {
             GlStateManager.popMatrix();
         }
         GlStateManager.popMatrix();
+    }
+    
+    @Override
+    public void playDownSound(SoundHandler handler) {
+        handler.play(SimpleSound.master(SoundsPM.PAGE, 1.0F, 1.0F));
     }
 }

@@ -3,8 +3,11 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.buttons;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -40,6 +43,11 @@ public class GrimoireBackButton extends Button {
         } else {
             this.blit(this.x, this.y, 40, 204, this.width, this.height);
         }
+    }
+
+    @Override
+    public void playDownSound(SoundHandler handler) {
+        handler.play(SimpleSound.master(SoundsPM.PAGE, 1.0F, 1.0F));
     }
 
     private static class Handler implements IPressable {
