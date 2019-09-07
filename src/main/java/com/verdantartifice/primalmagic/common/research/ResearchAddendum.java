@@ -13,22 +13,24 @@ import com.verdantartifice.primalmagic.common.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchAddendum {
+    protected ResearchEntry researchEntry;
     protected String textTranslationKey;
     protected List<ResourceLocation> recipes = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
     
-    protected ResearchAddendum(@Nonnull String textTranslationKey) {
+    protected ResearchAddendum(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
+        this.researchEntry = entry;
         this.textTranslationKey = textTranslationKey;
     }
     
     @Nullable
-    public static ResearchAddendum create(@Nullable String textTranslationKey) {
-        return (textTranslationKey == null) ? null : new ResearchAddendum(textTranslationKey);
+    public static ResearchAddendum create(@Nonnull ResearchEntry entry, @Nullable String textTranslationKey) {
+        return (textTranslationKey == null) ? null : new ResearchAddendum(entry, textTranslationKey);
     }
     
     @Nonnull
-    public static ResearchAddendum parse(@Nonnull JsonObject obj) throws Exception {
-        ResearchAddendum addendum = create(obj.getAsJsonPrimitive("text").getAsString());
+    public static ResearchAddendum parse(@Nonnull ResearchEntry entry, @Nonnull JsonObject obj) throws Exception {
+        ResearchAddendum addendum = create(entry, obj.getAsJsonPrimitive("text").getAsString());
         if (addendum == null) {
             throw new Exception("Illegal addendum text in research JSON");
         }
@@ -39,6 +41,11 @@ public class ResearchAddendum {
             addendum.requiredResearch = CompoundResearchKey.parse(obj.get("required_research").getAsJsonArray());
         }
         return addendum;
+    }
+    
+    @Nonnull
+    public ResearchEntry getResearchEntry() {
+        return this.researchEntry;
     }
     
     @Nonnull

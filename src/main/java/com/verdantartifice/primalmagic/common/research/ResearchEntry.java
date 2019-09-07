@@ -50,12 +50,12 @@ public class ResearchEntry {
         }
         
         for (JsonElement element : obj.get("stages").getAsJsonArray()) {
-            entry.stages.add(ResearchStage.parse(element.getAsJsonObject()));
+            entry.stages.add(ResearchStage.parse(entry, element.getAsJsonObject()));
         }
         
         if (obj.has("addenda")) {
             for (JsonElement element : obj.get("addenda").getAsJsonArray()) {
-                entry.addenda.add(ResearchAddendum.parse(element.getAsJsonObject()));
+                entry.addenda.add(ResearchAddendum.parse(entry, element.getAsJsonObject()));
             }
         }
         

@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchStage {
+    protected ResearchEntry researchEntry;
     protected String textTranslationKey;
     protected List<ResourceLocation> recipes = new ArrayList<>();
     protected List<Object> mustObtain = new ArrayList<>();  // Either a specific ItemStack or a tag ResourceLocation
@@ -29,18 +30,19 @@ public class ResearchStage {
     protected List<Knowledge> requiredKnowledge = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
     
-    protected ResearchStage(@Nonnull String textTranslationKey) {
+    protected ResearchStage(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
+        this.researchEntry = entry;
         this.textTranslationKey = textTranslationKey;
     }
     
     @Nullable
-    public static ResearchStage create(@Nullable String textTranslationKey) {
-        return (textTranslationKey == null) ? null : new ResearchStage(textTranslationKey);
+    public static ResearchStage create(@Nonnull ResearchEntry entry, @Nullable String textTranslationKey) {
+        return (textTranslationKey == null) ? null : new ResearchStage(entry, textTranslationKey);
     }
     
     @Nonnull
-    public static ResearchStage parse(@Nonnull JsonObject obj) throws Exception {
-        ResearchStage stage = create(obj.getAsJsonPrimitive("text").getAsString());
+    public static ResearchStage parse(@Nonnull ResearchEntry entry, @Nonnull JsonObject obj) throws Exception {
+        ResearchStage stage = create(entry, obj.getAsJsonPrimitive("text").getAsString());
         if (stage == null) {
             throw new Exception("Illegal stage text in research JSON");
         }
@@ -73,6 +75,11 @@ public class ResearchStage {
             stage.requiredResearch = CompoundResearchKey.parse(obj.get("required_research").getAsJsonArray());
         }
         return stage;
+    }
+    
+    @Nonnull
+    public ResearchEntry getResearchEntry() {
+        return this.researchEntry;
     }
     
     @Nonnull
