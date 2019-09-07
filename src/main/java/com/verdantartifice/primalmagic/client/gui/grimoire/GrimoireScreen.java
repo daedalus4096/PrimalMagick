@@ -1,12 +1,9 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -16,6 +13,13 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireBackB
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireDisciplineButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireEntryButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoirePageButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplinePage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.IndexPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.PageImage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.PageString;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.RequirementsPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.StagePage;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
@@ -41,7 +45,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected int scaledLeft;
     protected int scaledTop;
     protected int currentPage = 0;
-    protected List<Page> pages = new ArrayList<>();
+    protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
     
     protected GrimoirePageButton nextPageButton;
@@ -93,7 +97,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int current = 0;
         this.buttons.clear();
         this.children.clear();
-        for (Page page : this.pages) {
+        for (AbstractPage page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
                 this.initPageButtons(page, current % 2, this.scaledLeft + 23, this.scaledTop + 9);
             }
@@ -111,11 +115,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         this.updateNavButtonVisibility();
     }
 
-    private void initPageButtons(Page page, int side, int x, int y) {
-        if (!page.hasButtons) {
-            return;
-        }
-        
+    private void initPageButtons(AbstractPage abstractPage, int side, int x, int y) {
         // Make room for page title if applicable
         if (this.currentPage == 0 && side == 0) {
             y += 28;
@@ -125,14 +125,16 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // Place buttons
-        for (Object content : page.contents) {
-            if (content instanceof ResearchDiscipline) {
-                ResearchDiscipline discipline = (ResearchDiscipline)content;
+        if (abstractPage instanceof IndexPage) {
+            IndexPage page = (IndexPage)abstractPage;
+            for (ResearchDiscipline discipline : page.getDisciplines()) {
                 String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getFormattedText();
                 this.addButton(new GrimoireDisciplineButton(x + (side * 152), y, text, this, discipline));
                 y += 24;
-            } else if (content instanceof ResearchEntry) {
-                ResearchEntry entry = (ResearchEntry)content;
+            }
+        } else if (abstractPage instanceof DisciplinePage) {
+            DisciplinePage page = (DisciplinePage)abstractPage;
+            for (ResearchEntry entry : page.getEntries()) {
                 String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
                 this.addButton(new GrimoireEntryButton(x + (side * 152), y, text, this, entry));
                 y += 24;
@@ -157,9 +159,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         GlStateManager.popMatrix();
         
         int current = 0;
-        for (Page page : this.pages) {
+        for (AbstractPage page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
-                this.drawPage(page, current % 2, unscaledLeft, unscaledTop - 10, mouseX, mouseY);
+                page.render(current % 2, unscaledLeft, unscaledTop - 10, mouseX, mouseY);
             }
             current++;
             if (current > this.currentPage + 1) {
@@ -168,78 +170,6 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
     }
     
-    protected void drawPage(Page page, int side, int x, int y, int mouseX, int mouseY) {
-        // Draw page title if applicable
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        if (this.currentPage == 0 && side == 0) {
-            this.getMinecraft().getTextureManager().bindTexture(TEXTURE);
-            this.blit(x + 4, y - 7, 24, 184, 96, 4);
-            this.blit(x + 4, y + 10, 24, 184, 96, 4);
-            String headerTextKey;
-            if (this.container.getTopic() instanceof ResearchEntry) {
-                headerTextKey = ((ResearchEntry)this.container.getTopic()).getNameTranslationKey();
-            } else if (this.container.getTopic() instanceof ResearchDiscipline) {
-                headerTextKey = ((ResearchDiscipline)this.container.getTopic()).getNameTranslationKey();
-            } else {
-                headerTextKey = "primalmagic.grimoire.index_header";
-            }
-            String headerText = new TranslationTextComponent(headerTextKey).getFormattedText();
-            int offset = this.font.getStringWidth(headerText);
-            int indent = 140;
-            if (offset <= 140) {
-                this.font.drawString(headerText, x - 15 + (indent / 2) - (offset / 2), y, Color.BLACK.getRGB());
-            } else {
-                float scale = 140.0F / offset;
-                GlStateManager.pushMatrix();
-                GlStateManager.translatef(x - 15 + (indent / 2) - (offset / 2 * scale), y + (1.0F * scale), 0.0F);
-                GlStateManager.scalef(scale, scale, scale);
-                this.font.drawString(headerText, 0, 0, Color.BLACK.getRGB());
-                GlStateManager.popMatrix();
-            }
-            y += 28;
-        }
-        
-        // Render page contents
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        for (Object content : page.contents) {
-            if (content instanceof String) {
-                String contentStr = (String)content;
-                GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.font.drawString(contentStr.replace("~B", ""), x - 15 + (side * 152), y - 6, Color.BLACK.getRGB());
-                y += this.font.FONT_HEIGHT;
-                if (contentStr.endsWith("~B")) {
-                    y += (int)(this.font.FONT_HEIGHT * 0.66D);
-                }
-            } else if (content instanceof PageImage) {
-                PageImage contentImage = (PageImage)content;
-                GlStateManager.pushMatrix();
-                GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.getMinecraft().getTextureManager().bindTexture(contentImage.location);
-                GlStateManager.translatef(x - 15 + (side * 152) + ((140 - contentImage.adjustedWidth) / 2), y - 5, 0.0F);
-                GlStateManager.scalef(contentImage.scale, contentImage.scale, contentImage.scale);
-                this.blit(0, 0, contentImage.x, contentImage.y, contentImage.width, contentImage.height);
-                GlStateManager.popMatrix();
-                y += (contentImage.adjustedHeight + 2);
-            }
-        }
-        
-        // TODO Draw stage requirements
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        if (page.hasRequirements) {
-            // Draw requirements page header if applicable
-            this.getMinecraft().getTextureManager().bindTexture(TEXTURE);
-            this.blit(x + 4 + (side * 152), y + 10, 24, 184, 96, 4);
-            String headerText = new TranslationTextComponent("primalmagic.grimoire.requirements_header").getFormattedText();
-            int offset = this.font.getStringWidth(headerText);
-            int indent = 140;
-            this.font.drawString(headerText, x - 15 + (side * 152) + (indent / 2) - (offset / 2), y, Color.BLACK.getRGB());
-            y += 28;
-        }
-    }
-
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
@@ -264,19 +194,18 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         int heightRemaining = 182;
-        Page tempPage = new Page();
+        IndexPage tempPage = new IndexPage(true);
         for (ResearchDiscipline discipline : disciplines) {
-            tempPage.contents.add(discipline);
-            tempPage.hasButtons = true;
+            tempPage.addDiscipline(discipline);
             heightRemaining -= 24;
-            if (heightRemaining < 24 && !tempPage.contents.isEmpty()) {
+            if (heightRemaining < 24 && !tempPage.getDisciplines().isEmpty()) {
                 heightRemaining = 210;
-                this.pages.add(tempPage.copy());
-                tempPage = new Page();
+                this.pages.add(tempPage);
+                tempPage = new IndexPage();
             }
         }
-        if (!tempPage.contents.isEmpty()) {
-            this.pages.add(tempPage.copy());
+        if (!tempPage.getDisciplines().isEmpty()) {
+            this.pages.add(tempPage);
         }
     }
     
@@ -290,19 +219,18 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         int heightRemaining = 182;
-        Page tempPage = new Page();
+        DisciplinePage tempPage = new DisciplinePage(discipline, true);
         for (ResearchEntry entry : entries) {
-            tempPage.contents.add(entry);
-            tempPage.hasButtons = true;
+            tempPage.addEntry(entry);
             heightRemaining -= 24;
-            if (heightRemaining < 24 && !tempPage.contents.isEmpty()) {
+            if (heightRemaining < 24 && !tempPage.getEntries().isEmpty()) {
                 heightRemaining = 210;
-                this.pages.add(tempPage.copy());
-                tempPage = new Page();
+                this.pages.add(tempPage);
+                tempPage = new DisciplinePage(discipline);
             }
         }
-        if (!tempPage.contents.isEmpty()) {
-            this.pages.add(tempPage.copy());
+        if (!tempPage.getEntries().isEmpty()) {
+            this.pages.add(tempPage);
         }
     }
     
@@ -393,7 +321,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int heightRemaining = 182;
         
         // Break parsed text into pages
-        Page tempPage = new Page();
+        StagePage tempPage = new StagePage(stage, true);
         List<PageImage> tempImages = new ArrayList<>();
         for (String line : parsedText) {
             if (line.contains("~I")) {
@@ -407,14 +335,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 line = "";
             }
             if (line.contains("~P")) {
-                this.pages.add(tempPage.copy());
-                tempPage = new Page();
+                this.pages.add(tempPage);
+                tempPage = new StagePage(stage);
                 heightRemaining = 210;
                 line = "";
             }
             if (!line.isEmpty()) {
                 line = line.trim();
-                tempPage.contents.add(line);
+                tempPage.addElement(new PageString(line));
                 heightRemaining -= lineHeight;
                 if (line.endsWith("~B")) {
                     heightRemaining -= (int)(lineHeight * 0.66D);
@@ -422,41 +350,38 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             }
             while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
                 heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
-                tempPage.contents.add(tempImages.remove(0));
+                tempPage.addElement(tempImages.remove(0));
             }
-            if ((heightRemaining < lineHeight) && !tempPage.contents.isEmpty()) {
+            if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
                 heightRemaining = 210;
-                this.pages.add(tempPage.copy());
-                tempPage = new Page();
+                this.pages.add(tempPage);
+                tempPage = new StagePage(stage);
             }
         }
-        if (!tempPage.contents.isEmpty()) {
-            this.pages.add(tempPage.copy());
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
         }
         
         // Deal with any remaining images
-        tempPage = new Page();
+        tempPage = new StagePage(stage);
         heightRemaining = 210;
         while (!tempImages.isEmpty()) {
             if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
                 heightRemaining = 210;
-                this.pages.add(tempPage.copy());
-                tempPage = new Page();
+                this.pages.add(tempPage);
+                tempPage = new StagePage(stage);
             } else {
                 heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
-                tempPage.contents.add(tempImages.remove(0));
+                tempPage.addElement(tempImages.remove(0));
             }
         }
-        if (!tempPage.contents.isEmpty()) {
-            this.pages.add(tempPage.copy());
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
         }
         
         // Add requirements page if applicable
         if (!entry.getKey().isKnownByStrict(this.getMinecraft().player) && stage.hasPrerequisites()) {
-            heightRemaining = 182;
-            tempPage = new Page();
-            tempPage.hasRequirements = true;
-            this.pages.add(tempPage.copy());
+            this.pages.add(new RequirementsPage(stage));
         }
     }
     
@@ -506,52 +431,5 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             HISTORY.clear();
         }
         return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
-    }
-    
-    protected static class Page {
-        public List<Object> contents = new ArrayList<>();
-        public boolean hasButtons = false;
-        public boolean hasRequirements = false;
-        
-        private Page() {}
-        
-        public Page copy() {
-            Page p = new Page();
-            p.contents.addAll(this.contents);
-            p.hasButtons = this.hasButtons;
-            p.hasRequirements = this.hasRequirements;
-            return p;
-        }
-    }
-    
-    protected static class PageImage {
-        public int x, y, width, height, adjustedWidth, adjustedHeight;
-        public float scale;
-        public ResourceLocation location;
-        
-        @Nullable
-        public static PageImage parse(String str) {
-            String[] tokens = str.split(":");
-            if (tokens.length != 7) {
-                return null;
-            }
-            try {
-                PageImage image = new PageImage();
-                image.location = new ResourceLocation(tokens[0], tokens[1]);
-                image.x = Integer.parseInt(tokens[2]);
-                image.y = Integer.parseInt(tokens[3]);
-                image.width = Integer.parseInt(tokens[4]);
-                image.height = Integer.parseInt(tokens[5]);
-                image.scale = Float.parseFloat(tokens[6]);
-                image.adjustedWidth = (int)(image.width * image.scale);
-                image.adjustedHeight = (int)(image.height * image.scale);
-                if (image.adjustedWidth > 208 || image.adjustedHeight > 140) {
-                    return null;
-                }
-                return image;
-            } catch (Exception e) {
-                return null;
-            }
-        }
     }
 }
