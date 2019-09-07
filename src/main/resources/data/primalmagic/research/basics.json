@@ -7,7 +7,7 @@
             "stages": [
                 {
                     "text": "primalmagic.research.first_steps.text.stage.1",
-                    "required_item": ["minecraft:stick"],
+                    "required_item": ["minecraft:stick", "tag:minecraft:logs"],
                     "required_craft": ["minecraft:crafting_table"],
                     "required_knowledge": ["OBSERVATION;BASICS;2"],
                     "required_research": ["m_dummy"]
