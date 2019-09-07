@@ -12,24 +12,18 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
-public class GrimoirePageButton extends Button {
+public class BackButton extends Button {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
 
     protected GrimoireScreen screen;
-    protected boolean isNext;
-
-    public GrimoirePageButton(int widthIn, int heightIn, GrimoireScreen screen, boolean isNext) {
-        super(widthIn, heightIn, 12, 5, "", new Handler());
+    
+    public BackButton(int widthIn, int heightIn, GrimoireScreen screen) {
+        super(widthIn, heightIn, 20, 12, "", new Handler());
         this.screen = screen;
-        this.isNext = isNext;
     }
     
     public GrimoireScreen getScreen() {
         return this.screen;
-    }
-    
-    public boolean isNext() {
-        return this.isNext;
     }
     
     @Override
@@ -44,13 +38,13 @@ public class GrimoirePageButton extends Button {
             int dy = this.height / 2;
             GlStateManager.translatef(this.x + dx, this.y + dy, 0.0F);
             GlStateManager.scalef(1.0F + scaleMod, 1.0F + scaleMod, 1.0F);
-            this.blit(-dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
+            this.blit(-dx, -dy, 40, 204, this.width, this.height);
             GlStateManager.popMatrix();
         } else {
-            this.blit(this.x, this.y, this.isNext ? 12 : 0, 185, this.width, this.height);
+            this.blit(this.x, this.y, 40, 204, this.width, this.height);
         }
     }
-    
+
     @Override
     public void playDownSound(SoundHandler handler) {
         handler.play(SimpleSound.master(SoundsPM.PAGE, 1.0F, 1.0F));
@@ -59,13 +53,9 @@ public class GrimoirePageButton extends Button {
     private static class Handler implements IPressable {
         @Override
         public void onPress(Button button) {
-            if (button instanceof GrimoirePageButton) {
-                GrimoirePageButton gpb = (GrimoirePageButton)button;
-                if (gpb.isNext()) {
-                    gpb.getScreen().nextPage();
-                } else {
-                    gpb.getScreen().prevPage();
-                }
+            if (button instanceof BackButton) {
+                BackButton gbb = (BackButton)button;
+                gbb.getScreen().goBack();
             }
         }
     }

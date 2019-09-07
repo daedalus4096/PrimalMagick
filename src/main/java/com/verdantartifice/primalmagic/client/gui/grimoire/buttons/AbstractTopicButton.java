@@ -12,10 +12,10 @@ import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.widget.button.Button;
 
-public abstract class GrimoireTopicButton extends Button {
+public abstract class AbstractTopicButton extends Button {
     protected GrimoireScreen screen;
     
-    public GrimoireTopicButton(int widthIn, int heightIn, int width, int height, String text, GrimoireScreen screen, IPressable onPress) {
+    public AbstractTopicButton(int widthIn, int heightIn, int width, int height, String text, GrimoireScreen screen, IPressable onPress) {
         super(widthIn, heightIn, width, height, text, onPress);
         this.screen = screen;
     }

@@ -9,10 +9,10 @@ import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireBackButton;
-import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireDisciplineButton;
-import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoireEntryButton;
-import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.GrimoirePageButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.BackButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.DisciplineButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.EntryButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.PageButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplinePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.IndexPage;
@@ -48,9 +48,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
     
-    protected GrimoirePageButton nextPageButton;
-    protected GrimoirePageButton prevPageButton;
-    protected GrimoireBackButton backButton;
+    protected PageButton nextPageButton;
+    protected PageButton prevPageButton;
+    protected BackButton backButton;
     
     public GrimoireScreen(GrimoireContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
@@ -106,9 +106,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 break;
             }
         }
-        this.nextPageButton = new GrimoirePageButton(this.guiLeft + 262, this.guiTop + 190, this, true);
-        this.prevPageButton = new GrimoirePageButton(this.guiLeft - 16, this.guiTop + 190, this, false);
-        this.backButton = new GrimoireBackButton(this.guiLeft + 118, this.guiTop + 190, this);
+        this.nextPageButton = new PageButton(this.guiLeft + 262, this.guiTop + 190, this, true);
+        this.prevPageButton = new PageButton(this.guiLeft - 16, this.guiTop + 190, this, false);
+        this.backButton = new BackButton(this.guiLeft + 118, this.guiTop + 190, this);
         this.addButton(this.nextPageButton);
         this.addButton(this.prevPageButton);
         this.addButton(this.backButton);
@@ -129,14 +129,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             IndexPage page = (IndexPage)abstractPage;
             for (ResearchDiscipline discipline : page.getDisciplines()) {
                 String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getFormattedText();
-                this.addButton(new GrimoireDisciplineButton(x + (side * 152), y, text, this, discipline));
+                this.addButton(new DisciplineButton(x + (side * 152), y, text, this, discipline));
                 y += 24;
             }
         } else if (abstractPage instanceof DisciplinePage) {
             DisciplinePage page = (DisciplinePage)abstractPage;
             for (ResearchEntry entry : page.getEntries()) {
                 String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
-                this.addButton(new GrimoireEntryButton(x + (side * 152), y, text, this, entry));
+                this.addButton(new EntryButton(x + (side * 152), y, text, this, entry));
                 y += 24;
             }
         }
