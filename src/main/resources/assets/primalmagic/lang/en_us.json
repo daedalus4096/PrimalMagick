@@ -113,6 +113,11 @@
     
     "primalmagic.grimoire.index_header": "Disciplines",
     "primalmagic.grimoire.addendum_header": "Addendum %d",
+    "primalmagic.grimoire.requirements_header": "Requirements",
+    "primalmagic.grimoire.must_obtain_header": "Will be consumed:",
+    "primalmagic.grimoire.must_craft_header": "Must craft:",
+    "primalmagic.grimoire.required_knowledge_header": "Required knowledge:",
+    "primalmagic.grimoire.required_research_header": "Must be discovered:",
     
     "itemGroup.primalmagic": "Primal Magic"
 }

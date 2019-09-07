@@ -173,6 +173,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         if (this.currentPage == 0 && side == 0) {
+            this.getMinecraft().getTextureManager().bindTexture(TEXTURE);
             this.blit(x + 4, y - 7, 24, 184, 96, 4);
             this.blit(x + 4, y + 10, 24, 184, 96, 4);
             String headerTextKey;
@@ -225,6 +226,18 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // TODO Draw stage requirements
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        if (page.hasRequirements) {
+            // Draw requirements page header if applicable
+            this.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+            this.blit(x + 4 + (side * 152), y + 10, 24, 184, 96, 4);
+            String headerText = new TranslationTextComponent("primalmagic.grimoire.requirements_header").getFormattedText();
+            int offset = this.font.getStringWidth(headerText);
+            int indent = 140;
+            this.font.drawString(headerText, x - 15 + (side * 152) + (indent / 2) - (offset / 2), y, Color.BLACK.getRGB());
+            y += 28;
+        }
     }
 
     @Override
@@ -376,28 +389,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             parsedText.addAll(this.font.listFormattedStringToWidth(str, 140));
         }
         
-        // Determine available vertical space for first page
+        // First page has less available space to account for title
         int heightRemaining = 182;
-        int dividerSpace = 0;
-        if (!entry.getKey().isKnownByStrict(this.getMinecraft().player)) {
-            if (!stage.getMustCraft().isEmpty()) {
-                heightRemaining -= 18;
-                dividerSpace = 15;
-            }
-            if (!stage.getMustObtain().isEmpty()) {
-                heightRemaining -= 18;
-                dividerSpace = 15;
-            }
-            if (!stage.getRequiredKnowledge().isEmpty()) {
-                heightRemaining -= 18;
-                dividerSpace = 15;
-            }
-            if (stage.getRequiredResearch() != null) {
-                heightRemaining -= 18;
-                dividerSpace = 15;
-            }
-        }
-        heightRemaining -= dividerSpace;
         
         // Break parsed text into pages
         Page tempPage = new Page();
@@ -457,6 +450,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         if (!tempPage.contents.isEmpty()) {
             this.pages.add(tempPage.copy());
         }
+        
+        // Add requirements page if applicable
+        if (!entry.getKey().isKnownByStrict(this.getMinecraft().player) && stage.hasPrerequisites()) {
+            heightRemaining = 182;
+            tempPage = new Page();
+            tempPage.hasRequirements = true;
+            this.pages.add(tempPage.copy());
+        }
     }
     
     public void nextPage() {
@@ -510,6 +511,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected static class Page {
         public List<Object> contents = new ArrayList<>();
         public boolean hasButtons = false;
+        public boolean hasRequirements = false;
         
         private Page() {}
         
@@ -517,6 +519,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             Page p = new Page();
             p.contents.addAll(this.contents);
             p.hasButtons = this.hasButtons;
+            p.hasRequirements = this.hasRequirements;
             return p;
         }
     }
