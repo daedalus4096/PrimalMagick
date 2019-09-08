@@ -5,6 +5,7 @@ import java.awt.Color;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.ItemStackWidget;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.ItemTagWidget;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -49,7 +50,8 @@ public class RequirementsPage extends AbstractPage {
                     // Render item stack
                     screen.addWidgetToScreen(new ItemStackWidget((ItemStack)obj, x + (side * 152), y));
                 } else if (obj instanceof ResourceLocation) {
-                    // TODO Render cycling stacks from tag
+                    // Render cycling stacks from tag
+                    screen.addWidgetToScreen(new ItemTagWidget((ResourceLocation)obj, x + (side * 152), y));
                 }
                 x += 18;
             }
@@ -70,7 +72,7 @@ public class RequirementsPage extends AbstractPage {
         Minecraft mc = Minecraft.getInstance();
         int startX = x;
         
-        // TODO Render obtain requirement section
+        // Render obtain requirement section
         if (!this.stage.getMustObtain().isEmpty()) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_obtain_header").applyTextStyle(TextFormatting.UNDERLINE);
             mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 15 + (side * 152), y - 6, Color.BLACK.getRGB());
