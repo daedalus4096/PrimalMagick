@@ -30,6 +30,7 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -114,6 +115,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         this.addButton(this.backButton);
         this.updateNavButtonVisibility();
     }
+    
+    public <T extends Widget> T addWidgetToScreen(T widget) {
+        return this.addButton(widget);
+    }
 
     private void initPageButtons(AbstractPage abstractPage, int side, int x, int y) {
         // Make room for page title if applicable
@@ -139,6 +144,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 this.addButton(new EntryButton(x + (side * 152), y, text, this, entry));
                 y += 24;
             }
+        } else if (abstractPage instanceof RequirementsPage) {
+            ((RequirementsPage)abstractPage).initWidgets(this, side, x, y);
         }
     }
 
@@ -388,20 +395,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     public void nextPage() {
         if (this.currentPage < this.pages.size() - 2) {
             this.currentPage += 2;
-            if (this.container.getTopic() == null || this.container.getTopic() instanceof ResearchDiscipline) {
-                this.initButtons();
-            }
-            this.updateNavButtonVisibility();
+            this.initButtons();
         }
     }
     
     public void prevPage() {
         if (this.currentPage >= 2) {
             this.currentPage -= 2;
-            if (this.container.getTopic() == null || this.container.getTopic() instanceof ResearchDiscipline) {
-                this.initButtons();
-            }
-            this.updateNavButtonVisibility();
+            this.initButtons();
         }
     }
     

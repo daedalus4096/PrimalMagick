@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.pages;
 import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.ItemStackWidget;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -33,6 +35,28 @@ public class RequirementsPage extends AbstractPage {
     protected String getTitleTranslationKey() {
         return "primalmagic.grimoire.requirements_header";
     }
+    
+    public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        y += 28;    // Make room for page title
+        int startX = x;
+        Minecraft mc = Minecraft.getInstance();
+        
+        // Init obtain requirement widgets
+        if (!this.stage.getMustObtain().isEmpty()) {
+            y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
+            for (Object obj : this.stage.getMustObtain()) {
+                if (obj instanceof ItemStack) {
+                    // Render item stack
+                    screen.addWidgetToScreen(new ItemStackWidget((ItemStack)obj, x + (side * 152), y));
+                } else if (obj instanceof ResourceLocation) {
+                    // TODO Render cycling stacks from tag
+                }
+                x += 18;
+            }
+            x = startX;
+            y += 24;
+        }
+    }
 
     @Override
     public void render(int side, int x, int y, int mouseX, int mouseY) {
@@ -51,17 +75,7 @@ public class RequirementsPage extends AbstractPage {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_obtain_header").applyTextStyle(TextFormatting.UNDERLINE);
             mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 15 + (side * 152), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
-            
-            for (Object obj : this.stage.getMustObtain()) {
-                if (obj instanceof ItemStack) {
-                    // TODO Render item stack
-                } else if (obj instanceof ResourceLocation) {
-                    // TODO Render cycling stacks from tag
-                }
-                x += 18;
-            }
-            x = startX;
-            y += 24;
+            y += 24;    // Make room for obtain widgets
         }
         
         // TODO Render craft requirement section
