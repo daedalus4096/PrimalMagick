@@ -4,11 +4,13 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
@@ -53,17 +55,23 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
     }
     
     public static enum KnowledgeType {
-        OBSERVATION(16),
-        THEORY(32);
+        OBSERVATION(16, new ResourceLocation(PrimalMagic.MODID, "textures/research/knowledge_observation.png")),
+        THEORY(32, new ResourceLocation(PrimalMagic.MODID, "textures/research/knowledge_theory.png"));
         
         private short progression;
+        private ResourceLocation iconLocation;
         
-        private KnowledgeType(int progression) {
+        private KnowledgeType(int progression, ResourceLocation iconLocation) {
             this.progression = (short)progression;
+            this.iconLocation = iconLocation;
         }
         
         public int getProgression() {
             return this.progression;
+        }
+        
+        public ResourceLocation getIconLocation() {
+            return this.iconLocation;
         }
     }
 }
