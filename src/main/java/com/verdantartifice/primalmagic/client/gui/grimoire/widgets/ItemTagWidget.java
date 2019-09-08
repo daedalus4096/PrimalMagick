@@ -1,16 +1,23 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ItemTagWidget extends Widget {
     protected ResourceLocation tag;
     
@@ -29,7 +36,9 @@ public class ItemTagWidget extends Widget {
             ItemStack toDisplay = new ItemStack(tagContentsArray[index], 1);
             GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage(), false);
             if (this.isHovered()) {
-                // TODO Render tooltip
+                Minecraft mc = Minecraft.getInstance();
+                List<ITextComponent> tooltip = toDisplay.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+                GuiUtils.renderCustomTooltip(tooltip, this.x, this.y);
             }
         }
     }

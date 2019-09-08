@@ -1,9 +1,14 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
+import java.util.List;
+
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,7 +25,9 @@ public class ItemStackWidget extends Widget {
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         GuiUtils.renderItemStack(this.stack, this.x, this.y, this.getMessage(), false);
         if (this.isHovered()) {
-            // TODO Render tooltip
+            Minecraft mc = Minecraft.getInstance();
+            List<ITextComponent> tooltip = this.stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+            GuiUtils.renderCustomTooltip(tooltip, this.x, this.y);
         }
     }
     
