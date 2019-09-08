@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
-import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
@@ -33,7 +32,7 @@ public abstract class AbstractTopicButton extends Button {
         if (this.isHovered()) {
             int alpha = 0x22;
             int color = (alpha << 24);
-            GuiUtils.drawRect(this.x - 5, this.y, this.x + this.width + 5, this.y + this.height, color);
+            fill(this.x - 5, this.y, this.x + this.width + 5, this.y + this.height, color);
         }
         int strWidth = mc.fontRenderer.getStringWidth(this.getMessage());
         int dy = (this.height - mc.fontRenderer.FONT_HEIGHT) / 2;
