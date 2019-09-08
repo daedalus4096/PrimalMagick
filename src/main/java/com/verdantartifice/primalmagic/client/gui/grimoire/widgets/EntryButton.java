@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.client.gui.grimoire.buttons;
+package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;

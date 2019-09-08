@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
-import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.ItemStackWidget;
-import com.verdantartifice.primalmagic.client.gui.grimoire.buttons.ItemTagWidget;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemStackWidget;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemTagWidget;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;

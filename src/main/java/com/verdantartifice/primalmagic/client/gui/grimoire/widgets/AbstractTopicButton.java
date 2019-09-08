@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.client.gui.grimoire.buttons;
+package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
 import java.awt.Color;
 
