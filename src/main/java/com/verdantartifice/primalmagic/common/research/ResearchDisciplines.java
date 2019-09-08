@@ -30,11 +30,11 @@ public class ResearchDisciplines {
     }
     
     @Nullable
-    public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey) {
+    public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon) {
         if (key == null || DISCIPLINES.containsKey(key)) {
             return null;
         } else {
-            ResearchDiscipline discipline = ResearchDiscipline.create(key, unlockResearchKey);
+            ResearchDiscipline discipline = ResearchDiscipline.create(key, unlockResearchKey, icon);
             if (discipline != null) {
                 DISCIPLINES.put(key, discipline);
             }

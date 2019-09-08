@@ -8,19 +8,23 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.util.ResourceLocation;
+
 public class ResearchDiscipline {
     protected String key;
     protected CompoundResearchKey unlockResearchKey;
+    protected ResourceLocation iconLocation;
     protected Map<SimpleResearchKey, ResearchEntry> entries = new HashMap<>();
     
-    protected ResearchDiscipline(@Nonnull String key, @Nullable CompoundResearchKey unlockResearchKey) {
+    protected ResearchDiscipline(@Nonnull String key, @Nullable CompoundResearchKey unlockResearchKey, @Nonnull ResourceLocation icon) {
         this.key = key;
         this.unlockResearchKey = unlockResearchKey;
+        this.iconLocation = icon;
     }
     
     @Nullable
-    public static ResearchDiscipline create(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey) {
-        return (key == null) ? null : new ResearchDiscipline(key, unlockResearchKey);
+    public static ResearchDiscipline create(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon) {
+        return (key == null || icon == null) ? null : new ResearchDiscipline(key, unlockResearchKey, icon);
     }
     
     @Nonnull
@@ -36,6 +40,11 @@ public class ResearchDiscipline {
     @Nullable
     public CompoundResearchKey getUnlockResearchKey() {
         return this.unlockResearchKey;
+    }
+    
+    @Nonnull
+    public ResourceLocation getIconLocation() {
+        return this.iconLocation;
     }
     
     @Nullable
