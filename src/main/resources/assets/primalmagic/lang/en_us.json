@@ -7,7 +7,7 @@
     "primalmagic.research_discipline.BASICS": "Fundamentals",
     "primalmagic.research_discipline.ALCHEMY": "Alchemy",
     "primalmagic.research_discipline.SORCERY": "Sorcery",
-    "primalmagic.research_discipline.ENCHANTMENT": "Enchantment",
+    "primalmagic.research_discipline.MANAWEAVING": "Manaweaving",
     "primalmagic.research_discipline.RUNEWORKING": "Runeworking",
     "primalmagic.research_discipline.RITUAL": "Ritual Magic",
     "primalmagic.research_discipline.MAGITECH": "Magitech",
@@ -27,8 +27,8 @@
     "primalmagic.research.unlock_sorcery.title": "Introduction to Sorcery",
     "primalmagic.research.unlock_sorcery.text.stage.1": "For sorcery: Lorem ipsum",
     
-    "primalmagic.research.unlock_enchantment.title": "Introduction to Enchantment",
-    "primalmagic.research.unlock_enchantment.text.stage.1": "For enchantment: Lorem ipsum",
+    "primalmagic.research.unlock_manaweaving.title": "Introduction to Manaweaving",
+    "primalmagic.research.unlock_manaweaving.text.stage.1": "For manaweaving: Lorem ipsum",
     
     "primalmagic.research.unlock_runeworking.title": "Introduction to Runeworking",
     "primalmagic.research.unlock_runeworking.text.stage.1": "For runeworking: Lorem ipsum",
@@ -72,8 +72,8 @@
     "primalmagic.research.basic_sorcery.title": "Basic Sorcery",
     "primalmagic.research.basic_sorcery.text.stage.1": "Basic sorcery: Lorem ipsum",
     
-    "primalmagic.research.basic_enchantment.title": "Basic Enchantment",
-    "primalmagic.research.basic_enchantment.text.stage.1": "Basic enchantment: Lorem ipsum",
+    "primalmagic.research.basic_manaweaving.title": "Basic Manaweaving",
+    "primalmagic.research.basic_manaweaving.text.stage.1": "Basic manaweaving: Lorem ipsum",
     
     "primalmagic.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagic.research.basic_runeworking.text.stage.1": "Basic runeworking: Lorem ipsum",

@@ -60,12 +60,12 @@
             "addenda": []
         },
         {
-            "key": "UNLOCK_ENCHANTMENT",
-            "name": "primalmagic.research.unlock_enchantment.title",
+            "key": "UNLOCK_MANAWEAVING",
+            "name": "primalmagic.research.unlock_manaweaving.title",
             "discipline": "BASICS",
             "stages": [
                 {
-                    "text": "primalmagic.research.unlock_enchantment.text.stage.1"
+                    "text": "primalmagic.research.unlock_manaweaving.text.stage.1"
                 }
             ],
             "addenda": []
