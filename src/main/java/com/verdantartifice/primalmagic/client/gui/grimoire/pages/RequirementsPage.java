@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemStackWidget;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemTagWidget;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.KnowledgeWidget;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ProgressButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ResearchWidget;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
@@ -107,6 +108,13 @@ public class RequirementsPage extends AbstractPage {
             }
             x = startX;
             y += 24;
+        }
+        
+        // Init progress button if applicable
+        if (this.stage.arePrerequisitesMet(mc.player)) {
+            y = screen.height - 36;
+            ITextComponent text = new TranslationTextComponent("primalmagic.grimoire.complete_button");
+            screen.addWidgetToScreen(new ProgressButton(startX + (side * 152), y, text.getFormattedText()));
         }
     }
 
