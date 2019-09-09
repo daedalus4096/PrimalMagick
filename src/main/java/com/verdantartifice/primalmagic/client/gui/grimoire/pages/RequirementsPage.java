@@ -6,6 +6,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemStackWidget;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemTagWidget;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.KnowledgeWidget;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -75,6 +76,17 @@ public class RequirementsPage extends AbstractPage {
             x = startX;
             y += 24;
         }
+        
+        // Init knowledge requirement widgets
+        if (!this.stage.getRequiredKnowledge().isEmpty()) {
+            y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
+            for (Knowledge know : this.stage.getRequiredKnowledge()) {
+                screen.addWidgetToScreen(new KnowledgeWidget(know, x + (side * 152), y));
+                x += 18;
+            }
+            x = startX;
+            y += 24;
+        }
     }
 
     @Override
@@ -105,18 +117,12 @@ public class RequirementsPage extends AbstractPage {
             y += 24;    // Make room for craft widgets
         }
         
-        // TODO Render knowledge requirement section
+        // Render knowledge requirement section
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_knowledge_header").applyTextStyle(TextFormatting.UNDERLINE);
             mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 15 + (side * 152), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
-            
-            for (Knowledge know : this.stage.getRequiredKnowledge()) {
-                // TODO Render knowledge symbol
-                x += 18;
-            }
-            x = startX;
-            y += 24;
+            y += 24;    // Make room for knowledge widgets
         }
         
         // TODO Render research requirement section

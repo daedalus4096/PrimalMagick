@@ -61,7 +61,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
         private short progression;
         private ResourceLocation iconLocation;
         
-        private KnowledgeType(int progression, ResourceLocation iconLocation) {
+        private KnowledgeType(int progression, @Nonnull ResourceLocation iconLocation) {
             this.progression = (short)progression;
             this.iconLocation = iconLocation;
         }
@@ -70,8 +70,14 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
             return this.progression;
         }
         
+        @Nonnull
         public ResourceLocation getIconLocation() {
             return this.iconLocation;
+        }
+        
+        @Nonnull
+        public String getNameTranslationKey() {
+            return "primalmagic.knowledge_type." + this.name();
         }
     }
 }
