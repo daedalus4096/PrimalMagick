@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemStackWidget;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemTagWidget;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.KnowledgeWidget;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ResearchWidget;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -87,6 +88,17 @@ public class RequirementsPage extends AbstractPage {
             x = startX;
             y += 24;
         }
+        
+        // Init research requirement widgets
+        if (this.stage.getRequiredResearch() != null) {
+            y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
+            for (SimpleResearchKey key : this.stage.getRequiredResearch().getKeys()) {
+                screen.addWidgetToScreen(new ResearchWidget(key, x + (side * 152), y));
+                x += 18;
+            }
+            x = startX;
+            y += 24;
+        }
     }
 
     @Override
@@ -99,7 +111,6 @@ public class RequirementsPage extends AbstractPage {
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft mc = Minecraft.getInstance();
-        int startX = x;
         
         // Render obtain requirement section
         if (!this.stage.getMustObtain().isEmpty()) {
@@ -125,18 +136,12 @@ public class RequirementsPage extends AbstractPage {
             y += 24;    // Make room for knowledge widgets
         }
         
-        // TODO Render research requirement section
+        // Render research requirement section
         if (this.stage.getRequiredResearch() != null) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_research_header").applyTextStyle(TextFormatting.UNDERLINE);
             mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 15 + (side * 152), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
-            
-            for (SimpleResearchKey srk : this.stage.getRequiredResearch().getKeys()) {
-                // TODO Render research symbol
-                x += 18;
-            }
-            x = startX;
-            y += 24;
+            y += 24;    // Make room for research widgets
         }
     }
 }

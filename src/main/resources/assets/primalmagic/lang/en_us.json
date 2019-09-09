@@ -123,5 +123,10 @@
     "primalmagic.grimoire.required_knowledge_header": "Required knowledge:",
     "primalmagic.grimoire.required_research_header": "Must be discovered:",
     
+    "primalmagic.research.m_dummy.text": "Location Discovery",
+    "primalmagic.research.t_dummy.text": "Research Discovery",
+    "primalmagic.research.b_dummy.text": "Item Discovery",
+    "primalmagic.research.u_dummy.text": "Unknown Discovery",
+    
     "itemGroup.primalmagic": "Primal Magic"
 }
