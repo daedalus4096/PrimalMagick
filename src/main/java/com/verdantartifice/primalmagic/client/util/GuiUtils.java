@@ -70,7 +70,6 @@ public class GuiUtils {
         double scaleFactor = mc.mainWindow.getGuiScaleFactor();
         
         GlStateManager.disableRescaleNormal();
-        RenderHelper.disableStandardItemLighting();
         GlStateManager.disableLighting();
 
         int max = 240;
@@ -147,7 +146,6 @@ public class GuiUtils {
 
         mc.getItemRenderer().zLevel = prevZ;
         GlStateManager.enableLighting();
-        RenderHelper.enableStandardItemLighting();
         GlStateManager.enableRescaleNormal();
     }
     
