@@ -141,7 +141,7 @@ public class ResearchStage {
         
         // Check if player knows research for must-craft items
         for (Integer craftRef : this.craftReference) {
-            if (!knowledge.isResearchKnown(SimpleResearchKey.parse("#" + craftRef.intValue()))) {
+            if (!knowledge.isResearchKnown(SimpleResearchKey.parse("[#]" + craftRef.intValue()))) {
                 return false;
             }
         }
@@ -159,5 +159,79 @@ public class ResearchStage {
         }
         
         return true;
+    }
+    
+    public List<Boolean> getObtainRequirementCompletion(@Nullable PlayerEntity player) {
+        if (this.mustObtain.isEmpty()) {
+            return Collections.emptyList();
+        }
+        if (player == null) {
+            return Collections.nCopies(this.mustObtain.size(), Boolean.FALSE);
+        }
+        
+        List<Boolean> retVal = new ArrayList<>();
+        for (Object obj : this.mustObtain) {
+            if (obj instanceof ItemStack) {
+                retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ItemStack)obj)));
+            } else if (obj instanceof ResourceLocation) {
+                retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obj)));
+            } else {
+                retVal.add(Boolean.TRUE);
+            }
+        }
+        return retVal;
+    }
+    
+    public List<Boolean> getCraftRequirementCompletion(@Nullable PlayerEntity player) {
+        if (this.craftReference.isEmpty()) {
+            return Collections.emptyList();
+        }
+        if (player == null) {
+            return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
+        }
+        
+        List<Boolean> retVal = new ArrayList<>();
+        for (Integer craftRef : this.craftReference) {
+            retVal.add(Boolean.valueOf(knowledge.isResearchKnown(SimpleResearchKey.parse("[#]" + craftRef.intValue()))));
+        }
+        return retVal;
+    }
+    
+    public List<Boolean> getKnowledgeRequirementCompletion(@Nullable PlayerEntity player) {
+        if (this.requiredKnowledge.isEmpty()) {
+            return Collections.emptyList();
+        }
+        if (player == null) {
+            return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
+        }
+        
+        List<Boolean> retVal = new ArrayList<>();
+        for (Knowledge knowPacket : this.requiredKnowledge) {
+            retVal.add(Boolean.valueOf(knowledge.getKnowledge(knowPacket.getType(), knowPacket.getDiscipline()) >= knowPacket.getAmount()));
+        }
+        return retVal;
+    }
+    
+    public List<Boolean> getResearchRequirementCompletion(@Nullable PlayerEntity player) {
+        if (this.requiredResearch == null || this.requiredResearch.getKeys().isEmpty()) {
+            return Collections.emptyList();
+        }
+        if (player == null) {
+            return Collections.nCopies(this.requiredResearch.getKeys().size(), Boolean.FALSE);
+        }
+        
+        List<Boolean> retVal = new ArrayList<>();
+        for (SimpleResearchKey key : this.requiredResearch.getKeys()) {
+            retVal.add(Boolean.valueOf(key.isKnownByStrict(player)));
+        }
+        return retVal;
     }
 }

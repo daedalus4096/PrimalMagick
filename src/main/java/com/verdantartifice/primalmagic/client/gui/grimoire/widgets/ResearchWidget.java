@@ -21,12 +21,15 @@ public class ResearchWidget extends Widget {
     protected static final ResourceLocation TUBE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_flask.png");
     protected static final ResourceLocation MAP_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_map.png");
     protected static final ResourceLocation UNKNOWN_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_unknown.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
     
     protected SimpleResearchKey key;
+    protected boolean isComplete;
     
-    public ResearchWidget(SimpleResearchKey key, int x, int y) {
+    public ResearchWidget(SimpleResearchKey key, int x, int y, boolean isComplete) {
         super(x, y, 16, 16, "");
         this.key = key;
+        this.isComplete = isComplete;
     }
     
     @Override
@@ -51,6 +54,16 @@ public class ResearchWidget extends Widget {
         GlStateManager.scaled(0.0625D, 0.0625D, 0.0625D);
         this.blit(0, 0, 0, 0, 255, 255);
         GlStateManager.popMatrix();
+        
+        if (this.isComplete) {
+            // Render completion checkmark if appropriate
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.pushMatrix();
+            GlStateManager.translatef(this.x + 8, this.y, 500.0F);
+            Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
+            this.blit(0, 0, 159, 207, 10, 10);
+            GlStateManager.popMatrix();
+        }
         
         if (this.isHovered()) {
             ITextComponent text = new TranslationTextComponent("primalmagic.research." + this.key.getRootKey() + ".text");

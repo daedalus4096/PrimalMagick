@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.util.Collections;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -17,11 +19,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class KnowledgeWidget extends Widget {
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
+
     protected Knowledge knowledge;
+    protected boolean isComplete;
     
-    public KnowledgeWidget(Knowledge knowledge, int x, int y) {
+    public KnowledgeWidget(Knowledge knowledge, int x, int y, boolean isComplete) {
         super(x, y, 16, 16, "");
         this.knowledge = knowledge;
+        this.isComplete = isComplete;
     }
     
     @Override
@@ -57,6 +63,16 @@ public class KnowledgeWidget extends Widget {
         GlStateManager.scaled(0.5D, 0.5D, 0.5D);
         mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
         GlStateManager.popMatrix();
+        
+        if (this.isComplete) {
+            // Render completion checkmark if appropriate
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.pushMatrix();
+            GlStateManager.translatef(this.x + 8, this.y, 500.0F);
+            Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
+            this.blit(0, 0, 159, 207, 10, 10);
+            GlStateManager.popMatrix();
+        }
         
         if (this.isHovered()) {
             // Render tooltip

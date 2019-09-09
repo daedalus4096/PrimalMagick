@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.pages;
 
 import java.awt.Color;
+import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
@@ -47,13 +48,15 @@ public class RequirementsPage extends AbstractPage {
         // Init obtain requirement widgets
         if (!this.stage.getMustObtain().isEmpty()) {
             y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
-            for (Object obj : this.stage.getMustObtain()) {
+            List<Boolean> completion = this.stage.getObtainRequirementCompletion(mc.player);
+            for (int index = 0; index < this.stage.getMustObtain().size(); index++) {
+                Object obj = this.stage.getMustObtain().get(index);
                 if (obj instanceof ItemStack) {
                     // Render item stack
-                    screen.addWidgetToScreen(new ItemStackWidget((ItemStack)obj, x + (side * 152), y));
+                    screen.addWidgetToScreen(new ItemStackWidget((ItemStack)obj, x + (side * 152), y, completion.get(index).booleanValue()));
                 } else if (obj instanceof ResourceLocation) {
                     // Render cycling stacks from tag
-                    screen.addWidgetToScreen(new ItemTagWidget((ResourceLocation)obj, x + (side * 152), y));
+                    screen.addWidgetToScreen(new ItemTagWidget((ResourceLocation)obj, x + (side * 152), y, completion.get(index).booleanValue()));
                 }
                 x += 18;
             }
@@ -64,13 +67,15 @@ public class RequirementsPage extends AbstractPage {
         // Init craft requirement widgets
         if (!this.stage.getMustCraft().isEmpty()) {
             y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
-            for (Object obj : this.stage.getMustCraft()) {
+            List<Boolean> completion = this.stage.getCraftRequirementCompletion(mc.player);
+            for (int index = 0; index < this.stage.getMustCraft().size(); index++) {
+                Object obj = this.stage.getMustCraft().get(index);
                 if (obj instanceof ItemStack) {
                     // Render item stack
-                    screen.addWidgetToScreen(new ItemStackWidget((ItemStack)obj, x + (side * 152), y));
+                    screen.addWidgetToScreen(new ItemStackWidget((ItemStack)obj, x + (side * 152), y, completion.get(index).booleanValue()));
                 } else if (obj instanceof ResourceLocation) {
                     // Render cycling stacks from tag
-                    screen.addWidgetToScreen(new ItemTagWidget((ResourceLocation)obj, x + (side * 152), y));
+                    screen.addWidgetToScreen(new ItemTagWidget((ResourceLocation)obj, x + (side * 152), y, completion.get(index).booleanValue()));
                 }
                 x += 18;
             }
@@ -81,8 +86,10 @@ public class RequirementsPage extends AbstractPage {
         // Init knowledge requirement widgets
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
             y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
-            for (Knowledge know : this.stage.getRequiredKnowledge()) {
-                screen.addWidgetToScreen(new KnowledgeWidget(know, x + (side * 152), y));
+            List<Boolean> completion = this.stage.getKnowledgeRequirementCompletion(mc.player);
+            for (int index = 0; index < this.stage.getRequiredKnowledge().size(); index++) {
+                Knowledge know = this.stage.getRequiredKnowledge().get(index);
+                screen.addWidgetToScreen(new KnowledgeWidget(know, x + (side * 152), y, completion.get(index).booleanValue()));
                 x += 18;
             }
             x = startX;
@@ -92,8 +99,10 @@ public class RequirementsPage extends AbstractPage {
         // Init research requirement widgets
         if (this.stage.getRequiredResearch() != null) {
             y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
-            for (SimpleResearchKey key : this.stage.getRequiredResearch().getKeys()) {
-                screen.addWidgetToScreen(new ResearchWidget(key, x + (side * 152), y));
+            List<Boolean> completion = this.stage.getResearchRequirementCompletion(mc.player);
+            for (int index = 0; index < this.stage.getRequiredResearch().getKeys().size(); index++) {
+                SimpleResearchKey key = this.stage.getRequiredResearch().getKeys().get(index);
+                screen.addWidgetToScreen(new ResearchWidget(key, x + (side * 152), y, completion.get(index).booleanValue()));
                 x += 18;
             }
             x = startX;

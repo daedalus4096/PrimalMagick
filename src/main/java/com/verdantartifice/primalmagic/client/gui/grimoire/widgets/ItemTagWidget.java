@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 import java.util.Collection;
 import java.util.List;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
 import net.minecraft.client.Minecraft;
@@ -19,11 +21,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ItemTagWidget extends Widget {
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
+
     protected ResourceLocation tag;
+    protected boolean isComplete;
     
-    public ItemTagWidget(ResourceLocation tag, int x, int y) {
+    public ItemTagWidget(ResourceLocation tag, int x, int y, boolean isComplete) {
         super(x, y, 16, 16, "");
         this.tag = tag;
+        this.isComplete = isComplete;
     }
     
     @Override
@@ -35,6 +41,15 @@ public class ItemTagWidget extends Widget {
             Item[] tagContentsArray = tagContents.toArray(new Item[tagContents.size()]);
             ItemStack toDisplay = new ItemStack(tagContentsArray[index], 1);
             GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage(), false);
+            if (this.isComplete) {
+                // Render completion checkmark if appropriate
+                GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.pushMatrix();
+                GlStateManager.translatef(this.x + 8, this.y, 500.0F);
+                Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
+                this.blit(0, 0, 159, 207, 10, 10);
+                GlStateManager.popMatrix();
+            }
             if (this.isHovered()) {
                 Minecraft mc = Minecraft.getInstance();
                 List<ITextComponent> tooltip = toDisplay.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
