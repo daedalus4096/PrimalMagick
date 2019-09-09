@@ -75,8 +75,8 @@ public class GuiUtils {
         int max = 240;
         double mouseX = mc.mouseHelper.getMouseX();
         boolean flip = false;
-        if (!ignoreMouse && ((max + 24) * scaleFactor + mouseX > mc.mainWindow.getWidth())) {
-            max = (int)((mc.mainWindow.getWidth() - mouseX) / scaleFactor - 24);
+        if (!ignoreMouse && ((max + 24) * scaleFactor + mouseX > mc.mainWindow.getFramebufferWidth())) {
+            max = (int)((mc.mainWindow.getFramebufferWidth() - mouseX) / scaleFactor - 24);
             if (max < 120) {
                 max = 240;
                 flip = true;
@@ -108,7 +108,7 @@ public class GuiUtils {
             sY = mc.mainWindow.getScaledHeight() - totalHeight - 5;
         }
         if (flip) {
-            sX -= (widestLineWidth + 24);
+            sX -= (widestLineWidth + 6);
         }
         
         float prevZ = mc.getItemRenderer().zLevel;
