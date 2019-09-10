@@ -26,7 +26,7 @@ public class EntryButton extends AbstractTopicButton {
                 EntryButton geb = (EntryButton)button;
                 GrimoireScreen.HISTORY.add(geb.getScreen().getContainer().getTopic());
                 geb.getScreen().getContainer().setTopic(geb.getEntry());
-                PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().getKey(), true));  // Advance research from unknown to stage 1
+                PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().getKey(), true, false, true));  // Advance research from unknown to stage 1
                 geb.getScreen().getMinecraft().displayGuiScreen(new GrimoireScreen(
                     geb.getScreen().getContainer(),
                     geb.getScreen().getPlayerInventory(),
