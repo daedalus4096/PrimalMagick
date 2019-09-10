@@ -86,6 +86,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         this.renderHoveredToolTip(mouseX, mouseY);
     }
     
+    public boolean isProgressing() {
+        return this.progressing;
+    }
+    
     public void setProgressing() {
         this.progressing = true;
         this.lastCheck = 0L;

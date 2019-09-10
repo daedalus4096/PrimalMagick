@@ -125,6 +125,7 @@
     "primalmagic.grimoire.required_knowledge_header": "Required knowledge:",
     "primalmagic.grimoire.required_research_header": "Must be discovered:",
     "primalmagic.grimoire.complete_button": "Complete",
+    "primalmagic.grimoire.completing_text": "Completing...",
     
     "primalmagic.research.m_dummy.text": "Location Discovery",
     "primalmagic.research.t_dummy.text": "Research Discovery",
