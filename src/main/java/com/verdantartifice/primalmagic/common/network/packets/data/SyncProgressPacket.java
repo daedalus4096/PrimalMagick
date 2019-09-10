@@ -6,14 +6,18 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagic.common.research.Knowledge;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class SyncProgressPacket implements IMessageToServer {
@@ -95,7 +99,17 @@ public class SyncProgressPacket implements IMessageToServer {
             ResearchStage stage = entry.getStages().get(currentStageNum);
             boolean retVal = stage.arePrerequisitesMet(player);
             if (retVal) {
-                // TODO Consume the met prerequisite items and knowledge
+                // Consume the met prerequisite items and knowledge
+                for (Object obj : stage.getMustObtain()) {
+                    if (obj instanceof ItemStack) {
+                        InventoryUtils.consumeItem(player, (ItemStack)obj);
+                    } else if (obj instanceof ResourceLocation) {
+                        InventoryUtils.consumeItem(player, (ResourceLocation)obj, 1);
+                    }
+                }
+                for (Knowledge know : stage.getRequiredKnowledge()) {
+                    ResearchManager.addKnowledge(player, know.getType(), know.getDiscipline(), (know.getAmount() * know.getType().getProgression()));
+                }
             }
             return retVal;
         }

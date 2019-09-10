@@ -134,7 +134,7 @@ public class ResearchStage {
         for (Object obtainObj : this.mustObtain) {
             if (obtainObj instanceof ItemStack && !InventoryUtils.isPlayerCarrying(player, (ItemStack)obtainObj)) {
                 return false;
-            } else if (obtainObj instanceof ResourceLocation && !InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obtainObj)) {
+            } else if (obtainObj instanceof ResourceLocation && !InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obtainObj, 1)) {
                 return false;
             }
         }
@@ -174,7 +174,7 @@ public class ResearchStage {
             if (obj instanceof ItemStack) {
                 retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ItemStack)obj)));
             } else if (obj instanceof ResourceLocation) {
-                retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obj)));
+                retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obj, 1)));
             } else {
                 retVal.add(Boolean.TRUE);
             }
