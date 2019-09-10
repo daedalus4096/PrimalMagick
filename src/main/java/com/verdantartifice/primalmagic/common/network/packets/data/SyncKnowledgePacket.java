@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
-import com.verdantartifice.primalmagic.common.network.packets.IMessage;
+import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,7 +12,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class SyncKnowledgePacket implements IMessage {
+public class SyncKnowledgePacket implements IMessageToClient {
     protected CompoundNBT data;
     
     public SyncKnowledgePacket() {

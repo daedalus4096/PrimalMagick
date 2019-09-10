@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.network;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.network.packets.IMessage;
+import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -26,7 +26,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SyncKnowledgePacket.class, SyncKnowledgePacket::encode, SyncKnowledgePacket::decode, SyncKnowledgePacket.Handler::onMessage);
     }
     
-    public static void sendToPlayer(IMessage message, ServerPlayerEntity player) {
+    public static void sendToPlayer(IMessageToClient message, ServerPlayerEntity player) {
         INSTANCE.sendTo(message, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
     }
 }
