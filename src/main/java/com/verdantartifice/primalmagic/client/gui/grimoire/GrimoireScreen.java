@@ -46,6 +46,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected int scaledLeft;
     protected int scaledTop;
     protected int currentPage = 0;
+    protected int currentStageIndex = 0;
+    protected int lastStageIndex = 0;
+    protected long lastCheck = 0L;
+    protected boolean progressing = false;
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
     
@@ -65,9 +69,27 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
+        long millis = System.currentTimeMillis();
+        if (millis > this.lastCheck) {
+            this.lastCheck = this.progressing ? (millis + 250L) : (millis + 2000L);
+            this.initPages();
+            this.initButtons();
+            if (this.currentStageIndex > this.lastStageIndex) {
+                this.progressing = false;
+                this.lastStageIndex = this.currentStageIndex;
+                this.currentPage = 0;
+                this.updateNavButtonVisibility();
+            }
+        }
         this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
+    }
+    
+    public void setProgressing() {
+        this.progressing = true;
+        this.lastCheck = 0L;
+        this.lastStageIndex = this.currentStageIndex;
     }
     
     @Override
@@ -195,6 +217,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     protected void parseIndexPages() {
+        this.currentStageIndex = 0;
         List<ResearchDiscipline> disciplines = this.buildDisciplineList();
         if (disciplines.isEmpty()) {
             return;
@@ -217,6 +240,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     protected void parseDisciplinePages(ResearchDiscipline discipline) {
+        this.currentStageIndex = 0;
         if (discipline == null) {
             return;
         }
@@ -248,15 +272,15 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         
         // Determine current research stage
         boolean complete = false;
-        int currentStageIndex = this.knowledge.getResearchStage(entry.getKey()) - 1; // remember, it's one-based
-        if (currentStageIndex >= entry.getStages().size()) {
-            currentStageIndex = entry.getStages().size() - 1;
+        this.currentStageIndex = this.knowledge.getResearchStage(entry.getKey()) - 1; // remember, it's one-based
+        if (this.currentStageIndex >= entry.getStages().size()) {
+            this.currentStageIndex = entry.getStages().size() - 1;
             complete = true;
         }
-        if (currentStageIndex < 0) {
-            currentStageIndex = 0;
+        if (this.currentStageIndex < 0) {
+            this.currentStageIndex = 0;
         }
-        ResearchStage stage = entry.getStages().get(currentStageIndex);
+        ResearchStage stage = entry.getStages().get(this.currentStageIndex);
         List<ResearchAddendum> addenda = complete ? entry.getAddenda() : new ArrayList<>();
         
         // TODO generate recipe lists from stage and addenda

@@ -114,7 +114,7 @@ public class RequirementsPage extends AbstractPage {
         if (this.stage.arePrerequisitesMet(mc.player)) {
             y = screen.height - 36;
             ITextComponent text = new TranslationTextComponent("primalmagic.grimoire.complete_button");
-            screen.addWidgetToScreen(new ProgressButton(this.stage, startX + (side * 152), y, text.getFormattedText()));
+            screen.addWidgetToScreen(new ProgressButton(this.stage, startX + (side * 152), y, text.getFormattedText(), screen));
         }
     }
 
