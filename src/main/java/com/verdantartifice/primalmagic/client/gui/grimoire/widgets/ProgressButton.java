@@ -25,7 +25,7 @@ public class ProgressButton extends Button {
             if (button instanceof ProgressButton) {
                 ProgressButton pb = (ProgressButton)button;
                 PrimalMagic.LOGGER.info("Progressing research");
-                PacketHandler.sendToServer(new SyncProgressPacket(pb.getStage().getResearchEntry().getKey()));
+                PacketHandler.sendToServer(new SyncProgressPacket(pb.getStage().getResearchEntry().getKey(), false));
             }
         }
     }

@@ -13,22 +13,27 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class SyncProgressPacket implements IMessageToServer {
     protected SimpleResearchKey key;
+    protected boolean firstSync;
     
     public SyncProgressPacket() {
         this.key = null;
+        this.firstSync = false;
     }
     
-    public SyncProgressPacket(SimpleResearchKey key) {
+    public SyncProgressPacket(SimpleResearchKey key, boolean firstSync) {
         this.key = key;
+        this.firstSync = firstSync;
     }
     
     public static void encode(SyncProgressPacket message, PacketBuffer buf) {
         buf.writeString(message.key.getRootKey());
+        buf.writeBoolean(message.firstSync);
     }
     
     public static SyncProgressPacket decode(PacketBuffer buf) {
         SyncProgressPacket message = new SyncProgressPacket();
         message.key = SimpleResearchKey.parse(buf.readString());
+        message.firstSync = buf.readBoolean();
         return message;
     }
     
@@ -37,8 +42,10 @@ public class SyncProgressPacket implements IMessageToServer {
             ctx.get().enqueueWork(() -> {
                 if (message.key != null) {
                     PlayerEntity player = ctx.get().getSender();
-                    PrimalMagic.LOGGER.info("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
-                    ResearchManager.progressResearch(player, message.key);
+                    if (message.firstSync != message.key.isKnownBy(player)) {
+                        PrimalMagic.LOGGER.info("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
+                        ResearchManager.progressResearch(player, message.key);
+                    }
                 }
             });
         }

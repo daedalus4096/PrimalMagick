@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
 import net.minecraft.client.gui.widget.button.Button;
@@ -24,6 +26,7 @@ public class EntryButton extends AbstractTopicButton {
                 EntryButton geb = (EntryButton)button;
                 GrimoireScreen.HISTORY.add(geb.getScreen().getContainer().getTopic());
                 geb.getScreen().getContainer().setTopic(geb.getEntry());
+                PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().getKey(), true));  // Advance research from unknown to stage 1
                 geb.getScreen().getMinecraft().displayGuiScreen(new GrimoireScreen(
                     geb.getScreen().getContainer(),
                     geb.getScreen().getPlayerInventory(),
