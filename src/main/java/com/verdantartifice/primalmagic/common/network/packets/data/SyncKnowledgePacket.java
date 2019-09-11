@@ -2,9 +2,13 @@ package com.verdantartifice.primalmagic.common.network.packets.data;
 
 import java.util.function.Supplier;
 
+import com.verdantartifice.primalmagic.client.gui.ResearchToast;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
+import com.verdantartifice.primalmagic.common.research.ResearchEntries;
+import com.verdantartifice.primalmagic.common.research.ResearchEntry;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,6 +47,15 @@ public class SyncKnowledgePacket implements IMessageToClient {
                 IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                 if (knowledge != null) {
                     knowledge.deserializeNBT(message.data);
+                    for (SimpleResearchKey key : knowledge.getResearchSet()) {
+                        if (knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {
+                            ResearchEntry entry = ResearchEntries.getEntry(key);
+                            if (entry != null) {
+                                Minecraft.getInstance().getToastGui().add(new ResearchToast(entry));
+                            }
+                            knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
+                        }
+                    }
                 }
             });
         }

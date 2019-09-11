@@ -127,6 +127,8 @@
     "primalmagic.grimoire.complete_button": "Complete",
     "primalmagic.grimoire.completing_text": "Completing...",
     
+    "primalmagic.toast.title": "Research Complete!",
+    
     "primalmagic.research.m_dummy.text": "Location Discovery",
     "primalmagic.research.t_dummy.text": "Research Discovery",
     "primalmagic.research.b_dummy.text": "Item Discovery",

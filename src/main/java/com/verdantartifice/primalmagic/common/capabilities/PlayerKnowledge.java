@@ -229,11 +229,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     @Override
     public boolean removeResearchFlag(SimpleResearchKey research, ResearchFlag flag) {
-        Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
+        return this.removeResearchFlagInner(research.getRootKey(), flag);
+    }
+    
+    protected boolean removeResearchFlagInner(String researchKeyStr, ResearchFlag flag) {
+        Set<ResearchFlag> researchFlags = this.flags.get(researchKeyStr);
         if (researchFlags != null) {
             boolean retVal = researchFlags.remove(flag);
             if (researchFlags.isEmpty()) {
-                this.flags.remove(research.getRootKey());
+                this.flags.remove(researchKeyStr);
             }
             return retVal;
         }
@@ -288,6 +292,9 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     public void sync(ServerPlayerEntity player) {
         PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
+        for (String keyStr : this.flags.keySet()) {
+            this.removeResearchFlagInner(keyStr, ResearchFlag.POPUP);
+        }
     }
     
     public static class Provider implements ICapabilitySerializable<CompoundNBT> {
