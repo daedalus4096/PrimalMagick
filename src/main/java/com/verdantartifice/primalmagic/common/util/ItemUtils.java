@@ -24,7 +24,7 @@ public class ItemUtils {
     @Nonnull
     public static ItemStack parseItemStack(@Nullable String str) {
         if (str == null) {
-            return null;
+            return ItemStack.EMPTY;
         }
         
         String[] tokens = str.split(";");
