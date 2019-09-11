@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.BackButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.DisciplineButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.EntryButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.PageButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.SectionHeaderWidget;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
@@ -34,6 +35,8 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
@@ -165,9 +168,15 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             }
         } else if (abstractPage instanceof DisciplinePage) {
             DisciplinePage page = (DisciplinePage)abstractPage;
-            for (ResearchEntry entry : page.getEntries()) {
-                String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
-                this.addButton(new EntryButton(x + (side * 152), y, text, this, entry));
+            for (Object obj : page.getContents()) {
+                if (obj instanceof ResearchEntry) {
+                    ResearchEntry entry = (ResearchEntry)obj;
+                    String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
+                    this.addButton(new EntryButton(x + (side * 152), y, text, this, entry));
+                } else if (obj instanceof ITextComponent) {
+                    String text = ((ITextComponent)obj).getFormattedText();
+                    this.addButton(new SectionHeaderWidget(x + (side * 152), y, text));
+                }
                 y += 24;
             }
         } else if (abstractPage instanceof RequirementsPage) {
@@ -255,16 +264,18 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         
         int heightRemaining = 182;
         DisciplinePage tempPage = new DisciplinePage(discipline, true);
+        tempPage.addContent(new StringTextComponent("Testing").applyTextStyle(TextFormatting.UNDERLINE));
+        heightRemaining -= 24;
         for (ResearchEntry entry : entries) {
-            tempPage.addEntry(entry);
+            tempPage.addContent(entry);
             heightRemaining -= 24;
-            if (heightRemaining < 24 && !tempPage.getEntries().isEmpty()) {
+            if (heightRemaining < 24 && !tempPage.getContents().isEmpty()) {
                 heightRemaining = 210;
                 this.pages.add(tempPage);
                 tempPage = new DisciplinePage(discipline);
             }
         }
-        if (!tempPage.getEntries().isEmpty()) {
+        if (!tempPage.getContents().isEmpty()) {
             this.pages.add(tempPage);
         }
     }

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
-import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -15,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class DisciplinePage extends AbstractPage {
     protected ResearchDiscipline discipline;
-    protected List<ResearchEntry> contents = new ArrayList<>();
+    protected List<Object> contents = new ArrayList<>();
     protected boolean firstPage;
     
     public DisciplinePage(@Nonnull ResearchDiscipline discipline) {
@@ -28,11 +27,11 @@ public class DisciplinePage extends AbstractPage {
     }
     
     @Nonnull
-    public List<ResearchEntry> getEntries() {
+    public List<Object> getContents() {
         return Collections.unmodifiableList(this.contents);
     }
     
-    public boolean addEntry(ResearchEntry entry) {
+    public boolean addContent(Object entry) {
         return this.contents.add(entry);
     }
     
