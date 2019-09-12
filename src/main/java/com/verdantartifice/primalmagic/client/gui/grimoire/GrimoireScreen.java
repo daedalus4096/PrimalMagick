@@ -30,6 +30,7 @@ import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
@@ -164,7 +165,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             for (ResearchDiscipline discipline : page.getDisciplines()) {
                 String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getFormattedText();
                 this.addButton(new DisciplineButton(x + (side * 152), y, text, this, discipline));
-                y += 24;
+                y += 12;
             }
         } else if (abstractPage instanceof DisciplinePage) {
             DisciplinePage page = (DisciplinePage)abstractPage;
@@ -177,7 +178,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                     String text = ((ITextComponent)obj).getFormattedText();
                     this.addButton(new SectionHeaderWidget(x + (side * 152), y, text));
                 }
-                y += 24;
+                y += 12;
             }
         } else if (abstractPage instanceof RequirementsPage) {
             ((RequirementsPage)abstractPage).initWidgets(this, side, x, y);
@@ -240,8 +241,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         IndexPage tempPage = new IndexPage(true);
         for (ResearchDiscipline discipline : disciplines) {
             tempPage.addDiscipline(discipline);
-            heightRemaining -= 24;
-            if (heightRemaining < 24 && !tempPage.getDisciplines().isEmpty()) {
+            heightRemaining -= 12;
+            if (heightRemaining < 12 && !tempPage.getDisciplines().isEmpty()) {
                 heightRemaining = 210;
                 this.pages.add(tempPage);
                 tempPage = new IndexPage();
@@ -265,11 +266,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int heightRemaining = 182;
         DisciplinePage tempPage = new DisciplinePage(discipline, true);
         tempPage.addContent(new StringTextComponent("Testing").applyTextStyle(TextFormatting.UNDERLINE));
-        heightRemaining -= 24;
+        heightRemaining -= 12;
         for (ResearchEntry entry : entries) {
             tempPage.addContent(entry);
-            heightRemaining -= 24;
-            if (heightRemaining < 24 && !tempPage.getContents().isEmpty()) {
+            heightRemaining -= 12;
+            if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
                 heightRemaining = 210;
                 this.pages.add(tempPage);
                 tempPage = new DisciplinePage(discipline);

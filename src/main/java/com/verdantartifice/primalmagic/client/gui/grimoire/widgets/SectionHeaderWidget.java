@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SectionHeaderWidget extends Widget {
     public SectionHeaderWidget(int xIn, int yIn, String msg) {
-        super(xIn, yIn, 135, 18, msg);
+        super(xIn, yIn, 135, 12, msg);
     }
 
     @Override
