@@ -126,6 +126,12 @@
     "primalmagic.grimoire.required_research_header": "Must be discovered:",
     "primalmagic.grimoire.complete_button": "Complete",
     "primalmagic.grimoire.completing_text": "Completing...",
+    "primalmagic.grimoire.section_header.new": "New",
+    "primalmagic.grimoire.section_header.updated": "Updated",
+    "primalmagic.grimoire.section_header.complete": "Complete",
+    "primalmagic.grimoire.section_header.in_progress": "In Progress",
+    "primalmagic.grimoire.section_header.available": "Available",
+    "primalmagic.grimoire.section_header.unavailable": "Unavailable",
     
     "primalmagic.toast.title": "Research Complete!",
     

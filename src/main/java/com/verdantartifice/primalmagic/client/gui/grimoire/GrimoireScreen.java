@@ -263,17 +263,205 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             return;
         }
         
-        int heightRemaining = 182;
-        DisciplinePage tempPage = new DisciplinePage(discipline, true);
-        tempPage.addContent(new StringTextComponent("Testing").applyTextStyle(TextFormatting.UNDERLINE));
-        heightRemaining -= 12;
+        // Sort the alphabetized entries into sections
+        List<ResearchEntry> newList = new ArrayList<>();
+        List<ResearchEntry> updatedList = new ArrayList<>();
+        List<ResearchEntry> completeList = new ArrayList<>();
+        List<ResearchEntry> inProgressList = new ArrayList<>();
+        List<ResearchEntry> availableList = new ArrayList<>();
+        List<ResearchEntry> unavailableList = new ArrayList<>();
         for (ResearchEntry entry : entries) {
-            tempPage.addContent(entry);
-            heightRemaining -= 12;
-            if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+            if (this.knowledge.hasResearchFlag(entry.getKey(), IPlayerKnowledge.ResearchFlag.NEW)) {
+                newList.add(entry);
+            } else if (this.knowledge.hasResearchFlag(entry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED)) {
+                updatedList.add(entry);
+            } else if (this.knowledge.getResearchStatus(entry.getKey()) == IPlayerKnowledge.ResearchStatus.COMPLETE) {
+                completeList.add(entry);
+            } else if (this.knowledge.getResearchStatus(entry.getKey()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS) {
+                inProgressList.add(entry);
+            } else if (entry.getParentResearch() == null || entry.getParentResearch().isKnownBy(Minecraft.getInstance().player)) {
+                availableList.add(entry);
+            } else {
+                unavailableList.add(entry);
+            }
+        }
+        
+        // Divide the sections out into pages
+        int heightRemaining = 182;
+        boolean firstSection = true;
+        DisciplinePage tempPage = new DisciplinePage(discipline, true);
+        if (!updatedList.isEmpty()) {
+            // Append the section header and spacer
+            ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header.updated").applyTextStyle(TextFormatting.UNDERLINE);
+            if (heightRemaining < 36 && !tempPage.getContents().isEmpty()) {
+                // If there's not room for the spacer, the header, and a first entry, skip to the next page
                 heightRemaining = 210;
                 this.pages.add(tempPage);
                 tempPage = new DisciplinePage(discipline);
+                tempPage.addContent(headerText);
+            } else {
+                if (!firstSection) {
+                    tempPage.addContent(new StringTextComponent(""));
+                    heightRemaining -= 12;
+                }
+                tempPage.addContent(headerText);
+                heightRemaining -= 12;
+            }
+            firstSection = false;
+            for (ResearchEntry entry : updatedList) {
+                // Append each entry from the list to the page, breaking where necessary
+                tempPage.addContent(entry);
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                    heightRemaining = 210;
+                    this.pages.add(tempPage);
+                    tempPage = new DisciplinePage(discipline);
+                }
+            }
+        }
+        if (!newList.isEmpty()) {
+            // Append the section header and spacer
+            ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header.new").applyTextStyle(TextFormatting.UNDERLINE);
+            if (heightRemaining < 36 && !tempPage.getContents().isEmpty()) {
+                // If there's not room for the spacer, the header, and a first entry, skip to the next page
+                heightRemaining = 210;
+                this.pages.add(tempPage);
+                tempPage = new DisciplinePage(discipline);
+                tempPage.addContent(headerText);
+            } else {
+                if (!firstSection) {
+                    tempPage.addContent(new StringTextComponent(""));
+                    heightRemaining -= 12;
+                }
+                tempPage.addContent(headerText);
+                heightRemaining -= 12;
+            }
+            firstSection = false;
+            for (ResearchEntry entry : newList) {
+                // Append each entry from the list to the page, breaking where necessary
+                tempPage.addContent(entry);
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                    heightRemaining = 210;
+                    this.pages.add(tempPage);
+                    tempPage = new DisciplinePage(discipline);
+                }
+            }
+        }
+        if (!inProgressList.isEmpty()) {
+            // Append the section header and spacer
+            ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header.in_progress").applyTextStyle(TextFormatting.UNDERLINE);
+            if (heightRemaining < 36 && !tempPage.getContents().isEmpty()) {
+                // If there's not room for the spacer, the header, and a first entry, skip to the next page
+                heightRemaining = 210;
+                this.pages.add(tempPage);
+                tempPage = new DisciplinePage(discipline);
+                tempPage.addContent(headerText);
+            } else {
+                if (!firstSection) {
+                    tempPage.addContent(new StringTextComponent(""));
+                    heightRemaining -= 12;
+                }
+                tempPage.addContent(headerText);
+                heightRemaining -= 12;
+            }
+            firstSection = false;
+            for (ResearchEntry entry : inProgressList) {
+                // Append each entry from the list to the page, breaking where necessary
+                tempPage.addContent(entry);
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                    heightRemaining = 210;
+                    this.pages.add(tempPage);
+                    tempPage = new DisciplinePage(discipline);
+                }
+            }
+        }
+        if (!availableList.isEmpty()) {
+            // Append the section header and spacer
+            ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header.available").applyTextStyle(TextFormatting.UNDERLINE);
+            if (heightRemaining < 36 && !tempPage.getContents().isEmpty()) {
+                // If there's not room for the spacer, the header, and a first entry, skip to the next page
+                heightRemaining = 210;
+                this.pages.add(tempPage);
+                tempPage = new DisciplinePage(discipline);
+                tempPage.addContent(headerText);
+            } else {
+                if (!firstSection) {
+                    tempPage.addContent(new StringTextComponent(""));
+                    heightRemaining -= 12;
+                }
+                tempPage.addContent(headerText);
+                heightRemaining -= 12;
+            }
+            firstSection = false;
+            for (ResearchEntry entry : availableList) {
+                // Append each entry from the list to the page, breaking where necessary
+                tempPage.addContent(entry);
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                    heightRemaining = 210;
+                    this.pages.add(tempPage);
+                    tempPage = new DisciplinePage(discipline);
+                }
+            }
+        }
+        if (!completeList.isEmpty()) {
+            // Append the section header and spacer
+            ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header.complete").applyTextStyle(TextFormatting.UNDERLINE);
+            if (heightRemaining < 36 && !tempPage.getContents().isEmpty()) {
+                // If there's not room for the spacer, the header, and a first entry, skip to the next page
+                heightRemaining = 210;
+                this.pages.add(tempPage);
+                tempPage = new DisciplinePage(discipline);
+                tempPage.addContent(headerText);
+            } else {
+                if (!firstSection) {
+                    tempPage.addContent(new StringTextComponent(""));
+                    heightRemaining -= 12;
+                }
+                tempPage.addContent(headerText);
+                heightRemaining -= 12;
+            }
+            firstSection = false;
+            for (ResearchEntry entry : completeList) {
+                // Append each entry from the list to the page, breaking where necessary
+                tempPage.addContent(entry);
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                    heightRemaining = 210;
+                    this.pages.add(tempPage);
+                    tempPage = new DisciplinePage(discipline);
+                }
+            }
+        }
+        if (!unavailableList.isEmpty()) {
+            // Append the section header and spacer
+            ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header.unavailable").applyTextStyle(TextFormatting.UNDERLINE);
+            if (heightRemaining < 36 && !tempPage.getContents().isEmpty()) {
+                // If there's not room for the spacer, the header, and a first entry, skip to the next page
+                heightRemaining = 210;
+                this.pages.add(tempPage);
+                tempPage = new DisciplinePage(discipline);
+                tempPage.addContent(headerText);
+            } else {
+                if (!firstSection) {
+                    tempPage.addContent(new StringTextComponent(""));
+                    heightRemaining -= 12;
+                }
+                tempPage.addContent(headerText);
+                heightRemaining -= 12;
+            }
+            firstSection = false;
+            for (ResearchEntry entry : unavailableList) {
+                // Append each entry from the list to the page, breaking where necessary
+                tempPage.addContent(entry);
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                    heightRemaining = 210;
+                    this.pages.add(tempPage);
+                    tempPage = new DisciplinePage(discipline);
+                }
             }
         }
         if (!tempPage.getContents().isEmpty()) {
