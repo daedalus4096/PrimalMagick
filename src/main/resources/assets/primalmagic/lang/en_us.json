@@ -45,6 +45,9 @@
     "primalmagic.research.unlock_magitech.title": "Introduction to Magitech",
     "primalmagic.research.unlock_magitech.text.stage.1": "For magitech: Lorem ipsum",
     
+    "primalmagic.research.terrestrial_magic.title": "Terrestrial Magic",
+    "primalmagic.research.terrestrial_magic.text.stage.1": "For terrestrial magic: Lorem ipsum",
+    
     "primalmagic.research.source_earth.title": "Source: The Earth",
     "primalmagic.research.source_earth.text.stage.1": "For the earth: Lorem ipsum",
     
@@ -60,6 +63,9 @@
     "primalmagic.research.source_moon.title": "Source: The Moon",
     "primalmagic.research.source_moon.text.stage.1": "For the moon: Lorem ipsum",
     
+    "primalmagic.research.forbidden_magic.title": "Forbidden Magic",
+    "primalmagic.research.forbidden_magic.text.stage.1": "For forbidden magic: Lorem ipsum",
+    
     "primalmagic.research.source_blood.title": "Source: The Blood",
     "primalmagic.research.source_blood.text.stage.1": "For the blood: Lorem ipsum",
     
@@ -68,6 +74,9 @@
     
     "primalmagic.research.source_void.title": "Source: The Void",
     "primalmagic.research.source_void.text.stage.1": "For the void: Lorem ipsum",
+    
+    "primalmagic.research.heavenly_magic.title": "Heavenly Magic",
+    "primalmagic.research.heavenly_magic.text.stage.1": "For heavenly magic: Lorem ipsum",
     
     "primalmagic.research.source_hallowed.title": "Source: The Hallowed",
     "primalmagic.research.source_hallowed.text.stage.1": "For the hallowed: Lorem ipsum",

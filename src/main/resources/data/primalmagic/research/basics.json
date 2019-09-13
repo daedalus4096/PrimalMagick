@@ -4,6 +4,7 @@
             "key": "FIRST_STEPS",
             "name": "primalmagic.research.first_steps.title",
             "discipline": "BASICS",
+            "parents": [],
             "stages": [
                 {
                     "text": "primalmagic.research.first_steps.text.stage.1",
@@ -22,6 +23,7 @@
             "key": "KNOWLEDGE_TYPES",
             "name": "primalmagic.research.knowledge_types.title",
             "discipline": "BASICS",
+            "parents": [ "FIRST_STEPS" ],
             "stages": [
                 {
                     "text": "primalmagic.research.knowledge_types.text.stage.1"
@@ -33,6 +35,7 @@
             "key": "THEORYCRAFTING",
             "name": "primalmagic.research.theorycrafting.title",
             "discipline": "BASICS",
+            "parents": [ "KNOWLEDGE_TYPES" ],
             "stages": [
                 {
                     "text": "primalmagic.research.theorycrafting.text.stage.1",
@@ -45,9 +48,22 @@
             "addenda": []
         },
         {
+            "key": "UNLOCK_MANAWEAVING",
+            "name": "primalmagic.research.unlock_manaweaving.title",
+            "discipline": "BASICS",
+            "parents": [ "FIRST_STEPS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.unlock_manaweaving.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "UNLOCK_ALCHEMY",
             "name": "primalmagic.research.unlock_alchemy.title",
             "discipline": "BASICS",
+            "parents": [ "UNLOCK_MANAWEAVING" ],
             "stages": [
                 {
                     "text": "primalmagic.research.unlock_alchemy.text.stage.1"
@@ -59,6 +75,7 @@
             "key": "UNLOCK_SORCERY",
             "name": "primalmagic.research.unlock_sorcery.title",
             "discipline": "BASICS",
+            "parents": [ "UNLOCK_MANAWEAVING" ],
             "stages": [
                 {
                     "text": "primalmagic.research.unlock_sorcery.text.stage.1"
@@ -67,20 +84,10 @@
             "addenda": []
         },
         {
-            "key": "UNLOCK_MANAWEAVING",
-            "name": "primalmagic.research.unlock_manaweaving.title",
-            "discipline": "BASICS",
-            "stages": [
-                {
-                    "text": "primalmagic.research.unlock_manaweaving.text.stage.1"
-                }
-            ],
-            "addenda": []
-        },
-        {
             "key": "UNLOCK_RUNEWORKING",
             "name": "primalmagic.research.unlock_runeworking.title",
             "discipline": "BASICS",
+            "parents": [ "UNLOCK_ALCHEMY" ],
             "stages": [
                 {
                     "text": "primalmagic.research.unlock_runeworking.text.stage.1"
@@ -92,6 +99,7 @@
             "key": "UNLOCK_RITUAL",
             "name": "primalmagic.research.unlock_ritual.title",
             "discipline": "BASICS",
+            "parents": [ "UNLOCK_RUNEWORKING" ],
             "stages": [
                 {
                     "text": "primalmagic.research.unlock_ritual.text.stage.1"
@@ -103,6 +111,7 @@
             "key": "UNLOCK_MAGITECH",
             "name": "primalmagic.research.unlock_magitech.title",
             "discipline": "BASICS",
+            "parents": [ "UNLOCK_RITUAL" ],
             "stages": [
                 {
                     "text": "primalmagic.research.unlock_magitech.text.stage.1"
@@ -111,9 +120,22 @@
             "addenda": []
         },
         {
+            "key": "TERRESTRIAL_MAGIC",
+            "name": "primalmagic.research.terrestrial_magic.title",
+            "discipline": "BASICS",
+            "parents": [ "FIRST_STEPS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.terrestrial_magic.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SOURCE_EARTH",
             "name": "primalmagic.research.source_earth.title",
             "discipline": "BASICS",
+            "parents": [ "TERRESTRIAL_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_earth.text.stage.1"
@@ -125,6 +147,7 @@
             "key": "SOURCE_SEA",
             "name": "primalmagic.research.source_sea.title",
             "discipline": "BASICS",
+            "parents": [ "TERRESTRIAL_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_sea.text.stage.1"
@@ -136,6 +159,7 @@
             "key": "SOURCE_SKY",
             "name": "primalmagic.research.source_sky.title",
             "discipline": "BASICS",
+            "parents": [ "TERRESTRIAL_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_sky.text.stage.1"
@@ -147,6 +171,7 @@
             "key": "SOURCE_SUN",
             "name": "primalmagic.research.source_sun.title",
             "discipline": "BASICS",
+            "parents": [ "TERRESTRIAL_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_sun.text.stage.1"
@@ -158,6 +183,7 @@
             "key": "SOURCE_MOON",
             "name": "primalmagic.research.source_moon.title",
             "discipline": "BASICS",
+            "parents": [ "TERRESTRIAL_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_moon.text.stage.1"
@@ -166,9 +192,22 @@
             "addenda": []
         },
         {
+            "key": "FORBIDDEN_MAGIC",
+            "name": "primalmagic.research.forbidden_magic.title",
+            "discipline": "BASICS",
+            "parents": [ "TERRESTRIAL_MAGIC" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.forbidden_magic.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SOURCE_BLOOD",
             "name": "primalmagic.research.source_blood.title",
             "discipline": "BASICS",
+            "parents": [ "FORBIDDEN_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_blood.text.stage.1"
@@ -180,6 +219,7 @@
             "key": "SOURCE_INFERNAL",
             "name": "primalmagic.research.source_infernal.title",
             "discipline": "BASICS",
+            "parents": [ "FORBIDDEN_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_infernal.text.stage.1"
@@ -191,6 +231,7 @@
             "key": "SOURCE_VOID",
             "name": "primalmagic.research.source_void.title",
             "discipline": "BASICS",
+            "parents": [ "FORBIDDEN_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_void.text.stage.1"
@@ -199,9 +240,22 @@
             "addenda": []
         },
         {
+            "key": "HEAVENLY_MAGIC",
+            "name": "primalmagic.research.heavenly_magic.title",
+            "discipline": "BASICS",
+            "parents": [ "FORBIDDEN_MAGIC" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.heavenly_magic.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SOURCE_HALLOWED",
             "name": "primalmagic.research.source_hallowed.title",
             "discipline": "BASICS",
+            "parents": [ "HEAVENLY_MAGIC" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_hallowed.text.stage.1"

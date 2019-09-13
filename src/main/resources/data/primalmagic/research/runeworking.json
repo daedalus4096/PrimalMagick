@@ -4,6 +4,7 @@
             "key": "BASIC_RUNEWORKING",
             "name": "primalmagic.research.basic_runeworking.title",
             "discipline": "RUNEWORKING",
+            "parents": [ "UNLOCK_RUNEWORKING" ],
             "stages": [
                 {
                     "text": "primalmagic.research.basic_runeworking.text.stage.1"

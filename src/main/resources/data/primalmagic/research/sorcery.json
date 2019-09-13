@@ -4,6 +4,7 @@
             "key": "BASIC_SORCERY",
             "name": "primalmagic.research.basic_sorcery.title",
             "discipline": "SORCERY",
+            "parents": [ "UNLOCK_SORCERY" ],
             "stages": [
                 {
                     "text": "primalmagic.research.basic_sorcery.text.stage.1"
