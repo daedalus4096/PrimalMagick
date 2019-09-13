@@ -300,7 +300,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 tempPage = new DisciplinePage(discipline);
                 tempPage.addContent(headerText);
             } else {
-                if (!firstSection) {
+                if (!firstSection && !tempPage.getContents().isEmpty()) {
                     tempPage.addContent(new StringTextComponent(""));
                     heightRemaining -= 12;
                 }
@@ -329,7 +329,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 tempPage = new DisciplinePage(discipline);
                 tempPage.addContent(headerText);
             } else {
-                if (!firstSection) {
+                if (!firstSection && !tempPage.getContents().isEmpty()) {
                     tempPage.addContent(new StringTextComponent(""));
                     heightRemaining -= 12;
                 }
@@ -358,7 +358,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 tempPage = new DisciplinePage(discipline);
                 tempPage.addContent(headerText);
             } else {
-                if (!firstSection) {
+                if (!firstSection && !tempPage.getContents().isEmpty()) {
                     tempPage.addContent(new StringTextComponent(""));
                     heightRemaining -= 12;
                 }
@@ -387,7 +387,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 tempPage = new DisciplinePage(discipline);
                 tempPage.addContent(headerText);
             } else {
-                if (!firstSection) {
+                if (!firstSection && !tempPage.getContents().isEmpty()) {
                     tempPage.addContent(new StringTextComponent(""));
                     heightRemaining -= 12;
                 }
@@ -416,7 +416,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 tempPage = new DisciplinePage(discipline);
                 tempPage.addContent(headerText);
             } else {
-                if (!firstSection) {
+                if (!firstSection && !tempPage.getContents().isEmpty()) {
                     tempPage.addContent(new StringTextComponent(""));
                     heightRemaining -= 12;
                 }
@@ -445,7 +445,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 tempPage = new DisciplinePage(discipline);
                 tempPage.addContent(headerText);
             } else {
-                if (!firstSection) {
+                if (!firstSection && !tempPage.getContents().isEmpty()) {
                     tempPage.addContent(new StringTextComponent(""));
                     heightRemaining -= 12;
                 }
