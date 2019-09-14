@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.capabilities;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
@@ -20,27 +21,28 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
     @Nonnull
     public Set<SimpleResearchKey> getResearchSet();
     
-    public ResearchStatus getResearchStatus(SimpleResearchKey research);
-    public boolean isResearchComplete(SimpleResearchKey research);
-    public boolean isResearchKnown(SimpleResearchKey research);
-    public int getResearchStage(SimpleResearchKey research);
+    @Nonnull
+    public ResearchStatus getResearchStatus(@Nullable SimpleResearchKey research);
+    public boolean isResearchComplete(@Nullable SimpleResearchKey research);
+    public boolean isResearchKnown(@Nullable SimpleResearchKey research);
+    public int getResearchStage(@Nullable SimpleResearchKey research);
     
-    public boolean addResearch(SimpleResearchKey research);
-    public boolean setResearchStage(SimpleResearchKey research, int newStage);
-    public boolean removeResearch(SimpleResearchKey research);
+    public boolean addResearch(@Nullable SimpleResearchKey research);
+    public boolean setResearchStage(@Nullable SimpleResearchKey research, int newStage);
+    public boolean removeResearch(@Nullable SimpleResearchKey research);
     
-    public boolean addResearchFlag(SimpleResearchKey research, ResearchFlag flag);
-    public boolean removeResearchFlag(SimpleResearchKey research, ResearchFlag flag);
-    public boolean hasResearchFlag(SimpleResearchKey research, ResearchFlag flag);
+    public boolean addResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag);
+    public boolean removeResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag);
+    public boolean hasResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag);
     
     @Nonnull
-    public Set<ResearchFlag> getResearchFlags(SimpleResearchKey research);
+    public Set<ResearchFlag> getResearchFlags(@Nullable SimpleResearchKey research);
     
-    public boolean addKnowledge(KnowledgeType type, ResearchDiscipline discipline, int amount);
-    public int getKnowledge(KnowledgeType type, ResearchDiscipline discipline);
-    public int getKnowledgeRaw(KnowledgeType type, ResearchDiscipline discipline);
+    public boolean addKnowledge(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline, int amount);
+    public int getKnowledge(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline);
+    public int getKnowledgeRaw(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline);
     
-    public void sync(ServerPlayerEntity player);
+    public void sync(@Nullable ServerPlayerEntity player);
     
     public static enum ResearchStatus {
         UNKNOWN,

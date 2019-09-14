@@ -3,15 +3,15 @@ package com.verdantartifice.primalmagic.common.capabilities;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
@@ -32,12 +32,13 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class PlayerKnowledge implements IPlayerKnowledge {
-    private final Set<String> research = new HashSet<>();
-    private final Map<String, Integer> stages = new HashMap<>();
-    private final Map<String, Set<ResearchFlag>> flags = new HashMap<>();
-    private final Map<String, Integer> knowledge = new HashMap<>();
+    private final Set<String> research = ConcurrentHashMap.newKeySet();
+    private final Map<String, Integer> stages = new ConcurrentHashMap<>();
+    private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();
+    private final Map<String, Integer> knowledge = new ConcurrentHashMap<>();
 
     @Override
+    @Nonnull
     public CompoundNBT serializeNBT() {
         CompoundNBT rootTag = new CompoundNBT();
         
@@ -79,7 +80,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(@Nullable CompoundNBT nbt) {
         if (nbt == null) {
             return;
         }
@@ -142,7 +143,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public ResearchStatus getResearchStatus(SimpleResearchKey research) {
+    @Nonnull
+    public ResearchStatus getResearchStatus(@Nullable SimpleResearchKey research) {
         if (!this.isResearchKnown(research)) {
             return ResearchStatus.UNKNOWN;
         } else {
@@ -156,12 +158,12 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean isResearchComplete(SimpleResearchKey research) {
+    public boolean isResearchComplete(@Nullable SimpleResearchKey research) {
         return (this.getResearchStatus(research) == ResearchStatus.COMPLETE);
     }
 
     @Override
-    public boolean isResearchKnown(SimpleResearchKey research) {
+    public boolean isResearchKnown(@Nullable SimpleResearchKey research) {
         if (research == null) {
             return false;
         }
@@ -176,7 +178,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public int getResearchStage(SimpleResearchKey research) {
+    public int getResearchStage(@Nullable SimpleResearchKey research) {
         if (research == null || research.getRootKey().isEmpty() || !this.research.contains(research.getRootKey())) {
             return -1;
         } else {
@@ -185,8 +187,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean addResearch(SimpleResearchKey research) {
-        if (!this.isResearchKnown(research)) {
+    public boolean addResearch(@Nullable SimpleResearchKey research) {
+        if (research != null && !this.isResearchKnown(research)) {
             this.research.add(research.getRootKey());
             return true;
         } else {
@@ -195,7 +197,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean setResearchStage(SimpleResearchKey research, int newStage) {
+    public boolean setResearchStage(@Nullable SimpleResearchKey research, int newStage) {
         if (research == null || research.getRootKey().isEmpty() || !this.research.contains(research.getRootKey()) || newStage <= 0) {
             return false;
         } else {
@@ -205,8 +207,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean removeResearch(SimpleResearchKey research) {
-        if (this.isResearchKnown(research)) {
+    public boolean removeResearch(@Nullable SimpleResearchKey research) {
+        if (research != null && this.isResearchKnown(research)) {
             this.research.remove(research.getRootKey());
             return true;
         } else {
@@ -215,8 +217,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean addResearchFlag(SimpleResearchKey research, ResearchFlag flag) {
-        if (flag == null) {
+    public boolean addResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag) {
+        if (research == null || flag == null) {
             return false;
         }
         Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
@@ -228,11 +230,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean removeResearchFlag(SimpleResearchKey research, ResearchFlag flag) {
-        return this.removeResearchFlagInner(research.getRootKey(), flag);
+    public boolean removeResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag) {
+        if (research == null || flag == null) {
+            return false;
+        } else {
+            return this.removeResearchFlagInner(research.getRootKey(), flag);
+        }
     }
     
-    protected boolean removeResearchFlagInner(String researchKeyStr, ResearchFlag flag) {
+    protected boolean removeResearchFlagInner(@Nonnull String researchKeyStr, @Nonnull ResearchFlag flag) {
         Set<ResearchFlag> researchFlags = this.flags.get(researchKeyStr);
         if (researchFlags != null) {
             boolean retVal = researchFlags.remove(flag);
@@ -245,15 +251,23 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean hasResearchFlag(SimpleResearchKey research, ResearchFlag flag) {
-        Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
-        return researchFlags != null && researchFlags.contains(flag);
+    public boolean hasResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag) {
+        if (research == null || flag == null) {
+            return false;
+        } else {
+            Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
+            return researchFlags != null && researchFlags.contains(flag);
+        }
     }
     
     @Override
     @Nonnull
-    public Set<ResearchFlag> getResearchFlags(SimpleResearchKey research) {
-        return Collections.unmodifiableSet(this.flags.getOrDefault(research.getRootKey(), EnumSet.noneOf(ResearchFlag.class)));
+    public Set<ResearchFlag> getResearchFlags(@Nullable SimpleResearchKey research) {
+        if (research == null) {
+            return Collections.emptySet();
+        } else {
+            return Collections.unmodifiableSet(this.flags.getOrDefault(research.getRootKey(), EnumSet.noneOf(ResearchFlag.class)));
+        }
     }
     
     @Nonnull
@@ -266,7 +280,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean addKnowledge(KnowledgeType type, ResearchDiscipline discipline, int amount) {
+    public boolean addKnowledge(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline, int amount) {
         if (type == null || discipline == null) {
             return false;
         }
@@ -280,20 +294,30 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public int getKnowledge(KnowledgeType type, ResearchDiscipline discipline) {
-        return (int)Math.floor((double)this.getKnowledgeRaw(type, discipline) / (double)type.getProgression());
+    public int getKnowledge(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline) {
+        if (type == null || discipline == null) {
+            return 0;
+        } else {
+            return (int)Math.floor((double)this.getKnowledgeRaw(type, discipline) / (double)type.getProgression());
+        }
     }
     
     @Override
-    public int getKnowledgeRaw(KnowledgeType type, ResearchDiscipline discipline) {
-        return this.knowledge.getOrDefault(this.makeKnowledgeKey(type, discipline), Integer.valueOf(0)).intValue();
+    public int getKnowledgeRaw(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline) {
+        if (type == null || discipline == null) {
+            return 0;
+        } else {
+            return this.knowledge.getOrDefault(this.makeKnowledgeKey(type, discipline), Integer.valueOf(0)).intValue();
+        }
     }
 
     @Override
-    public void sync(ServerPlayerEntity player) {
-        PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
-        for (String keyStr : this.flags.keySet()) {
-            this.removeResearchFlagInner(keyStr, ResearchFlag.POPUP);
+    public void sync(@Nullable ServerPlayerEntity player) {
+        if (player != null) {
+            PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
+            for (String keyStr : this.flags.keySet()) {
+                this.removeResearchFlagInner(keyStr, ResearchFlag.POPUP);
+            }
         }
     }
     
