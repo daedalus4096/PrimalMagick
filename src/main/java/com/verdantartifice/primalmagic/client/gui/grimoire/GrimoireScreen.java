@@ -240,12 +240,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int heightRemaining = 182;
         IndexPage tempPage = new IndexPage(true);
         for (ResearchDiscipline discipline : disciplines) {
-            tempPage.addDiscipline(discipline);
-            heightRemaining -= 12;
-            if (heightRemaining < 12 && !tempPage.getDisciplines().isEmpty()) {
-                heightRemaining = 210;
-                this.pages.add(tempPage);
-                tempPage = new IndexPage();
+            if (discipline.getUnlockResearchKey() == null || discipline.getUnlockResearchKey().isKnownByStrict(Minecraft.getInstance().player)) {
+                tempPage.addDiscipline(discipline);
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getDisciplines().isEmpty()) {
+                    heightRemaining = 210;
+                    this.pages.add(tempPage);
+                    tempPage = new IndexPage();
+                }
             }
         }
         if (!tempPage.getDisciplines().isEmpty()) {
@@ -269,7 +271,6 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         List<ResearchEntry> completeList = new ArrayList<>();
         List<ResearchEntry> inProgressList = new ArrayList<>();
         List<ResearchEntry> availableList = new ArrayList<>();
-        List<ResearchEntry> unavailableList = new ArrayList<>();
         for (ResearchEntry entry : entries) {
             if (this.knowledge.hasResearchFlag(entry.getKey(), IPlayerKnowledge.ResearchFlag.NEW)) {
                 newList.add(entry);
@@ -281,8 +282,6 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 inProgressList.add(entry);
             } else if (entry.getParentResearch() == null || entry.getParentResearch().isKnownByStrict(Minecraft.getInstance().player)) {
                 availableList.add(entry);
-            } else {
-                unavailableList.add(entry);
             }
         }
         
@@ -425,35 +424,6 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             }
             firstSection = false;
             for (ResearchEntry entry : completeList) {
-                // Append each entry from the list to the page, breaking where necessary
-                tempPage.addContent(entry);
-                heightRemaining -= 12;
-                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
-                    heightRemaining = 210;
-                    this.pages.add(tempPage);
-                    tempPage = new DisciplinePage(discipline);
-                }
-            }
-        }
-        if (!unavailableList.isEmpty()) {
-            // Append the section header and spacer
-            ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header.unavailable").applyTextStyle(TextFormatting.UNDERLINE);
-            if (heightRemaining < 36 && !tempPage.getContents().isEmpty()) {
-                // If there's not room for the spacer, the header, and a first entry, skip to the next page
-                heightRemaining = 210;
-                this.pages.add(tempPage);
-                tempPage = new DisciplinePage(discipline);
-                tempPage.addContent(headerText);
-            } else {
-                if (!firstSection && !tempPage.getContents().isEmpty()) {
-                    tempPage.addContent(new StringTextComponent(""));
-                    heightRemaining -= 12;
-                }
-                tempPage.addContent(headerText);
-                heightRemaining -= 12;
-            }
-            firstSection = false;
-            for (ResearchEntry entry : unavailableList) {
                 // Append each entry from the list to the page, breaking where necessary
                 tempPage.addContent(entry);
                 heightRemaining -= 12;
