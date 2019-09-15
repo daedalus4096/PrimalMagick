@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 public class ResearchEntry {
     protected SimpleResearchKey key;
@@ -42,7 +43,7 @@ public class ResearchEntry {
             obj.getAsJsonPrimitive("name").getAsString()
         );
         if (entry == null) {
-            throw new Exception("Invalid entry data in research JSON");
+            throw new JsonParseException("Invalid entry data in research JSON");
         }
         
         if (obj.has("parents")) {

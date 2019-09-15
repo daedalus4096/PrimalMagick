@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
@@ -44,7 +45,7 @@ public class ResearchStage {
     public static ResearchStage parse(@Nonnull ResearchEntry entry, @Nonnull JsonObject obj) throws Exception {
         ResearchStage stage = create(entry, obj.getAsJsonPrimitive("text").getAsString());
         if (stage == null) {
-            throw new Exception("Illegal stage text in research JSON");
+            throw new JsonParseException("Illegal stage text in research JSON");
         }
         if (obj.has("recipes")) {
             stage.recipes = JsonUtils.toResourceLocations(obj.get("recipes").getAsJsonArray());

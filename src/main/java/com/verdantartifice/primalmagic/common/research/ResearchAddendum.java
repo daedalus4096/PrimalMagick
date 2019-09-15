@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +33,7 @@ public class ResearchAddendum {
     public static ResearchAddendum parse(@Nonnull ResearchEntry entry, @Nonnull JsonObject obj) throws Exception {
         ResearchAddendum addendum = create(entry, obj.getAsJsonPrimitive("text").getAsString());
         if (addendum == null) {
-            throw new Exception("Illegal addendum text in research JSON");
+            throw new JsonParseException("Illegal addendum text in research JSON");
         }
         if (obj.has("recipes")) {
             addendum.recipes = JsonUtils.toResourceLocations(obj.get("recipes").getAsJsonArray());
