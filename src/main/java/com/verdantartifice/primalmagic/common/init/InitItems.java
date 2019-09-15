@@ -11,6 +11,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class InitItems {
     public static void initBlockItems(IForgeRegistry<Item> registry) {
         registry.register(new BlockItemPM(BlocksPM.MARBLE_RAW));
+        registry.register(new BlockItemPM(BlocksPM.ARCANE_WORKBENCH));
     }
     
     public static void initItems(IForgeRegistry<Item> registry) {

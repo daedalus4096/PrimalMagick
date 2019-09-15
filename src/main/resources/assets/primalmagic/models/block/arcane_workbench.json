@@ -1,10 +1,10 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "thaumcraft:blocks/arcane_workbench_side",
-        "top": "thaumcraft:blocks/arcane_workbench_top",
-        "side": "thaumcraft:blocks/arcane_workbench_side",
-        "bottom": "thaumcraft:blocks/base_wood_grain"
+        "particle": "primalmagic:block/arcane_workbench_side",
+        "top": "primalmagic:block/arcane_workbench_top",
+        "side": "primalmagic:block/arcane_workbench_side",
+        "bottom": "primalmagic:block/base_wood_grain"
     },
     "elements": [
         {
