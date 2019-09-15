@@ -1,10 +1,14 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
 
 public class EntryButton extends AbstractTopicButton {
@@ -26,7 +30,16 @@ public class EntryButton extends AbstractTopicButton {
                 EntryButton geb = (EntryButton)button;
                 GrimoireScreen.HISTORY.add(geb.getScreen().getContainer().getTopic());
                 geb.getScreen().getContainer().setTopic(geb.getEntry());
-                PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().getKey(), true, false, true));  // Advance research from unknown to stage 1
+                if (geb.getEntry().getKey().isKnownBy(Minecraft.getInstance().player)) {
+                    IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(Minecraft.getInstance().player);
+                    if (knowledge != null) {
+                        knowledge.removeResearchFlag(geb.getEntry().getKey(), IPlayerKnowledge.ResearchFlag.NEW);
+                        knowledge.removeResearchFlag(geb.getEntry().getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                        PacketHandler.sendToServer(new SyncResearchFlagsPacket(Minecraft.getInstance().player, geb.getEntry().getKey()));
+                    }
+                } else {
+                    PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().getKey(), true, false, true));  // Advance research from unknown to stage 1
+                }
                 geb.getScreen().getMinecraft().displayGuiScreen(new GrimoireScreen(
                     geb.getScreen().getContainer(),
                     geb.getScreen().getPlayerInventory(),
