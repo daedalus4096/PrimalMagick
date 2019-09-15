@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeAmount
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
 import com.verdantartifice.primalmagic.common.init.InitCapabilities;
+import com.verdantartifice.primalmagic.common.init.InitRecipes;
 import com.verdantartifice.primalmagic.common.init.InitResearch;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 
@@ -20,6 +21,7 @@ public class CommonProxy implements IProxyPM {
     @Override
     public void preInit(FMLCommonSetupEvent event) {
         PacketHandler.registerMessages();
+        InitRecipes.initRecipeTypes();
         InitCapabilities.initCapabilities();
         InitResearch.initResearch();
     }

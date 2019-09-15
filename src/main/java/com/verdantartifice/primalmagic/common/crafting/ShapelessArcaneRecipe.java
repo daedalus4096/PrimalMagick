@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.crafting.ShapedRecipe;
@@ -85,11 +84,6 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     @Override
     public IRecipeSerializer<?> getSerializer() {
         return RecipeSerializersPM.SHAPELESS_ARCANE;
-    }
-
-    @Override
-    public IRecipeType<?> getType() {
-        return IRecipeType.CRAFTING;
     }
 
     @Override
