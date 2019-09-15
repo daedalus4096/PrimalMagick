@@ -1,0 +1,36 @@
+{
+    "type": "primalmagic:arcane_crafting_shapeless",
+    "research": "FIRST_STEPS",
+    "ingredients": [
+        {
+            "item": "primalmagic:marble_raw"
+        },
+        {
+            "item": "primalmagic:marble_raw"
+        },
+        {
+            "item": "primalmagic:marble_raw"
+        },
+        {
+            "item": "primalmagic:marble_raw"
+        },
+        {
+            "item": "primalmagic:marble_raw"
+        },
+        {
+            "item": "primalmagic:marble_raw"
+        },
+        {
+            "item": "primalmagic:marble_raw"
+        },
+        {
+            "item": "primalmagic:marble_raw"
+        },
+        {
+            "item": "primalmagic:marble_raw"
+        }
+    ],
+    "result": {
+        "item": "primalmagic:debug_tablet"
+    }
+}
