@@ -7,7 +7,10 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressP
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ProgressButton extends Button {
     protected ResearchStage stage;
     protected GrimoireScreen screen;

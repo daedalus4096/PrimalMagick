@@ -4,7 +4,10 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class DisciplineButton extends AbstractTopicButton {
     protected ResearchDiscipline discipline;
 

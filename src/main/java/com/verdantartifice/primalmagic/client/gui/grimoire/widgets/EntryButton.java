@@ -10,7 +10,10 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class EntryButton extends AbstractTopicButton {
     protected ResearchEntry entry;
 
