@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.proxy;
 
+import com.verdantartifice.primalmagic.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
 
@@ -15,5 +16,6 @@ public class ClientProxy extends CommonProxy {
     
     private void registerScreens() {
         ScreenManager.registerFactory(ContainersPM.GRIMOIRE, GrimoireScreen::new);
+        ScreenManager.registerFactory(ContainersPM.ARCANE_WORKBENCH, ArcaneWorkbenchScreen::new);
     }
 }
