@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.common.blocks.base.BlockPM;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -21,7 +22,7 @@ public class BlockArcaneWorkbench extends BlockPM {
     protected static final VoxelShape SHAPE = VoxelShapes.or(PART_UPPER, PART_POST1, PART_POST2, PART_POST3, PART_POST4, PART_LOWER);
 
     public BlockArcaneWorkbench() {
-        super("arcane_workbench", Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F));
+        super("arcane_workbench", Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
     }
     
     @Override
