@@ -14,17 +14,21 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import net.minecraft.command.arguments.ArgumentSerializer;
 import net.minecraft.command.arguments.ArgumentTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
 public class CommonProxy implements IProxyPM {
     @Override
-    public void preInit(FMLCommonSetupEvent event) {
+    public void commonSetup(FMLCommonSetupEvent event) {
         PacketHandler.registerMessages();
         InitRecipes.initRecipeTypes();
         InitCapabilities.initCapabilities();
         InitResearch.initResearch();
     }
+    
+    @Override
+    public void clientSetup(FMLClientSetupEvent event) {}
 
     @Override
     public void serverStarting(FMLServerStartingEvent event) {
