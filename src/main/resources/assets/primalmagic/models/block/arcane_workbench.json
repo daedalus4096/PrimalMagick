@@ -1,4 +1,5 @@
 {
+    "parent": "block/block",
     "ambientocclusion": false,
     "textures": {
         "particle": "primalmagic:block/arcane_workbench_side",
