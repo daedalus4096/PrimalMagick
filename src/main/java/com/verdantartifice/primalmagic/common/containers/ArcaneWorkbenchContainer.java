@@ -2,19 +2,22 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 
 public class ArcaneWorkbenchContainer extends Container {
     protected final CraftingInventory craftingInv = new CraftingInventory(this, 3, 3);
+    protected final CraftResultInventory resultInv = new CraftResultInventory();
     protected final PlayerEntity player;
     
     public ArcaneWorkbenchContainer(int windowId, PlayerInventory inv) {
         super(ContainersPM.ARCANE_WORKBENCH, windowId);
         this.player = inv.player;
         
-        // TODO add output slot
+        this.addSlot(new CraftingResultSlot(this.player, this.craftingInv, this.resultInv, 0, 124, 35));
         
         int i, j;
         for (i = 0; i < 3; i++) {
