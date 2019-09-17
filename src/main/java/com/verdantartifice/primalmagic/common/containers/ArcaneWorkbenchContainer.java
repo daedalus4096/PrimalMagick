@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.common.containers;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -127,12 +129,19 @@ public class ArcaneWorkbenchContainer extends Container {
         if (!world.isRemote && player instanceof ServerPlayerEntity) {
             ServerPlayerEntity spe = (ServerPlayerEntity)player;
             ItemStack stack = ItemStack.EMPTY;
-            // TODO try arcane recipes first
-            Optional<ICraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftInv, world);
-            if (optional.isPresent()) {
-                ICraftingRecipe recipe = optional.get();
-                if (resultInv.canUseRecipe(world, spe, recipe)) {
+            Optional<IArcaneRecipe> arcaneOptional = world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.ARCANE_CRAFTING, craftInv, world);
+            if (arcaneOptional.isPresent()) {
+                IArcaneRecipe recipe = arcaneOptional.get();
+                if (resultInv.canUseRecipe(world, spe, recipe) && (recipe.getRequiredResearch() == null || recipe.getRequiredResearch().isKnownByStrict(spe))) {
                     stack = recipe.getCraftingResult(craftInv);
+                }
+            } else {
+                Optional<ICraftingRecipe> vanillaOptional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftInv, world);
+                if (vanillaOptional.isPresent()) {
+                    ICraftingRecipe recipe = vanillaOptional.get();
+                    if (resultInv.canUseRecipe(world, spe, recipe)) {
+                        stack = recipe.getCraftingResult(craftInv);
+                    }
                 }
             }
             resultInv.setInventorySlotContents(0, stack);
