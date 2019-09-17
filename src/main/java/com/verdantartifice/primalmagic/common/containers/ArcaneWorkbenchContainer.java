@@ -1,16 +1,24 @@
 package com.verdantartifice.primalmagic.common.containers;
 
+import java.util.Optional;
+
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ICraftingRecipe;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.World;
 
 public class ArcaneWorkbenchContainer extends Container {
     protected final CraftingInventory craftingInv = new CraftingInventory(this, 3, 3);
@@ -106,5 +114,29 @@ public class ArcaneWorkbenchContainer extends Container {
     @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return slotIn.inventory != this.resultInv && super.canMergeSlot(stack, slotIn);
+    }
+    
+    @Override
+    public void onCraftMatrixChanged(IInventory inventoryIn) {
+        this.worldPosCallable.consume((world, blockPos) -> {
+            slotChangedCraftingGrid(this.windowId, world, this.player, this.craftingInv, this.resultInv);
+        });
+    }
+    
+    protected static void slotChangedCraftingGrid(int windowId, World world, PlayerEntity player, CraftingInventory craftInv, CraftResultInventory resultInv) {
+        if (!world.isRemote && player instanceof ServerPlayerEntity) {
+            ServerPlayerEntity spe = (ServerPlayerEntity)player;
+            ItemStack stack = ItemStack.EMPTY;
+            // TODO try arcane recipes first
+            Optional<ICraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftInv, world);
+            if (optional.isPresent()) {
+                ICraftingRecipe recipe = optional.get();
+                if (resultInv.canUseRecipe(world, spe, recipe)) {
+                    stack = recipe.getCraftingResult(craftInv);
+                }
+            }
+            resultInv.setInventorySlotContents(0, stack);
+            spe.connection.sendPacket(new SSetSlotPacket(windowId, 0, stack));
+        }
     }
 }
