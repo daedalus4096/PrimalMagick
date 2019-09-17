@@ -13,6 +13,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.util.Hand;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -48,7 +49,7 @@ public class ArcaneWorkbenchBlock extends BlockPM {
             NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
                 @Override
                 public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-                    return new ArcaneWorkbenchContainer(windowId, inv);
+                    return new ArcaneWorkbenchContainer(windowId, inv, IWorldPosCallable.of(worldIn, pos));
                 }
 
                 @Override
