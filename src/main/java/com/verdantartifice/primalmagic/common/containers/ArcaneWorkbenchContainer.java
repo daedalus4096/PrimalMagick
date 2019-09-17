@@ -9,6 +9,7 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 
 public class ArcaneWorkbenchContainer extends Container {
@@ -47,5 +48,63 @@ public class ArcaneWorkbenchContainer extends Container {
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.ARCANE_WORKBENCH);
+    }
+    
+    @Override
+    public void onContainerClosed(PlayerEntity playerIn) {
+        super.onContainerClosed(playerIn);
+        this.worldPosCallable.consume((world, blockPos) -> {
+            this.clearContainer(playerIn, world, this.craftingInv);
+        });
+    }
+    
+    @Override
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+        if (slot != null && slot.getHasStack()) {
+            ItemStack slotStack = slot.getStack();
+            stack = slotStack.copy();
+            if (index == 0) {
+                this.worldPosCallable.consume((world, blockPos) -> {
+                    slotStack.getItem().onCreated(slotStack, world, playerIn);
+                });
+                if (!this.mergeItemStack(slotStack, 10, 46, true)) {
+                    return ItemStack.EMPTY;
+                }
+                slot.onSlotChange(slotStack, stack);
+            } else if (index >= 10 && index < 37) {
+                if (!this.mergeItemStack(slotStack, 37, 46, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index >= 37 && index < 46) {
+                if (!this.mergeItemStack(slotStack, 10, 37, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.mergeItemStack(slotStack, 10, 46, false)) {
+                return ItemStack.EMPTY;
+            }
+            
+            if (slotStack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+            
+            if (slotStack.getCount() == stack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+            
+            ItemStack taken = slot.onTake(playerIn, slotStack);
+            if (index == 0) {
+                playerIn.dropItem(taken, false);
+            }
+        }
+        return stack;
+    }
+    
+    @Override
+    public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
+        return slotIn.inventory != this.resultInv && super.canMergeSlot(stack, slotIn);
     }
 }
