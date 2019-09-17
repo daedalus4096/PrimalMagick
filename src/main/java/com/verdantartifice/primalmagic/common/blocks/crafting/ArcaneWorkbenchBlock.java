@@ -48,7 +48,7 @@ public class ArcaneWorkbenchBlock extends BlockPM {
             NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
                 @Override
                 public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-                    return new ArcaneWorkbenchContainer(windowId);
+                    return new ArcaneWorkbenchContainer(windowId, inv);
                 }
 
                 @Override

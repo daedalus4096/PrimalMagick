@@ -15,7 +15,7 @@ public class InitContainers {
         }).setRegistryName(PrimalMagic.MODID, "grimoire"));
         
         registry.register(IForgeContainerType.create((windowId, inv, data) -> {
-            return new ArcaneWorkbenchContainer(windowId);
+            return new ArcaneWorkbenchContainer(windowId, inv);
         }).setRegistryName(PrimalMagic.MODID, "arcane_workbench"));
     }
 }
