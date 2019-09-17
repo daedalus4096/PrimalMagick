@@ -41,7 +41,6 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
 
     @Override
     public boolean matches(CraftingInventory inv, World worldIn) {
-        // TODO test research
         RecipeItemHelper helper = new RecipeItemHelper();
         List<ItemStack> inputs = new ArrayList<>();
         int count = 0;

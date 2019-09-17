@@ -12,4 +12,10 @@ public interface IArcaneRecipe extends IRecipe<CraftingInventory> {
     default IRecipeType<?> getType() {
         return RecipeTypesPM.ARCANE_CRAFTING;
     }
+    
+    @Override
+    default boolean isDynamic() {
+        // Return true to keep arcane recipes from showing up in the vanilla recipe book
+        return true;
+    }
 }
