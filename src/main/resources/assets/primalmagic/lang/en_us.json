@@ -13,6 +13,16 @@
     "primalmagic.research_discipline.RITUAL": "Ritual Magic",
     "primalmagic.research_discipline.MAGITECH": "Magitech",
     
+    "primalmagic.source.earth": "Earth",
+    "primalmagic.source.sea": "Sea",
+    "primalmagic.source.sky": "Sky",
+    "primalmagic.source.sun": "Sun",
+    "primalmagic.source.moon": "Moon",
+    "primalmagic.source.blood": "Blood",
+    "primalmagic.source.infernal": "Infernal",
+    "primalmagic.source.void": "Void",
+    "primalmagic.source.hallowed": "Hallowed",
+    
     "primalmagic.knowledge_type.OBSERVATION": "Observation",
     "primalmagic.knowledge_type.THEORY": "Theory",
     "primalmagic.knowledge_type.label": "%s: %s",
