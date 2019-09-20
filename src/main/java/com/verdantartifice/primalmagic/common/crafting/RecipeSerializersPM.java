@@ -7,5 +7,6 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(PrimalMagic.MODID)
 public class RecipeSerializersPM {
-    public static final IRecipeSerializer<ShapelessArcaneRecipe> SHAPELESS_ARCANE = null;
+    public static final IRecipeSerializer<ShapelessArcaneRecipe> ARCANE_CRAFTING_SHAPELESS = null;
+    public static final IRecipeSerializer<ShapedArcaneRecipe> ARCANE_CRAFTING_SHAPED = null;
 }

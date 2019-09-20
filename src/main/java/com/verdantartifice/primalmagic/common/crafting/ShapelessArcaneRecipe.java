@@ -82,7 +82,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return RecipeSerializersPM.SHAPELESS_ARCANE;
+        return RecipeSerializersPM.ARCANE_CRAFTING_SHAPELESS;
     }
 
     @Override

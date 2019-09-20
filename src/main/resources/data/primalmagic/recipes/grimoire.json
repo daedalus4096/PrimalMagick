@@ -1,0 +1,16 @@
+{
+	"type": "primalmagic:arcane_crafting_shaped",
+	"research": "FIRST_STEPS",
+	"pattern": [
+		"MM",
+		"MM"
+	],
+	"key": {
+		"M": {
+			"item": "primalmagic:marble_raw"
+		}
+	},
+	"result": {
+		"item": "primalmagic:grimoire"
+	}
+}
