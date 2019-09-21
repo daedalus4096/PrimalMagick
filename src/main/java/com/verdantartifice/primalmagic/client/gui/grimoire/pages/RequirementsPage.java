@@ -112,7 +112,7 @@ public class RequirementsPage extends AbstractPage {
         }
         
         // Init progress button if applicable
-        y = screen.height - 36;
+        y = screen.height - 40;
         if (screen.isProgressing()) {
             ITextComponent text = new TranslationTextComponent("primalmagic.grimoire.completing_text");
             screen.addWidgetToScreen(new ProgressingWidget(startX + (side * 152), y, text.getFormattedText()));

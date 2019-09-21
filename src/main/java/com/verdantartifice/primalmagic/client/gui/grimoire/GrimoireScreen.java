@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.lwjgl.glfw.GLFW;
@@ -10,10 +12,12 @@ import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractRecipePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplinePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.IndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.PageImage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.PageString;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.RecipePageFactory;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.RequirementsPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.StagePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.BackButton;
@@ -34,6 +38,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -185,6 +190,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             }
         } else if (abstractPage instanceof RequirementsPage) {
             ((RequirementsPage)abstractPage).initWidgets(this, side, x, y);
+        } else if (abstractPage instanceof AbstractRecipePage) {
+            ((AbstractRecipePage)abstractPage).initWidgets(this, side, x, y);
         }
     }
 
@@ -359,9 +366,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             this.currentStageIndex = 0;
         }
         ResearchStage stage = entry.getStages().get(this.currentStageIndex);
-        List<ResearchAddendum> addenda = complete ? entry.getAddenda() : new ArrayList<>();
-        
-        // TODO generate recipe lists from stage and addenda
+        List<ResearchAddendum> addenda = complete ? entry.getAddenda() : Collections.emptyList();
         
         String rawText = (new TranslationTextComponent(stage.getTextTranslationKey())).getString();
         
@@ -491,6 +496,32 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         // Add requirements page if applicable
         if (!entry.getKey().isKnownByStrict(this.getMinecraft().player) && stage.hasPrerequisites()) {
             this.pages.add(new RequirementsPage(stage));
+        }
+        
+        // Generate recipe pages from stage and addenda
+        List<ResourceLocation> locList = new ArrayList<>();
+        for (ResourceLocation loc : stage.getRecipes()) {
+            if (!locList.contains(loc)) {
+                locList.add(loc);
+            }
+        }
+        for (ResearchAddendum addendum : addenda) {
+            if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
+                for (ResourceLocation loc : addendum.getRecipes()) {
+                    if (!locList.contains(loc)) {
+                        locList.add(loc);
+                    }
+                }
+            }
+        }
+        for (ResourceLocation recipeLoc : locList) {
+            Optional<? extends IRecipe<?>> opt = this.getMinecraft().world.getRecipeManager().getRecipe(recipeLoc);
+            if (opt.isPresent()) {
+                AbstractRecipePage page = RecipePageFactory.createPage(opt.get());
+                if (page != null) {
+                    this.pages.add(page);
+                }
+            }
         }
     }
     
