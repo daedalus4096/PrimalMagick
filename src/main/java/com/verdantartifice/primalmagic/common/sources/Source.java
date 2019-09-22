@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.common.sources;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -24,6 +26,8 @@ public class Source {
     public static final Source VOID = new Source("void", 0x551A8B, TextFormatting.DARK_PURPLE);
     public static final Source HALLOWED = new Source("hallowed", 0xEEEBD9, TextFormatting.WHITE);
     
+    public static final List<Source> SORTED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED);
+
     protected String tag;
     protected int color;
     protected TextFormatting chatColor;
