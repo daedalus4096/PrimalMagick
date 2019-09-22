@@ -74,6 +74,11 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     public ItemStack getRecipeOutput() {
         return this.recipeOutput;
     }
+    
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return this.recipeItems;
+    }
 
     @Override
     public ResourceLocation getId() {
