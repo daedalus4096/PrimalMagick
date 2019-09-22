@@ -1,10 +1,16 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.pages;
 
+import java.util.List;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.IngredientWidget;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemStackWidget;
 import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -23,8 +29,25 @@ public class ShapedArcaneRecipePage extends AbstractRecipePage {
     
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-        // TODO Render ingredient stacks
-        // TODO Render output stack
+        int indent = 140;
+        int overlayWidth = 52;
+
+        // Render ingredient stacks
+        int recipeWidth = this.recipe.getRecipeWidth();
+        int recipeHeight = this.recipe.getRecipeHeight();
+        List<Ingredient> ingredients = this.recipe.getIngredients();
+        for (int i = 0; i < Math.min(recipeWidth, 3); i++) {
+            for (int j = 0; j < Math.min(recipeHeight, 3); j++) {
+                Ingredient ingredient = ingredients.get(i + j * recipeWidth);
+                if (ingredient != null) {
+                    screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 17 + (side * 152) + (indent / 2) - (overlayWidth / 2) + (i * 32), y + 67 + (j * 32)));
+                }
+            }
+        }
+        
+        // Render output stack
+        ItemStack output = this.recipe.getRecipeOutput();
+        screen.addWidgetToScreen(new ItemStackWidget(output, x + 15 + (side * 152) + (indent / 2) - (overlayWidth / 2), y + 30, false));
     }
     
     @Override

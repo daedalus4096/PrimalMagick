@@ -94,6 +94,11 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     public ItemStack getRecipeOutput() {
         return this.recipeOutput;
     }
+    
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return this.recipeItems;
+    }
 
     @Override
     public ResourceLocation getId() {
