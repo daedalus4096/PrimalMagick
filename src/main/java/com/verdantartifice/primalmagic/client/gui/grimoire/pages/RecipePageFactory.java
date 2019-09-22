@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.ShapelessArcaneRecipe;
 
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipe;
+import net.minecraft.item.crafting.ShapelessRecipe;
 
 public class RecipePageFactory {
     @Nullable
@@ -15,6 +17,10 @@ public class RecipePageFactory {
             return new ShapelessArcaneRecipePage((ShapelessArcaneRecipe)recipe);
         } else if (recipe instanceof ShapedArcaneRecipe) {
             return new ShapedArcaneRecipePage((ShapedArcaneRecipe)recipe);
+        } else if (recipe instanceof ShapelessRecipe) {
+            return new ShapelessRecipePage((ShapelessRecipe)recipe);
+        } else if (recipe instanceof ShapedRecipe) {
+            return new ShapedRecipePage((ShapedRecipe)recipe);
         } else {
             return null;
         }

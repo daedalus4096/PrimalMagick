@@ -143,6 +143,8 @@
     "primalmagic.grimoire.requirements_header": "Requirements",
     "primalmagic.grimoire.shapeless_arcane_recipe_header": "Arcane Workbench (Shapeless)",
     "primalmagic.grimoire.shaped_arcane_recipe_header": "Arcane Workbench",
+    "primalmagic.grimoire.shapeless_recipe_header": "Workbench (Shapeless)",
+    "primalmagic.grimoire.shaped_recipe_header": "Workbench",
     "primalmagic.grimoire.must_obtain_header": "Will be consumed:",
     "primalmagic.grimoire.must_craft_header": "Must craft:",
     "primalmagic.grimoire.required_knowledge_header": "Required knowledge:",
