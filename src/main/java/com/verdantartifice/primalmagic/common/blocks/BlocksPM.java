@@ -9,4 +9,5 @@ import net.minecraftforge.registries.ObjectHolder;
 public class BlocksPM {
     public static final Block MARBLE_RAW = null;
     public static final Block ARCANE_WORKBENCH = null;
+    public static final Block ANCIENT_FONT_EARTH = null;
 }
