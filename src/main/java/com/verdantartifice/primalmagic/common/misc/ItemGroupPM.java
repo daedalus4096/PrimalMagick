@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.misc;
 
-import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -12,6 +12,6 @@ public class ItemGroupPM extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(BlocksPM.MARBLE_RAW);
+        return new ItemStack(ItemsPM.GRIMOIRE);
     }
 }
