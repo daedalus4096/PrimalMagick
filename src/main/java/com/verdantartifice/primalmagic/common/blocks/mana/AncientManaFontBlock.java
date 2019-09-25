@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.blocks.mana;
 
-import com.verdantartifice.primalmagic.common.blocks.base.BlockPM;
 import com.verdantartifice.primalmagic.common.blocks.base.BlockTilePM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
