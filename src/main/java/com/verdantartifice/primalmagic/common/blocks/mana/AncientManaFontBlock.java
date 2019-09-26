@@ -19,12 +19,19 @@ public class AncientManaFontBlock extends BlockTilePM<AncientManaFontTileEntity>
     protected static final VoxelShape PART_UPPER = Block.makeCuboidShape(2.0D, 14.0D, 2.0D, 14.0D, 16.0D, 14.0D);
     protected static final VoxelShape SHAPE = VoxelShapes.or(PART_LOWER, PART_UPPER);
     
+    protected Source source;
+    
     public AncientManaFontBlock(Source source) {
         super("ancient_font_" + source.getTag(), AncientManaFontTileEntity.class, Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F).sound(SoundType.STONE).noDrops());
+        this.source = source;
     }
     
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE;
+    }
+    
+    public Source getSource() {
+        return this.source;
     }
 }
