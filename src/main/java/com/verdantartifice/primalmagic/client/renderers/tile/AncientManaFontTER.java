@@ -5,6 +5,7 @@ import java.awt.Color;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 
@@ -19,7 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEntity> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/beacon_beam.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/mana_font_core.png");
     
     @Override
     public void render(AncientManaFontTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
@@ -31,11 +32,18 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
             float g = sourceColor.getGreen() / 255.0F;
             float b = sourceColor.getBlue() / 255.0F;
             double ds = 0.1875D;
+            int rot = (int)(this.getWorld().getWorldInfo().getGameTime() % 360);
             
             this.bindTexture(TEXTURE);
             
+            GlStateManager.pushLightingAttributes();
+            GlStateManager.disableLighting();
+            
             GlStateManager.pushMatrix();
             GlStateManager.translated(x + 0.5D, y + 0.5D, z + 0.5D);
+            GlStateManager.rotated(rot, 0.0D, 1.0D, 0.0D);
+            GlStateManager.rotated(45.0D, 0.0D, 0.0D, 1.0D);
+            GlStateManager.rotated(45.0D, 1.0D, 0.0D, 0.0D);
             GlStateManager.color4f(r, g, b, 1.0F);
 
             Tessellator tess = Tessellator.getInstance();
@@ -48,24 +56,24 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
             bb.pos(ds, ds, ds).tex(1.0D, 1.0D).endVertex();
             
             bb.pos(-ds, ds, -ds).tex(0.0D, 1.0D).endVertex();
-            bb.pos(-ds, -ds, -ds).tex(0.0D, 0.0D).endVertex();
-            bb.pos(ds, -ds, -ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(ds, ds, -ds).tex(1.0D, 1.0D).endVertex();
-            
-            bb.pos(ds, ds, -ds).tex(1.0D, 0.0D).endVertex();
-            bb.pos(ds, -ds, -ds).tex(0.0D, 0.0D).endVertex();
-            bb.pos(ds, -ds, ds).tex(0.0D, 1.0D).endVertex();
-            bb.pos(ds, ds, ds).tex(1.0D, 1.0D).endVertex();
-            
-            bb.pos(-ds, -ds, ds).tex(0.0D, 1.0D).endVertex();
+            bb.pos(ds, -ds, -ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(-ds, -ds, -ds).tex(0.0D, 0.0D).endVertex();
-            bb.pos(-ds, ds, -ds).tex(1.0D, 0.0D).endVertex();
+            
+            bb.pos(ds, ds, -ds).tex(0.0D, 1.0D).endVertex();
+            bb.pos(ds, ds, ds).tex(1.0D, 1.0D).endVertex();
+            bb.pos(ds, -ds, ds).tex(1.0D, 0.0D).endVertex();
+            bb.pos(ds, -ds, -ds).tex(0.0D, 0.0D).endVertex();
+            
+            bb.pos(-ds, -ds, ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(-ds, ds, ds).tex(1.0D, 1.0D).endVertex();
+            bb.pos(-ds, ds, -ds).tex(0.0D, 1.0D).endVertex();
+            bb.pos(-ds, -ds, -ds).tex(0.0D, 0.0D).endVertex();
             
             bb.pos(ds, ds, -ds).tex(1.0D, 0.0D).endVertex();
-            bb.pos(ds, ds, ds).tex(1.0D, 1.0D).endVertex();
-            bb.pos(-ds, ds, ds).tex(0.0D, 1.0D).endVertex();
             bb.pos(-ds, ds, -ds).tex(0.0D, 0.0D).endVertex();
+            bb.pos(-ds, ds, ds).tex(0.0D, 1.0D).endVertex();
+            bb.pos(ds, ds, ds).tex(1.0D, 1.0D).endVertex();
             
             bb.pos(ds, -ds, -ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(ds, -ds, ds).tex(1.0D, 1.0D).endVertex();
@@ -75,6 +83,7 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
             tess.draw();
             
             GlStateManager.popMatrix();
+            GlStateManager.popAttributes();
         }
     }
 }
