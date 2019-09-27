@@ -13,6 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class InitBlocks {
     public static void initBlocks(IForgeRegistry<Block> registry) {
         registry.register(new BlockPM("marble_raw", Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F)));
+        registry.register(new BlockPM("marble_enchanted", Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F)));
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));
     }
