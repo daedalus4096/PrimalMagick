@@ -29,6 +29,7 @@
     "primalmagic.source.infernal": "Infernal",
     "primalmagic.source.void": "Void",
     "primalmagic.source.hallowed": "Hallowed",
+    "primalmagic.source.mana_tooltip": "%s: %d / %d",
     
     "primalmagic.knowledge_type.OBSERVATION": "Observation",
     "primalmagic.knowledge_type.THEORY": "Theory",
