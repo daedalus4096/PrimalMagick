@@ -33,6 +33,7 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
             float b = sourceColor.getBlue() / 255.0F;
             double ds = 0.1875D;
             int rot = (int)(this.getWorld().getWorldInfo().getGameTime() % 360);
+            double scale = (double)tileEntityIn.getMana() / (double)tileEntityIn.getManaCapacity();
             
             this.bindTexture(TEXTURE);
             
@@ -44,6 +45,7 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
             GlStateManager.rotated(rot, 0.0D, 1.0D, 0.0D);
             GlStateManager.rotated(45.0D, 0.0D, 0.0D, 1.0D);
             GlStateManager.rotated(45.0D, 1.0D, 0.0D, 0.0D);
+            GlStateManager.scaled(scale, scale, scale);
             GlStateManager.color4f(r, g, b, 1.0F);
 
             Tessellator tess = Tessellator.getInstance();
