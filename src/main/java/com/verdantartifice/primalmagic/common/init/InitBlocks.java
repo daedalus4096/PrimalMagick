@@ -16,5 +16,9 @@ public class InitBlocks {
         registry.register(new BlockPM("marble_enchanted", Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F)));
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));
+        registry.register(new AncientManaFontBlock(Source.SEA));
+        registry.register(new AncientManaFontBlock(Source.SKY));
+        registry.register(new AncientManaFontBlock(Source.SUN));
+        registry.register(new AncientManaFontBlock(Source.MOON));
     }
 }

@@ -17,6 +17,10 @@ public class InitItems {
         registry.register(new BlockItemPM(BlocksPM.MARBLE_ENCHANTED));
         registry.register(new BlockItemPM(BlocksPM.ARCANE_WORKBENCH));
         registry.register(new BlockItemPM(BlocksPM.ANCIENT_FONT_EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE)));
+        registry.register(new BlockItemPM(BlocksPM.ANCIENT_FONT_SEA, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE)));
+        registry.register(new BlockItemPM(BlocksPM.ANCIENT_FONT_SKY, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE)));
+        registry.register(new BlockItemPM(BlocksPM.ANCIENT_FONT_SUN, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE)));
+        registry.register(new BlockItemPM(BlocksPM.ANCIENT_FONT_MOON, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE)));
     }
     
     public static void initItems(IForgeRegistry<Item> registry) {

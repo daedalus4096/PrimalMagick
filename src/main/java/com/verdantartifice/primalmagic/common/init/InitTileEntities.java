@@ -9,6 +9,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class InitTileEntities {
     public static void initTileEntityTypes(IForgeRegistry<TileEntityType<?>> registry) {
-        registry.register(TileEntityType.Builder.create(AncientManaFontTileEntity::new, BlocksPM.ANCIENT_FONT_EARTH).build(null).setRegistryName(PrimalMagic.MODID, "ancient_mana_font"));
+        registry.register(TileEntityType.Builder.create(AncientManaFontTileEntity::new, BlocksPM.ANCIENT_FONT_EARTH, BlocksPM.ANCIENT_FONT_SEA, BlocksPM.ANCIENT_FONT_SKY, BlocksPM.ANCIENT_FONT_SUN, BlocksPM.ANCIENT_FONT_MOON).build(null).setRegistryName(PrimalMagic.MODID, "ancient_mana_font"));
     }
 }

@@ -3,6 +3,10 @@
     "block.primalmagic.marble_enchanted": "Enchanted Marble",
     "block.primalmagic.arcane_workbench": "Arcane Workbench",
     "block.primalmagic.ancient_font_earth": "Ancient Earth Font",
+    "block.primalmagic.ancient_font_sea": "Ancient Sea Font",
+    "block.primalmagic.ancient_font_sky": "Ancient Sky Font",
+    "block.primalmagic.ancient_font_sun": "Ancient Sun Font",
+    "block.primalmagic.ancient_font_moon": "Ancient Moon Font",
     
     "item.primalmagic.debug_tablet": "Debug Tablet",
     "item.primalmagic.grimoire": "Grimoire",
