@@ -8,4 +8,6 @@ public interface IProxyPM {
     public void commonSetup(FMLCommonSetupEvent event);
     public void clientSetup(FMLClientSetupEvent event);
     public void serverStarting(FMLServerStartingEvent event);
+    
+    public boolean isShiftDown();
 }

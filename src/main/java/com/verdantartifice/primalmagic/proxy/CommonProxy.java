@@ -38,4 +38,9 @@ public class CommonProxy implements IProxyPM {
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "knowledge_amount").toString()), KnowledgeAmountArgument.class, new ArgumentSerializer<>(KnowledgeAmountArgument::amount));
         PrimalMagicCommand.register(event.getCommandDispatcher());
     }
+    
+    @Override
+    public boolean isShiftDown() {
+        return false;
+    }
 }
