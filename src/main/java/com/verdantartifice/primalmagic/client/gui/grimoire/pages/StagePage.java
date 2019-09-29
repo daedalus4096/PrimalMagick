@@ -49,7 +49,9 @@ public class StagePage extends AbstractPage {
         // Draw title page if applicable
         if (this.isFirstPage() && side == 0) {
             this.renderTitle(side, x, y, mouseX, mouseY);
-            y += 28;
+            y += 53;
+        } else {
+            y += 25;
         }
         
         // Render page contents

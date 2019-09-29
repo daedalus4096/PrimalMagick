@@ -18,7 +18,7 @@ public class EntryButton extends AbstractTopicButton {
     protected ResearchEntry entry;
 
     public EntryButton(int widthIn, int heightIn, String text, GrimoireScreen screen, ResearchEntry entry) {
-        super(widthIn, heightIn, 135, 12, text, screen, new Handler());
+        super(widthIn, heightIn, 123, 12, text, screen, new Handler());
         this.entry = entry;
     }
     

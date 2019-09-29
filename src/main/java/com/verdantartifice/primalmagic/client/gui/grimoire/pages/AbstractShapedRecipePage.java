@@ -24,7 +24,7 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-        int indent = 140;
+        int indent = 124;
         int overlayWidth = 52;
 
         // Render ingredient stacks
@@ -35,22 +35,22 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
             for (int j = 0; j < Math.min(recipeHeight, 3); j++) {
                 Ingredient ingredient = ingredients.get(i + j * recipeWidth);
                 if (ingredient != null) {
-                    screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 17 + (side * 152) + (indent / 2) - (overlayWidth / 2) + (i * 32), y + 67 + (j * 32)));
+                    screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (i * 32), y + 67 + (j * 32)));
                 }
             }
         }
         
         // Render output stack
         ItemStack output = this.recipe.getRecipeOutput();
-        screen.addWidgetToScreen(new ItemStackWidget(output, x + 15 + (side * 152) + (indent / 2) - (overlayWidth / 2), y + 30, false));
+        screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
     }
     
     @Override
     public void render(int side, int x, int y, int mouseX, int mouseY) {
         super.render(side, x, y, mouseX, mouseY);
-        y += 28;
+        y += 53;
         
-        int indent = 140;
+        int indent = 124;
         int overlayWidth = 52;
         int overlayHeight = 52;
         
@@ -63,7 +63,7 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.translatef(x - 17 + (side * 152) + (indent / 2), y + 50 + (overlayHeight / 2), 0.0F);
+        GlStateManager.translatef(x - 5 + (side * 140) + (indent / 2), y + 50 + (overlayHeight / 2), 0.0F);
         GlStateManager.scalef(2.0F, 2.0F, 1.0F);
         this.blit(-(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight);
         GlStateManager.popMatrix();

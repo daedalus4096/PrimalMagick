@@ -12,7 +12,7 @@ public class DisciplineButton extends AbstractTopicButton {
     protected ResearchDiscipline discipline;
 
     public DisciplineButton(int widthIn, int heightIn, String text, GrimoireScreen screen, ResearchDiscipline discipline) {
-        super(widthIn, heightIn, 135, 12, text, screen, new Handler());
+        super(widthIn, heightIn, 123, 12, text, screen, new Handler());
         this.discipline = discipline;
     }
     

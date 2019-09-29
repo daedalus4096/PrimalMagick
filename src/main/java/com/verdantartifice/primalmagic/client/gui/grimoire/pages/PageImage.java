@@ -48,7 +48,7 @@ public class PageImage extends AbstractGui implements IPageElement {
         GlStateManager.pushMatrix();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft.getInstance().getTextureManager().bindTexture(this.location);
-        GlStateManager.translatef(x - 15 + (side * 152) + ((140 - this.adjustedWidth) / 2), y - 5, 0.0F);
+        GlStateManager.translatef(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
         GlStateManager.scalef(this.scale, this.scale, this.scale);
         this.blit(0, 0, this.x, this.y, this.width, this.height);
         GlStateManager.popMatrix();

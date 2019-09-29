@@ -30,18 +30,18 @@ public abstract class AbstractPage extends AbstractGui {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
         if (this.renderTopTitleBar()) {
-            this.blit(x + 4 + (side * 152), y - 7, 24, 184, 96, 4);
+            this.blit(x + 10 + (side * 140), y + 18, 24, 184, 96, 4);
         }
-        this.blit(x + 4 + (side * 152), y + 10, 24, 184, 96, 4);
+        this.blit(x + 10 + (side * 140), y + 35, 24, 184, 96, 4);
         String headerText = new TranslationTextComponent(this.getTitleTranslationKey()).getFormattedText();
         int offset = mc.fontRenderer.getStringWidth(headerText);
-        int indent = 140;
-        if (offset <= 140) {
-            mc.fontRenderer.drawString(headerText, x - 15 + (side * 152) + (indent / 2) - (offset / 2), y, Color.BLACK.getRGB());
+        int indent = 124;
+        if (offset <= 124) {
+            mc.fontRenderer.drawString(headerText, x - 3 + (side * 140) + (indent / 2) - (offset / 2), y + 25, Color.BLACK.getRGB());
         } else {
-            float scale = 140.0F / offset;
+            float scale = 124.0F / offset;
             GlStateManager.pushMatrix();
-            GlStateManager.translatef(x - 15 + (side * 152) + (indent / 2) - (offset / 2 * scale), y + (1.0F * scale), 0.0F);
+            GlStateManager.translatef(x - 3 + (side * 140) + (indent / 2) - (offset / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
             GlStateManager.scalef(scale, scale, scale);
             mc.fontRenderer.drawString(headerText, 0, 0, Color.BLACK.getRGB());
             GlStateManager.popMatrix();

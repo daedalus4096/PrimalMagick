@@ -145,9 +145,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 break;
             }
         }
-        this.nextPageButton = new PageButton(this.guiLeft + 262, this.guiTop + 190, this, true);
-        this.prevPageButton = new PageButton(this.guiLeft - 16, this.guiTop + 190, this, false);
-        this.backButton = new BackButton(this.guiLeft + 118, this.guiTop + 190, this);
+        this.nextPageButton = new PageButton(this.guiLeft + 258, this.guiTop + 172, this, true);
+        this.prevPageButton = new PageButton(this.guiLeft - 12, this.guiTop + 172, this, false);
+        this.backButton = new BackButton(this.guiLeft + 120, this.guiTop + 172, this);
         this.addButton(this.nextPageButton);
         this.addButton(this.prevPageButton);
         this.addButton(this.backButton);
@@ -161,10 +161,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     private void initPageButtons(AbstractPage abstractPage, int side, int x, int y) {
         // Make room for page title if applicable
         if (this.currentPage == 0 && side == 0) {
-            y += 28;
+            y += 53;
         }
         if (this.currentPage > 0 || side == 1) {
-            y += 4;
+            y += 29;
         }
         
         // Place buttons
@@ -172,7 +172,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             IndexPage page = (IndexPage)abstractPage;
             for (ResearchDiscipline discipline : page.getDisciplines()) {
                 String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getFormattedText();
-                this.addButton(new DisciplineButton(x + (side * 152), y, text, this, discipline));
+                this.addButton(new DisciplineButton(x + 12 + (side * 140), y, text, this, discipline));
                 y += 12;
             }
         } else if (abstractPage instanceof DisciplinePage) {
@@ -181,10 +181,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 if (obj instanceof ResearchEntry) {
                     ResearchEntry entry = (ResearchEntry)obj;
                     String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
-                    this.addButton(new EntryButton(x + (side * 152), y, text, this, entry));
+                    this.addButton(new EntryButton(x + 12 + (side * 140), y, text, this, entry));
                 } else if (obj instanceof ITextComponent) {
                     String text = ((ITextComponent)obj).getFormattedText();
-                    this.addButton(new SectionHeaderWidget(x + (side * 152), y, text));
+                    this.addButton(new SectionHeaderWidget(x + 12 + (side * 140), y, text));
                 }
                 y += 12;
             }
@@ -297,7 +297,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         
         // Divide the sections out into pages
         DisciplinePageProperties properties = new DisciplinePageProperties();
-        properties.heightRemaining = 182;
+        properties.heightRemaining = 137;
         properties.firstSection = true;
         properties.page = new DisciplinePage(discipline, true);
         if (!updatedList.isEmpty()) {
@@ -325,7 +325,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header." + headerName).applyTextStyle(TextFormatting.UNDERLINE);
         if (properties.heightRemaining < 36 && !properties.page.getContents().isEmpty()) {
             // If there's not room for the spacer, the header, and a first entry, skip to the next page
-            properties.heightRemaining = 210;
+            properties.heightRemaining = 165;
             this.pages.add(properties.page);
             properties.page = new DisciplinePage(discipline);
             properties.page.addContent(headerText);
@@ -343,7 +343,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             properties.page.addContent(entry);
             properties.heightRemaining -= 12;
             if (properties.heightRemaining < 12 && !properties.page.getContents().isEmpty()) {
-                properties.heightRemaining = 210;
+                properties.heightRemaining = 165;
                 this.pages.add(properties.page);
                 properties.page = new DisciplinePage(discipline);
             }
@@ -428,11 +428,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int lineHeight = this.font.FONT_HEIGHT;
         List<String> parsedText = new ArrayList<>();
         for (String str : firstPassText) {
-            parsedText.addAll(this.font.listFormattedStringToWidth(str, 140));
+            parsedText.addAll(this.font.listFormattedStringToWidth(str, 124));
         }
         
         // First page has less available space to account for title
-        int heightRemaining = 182;
+        int heightRemaining = 137;
         
         // Break parsed text into pages
         StagePage tempPage = new StagePage(stage, true);
@@ -451,7 +451,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             if (line.contains("~P")) {
                 this.pages.add(tempPage);
                 tempPage = new StagePage(stage);
-                heightRemaining = 210;
+                heightRemaining = 165;
                 line = "";
             }
             if (!line.isEmpty()) {
@@ -467,7 +467,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 tempPage.addElement(tempImages.remove(0));
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
-                heightRemaining = 210;
+                heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new StagePage(stage);
             }
@@ -478,10 +478,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         
         // Deal with any remaining images
         tempPage = new StagePage(stage);
-        heightRemaining = 210;
+        heightRemaining = 165;
         while (!tempImages.isEmpty()) {
             if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
-                heightRemaining = 210;
+                heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new StagePage(stage);
             } else {

@@ -25,7 +25,7 @@ public class PageString implements IPageElement {
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Minecraft.getInstance().fontRenderer.drawString(this.str.replace("~B", ""), x - 15 + (side * 152), y - 6, Color.BLACK.getRGB());
+        Minecraft.getInstance().fontRenderer.drawString(this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB());
     }
 
     @Override
