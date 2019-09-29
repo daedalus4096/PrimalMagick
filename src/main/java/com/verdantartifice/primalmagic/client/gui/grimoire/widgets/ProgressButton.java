@@ -34,7 +34,7 @@ public class ProgressButton extends Button {
         public void onPress(Button button) {
             if (button instanceof ProgressButton) {
                 ProgressButton pb = (ProgressButton)button;
-                PrimalMagic.LOGGER.info("Progressing research");
+                PrimalMagic.LOGGER.debug("Progressing research");
                 PacketHandler.sendToServer(new SyncProgressPacket(pb.getStage().getResearchEntry().getKey(), false, true, true));
                 pb.getScreen().setProgressing();
             }

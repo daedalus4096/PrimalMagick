@@ -31,7 +31,7 @@ public class DebugTabletItem extends ItemPM {
                                         .collect(Collectors.toSet())
                                         .toArray(new String[researchSet.size()]);
             String output = String.join(", ", researchList);
-            PrimalMagic.LOGGER.info("Checking {}-side knowledge for {}: {}", (worldIn.isRemote ? "client" : "server"), playerIn.getName().getString(), output);
+            PrimalMagic.LOGGER.debug("Checking {}-side knowledge for {}: {}", (worldIn.isRemote ? "client" : "server"), playerIn.getName().getString(), output);
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }

@@ -69,7 +69,7 @@ public class SyncProgressPacket implements IMessageToServer {
                             ResearchManager.noFlags = true;
                         }
                         // Do the actual progression
-                        PrimalMagic.LOGGER.info("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
+                        PrimalMagic.LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
                         ResearchManager.progressResearch(player, message.key);
                     }
                 }
