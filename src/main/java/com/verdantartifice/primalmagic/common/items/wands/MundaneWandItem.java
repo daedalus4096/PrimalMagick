@@ -197,4 +197,9 @@ public class MundaneWandItem extends ItemPM implements IWand {
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return false;
     }
+    
+    @Override
+    public boolean canContinueUsing(ItemStack oldStack, ItemStack newStack) {
+        return true;
+    }
 }

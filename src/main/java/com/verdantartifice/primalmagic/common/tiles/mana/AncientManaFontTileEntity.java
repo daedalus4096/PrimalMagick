@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.tiles.mana;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
@@ -63,7 +62,6 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
 
     @Override
     public ActionResultType onWandRightClick(ItemStack wandStack, World world, PlayerEntity player, BlockPos pos, Direction direction) {
-        PrimalMagic.LOGGER.debug("Calling ancient mana font onWandRightClick");
         if (wandStack.getItem() instanceof IWand) {
             IWand wand = (IWand)wandStack.getItem();
             wand.setTileInUse(wandStack, this);
