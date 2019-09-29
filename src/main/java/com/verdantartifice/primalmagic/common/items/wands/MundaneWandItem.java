@@ -8,14 +8,23 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.base.ItemPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
+import com.verdantartifice.primalmagic.common.wands.IWand;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.UseAction;
 import net.minecraft.nbt.IntNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -28,19 +37,6 @@ public class MundaneWandItem extends ItemPM implements IWand {
         super("mundane_wand", new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1));
     }
     
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (worldIn.isRemote) {
-            PrimalMagic.LOGGER.info("Equipped wand mana:");
-            SourceList mana = this.getAllMana(playerIn.getHeldItem(handIn));
-            for (Source source : mana.getSources()) {
-                ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey());
-                PrimalMagic.LOGGER.info(nameComp.getString() + ": " + mana.getAmount(source));
-            }
-        }
-        return super.onItemRightClick(worldIn, playerIn, handIn);
-    }
-
     @Override
     public int getMana(ItemStack stack, Source source) {
         int retVal = 0;
@@ -120,5 +116,85 @@ public class MundaneWandItem extends ItemPM implements IWand {
             }
             tooltip.add(new StringTextComponent(sb.toString()));
         }
+    }
+    
+    @Override
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.BOW;
+    }
+    
+    @Override
+    public int getUseDuration(ItemStack stack) {
+        return 72000;
+    }
+    
+    @Override
+    public IInteractWithWand getTileInUse(ItemStack wandStack, World world) {
+        if (wandStack.hasTag() && wandStack.getTag().contains("UsingX") && wandStack.getTag().contains("UsingY") && wandStack.getTag().contains("UsingZ")) {
+            BlockPos pos = new BlockPos(wandStack.getTag().getInt("UsingX"), wandStack.getTag().getInt("UsingY"), wandStack.getTag().getInt("UsingZ"));
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof IInteractWithWand) {
+                return (IInteractWithWand)tile;
+            }
+        }
+        return null;
+    }
+    
+    @Override
+    public <T extends TileEntity & IInteractWithWand> void setTileInUse(ItemStack wandStack, T tile) {
+        wandStack.setTagInfo("UsingX", new IntNBT(tile.getPos().getX()));
+        wandStack.setTagInfo("UsingY", new IntNBT(tile.getPos().getY()));
+        wandStack.setTagInfo("UsingZ", new IntNBT(tile.getPos().getZ()));
+    }
+    
+    @Override
+    public void clearTileInUse(ItemStack wandStack) {
+        if (wandStack.hasTag()) {
+            wandStack.getTag().remove("UsingX");
+            wandStack.getTag().remove("UsingY");
+            wandStack.getTag().remove("UsingZ");
+        }
+    }
+    
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        ItemStack stack = playerIn.getHeldItem(handIn);
+        playerIn.setActiveHand(handIn);
+        return new ActionResult<>(ActionResultType.SUCCESS, stack);
+    }
+    
+    @Override
+    public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+        BlockState bs = context.getWorld().getBlockState(context.getPos());
+        if (bs.getBlock() instanceof IInteractWithWand) {
+            return ((IInteractWithWand)bs.getBlock()).onWandRightClick(context.getItem(), context.getWorld(), context.getPlayer(), context.getPos(), context.getFace());
+        }
+        TileEntity tile = context.getWorld().getTileEntity(context.getPos());
+        if (tile != null && tile instanceof IInteractWithWand) {
+            return ((IInteractWithWand)tile).onWandRightClick(context.getItem(), context.getWorld(), context.getPlayer(), context.getPos(), context.getFace());
+        }
+        return ActionResultType.PASS;
+    }
+    
+    @Override
+    public void onUsingTick(ItemStack stack, LivingEntity living, int count) {
+        if (living instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity)living;
+            IInteractWithWand wandable = this.getTileInUse(stack, player.world);
+            if (wandable != null) {
+                wandable.onWandUseTick(stack, player, count);
+            }
+        }
+    }
+    
+    @Override
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+        super.onPlayerStoppedUsing(stack, worldIn, entityLiving, timeLeft);
+        this.clearTileInUse(stack);
+    }
+    
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return false;
     }
 }
