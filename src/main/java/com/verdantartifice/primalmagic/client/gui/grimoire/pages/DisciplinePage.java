@@ -6,8 +6,14 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.EntryButton;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.SectionHeaderWidget;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -49,6 +55,21 @@ public class DisciplinePage extends AbstractPage {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
             this.renderTitle(side, x, y, mouseX, mouseY);
+        }
+    }
+    
+    @Override
+    public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        for (Object obj : this.getContents()) {
+            if (obj instanceof ResearchEntry) {
+                ResearchEntry entry = (ResearchEntry)obj;
+                String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
+                screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, text, screen, entry));
+            } else if (obj instanceof ITextComponent) {
+                String text = ((ITextComponent)obj).getFormattedText();
+                screen.addWidgetToScreen(new SectionHeaderWidget(x + 12 + (side * 140), y, text));
+            }
+            y += 12;
         }
     }
 }

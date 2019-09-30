@@ -6,8 +6,11 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.DisciplineButton;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -47,6 +50,15 @@ public class IndexPage extends AbstractPage {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
             this.renderTitle(side, x, y, mouseX, mouseY);
+        }
+    }
+    
+    @Override
+    public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        for (ResearchDiscipline discipline : this.getDisciplines()) {
+            String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getFormattedText();
+            screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, discipline));
+            y += 12;
         }
     }
 }

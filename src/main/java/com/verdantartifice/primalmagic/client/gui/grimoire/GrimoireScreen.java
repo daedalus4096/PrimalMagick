@@ -21,10 +21,7 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.pages.RecipePageFacto
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.RequirementsPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.StagePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.BackButton;
-import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.DisciplineButton;
-import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.EntryButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.PageButton;
-import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.SectionHeaderWidget;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
@@ -168,31 +165,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // Place buttons
-        if (abstractPage instanceof IndexPage) {
-            IndexPage page = (IndexPage)abstractPage;
-            for (ResearchDiscipline discipline : page.getDisciplines()) {
-                String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getFormattedText();
-                this.addButton(new DisciplineButton(x + 12 + (side * 140), y, text, this, discipline));
-                y += 12;
-            }
-        } else if (abstractPage instanceof DisciplinePage) {
-            DisciplinePage page = (DisciplinePage)abstractPage;
-            for (Object obj : page.getContents()) {
-                if (obj instanceof ResearchEntry) {
-                    ResearchEntry entry = (ResearchEntry)obj;
-                    String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
-                    this.addButton(new EntryButton(x + 12 + (side * 140), y, text, this, entry));
-                } else if (obj instanceof ITextComponent) {
-                    String text = ((ITextComponent)obj).getFormattedText();
-                    this.addButton(new SectionHeaderWidget(x + 12 + (side * 140), y, text));
-                }
-                y += 12;
-            }
-        } else if (abstractPage instanceof RequirementsPage) {
-            ((RequirementsPage)abstractPage).initWidgets(this, side, x, y);
-        } else if (abstractPage instanceof AbstractRecipePage) {
-            ((AbstractRecipePage)abstractPage).initWidgets(this, side, x, y);
-        }
+        abstractPage.initWidgets(this, side, x, y);
     }
 
     @Override

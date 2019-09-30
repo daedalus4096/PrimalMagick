@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -19,6 +20,8 @@ public abstract class AbstractPage extends AbstractGui {
     public abstract void render(int side, int x, int y, int mouseX, int mouseY);
     
     protected abstract String getTitleTranslationKey();
+    
+    public abstract void initWidgets(GrimoireScreen screen, int side, int x, int y);
     
     protected boolean renderTopTitleBar() {
         return true;

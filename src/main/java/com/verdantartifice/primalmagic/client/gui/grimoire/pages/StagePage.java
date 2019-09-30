@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -60,4 +61,7 @@ public class StagePage extends AbstractPage {
             y = content.getNextY(y);
         }
     }
+    
+    @Override
+    public void initWidgets(GrimoireScreen screen, int side, int x, int y) {}
 }
