@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
 import java.awt.Color;
-import java.util.Random;
+import java.lang.reflect.Method;
 
 import org.lwjgl.opengl.GL11;
 
@@ -9,9 +9,9 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
@@ -20,7 +20,6 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,12 +27,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/mana_font_core.png");
+    private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
 
     @Override
     public void renderByItem(ItemStack itemStackIn) {
         Item item = itemStackIn.getItem();
         if (item instanceof BlockItem && ((BlockItem)item).getBlock() instanceof AncientManaFontBlock) {
             Minecraft mc = Minecraft.getInstance();
+            ItemRenderer itemRenderer = mc.getItemRenderer();
             
             Color sourceColor = new Color(((AncientManaFontBlock)((BlockItem)item).getBlock()).getSource().getColor());
             float r = sourceColor.getRed() / 255.0F;
@@ -45,17 +46,14 @@ public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
             BufferBuilder bb = tess.getBuffer();
             
             // Draw the font base
-            ModelResourceLocation mrc = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
-            IBakedModel model = mc.getModelManager().getModel(mrc);
-            bb.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
-            Random random = new Random();
-            for (Direction dir : Direction.values()) {
-                random.setSeed(42L);
-                mc.getItemRenderer().renderQuads(bb, model.getQuads((BlockState)null, dir, random), -1, itemStackIn);
+            IBakedModel model = mc.getModelManager().getModel(MRL);
+            try {
+                Method renderModelMethod = itemRenderer.getClass().getDeclaredMethod("renderModel", IBakedModel.class, int.class, ItemStack.class);
+                renderModelMethod.setAccessible(true);
+                renderModelMethod.invoke(itemRenderer, model, Integer.valueOf(-1), itemStackIn);
+            } catch (Exception e) {
+                PrimalMagic.LOGGER.catching(e);
             }
-            random.setSeed(42L);
-            mc.getItemRenderer().renderQuads(bb, model.getQuads((BlockState)null, (Direction)null, random), -1, itemStackIn);
-            tess.draw();
             
             // Draw the font core
             mc.getTextureManager().bindTexture(TEXTURE);
