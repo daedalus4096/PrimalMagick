@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -24,7 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ForgeHooksClient;
 
 @OnlyIn(Dist.CLIENT)
 public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
@@ -60,7 +58,6 @@ public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
             
             // Draw the font base
             IBakedModel model = mc.getModelManager().getModel(MRL);
-            model = ForgeHooksClient.handleCameraTransforms(model, ItemCameraTransforms.TransformType.GUI, false);
             try {
                 RENDER_MODEL_METHOD.invoke(itemRenderer, model, Integer.valueOf(-1), itemStackIn);
             } catch (Exception e) {
