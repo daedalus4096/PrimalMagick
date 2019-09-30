@@ -16,13 +16,13 @@ import net.minecraft.util.text.TextFormatting;
 public class Source {
     public static final Map<String, Source> SOURCES = new HashMap<>();
     
-    public static final Source EARTH = new Source("earth", 0x228B22, TextFormatting.DARK_GREEN);
-    public static final Source SEA = new Source("sea", 0x004080, TextFormatting.DARK_BLUE);
+    public static final Source EARTH = new Source("earth", 0x20702B, TextFormatting.DARK_GREEN);
+    public static final Source SEA = new Source("sea", 0x117899, TextFormatting.DARK_BLUE);
     public static final Source SKY = new Source("sky", 0x87CEEB, TextFormatting.AQUA);
-    public static final Source SUN = new Source("sun", 0xF9D71C, TextFormatting.YELLOW);
-    public static final Source MOON = new Source("moon", 0xD0D5D2, TextFormatting.GRAY);
+    public static final Source SUN = new Source("sun", 0xF9C81C, TextFormatting.YELLOW);
+    public static final Source MOON = new Source("moon", 0xD1DDE3, TextFormatting.GRAY);
     public static final Source BLOOD = new Source("blood", 0x8A0303, TextFormatting.DARK_RED);
-    public static final Source INFERNAL = new Source("infernal", 0xE25822, TextFormatting.GOLD);
+    public static final Source INFERNAL = new Source("infernal", 0xED2F1B, TextFormatting.GOLD);
     public static final Source VOID = new Source("void", 0x551A8B, TextFormatting.DARK_PURPLE);
     public static final Source HALLOWED = new Source("hallowed", 0xEEEBD9, TextFormatting.WHITE);
     
