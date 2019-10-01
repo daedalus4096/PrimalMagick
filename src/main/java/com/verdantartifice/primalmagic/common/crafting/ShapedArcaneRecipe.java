@@ -11,6 +11,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -33,11 +35,13 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     protected final ResourceLocation id;
     protected final String group;
     protected final SimpleResearchKey research;
+    protected final SourceList manaCosts;
     
-    public ShapedArcaneRecipe(ResourceLocation id, String group, SimpleResearchKey research, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
+    public ShapedArcaneRecipe(ResourceLocation id, String group, SimpleResearchKey research, SourceList manaCosts, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
         this.id = id;
         this.group = group;
         this.research = research;
+        this.manaCosts = manaCosts;
         this.recipeWidth = width;
         this.recipeHeight = height;
         this.recipeItems = items;
@@ -113,6 +117,11 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     @Override
     public SimpleResearchKey getRequiredResearch() {
         return this.research;
+    }
+    
+    @Override
+    public SourceList getManaCosts() {
+        return this.manaCosts;
     }
 
     @Override
@@ -233,13 +242,22 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         public ShapedArcaneRecipe read(ResourceLocation recipeId, JsonObject json) {
             String group = JSONUtils.getString(json, "group", "");
             SimpleResearchKey research = SimpleResearchKey.parse(JSONUtils.getString(json, "research", ""));
+            SourceList manaCosts = this.readManaCosts(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
             Map<String, Ingredient> map = ShapedArcaneRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));
             String[] patternStrs = ShapedArcaneRecipe.shrink(ShapedArcaneRecipe.patternFromJson(JSONUtils.getJsonArray(json, "pattern")));
             int width = patternStrs[0].length();
             int height = patternStrs.length;
             NonNullList<Ingredient> ingredients = ShapedArcaneRecipe.deserializeIngredients(patternStrs, map, width, height);
             ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-            return new ShapedArcaneRecipe(recipeId, group, research, width, height, ingredients, result);
+            return new ShapedArcaneRecipe(recipeId, group, research, manaCosts, width, height, ingredients, result);
+        }
+        
+        protected SourceList readManaCosts(JsonObject jsonObject) {
+            SourceList retVal = new SourceList();
+            for (Source source : Source.SORTED_SOURCES) {
+                retVal.add(source, JSONUtils.getInt(jsonObject, source.getTag(), 0));
+            }
+            return retVal;
         }
 
         @Override
@@ -248,12 +266,16 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             int height = buffer.readVarInt();
             String group = buffer.readString(32767);
             SimpleResearchKey research = SimpleResearchKey.parse(buffer.readString(32767));
+            SourceList manaCosts = new SourceList();
+            for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
+                manaCosts.add(Source.SORTED_SOURCES.get(index), buffer.readVarInt());
+            }
             NonNullList<Ingredient> list = NonNullList.withSize(width * height, Ingredient.EMPTY);
             for (int index = 0; index < list.size(); index++) {
                 list.set(index, Ingredient.read(buffer));
             }
             ItemStack stack = buffer.readItemStack();
-            return new ShapedArcaneRecipe(recipeId, group, research, width, height, list, stack);
+            return new ShapedArcaneRecipe(recipeId, group, research, manaCosts, width, height, list, stack);
         }
 
         @Override
@@ -262,6 +284,9 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             buffer.writeVarInt(recipe.recipeHeight);
             buffer.writeString(recipe.group);
             buffer.writeString(recipe.research.toString());
+            for (Source source : Source.SORTED_SOURCES) {
+                buffer.writeVarInt(recipe.manaCosts.getAmount(source));
+            }
             for (Ingredient ingredient : recipe.recipeItems) {
                 ingredient.write(buffer);
             }

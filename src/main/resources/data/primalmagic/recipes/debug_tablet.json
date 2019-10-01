@@ -1,6 +1,13 @@
 {
     "type": "primalmagic:arcane_crafting_shapeless",
     "research": "FIRST_STEPS",
+    "mana": {
+        "earth": 1,
+        "sea": 2,
+        "sky": 3,
+        "sun": 4,
+        "moon": 5
+    },
     "ingredients": [
         {
             "item": "primalmagic:marble_raw"
