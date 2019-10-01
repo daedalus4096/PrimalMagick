@@ -3,8 +3,10 @@ package com.verdantartifice.primalmagic.common.containers;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagic.common.crafting.WandInventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -24,6 +26,7 @@ import net.minecraft.world.World;
 
 public class ArcaneWorkbenchContainer extends Container {
     protected final CraftingInventory craftingInv = new CraftingInventory(this, 3, 3);
+    protected final WandInventory wandInv = new WandInventory();
     protected final CraftResultInventory resultInv = new CraftResultInventory();
     protected final IWorldPosCallable worldPosCallable;
     protected final PlayerEntity player;
@@ -37,12 +40,14 @@ public class ArcaneWorkbenchContainer extends Container {
         this.worldPosCallable = callable;
         this.player = inv.player;
         
-        this.addSlot(new CraftingResultSlot(this.player, this.craftingInv, this.resultInv, 0, 124, 35));
+        this.addSlot(new CraftingResultSlot(this.player, this.craftingInv, this.resultInv, 0, 137, 35));
+        
+        this.addSlot(new WandSlot(this.wandInv, 0, 18, 35));
         
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
-                this.addSlot(new Slot(this.craftingInv, j + i * 3, 30 + j * 18, 17 + i * 18));
+                this.addSlot(new Slot(this.craftingInv, j + i * 3, 43 + j * 18, 17 + i * 18));
             }
         }
         for (i = 0; i < 3; i++) {
@@ -65,6 +70,7 @@ public class ArcaneWorkbenchContainer extends Container {
         super.onContainerClosed(playerIn);
         this.worldPosCallable.consume((world, blockPos) -> {
             this.clearContainer(playerIn, world, this.craftingInv);
+            this.clearContainer(playerIn, world, this.wandInv);
         });
     }
     
@@ -79,19 +85,19 @@ public class ArcaneWorkbenchContainer extends Container {
                 this.worldPosCallable.consume((world, blockPos) -> {
                     slotStack.getItem().onCreated(slotStack, world, playerIn);
                 });
-                if (!this.mergeItemStack(slotStack, 10, 46, true)) {
+                if (!this.mergeItemStack(slotStack, 11, 47, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onSlotChange(slotStack, stack);
-            } else if (index >= 10 && index < 37) {
+            } else if (index >= 11 && index < 38) {
                 if (!this.mergeItemStack(slotStack, 37, 46, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index >= 37 && index < 46) {
-                if (!this.mergeItemStack(slotStack, 10, 37, false)) {
+            } else if (index >= 38 && index < 47) {
+                if (!this.mergeItemStack(slotStack, 11, 38, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(slotStack, 10, 46, false)) {
+            } else if (!this.mergeItemStack(slotStack, 11, 47, false)) {
                 return ItemStack.EMPTY;
             }
             
