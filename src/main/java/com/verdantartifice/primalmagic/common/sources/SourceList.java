@@ -123,6 +123,10 @@ public class SourceList {
         return retVal;
     }
     
+    public boolean isEmpty() {
+        return this.sources.isEmpty();
+    }
+    
     @Nonnull
     public SourceList copy() {
         SourceList retVal = new SourceList();

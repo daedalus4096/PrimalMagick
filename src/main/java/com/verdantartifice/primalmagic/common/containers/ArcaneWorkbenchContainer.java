@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.crafting.WandInventory;
+import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -147,31 +148,46 @@ public class ArcaneWorkbenchContainer extends Container {
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
         this.worldPosCallable.consume((world, blockPos) -> {
-            slotChangedCraftingGrid(this.windowId, world, this.player, this.craftingInv, this.resultInv);
+            this.slotChangedCraftingGrid(world);
         });
     }
     
-    protected static void slotChangedCraftingGrid(int windowId, World world, PlayerEntity player, CraftingInventory craftInv, CraftResultInventory resultInv) {
-        if (!world.isRemote && player instanceof ServerPlayerEntity) {
-            ServerPlayerEntity spe = (ServerPlayerEntity)player;
+    protected void slotChangedCraftingGrid(World world) {
+        if (!world.isRemote && this.player instanceof ServerPlayerEntity) {
+            ServerPlayerEntity spe = (ServerPlayerEntity)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            Optional<IArcaneRecipe> arcaneOptional = world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.ARCANE_CRAFTING, craftInv, world);
+            Optional<IArcaneRecipe> arcaneOptional = world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.ARCANE_CRAFTING, this.craftingInv, world);
             if (arcaneOptional.isPresent()) {
                 IArcaneRecipe recipe = arcaneOptional.get();
-                if (resultInv.canUseRecipe(world, spe, recipe) && (recipe.getRequiredResearch() == null || recipe.getRequiredResearch().isKnownByStrict(spe))) {
-                    stack = recipe.getCraftingResult(craftInv);
+                if (this.canUseArcaneRecipe(world, spe, recipe)) {
+                    stack = recipe.getCraftingResult(this.craftingInv);
                 }
             } else {
-                Optional<ICraftingRecipe> vanillaOptional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftInv, world);
+                Optional<ICraftingRecipe> vanillaOptional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, this.craftingInv, world);
                 if (vanillaOptional.isPresent()) {
                     ICraftingRecipe recipe = vanillaOptional.get();
-                    if (resultInv.canUseRecipe(world, spe, recipe)) {
-                        stack = recipe.getCraftingResult(craftInv);
+                    if (this.resultInv.canUseRecipe(world, spe, recipe)) {
+                        stack = recipe.getCraftingResult(this.craftingInv);
                     }
                 }
             }
-            resultInv.setInventorySlotContents(0, stack);
-            spe.connection.sendPacket(new SSetSlotPacket(windowId, 0, stack));
+            this.resultInv.setInventorySlotContents(0, stack);
+            spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
         }
+    }
+    
+    protected boolean canUseArcaneRecipe(World world, ServerPlayerEntity player, IArcaneRecipe recipe) {
+        return this.resultInv.canUseRecipe(world, player, recipe) &&
+                (recipe.getRequiredResearch() == null || recipe.getRequiredResearch().isKnownByStrict(player)) &&
+                (recipe.getManaCosts().isEmpty() || this.wandContainsEnoughMana(player, recipe));
+    }
+    
+    protected boolean wandContainsEnoughMana(PlayerEntity player, IArcaneRecipe recipe) {
+        ItemStack stack = this.wandInv.getStackInSlot(0);
+        if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand)) {
+            return false;
+        }
+        IWand wand = (IWand)stack.getItem();
+        return wand.containsMana(stack, player, recipe.getManaCosts());
     }
 }
