@@ -30,6 +30,7 @@ public class ArcaneWorkbenchContainer extends Container {
     protected final CraftResultInventory resultInv = new CraftResultInventory();
     protected final IWorldPosCallable worldPosCallable;
     protected final PlayerEntity player;
+    protected final Slot wandSlot;
     
     public ArcaneWorkbenchContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -40,21 +41,28 @@ public class ArcaneWorkbenchContainer extends Container {
         this.worldPosCallable = callable;
         this.player = inv.player;
         
+        // Slot 0
         this.addSlot(new CraftingResultSlot(this.player, this.craftingInv, this.resultInv, 0, 137, 35));
         
-        this.addSlot(new WandSlot(this.wandInv, 0, 18, 35));
+        // Slot 1
+        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 18, 35));
         
+        // Slots 2-10
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
                 this.addSlot(new Slot(this.craftingInv, j + i * 3, 43 + j * 18, 17 + i * 18));
             }
         }
+        
+        // Slots 11-37
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 9; j++) {
                 this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
+        
+        // Slots 38-46
         for (i = 0; i < 9; i++) {
             this.addSlot(new Slot(inv, i, 8 + i * 18, 142));
         }
@@ -69,8 +77,8 @@ public class ArcaneWorkbenchContainer extends Container {
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         this.worldPosCallable.consume((world, blockPos) -> {
-            this.clearContainer(playerIn, world, this.craftingInv);
             this.clearContainer(playerIn, world, this.wandInv);
+            this.clearContainer(playerIn, world, this.craftingInv);
         });
     }
     
@@ -90,12 +98,24 @@ public class ArcaneWorkbenchContainer extends Container {
                 }
                 slot.onSlotChange(slotStack, stack);
             } else if (index >= 11 && index < 38) {
-                if (!this.mergeItemStack(slotStack, 37, 46, false)) {
-                    return ItemStack.EMPTY;
+                if (this.wandSlot.isItemValid(slotStack)) {
+                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    if (!this.mergeItemStack(slotStack, 38, 47, false)) {
+                        return ItemStack.EMPTY;
+                    }
                 }
             } else if (index >= 38 && index < 47) {
-                if (!this.mergeItemStack(slotStack, 11, 38, false)) {
-                    return ItemStack.EMPTY;
+                if (this.wandSlot.isItemValid(slotStack)) {
+                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    if (!this.mergeItemStack(slotStack, 11, 38, false)) {
+                        return ItemStack.EMPTY;
+                    }
                 }
             } else if (!this.mergeItemStack(slotStack, 11, 47, false)) {
                 return ItemStack.EMPTY;
