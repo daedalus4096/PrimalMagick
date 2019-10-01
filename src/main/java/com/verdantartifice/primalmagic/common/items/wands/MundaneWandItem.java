@@ -84,12 +84,42 @@ public class MundaneWandItem extends ItemPM implements IWand {
         if (stack == null || player == null || source == null) {
             return false;
         }
-        if (this.getMana(stack, source) >= amount) {
+        if (this.containsMana(stack, player, source, amount)) {
             this.setMana(stack, source, this.getMana(stack, source) - amount);
             return true;
         } else {
             return false;
         }
+    }
+    
+    @Override
+    public boolean consumeMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+        if (stack == null || player == null || sources == null) {
+            return false;
+        }
+        if (this.containsMana(stack, player, sources)) {
+            for (Source source : sources.getSources()) {
+                this.setMana(stack, source, this.getMana(stack, source) - sources.getAmount(source));
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean containsMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+        return this.getMana(stack, source) >= amount;
+    }
+    
+    @Override
+    public boolean containsMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+        for (Source source : sources.getSources()) {
+            if (!this.containsMana(stack, player, source, sources.getAmount(source))) {
+                return false;
+            }
+        }
+        return true;
     }
     
     @Override

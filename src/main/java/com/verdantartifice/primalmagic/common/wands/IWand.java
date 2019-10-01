@@ -22,6 +22,12 @@ public interface IWand {
     public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     public boolean consumeMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
+    
+    public boolean consumeMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
+    
+    public boolean containsMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
+    
+    public boolean containsMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
 
     public void clearTileInUse(@Nonnull ItemStack wandStack);
 
