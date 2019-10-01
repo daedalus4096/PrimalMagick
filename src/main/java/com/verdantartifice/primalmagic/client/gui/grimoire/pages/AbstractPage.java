@@ -33,9 +33,9 @@ public abstract class AbstractPage extends AbstractGui {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
         if (this.renderTopTitleBar()) {
-            this.blit(x + 10 + (side * 140), y + 18, 24, 184, 96, 4);
+            this.blit(x + 10 + (side * 140), y + 18, 24, 184, 96, 5);
         }
-        this.blit(x + 10 + (side * 140), y + 35, 24, 184, 96, 4);
+        this.blit(x + 10 + (side * 140), y + 35, 24, 184, 96, 5);
         String headerText = new TranslationTextComponent(this.getTitleTranslationKey()).getFormattedText();
         int offset = mc.fontRenderer.getStringWidth(headerText);
         int indent = 124;
