@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 
 public class ArcaneWorkbenchContainer extends Container {
     protected final CraftingInventory craftingInv = new CraftingInventory(this, 3, 3);
-    protected final WandInventory wandInv = new WandInventory();
+    protected final WandInventory wandInv = new WandInventory(this);
     protected final CraftResultInventory resultInv = new CraftResultInventory();
     protected final IWorldPosCallable worldPosCallable;
     protected final PlayerEntity player;
