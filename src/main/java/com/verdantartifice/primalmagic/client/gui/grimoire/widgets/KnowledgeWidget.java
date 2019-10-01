@@ -55,13 +55,12 @@ public class KnowledgeWidget extends Widget {
         
         // Draw amount str
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.knowledge.getAmount()));
-        // TODO apply red color if not complete
         int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.pushMatrix();
         GlStateManager.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
         GlStateManager.scaled(0.5D, 0.5D, 0.5D);
-        mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
+        mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
         GlStateManager.popMatrix();
         
         if (this.isComplete) {
