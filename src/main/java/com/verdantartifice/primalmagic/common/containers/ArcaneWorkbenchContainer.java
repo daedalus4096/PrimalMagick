@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.containers;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.containers.slots.ArcaneCraftingResultSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
@@ -16,7 +17,6 @@ import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
@@ -43,7 +43,7 @@ public class ArcaneWorkbenchContainer extends Container {
         this.player = inv.player;
         
         // Slot 0
-        this.addSlot(new CraftingResultSlot(this.player, this.craftingInv, this.resultInv, 0, 137, 35));
+        this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 137, 35));
         
         // Slot 1
         this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 18, 35));
@@ -147,6 +147,7 @@ public class ArcaneWorkbenchContainer extends Container {
     
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
+        super.onCraftMatrixChanged(inventoryIn);
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
