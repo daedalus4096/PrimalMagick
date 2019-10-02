@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui;
 
+import java.awt.Color;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.ManaCostWidget;
@@ -12,6 +14,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -38,6 +41,18 @@ public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContai
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
+    
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        IArcaneRecipe activeArcaneRecipe = this.container.getActiveArcaneRecipe();
+        if (activeArcaneRecipe == null || activeArcaneRecipe.getManaCosts() == null || activeArcaneRecipe.getManaCosts().isEmpty()) {
+            ITextComponent text = new TranslationTextComponent("primalmagic.crafting.no_mana");
+            int width = this.font.getStringWidth(text.getFormattedText());
+            int x = 1 + (this.getXSize() - width) / 2;
+            int y = 10 + (16 - this.font.FONT_HEIGHT) / 2;
+            this.font.drawString(text.getFormattedText(), x, y, Color.BLACK.getRGB());
+        }
+    }
 
     protected void initWidgets() {
         this.buttons.clear();
@@ -48,7 +63,7 @@ public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContai
             if (!manaCosts.isEmpty()) {
                 int widgetSetWidth = manaCosts.getSourcesSorted().size() * 18;
                 int x = this.guiLeft + 1 + (this.getXSize() - widgetSetWidth) / 2;
-                int y = this.guiTop + 77;
+                int y = this.guiTop + 10;
                 for (Source source : manaCosts.getSourcesSorted()) {
                     this.addButton(new ManaCostWidget(source, manaCosts.getAmount(source), x, y));
                     x += 18;

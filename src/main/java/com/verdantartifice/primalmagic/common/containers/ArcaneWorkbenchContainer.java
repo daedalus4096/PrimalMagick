@@ -46,16 +46,16 @@ public class ArcaneWorkbenchContainer extends Container {
         this.player = inv.player;
         
         // Slot 0
-        this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 138, 35));
+        this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 138, 52));
         
         // Slot 1
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 35));
+        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52));
         
         // Slots 2-10
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
-                this.addSlot(new Slot(this.craftingInv, j + i * 3, 44 + j * 18, 17 + i * 18));
+                this.addSlot(new Slot(this.craftingInv, j + i * 3, 44 + j * 18, 34 + i * 18));
             }
         }
         
