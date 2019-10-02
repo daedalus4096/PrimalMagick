@@ -146,6 +146,8 @@
     
     "event.primalmagic.add_addendum": "Addendum added to %s",
     
+    "primalmagic.crafting.mana_tooltip": "%d %s mana",
+    
     "primalmagic.grimoire.index_header": "Disciplines",
     "primalmagic.grimoire.addendum_header": "Addendum %d",
     "primalmagic.grimoire.requirements_header": "Requirements",

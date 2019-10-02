@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.ArcaneCraftingResultSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
@@ -32,6 +34,7 @@ public class ArcaneWorkbenchContainer extends Container {
     protected final IWorldPosCallable worldPosCallable;
     protected final PlayerEntity player;
     protected final Slot wandSlot;
+    protected IArcaneRecipe activeArcaneRecipe = null;
     
     public ArcaneWorkbenchContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -43,30 +46,35 @@ public class ArcaneWorkbenchContainer extends Container {
         this.player = inv.player;
         
         // Slot 0
-        this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 137, 35));
+        this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 138, 35));
         
         // Slot 1
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 18, 35));
+        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 35));
         
         // Slots 2-10
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
-                this.addSlot(new Slot(this.craftingInv, j + i * 3, 43 + j * 18, 17 + i * 18));
+                this.addSlot(new Slot(this.craftingInv, j + i * 3, 44 + j * 18, 17 + i * 18));
             }
         }
         
         // Slots 11-37
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 9; j++) {
-                this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 101 + i * 18));
             }
         }
         
         // Slots 38-46
         for (i = 0; i < 9; i++) {
-            this.addSlot(new Slot(inv, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(inv, i, 8 + i * 18, 159));
         }
+    }
+    
+    @Nullable
+    public IArcaneRecipe getActiveArcaneRecipe() {
+        return this.activeArcaneRecipe;
     }
     
     @Override
@@ -148,12 +156,21 @@ public class ArcaneWorkbenchContainer extends Container {
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
         super.onCraftMatrixChanged(inventoryIn);
-        this.worldPosCallable.consume((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.slotChangedCraftingGrid(this.player.world);
     }
     
     protected void slotChangedCraftingGrid(World world) {
+        if (world.isRemote) {
+            // Get the active recipe, if any, for client display of mana costs
+            this.activeArcaneRecipe = null;
+            Optional<IArcaneRecipe> arcaneOptional = world.getRecipeManager().getRecipe(RecipeTypesPM.ARCANE_CRAFTING, this.craftingInv, world);
+            if (arcaneOptional.isPresent()) {
+                IArcaneRecipe recipe = arcaneOptional.get();
+                if (recipe.getRequiredResearch() == null || recipe.getRequiredResearch().isKnownByStrict(player)) {
+                    this.activeArcaneRecipe = recipe;
+                }
+            }
+        }
         if (!world.isRemote && this.player instanceof ServerPlayerEntity) {
             ServerPlayerEntity spe = (ServerPlayerEntity)this.player;
             ItemStack stack = ItemStack.EMPTY;
