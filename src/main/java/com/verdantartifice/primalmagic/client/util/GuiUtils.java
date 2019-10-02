@@ -69,6 +69,7 @@ public class GuiUtils {
         Minecraft mc = Minecraft.getInstance();
         double scaleFactor = mc.mainWindow.getGuiScaleFactor();
         
+        boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
         GlStateManager.disableRescaleNormal();
         GlStateManager.disableLighting();
 
@@ -145,7 +146,11 @@ public class GuiUtils {
         }
 
         mc.getItemRenderer().zLevel = prevZ;
-        GlStateManager.enableLighting();
+        if (isLightingEnabled) {
+            GlStateManager.enableLighting();
+        } else {
+            GlStateManager.disableLighting();
+        }
         GlStateManager.enableRescaleNormal();
     }
     
@@ -159,6 +164,7 @@ public class GuiUtils {
         float r2 = (color2 >> 16 & 0xFF) / 255.0F;
         float g2 = (color2 >> 8 & 0xFF) / 255.0F;
         float b2 = (color2 & 0xFF) / 255.0F;
+        double z = 300.0D;
         GL11.glDisable(3553);
         GL11.glEnable(3042);
         GL11.glDisable(3008);
@@ -166,10 +172,10 @@ public class GuiUtils {
         GL11.glShadeModel(7425);
         Tessellator tess = Tessellator.getInstance();
         tess.getBuffer().begin(7, DefaultVertexFormats.POSITION_COLOR);
-        tess.getBuffer().pos(right, top, 300.0D).color(r1, g1, b1, a1).endVertex();
-        tess.getBuffer().pos(left, top, 300.0D).color(r1, g1, b1, a1).endVertex();
-        tess.getBuffer().pos(left, bottom, 300.0D).color(r2, g2, b2, a2).endVertex();
-        tess.getBuffer().pos(right, bottom, 300.0D).color(r2, g2, b2, a2).endVertex();
+        tess.getBuffer().pos(right, top, z).color(r1, g1, b1, a1).endVertex();
+        tess.getBuffer().pos(left, top, z).color(r1, g1, b1, a1).endVertex();
+        tess.getBuffer().pos(left, bottom, z).color(r2, g2, b2, a2).endVertex();
+        tess.getBuffer().pos(right, bottom, z).color(r2, g2, b2, a2).endVertex();
         tess.draw();
         GL11.glShadeModel(7424);
         GlStateManager.blendFunc(770, 771);
