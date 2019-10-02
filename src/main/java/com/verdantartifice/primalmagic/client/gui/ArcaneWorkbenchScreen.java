@@ -46,12 +46,12 @@ public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContai
         if (activeArcaneRecipe != null) {
             SourceList manaCosts = activeArcaneRecipe.getManaCosts();
             if (!manaCosts.isEmpty()) {
-                int widgetSetWidth = manaCosts.getSourcesSorted().size() * 16;
-                int x = this.guiLeft + (this.getXSize() - widgetSetWidth) / 2;
+                int widgetSetWidth = manaCosts.getSourcesSorted().size() * 18;
+                int x = this.guiLeft + 1 + (this.getXSize() - widgetSetWidth) / 2;
                 int y = this.guiTop + 77;
                 for (Source source : manaCosts.getSourcesSorted()) {
                     this.addButton(new ManaCostWidget(source, manaCosts.getAmount(source), x, y));
-                    x += 16;
+                    x += 18;
                 }
             }
         }
