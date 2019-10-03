@@ -31,6 +31,8 @@ public class ManaCostWidget extends Widget {
         Minecraft mc = Minecraft.getInstance();
         
         // Draw the colored source icon
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.pushMatrix();
         mc.getTextureManager().bindTexture(this.source.getImage());
         Color sourceColor = new Color(this.source.getColor());
