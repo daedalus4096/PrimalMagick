@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.misc;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
@@ -7,6 +8,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.BlockPoofPacket;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -75,7 +79,7 @@ public class BlockSwapper {
                     entity.setMotion(0.0D, 0.0D, 0.0D);
                     world.addEntity(entity);
                 }
-                // TODO Special effects
+                PacketHandler.sendToAllAround(new BlockPoofPacket(this.pos, Color.BLUE.getRGB(), true, Direction.UP), world.getDimension().getType(), this.pos, 32.0D);
             }
         }
     }
