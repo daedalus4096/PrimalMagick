@@ -8,4 +8,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(PrimalMagic.MODID)
 public class SoundsPM {
     public static final SoundEvent PAGE = null;
+    public static final SoundEvent POOF = null;
 }

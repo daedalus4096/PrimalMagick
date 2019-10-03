@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.PacketBuffer;
@@ -59,7 +59,11 @@ public class BlockPoofPacket implements IMessageToClient {
     public static class Handler {
         public static void onMessage(BlockPoofPacket message, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                PrimalMagic.LOGGER.debug("Doing block poof at [{}, {}, {}]", message.x, message.y, message.z);
+                Direction side = null;
+                if (message.face >= 0) {
+                    side = Direction.byIndex(message.face);
+                }
+                FxDispatcher.INSTANCE.poof(message.x, message.y, message.z, message.color, message.sound, side);
             });
         }
     }
