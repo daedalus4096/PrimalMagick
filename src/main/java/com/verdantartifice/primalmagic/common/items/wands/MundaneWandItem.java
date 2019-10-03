@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
+import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.items.base.ItemPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -195,6 +197,9 @@ public class MundaneWandItem extends ItemPM implements IWand {
     
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+        if (context.getPlayer().isSneaking()) {
+            return ActionResultType.PASS;
+        }
         BlockState bs = context.getWorld().getBlockState(context.getPos());
         if (bs.getBlock() instanceof IInteractWithWand) {
             return ((IInteractWithWand)bs.getBlock()).onWandRightClick(context.getItem(), context.getWorld(), context.getPlayer(), context.getPos(), context.getFace());
@@ -202,6 +207,17 @@ public class MundaneWandItem extends ItemPM implements IWand {
         TileEntity tile = context.getWorld().getTileEntity(context.getPos());
         if (tile != null && tile instanceof IInteractWithWand) {
             return ((IInteractWithWand)tile).onWandRightClick(context.getItem(), context.getWorld(), context.getPlayer(), context.getPos(), context.getFace());
+        }
+        for (IWandTransform transform : WandTransforms.getAll()) {
+            if (transform.isValid(context.getWorld(), context.getPlayer(), context.getPos())) {
+                if (!context.getPlayer().canPlayerEdit(context.getPos(), context.getFace(), context.getItem())) {
+                    return ActionResultType.FAIL;
+                } else {
+                    context.getPlayer().swingArm(context.getHand());
+                    transform.execute(context.getWorld(), context.getPlayer(), context.getPos());
+                    return ActionResultType.SUCCESS;
+                }
+            }
         }
         return ActionResultType.PASS;
     }

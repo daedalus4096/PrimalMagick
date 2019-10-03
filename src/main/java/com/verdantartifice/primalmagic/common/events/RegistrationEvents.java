@@ -43,6 +43,7 @@ public class RegistrationEvents {
     @SubscribeEvent
     public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         InitRecipes.initRecipeSerializers(event.getRegistry());
+        InitRecipes.initWandTransforms();
     }
     
     @SubscribeEvent
