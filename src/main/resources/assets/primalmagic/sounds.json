@@ -4,5 +4,11 @@
         "sounds": [
             "primalmagic:page"
         ]
+    },
+    "poof": {
+        "category": "ambient",
+        "sounds": [
+            "primalmagic:poof"
+        ]
     }
 }

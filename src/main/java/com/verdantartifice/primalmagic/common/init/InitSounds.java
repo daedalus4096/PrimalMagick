@@ -9,6 +9,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class InitSounds {
     public static void initSoundEvents(IForgeRegistry<SoundEvent> registry) {
         registry.register(createEvent("page"));
+        registry.register(createEvent("poof"));
     }
     
     private static SoundEvent createEvent(String name) {
