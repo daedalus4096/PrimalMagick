@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.fx;
 import java.awt.Color;
 import java.util.Random;
 
+import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
@@ -33,5 +34,6 @@ public class FxDispatcher {
         if (sound) {
             getWorld().playSound(x, y, z, SoundsPM.POOF, SoundCategory.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
         }
+        getWorld().addParticle(ParticleTypesPM.WAND_POOF, x, y, z, 0.0D, 0.0D, 0.0D);
     }
 }
