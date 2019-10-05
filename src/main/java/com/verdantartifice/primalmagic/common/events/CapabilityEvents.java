@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.events;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerKnowledge;
 
 import net.minecraft.entity.Entity;
@@ -8,7 +9,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class CapabilityEvents {
     @SubscribeEvent
     public static void attachEntityCapability(AttachCapabilitiesEvent<Entity> event) {

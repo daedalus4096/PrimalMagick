@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.events;
 
 import java.util.Queue;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.misc.BlockSwapper;
 
 import net.minecraft.world.World;
@@ -10,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class ServerEvents {
     @SubscribeEvent
     public static void serverWorldTick(TickEvent.WorldTickEvent event) {

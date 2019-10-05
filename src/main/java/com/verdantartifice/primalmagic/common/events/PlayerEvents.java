@@ -18,7 +18,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class PlayerEvents {
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
