@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
-import com.verdantartifice.primalmagic.common.items.base.ItemPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
@@ -34,9 +33,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class MundaneWandItem extends ItemPM implements IWand {
+public class MundaneWandItem extends Item implements IWand {
     public MundaneWandItem() {
-        super("mundane_wand", new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1));
+        this.setRegistryName(PrimalMagic.MODID, "mundane_wand");
     }
     
     @Override

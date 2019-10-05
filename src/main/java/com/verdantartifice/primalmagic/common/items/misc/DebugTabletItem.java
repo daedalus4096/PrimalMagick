@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
-import com.verdantartifice.primalmagic.common.items.base.ItemPM;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,9 +15,10 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class DebugTabletItem extends ItemPM {
+public class DebugTabletItem extends Item {
     public DebugTabletItem() {
-        super("debug_tablet", new Item.Properties().group(PrimalMagic.ITEM_GROUP));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP));
+        this.setRegistryName(PrimalMagic.MODID, "debug_tablet");
     }
     
     @Override

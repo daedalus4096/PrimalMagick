@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.items.misc;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
-import com.verdantartifice.primalmagic.common.items.base.ItemPM;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,9 +19,10 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class GrimoireItem extends ItemPM implements INamedContainerProvider {
+public class GrimoireItem extends Item implements INamedContainerProvider {
     public GrimoireItem() {
-        super("grimoire", new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON));
+        this.setRegistryName(PrimalMagic.MODID, "grimoire");
     }
     
     @Override
