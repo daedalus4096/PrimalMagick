@@ -23,7 +23,8 @@ public class WandPoofParticle extends SpriteTexturedParticle {
         this.motionX = xSpeed;
         this.motionY = ySpeed;
         this.motionZ = zSpeed;
-        this.maxAge = 5;
+        this.particleScale = 1.0F;
+        this.maxAge = 10;
         this.spriteSet = spriteSet;
         this.selectSpriteWithAge(this.spriteSet);
     }

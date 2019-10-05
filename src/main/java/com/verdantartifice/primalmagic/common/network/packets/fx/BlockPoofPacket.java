@@ -63,7 +63,7 @@ public class BlockPoofPacket implements IMessageToClient {
                 if (message.face >= 0) {
                     side = Direction.byIndex(message.face);
                 }
-                FxDispatcher.INSTANCE.poof(message.x, message.y, message.z, message.color, message.sound, side);
+                FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, side);
             });
         }
     }

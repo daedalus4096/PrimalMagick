@@ -79,7 +79,7 @@ public class BlockSwapper {
                     entity.setMotion(0.0D, 0.0D, 0.0D);
                     world.addEntity(entity);
                 }
-                PacketHandler.sendToAllAround(new BlockPoofPacket(this.pos, Color.BLUE.getRGB(), true, Direction.UP), world.getDimension().getType(), this.pos, 32.0D);
+                PacketHandler.sendToAllAround(new BlockPoofPacket(this.pos, Color.WHITE.getRGB(), true, Direction.UP), world.getDimension().getType(), this.pos, 32.0D);
             }
         }
     }
