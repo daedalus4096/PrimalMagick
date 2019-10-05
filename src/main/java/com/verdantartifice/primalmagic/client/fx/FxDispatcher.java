@@ -44,10 +44,11 @@ public class FxDispatcher {
                 dy += (side.getYOffset() * 0.1D);
                 dz += (side.getZOffset() * 0.1D);
             }
-            Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.WAND_POOF, x + dx * 2.0D, y + dy * 2.0D, z + dz * 2.0D, dx / 2.0D, dy / 2.0D, dz / 2.0D);
-            if (p != null) {
-                p.setColor(r, g, b);
-            }
+            // FIXME Fix "Redundant texture list" crash
+//            Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.WAND_POOF, x + dx * 2.0D, y + dy * 2.0D, z + dz * 2.0D, dx / 2.0D, dy / 2.0D, dz / 2.0D);
+//            if (p != null) {
+//                p.setColor(r, g, b);
+//            }
         }
     }
 }

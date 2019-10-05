@@ -16,6 +16,7 @@ public class ClientRegistrationEvents {
     @SubscribeEvent
     public static void registerParticleTypes(RegistryEvent.Register<ParticleType<?>> event) {
         PrimalMagic.LOGGER.info("Registering wand poof particle type");
-        event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "wand_poof"));
+        // FIXME Fix "Redundant texture list" crash
+//        event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "wand_poof"));
     }
 }

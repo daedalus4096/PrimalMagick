@@ -35,7 +35,8 @@ public class ClientProxy extends CommonProxy {
     
     private void registerParticleFactories() {
         PrimalMagic.LOGGER.info("Registering wand poof particle factory");
-        Minecraft.getInstance().particles.registerFactory(ParticleTypesPM.WAND_POOF, WandPoofParticle.Factory::new);
+        // FIXME Fix "Redundant texture list" crash
+//        Minecraft.getInstance().particles.registerFactory(ParticleTypesPM.WAND_POOF, WandPoofParticle.Factory::new);
     }
     
     @Override
