@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.blocks.crafting;
 
-import com.verdantartifice.primalmagic.common.blocks.base.BlockPM;
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.ArcaneWorkbenchContainer;
 
 import net.minecraft.block.Block;
@@ -25,7 +25,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ArcaneWorkbenchBlock extends BlockPM {
+public class ArcaneWorkbenchBlock extends Block {
     protected static final VoxelShape PART_UPPER = Block.makeCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape PART_POST1 = Block.makeCuboidShape(11.0D, 4.0D, 1.0D, 15.0D, 8.0D, 5.0D);
     protected static final VoxelShape PART_POST2 = Block.makeCuboidShape(11.0D, 4.0D, 11.0D, 15.0D, 8.0D, 15.0D);
@@ -35,7 +35,8 @@ public class ArcaneWorkbenchBlock extends BlockPM {
     protected static final VoxelShape SHAPE = VoxelShapes.or(PART_UPPER, PART_POST1, PART_POST2, PART_POST3, PART_POST4, PART_LOWER);
 
     public ArcaneWorkbenchBlock() {
-        super("arcane_workbench", Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
+        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
+        this.setRegistryName(PrimalMagic.MODID, "arcane_workbench");
     }
     
     @Override

@@ -2,17 +2,19 @@ package com.verdantartifice.primalmagic.common.blocks.base;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class BlockTilePM<T extends TileEntity> extends BlockPM {
+public class BlockTilePM<T extends TileEntity> extends Block {
     protected final Class<T> tileClass;
 
     public BlockTilePM(String name, Class<T> tileClass, Properties properties) {
-        super(name, properties);
+        super(properties);
+        this.setRegistryName(PrimalMagic.MODID, name);
         this.tileClass = tileClass;
     }
     
