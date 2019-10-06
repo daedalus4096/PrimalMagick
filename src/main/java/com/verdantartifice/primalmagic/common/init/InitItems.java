@@ -6,6 +6,12 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.misc.DebugTabletItem;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
+import com.verdantartifice.primalmagic.common.items.wands.WandCapItem;
+import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
+import com.verdantartifice.primalmagic.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagic.common.wands.WandCap;
+import com.verdantartifice.primalmagic.common.wands.WandCore;
+import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -28,5 +34,8 @@ public class InitItems {
         registry.register(new DebugTabletItem());
         registry.register(new GrimoireItem());
         registry.register(new MundaneWandItem());
+        registry.register(new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
+        registry.register(new WandCapItem(WandCap.IRON, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
+        registry.register(new WandGemItem(WandGem.APPRENTICE, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
     }
 }

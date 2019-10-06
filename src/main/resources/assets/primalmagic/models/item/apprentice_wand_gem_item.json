@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "primalmagic:item/apprentice_wand_gem_item"
+    }
+}
