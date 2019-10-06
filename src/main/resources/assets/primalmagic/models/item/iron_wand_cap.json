@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagic:item/wand_cap",
+    "textures": {
+        "cap": "block/iron_block"
+    }
+}
