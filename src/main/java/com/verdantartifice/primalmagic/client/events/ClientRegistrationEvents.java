@@ -34,6 +34,6 @@ public class ClientRegistrationEvents {
     
     @SubscribeEvent
     public static void onModelRegister(ModelRegistryEvent event) {
-        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "wand_core"), ""));
+        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), ""));
     }
 }
