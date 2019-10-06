@@ -35,6 +35,7 @@ public class ClientRegistrationEvents {
     @SubscribeEvent
     public static void onModelRegister(ModelRegistryEvent event) {
         ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), ""));
+        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "heartwood_wand_core"), ""));
         ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "iron_wand_cap"), ""));
         ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "apprentice_wand_gem"), ""));
     }
