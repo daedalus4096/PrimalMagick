@@ -3,6 +3,9 @@ package com.verdantartifice.primalmagic.client.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagic.client.fx.particles.WandPoofParticle;
+import com.verdantartifice.primalmagic.common.wands.WandCap;
+import com.verdantartifice.primalmagic.common.wands.WandCore;
+import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
@@ -35,8 +38,14 @@ public class ClientRegistrationEvents {
     @SubscribeEvent
     public static void onModelRegister(ModelRegistryEvent event) {
         ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), ""));
-        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "heartwood_wand_core"), ""));
-        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "iron_wand_cap"), ""));
-        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "apprentice_wand_gem"), ""));
+        for (WandCore core : WandCore.getAllWandCores()) {
+            ModelLoader.addSpecialModel(core.getModelResourceLocation());
+        }
+        for (WandCap cap : WandCap.getAllWandCaps()) {
+            ModelLoader.addSpecialModel(cap.getModelResourceLocation());
+        }
+        for (WandGem gem : WandGem.getAllWandGems()) {
+            ModelLoader.addSpecialModel(gem.getModelResourceLocation());
+        }
     }
 }
