@@ -9,4 +9,5 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ContainersPM {
     public static final ContainerType<GrimoireContainer> GRIMOIRE = null;
     public static final ContainerType<ArcaneWorkbenchContainer> ARCANE_WORKBENCH = null;
+    public static final ContainerType<WandAssemblyContainer> WAND_ASSEMBLY = null;
 }

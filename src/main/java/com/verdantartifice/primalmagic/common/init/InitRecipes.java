@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.ShapelessArcaneRecipe;
+import com.verdantartifice.primalmagic.common.crafting.WandAssemblyRecipe;
 import com.verdantartifice.primalmagic.common.crafting.WandTransformBlock;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
@@ -15,6 +16,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class InitRecipes {
@@ -25,6 +27,7 @@ public class InitRecipes {
     public static void initRecipeSerializers(IForgeRegistry<IRecipeSerializer<?>> registry) {
         registry.register(new ShapelessArcaneRecipe.Serializer().setRegistryName(PrimalMagic.MODID, "arcane_crafting_shapeless"));
         registry.register(new ShapedArcaneRecipe.Serializer().setRegistryName(PrimalMagic.MODID, "arcane_crafting_shaped"));
+        registry.register(new SpecialRecipeSerializer<>(WandAssemblyRecipe::new).setRegistryName(PrimalMagic.MODID, "wand_assembly_special"));
     }
     
     public static void initWandTransforms() {

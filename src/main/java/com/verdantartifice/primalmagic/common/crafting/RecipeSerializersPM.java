@@ -9,4 +9,5 @@ import net.minecraftforge.registries.ObjectHolder;
 public class RecipeSerializersPM {
     public static final IRecipeSerializer<ShapelessArcaneRecipe> ARCANE_CRAFTING_SHAPELESS = null;
     public static final IRecipeSerializer<ShapedArcaneRecipe> ARCANE_CRAFTING_SHAPED = null;
+    public static final IRecipeSerializer<WandAssemblyRecipe> WAND_ASSEMBLY_SPECIAL = null;
 }
