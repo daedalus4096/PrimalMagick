@@ -51,6 +51,11 @@ public class WandGem {
     }
     
     @Nonnull
+    public String getNameTranslationKey() {
+        return "primalmagic.wand_gem." + this.tag + ".name";
+    }
+    
+    @Nonnull
     public static Collection<WandGem> getAllWandGems() {
         return Collections.unmodifiableCollection(REGISTRY.values());
     }

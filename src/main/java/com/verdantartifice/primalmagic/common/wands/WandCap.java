@@ -51,6 +51,11 @@ public class WandCap {
     }
     
     @Nonnull
+    public String getNameTranslationKey() {
+        return "primalmagic.wand_cap." + this.tag + ".name";
+    }
+    
+    @Nonnull
     public static Collection<WandCap> getAllWandCaps() {
         return Collections.unmodifiableCollection(REGISTRY.values());
     }

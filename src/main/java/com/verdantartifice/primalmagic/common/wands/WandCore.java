@@ -58,6 +58,11 @@ public class WandCore {
         return this.mrl;
     }
     
+    @Nonnull
+    public String getNameTranslationKey() {
+        return "primalmagic.wand_core." + this.tag + ".name";
+    }
+    
     public static Collection<WandCore> getAllWandCores() {
         return Collections.unmodifiableCollection(REGISTRY.values());
     }

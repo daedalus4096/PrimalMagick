@@ -11,9 +11,16 @@
     "item.primalmagic.debug_tablet": "Debug Tablet",
     "item.primalmagic.grimoire": "Grimoire",
     "item.primalmagic.mundane_wand": "Mundane Wand",
+    "item.primalmagic.modular_wand": "%s %s %s Wand",
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.apprentice_wand_gem_item": "Apprentice's Wand Gem",
+    
+    "primalmagic.wand_core.heartwood.name": "Heartwood",
+    
+    "primalmagic.wand_cap.iron.name": "Iron-Shod",
+    
+    "primalmagic.wand_gem.apprentice.name": "Apprentice's",
     
     "primalmagic.research_discipline.BASICS": "Fundamentals",
     "primalmagic.research_discipline.ALCHEMY": "Alchemy",
