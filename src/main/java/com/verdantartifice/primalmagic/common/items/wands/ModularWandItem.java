@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandTEISR;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -19,7 +20,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class ModularWandItem extends AbstractWandItem {
     public ModularWandItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1)); // TODO set TEISR
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setTEISR(() -> ModularWandTEISR::new));
         this.setRegistryName(PrimalMagic.MODID, "modular_wand");
     }
 
