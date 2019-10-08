@@ -15,4 +15,5 @@ public class BlocksPM {
     public static final Block ANCIENT_FONT_SKY = null;
     public static final Block ANCIENT_FONT_SUN = null;
     public static final Block ANCIENT_FONT_MOON = null;
+    public static final Block WAND_ASSEMBLY_TABLE = null;
 }

@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "bottom": "primalmagic:block/marble_raw",
+        "top": "primalmagic:block/wand_assembly_table_top",
+        "side": "primalmagic:block/wand_assembly_table_side"
+    }
+}
