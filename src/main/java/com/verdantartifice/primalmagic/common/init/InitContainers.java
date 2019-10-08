@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.common.init;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.ArcaneWorkbenchContainer;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
-import com.verdantartifice.primalmagic.common.containers.WandAssemblyContainer;
+import com.verdantartifice.primalmagic.common.containers.WandAssemblyTableContainer;
 
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -20,7 +20,7 @@ public class InitContainers {
         }).setRegistryName(PrimalMagic.MODID, "arcane_workbench"));
         
         registry.register(IForgeContainerType.create((windowId, inv, data) -> {
-            return new WandAssemblyContainer(windowId, inv);
-        }).setRegistryName(PrimalMagic.MODID, "wand_assembly"));
+            return new WandAssemblyTableContainer(windowId, inv);
+        }).setRegistryName(PrimalMagic.MODID, "wand_assembly_table"));
     }
 }

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.client.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.containers.WandAssemblyContainer;
+import com.verdantartifice.primalmagic.common.containers.WandAssemblyTableContainer;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,10 +12,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class WandAssemblyTableScreen extends ContainerScreen<WandAssemblyContainer> {
+public class WandAssemblyTableScreen extends ContainerScreen<WandAssemblyTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/wand_assembly_table.png");
 
-    public WandAssemblyTableScreen(WandAssemblyContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public WandAssemblyTableScreen(WandAssemblyTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
     }
 

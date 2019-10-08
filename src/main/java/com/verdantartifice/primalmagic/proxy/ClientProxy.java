@@ -23,7 +23,7 @@ public class ClientProxy extends CommonProxy {
     private void registerScreens() {
         ScreenManager.registerFactory(ContainersPM.GRIMOIRE, GrimoireScreen::new);
         ScreenManager.registerFactory(ContainersPM.ARCANE_WORKBENCH, ArcaneWorkbenchScreen::new);
-        ScreenManager.registerFactory(ContainersPM.WAND_ASSEMBLY, WandAssemblyTableScreen::new);
+        ScreenManager.registerFactory(ContainersPM.WAND_ASSEMBLY_TABLE, WandAssemblyTableScreen::new);
     }
     
     private void registerTERs() {

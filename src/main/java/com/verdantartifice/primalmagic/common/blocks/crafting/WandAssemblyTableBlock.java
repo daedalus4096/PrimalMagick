@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.blocks.crafting;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.containers.WandAssemblyContainer;
+import com.verdantartifice.primalmagic.common.containers.WandAssemblyTableContainer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -34,7 +34,7 @@ public class WandAssemblyTableBlock extends Block {
             NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
                 @Override
                 public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-                    return new WandAssemblyContainer(windowId, inv, IWorldPosCallable.of(worldIn, pos));
+                    return new WandAssemblyTableContainer(windowId, inv, IWorldPosCallable.of(worldIn, pos));
                 }
 
                 @Override
