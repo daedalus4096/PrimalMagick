@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledge
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.BlockPoofPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +35,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SyncProgressPacket.class, SyncProgressPacket::encode, SyncProgressPacket::decode, SyncProgressPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncResearchFlagsPacket.class, SyncResearchFlagsPacket::encode, SyncResearchFlagsPacket::decode, SyncResearchFlagsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, BlockPoofPacket.class, BlockPoofPacket::encode, BlockPoofPacket::decode, BlockPoofPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, ManaSparklePacket.class, ManaSparklePacket::encode, ManaSparklePacket::decode, ManaSparklePacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

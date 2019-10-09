@@ -50,4 +50,23 @@ public class FxDispatcher {
             }
         }
     }
+    
+    public void manaSparkle(double x1, double y1, double z1, double x2, double y2, double z2, int maxAge, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.manaSparkle(x1, y1, z1, x2, y2, z2, maxAge, r, g, b);
+    }
+    
+    public void manaSparkle(double x1, double y1, double z1, double x2, double y2, double z2, int maxAge, float r, float g, float b) {
+        double vx = (x2 - x1) / (double)maxAge;
+        double vy = (y2 - y1) / (double)maxAge;
+        double vz = (z2 - z1) / (double)maxAge;
+        Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.MANA_SPARKLE, x1, y1, z1, vx, vy, vz);
+        if (p != null) {
+            p.setColor(r, g, b);
+            p.setMaxAge(maxAge);
+        }
+    }
 }

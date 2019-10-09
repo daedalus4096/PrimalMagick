@@ -11,4 +11,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(PrimalMagic.MODID)
 public class ParticleTypesPM {
     public static final BasicParticleType WAND_POOF = null;
+    public static final BasicParticleType MANA_SPARKLE = null;
 }
