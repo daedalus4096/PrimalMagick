@@ -1,24 +1,37 @@
 package com.verdantartifice.primalmagic.common.containers;
 
+import java.util.Optional;
+
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.WandCapSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandCoreSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandGemSlot;
+import com.verdantartifice.primalmagic.common.crafting.WandAssemblyRecipe;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftResultInventory;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 public class WandAssemblyTableContainer extends Container {
+    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "wand_assembly");
+    
     protected final IWorldPosCallable worldPosCallable;
-    public final IInventory componentInv = new WandComponentInventory();    // TODO make protected?
-    protected final IInventory resultInv = new WandAssemblyResultInventory();
+    protected final WandComponentInventory componentInv = new WandComponentInventory();
+    protected final CraftResultInventory resultInv = new CraftResultInventory();
+    protected final PlayerEntity player;
     protected final Slot coreSlot;
     protected final Slot capSlot;
     protected final Slot gemSlot;
@@ -30,9 +43,10 @@ public class WandAssemblyTableContainer extends Container {
     public WandAssemblyTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
         super(ContainersPM.WAND_ASSEMBLY_TABLE, windowId);
         this.worldPosCallable = callable;
+        this.player = inv.player;
         
         // Slot 0: Result
-        this.addSlot(new WandAssemblyResultSlot(this.resultInv, 0, 124, 35));
+        this.addSlot(new CraftingResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Wand core
         this.coreSlot = this.addSlot(new WandCoreSlot(this.componentInv, 0, 48, 35));
@@ -142,40 +156,44 @@ public class WandAssemblyTableContainer extends Container {
         }
         return stack;
     }
-
-    protected class WandComponentInventory extends Inventory {
-        public WandComponentInventory() {
-            super(4);
+    
+    @Override
+    public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
+        return slotIn.inventory != this.resultInv && super.canMergeSlot(stack, slotIn);
+    }
+    
+    @Override
+    public void onCraftMatrixChanged(IInventory inventoryIn) {
+        super.onCraftMatrixChanged(inventoryIn);
+        this.worldPosCallable.consume((world, blockPos) -> {
+            this.slotChangedCraftingGrid(world);
+        });
+    }
+    
+    protected void slotChangedCraftingGrid(World world) {
+        if (!world.isRemote && this.player instanceof ServerPlayerEntity) {
+            ServerPlayerEntity spe = (ServerPlayerEntity)this.player;
+            ItemStack stack = ItemStack.EMPTY;
+            Optional<? extends IRecipe<?>> opt = world.getServer().getRecipeManager().getRecipe(RECIPE_LOC);
+            if (opt.isPresent() && opt.get() instanceof WandAssemblyRecipe) {
+                WandAssemblyRecipe recipe = (WandAssemblyRecipe)opt.get();
+                if (recipe.matches(this.componentInv, world)) {
+                    stack = recipe.getCraftingResult(this.componentInv);
+                }
+            }
+            this.resultInv.setInventorySlotContents(0, stack);
+            spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
         }
-        
-        @Override
-        public void markDirty() {
-            WandAssemblyTableContainer.this.onCraftMatrixChanged(this);
-            super.markDirty();
+    }
+
+    protected class WandComponentInventory extends CraftingInventory {
+        public WandComponentInventory() {
+            super(WandAssemblyTableContainer.this, 2, 2);
         }
         
         @Override
         public int getInventoryStackLimit() {
             return 1;
-        }
-    }
-    
-    protected class WandAssemblyResultInventory extends CraftResultInventory {
-        @Override
-        public void markDirty() {
-            WandAssemblyTableContainer.this.onCraftMatrixChanged(this);
-            super.markDirty();
-        }
-    }
-    
-    protected class WandAssemblyResultSlot extends Slot {
-        public WandAssemblyResultSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
-        }
-
-        @Override
-        public boolean isItemValid(ItemStack stack) {
-            return false;
         }
     }
 }
