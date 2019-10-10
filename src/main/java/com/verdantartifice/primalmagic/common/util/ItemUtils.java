@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -12,12 +13,19 @@ import net.minecraft.util.registry.Registry;
 
 public class ItemUtils {
     public static int getHashCode(@Nullable ItemStack stack) {
+        return getHashCode(stack, false);
+    }
+    
+    public static int getHashCode(@Nullable ItemStack stack, boolean stripNBT) {
         if (stack == null || stack.isEmpty()) {
             return 0;
         }
         ItemStack temp = stack.copy();
         temp.setCount(1);
-        return temp.toString().hashCode();
+        if (stripNBT) {
+            temp.setTag(null);
+        }
+        return temp.write(new CompoundNBT()).toString().hashCode();
     }
     
     @SuppressWarnings("deprecation")
