@@ -72,7 +72,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             return 0;
         }
         int toStore = this.getMana(stack, source) + amount;
-        int leftover = Math.max(this.getMaxMana(stack) - toStore, 0);
+        int leftover = Math.max(toStore - this.getMaxMana(stack), 0);
         this.setMana(stack, source, Math.min(toStore, this.getMaxMana(stack)));
         return leftover;
     }

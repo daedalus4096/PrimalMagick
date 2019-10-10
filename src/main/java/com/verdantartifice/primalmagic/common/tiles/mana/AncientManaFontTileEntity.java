@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.common.tiles.mana;
 
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
@@ -84,6 +86,14 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
                         this.mana -= (tap - leftover);
                         this.markDirty();
                         this.syncTile(false);
+                        
+                        // Show fancy sparkles
+                        double targetY = player.posY + (player.getEyeHeight() / 2.0D);
+                        PacketHandler.sendToAllAround(
+                                new ManaSparklePacket(this.pos, player.posX, targetY, player.posZ, 10, source.getColor()), 
+                                this.world.getDimension().getType(), 
+                                this.pos, 
+                                32.0D);
                     }
                 }
             }

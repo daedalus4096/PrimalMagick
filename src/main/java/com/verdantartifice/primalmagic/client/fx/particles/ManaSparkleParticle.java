@@ -19,7 +19,7 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
         this.motionX = xSpeed;
         this.motionY = ySpeed;
         this.motionZ = zSpeed;
-        this.particleScale = 1.0F;
+        this.particleScale = 0.125F;
         this.spriteSet = spriteSet;
         this.selectSpriteWithAge(this.spriteSet);
     }
@@ -38,15 +38,7 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
             this.setExpired();
         } else {
             this.selectSpriteWithAge(this.spriteSet);
-            this.motionY += 0.004D;
             this.move(this.motionX, this.motionY, this.motionZ);
-            this.motionX *= 0.9D;
-            this.motionY *= 0.9D;
-            this.motionZ *= 0.9D;
-            if (this.onGround) {
-                this.motionX *= 0.7D;
-                this.motionZ *= 0.7D;
-            }
         }
     }
 
