@@ -90,7 +90,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
                         // Show fancy sparkles
                         double targetY = player.posY + (player.getEyeHeight() / 2.0D);
                         PacketHandler.sendToAllAround(
-                                new ManaSparklePacket(this.pos, player.posX, targetY, player.posZ, 10, source.getColor()), 
+                                new ManaSparklePacket(this.pos, player.posX, targetY, player.posZ, 20, source.getColor()), 
                                 this.world.getDimension().getType(), 
                                 this.pos, 
                                 32.0D);
