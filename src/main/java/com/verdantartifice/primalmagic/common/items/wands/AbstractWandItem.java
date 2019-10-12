@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -124,23 +125,28 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
+        PlayerEntity player = Minecraft.getInstance().player;
         if (PrimalMagic.proxy.isShiftDown()) {
             for (Source source : Source.SORTED_SOURCES) {
-                ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
-                ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getFormattedText(), this.getMana(stack, source), this.getMaxMana(stack));
-                tooltip.add(line);
+                if (source.isDiscovered(player)) {
+                    ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
+                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getFormattedText(), this.getMana(stack, source), this.getMaxMana(stack));
+                    tooltip.add(line);
+                }
             }
         } else {
             StringBuilder sb = new StringBuilder();
             boolean first = true;
             for (Source source : Source.SORTED_SOURCES) {
-                if (!first) {
-                    sb.append("/");
+                if (source.isDiscovered(player)) {
+                    if (!first) {
+                        sb.append("/");
+                    }
+                    int mana = this.getMana(stack, source);
+                    ITextComponent manaStr = new StringTextComponent(Integer.toString(mana)).applyTextStyle(source.getChatColor());
+                    sb.append(manaStr.getFormattedText());
+                    first = false;
                 }
-                int mana = this.getMana(stack, source);
-                ITextComponent manaStr = new StringTextComponent(Integer.toString(mana)).applyTextStyle(source.getChatColor());
-                sb.append(manaStr.getFormattedText());
-                first = false;
             }
             tooltip.add(new StringTextComponent(sb.toString()));
         }

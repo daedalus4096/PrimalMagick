@@ -29,17 +29,23 @@ public class ManaCostWidget extends Widget {
     @Override
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
+        boolean discovered = this.source.isDiscovered(mc.player);
         
         // Draw the colored source icon
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.pushMatrix();
-        mc.getTextureManager().bindTexture(this.source.getImage());
-        Color sourceColor = new Color(this.source.getColor());
-        float r = sourceColor.getRed() / 255.0F;
-        float g = sourceColor.getGreen() / 255.0F;
-        float b = sourceColor.getBlue() / 255.0F;
-        GlStateManager.color4f(r, g, b, 1.0F);
+        if (discovered) {
+            mc.getTextureManager().bindTexture(this.source.getImage());
+            Color sourceColor = new Color(this.source.getColor());
+            float r = sourceColor.getRed() / 255.0F;
+            float g = sourceColor.getGreen() / 255.0F;
+            float b = sourceColor.getBlue() / 255.0F;
+            GlStateManager.color4f(r, g, b, 1.0F);
+        } else {
+            mc.getTextureManager().bindTexture(Source.getUnknownImage());
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        }
         GlStateManager.translatef(this.x, this.y, 0.0F);
         GlStateManager.scaled(0.0625D, 0.0625D, 0.0625D);
         this.blit(0, 0, 0, 0, 255, 255);
@@ -57,7 +63,9 @@ public class ManaCostWidget extends Widget {
         
         // Draw the tooltip if applicable
         if (this.isHovered()) {
-            ITextComponent sourceText = new TranslationTextComponent(this.source.getNameTranslationKey()).applyTextStyle(this.source.getChatColor());
+            ITextComponent sourceText = discovered ? 
+                    new TranslationTextComponent(this.source.getNameTranslationKey()).applyTextStyle(this.source.getChatColor()) :
+                    new TranslationTextComponent(Source.getUnknownTranslationKey());
             ITextComponent labelText = new TranslationTextComponent("primalmagic.crafting.mana_tooltip", this.amount, sourceText);
             GuiUtils.renderCustomTooltip(Collections.singletonList(labelText), this.x, this.y);
         }

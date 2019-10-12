@@ -40,6 +40,7 @@
     "primalmagic.source.infernal": "Infernal",
     "primalmagic.source.void": "Void",
     "primalmagic.source.hallowed": "Hallowed",
+    "primalmagic.source.unknown": "Unknown",
     "primalmagic.source.mana_tooltip": "%1$s: %2$d / %3$d",
     
     "primalmagic.knowledge_type.OBSERVATION": "Observation",
