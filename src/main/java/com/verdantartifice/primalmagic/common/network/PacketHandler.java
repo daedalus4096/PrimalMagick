@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchFlagsPacket;
-import com.verdantartifice.primalmagic.common.network.packets.fx.BlockPoofPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -34,7 +34,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SyncKnowledgePacket.class, SyncKnowledgePacket::encode, SyncKnowledgePacket::decode, SyncKnowledgePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncProgressPacket.class, SyncProgressPacket::encode, SyncProgressPacket::decode, SyncProgressPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncResearchFlagsPacket.class, SyncResearchFlagsPacket::encode, SyncResearchFlagsPacket::decode, SyncResearchFlagsPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, BlockPoofPacket.class, BlockPoofPacket::encode, BlockPoofPacket::decode, BlockPoofPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, WandPoofPacket.class, WandPoofPacket::encode, WandPoofPacket::decode, WandPoofPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, ManaSparklePacket.class, ManaSparklePacket::encode, ManaSparklePacket::decode, ManaSparklePacket.Handler::onMessage);
     }
     

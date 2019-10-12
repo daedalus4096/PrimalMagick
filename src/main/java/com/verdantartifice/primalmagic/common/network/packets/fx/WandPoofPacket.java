@@ -13,7 +13,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class BlockPoofPacket implements IMessageToClient {
+public class WandPoofPacket implements IMessageToClient {
     protected double x;
     protected double y;
     protected double z;
@@ -21,9 +21,9 @@ public class BlockPoofPacket implements IMessageToClient {
     protected boolean sound;
     protected byte face;
     
-    public BlockPoofPacket() {}
+    public WandPoofPacket() {}
     
-    public BlockPoofPacket(double x, double y, double z, int color, boolean sound, @Nullable Direction facing) {
+    public WandPoofPacket(double x, double y, double z, int color, boolean sound, @Nullable Direction facing) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -32,11 +32,11 @@ public class BlockPoofPacket implements IMessageToClient {
         this.face = facing == null ? (byte)-1 : (byte)facing.getIndex();
     }
     
-    public BlockPoofPacket(@Nonnull BlockPos pos, int color, boolean sound, @Nullable Direction facing) {
+    public WandPoofPacket(@Nonnull BlockPos pos, int color, boolean sound, @Nullable Direction facing) {
         this(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, color, sound, facing);
     }
     
-    public static void encode(BlockPoofPacket message, PacketBuffer buf) {
+    public static void encode(WandPoofPacket message, PacketBuffer buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
         buf.writeDouble(message.z);
@@ -45,8 +45,8 @@ public class BlockPoofPacket implements IMessageToClient {
         buf.writeByte(message.face);
     }
     
-    public static BlockPoofPacket decode(PacketBuffer buf) {
-        BlockPoofPacket message = new BlockPoofPacket();
+    public static WandPoofPacket decode(PacketBuffer buf) {
+        WandPoofPacket message = new WandPoofPacket();
         message.x = buf.readDouble();
         message.y = buf.readDouble();
         message.z = buf.readDouble();
@@ -57,7 +57,7 @@ public class BlockPoofPacket implements IMessageToClient {
     }
     
     public static class Handler {
-        public static void onMessage(BlockPoofPacket message, Supplier<NetworkEvent.Context> ctx) {
+        public static void onMessage(WandPoofPacket message, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
                 Direction side = null;
                 if (message.face >= 0) {

@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
-import com.verdantartifice.primalmagic.common.network.packets.fx.BlockPoofPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -79,7 +79,7 @@ public class BlockSwapper {
                     entity.setMotion(0.0D, 0.0D, 0.0D);
                     world.addEntity(entity);
                 }
-                PacketHandler.sendToAllAround(new BlockPoofPacket(this.pos, Color.WHITE.getRGB(), true, Direction.UP), world.getDimension().getType(), this.pos, 32.0D);
+                PacketHandler.sendToAllAround(new WandPoofPacket(this.pos, Color.WHITE.getRGB(), true, Direction.UP), world.getDimension().getType(), this.pos, 32.0D);
             }
         }
     }
