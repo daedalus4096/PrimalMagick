@@ -83,7 +83,7 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
             double radius = 0.5D * Math.sin(Math.PI * t);
             this.age++;
             this.posX = this.initX + (this.dist * this.cosYaw * this.cosPitch * t) + (radius * this.cosYaw * this.sinPitch * Math.sin(theta)) + (radius * this.sinYaw * this.cosPitch * Math.sin(theta));
-            this.posY = this.initY + (radius * this.cosYaw * this.cosPitch * Math.cos(theta)) + (this.dist * this.cosYaw * this.sinPitch * t) + (radius * this.sinYaw * this.cosPitch * Math.cos(theta));
+            this.posY = this.initY + (radius * this.cosPitch * Math.cos(theta)) + (this.dist * this.sinPitch * t);
             this.posZ = this.initZ - (radius * this.cosYaw * this.cosPitch * Math.sin(theta)) - (radius * this.cosYaw * this.sinPitch * Math.cos(theta)) + (this.dist * this.sinYaw * this.cosPitch * t);
         }
     }
