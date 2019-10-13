@@ -26,7 +26,6 @@ public class CommonProxy implements IProxyPM {
         InitRecipes.initRecipeTypes();
         InitCapabilities.initCapabilities();
         InitResearch.initResearch();
-        InitAffinities.initAffinities();
 
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "research")).toString(), ResearchArgument.class, new ArgumentSerializer<>(ResearchArgument::research));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "discipline")).toString(), DisciplineArgument.class, new ArgumentSerializer<>(DisciplineArgument::discipline));
@@ -40,6 +39,7 @@ public class CommonProxy implements IProxyPM {
     @Override
     public void serverStarting(FMLServerStartingEvent event) {
         PrimalMagicCommand.register(event.getCommandDispatcher());
+        InitAffinities.initAffinities();
     }
     
     @Override
