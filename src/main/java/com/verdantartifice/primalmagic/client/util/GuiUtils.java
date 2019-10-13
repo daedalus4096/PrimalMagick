@@ -1,18 +1,25 @@
 package com.verdantartifice.primalmagic.client.util;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -35,7 +42,6 @@ public class GuiUtils {
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableLighting();
             RenderHelper.enableGUIStandardItemLighting();
-            // OpenGlHelper.setLightmapTextureCoords ???
             itemRenderer.renderItemAndEffectIntoGUI(stack, x, y);
             if (!hideStackOverlay) {
                 itemRenderer.renderItemOverlayIntoGUI(mc.fontRenderer, stack, x, y, text);
@@ -184,5 +190,67 @@ public class GuiUtils {
         }
         GL11.glEnable(3008);
         GL11.glEnable(3553);
+    }
+    
+    public static void renderSourceIcon(int x, int y, @Nullable Source source, int amount, double z) {
+        if (source != null) {
+            renderSourceIcon(x, y, source.getImage(), source.getColor(), amount, z);
+        }
+    }
+    
+    public static void renderUnknownSourceIcon(int x, int y, int amount, double z) {
+        renderSourceIcon(x, y, Source.getUnknownImage(), Color.WHITE.getRGB(), amount, z);
+    }
+    
+    protected static void renderSourceIcon(int x, int y, @Nonnull ResourceLocation imageLoc, int colorInt, int amount, double z) {
+        boolean isBlendOn = GL11.glIsEnabled(3042);
+        boolean isLightingEnabled = GL11.glIsEnabled(2896);
+        
+        Minecraft mc = Minecraft.getInstance();
+        
+        Color color = new Color(colorInt);
+        float r = color.getRed() / 255.0F;
+        float g = color.getGreen() / 255.0F;
+        float b = color.getBlue() / 255.0F;
+        float a = 1.0F;
+        
+        GlStateManager.pushMatrix();
+        GlStateManager.disableLighting();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(770, 771);
+        
+        GlStateManager.pushMatrix();
+        
+        mc.getTextureManager().bindTexture(imageLoc);
+        GlStateManager.color4f(r, g, b, a);
+        
+        Tessellator tess = Tessellator.getInstance();
+        BufferBuilder bb = tess.getBuffer();
+        bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+        bb.pos(x + 0.0D, y + 16.0D, z).tex(0.0D, 1.0D).color(r, g, b, a).endVertex();
+        bb.pos(x + 16.0D, y + 16.0D, z).tex(1.0D, 1.0D).color(r, g, b, a).endVertex();
+        bb.pos(x + 16.0D, y + 0.0D, z).tex(1.0D, 0.0D).color(r, g, b, a).endVertex();
+        bb.pos(x + 0.0D, y + 0.0D, z).tex(0.0D, 0.0D).color(r, g, b, a).endVertex();
+        tess.draw();
+
+        GlStateManager.popMatrix();
+        
+        if (amount > 0) {
+            GlStateManager.pushMatrix();
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            String amountStr = Integer.toString(amount);
+            int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
+            mc.fontRenderer.drawString(amountStr, (32 - amountWidth + (x * 2)), (32 - mc.fontRenderer.FONT_HEIGHT + (y * 2)), Color.WHITE.getRGB());
+            GlStateManager.popMatrix();
+        }
+        
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        if (!isBlendOn) {
+            GlStateManager.disableBlend();
+        }
+        if (isLightingEnabled) {
+            GlStateManager.enableLighting();
+        }
+        GlStateManager.popMatrix();
     }
 }
