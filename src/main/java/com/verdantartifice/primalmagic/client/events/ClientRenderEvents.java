@@ -32,7 +32,7 @@ public class ClientRenderEvents {
         Minecraft mc = Minecraft.getInstance();
         Screen gui = mc.currentScreen;
         if (gui instanceof ContainerScreen && Screen.hasShiftDown() && !mc.mouseHelper.isMouseGrabbed() && event.getItemStack() != null) {
-            SourceList sources = AffinityManager.getAffinities(event.getItemStack());
+            SourceList sources = AffinityManager.getAffinities(event.getItemStack(), mc.world);
             if (sources == null || sources.isEmpty()) {
                 event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.none"));
             } else {
@@ -77,7 +77,7 @@ public class ClientRenderEvents {
     }
     
     protected static void renderSourcesInGui(Screen gui, PlayerEntity player, ItemStack stack, int sd, int sx, int sy) {
-        SourceList sources = AffinityManager.getAffinities(stack);
+        SourceList sources = AffinityManager.getAffinities(stack, Minecraft.getInstance().world);
         if (sources == null || sources.isEmpty()) {
             return;
         }
