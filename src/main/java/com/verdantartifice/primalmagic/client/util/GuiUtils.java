@@ -237,6 +237,7 @@ public class GuiUtils {
         
         if (amount > 0) {
             GlStateManager.pushMatrix();
+            GlStateManager.scaled(0.5D, 0.5D, 1.0D);
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
