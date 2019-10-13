@@ -196,7 +196,7 @@ public class AffinityManager {
         // Scale down remaining affinities
         SourceList retVal = new SourceList();
         for (Source source : intermediate.getSources()) {
-            double amount = intermediate.getAmount(source) * 0.25D / output.getCount();
+            double amount = intermediate.getAmount(source) * 0.75D / output.getCount();
             if (amount < 1.0D && amount > 0.75D) {
                 amount = 1.0D;
             }
