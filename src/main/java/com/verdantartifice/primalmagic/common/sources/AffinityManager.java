@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.containers.FakeContainer;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
+import net.minecraft.block.Block;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,7 @@ import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -40,7 +42,7 @@ public class AffinityManager {
         REGISTRY.put(Integer.valueOf(ItemUtils.getHashCode(stack)), sources);
     }
     
-    public static void registerAffinities(@Nullable ResourceLocation tag, @Nullable SourceList sources) {
+    public static void registerItemTagAffinities(@Nullable ResourceLocation tag, @Nullable SourceList sources) {
         if (tag == null) {
             return;
         }
@@ -49,6 +51,18 @@ public class AffinityManager {
         }
         for (Item item : ItemTags.getCollection().getOrCreate(tag).getAllElements()) {
             registerAffinities(new ItemStack(item, 1), sources);
+        }
+    }
+    
+    public static void registerBlockTagAffinities(@Nullable ResourceLocation tag, @Nullable SourceList sources) {
+        if (tag == null) {
+            return;
+        }
+        if (sources == null) {
+            sources = new SourceList();
+        }
+        for (Block block : BlockTags.getCollection().getOrCreate(tag).getAllElements()) {
+            registerAffinities(new ItemStack(block, 1), sources);
         }
     }
     
