@@ -138,6 +138,13 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.MELON_STEM), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         AffinityManager.registerAffinities(new ItemStack(Blocks.VINE), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.MYCELIUM), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 10));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.LILY_PAD), new SourceList().add(Source.EARTH, 2).add(Source.SEA, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.END_PORTAL), new SourceList().add(Source.VOID, 20));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.END_PORTAL_FRAME), new SourceList().add(Source.EARTH, 5).add(Source.VOID, 20));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.DRAGON_EGG), new SourceList().add(Source.BLOOD, 20).add(Source.VOID, 20));
+        // TODO Redstone lamp
+        AffinityManager.registerAffinities(new ItemStack(Blocks.COCOA), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
+        
         
         AffinityManager.registerAffinities(new ItemStack(Items.BONE), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 10));
         
