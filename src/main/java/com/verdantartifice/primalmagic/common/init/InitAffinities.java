@@ -116,7 +116,6 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.FARMLAND), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 2).add(Source.SUN, 5));
         // TODO Furnace block
         AffinityManager.registerAffinities(new ItemStack(Blocks.SNOW), new SourceList().add(Source.SEA, 2).add(Source.SKY, 2));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.ICE), new SourceList().add(Source.SEA, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.SNOW_BLOCK), new SourceList().add(Source.SEA, 5).add(Source.SKY, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.CACTUS), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.CLAY), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5));
@@ -149,6 +148,18 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.DRAGON_EGG), new SourceList().add(Source.BLOOD, 20).add(Source.VOID, 20));
         // TODO Redstone lamp
         AffinityManager.registerAffinities(new ItemStack(Blocks.COCOA), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.FLOWER_POT), new SourceList().add(Source.EARTH, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_OAK_SAPLING), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.OAK_SAPLING)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_SPRUCE_SAPLING), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.SPRUCE_SAPLING)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_BIRCH_SAPLING), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.BIRCH_SAPLING)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_JUNGLE_SAPLING), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.JUNGLE_SAPLING)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_ACACIA_SAPLING), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.ACACIA_SAPLING)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_DARK_OAK_SAPLING), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.DARK_OAK_SAPLING)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_FERN), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FERN)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_WITHER_ROSE), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.WITHER_ROSE)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_RED_MUSHROOM), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.RED_MUSHROOM)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_BROWN_MUSHROOM), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.BROWN_MUSHROOM)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_DEAD_BUSH), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.DEAD_BUSH)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
         
         
         AffinityManager.registerAffinities(new ItemStack(Items.BONE), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 10));

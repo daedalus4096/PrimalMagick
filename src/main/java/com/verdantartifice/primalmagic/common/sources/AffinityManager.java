@@ -93,6 +93,19 @@ public class AffinityManager {
         }
         return capAffinities(retVal, MAX_AFFINITY);
     }
+    
+    @Nullable
+    public static SourceList getAffinitiesUnsafe(@Nullable ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return null;
+        }
+        // Lookup the stack in the registery, but do not attempt to generate it if not found
+        SourceList retVal = REGISTRY.get(Integer.valueOf(ItemUtils.getHashCode(stack, false)));
+        if (retVal == null) {
+            retVal = REGISTRY.get(Integer.valueOf(ItemUtils.getHashCode(stack, true)));
+        }
+        return capAffinities(retVal, MAX_AFFINITY);
+    }
 
     @Nullable
     protected static SourceList capAffinities(@Nullable SourceList sources, int maxAmount) {
