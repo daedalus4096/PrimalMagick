@@ -112,7 +112,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.FIRE), new SourceList().add(Source.INFERNAL, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.SPAWNER), new SourceList().add(Source.BLOOD, 20).add(Source.INFERNAL, 10).add(Source.VOID, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.REDSTONE_WIRE), new SourceList().add(Source.EARTH, 5));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.WHEAT), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.WHEAT), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.WHEAT)));
         AffinityManager.registerAffinities(new ItemStack(Blocks.FARMLAND), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 2).add(Source.SUN, 5));
         // TODO Furnace block
         AffinityManager.registerAffinities(new ItemStack(Blocks.SNOW), new SourceList().add(Source.SEA, 2).add(Source.SKY, 2));
@@ -160,7 +160,45 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_RED_MUSHROOM), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.RED_MUSHROOM)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
         AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_BROWN_MUSHROOM), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.BROWN_MUSHROOM)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
         AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_DEAD_BUSH), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.DEAD_BUSH)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
-        
+        AffinityManager.registerAffinities(new ItemStack(Blocks.CARROTS), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.CARROT)));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTATOES), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.POTATO)));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.SKELETON_SKULL), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 20));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.SKELETON_WALL_SKULL), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.SKELETON_SKULL)));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.WITHER_SKELETON_SKULL), new SourceList().add(Source.BLOOD, 20).add(Source.INFERNAL, 10));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.WITHER_SKELETON_WALL_SKULL), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.WITHER_SKELETON_SKULL)));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.ZOMBIE_HEAD), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 20));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.ZOMBIE_WALL_HEAD), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.ZOMBIE_HEAD)));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.PLAYER_WALL_HEAD), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.PLAYER_HEAD)));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.CREEPER_WALL_HEAD), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.CREEPER_HEAD)));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.DRAGON_HEAD), new SourceList().add(Source.BLOOD, 20).add(Source.VOID, 20));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.DRAGON_WALL_HEAD), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.DRAGON_HEAD)));
+        // TODO Sea lantern
+        AffinityManager.registerAffinities(new ItemStack(Blocks.PACKED_ICE), new SourceList().add(Source.SEA, 10));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.SUNFLOWER), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.LILAC), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.ROSE_BUSH), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.PEONY), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.TALL_GRASS), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.LARGE_FERN), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.CHORUS_PLANT), new SourceList().add(Source.EARTH, 5).add(Source.VOID, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.CHORUS_FLOWER), new SourceList().add(Source.EARTH, 5).add(Source.VOID, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.PURPUR_BLOCK), new SourceList().add(Source.EARTH, 5).add(Source.VOID, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.BEETROOTS), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.BEETROOT)));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.GRASS_PATH), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.END_GATEWAY), new SourceList().add(Source.VOID, 20));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.MAGMA_BLOCK), new SourceList().add(Source.INFERNAL, 10));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.KELP), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.KELP_PLANT), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.TURTLE_EGG), new SourceList().add(Source.SEA, 5).add(Source.BLOOD, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.SEA_PICKLE), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SUN, 10));
+        // TODO Conduit
+        AffinityManager.registerAffinities(new ItemStack(Blocks.BAMBOO_SAPLING), new SourceList().add(Source.EARTH, 10).add(Source.SKY, 10).add(Source.SUN, 10));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.BAMBOO), new SourceList().add(Source.EARTH, 5).add(Source.SKY, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_BAMBOO), AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.BAMBOO)).add(AffinityManager.getAffinitiesUnsafe(new ItemStack(Blocks.FLOWER_POT))));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.BELL), new SourceList().add(Source.EARTH, 10));
+        // TODO Lantern
+        // TODO Campfire
+        AffinityManager.registerAffinities(new ItemStack(Blocks.SWEET_BERRY_BUSH), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         
         AffinityManager.registerAffinities(new ItemStack(Items.BONE), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 10));
         
