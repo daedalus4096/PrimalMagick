@@ -82,6 +82,7 @@ public class InitAffinities {
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "ores/redstone"), new SourceList().add(Source.EARTH, 10));
         
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "rods/blaze"), new SourceList().add(Source.INFERNAL, 20));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "rods/wooden"), new SourceList().add(Source.EARTH, 1).add(Source.SUN, 1));
         
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "sand/colorless"), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "sand/red"), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
@@ -123,13 +124,13 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.GLOWSTONE), new SourceList().add(Source.SUN, 20).add(Source.INFERNAL, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.NETHER_PORTAL), new SourceList().add(Source.INFERNAL, 20).add(Source.VOID, 20));
         AffinityManager.registerAffinities(new ItemStack(Blocks.CARVED_PUMPKIN), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
-        // TODO Mossy stone bricks
+        AffinityManager.registerAffinities(new ItemStack(Blocks.MOSSY_STONE_BRICKS), new SourceList().add(Source.EARTH, 3).add(Source.MOON, 3));
         AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_STONE), new SourceList().add(Source.EARTH, 5).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_COBBLESTONE), new SourceList().add(Source.EARTH, 5).add(Source.BLOOD, 2));
-        // TODO Infested stone bricks
-        // TODO Infested mossy stone bricks
-        // TODO Infested cracked stone bricks
-        // TODO Infested chiseled stone bricks
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_STONE_BRICKS), new SourceList().add(Source.EARTH, 3).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_MOSSY_STONE_BRICKS), new SourceList().add(Source.EARTH, 3).add(Source.MOON, 3).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_CRACKED_STONE_BRICKS), new SourceList().add(Source.EARTH, 2).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_CHISELED_STONE_BRICKS), new SourceList().add(Source.EARTH, 1).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.MUSHROOM_STEM), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 10));
