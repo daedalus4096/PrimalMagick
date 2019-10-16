@@ -178,8 +178,8 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.PEONY), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.TALL_GRASS), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.LARGE_FERN), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.CHORUS_PLANT), new SourceList().add(Source.EARTH, 5).add(Source.VOID, 5));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.CHORUS_FLOWER), new SourceList().add(Source.EARTH, 5).add(Source.VOID, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.CHORUS_PLANT), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 5).add(Source.VOID, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.CHORUS_FLOWER), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 5).add(Source.VOID, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.PURPUR_BLOCK), new SourceList().add(Source.EARTH, 5).add(Source.VOID, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.BEETROOTS), AffinityManager.getAffinitiesUnsafe(new ItemStack(Items.BEETROOT)));
         AffinityManager.registerAffinities(new ItemStack(Blocks.GRASS_PATH), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 2));
@@ -218,6 +218,37 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Items.INK_SAC), new SourceList().add(Source.SEA, 5).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.COCOA_BEANS), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.BONE), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 10));
+        // TODO Filled map
+        AffinityManager.registerAffinities(new ItemStack(Items.MELON_SLICE), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
+        AffinityManager.registerAffinities(new ItemStack(Items.BEEF), new SourceList().add(Source.BLOOD, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.CHICKEN), new SourceList().add(Source.SKY, 2).add(Source.BLOOD, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.ROTTEN_FLESH), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 10));
+        AffinityManager.registerAffinities(new ItemStack(Items.GHAST_TEAR), new SourceList().add(Source.SKY, 5).add(Source.BLOOD, 5).add(Source.INFERNAL, 10));
+        AffinityManager.registerAffinities(new ItemStack(Items.POTION), new SourceList().add(Source.SEA, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.SPIDER_EYE), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.EXPERIENCE_BOTTLE), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5));
+        // TODO Writable book
+        // TODO Written book
+        AffinityManager.registerAffinities(new ItemStack(Items.POISONOUS_POTATO), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 5).add(Source.VOID, 2));
+        AffinityManager.registerAffinities(new ItemStack(Items.ENCHANTED_BOOK), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.RABBIT), new SourceList().add(Source.BLOOD, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.RABBIT_FOOT), new SourceList().add(Source.MOON, 20).add(Source.BLOOD, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.RABBIT_HIDE), new SourceList().add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Items.IRON_HORSE_ARMOR), new SourceList().add(Source.EARTH, 52));
+        AffinityManager.registerAffinities(new ItemStack(Items.GOLDEN_HORSE_ARMOR), new SourceList().add(Source.EARTH, 52));
+        AffinityManager.registerAffinities(new ItemStack(Items.DIAMOND_HORSE_ARMOR), new SourceList().add(Source.EARTH, 105));
+        AffinityManager.registerAffinities(new ItemStack(Items.MUTTON), new SourceList().add(Source.BLOOD, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.CHORUS_FRUIT), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 5).add(Source.VOID, 10));
+        AffinityManager.registerAffinities(new ItemStack(Items.DRAGON_BREATH), new SourceList().add(Source.SKY, 10).add(Source.VOID, 10));
+        AffinityManager.registerAffinities(new ItemStack(Items.SPLASH_POTION), new SourceList().add(Source.SEA, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.ELYTRA), new SourceList().add(Source.SKY, 20).add(Source.VOID, 10));
+        AffinityManager.registerAffinities(new ItemStack(Items.TOTEM_OF_UNDYING), new SourceList().add(Source.HALLOWED, 10));
+        AffinityManager.registerAffinities(new ItemStack(Items.SHULKER_SHELL), new SourceList().add(Source.BLOOD, 5).add(Source.VOID, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.TRIDENT), new SourceList().add(Source.EARTH, 15).add(Source.SEA, 15));
+        AffinityManager.registerAffinities(new ItemStack(Items.PHANTOM_MEMBRANE), new SourceList().add(Source.SKY, 10).add(Source.BLOOD, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.NAUTILUS_SHELL), new SourceList().add(Source.SEA, 10).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Items.HEART_OF_THE_SEA), new SourceList().add(Source.SEA, 20));
+        AffinityManager.registerAffinities(new ItemStack(Items.SWEET_BERRIES), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_RAW), new SourceList().add(Source.EARTH, 5));
     }
