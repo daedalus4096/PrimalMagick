@@ -68,6 +68,24 @@ public class AffinityManager {
         }
     }
     
+    public static void appendAffinities(@Nullable ItemStack stack, @Nullable SourceList sources, @Nonnull MinecraftServer server) {
+        appendAffinities(stack, sources, server.getRecipeManager(), new ArrayList<>());
+    }
+    
+    protected static void appendAffinities(@Nullable ItemStack stack, @Nullable SourceList sources, @Nonnull RecipeManager recipeManager, @Nonnull List<String> history) {
+        if (stack == null || stack.isEmpty()) {
+            return;
+        }
+        if (sources == null) {
+            sources = new SourceList();
+        }
+        SourceList originalAffinities = getAffinities(stack, recipeManager, history);
+        if (originalAffinities == null) {
+            originalAffinities = new SourceList();
+        }
+        registerAffinities(stack, originalAffinities.merge(sources));
+    }
+    
     public static boolean isRegistered(@Nullable ItemStack stack) {
         return REGISTRY.containsKey(Integer.valueOf(ItemUtils.getHashCode(stack, false))) ||
                REGISTRY.containsKey(Integer.valueOf(ItemUtils.getHashCode(stack, true)));

@@ -11,4 +11,7 @@ public class ItemsPM {
     public static final Item GRIMOIRE = null;
     public static final Item MUNDANE_WAND = null;
     public static final Item MODULAR_WAND = null;
+    public static final Item HEARTWOOD_WAND_CORE_ITEM = null;
+    public static final Item IRON_WAND_CAP_ITEM = null;
+    public static final Item APPRENTICE_WAND_GEM_ITEM = null;
 }
