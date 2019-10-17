@@ -167,7 +167,7 @@ public class AffinityManager {
             }
             int manaSize = ingSources.getManaSize();
             if (manaSize > 0 && manaSize < maxValue) {
-                // Keep the source list with the smallest mana footprint
+                // Keep the source list with the smallest non-zero mana footprint
                 retVal = ingSources;
                 maxValue = manaSize;
             }
@@ -188,8 +188,9 @@ public class AffinityManager {
             CraftingInventory inv = new CraftingInventory(new FakeContainer(), 3, 3);
             int index = 0;
             for (Ingredient ingredient : ingredients) {
-                if (ingredient.getMatchingStacks().length > 0) {
-                    inv.setInventorySlotContents(index, ingredient.getMatchingStacks()[0]);
+                ItemStack ingStack = getMatchingItemStack(ingredient, world, history);
+                if (!ingStack.isEmpty()) {
+                    inv.setInventorySlotContents(index, ingStack);
                 }
                 index++;
             }
@@ -198,8 +199,9 @@ public class AffinityManager {
 
         // Compute total affinities for each ingredient
         for (Ingredient ingredient : ingredients) {
-            if (ingredient.getMatchingStacks().length > 0) {
-                SourceList ingSources = getAffinities(ingredient.getMatchingStacks()[0], world, history);
+            ItemStack ingStack = getMatchingItemStack(ingredient, world, history);
+            if (!ingStack.isEmpty()) {
+                SourceList ingSources = getAffinities(ingStack, world, history);
                 if (ingSources != null) {
                     intermediate.add(ingSources);
                 }
@@ -232,6 +234,28 @@ public class AffinityManager {
             }
         }
         
+        return retVal;
+    }
+    
+    @Nonnull
+    protected static ItemStack getMatchingItemStack(@Nullable Ingredient ingredient, @Nonnull World world, @Nonnull List<String> history) {
+        if (ingredient == null || ingredient.getMatchingStacks() == null || ingredient.getMatchingStacks().length <= 0) {
+            return ItemStack.EMPTY;
+        }
+        
+        int maxValue = Integer.MAX_VALUE;
+        ItemStack retVal = ItemStack.EMPTY;
+        for (ItemStack stack : ingredient.getMatchingStacks()) {
+            SourceList stackSources = getAffinities(stack, world, history);
+            if (stackSources != null) {
+                int manaSize = stackSources.getManaSize();
+                if (manaSize > 0 && manaSize < maxValue) {
+                    // Keep the ingredient match-stack with the smallest non-zero mana footprint
+                    retVal = stack;
+                    maxValue = manaSize;
+                }
+            }
+        }
         return retVal;
     }
 }
