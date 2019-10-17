@@ -20,7 +20,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.NonNullList;
@@ -73,11 +75,15 @@ public class AffinityManager {
     
     @Nullable
     public static SourceList getAffinities(@Nullable ItemStack stack, @Nonnull World world) {
-        return getAffinities(stack, world, new ArrayList<>());
+        return getAffinities(stack, world.getRecipeManager(), new ArrayList<>());
+    }
+    
+    public static SourceList getAffinities(@Nullable ItemStack stack, @Nonnull MinecraftServer server) {
+        return getAffinities(stack, server.getRecipeManager(), new ArrayList<>());
     }
     
     @Nullable
-    protected static SourceList getAffinities(@Nullable ItemStack stack, @Nonnull World world, @Nonnull List<String> history) {
+    protected static SourceList getAffinities(@Nullable ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull List<String> history) {
         if (stack == null || stack.isEmpty()) {
             return null;
         }
@@ -88,25 +94,12 @@ public class AffinityManager {
             retVal = REGISTRY.get(Integer.valueOf(ItemUtils.getHashCode(stack, true)));
             if (retVal == null) {
                 // If that doesn't work either, generate affinities for the item and return those
-                retVal = generateAffinities(stack, world, history);
+                retVal = generateAffinities(stack, recipeManager, history);
             }
         }
         return capAffinities(retVal, MAX_AFFINITY);
     }
     
-    @Nullable
-    public static SourceList getAffinitiesUnsafe(@Nullable ItemStack stack) {
-        if (stack == null || stack.isEmpty()) {
-            return null;
-        }
-        // Lookup the stack in the registery, but do not attempt to generate it if not found
-        SourceList retVal = REGISTRY.get(Integer.valueOf(ItemUtils.getHashCode(stack, false)));
-        if (retVal == null) {
-            retVal = REGISTRY.get(Integer.valueOf(ItemUtils.getHashCode(stack, true)));
-        }
-        return capAffinities(retVal, MAX_AFFINITY);
-    }
-
     @Nullable
     protected static SourceList capAffinities(@Nullable SourceList sources, int maxAmount) {
         if (sources == null) {
@@ -120,13 +113,13 @@ public class AffinityManager {
     }
 
     @Nullable
-    protected static SourceList generateAffinities(@Nonnull ItemStack stack, @Nonnull World world, @Nonnull List<String> history) {
+    protected static SourceList generateAffinities(@Nonnull ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull List<String> history) {
         ItemStack stackCopy = stack.copy();
         stackCopy.setCount(1);
         
         // If the stack is already registered, just return that
         if (AffinityManager.isRegistered(stackCopy)) {
-            return getAffinities(stackCopy, world, history);
+            return getAffinities(stackCopy, recipeManager, history);
         }
         
         // Prevent cycles in affinity generation
@@ -138,7 +131,7 @@ public class AffinityManager {
         
         // If we haven't hit a complexity limit, scan recipes to compute affinities
         if (history.size() < HISTORY_LIMIT) {
-            SourceList retVal = capAffinities(generateAffinitiesFromRecipes(stackCopy, world, history), MAX_AFFINITY);
+            SourceList retVal = capAffinities(generateAffinitiesFromRecipes(stackCopy, recipeManager, history), MAX_AFFINITY);
             registerAffinities(stack, retVal);
             return retVal;
         } else {
@@ -147,11 +140,11 @@ public class AffinityManager {
     }
     
     @Nullable
-    protected static SourceList generateAffinitiesFromRecipes(@Nonnull ItemStack stack, @Nonnull World world, @Nonnull List<String> history) {
+    protected static SourceList generateAffinitiesFromRecipes(@Nonnull ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull List<String> history) {
         SourceList retVal = null;
         int maxValue = Integer.MAX_VALUE;
-        for (IRecipe<?> recipe : world.getRecipeManager().getRecipes().stream().filter(r -> r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(stack)).collect(Collectors.toList())) {
-            SourceList ingSources = generateAffinitiesFromIngredients(recipe, world, history);
+        for (IRecipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(stack)).collect(Collectors.toList())) {
+            SourceList ingSources = generateAffinitiesFromIngredients(recipe, recipeManager, history);
             if (recipe instanceof IArcaneRecipe) {
                 // Add affinities from mana costs
                 IArcaneRecipe arcaneRecipe = (IArcaneRecipe)recipe;
@@ -176,7 +169,7 @@ public class AffinityManager {
     }
     
     @Nonnull
-    protected static SourceList generateAffinitiesFromIngredients(@Nonnull IRecipe<?> recipe, @Nonnull World world, @Nonnull List<String> history) {
+    protected static SourceList generateAffinitiesFromIngredients(@Nonnull IRecipe<?> recipe, @Nonnull RecipeManager recipeManager, @Nonnull List<String> history) {
         NonNullList<Ingredient> ingredients = recipe.getIngredients();
         ItemStack output = recipe.getRecipeOutput();
         SourceList intermediate = new SourceList();
@@ -188,7 +181,7 @@ public class AffinityManager {
             CraftingInventory inv = new CraftingInventory(new FakeContainer(), 3, 3);
             int index = 0;
             for (Ingredient ingredient : ingredients) {
-                ItemStack ingStack = getMatchingItemStack(ingredient, world, history);
+                ItemStack ingStack = getMatchingItemStack(ingredient, recipeManager, history);
                 if (!ingStack.isEmpty()) {
                     inv.setInventorySlotContents(index, ingStack);
                 }
@@ -199,9 +192,9 @@ public class AffinityManager {
 
         // Compute total affinities for each ingredient
         for (Ingredient ingredient : ingredients) {
-            ItemStack ingStack = getMatchingItemStack(ingredient, world, history);
+            ItemStack ingStack = getMatchingItemStack(ingredient, recipeManager, history);
             if (!ingStack.isEmpty()) {
-                SourceList ingSources = getAffinities(ingStack, world, history);
+                SourceList ingSources = getAffinities(ingStack, recipeManager, history);
                 if (ingSources != null) {
                     intermediate.add(ingSources);
                 }
@@ -212,7 +205,7 @@ public class AffinityManager {
         if (containerList != null) {
             for (ItemStack containerStack : containerList) {
                 if (!containerStack.isEmpty()) {
-                    SourceList containerSources = getAffinities(containerStack, world);
+                    SourceList containerSources = getAffinities(containerStack, recipeManager, history);
                     if (containerSources != null) {
                         for (Source source : containerSources.getSources()) {
                             intermediate.reduce(source, containerSources.getAmount(source));
@@ -238,7 +231,7 @@ public class AffinityManager {
     }
     
     @Nonnull
-    protected static ItemStack getMatchingItemStack(@Nullable Ingredient ingredient, @Nonnull World world, @Nonnull List<String> history) {
+    protected static ItemStack getMatchingItemStack(@Nullable Ingredient ingredient, @Nonnull RecipeManager recipeManager, @Nonnull List<String> history) {
         if (ingredient == null || ingredient.getMatchingStacks() == null || ingredient.getMatchingStacks().length <= 0) {
             return ItemStack.EMPTY;
         }
@@ -246,7 +239,7 @@ public class AffinityManager {
         int maxValue = Integer.MAX_VALUE;
         ItemStack retVal = ItemStack.EMPTY;
         for (ItemStack stack : ingredient.getMatchingStacks()) {
-            SourceList stackSources = getAffinities(stack, world, history);
+            SourceList stackSources = getAffinities(stack, recipeManager, history);
             if (stackSources != null) {
                 int manaSize = stackSources.getManaSize();
                 if (manaSize > 0 && manaSize < maxValue) {
