@@ -31,6 +31,8 @@ public class InitAffinities {
         AffinityManager.registerItemTagAffinities(new ResourceLocation("sand"), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("saplings"), new SourceList().add(Source.EARTH, 10).add(Source.SUN, 10));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("small_flowers"), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation("stone_bricks"), new SourceList().add(Source.EARTH, 3));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation("wooden_slabs"), new SourceList().add(Source.EARTH, 1).add(Source.SUN, 1));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("wool"), new SourceList().add(Source.BLOOD, 5));
         
         AffinityManager.registerBlockTagAffinities(new ResourceLocation("anvil"), new SourceList().add(Source.EARTH, 180));
@@ -40,6 +42,7 @@ public class InitAffinities {
         AffinityManager.registerBlockTagAffinities(new ResourceLocation("ice"), new SourceList().add(Source.SEA, 5));
         
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "cobblestone"), new SourceList().add(Source.EARTH, 5));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "dyes"), new SourceList().add(Source.EARTH, 1).add(Source.SUN, 1));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "eggs"), new SourceList().add(Source.SKY, 2).add(Source.BLOOD, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "end_stones"), new SourceList().add(Source.EARTH, 5).add(Source.VOID, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "ender_pearls"), new SourceList().add(Source.VOID, 20));
@@ -50,7 +53,7 @@ public class InitAffinities {
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "leather"), new SourceList().add(Source.BLOOD, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "mushrooms"), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "nether_stars"), new SourceList().add(Source.EARTH, 10).add(Source.SEA, 10).add(Source.SKY, 10).add(Source.SUN, 10).add(Source.MOON, 10).add(Source.BLOOD, 10).add(Source.INFERNAL, 10).add(Source.VOID, 10).add(Source.HALLOWED, 10));
-        AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "netherack"), new SourceList().add(Source.EARTH, 5).add(Source.INFERNAL, 5));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "netherrack"), new SourceList().add(Source.EARTH, 5).add(Source.INFERNAL, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "obsidian"), new SourceList().add(Source.EARTH, 5).add(Source.INFERNAL, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "sandstone"), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "slimeballs"), new SourceList().add(Source.SEA, 5).add(Source.BLOOD, 2));
@@ -130,12 +133,12 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.NETHER_PORTAL), new SourceList().add(Source.INFERNAL, 20).add(Source.VOID, 20));
         AffinityManager.registerAffinities(new ItemStack(Blocks.CARVED_PUMPKIN), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.MOSSY_STONE_BRICKS), new SourceList().add(Source.EARTH, 3).add(Source.MOON, 3));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_STONE), new SourceList().add(Source.EARTH, 5).add(Source.BLOOD, 2));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_COBBLESTONE), new SourceList().add(Source.EARTH, 5).add(Source.BLOOD, 2));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_STONE_BRICKS), new SourceList().add(Source.EARTH, 3).add(Source.BLOOD, 2));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_MOSSY_STONE_BRICKS), new SourceList().add(Source.EARTH, 3).add(Source.MOON, 3).add(Source.BLOOD, 2));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_CRACKED_STONE_BRICKS), new SourceList().add(Source.EARTH, 2).add(Source.BLOOD, 2));
-        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_CHISELED_STONE_BRICKS), new SourceList().add(Source.EARTH, 1).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_STONE), AffinityManager.getAffinities(new ItemStack(Blocks.STONE), server).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_COBBLESTONE), AffinityManager.getAffinities(new ItemStack(Blocks.COBBLESTONE), server).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_STONE_BRICKS), AffinityManager.getAffinities(new ItemStack(Blocks.STONE_BRICKS), server).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_MOSSY_STONE_BRICKS), AffinityManager.getAffinities(new ItemStack(Blocks.MOSSY_STONE_BRICKS), server).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_CRACKED_STONE_BRICKS), AffinityManager.getAffinities(new ItemStack(Blocks.CRACKED_STONE_BRICKS), server).add(Source.BLOOD, 2));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.INFESTED_CHISELED_STONE_BRICKS), AffinityManager.getAffinities(new ItemStack(Blocks.CHISELED_STONE_BRICKS), server).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.MUSHROOM_STEM), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 10));
@@ -201,11 +204,15 @@ public class InitAffinities {
         
         AffinityManager.registerAffinities(new ItemStack(Items.SCUTE), new SourceList().add(Source.SEA, 2).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.APPLE), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.CHAINMAIL_HELMET), AffinityManager.getAffinities(new ItemStack(Items.IRON_HELMET), server));
+        AffinityManager.registerAffinities(new ItemStack(Items.CHAINMAIL_CHESTPLATE), AffinityManager.getAffinities(new ItemStack(Items.IRON_CHESTPLATE), server));
+        AffinityManager.registerAffinities(new ItemStack(Items.CHAINMAIL_LEGGINGS), AffinityManager.getAffinities(new ItemStack(Items.IRON_LEGGINGS), server));
+        AffinityManager.registerAffinities(new ItemStack(Items.CHAINMAIL_BOOTS), AffinityManager.getAffinities(new ItemStack(Items.IRON_BOOTS), server));
         AffinityManager.registerAffinities(new ItemStack(Items.FLINT), new SourceList().add(Source.EARTH, 5));
         AffinityManager.registerAffinities(new ItemStack(Items.PORKCHOP), new SourceList().add(Source.BLOOD, 5));
         AffinityManager.registerAffinities(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE), AffinityManager.getAffinities(new ItemStack(Items.GOLDEN_APPLE), server).add(Source.HALLOWED, 5));
-        AffinityManager.registerAffinities(new ItemStack(Items.WATER_BUCKET), AffinityManager.getAffinities(new ItemStack(Items.BUCKET), server).add(AffinityManager.getAffinities(new ItemStack(Blocks.WATER), server)));
-        AffinityManager.registerAffinities(new ItemStack(Items.LAVA_BUCKET), AffinityManager.getAffinities(new ItemStack(Items.BUCKET), server).add(AffinityManager.getAffinities(new ItemStack(Blocks.LAVA), server)));
+        AffinityManager.registerAffinities(new ItemStack(Items.WATER_BUCKET), AffinityManager.getAffinities(new ItemStack(Items.BUCKET), server).add(new SourceList().add(Source.SEA, 20)));
+        AffinityManager.registerAffinities(new ItemStack(Items.LAVA_BUCKET), AffinityManager.getAffinities(new ItemStack(Items.BUCKET), server).add(new SourceList().add(Source.INFERNAL, 20)));
         AffinityManager.registerAffinities(new ItemStack(Items.SADDLE), new SourceList().add(Source.BLOOD, 5));
         AffinityManager.registerAffinities(new ItemStack(Items.SNOWBALL), new SourceList().add(Source.SEA, 2).add(Source.SKY, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.MILK_BUCKET), AffinityManager.getAffinities(new ItemStack(Items.BUCKET), server).add(Source.BLOOD, 5));
@@ -228,6 +235,8 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Items.EXPERIENCE_BOTTLE), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5));
         AffinityManager.registerAffinities(new ItemStack(Items.WRITTEN_BOOK), AffinityManager.getAffinities(new ItemStack(Items.WRITABLE_BOOK), server));
         AffinityManager.registerAffinities(new ItemStack(Items.POISONOUS_POTATO), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 5).add(Source.VOID, 2));
+        AffinityManager.registerAffinities(new ItemStack(Items.FIREWORK_ROCKET), new SourceList().add(Source.EARTH, 5).add(Source.SKY, 5).add(Source.SUN, 15).add(Source.INFERNAL, 5));
+        AffinityManager.registerAffinities(new ItemStack(Items.FIREWORK_STAR), AffinityManager.getAffinities(new ItemStack(Items.GUNPOWDER), server));
         AffinityManager.registerAffinities(new ItemStack(Items.ENCHANTED_BOOK), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5));
         AffinityManager.registerAffinities(new ItemStack(Items.RABBIT), new SourceList().add(Source.BLOOD, 5));
         AffinityManager.registerAffinities(new ItemStack(Items.RABBIT_FOOT), new SourceList().add(Source.MOON, 20).add(Source.BLOOD, 5));
@@ -248,6 +257,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Items.PHANTOM_MEMBRANE), new SourceList().add(Source.SKY, 10).add(Source.BLOOD, 5));
         AffinityManager.registerAffinities(new ItemStack(Items.NAUTILUS_SHELL), new SourceList().add(Source.SEA, 10).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.HEART_OF_THE_SEA), new SourceList().add(Source.SEA, 20));
+        AffinityManager.registerAffinities(new ItemStack(Items.GLOBE_BANNER_PATTERN), AffinityManager.getAffinities(new ItemStack(Items.PAPER), server));
         AffinityManager.registerAffinities(new ItemStack(Items.SWEET_BERRIES), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_RAW), new SourceList().add(Source.EARTH, 5));
