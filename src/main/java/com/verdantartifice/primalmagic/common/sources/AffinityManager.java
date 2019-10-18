@@ -22,6 +22,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -31,6 +34,7 @@ import net.minecraft.world.World;
 
 public class AffinityManager {
     protected static final Map<Integer, SourceList> REGISTRY = new ConcurrentHashMap<>();
+    protected static final Map<ResourceLocation, SourceList> POTION_BONUS_REGISTRY = new ConcurrentHashMap<>();
     protected static final int MAX_AFFINITY = 100;
     protected static final int HISTORY_LIMIT = 100;
     
@@ -86,6 +90,16 @@ public class AffinityManager {
         registerAffinities(stack, originalAffinities.merge(sources));
     }
     
+    public static void registerPotionBonusAffinity(@Nullable Potion potion, @Nullable SourceList sources) {
+        if (potion == null) {
+            return;
+        }
+        if (sources == null) {
+            sources = new SourceList();
+        }
+        POTION_BONUS_REGISTRY.put(potion.getRegistryName(), sources);
+    }
+    
     public static boolean isRegistered(@Nullable ItemStack stack) {
         return REGISTRY.containsKey(Integer.valueOf(ItemUtils.getHashCode(stack, false))) ||
                REGISTRY.containsKey(Integer.valueOf(ItemUtils.getHashCode(stack, true)));
@@ -115,7 +129,7 @@ public class AffinityManager {
                 retVal = generateAffinities(stack, recipeManager, history);
             }
         }
-        return capAffinities(retVal, MAX_AFFINITY);
+        return capAffinities(addBonusAffinities(stack, retVal), MAX_AFFINITY);
     }
     
     @Nullable
@@ -268,5 +282,30 @@ public class AffinityManager {
             }
         }
         return retVal;
+    }
+    
+    @Nullable
+    protected static SourceList addBonusAffinities(@Nonnull ItemStack stack, @Nullable SourceList inputSources) {
+        if (inputSources == null) {
+            return null;
+        }
+        
+        SourceList retVal = inputSources.copy();
+        
+        // Determine bonus affinities from NBT-attached potion data
+        Potion potion = PotionUtils.getPotionFromItem(stack);
+        if (potion != null && potion != Potions.EMPTY) {
+            SourceList bonus = getPotionBonusAffinities(potion);
+            if (bonus != null && !bonus.isEmpty()) {
+                retVal.add(bonus);
+            }
+        }
+        
+        return retVal;
+    }
+    
+    @Nullable
+    protected static SourceList getPotionBonusAffinities(@Nonnull Potion potion) {
+        return POTION_BONUS_REGISTRY.get(potion.getRegistryName());
     }
 }
