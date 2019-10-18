@@ -14,6 +14,8 @@ import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -35,6 +37,7 @@ import net.minecraft.world.World;
 public class AffinityManager {
     protected static final Map<Integer, SourceList> REGISTRY = new ConcurrentHashMap<>();
     protected static final Map<ResourceLocation, SourceList> POTION_BONUS_REGISTRY = new ConcurrentHashMap<>();
+    protected static final Map<ResourceLocation, Source> ENCHANTMENT_BONUS_REGISTRY = new ConcurrentHashMap<>();
     protected static final int MAX_AFFINITY = 100;
     protected static final int HISTORY_LIMIT = 100;
     
@@ -98,6 +101,13 @@ public class AffinityManager {
             sources = new SourceList();
         }
         POTION_BONUS_REGISTRY.put(potion.getRegistryName(), sources);
+    }
+    
+    public static void registerEnchantmentBonusAffinity(@Nullable Enchantment enchant, @Nullable Source source) {
+        if (enchant == null || source == null) {
+            return;
+        }
+        ENCHANTMENT_BONUS_REGISTRY.put(enchant.getRegistryName(), source);
     }
     
     public static boolean isRegistered(@Nullable ItemStack stack) {
@@ -301,11 +311,32 @@ public class AffinityManager {
             }
         }
         
+        // Determine bonus affinities from NBT-attached enchantment data
+        Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
+        if (enchants != null && !enchants.isEmpty()) {
+            for (Enchantment enchant : enchants.keySet()) {
+                SourceList bonus = getEnchantmentBonusAffinities(enchant, enchants.get(enchant));
+                if (bonus != null && !bonus.isEmpty()) {
+                    retVal.add(bonus);
+                }
+            }
+        }
+        
         return retVal;
     }
     
     @Nullable
     protected static SourceList getPotionBonusAffinities(@Nonnull Potion potion) {
         return POTION_BONUS_REGISTRY.get(potion.getRegistryName());
+    }
+    
+    @Nonnull
+    protected static SourceList getEnchantmentBonusAffinities(@Nonnull Enchantment enchant, @Nonnull int level) {
+        SourceList retVal = new SourceList();
+        Source source = ENCHANTMENT_BONUS_REGISTRY.get(enchant.getRegistryName());
+        if (source != null) {
+            retVal.add(source, level);
+        }
+        return retVal;
     }
 }

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
@@ -17,6 +18,7 @@ public class InitAffinities {
     public static void initAffinities(MinecraftServer server) {
         initItemAffinities(server);
         initPotionBonusAffinities();
+        initEnchantmentBonusAffinities();
         // TODO init entity affinities
     }
     
@@ -265,7 +267,7 @@ public class InitAffinities {
         AffinityManager.appendAffinities(new ItemStack(Blocks.LANTERN), new SourceList().add(Source.SUN, 15), server);
     }
     
-    public static void initPotionBonusAffinities() {
+    protected static void initPotionBonusAffinities() {
         AffinityManager.registerPotionBonusAffinity(Potions.NIGHT_VISION, new SourceList().add(Source.SUN, 2));
         AffinityManager.registerPotionBonusAffinity(Potions.LONG_NIGHT_VISION, new SourceList().add(Source.SUN, 5));
         AffinityManager.registerPotionBonusAffinity(Potions.INVISIBILITY, new SourceList().add(Source.MOON, 2));
@@ -304,5 +306,45 @@ public class InitAffinities {
         AffinityManager.registerPotionBonusAffinity(Potions.LUCK, new SourceList().add(Source.MOON, 5));
         AffinityManager.registerPotionBonusAffinity(Potions.SLOW_FALLING, new SourceList().add(Source.SKY, 2));
         AffinityManager.registerPotionBonusAffinity(Potions.LONG_SLOW_FALLING, new SourceList().add(Source.SKY, 5));
+    }
+    
+    protected static void initEnchantmentBonusAffinities() {
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.PROTECTION, Source.EARTH);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.FIRE_PROTECTION, Source.INFERNAL);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.FEATHER_FALLING, Source.SKY);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.BLAST_PROTECTION, Source.EARTH);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.PROJECTILE_PROTECTION, Source.SKY);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.RESPIRATION, Source.SEA);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.AQUA_AFFINITY, Source.SEA);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.THORNS, Source.BLOOD);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.DEPTH_STRIDER, Source.SEA);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.FROST_WALKER, Source.SEA);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.BINDING_CURSE, Source.VOID);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.SHARPNESS, Source.BLOOD);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.SMITE, Source.HALLOWED);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.BANE_OF_ARTHROPODS, Source.BLOOD);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.KNOCKBACK, Source.EARTH);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.FIRE_ASPECT, Source.INFERNAL);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.LOOTING, Source.MOON);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.SWEEPING, Source.SKY);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.EFFICIENCY, Source.EARTH);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.SILK_TOUCH, Source.MOON);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.UNBREAKING, Source.EARTH);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.FORTUNE, Source.MOON);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.POWER, Source.BLOOD);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.PUNCH, Source.BLOOD);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.FLAME, Source.INFERNAL);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.INFINITY, Source.VOID);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.LUCK_OF_THE_SEA, Source.MOON);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.LURE, Source.SEA);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.LOYALTY, Source.SKY);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.IMPALING, Source.BLOOD);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.RIPTIDE, Source.SEA);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.CHANNELING, Source.SKY);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.MULTISHOT, Source.SKY);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.QUICK_CHARGE, Source.SKY);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.PIERCING, Source.BLOOD);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.MENDING, Source.SUN);
+        AffinityManager.registerEnchantmentBonusAffinity(Enchantments.VANISHING_CURSE, Source.VOID);
     }
 }
