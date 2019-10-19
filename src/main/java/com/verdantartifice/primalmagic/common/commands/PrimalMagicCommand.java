@@ -75,6 +75,7 @@ public class PrimalMagicCommand {
                     .then(Commands.literal("grant")
                         .then(Commands.argument("item", ItemArgument.item()).executes((context) -> { return grantScanResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ItemArgument.getItem(context, "item")); }))
                     )
+                    .then(Commands.literal("grant_all").executes((context) -> { return grantAllScanResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                 )
             )
         );
@@ -249,6 +250,12 @@ public class PrimalMagicCommand {
         } else {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.failure", target.getName().getString()).applyTextStyle(TextFormatting.RED), true);            
         }
+        return 0;
+    }
+    
+    private static int grantAllScanResearch(CommandSource source, ServerPlayerEntity target) {
+        int count = AffinityManager.setAllScanned(target);
+        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant_all", count, target.getName().getString()), true);
         return 0;
     }
 }

@@ -157,6 +157,7 @@
     "commands.primalmagic.knowledge.add.failure": "Failed to add knowledge to %1$s",
     "commands.primalmagic.scans.grant.success": "Granting scan research to %1$s: %2$s",
     "commands.primalmagic.scans.grant.failure": "Failed to grant scan research to %1$s",
+    "commands.primalmagic.scans.grant_all": "Granting %1$d scan research entries to %2$s",
     "commands.primalmagic.research.noexist": "Research %1$s does not exist",
     "commands.primalmagic.discipline.noexist": "Discipline %1$s does not exist",
     "commands.primalmagic.knowledge_type.noexist": "Knowledge type does not exist",

@@ -350,8 +350,13 @@ public class AffinityManager {
         if (stack == null || stack.isEmpty()) {
             return null;
         } else {
-            return SimpleResearchKey.parse("!" + Integer.toString(ItemUtils.getHashCode(stack, true)));
+            return getScanResearchKey(ItemUtils.getHashCode(stack, true));
         }
+    }
+    
+    @Nullable
+    protected static SimpleResearchKey getScanResearchKey(int hashCode) {
+        return SimpleResearchKey.parse("!" + Integer.toString(hashCode));
     }
     
     public static boolean isScanned(@Nullable ItemStack stack, @Nullable PlayerEntity player) {
@@ -377,5 +382,27 @@ public class AffinityManager {
         } else {
             return false;
         }
+    }
+    
+    public static int setAllScanned(@Nullable ServerPlayerEntity player) {
+        if (player == null) {
+            return 0;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return 0;
+        }
+        int count = 0;
+        SimpleResearchKey key;
+        for (Integer hashCode : REGISTRY.keySet()) {
+            key = getScanResearchKey(hashCode.intValue());
+            if (key != null && knowledge.addResearch(key)) {
+                count++;
+            }
+        }
+        if (count > 0) {
+            knowledge.sync(player);
+        }
+        return count;
     }
 }
