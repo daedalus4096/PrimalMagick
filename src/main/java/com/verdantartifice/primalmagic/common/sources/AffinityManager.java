@@ -20,6 +20,7 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -361,7 +362,7 @@ public class AffinityManager {
         return (key != null && key.isKnownByStrict(player));
     }
     
-    public static boolean setScanned(@Nullable ItemStack stack, @Nullable PlayerEntity player) {
+    public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayerEntity player) {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
@@ -370,6 +371,11 @@ public class AffinityManager {
             return false;
         }
         SimpleResearchKey key = getScanResearchKey(stack);
-        return key != null && knowledge.addResearch(key);
+        if (key != null && knowledge.addResearch(key)) {
+            knowledge.sync(player);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

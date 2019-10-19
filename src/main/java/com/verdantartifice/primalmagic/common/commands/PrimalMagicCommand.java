@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
@@ -20,11 +21,15 @@ import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
+import net.minecraft.command.arguments.ItemArgument;
+import net.minecraft.command.arguments.ItemInput;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -65,12 +70,19 @@ public class PrimalMagicCommand {
                     )
                 )
             )
+            .then(Commands.literal("scans")
+                .then(Commands.argument("target", EntityArgument.player())
+                    .then(Commands.literal("grant")
+                        .then(Commands.argument("item", ItemArgument.item()).executes((context) -> { return grantScanResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ItemArgument.getItem(context, "item")); }))
+                    )
+                )
+            )
         );
         dispatcher.register(Commands.literal("pm").requires((source) -> {
             return source.hasPermissionLevel(2);
         }).redirect(node));
     }
-    
+
     private static int showHelp(CommandSource source) {
         source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.1").applyTextStyle(TextFormatting.DARK_GREEN), true);
         source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.2").applyTextStyle(TextFormatting.DARK_GREEN), true);
@@ -220,6 +232,22 @@ public class PrimalMagicCommand {
                     source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.failure", target.getName().getString()), true);
                 }
             }
+        }
+        return 0;
+    }
+    
+    private static int grantScanResearch(CommandSource source, ServerPlayerEntity target, ItemInput item) {
+        ItemStack stack;
+        try {
+            stack = item.createStack(1, false);
+        } catch (CommandSyntaxException e) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.failure", target.getName().getString()).applyTextStyle(TextFormatting.RED), true);
+            return 0;
+        }
+        if (AffinityManager.setScanned(stack, target)) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.success", target.getName().getString(), item.getItem().getRegistryName().toString()), true);
+        } else {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.failure", target.getName().getString()).applyTextStyle(TextFormatting.RED), true);            
         }
         return 0;
     }
