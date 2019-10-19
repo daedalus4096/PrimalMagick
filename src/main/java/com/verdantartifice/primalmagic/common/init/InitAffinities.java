@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.init;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
@@ -23,6 +24,7 @@ public class InitAffinities {
     }
     
     protected static void initItemAffinities(MinecraftServer server) {
+        // Register Vanilla item tag affinities
         AffinityManager.registerItemTagAffinities(new ResourceLocation("coals"), new SourceList().add(Source.EARTH, 5).add(Source.INFERNAL, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("fishes"), new SourceList().add(Source.SEA, 5).add(Source.BLOOD, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("leaves"), new SourceList().add(Source.EARTH, 5).add(Source.SKY, 5).add(Source.SUN, 5));
@@ -35,12 +37,14 @@ public class InitAffinities {
         AffinityManager.registerItemTagAffinities(new ResourceLocation("wooden_slabs"), new SourceList().add(Source.EARTH, 1).add(Source.SUN, 1));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("wool"), new SourceList().add(Source.BLOOD, 5));
         
+        // Register Vanilla block tag affinities
         AffinityManager.registerBlockTagAffinities(new ResourceLocation("anvil"), new SourceList().add(Source.EARTH, 180));
         AffinityManager.registerBlockTagAffinities(new ResourceLocation("coral_blocks"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 10).add(Source.SUN, 5));
         AffinityManager.registerBlockTagAffinities(new ResourceLocation("corals"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SUN, 5));
         AffinityManager.registerBlockTagAffinities(new ResourceLocation("flower_pots"), new SourceList().add(Source.EARTH, 10).add(Source.SUN, 5));
         AffinityManager.registerBlockTagAffinities(new ResourceLocation("ice"), new SourceList().add(Source.SEA, 5));
         
+        // Register Forge item tag affinities
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "cobblestone"), new SourceList().add(Source.EARTH, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "dyes"), new SourceList().add(Source.EARTH, 1).add(Source.SUN, 1));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "eggs"), new SourceList().add(Source.SKY, 2).add(Source.BLOOD, 5));
@@ -101,8 +105,10 @@ public class InitAffinities {
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "seeds/pumpkin"), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("forge", "seeds/wheat"), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         
+        // Register Forge block tag affinities
         AffinityManager.registerBlockTagAffinities(new ResourceLocation("forge", "dirt"), new SourceList().add(Source.EARTH, 5));
         
+        // Register Vanilla block affinities
         AffinityManager.registerAffinities(new ItemStack(Blocks.GRASS_BLOCK), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 2));
         AffinityManager.registerAffinities(new ItemStack(Blocks.BEDROCK), new SourceList().add(Source.EARTH, 20).add(Source.VOID, 20));
         AffinityManager.registerAffinities(new ItemStack(Blocks.WATER), new SourceList().add(Source.SEA, 20));
@@ -192,6 +198,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.GRASS_PATH), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 2));
         AffinityManager.registerAffinities(new ItemStack(Blocks.END_GATEWAY), new SourceList().add(Source.VOID, 20));
         AffinityManager.registerAffinities(new ItemStack(Blocks.MAGMA_BLOCK), new SourceList().add(Source.INFERNAL, 10));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.BONE_BLOCK), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.KELP), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SUN, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.KELP_PLANT), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SUN, 5));
         AffinityManager.registerAffinities(new ItemStack(Blocks.TURTLE_EGG), new SourceList().add(Source.SEA, 5).add(Source.BLOOD, 5));
@@ -202,6 +209,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.BELL), new SourceList().add(Source.EARTH, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.SWEET_BERRY_BUSH), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         
+        // Register Vanilla item affinities
         AffinityManager.registerAffinities(new ItemStack(Items.SCUTE), new SourceList().add(Source.SEA, 2).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.APPLE), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
         AffinityManager.registerAffinities(new ItemStack(Items.CHAINMAIL_HELMET), AffinityManager.getAffinities(new ItemStack(Items.IRON_HELMET), server));
@@ -223,6 +231,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Items.CLAY_BALL), new SourceList().add(Source.EARTH, 2).add(Source.SEA, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.INK_SAC), new SourceList().add(Source.SEA, 5).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.COCOA_BEANS), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
+        AffinityManager.registerAffinities(new ItemStack(Items.BONE_MEAL), new SourceList().add(Source.MOON, 1).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(Items.BONE), new SourceList().add(Source.MOON, 5).add(Source.BLOOD, 10));
         AffinityManager.registerAffinities(new ItemStack(Items.FILLED_MAP), AffinityManager.getAffinities(new ItemStack(Items.MAP), server));
         AffinityManager.registerAffinities(new ItemStack(Items.MELON_SLICE), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
@@ -260,6 +269,14 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Items.GLOBE_BANNER_PATTERN), AffinityManager.getAffinities(new ItemStack(Items.PAPER), server));
         AffinityManager.registerAffinities(new ItemStack(Items.SWEET_BERRIES), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         
+        // Register Primal Magic tag affinities
+        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "beds"), AffinityManager.getAffinities(new ItemStack(Items.WHITE_BED), server));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "colored_shulker_boxes"), AffinityManager.getAffinities(new ItemStack(Items.SHULKER_BOX), server));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "concrete"), AffinityManager.getAffinities(new ItemStack(Items.WHITE_CONCRETE_POWDER), server).add(Source.SEA, 1));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "dead_coral_blocks"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 10));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "dead_corals"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5));
+        
+        // Register Primal Magic block affinities
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_RAW), new SourceList().add(Source.EARTH, 5));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED), new SourceList().add(Source.EARTH, 6).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ARCANE_WORKBENCH), AffinityManager.getAffinities(new ItemStack(Blocks.CRAFTING_TABLE), server));
@@ -269,8 +286,10 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_SUN), new SourceList().add(Source.SUN, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_MOON), new SourceList().add(Source.MOON, 20));
         
+        // Register Primal Magic item affinities
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.GRIMOIRE), AffinityManager.getAffinities(new ItemStack(Items.ENCHANTED_BOOK), server));
         
+        // Append affinities to Vanilla blocks
         AffinityManager.appendAffinities(new ItemStack(Blocks.FURNACE), new SourceList().add(Source.INFERNAL, 5), server);
         AffinityManager.appendAffinities(new ItemStack(Blocks.SEA_LANTERN), new SourceList().add(Source.SUN, 15), server);
         AffinityManager.appendAffinities(new ItemStack(Blocks.CONDUIT), new SourceList().add(Source.SUN, 15), server);
