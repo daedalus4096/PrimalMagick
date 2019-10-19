@@ -35,6 +35,8 @@ public class ClientRenderEvents {
             SourceList sources = AffinityManager.getAffinities(event.getItemStack(), mc.world);
             if (sources == null || sources.isEmpty()) {
                 event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.none"));
+            } else if (!AffinityManager.isScanned(event.getItemStack(), mc.player)) {
+                event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.unknown"));
             } else {
                 int width = 0;
                 for (Source source : sources.getSources()) {

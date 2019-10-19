@@ -9,13 +9,17 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.FakeContainer;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -338,5 +342,34 @@ public class AffinityManager {
             retVal.add(source, level);
         }
         return retVal;
+    }
+    
+    @Nullable
+    public static SimpleResearchKey getScanResearchKey(@Nullable ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return null;
+        } else {
+            return SimpleResearchKey.parse("!" + Integer.toString(ItemUtils.getHashCode(stack, true)));
+        }
+    }
+    
+    public static boolean isScanned(@Nullable ItemStack stack, @Nullable PlayerEntity player) {
+        if (stack == null || stack.isEmpty() || player == null) {
+            return false;
+        }
+        SimpleResearchKey key = getScanResearchKey(stack);
+        return (key != null && key.isKnownByStrict(player));
+    }
+    
+    public static boolean setScanned(@Nullable ItemStack stack, @Nullable PlayerEntity player) {
+        if (stack == null || stack.isEmpty() || player == null) {
+            return false;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        }
+        SimpleResearchKey key = getScanResearchKey(stack);
+        return key != null && knowledge.addResearch(key);
     }
 }
