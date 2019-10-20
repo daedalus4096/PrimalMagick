@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "item/handheld",
+	"parent": "block/block",
 	"textures": {
 		"0": "primalmagic:block/base_wood_grain",
 		"1": "primalmagic:block/base_iron",
