@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.items.misc;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerTEISR;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 
 import net.minecraft.entity.LivingEntity;
@@ -21,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ArcanometerItem extends Item {
     public ArcanometerItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON).setTEISR(() -> ArcanometerTEISR::new));
         this.setRegistryName(PrimalMagic.MODID, "arcanometer");
         this.addPropertyOverride(new ResourceLocation(PrimalMagic.MODID, "scan_state"), new IItemPropertyGetter() {
             @OnlyIn(Dist.CLIENT)
