@@ -169,12 +169,5 @@
 				"down": {"uv": [0, 0, 1, 1], "texture": "#4"}
 			}
 		}
-	],
-    "overrides": [
-        { "predicate": { "primalmagic:scan_state": 0 }, "model": "primalmagic:item/arcanometer_0" },
-        { "predicate": { "primalmagic:scan_state": 1 }, "model": "primalmagic:item/arcanometer_1" },
-        { "predicate": { "primalmagic:scan_state": 2 }, "model": "primalmagic:item/arcanometer_2" },
-        { "predicate": { "primalmagic:scan_state": 3 }, "model": "primalmagic:item/arcanometer_3" },
-        { "predicate": { "primalmagic:scan_state": 4 }, "model": "primalmagic:item/arcanometer_4" }    
     ]
 }
