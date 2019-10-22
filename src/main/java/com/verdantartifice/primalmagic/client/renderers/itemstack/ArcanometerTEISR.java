@@ -71,8 +71,8 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
             GlStateManager.disableLighting();
             GlStateManager.pushMatrix();
             GlStateManager.translated(0.5D, 0.4375D, 0.405D);
-            GlStateManager.rotated(180.0D, 0.0D, 0.0D, 1.0D);
-            GlStateManager.scaled(0.2D, -0.2D, 0.0001D);
+            GlStateManager.rotated(180.0D, 0.0D, 1.0D, 0.0D);
+            GlStateManager.scaled(0.2D, 0.2D, 0.0001D);
             itemRenderer.renderItem(screenStack, ItemCameraTransforms.TransformType.GUI);
             GlStateManager.popMatrix();
             GlStateManager.enableLighting();
