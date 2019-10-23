@@ -89,19 +89,12 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
                 }
                 
                 // Render the screen display
-                GlStateManager.pushLightingAttributes();
-                boolean isLightingEnabled = GL11.glIsEnabled(2896);
-                GlStateManager.disableLighting();
                 GlStateManager.pushMatrix();
                 GlStateManager.translated(0.5D, 0.4375D, 0.405D);
                 GlStateManager.rotated(180.0D, 0.0D, 1.0D, 0.0D);
                 GlStateManager.scaled(0.2D, 0.2D, 0.0001D);
                 itemRenderer.renderItem(screenStack, ItemCameraTransforms.TransformType.GUI);
                 GlStateManager.popMatrix();
-                if (isLightingEnabled) {
-                    GlStateManager.enableLighting();
-                }
-                GlStateManager.popAttributes();
                 
                 isRenderingScreen = false;
             }
