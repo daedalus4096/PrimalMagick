@@ -1,7 +1,11 @@
 package com.verdantartifice.primalmagic.common.items.misc;
 
+import javax.annotation.Nonnull;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerTEISR;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPacket;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 
 import net.minecraft.client.Minecraft;
@@ -17,12 +21,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -64,6 +72,7 @@ public class ArcanometerItem extends Item {
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Nonnull
     public static ItemStack getMouseOverItemStack() {
         ItemStack stack = ItemStack.EMPTY;
         Minecraft mc = Minecraft.getInstance();
@@ -109,5 +118,20 @@ public class ArcanometerItem extends Item {
             stack = new ItemStack(mc.world.getBlockState(blockResult.getPos()).getBlock());
         }
         return stack;
+    }
+    
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (worldIn.isRemote) {
+            ItemStack targetStack = getMouseOverItemStack();
+            if (!targetStack.isEmpty()) {
+                if (AffinityManager.isScanned(targetStack, playerIn)) {
+                    playerIn.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").applyTextStyle(TextFormatting.RED), true);
+                } else {
+                    PacketHandler.sendToServer(new ScanPacket(targetStack));
+                }
+            }
+        }
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 }

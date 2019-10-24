@@ -165,6 +165,9 @@
     "commands.primalmagic.error": "Error executing command",
     
     "event.primalmagic.add_addendum": "Addendum added to %1$s",
+    "event.primalmagic.scan.success": "You have gained valuable research data",
+    "event.primalmagic.scan.fail": "You are unable to scan that",
+    "event.primalmagic.scan.repeat": "You learn nothing new from scanning that",
     
     "primalmagic.crafting.mana_tooltip": "%1$d %2$s mana",
     "primalmagic.crafting.no_mana": "No mana cost",
