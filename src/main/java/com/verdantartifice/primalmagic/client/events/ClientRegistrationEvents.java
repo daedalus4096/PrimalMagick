@@ -50,5 +50,8 @@ public class ClientRegistrationEvents {
         for (WandGem gem : WandGem.getAllWandGems()) {
             ModelLoader.addSpecialModel(gem.getModelResourceLocation());
         }
+        for (int index = 0; index <= 4; index++) {
+            ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_" + index), ""));
+        }
     }
 }

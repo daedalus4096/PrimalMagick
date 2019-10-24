@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledge
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
+import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -36,6 +37,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SyncResearchFlagsPacket.class, SyncResearchFlagsPacket::encode, SyncResearchFlagsPacket::decode, SyncResearchFlagsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, WandPoofPacket.class, WandPoofPacket::encode, WandPoofPacket::decode, WandPoofPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, ManaSparklePacket.class, ManaSparklePacket::encode, ManaSparklePacket::decode, ManaSparklePacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, ScanPacket.class, ScanPacket::encode, ScanPacket::decode, ScanPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
