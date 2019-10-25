@@ -68,7 +68,7 @@ public class ArcanometerItem extends Item {
         });
     }
     
-    public static boolean isMouseOverScannable(@Nullable RayTraceResult result, @Nullable World world, @Nullable PlayerEntity player) {
+    protected static boolean isMouseOverScannable(@Nullable RayTraceResult result, @Nullable World world, @Nullable PlayerEntity player) {
         if (result == null || world == null) {
             return false;
         } else if (result.getType() == RayTraceResult.Type.ENTITY) {
