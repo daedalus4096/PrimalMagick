@@ -9,4 +9,5 @@ import net.minecraftforge.registries.ObjectHolder;
 public class SoundsPM {
     public static final SoundEvent PAGE = null;
     public static final SoundEvent POOF = null;
+    public static final SoundEvent SCAN = null;
 }

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerTEISR;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPacket;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 
 import net.minecraft.client.Minecraft;
@@ -24,6 +25,7 @@ import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -125,6 +127,7 @@ public class ArcanometerItem extends Item {
         if (worldIn.isRemote) {
             ItemStack targetStack = getMouseOverItemStack();
             if (!targetStack.isEmpty()) {
+                worldIn.playSound(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, SoundsPM.SCAN, SoundCategory.MASTER, 1.0F, 1.0F);
                 if (AffinityManager.isScanned(targetStack, playerIn)) {
                     playerIn.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").applyTextStyle(TextFormatting.RED), true);
                 } else {

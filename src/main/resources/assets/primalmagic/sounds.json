@@ -10,5 +10,11 @@
         "sounds": [
             "primalmagic:poof"
         ]
+    },
+    "scan": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:scan"
+        ]
     }
 }

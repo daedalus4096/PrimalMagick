@@ -10,6 +10,7 @@ public class InitSounds {
     public static void initSoundEvents(IForgeRegistry<SoundEvent> registry) {
         registry.register(createEvent("page"));
         registry.register(createEvent("poof"));
+        registry.register(createEvent("scan"));
     }
     
     private static SoundEvent createEvent(String name) {
