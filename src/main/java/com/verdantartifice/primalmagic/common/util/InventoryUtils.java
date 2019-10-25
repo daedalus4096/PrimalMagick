@@ -1,13 +1,27 @@
 package com.verdantartifice.primalmagic.common.util;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.VanillaInventoryCodeHooks;
+import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 public class InventoryUtils {
     public static boolean isPlayerCarrying(@Nullable PlayerEntity player, @Nullable ItemStack stack) {
@@ -104,5 +118,30 @@ public class InventoryUtils {
             }
         }
         return false;
+    }
+    
+    @Nullable
+    public static IItemHandler getItemHandler(@Nonnull World world, @Nonnull BlockPos pos, @Nullable Direction side) {
+        LazyOptional<Pair<IItemHandler, Object>> optional = VanillaInventoryCodeHooks.getItemHandler(world, pos.getX(), pos.getY(), pos.getZ(), side);
+        Pair<IItemHandler, Object> pair = optional.orElse(null);
+        if (pair != null && pair.getLeft() != null) {
+            return pair.getLeft();
+        } else {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile != null && tile instanceof IInventory) {
+                return wrapInventory((IInventory)tile, side);
+            } else {
+                return null;
+            }
+        }
+    }
+    
+    @Nonnull
+    public static IItemHandler wrapInventory(@Nonnull IInventory inv, @Nullable Direction side) {
+        if (inv instanceof ISidedInventory) {
+            return new SidedInvWrapper((ISidedInventory)inv, side);
+        } else {
+            return new InvWrapper(inv);
+        }
     }
 }

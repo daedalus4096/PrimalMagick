@@ -4,7 +4,9 @@ import java.lang.reflect.Method;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.util.RayTraceUtils;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -15,6 +17,9 @@ import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -58,7 +63,15 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
                 isRenderingScreen = true;
                 
                 // Determine what to show on the screen
-                ItemStack screenStack = ArcanometerItem.getMouseOverItemStack();
+                ItemStack screenStack = ItemStack.EMPTY;
+                RayTraceResult result = RayTraceUtils.getMouseOver();
+                if (result != null) {
+                    if (result.getType() == RayTraceResult.Type.ENTITY) {
+                        screenStack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
+                    } else if (result.getType() == RayTraceResult.Type.BLOCK) {
+                        screenStack = new ItemStack(mc.world.getBlockState(((BlockRayTraceResult)result).getPos()).getBlock());
+                    }
+                }
                 
                 // Render the screen display
                 GlStateManager.pushMatrix();

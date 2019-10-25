@@ -12,29 +12,29 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class ScanPacket implements IMessageToServer {
+public class ScanItemPacket implements IMessageToServer {
     protected ItemStack stack;
     
-    public ScanPacket() {
+    public ScanItemPacket() {
         this.stack = ItemStack.EMPTY;
     }
     
-    public ScanPacket(ItemStack stack) {
+    public ScanItemPacket(ItemStack stack) {
         this.stack = stack;
     }
     
-    public static void encode(ScanPacket message, PacketBuffer buf) {
+    public static void encode(ScanItemPacket message, PacketBuffer buf) {
         buf.writeItemStack(message.stack);
     }
     
-    public static ScanPacket decode(PacketBuffer buf) {
-        ScanPacket message = new ScanPacket();
+    public static ScanItemPacket decode(PacketBuffer buf) {
+        ScanItemPacket message = new ScanItemPacket();
         message.stack = buf.readItemStack();
         return message;
     }
 
     public static class Handler {
-        public static void onMessage(ScanPacket message, Supplier<NetworkEvent.Context> ctx) {
+        public static void onMessage(ScanItemPacket message, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
                 if (message.stack != null && !message.stack.isEmpty()) {
                     ServerPlayerEntity player = ctx.get().getSender();
