@@ -26,8 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -79,7 +77,6 @@ public class ArcanometerItem extends Item {
         } else if (result.getType() == RayTraceResult.Type.BLOCK) {
             BlockPos pos = ((BlockRayTraceResult)result).getPos();
             ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock());
-            // TODO determine if pos is a container with scannable stuff
             return !stack.isEmpty() && !AffinityManager.isScanned(stack, player);
         } else {
             return false;
@@ -92,9 +89,7 @@ public class ArcanometerItem extends Item {
             RayTraceResult result = RayTraceUtils.getMouseOver();
             if (result != null && result.getType() != RayTraceResult.Type.MISS) {
                 worldIn.playSound(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, SoundsPM.SCAN, SoundCategory.MASTER, 1.0F, 1.0F);
-                if (!isMouseOverScannable(result, worldIn, playerIn)) {
-                    playerIn.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").applyTextStyle(TextFormatting.RED), true);
-                } else if (result.getType() == RayTraceResult.Type.ENTITY) {
+                if (result.getType() == RayTraceResult.Type.ENTITY) {
                     ItemStack entityStack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
                     PacketHandler.sendToServer(new ScanItemPacket(entityStack));
                 } else if (result.getType() == RayTraceResult.Type.BLOCK) {

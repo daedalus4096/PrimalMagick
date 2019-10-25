@@ -46,6 +46,8 @@ public class AffinityManager {
     protected static final int MAX_AFFINITY = 100;
     protected static final int HISTORY_LIMIT = 100;
     
+    public static final int MAX_SCAN_COUNT = 108;   // Enough to scan a 9x12 inventory
+    
     public static void registerAffinities(@Nullable ItemStack stack, @Nullable SourceList sources) {
         if (stack == null || stack.isEmpty()) {
             return;
@@ -368,6 +370,10 @@ public class AffinityManager {
     }
     
     public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayerEntity player) {
+        return setScanned(stack, player, true);
+    }
+    
+    public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayerEntity player, boolean sync) {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
@@ -377,7 +383,9 @@ public class AffinityManager {
         }
         SimpleResearchKey key = getScanResearchKey(stack);
         if (key != null && knowledge.addResearch(key)) {
-            knowledge.sync(player);
+            if (sync) {
+                knowledge.sync(player);
+            }
             return true;
         } else {
             return false;
