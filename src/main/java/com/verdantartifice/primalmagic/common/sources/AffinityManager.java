@@ -39,6 +39,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class AffinityManager {
     protected static final Map<Integer, SourceList> REGISTRY = new ConcurrentHashMap<>();
@@ -407,10 +408,16 @@ public class AffinityManager {
         }
         int count = 0;
         SimpleResearchKey key;
-        for (Integer hashCode : REGISTRY.keySet()) {
-            key = getScanResearchKey(hashCode.intValue());
+        ItemStack stack;
+        for (Item item : ForgeRegistries.ITEMS) {
+            stack = new ItemStack(item);
+            key = getScanResearchKey(stack);
             if (key != null && knowledge.addResearch(key)) {
                 count++;
+                int obsPoints = getObservationPoints(stack, player.getEntityWorld());
+                if (obsPoints > 0) {
+                    knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
+                }
             }
         }
         if (count > 0) {
