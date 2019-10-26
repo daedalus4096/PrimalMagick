@@ -184,18 +184,18 @@ public class ResearchManager {
         return true;
     }
     
-    public static boolean addKnowledge(PlayerEntity player, IPlayerKnowledge.KnowledgeType type, ResearchDiscipline discipline, int points) {
+    public static boolean addKnowledge(PlayerEntity player, IPlayerKnowledge.KnowledgeType type, int points) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
         if (knowledge == null) {
             return false;
         }
-        int levelsBefore = knowledge.getKnowledge(type, discipline);
-        boolean success = knowledge.addKnowledge(type, discipline, points);
+        int levelsBefore = knowledge.getKnowledge(type);
+        boolean success = knowledge.addKnowledge(type, points);
         if (!success) {
             return false;
         }
         if (points > 0) {
-            int levelsAfter = knowledge.getKnowledge(type, discipline);
+            int levelsAfter = knowledge.getKnowledge(type);
             for (int index = 0; index < (levelsAfter - levelsBefore); index++) {
                 // TODO send knowledge gain packet to player
             }

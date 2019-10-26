@@ -9,12 +9,10 @@ import net.minecraft.util.math.MathHelper;
 
 public class Knowledge {
     protected IPlayerKnowledge.KnowledgeType type;
-    protected ResearchDiscipline discipline;
     protected int amount;
     
-    protected Knowledge(@Nonnull IPlayerKnowledge.KnowledgeType type, @Nonnull ResearchDiscipline discipline, int amount) {
+    protected Knowledge(@Nonnull IPlayerKnowledge.KnowledgeType type, int amount) {
         this.type = type;
-        this.discipline = discipline;
         this.amount = amount;
     }
     
@@ -22,17 +20,16 @@ public class Knowledge {
     public static Knowledge parse(@Nullable String str) {
         if (str != null) {
             String[] tokens = str.split(";");
-            if (tokens.length == 3) {
+            if (tokens.length == 2) {
                 IPlayerKnowledge.KnowledgeType type;
                 try {
                     type = IPlayerKnowledge.KnowledgeType.valueOf(tokens[0].toUpperCase());
                 } catch (Exception e) {
                     return null;
                 }
-                ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(tokens[1].toUpperCase());
-                int amount = MathHelper.getInt(tokens[2], 0);
-                if (type != null && discipline != null && amount > 0) {
-                    return new Knowledge(type, discipline, amount);
+                int amount = MathHelper.getInt(tokens[1], 0);
+                if (type != null && amount > 0) {
+                    return new Knowledge(type, amount);
                 }
             }
         }
@@ -44,11 +41,6 @@ public class Knowledge {
         return this.type;
     }
     
-    @Nonnull
-    public ResearchDiscipline getDiscipline() {
-        return this.discipline;
-    }
-    
     public int getAmount() {
         return this.amount;
     }
@@ -57,8 +49,6 @@ public class Knowledge {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(this.type.name());
-        builder.append(";");
-        builder.append(this.discipline.getKey());
         builder.append(";");
         builder.append(this.amount);
         return builder.toString();
@@ -69,7 +59,6 @@ public class Knowledge {
         final int prime = 31;
         int result = 1;
         result = prime * result + amount;
-        result = prime * result + ((discipline == null) ? 0 : discipline.getKey().hashCode());
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         return result;
     }
@@ -87,13 +76,6 @@ public class Knowledge {
         }
         Knowledge other = (Knowledge) obj;
         if (amount != other.amount) {
-            return false;
-        }
-        if (discipline == null) {
-            if (other.discipline != null) {
-                return false;
-            }
-        } else if (!discipline.getKey().equals(other.discipline.getKey())) {
             return false;
         }
         if (type != other.type) {

@@ -46,7 +46,6 @@
     
     "primalmagic.knowledge_type.OBSERVATION": "Observation",
     "primalmagic.knowledge_type.THEORY": "Theory",
-    "primalmagic.knowledge_type.label": "%1$s: %2$s",
     
     "primalmagic.affinities.label": "Affinities:",
     "primalmagic.affinities.none": "Affinities: None",
@@ -153,8 +152,8 @@
     "commands.primalmagic.research.progress.success": "Research %1$s progressed from stage %2$d to stage %3$d",
     "commands.primalmagic.research.progress.failure": "Failed to progress research %1$s from stage %2$d",
     "commands.primalmagic.knowledge.reset": "Resetting all knowledge for %1$s",
-    "commands.primalmagic.knowledge.get": "%1$s has %2$d levels of %3$s %4$s (%5$d points)",
-    "commands.primalmagic.knowledge.add.success": "Added %1$d points of %2$s %3$s to %4$s",
+    "commands.primalmagic.knowledge.get": "%1$s has %2$d levels of %3$s (%4$d points)",
+    "commands.primalmagic.knowledge.add.success": "Added %1$d points of %2$s to %3$s",
     "commands.primalmagic.knowledge.add.failure": "Failed to add knowledge to %1$s",
     "commands.primalmagic.scans.grant.success": "Granting scan research to %1$s: %2$s",
     "commands.primalmagic.scans.grant.failure": "Failed to grant scan research to %1$s",

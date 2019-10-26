@@ -43,14 +43,6 @@ public class KnowledgeWidget extends Widget {
         GlStateManager.scaled(0.0625D, 0.0625D, 0.0625D);
         this.blit(0, 0, 0, 0, 255, 255);
         
-        // Draw discipline icon
-        mc.getTextureManager().bindTexture(this.knowledge.getDiscipline().getIconLocation());
-        GlStateManager.pushMatrix();
-        GlStateManager.translatef(32.0F, 32.0F, 1.0F);
-        GlStateManager.scaled(0.75D, 0.75D, 0.75D);
-        this.blit(0, 0, 0, 0, 255, 255);
-        GlStateManager.popMatrix();
-        
         GlStateManager.popMatrix();
         
         // Draw amount str
@@ -76,9 +68,7 @@ public class KnowledgeWidget extends Widget {
         if (this.isHovered()) {
             // Render tooltip
             ITextComponent knowledgeText = new TranslationTextComponent(this.knowledge.getType().getNameTranslationKey());
-            ITextComponent disciplineText = new TranslationTextComponent(this.knowledge.getDiscipline().getNameTranslationKey());
-            ITextComponent labelText = new TranslationTextComponent("primalmagic.knowledge_type.label", knowledgeText, disciplineText);
-            GuiUtils.renderCustomTooltip(Collections.singletonList(labelText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(Collections.singletonList(knowledgeText), this.x, this.y);
         }
     }
     

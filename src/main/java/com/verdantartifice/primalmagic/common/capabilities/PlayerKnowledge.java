@@ -16,7 +16,6 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
-import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -35,7 +34,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Set<String> research = ConcurrentHashMap.newKeySet();
     private final Map<String, Integer> stages = new ConcurrentHashMap<>();
     private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();
-    private final Map<String, Integer> knowledge = new ConcurrentHashMap<>();
+    private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();
 
     @Override
     @Nonnull
@@ -63,12 +62,12 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         rootTag.put("research", researchList);
         
         ListNBT knowledgeList = new ListNBT();
-        for (String knowledgeKey : this.knowledge.keySet()) {
-            if (knowledgeKey != null && !knowledgeKey.isEmpty()) {
+        for (IPlayerKnowledge.KnowledgeType knowledgeKey : this.knowledge.keySet()) {
+            if (knowledgeKey != null) {
                 Integer points = this.knowledge.get(knowledgeKey);
                 if (points != null && points.intValue() > 0) {
                     CompoundNBT tag = new CompoundNBT();
-                    tag.putString("key", knowledgeKey);
+                    tag.putString("key", knowledgeKey.name());
                     tag.putInt("value", points);
                     knowledgeList.add(tag);
                 }
@@ -113,9 +112,13 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         ListNBT knowledgeList = nbt.getList("knowledge", 10);
         for (int index = 0; index < knowledgeList.size(); index++) {
             CompoundNBT tag = knowledgeList.getCompound(index);
-            String key = tag.getString("key");
+            String keyStr = tag.getString("key");
+            IPlayerKnowledge.KnowledgeType key = null;
+            try {
+                key = IPlayerKnowledge.KnowledgeType.valueOf(keyStr);
+            } catch (Exception e) {}
             int points = tag.getInt("value");
-            if (key != null && !key.isEmpty()) {
+            if (key != null) {
                 this.knowledge.put(key, Integer.valueOf(points));
             }
         }
@@ -270,44 +273,35 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
     }
     
-    @Nonnull
-    private String makeKnowledgeKey(@Nonnull KnowledgeType type, @Nonnull ResearchDiscipline discipline) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(type.name());
-        builder.append("_");
-        builder.append(discipline.getKey());
-        return builder.toString();
-    }
-    
     @Override
-    public boolean addKnowledge(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline, int amount) {
-        if (type == null || discipline == null) {
+    public boolean addKnowledge(@Nullable KnowledgeType type, int amount) {
+        if (type == null) {
             return false;
         }
-        int points = this.getKnowledgeRaw(type, discipline) + amount;
+        int points = this.getKnowledgeRaw(type) + amount;
         if (points < 0) {
             return false;
         } else {
-            this.knowledge.put(this.makeKnowledgeKey(type, discipline), Integer.valueOf(points));
+            this.knowledge.put(type, Integer.valueOf(points));
             return true;
         }
     }
     
     @Override
-    public int getKnowledge(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline) {
-        if (type == null || discipline == null) {
+    public int getKnowledge(@Nullable KnowledgeType type) {
+        if (type == null) {
             return 0;
         } else {
-            return (int)Math.floor((double)this.getKnowledgeRaw(type, discipline) / (double)type.getProgression());
+            return (int)Math.floor((double)this.getKnowledgeRaw(type) / (double)type.getProgression());
         }
     }
     
     @Override
-    public int getKnowledgeRaw(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline) {
-        if (type == null || discipline == null) {
+    public int getKnowledgeRaw(@Nullable KnowledgeType type) {
+        if (type == null) {
             return 0;
         } else {
-            return this.knowledge.getOrDefault(this.makeKnowledgeKey(type, discipline), Integer.valueOf(0)).intValue();
+            return this.knowledge.getOrDefault(type, Integer.valueOf(0)).intValue();
         }
     }
 

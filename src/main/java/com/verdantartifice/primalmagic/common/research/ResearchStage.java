@@ -149,7 +149,7 @@ public class ResearchStage {
         
         // Check if player has required knowledge
         for (Knowledge knowPacket : this.requiredKnowledge) {
-            if (knowledge.getKnowledge(knowPacket.getType(), knowPacket.getDiscipline()) < knowPacket.getAmount()) {
+            if (knowledge.getKnowledge(knowPacket.getType()) < knowPacket.getAmount()) {
                 return false;
             }
         }
@@ -216,7 +216,7 @@ public class ResearchStage {
         
         List<Boolean> retVal = new ArrayList<>();
         for (Knowledge knowPacket : this.requiredKnowledge) {
-            retVal.add(Boolean.valueOf(knowledge.getKnowledge(knowPacket.getType(), knowPacket.getDiscipline()) >= knowPacket.getAmount()));
+            retVal.add(Boolean.valueOf(knowledge.getKnowledge(knowPacket.getType()) >= knowPacket.getAmount()));
         }
         return retVal;
     }

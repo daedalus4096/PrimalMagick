@@ -108,7 +108,7 @@ public class SyncProgressPacket implements IMessageToServer {
                     }
                 }
                 for (Knowledge know : stage.getRequiredKnowledge()) {
-                    ResearchManager.addKnowledge(player, know.getType(), know.getDiscipline(), (know.getAmount() * know.getType().getProgression()));
+                    ResearchManager.addKnowledge(player, know.getType(), (know.getAmount() * know.getType().getProgression()));
                 }
             }
             return retVal;

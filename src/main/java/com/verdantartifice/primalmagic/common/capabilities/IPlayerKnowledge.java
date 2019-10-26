@@ -6,7 +6,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -38,9 +37,9 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
     @Nonnull
     public Set<ResearchFlag> getResearchFlags(@Nullable SimpleResearchKey research);
     
-    public boolean addKnowledge(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline, int amount);
-    public int getKnowledge(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline);
-    public int getKnowledgeRaw(@Nullable KnowledgeType type, @Nullable ResearchDiscipline discipline);
+    public boolean addKnowledge(@Nullable KnowledgeType type, int amount);
+    public int getKnowledge(@Nullable KnowledgeType type);
+    public int getKnowledgeRaw(@Nullable KnowledgeType type);
     
     public void sync(@Nullable ServerPlayerEntity player);
     
