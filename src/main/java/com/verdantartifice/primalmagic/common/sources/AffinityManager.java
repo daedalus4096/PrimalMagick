@@ -37,6 +37,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class AffinityManager {
@@ -383,6 +384,10 @@ public class AffinityManager {
         }
         SimpleResearchKey key = getScanResearchKey(stack);
         if (key != null && knowledge.addResearch(key)) {
+            int obsPoints = getObservationPoints(stack, player.getEntityWorld());
+            if (obsPoints > 0) {
+                knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
+            }
             if (sync) {
                 knowledge.sync(player);
             }
@@ -412,5 +417,20 @@ public class AffinityManager {
             knowledge.sync(player);
         }
         return count;
+    }
+    
+    protected static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull World world) {
+        SourceList sources = getAffinities(stack, world);
+        if (sources == null) {
+            return 0;
+        }
+        double total = 0.0D;
+        for (Source source : sources.getSources()) {
+            total += (sources.getAmount(source) * source.getObservationMultiplier());
+        }
+        if (total > 0.0D) {
+            total = Math.sqrt(total);
+        }
+        return MathHelper.ceil(total);
     }
 }
