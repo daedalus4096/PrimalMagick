@@ -96,7 +96,11 @@
             "parents": [ "UNLOCK_ALCHEMY" ],
             "stages": [
                 {
-                    "text": "primalmagic.research.unlock_runeworking.text.stage.1"
+                    "text": "primalmagic.research.unlock_runeworking.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.unlock_runeworking.text.stage.2"
                 }
             ],
             "addenda": []
