@@ -24,7 +24,7 @@ public class SourceList {
     
     @Nonnull
     public SourceList add(@Nullable Source source, int amount) {
-        if (source != null) {
+        if (source != null && amount > 0) {
             this.sources.put(source, amount + this.getAmount(source));
         }
         return this;
