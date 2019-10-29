@@ -1,0 +1,19 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "SSS",
+        " P ",
+        "SPS"
+    ],
+    "key": {
+        "S": {
+            "tag": "minecraft:wooden_slabs"
+        },
+        "P": {
+            "tag": "minecraft:planks"
+        }
+    },
+    "result": {
+        "item": "primalmagic:wood_table"
+    }
+}

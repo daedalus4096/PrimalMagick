@@ -1,0 +1,22 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        " I ",
+        "IGI",
+        "SI "
+    ],
+    "key": {
+        "S": {
+            "tag": "forge:rods/wooden"
+        },
+        "G": {
+            "tag": "forge:glass_panes/colorless"
+        },
+        "I": {
+            "tag": "forge:ingots/iron"
+        }
+    },
+    "result": {
+        "item": "primalmagic:magnifying_glass"
+    }
+}
