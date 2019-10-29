@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.crafting.ArcaneWorkbenchBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandAssemblyTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
+import com.verdantartifice.primalmagic.common.blocks.misc.AnalysisTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -24,5 +25,6 @@ public class InitBlocks {
         registry.register(new AncientManaFontBlock(Source.MOON));
         registry.register(new WandAssemblyTableBlock());
         registry.register(new WoodTableBlock());
+        registry.register(new AnalysisTableBlock());
     }
 }
