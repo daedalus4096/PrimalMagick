@@ -25,6 +25,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class AnalysisTableBlock extends Block {
     protected static final VoxelShape PART_TOP = Block.makeCuboidShape(0.0D, 12.0D, 0.0D, 16.0D, 16.0D, 16.0D);
@@ -80,7 +81,7 @@ public class AnalysisTableBlock extends Block {
         if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof AnalysisTableTileEntity) {
-                PrimalMagic.LOGGER.debug("Tile ticks: " + ((AnalysisTableTileEntity)tile).counter);
+                NetworkHooks.openGui((ServerPlayerEntity)player, (AnalysisTableTileEntity)tile);
             }
         }
         return true;

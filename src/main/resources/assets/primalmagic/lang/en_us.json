@@ -176,6 +176,9 @@
     "primalmagic.crafting.mana_tooltip": "%1$d %2$s mana",
     "primalmagic.crafting.no_mana": "No mana cost",
     
+    "primalmagic.analysis.no_item": "No item analyzed",
+    "primalmagic.analysis.no_affinities": "No affinities detected",
+    
     "primalmagic.grimoire.index_header": "Disciplines",
     "primalmagic.grimoire.addendum_header": "Addendum %1$d",
     "primalmagic.grimoire.requirements_header": "Requirements",
