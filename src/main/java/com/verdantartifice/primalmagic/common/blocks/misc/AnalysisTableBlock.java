@@ -1,23 +1,30 @@
 package com.verdantartifice.primalmagic.common.blocks.misc;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.tiles.misc.AnalysisTableTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 public class AnalysisTableBlock extends Block {
     protected static final VoxelShape PART_TOP = Block.makeCuboidShape(0.0D, 12.0D, 0.0D, 16.0D, 16.0D, 16.0D);
@@ -56,5 +63,26 @@ public class AnalysisTableBlock extends Block {
     @Override
     protected void fillStateContainer(Builder<Block, BlockState> builder) {
         builder.add(FACING);
+    }
+    
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new AnalysisTableTileEntity();
+    }
+    
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+    
+    @Override
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if (tile instanceof AnalysisTableTileEntity) {
+                PrimalMagic.LOGGER.debug("Tile ticks: " + ((AnalysisTableTileEntity)tile).counter);
+            }
+        }
+        return true;
     }
 }
