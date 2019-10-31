@@ -1,8 +1,9 @@
 package com.verdantartifice.primalmagic.common.containers;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.AnalysisResultSlot;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,7 +32,7 @@ public class AnalysisTableContainer extends Container {
         this.addSlot(new Slot(this.analysisInventory, 0, 56, 35));
         
         // Slot 1: Last analyzed item
-        this.addSlot(new AnalysisResultSlot(this.analysisInventory, 1, 116, 35));
+        this.addSlot(new AnalysisResultSlot(this.analysisInventory, 1, 103, 35));
         
         // Slots 2-28: Player backpack
         int i, j;
@@ -67,6 +68,10 @@ public class AnalysisTableContainer extends Container {
     }
     
     public void doScan() {
-        PrimalMagic.LOGGER.debug("Doing analysis");
+        ItemStack stack = this.analysisInventory.getStackInSlot(0).copy();
+        stack.setCount(1);
+        this.analysisInventory.setInventorySlotContents(0, ItemStack.EMPTY);
+        this.analysisInventory.setInventorySlotContents(1, stack);
+        PacketHandler.sendToServer(new ScanItemPacket(stack));
     }
 }

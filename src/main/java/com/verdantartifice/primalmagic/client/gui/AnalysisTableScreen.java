@@ -71,7 +71,7 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
     protected void initWidgets() {
         this.buttons.clear();
         this.children.clear();
-        this.addButton(new ImageButton(this.guiLeft + 81, this.guiTop + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
+        this.addButton(new ImageButton(this.guiLeft + 78, this.guiTop + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
             AnalysisTableScreen.this.container.doScan();
         }));
         ItemStack lastScannedStack = this.container.getLastScannedStack();
