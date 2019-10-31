@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -23,6 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_table.png");
+    private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_button.png");
     
     protected World world;
 
@@ -30,7 +32,7 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
         super(screenContainer, inv, titleIn);
         this.world = inv.player.world;
     }
-
+    
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         this.initWidgets();
@@ -44,8 +46,6 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-        int i = this.container.getAnalysisProgressionScaled();
-        this.blit(this.guiLeft + 79, this.guiTop + 34, 176, 14, i + 1, 16);
     }
     
     @Override
@@ -71,6 +71,9 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
     protected void initWidgets() {
         this.buttons.clear();
         this.children.clear();
+        this.addButton(new ImageButton(this.guiLeft + 81, this.guiTop + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
+            AnalysisTableScreen.this.container.doScan();
+        }));
         ItemStack lastScannedStack = this.container.getLastScannedStack();
         if (lastScannedStack != null && !lastScannedStack.isEmpty()) {
             SourceList sources = AffinityManager.getAffinities(lastScannedStack, this.world);

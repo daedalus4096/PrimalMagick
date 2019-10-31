@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.containers;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.AnalysisResultSlot;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,23 +11,21 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.util.IWorldPosCallable;
 
 public class AnalysisTableContainer extends Container {
-    protected final IInventory analysisInventory;
-    protected final IIntArray analysisData;
+    protected final IInventory analysisInventory = new Inventory(2);
+    protected final IWorldPosCallable worldPosCallable;
+    protected final PlayerEntity player;
     
     public AnalysisTableContainer(int windowId, PlayerInventory inv) {
-        this(windowId, inv, new Inventory(2), new IntArray(2));
+        this(windowId, inv, IWorldPosCallable.DUMMY);
     }
     
-    public AnalysisTableContainer(int windowId, PlayerInventory inv, IInventory analysisInventory, IIntArray analysisData) {
+    public AnalysisTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
         super(ContainersPM.ANALYSIS_TABLE, windowId);
-        this.analysisInventory = analysisInventory;
-        this.analysisData = analysisData;
+        this.worldPosCallable = callable;
+        this.player = inv.player;
         
         // Slot 0: Item to analyze
         this.addSlot(new Slot(this.analysisInventory, 0, 56, 35));
@@ -45,13 +45,11 @@ public class AnalysisTableContainer extends Container {
         for (i = 0; i < 9; i++) {
             this.addSlot(new Slot(inv, i, 8 + i * 18, 142));
         }
-
-        this.trackIntArray(this.analysisData);
     }
     
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.analysisInventory.isUsableByPlayer(playerIn);
+        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.ANALYSIS_TABLE);
     }
     
     @Override
@@ -64,14 +62,11 @@ public class AnalysisTableContainer extends Container {
         return stack;
     }
     
-    @OnlyIn(Dist.CLIENT)
-    public int getAnalysisProgressionScaled() {
-        int i = this.analysisData.get(0);
-        int j = this.analysisData.get(1);
-        return (i != 0 && j != 0) ? (i * 24 / j) : 0;
-    }
-    
     public ItemStack getLastScannedStack() {
         return this.analysisInventory.getStackInSlot(1);
+    }
+    
+    public void doScan() {
+        PrimalMagic.LOGGER.debug("Doing analysis");
     }
 }
