@@ -6,6 +6,8 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -72,7 +74,7 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
         this.buttons.clear();
         this.children.clear();
         this.addButton(new ImageButton(this.guiLeft + 78, this.guiTop + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
-            AnalysisTableScreen.this.container.doScan();
+            PacketHandler.sendToServer(new AnalysisActionPacket(this.container.windowId));
         }));
         ItemStack lastScannedStack = this.container.getLastScannedStack();
         if (lastScannedStack != null && !lastScannedStack.isEmpty()) {

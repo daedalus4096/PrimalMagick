@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.AnalysisResultSlot;
-import com.verdantartifice.primalmagic.common.network.PacketHandler;
-import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
+import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
@@ -68,10 +68,15 @@ public class AnalysisTableContainer extends Container {
     }
     
     public void doScan() {
-        ItemStack stack = this.analysisInventory.getStackInSlot(0).copy();
-        stack.setCount(1);
-        this.analysisInventory.setInventorySlotContents(0, ItemStack.EMPTY);
-        this.analysisInventory.setInventorySlotContents(1, stack);
-        PacketHandler.sendToServer(new ScanItemPacket(stack));
+        if (!this.player.world.isRemote && this.player instanceof ServerPlayerEntity) {
+            ItemStack stack = this.analysisInventory.getStackInSlot(0).copy();
+            if (!stack.isEmpty()) {
+                this.analysisInventory.setInventorySlotContents(0, ItemStack.EMPTY);
+                this.analysisInventory.setInventorySlotContents(1, stack);
+                if (!AffinityManager.isScanned(stack, this.player)) {
+                    AffinityManager.setScanned(stack, (ServerPlayerEntity)this.player);
+                }
+            }
+        }
     }
 }
