@@ -15,7 +15,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 
 public class AnalysisTableContainer extends Container {
-    protected final IInventory analysisInventory = new Inventory(2);
+    protected final IInventory analysisInventory = new Inventory(2) {
+        public int getInventoryStackLimit() {
+            return 1;
+        }
+    };
     protected final IWorldPosCallable worldPosCallable;
     protected final PlayerEntity player;
     
