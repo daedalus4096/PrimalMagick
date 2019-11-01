@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.gui.widgets.ManaCostWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActionPacket;
@@ -84,8 +84,7 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
                 int x = this.guiLeft + 1 + (this.getXSize() - widgetSetWidth) / 2;
                 int y = this.guiTop + 10;
                 for (Source source : sources.getSourcesSorted()) {
-                    // FIXME make affinity widget
-                    this.addButton(new ManaCostWidget(source, sources.getAmount(source), x, y));
+                    this.addButton(new AffinityWidget(source, sources.getAmount(source), x, y));
                     x += 18;
                 }
             }
