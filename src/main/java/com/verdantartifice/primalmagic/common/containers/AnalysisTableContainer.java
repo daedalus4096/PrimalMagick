@@ -60,9 +60,34 @@ public class AnalysisTableContainer extends Container {
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        //Slot slot = this.inventorySlots.get(index);
-        
-        // TODO
+        Slot slot = this.inventorySlots.get(index);
+        if (slot != null && slot.getHasStack()) {
+            ItemStack slotStack = slot.getStack();
+            stack = slotStack.copy();
+            if (index == 0) {
+                if (!this.mergeItemStack(slotStack, 2, 38, true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index >= 2 && index < 29) {
+                if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index >= 29 && index < 38) {
+                if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            if (slotStack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+
+            if (slotStack.getCount() == stack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+        }
         
         return stack;
     }
