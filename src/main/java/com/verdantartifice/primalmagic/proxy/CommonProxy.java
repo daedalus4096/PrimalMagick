@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.init.InitAffinities;
 import com.verdantartifice.primalmagic.common.init.InitCapabilities;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
 import com.verdantartifice.primalmagic.common.init.InitResearch;
+import com.verdantartifice.primalmagic.common.init.InitWorldGen;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 
 import net.minecraft.command.arguments.ArgumentSerializer;
@@ -26,6 +27,7 @@ public class CommonProxy implements IProxyPM {
         InitRecipes.initRecipeTypes();
         InitCapabilities.initCapabilities();
         InitResearch.initResearch();
+        InitWorldGen.initWorldGen();
 
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "research")).toString(), ResearchArgument.class, new ArgumentSerializer<>(ResearchArgument::research));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "discipline")).toString(), DisciplineArgument.class, new ArgumentSerializer<>(DisciplineArgument::discipline));
