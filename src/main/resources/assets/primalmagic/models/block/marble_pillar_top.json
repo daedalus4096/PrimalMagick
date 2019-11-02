@@ -1,0 +1,38 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"1": "primalmagic:block/marble_pillar_inner",
+		"2": "primalmagic:block/marble_pillar_top",
+		"3": "primalmagic:block/marble_raw",
+		"particle": "primalmagic:block/marble_pillar_top"
+	},
+	"elements": [
+		{
+			"name": "pillar",
+			"from": [2, 0, 2],
+			"to": [14, 12, 14],
+			"faces": {
+				"north": {"uv": [2, 4, 14, 16], "texture": "#2"},
+				"east": {"uv": [2, 4, 14, 16], "texture": "#2"},
+				"south": {"uv": [2, 4, 14, 16], "texture": "#2"},
+				"west": {"uv": [2, 4, 14, 16], "texture": "#2"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#1"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#1"}
+			}
+		},
+		{
+			"name": "pillar_top",
+			"from": [0, 12, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 4], "texture": "#2"},
+				"east": {"uv": [0, 0, 16, 4], "texture": "#2"},
+				"south": {"uv": [0, 0, 16, 4], "texture": "#2"},
+				"west": {"uv": [0, 0, 16, 4], "texture": "#2"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#3"}
+			}
+		}
+	]
+}
