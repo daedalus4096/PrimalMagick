@@ -43,8 +43,17 @@ public class InitBlocks {
                 PrimalMagic.LOGGER.catching(t);
             }
         }
-        registry.register(new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_bricks"));
+        Block marbleBricks = new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_bricks");
+        registry.register(marbleBricks);
         registry.register(new SlabBlock(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_brick_slab"));
+        if (stairsConstructor != null) {
+            try {
+                registry.register(stairsConstructor.newInstance(marbleBricks.getDefaultState(), Block.Properties.from(marbleBricks)).setRegistryName(PrimalMagic.MODID, "marble_brick_stairs"));
+            } catch (Throwable t) {
+                PrimalMagic.LOGGER.error("Unable to register marble_brick_stairs block");
+                PrimalMagic.LOGGER.catching(t);
+            }
+        }
         registry.register(new MarblePillarBlock());
         registry.register(new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F)).setRegistryName(PrimalMagic.MODID, "marble_enchanted"));
         registry.register(new ArcaneWorkbenchBlock());
