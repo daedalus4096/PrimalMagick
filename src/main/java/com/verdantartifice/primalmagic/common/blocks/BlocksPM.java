@@ -8,6 +8,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(PrimalMagic.MODID)
 public class BlocksPM {
     public static final Block MARBLE_RAW = null;
+    public static final Block MARBLE_BRICKS = null;
     public static final Block MARBLE_PILLAR = null;
     public static final Block MARBLE_ENCHANTED = null;
     public static final Block ARCANE_WORKBENCH = null;

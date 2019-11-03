@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -17,6 +18,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class InitBlocks {
     public static void initBlocks(IForgeRegistry<Block> registry) {
         registry.register(new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F)).setRegistryName(PrimalMagic.MODID, "marble_raw"));
+        registry.register(new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_bricks"));
         registry.register(new MarblePillarBlock());
         registry.register(new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F)).setRegistryName(PrimalMagic.MODID, "marble_enchanted"));
         registry.register(new ArcaneWorkbenchBlock());
