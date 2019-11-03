@@ -23,6 +23,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class InitItems {
     public static void initBlockItems(IForgeRegistry<Item> registry) {
         registry.register(new BlockItem(BlocksPM.MARBLE_RAW, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_RAW.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.MARBLE_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SLAB.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_BRICKS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_BRICKS.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_PILLAR.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED.getRegistryName()));
