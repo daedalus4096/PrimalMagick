@@ -17,6 +17,7 @@ public class BlocksPM {
     public static final Block MARBLE_CHISELED = null;
     public static final Block MARBLE_RUNED = null;
     public static final Block MARBLE_ENCHANTED = null;
+    public static final Block MARBLE_ENCHANTED_SLAB = null;
     public static final Block ARCANE_WORKBENCH = null;
     public static final Block ANCIENT_FONT_EARTH = null;
     public static final Block ANCIENT_FONT_SEA = null;
