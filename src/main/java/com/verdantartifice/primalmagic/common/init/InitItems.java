@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.AncientManaFontTEISR;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
-import com.verdantartifice.primalmagic.common.items.misc.DebugTabletItem;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
@@ -45,7 +44,6 @@ public class InitItems {
     }
     
     public static void initItems(IForgeRegistry<Item> registry) {
-        registry.register(new DebugTabletItem());
         registry.register(new GrimoireItem());
         registry.register(new ArcanometerItem());
         registry.register(new MundaneWandItem());

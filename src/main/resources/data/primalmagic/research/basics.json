@@ -8,12 +8,11 @@
             "stages": [
                 {
                     "text": "primalmagic.research.first_steps.text.stage.1",
-                    "required_item": ["minecraft:stick"],
-                    "recipes": ["primalmagic:debug_tablet"]
+                    "required_item": ["minecraft:stick"]
                 },
                 {
                     "text": "primalmagic.research.first_steps.text.stage.2",
-                    "recipes": ["primalmagic:debug_tablet", "primalmagic:grimoire"]
+                    "recipes": ["primalmagic:grimoire"]
                 }
             ],
             "addenda": []
