@@ -5,6 +5,7 @@ import java.util.Collections;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
+import com.verdantartifice.primalmagic.common.config.Config;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -35,7 +36,7 @@ public class ClientRenderEvents {
             SourceList sources = AffinityManager.getAffinities(event.getItemStack(), mc.world);
             if (sources == null || sources.isEmpty()) {
                 event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.none"));
-            } else if (!AffinityManager.isScanned(event.getItemStack(), mc.player)) {
+            } else if (!AffinityManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
                 event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.unknown"));
             } else {
                 int width = 0;
