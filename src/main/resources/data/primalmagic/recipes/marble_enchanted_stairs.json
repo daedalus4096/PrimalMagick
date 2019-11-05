@@ -1,0 +1,17 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "M  ",
+        "MM ",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "primalmagic:marble_enchanted"
+        }
+    },
+    "result": {
+        "item": "primalmagic:marble_enchanted_stairs",
+        "count": 4
+    }
+}
