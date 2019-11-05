@@ -1,0 +1,15 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "M",
+        "M"
+    ],
+    "key": {
+        "M": {
+            "item": "primalmagic:marble_slab"
+        }
+    },
+    "result": {
+        "item": "primalmagic:marble_chiseled"
+    }
+}
