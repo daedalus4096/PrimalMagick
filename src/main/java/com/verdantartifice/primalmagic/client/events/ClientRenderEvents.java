@@ -32,7 +32,7 @@ public class ClientRenderEvents {
     public static void renderTooltip(ItemTooltipEvent event) {
         Minecraft mc = Minecraft.getInstance();
         Screen gui = mc.currentScreen;
-        if (gui instanceof ContainerScreen && Screen.hasShiftDown() && !mc.mouseHelper.isMouseGrabbed() && event.getItemStack() != null) {
+        if (gui instanceof ContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHelper.isMouseGrabbed() && event.getItemStack() != null) {
             SourceList sources = AffinityManager.getAffinities(event.getItemStack(), mc.world);
             if (sources == null || sources.isEmpty()) {
                 event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.none"));
@@ -63,7 +63,7 @@ public class ClientRenderEvents {
     public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground event) {
         Minecraft mc = Minecraft.getInstance();
         Screen gui = mc.currentScreen;
-        if (gui instanceof ContainerScreen && Screen.hasShiftDown() && !mc.mouseHelper.isMouseGrabbed() && event.getStack() != null) {
+        if (gui instanceof ContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHelper.isMouseGrabbed() && event.getStack() != null) {
             int bottom = event.getHeight();
             if (!event.getLines().isEmpty()) {
                 for (int index = event.getLines().size() - 1; index >= 0; index--) {
