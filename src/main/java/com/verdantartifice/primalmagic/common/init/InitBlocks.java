@@ -43,6 +43,7 @@ public class InitBlocks {
         registry.register(new Block(Block.Properties.from(marbleEnchanted)).setRegistryName(PrimalMagic.MODID, "marble_enchanted_runed"));
         Block marbleSmoked = new Block(Block.Properties.create(Material.ROCK, MaterialColor.OBSIDIAN).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_smoked");
         registry.register(marbleSmoked);
+        registry.register(new SlabBlock(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_slab"));
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));
         registry.register(new AncientManaFontBlock(Source.SEA));
