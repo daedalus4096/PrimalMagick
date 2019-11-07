@@ -1,0 +1,17 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "M  ",
+        "MM ",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "primalmagic:marble_smoked"
+        }
+    },
+    "result": {
+        "item": "primalmagic:marble_smoked_stairs",
+        "count": 4
+    }
+}
