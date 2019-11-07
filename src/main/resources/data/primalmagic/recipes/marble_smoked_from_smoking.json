@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smoking",
+    "ingredient": {
+        "item": "primalmagic:marble_raw"
+    },
+    "result": "primalmagic:marble_smoked",
+    "experience": 0,
+    "cookingtime": 100
+}

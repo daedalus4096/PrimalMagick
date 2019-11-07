@@ -279,6 +279,7 @@ public class InitAffinities {
         // Register Primal Magic block affinities
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_RAW), new SourceList().add(Source.EARTH, 5));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED), new SourceList().add(Source.EARTH, 6).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_SMOKED), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 5));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ARCANE_WORKBENCH), AffinityManager.getAffinities(new ItemStack(Blocks.CRAFTING_TABLE), server));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_EARTH), new SourceList().add(Source.EARTH, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_SEA), new SourceList().add(Source.SEA, 20));
