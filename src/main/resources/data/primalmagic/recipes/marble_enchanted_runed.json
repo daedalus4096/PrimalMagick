@@ -1,0 +1,20 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        " M ",
+        "MCM",
+        " M "
+    ],
+    "key": {
+        "M": {
+            "item": "primalmagic:marble_enchanted"
+        },
+        "C": {
+            "item": "primalmagic:marble_enchanted_chiseled"
+        }
+    },
+    "result": {
+        "item": "primalmagic:marble_enchanted_runed",
+        "count": 5
+    }
+}

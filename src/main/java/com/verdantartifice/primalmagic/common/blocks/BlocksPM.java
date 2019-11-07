@@ -24,6 +24,7 @@ public class BlocksPM {
     public static final Block MARBLE_ENCHANTED_BRICK_STAIRS = null;
     public static final Block MARBLE_ENCHANTED_PILLAR = null;
     public static final Block MARBLE_ENCHANTED_CHISELED = null;
+    public static final Block MARBLE_ENCHANTED_RUNED = null;
     public static final Block ARCANE_WORKBENCH = null;
     public static final Block ANCIENT_FONT_EARTH = null;
     public static final Block ANCIENT_FONT_SEA = null;
