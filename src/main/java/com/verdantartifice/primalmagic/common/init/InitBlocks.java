@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagic.common.blocks.crafting.ArcaneWorkbenchBlo
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandAssemblyTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.AnalysisTableBlock;
-import com.verdantartifice.primalmagic.common.blocks.misc.MarblePillarBlock;
+import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -27,7 +27,7 @@ public class InitBlocks {
         registry.register(marbleBricks);
         registry.register(new SlabBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_brick_slab"));
         registry.register(new StairsBlockPM(marbleBricks.getDefaultState(), Block.Properties.from(marbleBricks)).setRegistryName(PrimalMagic.MODID, "marble_brick_stairs"));
-        registry.register(new MarblePillarBlock());
+        registry.register(new PillarBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_pillar"));
         registry.register(new Block(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_chiseled"));
         registry.register(new Block(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_runed"));
         Block marbleEnchanted = new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(3.0F, 12.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_enchanted");
@@ -38,6 +38,7 @@ public class InitBlocks {
         registry.register(marbleEnchantedBricks);
         registry.register(new SlabBlock(Block.Properties.from(marbleEnchantedBricks)).setRegistryName(PrimalMagic.MODID, "marble_enchanted_brick_slab"));
         registry.register(new StairsBlockPM(marbleEnchantedBricks.getDefaultState(), Block.Properties.from(marbleEnchantedBricks)).setRegistryName(PrimalMagic.MODID, "marble_enchanted_brick_stairs"));
+        registry.register(new PillarBlock(Block.Properties.from(marbleEnchanted)).setRegistryName(PrimalMagic.MODID, "marble_enchanted_pillar"));
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));
         registry.register(new AncientManaFontBlock(Source.SEA));

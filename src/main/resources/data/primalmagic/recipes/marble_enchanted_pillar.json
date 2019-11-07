@@ -1,0 +1,16 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "M",
+        "M"
+    ],
+    "key": {
+        "M": {
+            "item": "primalmagic:marble_enchanted"
+        }
+    },
+    "result": {
+        "item": "primalmagic:marble_enchanted_pillar",
+        "count": 2
+    }
+}
