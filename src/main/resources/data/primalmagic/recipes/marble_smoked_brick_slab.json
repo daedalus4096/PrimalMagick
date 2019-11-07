@@ -1,0 +1,15 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "primalmagic:marble_smoked_bricks"
+        }
+    },
+    "result": {
+        "item": "primalmagic:marble_smoked_brick_slab",
+        "count": 6
+    }
+}
