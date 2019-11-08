@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.WallBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -23,6 +24,7 @@ public class InitBlocks {
         registry.register(marbleRaw);
         registry.register(new SlabBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_slab"));
         registry.register(new StairsBlockPM(marbleRaw.getDefaultState(), Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_stairs"));
+        registry.register(new WallBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_wall"));
         Block marbleBricks = new Block(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_bricks");
         registry.register(marbleBricks);
         registry.register(new SlabBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_brick_slab"));

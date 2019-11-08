@@ -10,6 +10,7 @@ public class BlocksPM {
     public static final Block MARBLE_RAW = null;
     public static final Block MARBLE_SLAB = null;
     public static final Block MARBLE_STAIRS = null;
+    public static final Block MARBLE_WALL = null;
     public static final Block MARBLE_BRICKS = null;
     public static final Block MARBLE_BRICK_SLAB = null;
     public static final Block MARBLE_BRICK_STAIRS = null;

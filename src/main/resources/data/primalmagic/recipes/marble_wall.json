@@ -1,0 +1,16 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "MMM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "primalmagic:marble_raw"
+        }
+    },
+    "result": {
+        "item": "primalmagic:marble_wall",
+        "count": 6
+    }
+}
