@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "side": "primalmagic:block/marble_smoked_runed",
+        "end": "primalmagic:block/marble_smoked"
+    }
+}
