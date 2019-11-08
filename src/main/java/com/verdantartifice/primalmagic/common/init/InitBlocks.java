@@ -49,6 +49,7 @@ public class InitBlocks {
         registry.register(marbleSmokedBricks);
         registry.register(new SlabBlock(Block.Properties.from(marbleSmokedBricks)).setRegistryName(PrimalMagic.MODID, "marble_smoked_brick_slab"));
         registry.register(new StairsBlockPM(marbleSmokedBricks.getDefaultState(), Block.Properties.from(marbleSmokedBricks)).setRegistryName(PrimalMagic.MODID, "marble_smoked_brick_stairs"));
+        registry.register(new PillarBlock(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_pillar"));
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));
         registry.register(new AncientManaFontBlock(Source.SEA));

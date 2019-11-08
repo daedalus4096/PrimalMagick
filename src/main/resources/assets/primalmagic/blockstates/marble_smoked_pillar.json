@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=base":   { "model": "primalmagic:block/marble_smoked_pillar" },
+        "type=bottom": { "model": "primalmagic:block/marble_smoked_pillar_bottom" },
+        "type=top":    { "model": "primalmagic:block/marble_smoked_pillar_top" }
+    }
+}
