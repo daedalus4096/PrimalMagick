@@ -27,8 +27,9 @@ public class InitBlocks {
         registry.register(new WallBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_wall"));
         Block marbleBricks = new Block(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_bricks");
         registry.register(marbleBricks);
-        registry.register(new SlabBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_brick_slab"));
+        registry.register(new SlabBlock(Block.Properties.from(marbleBricks)).setRegistryName(PrimalMagic.MODID, "marble_brick_slab"));
         registry.register(new StairsBlockPM(marbleBricks.getDefaultState(), Block.Properties.from(marbleBricks)).setRegistryName(PrimalMagic.MODID, "marble_brick_stairs"));
+        registry.register(new WallBlock(Block.Properties.from(marbleBricks)).setRegistryName(PrimalMagic.MODID, "marble_brick_wall"));
         registry.register(new PillarBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_pillar"));
         registry.register(new Block(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_chiseled"));
         registry.register(new Block(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_runed"));

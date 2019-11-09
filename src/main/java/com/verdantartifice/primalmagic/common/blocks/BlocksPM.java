@@ -14,6 +14,7 @@ public class BlocksPM {
     public static final Block MARBLE_BRICKS = null;
     public static final Block MARBLE_BRICK_SLAB = null;
     public static final Block MARBLE_BRICK_STAIRS = null;
+    public static final Block MARBLE_BRICK_WALL = null;
     public static final Block MARBLE_PILLAR = null;
     public static final Block MARBLE_CHISELED = null;
     public static final Block MARBLE_RUNED = null;

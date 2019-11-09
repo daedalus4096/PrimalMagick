@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
-        "primalmagic:marble_wall"
+        "primalmagic:marble_wall",
+        "primalmagic:marble_brick_wall"
     ]
 }

@@ -28,6 +28,7 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.MARBLE_BRICKS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_BRICKS.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_BRICK_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_BRICK_SLAB.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_BRICK_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_BRICK_STAIRS.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.MARBLE_BRICK_WALL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_BRICK_WALL.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_PILLAR.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_CHISELED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_CHISELED.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_RUNED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_RUNED.getRegistryName()));
