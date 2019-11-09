@@ -1,0 +1,16 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "MMM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "primalmagic:marble_enchanted_bricks"
+        }
+    },
+    "result": {
+        "item": "primalmagic:marble_enchanted_brick_wall",
+        "count": 6
+    }
+}

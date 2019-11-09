@@ -39,6 +39,7 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_BRICKS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_BRICKS.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_PILLAR.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_CHISELED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_CHISELED.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_RUNED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_RUNED.getRegistryName()));
