@@ -21,6 +21,7 @@ public class BlocksPM {
     public static final Block MARBLE_ENCHANTED = null;
     public static final Block MARBLE_ENCHANTED_SLAB = null;
     public static final Block MARBLE_ENCHANTED_STAIRS = null;
+    public static final Block MARBLE_ENCHANTED_WALL = null;
     public static final Block MARBLE_ENCHANTED_BRICKS = null;
     public static final Block MARBLE_ENCHANTED_BRICK_SLAB = null;
     public static final Block MARBLE_ENCHANTED_BRICK_STAIRS = null;
