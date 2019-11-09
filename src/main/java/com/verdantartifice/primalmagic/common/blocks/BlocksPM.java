@@ -36,6 +36,7 @@ public class BlocksPM {
     public static final Block MARBLE_SMOKED_BRICKS = null;
     public static final Block MARBLE_SMOKED_BRICK_SLAB = null;
     public static final Block MARBLE_SMOKED_BRICK_STAIRS = null;
+    public static final Block MARBLE_SMOKED_BRICK_WALL = null;
     public static final Block MARBLE_SMOKED_PILLAR = null;
     public static final Block MARBLE_SMOKED_CHISELED = null;
     public static final Block MARBLE_SMOKED_RUNED = null;
