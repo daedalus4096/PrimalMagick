@@ -64,3 +64,9 @@ local.properties
 /gradle/
 gradlew
 gradlew.bat
+
+#################
+## MC Generated Data
+#################
+
+/src/generated/
