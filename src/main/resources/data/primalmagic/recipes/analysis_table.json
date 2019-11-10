@@ -1,17 +1,17 @@
 {
-    "type": "crafting_shapeless",
-    "ingredients": [
-        {
-            "item": "primalmagic:wood_table"
-        },
-        {
-            "item": "primalmagic:magnifying_glass"
-        },
-        {
-            "item": "minecraft:paper"
-        }
-    ],
-    "result": {
-        "item": "primalmagic:analysis_table"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primalmagic:wood_table"
+    },
+    {
+      "item": "primalmagic:magnifying_glass"
+    },
+    {
+      "item": "minecraft:paper"
     }
+  ],
+  "result": {
+    "item": "primalmagic:analysis_table"
+  }
 }

@@ -4,17 +4,23 @@ import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.data.CookingRecipeBuilder;
+import net.minecraft.data.CustomRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.data.SingleItemRecipeBuilder;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 
 public class Recipes extends RecipeProvider {
     public Recipes(DataGenerator generatorIn) {
@@ -26,6 +32,34 @@ public class Recipes extends RecipeProvider {
         this.registerMarbleRecipes(consumer);
         this.registerEnchantedMarbleRecipes(consumer);
         this.registerSmokedMarbleRecipes(consumer);
+        
+        ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.ANALYSIS_TABLE)
+            .addIngredient(BlocksPM.WOOD_TABLE)
+            .addIngredient(ItemsPM.MAGNIFYING_GLASS)
+            .addIngredient(Items.PAPER)
+            .addCriterion("has_wood_table", this.hasItem(BlocksPM.WOOD_TABLE))
+            .addCriterion("has_magnifying_glass", this.hasItem(ItemsPM.MAGNIFYING_GLASS))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemsPM.MAGNIFYING_GLASS)
+            .patternLine(" I ")
+            .patternLine("IGI")
+            .patternLine("SI ")
+            .key('I', Tags.Items.INGOTS_IRON)
+            .key('G', Tags.Items.GLASS_PANES_COLORLESS)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .addCriterion("has_iron_ingot", this.hasItem(Tags.Items.INGOTS_IRON))
+            .addCriterion("has_glass_pane", this.hasItem(Tags.Items.GLASS_PANES_COLORLESS))
+            .build(consumer);
+        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL)
+            .build(consumer, "primalmagic:wand_assembly");
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.WOOD_TABLE)
+            .patternLine("SSS")
+            .patternLine(" P ")
+            .patternLine("SPS")
+            .key('S', ItemTags.WOODEN_SLABS)
+            .key('P', ItemTags.PLANKS)
+            .addCriterion("has_planks", this.hasItem(ItemTags.PLANKS))
+            .build(consumer);
     }
 
     protected void registerMarbleRecipes(Consumer<IFinishedRecipe> consumer) {
