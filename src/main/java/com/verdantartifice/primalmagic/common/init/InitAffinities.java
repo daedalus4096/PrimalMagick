@@ -20,11 +20,11 @@ public class InitAffinities {
         initItemAffinities(server);
         initPotionBonusAffinities();
         initEnchantmentBonusAffinities();
-        // TODO init entity affinities
     }
     
     protected static void initItemAffinities(MinecraftServer server) {
         // Register Vanilla item tag affinities
+        AffinityManager.registerItemTagAffinities(new ResourceLocation("beds"), new SourceList().add(Source.EARTH, 4).add(Source.SUN, 4).add(Source.BLOOD, 11));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("coals"), new SourceList().add(Source.EARTH, 5).add(Source.INFERNAL, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("fishes"), new SourceList().add(Source.SEA, 5).add(Source.BLOOD, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation("leaves"), new SourceList().add(Source.EARTH, 5).add(Source.SKY, 5).add(Source.SUN, 5));
@@ -270,7 +270,6 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Items.SWEET_BERRIES), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         
         // Register Primal Magic tag affinities
-        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "beds"), AffinityManager.getAffinities(new ItemStack(Items.WHITE_BED), server));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "colored_shulker_boxes"), AffinityManager.getAffinities(new ItemStack(Items.SHULKER_BOX), server));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "concrete"), AffinityManager.getAffinities(new ItemStack(Items.WHITE_CONCRETE_POWDER), server).add(Source.SEA, 1));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "dead_coral_blocks"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 10));
