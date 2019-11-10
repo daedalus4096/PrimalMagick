@@ -139,7 +139,7 @@ public class ArcaneShapedRecipeBuilder {
         }
     }
     
-    public class Result implements IFinishedRecipe {
+    public static class Result implements IFinishedRecipe {
         protected final ResourceLocation id;
         protected final Item result;
         protected final int count;

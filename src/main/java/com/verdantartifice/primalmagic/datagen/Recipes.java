@@ -6,6 +6,9 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.CustomRecipeBuilder;
@@ -177,7 +180,11 @@ public class Recipes extends RecipeProvider {
     }
 
     protected void registerEnchantedMarbleRecipes(Consumer<IFinishedRecipe> consumer) {
-        // TODO Add base enchanted marble recipe
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(BlocksPM.MARBLE_ENCHANTED, 9)
+            .addIngredient(BlocksPM.MARBLE_RAW, 9)
+            .research(SimpleResearchKey.parse("FIRST_STEPS"))
+            .manaCost(new SourceList().add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1))
+            .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB, 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED)
