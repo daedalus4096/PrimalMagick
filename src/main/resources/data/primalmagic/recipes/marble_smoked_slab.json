@@ -1,15 +1,16 @@
 {
-    "type": "crafting_shaped",
-    "pattern": [
-        "MMM"
-    ],
-    "key": {
-        "M": {
-            "item": "primalmagic:marble_smoked"
-        }
-    },
-    "result": {
-        "item": "primalmagic:marble_smoked_slab",
-        "count": 6
+  "type": "minecraft:crafting_shaped",
+  "group": "marble_smoked",
+  "pattern": [
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_smoked"
     }
+  },
+  "result": {
+    "item": "primalmagic:marble_smoked_slab",
+    "count": 6
+  }
 }

@@ -1,20 +1,21 @@
 {
-    "type": "crafting_shaped",
-    "pattern": [
-        " M ",
-        "MCM",
-        " M "
-    ],
-    "key": {
-        "M": {
-            "item": "primalmagic:marble_smoked"
-        },
-        "C": {
-            "item": "primalmagic:marble_smoked_chiseled"
-        }
+  "type": "minecraft:crafting_shaped",
+  "group": "marble_smoked",
+  "pattern": [
+    " M ",
+    "MCM",
+    " M "
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_smoked"
     },
-    "result": {
-        "item": "primalmagic:marble_smoked_runed",
-        "count": 5
+    "C": {
+      "item": "primalmagic:marble_smoked_chiseled"
     }
+  },
+  "result": {
+    "item": "primalmagic:marble_smoked_runed",
+    "count": 5
+  }
 }

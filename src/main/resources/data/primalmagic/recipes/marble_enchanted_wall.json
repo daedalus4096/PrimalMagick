@@ -1,16 +1,17 @@
 {
-    "type": "crafting_shaped",
-    "pattern": [
-        "MMM",
-        "MMM"
-    ],
-    "key": {
-        "M": {
-            "item": "primalmagic:marble_enchanted"
-        }
-    },
-    "result": {
-        "item": "primalmagic:marble_enchanted_wall",
-        "count": 6
+  "type": "minecraft:crafting_shaped",
+  "group": "marble_enchanted",
+  "pattern": [
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_enchanted"
     }
+  },
+  "result": {
+    "item": "primalmagic:marble_enchanted_wall",
+    "count": 6
+  }
 }

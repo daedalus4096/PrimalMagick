@@ -1,15 +1,16 @@
 {
-    "type": "crafting_shaped",
-    "pattern": [
-        "MMM"
-    ],
-    "key": {
-        "M": {
-            "item": "primalmagic:marble_bricks"
-        }
-    },
-    "result": {
-        "item": "primalmagic:marble_brick_slab",
-        "count": 6
+  "type": "minecraft:crafting_shaped",
+  "group": "marble",
+  "pattern": [
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_bricks"
     }
+  },
+  "result": {
+    "item": "primalmagic:marble_brick_slab",
+    "count": 6
+  }
 }

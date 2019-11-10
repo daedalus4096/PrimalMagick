@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagic:marble_enchanted_chiseled_from_marble_enchanted_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_marble_enchanted": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "primalmagic:marble_enchanted"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagic:marble_enchanted_chiseled_from_marble_enchanted_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_marble_enchanted",
+      "has_the_recipe"
+    ]
+  ]
+}

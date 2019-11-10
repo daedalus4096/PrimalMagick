@@ -1,15 +1,16 @@
 {
-    "type": "crafting_shaped",
-    "pattern": [
-        "M",
-        "M"
-    ],
-    "key": {
-        "M": {
-            "item": "primalmagic:marble_enchanted_slab"
-        }
-    },
-    "result": {
-        "item": "primalmagic:marble_enchanted_chiseled"
+  "type": "minecraft:crafting_shaped",
+  "group": "marble_enchanted",
+  "pattern": [
+    "M",
+    "M"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_enchanted_slab"
     }
+  },
+  "result": {
+    "item": "primalmagic:marble_enchanted_chiseled"
+  }
 }
