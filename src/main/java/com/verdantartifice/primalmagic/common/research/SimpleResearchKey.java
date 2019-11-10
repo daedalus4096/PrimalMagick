@@ -31,6 +31,11 @@ public class SimpleResearchKey {
     }
     
     @Nonnull
+    public SimpleResearchKey copy() {
+        return new SimpleResearchKey(this.rootKey, this.stage);
+    }
+    
+    @Nonnull
     public String getRootKey() {
         return this.rootKey;
     }
