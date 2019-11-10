@@ -10,10 +10,12 @@ import com.google.gson.GsonBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.data.LootTableProvider;
+import net.minecraft.state.properties.SlabType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.ConstantRange;
 import net.minecraft.world.storage.loot.ItemLootEntry;
@@ -21,7 +23,10 @@ import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableManager;
+import net.minecraft.world.storage.loot.conditions.BlockStateProperty;
 import net.minecraft.world.storage.loot.conditions.SurvivesExplosion;
+import net.minecraft.world.storage.loot.functions.ExplosionDecay;
+import net.minecraft.world.storage.loot.functions.SetCount;
 
 public abstract class BlockLootTableProvider extends LootTableProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -37,9 +42,20 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
 
     protected abstract void addTables();
     
-    protected LootTable.Builder createBasicTable(Block block) {
-        LootPool.Builder poolBuilder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block)).acceptCondition(SurvivesExplosion.builder());
-        return LootTable.builder().addLootPool(poolBuilder);
+    protected void registerBasicTable(Block block) {
+        LootPool.Builder poolBuilder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block))
+                .acceptCondition(SurvivesExplosion.builder());
+        LootTable.Builder tableBuilder = LootTable.builder().addLootPool(poolBuilder);
+        this.lootTables.put(block, tableBuilder);
+    }
+    
+    protected void registerSlabTable(Block block) {
+        LootPool.Builder poolBuilder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block)
+                .acceptFunction(SetCount.func_215932_a(ConstantRange.of(2))
+                    .acceptCondition(BlockStateProperty.builder(block).with(SlabBlock.TYPE, SlabType.DOUBLE))
+                ).acceptFunction(ExplosionDecay.func_215863_b()));
+        LootTable.Builder tableBuilder = LootTable.builder().addLootPool(poolBuilder);
+        this.lootTables.put(block, tableBuilder);
     }
     
     @Override

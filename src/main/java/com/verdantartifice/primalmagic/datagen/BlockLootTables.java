@@ -11,9 +11,58 @@ public class BlockLootTables extends BlockLootTableProvider {
 
     @Override
     protected void addTables() {
-        this.lootTables.put(BlocksPM.ANALYSIS_TABLE, this.createBasicTable(BlocksPM.ANALYSIS_TABLE));
+        this.registerMarbleLootTables();
+        this.registerEnchantedMarbleLootTables();
+        this.registerSmokedMarbleLootTables();
+        
+        this.registerBasicTable(BlocksPM.ANALYSIS_TABLE);
+        this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH);
+        this.registerBasicTable(BlocksPM.WAND_ASSEMBLY_TABLE);
+        this.registerBasicTable(BlocksPM.WOOD_TABLE);
     }
     
+    private void registerMarbleLootTables() {
+        this.registerBasicTable(BlocksPM.MARBLE_RAW);
+        this.registerSlabTable(BlocksPM.MARBLE_BRICK_SLAB);
+        this.registerBasicTable(BlocksPM.MARBLE_BRICK_STAIRS);
+        this.registerBasicTable(BlocksPM.MARBLE_BRICK_WALL);
+        this.registerBasicTable(BlocksPM.MARBLE_BRICKS);
+        this.registerBasicTable(BlocksPM.MARBLE_CHISELED);
+        this.registerBasicTable(BlocksPM.MARBLE_PILLAR);
+        this.registerBasicTable(BlocksPM.MARBLE_RUNED);
+        this.registerSlabTable(BlocksPM.MARBLE_SLAB);
+        this.registerBasicTable(BlocksPM.MARBLE_STAIRS);
+        this.registerBasicTable(BlocksPM.MARBLE_WALL);
+    }
+    
+    private void registerEnchantedMarbleLootTables() {
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED);
+        this.registerSlabTable(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICKS);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_CHISELED);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_PILLAR);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_RUNED);
+        this.registerSlabTable(BlocksPM.MARBLE_ENCHANTED_SLAB);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_STAIRS);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_WALL);
+    }
+    
+    private void registerSmokedMarbleLootTables() {
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED);
+        this.registerSlabTable(BlocksPM.MARBLE_SMOKED_BRICK_SLAB);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICK_WALL);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICKS);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_CHISELED);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_PILLAR);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_RUNED);
+        this.registerSlabTable(BlocksPM.MARBLE_SMOKED_SLAB);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_STAIRS);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_WALL);
+    }
+
     @Override
     public String getName() {
         return "Primal Magic Block Loot Tables";
