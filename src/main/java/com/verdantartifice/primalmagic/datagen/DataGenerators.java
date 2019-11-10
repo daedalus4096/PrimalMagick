@@ -14,7 +14,7 @@ public class DataGenerators {
         DataGenerator generator = event.getGenerator();
         generator.addProvider(new Recipes(generator));
         generator.addProvider(new BlockLootTables(generator));
-        generator.addProvider(new BlockTags(generator));
-        generator.addProvider(new ItemTags(generator));
+        generator.addProvider(new BlockTagsProvider(generator));
+        generator.addProvider(new ItemTagsProvider(generator));
     }
 }

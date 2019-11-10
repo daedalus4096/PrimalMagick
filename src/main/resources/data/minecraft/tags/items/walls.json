@@ -1,11 +1,11 @@
 {
-    "replace": false,
-    "values": [
-        "primalmagic:marble_wall",
-        "primalmagic:marble_brick_wall",
-        "primalmagic:marble_enchanted_wall",
-        "primalmagic:marble_enchanted_brick_wall",
-        "primalmagic:marble_smoked_wall",
-        "primalmagic:marble_smoked_brick_wall"
-    ]
+  "replace": false,
+  "values": [
+    "primalmagic:marble_wall",
+    "primalmagic:marble_brick_wall",
+    "primalmagic:marble_enchanted_wall",
+    "primalmagic:marble_enchanted_brick_wall",
+    "primalmagic:marble_smoked_wall",
+    "primalmagic:marble_smoked_brick_wall"
+  ]
 }
