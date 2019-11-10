@@ -12,7 +12,7 @@
                 },
                 {
                     "text": "primalmagic.research.first_steps.text.stage.2",
-                    "recipes": ["primalmagic:grimoire"]
+                    "recipes": ["primalmagic:marble_enchanted"]
                 }
             ],
             "addenda": []
