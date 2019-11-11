@@ -29,6 +29,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
     protected void registerTags() {
         this.getBuilder(BlockTags.LOGS).add(BlocksPM.SUNWOOD_LOG);
         this.getBuilder(BlockTags.LEAVES).add(BlocksPM.SUNWOOD_LEAVES);
+        this.getBuilder(BlockTags.SAPLINGS).add(BlocksPM.SUNWOOD_SAPLING);
         this.getBuilder(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL, BlocksPM.MARBLE_BRICK_WALL, BlocksPM.MARBLE_ENCHANTED_WALL, BlocksPM.MARBLE_ENCHANTED_BRICK_WALL, BlocksPM.MARBLE_SMOKED_WALL, BlocksPM.MARBLE_SMOKED_BRICK_WALL);
         
         this.getBuilder(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);

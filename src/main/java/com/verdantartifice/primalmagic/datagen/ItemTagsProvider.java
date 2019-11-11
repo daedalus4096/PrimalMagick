@@ -29,6 +29,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
     protected void registerTags() {
         this.getBuilder(ItemTags.LOGS).add(BlocksPM.SUNWOOD_LOG.asItem());
         this.getBuilder(ItemTags.LEAVES).add(BlocksPM.SUNWOOD_LEAVES.asItem());
+        this.getBuilder(ItemTags.SAPLINGS).add(BlocksPM.SUNWOOD_SAPLING.asItem());
         this.getBuilder(ItemTags.WALLS).add(BlocksPM.MARBLE_WALL.asItem(), BlocksPM.MARBLE_BRICK_WALL.asItem(), BlocksPM.MARBLE_ENCHANTED_WALL.asItem(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.asItem(), BlocksPM.MARBLE_SMOKED_WALL.asItem(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.asItem());
 
         this.getBuilder(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.BLACK_SHULKER_BOX, Items.BLUE_SHULKER_BOX, Items.BROWN_SHULKER_BOX, Items.CYAN_SHULKER_BOX, Items.GRAY_SHULKER_BOX, Items.GREEN_SHULKER_BOX, Items.LIGHT_BLUE_SHULKER_BOX, Items.LIGHT_GRAY_SHULKER_BOX, Items.LIME_SHULKER_BOX, Items.MAGENTA_SHULKER_BOX, Items.ORANGE_SHULKER_BOX, Items.PINK_SHULKER_BOX, Items.PURPLE_SHULKER_BOX, Items.RED_SHULKER_BOX, Items.WHITE_SHULKER_BOX, Items.YELLOW_SHULKER_BOX);
