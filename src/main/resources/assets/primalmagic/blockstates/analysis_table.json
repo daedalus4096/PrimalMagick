@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "primalmagic:block/analysis_table", "y": 180 },
-        "facing=south": { "model": "primalmagic:block/analysis_table" },
-        "facing=west":  { "model": "primalmagic:block/analysis_table", "y": 90 },
-        "facing=east":  { "model": "primalmagic:block/analysis_table", "y": 270 }
+        "facing=north": { "model": "primalmagic:block/analysis_table" },
+        "facing=south": { "model": "primalmagic:block/analysis_table", "y": 180 },
+        "facing=west":  { "model": "primalmagic:block/analysis_table", "y": 270 },
+        "facing=east":  { "model": "primalmagic:block/analysis_table", "y": 90 }
     }
 }
