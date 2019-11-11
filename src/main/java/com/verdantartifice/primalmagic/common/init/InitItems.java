@@ -54,6 +54,8 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED_PILLAR.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED_CHISELED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED_CHISELED.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED_RUNED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED_RUNED.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_LOG, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_LOG.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_LEAVES, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_LEAVES.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ARCANE_WORKBENCH, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ARCANE_WORKBENCH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_EARTH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_SEA, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_SEA.getRegistryName()));

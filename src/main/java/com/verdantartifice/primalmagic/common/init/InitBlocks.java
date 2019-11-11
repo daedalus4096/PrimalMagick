@@ -11,6 +11,8 @@ import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.LogBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.WallBlock;
@@ -59,6 +61,8 @@ public class InitBlocks {
         registry.register(new PillarBlock(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_pillar"));
         registry.register(new Block(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_chiseled"));
         registry.register(new Block(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_runed"));
+        registry.register(new LogBlock(MaterialColor.GOLD, Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)).setRegistryName(PrimalMagic.MODID, "sunwood_log"));
+        registry.register(new LeavesBlock(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT)).setRegistryName(PrimalMagic.MODID, "sunwood_leaves"));
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));
         registry.register(new AncientManaFontBlock(Source.SEA));
