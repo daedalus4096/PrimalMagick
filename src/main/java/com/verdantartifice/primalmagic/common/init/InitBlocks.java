@@ -66,7 +66,9 @@ public class InitBlocks {
         registry.register(new Block(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_chiseled"));
         registry.register(new Block(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_runed"));
 
-        registry.register(new SunwoodLogBlock());
+        Block strippedSunwoodLog = new SunwoodLogBlock(null).setRegistryName(PrimalMagic.MODID, "stripped_sunwood_log");
+        registry.register(strippedSunwoodLog);
+        registry.register(new SunwoodLogBlock(strippedSunwoodLog).setRegistryName(PrimalMagic.MODID, "sunwood_log"));
         registry.register(new SunwoodLeavesBlock());
         registry.register(new SaplingBlockPM(new SunwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.PLANT)).setRegistryName(PrimalMagic.MODID, "sunwood_sapling"));
 
