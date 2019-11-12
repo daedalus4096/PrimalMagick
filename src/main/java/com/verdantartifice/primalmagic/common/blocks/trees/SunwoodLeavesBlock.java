@@ -10,13 +10,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class SunwoodLeavesBlock extends LeavesBlock {
@@ -62,5 +66,23 @@ public class SunwoodLeavesBlock extends LeavesBlock {
             state = state.with(PHASE, newPhase);
         }
         return state;
+    }
+    
+    @Override
+    public float getBlockHardness(BlockState blockState, IBlockReader worldIn, BlockPos pos) {
+        if (blockState.get(PHASE) == TimePhase.FULL) {
+            return this.blockHardness;
+        } else {
+            return blockState.get(PHASE).getHardness();
+        }
+    }
+    
+    @Override
+    public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, Entity exploder, Explosion explosion) {
+        if (state.get(PHASE) == TimePhase.FULL) {
+            return this.blockResistance;
+        } else {
+            return state.get(PHASE).getResistance();
+        }
     }
 }
