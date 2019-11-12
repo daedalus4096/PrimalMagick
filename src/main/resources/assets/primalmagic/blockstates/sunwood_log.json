@@ -1,7 +1,10 @@
 {
     "variants": {
-        "axis=y": { "model": "primalmagic:block/sunwood_log" },
-        "axis=z": { "model": "primalmagic:block/sunwood_log", "x": 90 },
-        "axis=x": { "model": "primalmagic:block/sunwood_log", "x": 90, "y": 90 }
+        "phase=full,axis=y": { "model": "primalmagic:block/sunwood_log_full" },
+        "phase=full,axis=z": { "model": "primalmagic:block/sunwood_log_full", "x": 90 },
+        "phase=full,axis=x": { "model": "primalmagic:block/sunwood_log_full", "x": 90, "y": 90 },
+        "phase=faded,axis=y": { "model": "primalmagic:block/sunwood_log_faded" },
+        "phase=faded,axis=z": { "model": "primalmagic:block/sunwood_log_faded", "x": 90 },
+        "phase=faded,axis=x": { "model": "primalmagic:block/sunwood_log_faded", "x": 90, "y": 90 }
     }
 }

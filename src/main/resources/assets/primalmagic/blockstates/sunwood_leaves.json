@@ -1,5 +1,6 @@
 {
     "variants": {
-        "": { "model": "primalmagic:block/sunwood_leaves" }
+        "phase=full": { "model": "primalmagic:block/sunwood_leaves_full" },
+        "phase=faded": { "model": "primalmagic:block/sunwood_leaves_faded" }
     }
 }

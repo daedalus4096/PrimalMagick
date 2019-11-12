@@ -6,10 +6,14 @@ import java.util.function.Function;
 
 import com.mojang.datafixers.Dynamic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLeavesBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLogBlock;
+import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -26,6 +30,17 @@ public class SunwoodTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
     @Override
     protected boolean place(Set<BlockPos> changedBlocks, IWorldGenerationReader world, Random rand, BlockPos position, MutableBoundingBox box) {
         int i = rand.nextInt(3) + 5;
+        
+        BlockState logState;
+        BlockState leafState;
+        if (world instanceof IWorld) {
+            TimePhase phase = TimePhase.getSunPhase((IWorld)world);
+            logState = LOG.with(SunwoodLogBlock.PHASE, phase);
+            leafState = LEAF.with(SunwoodLeavesBlock.PHASE, phase);
+        } else {
+            logState = LOG;
+            leafState = LEAF;
+        }
         
         boolean flag = true;
         if (position.getY() >= 1 && position.getY() + i + 1 <= world.getMaxHeight()) {
@@ -70,7 +85,7 @@ public class SunwoodTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
                             if (Math.abs(i3) != k2 || Math.abs(k1) != k2 || rand.nextInt(2) != 0 && j2 != 0) {
                                 BlockPos blockpos = new BlockPos(l2, l1, j1);
                                 if (isAirOrLeaves(world, blockpos)) {
-                                    this.setLogState(changedBlocks, world, blockpos, LEAF, box);
+                                    this.setLogState(changedBlocks, world, blockpos, leafState, box);
                                 }
                             }
                         }
@@ -79,7 +94,7 @@ public class SunwoodTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
                 
                 for (int i2 = 0; i2 < i; ++i2) {
                     if (isAirOrLeaves(world, position.up(i2))) {
-                        this.setLogState(changedBlocks, world, position.up(i2), LOG, box);
+                        this.setLogState(changedBlocks, world, position.up(i2), logState, box);
                     }
                 }
                 
