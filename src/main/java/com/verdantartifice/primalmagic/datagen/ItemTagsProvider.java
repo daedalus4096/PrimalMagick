@@ -27,7 +27,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
 
     @Override
     protected void registerTags() {
-        this.getBuilder(ItemTags.LOGS).add(BlocksPM.SUNWOOD_LOG.asItem());
+        this.getBuilder(ItemTags.LOGS).add(ItemTagsPM.SUNWOOD_LOGS);
         this.getBuilder(ItemTags.LEAVES).add(BlocksPM.SUNWOOD_LEAVES.asItem());
         this.getBuilder(ItemTags.SAPLINGS).add(BlocksPM.SUNWOOD_SAPLING.asItem());
         this.getBuilder(ItemTags.WALLS).add(BlocksPM.MARBLE_WALL.asItem(), BlocksPM.MARBLE_BRICK_WALL.asItem(), BlocksPM.MARBLE_ENCHANTED_WALL.asItem(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.asItem(), BlocksPM.MARBLE_SMOKED_WALL.asItem(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.asItem());
@@ -38,6 +38,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTagsPM.DEAD_CORAL_PLANTS).add(Items.DEAD_BRAIN_CORAL, Items.DEAD_BUBBLE_CORAL, Items.DEAD_FIRE_CORAL, Items.DEAD_HORN_CORAL, Items.DEAD_TUBE_CORAL);
         this.getBuilder(ItemTagsPM.DEAD_CORALS).add(ItemTagsPM.DEAD_CORAL_PLANTS).add(Items.DEAD_BRAIN_CORAL_FAN, Items.DEAD_BUBBLE_CORAL_FAN, Items.DEAD_FIRE_CORAL_FAN, Items.DEAD_HORN_CORAL_FAN, Items.DEAD_TUBE_CORAL_FAN);
         this.getBuilder(ItemTagsPM.SHULKER_BOXES).add(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.SHULKER_BOX);
+        this.getBuilder(ItemTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.asItem(), BlocksPM.STRIPPED_SUNWOOD_LOG.asItem());
     }
 
     @Override

@@ -15,6 +15,7 @@ public class BlockTagsPM {
     public static final Tag<Block> DEAD_CORAL_PLANTS = tag("dead_coral_plants");
     public static final Tag<Block> DEAD_CORALS = tag("dead_corals");
     public static final Tag<Block> SHULKER_BOXES = tag("shulker_boxes");
+    public static final Tag<Block> SUNWOOD_LOGS = tag("sunwood_logs");
     
     private static Tag<Block> tag(String name) {
         return new BlockTags.Wrapper(new ResourceLocation(PrimalMagic.MODID, name));
