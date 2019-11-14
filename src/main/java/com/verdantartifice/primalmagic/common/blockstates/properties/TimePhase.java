@@ -4,19 +4,21 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IWorld;
 
 public enum TimePhase implements IStringSerializable {
-    FULL("full", 0.0F, 0.0F),   // Default to block-specified hardness and resistance
-    WAXING("waxing", 6.0F, 12.0F),
-    WANING("waning", 50.0F, 1200.0F),
-    FADED("faded", -1.0F, 3600000.0F);
+    FULL("full", 0.0F, 0.0F, 2),    // Default to block-specified hardness and resistance
+    WAXING("waxing", 6.0F, 12.0F, 1),
+    WANING("waning", 50.0F, 1200.0F, 0),
+    FADED("faded", -1.0F, 3600000.0F, 0);
     
     private final String name;
     private final float hardness;
     private final float resistance;
+    private final int light;
     
-    private TimePhase(String name, float hardness, float resistance) {
+    private TimePhase(String name, float hardness, float resistance, int light) {
         this.name = name;
         this.hardness = hardness;
         this.resistance = resistance;
+        this.light = light;
     }
     
     public static TimePhase getSunPhase(IWorld world) {
@@ -54,5 +56,9 @@ public enum TimePhase implements IStringSerializable {
     
     public float getResistance() {
         return this.resistance;
+    }
+    
+    public int getLightLevel() {
+        return this.light;
     }
 }

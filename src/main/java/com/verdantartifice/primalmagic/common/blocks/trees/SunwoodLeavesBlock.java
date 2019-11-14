@@ -85,4 +85,9 @@ public class SunwoodLeavesBlock extends LeavesBlock {
             return state.get(PHASE).getResistance();
         }
     }
+
+    @Override
+    public int getLightValue(BlockState state) {
+        return state.get(PHASE).getLightLevel();
+    }
 }
