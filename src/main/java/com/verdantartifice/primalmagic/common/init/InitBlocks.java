@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLogBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodPlanksBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodSlabBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodStairsBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodTree;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -76,8 +77,10 @@ public class InitBlocks {
         registry.register(new SunwoodLogBlock(strippedSunwoodWood).setRegistryName(PrimalMagic.MODID, "sunwood_wood"));
         registry.register(new SunwoodLeavesBlock());
         registry.register(new SaplingBlockPM(new SunwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.PLANT)).setRegistryName(PrimalMagic.MODID, "sunwood_sapling"));
-        registry.register(new SunwoodPlanksBlock());
+        Block sunwoodPlanks = new SunwoodPlanksBlock();
+        registry.register(sunwoodPlanks);
         registry.register(new SunwoodSlabBlock());
+        registry.register(new SunwoodStairsBlock(sunwoodPlanks.getDefaultState(), Block.Properties.from(sunwoodPlanks)).setRegistryName(PrimalMagic.MODID, "sunwood_stairs"));
 
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));

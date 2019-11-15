@@ -65,6 +65,7 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.SUNWOOD_SAPLING, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_SAPLING.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.SUNWOOD_PLANKS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_PLANKS.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.SUNWOOD_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_SLAB.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_STAIRS.getRegistryName()));
         
         registry.register(new BlockItem(BlocksPM.ARCANE_WORKBENCH, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ARCANE_WORKBENCH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_EARTH.getRegistryName()));
