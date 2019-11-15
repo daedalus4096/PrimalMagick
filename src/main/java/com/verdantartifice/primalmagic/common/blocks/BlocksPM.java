@@ -47,6 +47,7 @@ public class BlocksPM {
     public static final Block SUNWOOD_LEAVES = null;
     public static final Block SUNWOOD_SAPLING = null;
     public static final Block SUNWOOD_PLANKS = null;
+    public static final Block SUNWOOD_SLAB = null;
     public static final Block ARCANE_WORKBENCH = null;
     public static final Block ANCIENT_FONT_EARTH = null;
     public static final Block ANCIENT_FONT_SEA = null;

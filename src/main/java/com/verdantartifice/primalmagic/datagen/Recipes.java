@@ -447,5 +447,11 @@ public class Recipes extends RecipeProvider {
             .setGroup("planks")
             .addCriterion("has_sunwood_log", this.hasItem(ItemTagsPM.SUNWOOD_LOGS))
             .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.SUNWOOD_SLAB, 6)
+            .patternLine("###")
+            .key('#', BlocksPM.SUNWOOD_PLANKS)
+            .setGroup("wooden_slab")
+            .addCriterion("has_planks", this.hasItem(BlocksPM.SUNWOOD_PLANKS))
+            .build(consumer);
     }
 }
