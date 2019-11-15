@@ -294,6 +294,15 @@ public class InitAffinities {
         AffinityManager.appendAffinities(new ItemStack(Blocks.SEA_LANTERN), new SourceList().add(Source.SUN, 15), server);
         AffinityManager.appendAffinities(new ItemStack(Blocks.CONDUIT), new SourceList().add(Source.SUN, 15), server);
         AffinityManager.appendAffinities(new ItemStack(Blocks.LANTERN), new SourceList().add(Source.SUN, 15), server);
+        
+        // Append affinities to Primal Magic blocks
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_LOG), new SourceList().add(Source.SUN, 20), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.STRIPPED_SUNWOOD_LOG), new SourceList().add(Source.SUN, 20), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_WOOD), new SourceList().add(Source.SUN, 20), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.STRIPPED_SUNWOOD_WOOD), new SourceList().add(Source.SUN, 20), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_LEAVES), new SourceList().add(Source.SUN, 10), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SAPLING), new SourceList().add(Source.SUN, 20), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_PLANKS), new SourceList().add(Source.SUN, 4), server);
     }
     
     protected static void initPotionBonusAffinities() {

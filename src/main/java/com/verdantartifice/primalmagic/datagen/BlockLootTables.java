@@ -14,6 +14,7 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerMarbleLootTables();
         this.registerEnchantedMarbleLootTables();
         this.registerSmokedMarbleLootTables();
+        this.registerSunwoodLootTables();
         
         this.registerBasicTable(BlocksPM.ANALYSIS_TABLE);
         this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH);
@@ -61,6 +62,18 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerSlabTable(BlocksPM.MARBLE_SMOKED_SLAB);
         this.registerBasicTable(BlocksPM.MARBLE_SMOKED_STAIRS);
         this.registerBasicTable(BlocksPM.MARBLE_SMOKED_WALL);
+    }
+    
+    private void registerSunwoodLootTables() {
+        this.registerBasicTable(BlocksPM.SUNWOOD_LOG);
+        this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_LOG);
+        this.registerBasicTable(BlocksPM.SUNWOOD_WOOD);
+        this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_WOOD);
+        this.registerLeavesTable(BlocksPM.SUNWOOD_LEAVES, BlocksPM.SUNWOOD_SAPLING);
+        this.registerBasicTable(BlocksPM.SUNWOOD_SAPLING);
+        this.registerBasicTable(BlocksPM.SUNWOOD_PLANKS);
+        this.registerSlabTable(BlocksPM.SUNWOOD_SLAB);
+        this.registerBasicTable(BlocksPM.SUNWOOD_STAIRS);
     }
 
     @Override

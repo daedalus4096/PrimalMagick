@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "primalmagic:block/sunwood_planks_waning",
+        "top": "primalmagic:block/sunwood_planks_waning",
+        "side": "primalmagic:block/sunwood_planks_waning"
+    }
+}

@@ -32,6 +32,7 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.MARBLE_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_PILLAR.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_CHISELED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_CHISELED.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_RUNED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_RUNED.getRegistryName()));
+
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_SLAB.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_STAIRS.getRegistryName()));
@@ -43,6 +44,7 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_PILLAR.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_CHISELED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_CHISELED.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_ENCHANTED_RUNED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_ENCHANTED_RUNED.getRegistryName()));
+
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED_SLAB.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED_STAIRS.getRegistryName()));
@@ -54,6 +56,17 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED_PILLAR.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED_CHISELED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED_CHISELED.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MARBLE_SMOKED_RUNED, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MARBLE_SMOKED_RUNED.getRegistryName()));
+
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_LOG, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_LOG.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.STRIPPED_SUNWOOD_LOG, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.STRIPPED_SUNWOOD_LOG.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_WOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_WOOD.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.STRIPPED_SUNWOOD_WOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.STRIPPED_SUNWOOD_WOOD.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_LEAVES, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_LEAVES.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_SAPLING, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_SAPLING.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_PLANKS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_PLANKS.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_SLAB.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_STAIRS.getRegistryName()));
+        
         registry.register(new BlockItem(BlocksPM.ARCANE_WORKBENCH, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ARCANE_WORKBENCH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_EARTH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_SEA, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_SEA.getRegistryName()));
