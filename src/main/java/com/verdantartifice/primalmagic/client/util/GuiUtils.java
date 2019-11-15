@@ -194,25 +194,19 @@ public class GuiUtils {
     
     public static void renderSourceIcon(int x, int y, @Nullable Source source, int amount, double z) {
         if (source != null) {
-            renderSourceIcon(x, y, source.getImage(), source.getColor(), amount, z);
+            renderSourceIcon(x, y, source.getImage(), amount, z);
         }
     }
     
     public static void renderUnknownSourceIcon(int x, int y, int amount, double z) {
-        renderSourceIcon(x, y, Source.getUnknownImage(), Color.WHITE.getRGB(), amount, z);
+        renderSourceIcon(x, y, Source.getUnknownImage(), amount, z);
     }
     
-    protected static void renderSourceIcon(int x, int y, @Nonnull ResourceLocation imageLoc, int colorInt, int amount, double z) {
+    protected static void renderSourceIcon(int x, int y, @Nonnull ResourceLocation imageLoc, int amount, double z) {
         boolean isBlendOn = GL11.glIsEnabled(3042);
         boolean isLightingEnabled = GL11.glIsEnabled(2896);
         
         Minecraft mc = Minecraft.getInstance();
-        
-        Color color = new Color(colorInt);
-        float r = color.getRed() / 255.0F;
-        float g = color.getGreen() / 255.0F;
-        float b = color.getBlue() / 255.0F;
-        float a = 1.0F;
         
         GlStateManager.pushMatrix();
         GlStateManager.disableLighting();
@@ -222,15 +216,15 @@ public class GuiUtils {
         GlStateManager.pushMatrix();
         
         mc.getTextureManager().bindTexture(imageLoc);
-        GlStateManager.color4f(r, g, b, a);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder bb = tess.getBuffer();
-        bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-        bb.pos(x + 0.0D, y + 16.0D, z).tex(0.0D, 1.0D).color(r, g, b, a).endVertex();
-        bb.pos(x + 16.0D, y + 16.0D, z).tex(1.0D, 1.0D).color(r, g, b, a).endVertex();
-        bb.pos(x + 16.0D, y + 0.0D, z).tex(1.0D, 0.0D).color(r, g, b, a).endVertex();
-        bb.pos(x + 0.0D, y + 0.0D, z).tex(0.0D, 0.0D).color(r, g, b, a).endVertex();
+        bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        bb.pos(x + 0.0D, y + 16.0D, z).tex(0.0D, 1.0D).endVertex();
+        bb.pos(x + 16.0D, y + 16.0D, z).tex(1.0D, 1.0D).endVertex();
+        bb.pos(x + 16.0D, y + 0.0D, z).tex(1.0D, 0.0D).endVertex();
+        bb.pos(x + 0.0D, y + 0.0D, z).tex(0.0D, 0.0D).endVertex();
         tess.draw();
 
         GlStateManager.popMatrix();
