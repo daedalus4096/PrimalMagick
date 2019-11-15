@@ -71,6 +71,7 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_WOOD);
         this.registerLeavesTable(BlocksPM.SUNWOOD_LEAVES, BlocksPM.SUNWOOD_SAPLING);
         this.registerBasicTable(BlocksPM.SUNWOOD_SAPLING);
+        this.registerBasicTable(BlocksPM.SUNWOOD_PLANKS);
     }
 
     @Override

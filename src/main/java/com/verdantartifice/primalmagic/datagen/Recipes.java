@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.CustomRecipeBuilder;
@@ -440,6 +441,11 @@ public class Recipes extends RecipeProvider {
             .setGroup("stripped_bark")
             .addCriterion("has_sunwood_log", this.hasItem(BlocksPM.SUNWOOD_LOG))
             .addCriterion("has_stripped_sunwood_log", this.hasItem(BlocksPM.STRIPPED_SUNWOOD_LOG))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.SUNWOOD_PLANKS, 4)
+            .addIngredient(ItemTagsPM.SUNWOOD_LOGS)
+            .setGroup("planks")
+            .addCriterion("has_sunwood_log", this.hasItem(ItemTagsPM.SUNWOOD_LOGS))
             .build(consumer);
     }
 }
