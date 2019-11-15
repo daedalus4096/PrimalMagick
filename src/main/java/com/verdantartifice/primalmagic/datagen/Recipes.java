@@ -35,6 +35,7 @@ public class Recipes extends RecipeProvider {
         this.registerMarbleRecipes(consumer);
         this.registerEnchantedMarbleRecipes(consumer);
         this.registerSmokedMarbleRecipes(consumer);
+        this.registerSunwoodRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.ANALYSIS_TABLE)
             .addIngredient(BlocksPM.WOOD_TABLE)
@@ -422,5 +423,23 @@ public class Recipes extends RecipeProvider {
         SingleItemRecipeBuilder.func_218648_a(Ingredient.fromItems(BlocksPM.MARBLE_SMOKED), BlocksPM.MARBLE_SMOKED_WALL)
             .func_218643_a("has_marble_smoked", this.hasItem(BlocksPM.MARBLE_SMOKED))
             .func_218647_a(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_smoked_wall_from_marble_smoked_stonecutting"));
+    }
+
+    protected void registerSunwoodRecipes(Consumer<IFinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.SUNWOOD_WOOD, 3)
+            .patternLine("WW")
+            .patternLine("WW")
+            .key('W', BlocksPM.SUNWOOD_LOG)
+            .setGroup("bark")
+            .addCriterion("has_sunwood_log", this.hasItem(BlocksPM.SUNWOOD_LOG))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.STRIPPED_SUNWOOD_WOOD, 3)
+            .patternLine("WW")
+            .patternLine("WW")
+            .key('W', BlocksPM.STRIPPED_SUNWOOD_LOG)
+            .setGroup("stripped_bark")
+            .addCriterion("has_sunwood_log", this.hasItem(BlocksPM.SUNWOOD_LOG))
+            .addCriterion("has_stripped_sunwood_log", this.hasItem(BlocksPM.STRIPPED_SUNWOOD_LOG))
+            .build(consumer);
     }
 }

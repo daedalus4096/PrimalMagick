@@ -298,6 +298,8 @@ public class InitAffinities {
         // Append affinities to Primal Magic blocks
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_LOG), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.STRIPPED_SUNWOOD_LOG), new SourceList().add(Source.SUN, 20), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_WOOD), new SourceList().add(Source.SUN, 20), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.STRIPPED_SUNWOOD_WOOD), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_LEAVES), new SourceList().add(Source.SUN, 10), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SAPLING), new SourceList().add(Source.SUN, 20), server);
     }

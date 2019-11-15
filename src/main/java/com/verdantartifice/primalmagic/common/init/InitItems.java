@@ -59,6 +59,8 @@ public class InitItems {
 
         registry.register(new BlockItem(BlocksPM.SUNWOOD_LOG, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_LOG.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.STRIPPED_SUNWOOD_LOG, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.STRIPPED_SUNWOOD_LOG.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SUNWOOD_WOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_WOOD.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.STRIPPED_SUNWOOD_WOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.STRIPPED_SUNWOOD_WOOD.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.SUNWOOD_LEAVES, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_LEAVES.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.SUNWOOD_SAPLING, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_SAPLING.getRegistryName()));
         

@@ -38,7 +38,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.getBuilder(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL, Blocks.DEAD_BUBBLE_CORAL, Blocks.DEAD_FIRE_CORAL, Blocks.DEAD_HORN_CORAL, Blocks.DEAD_TUBE_CORAL);
         this.getBuilder(BlockTagsPM.DEAD_CORALS).add(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL_FAN, Blocks.DEAD_BUBBLE_CORAL_FAN, Blocks.DEAD_FIRE_CORAL_FAN, Blocks.DEAD_HORN_CORAL_FAN, Blocks.DEAD_TUBE_CORAL_FAN);
         this.getBuilder(BlockTagsPM.SHULKER_BOXES).add(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.SHULKER_BOX);
-        this.getBuilder(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG, BlocksPM.STRIPPED_SUNWOOD_LOG);
+        this.getBuilder(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG, BlocksPM.STRIPPED_SUNWOOD_LOG, BlocksPM.SUNWOOD_WOOD, BlocksPM.STRIPPED_SUNWOOD_WOOD);
     }
 
     @Override
