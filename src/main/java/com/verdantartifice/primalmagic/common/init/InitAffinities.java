@@ -283,6 +283,8 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_SMOKED), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 5));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MOONWOOD_LEAVES), new SourceList().add(Source.EARTH, 5).add(Source.SKY, 5).add(Source.MOON, 10));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MOONWOOD_SAPLING), new SourceList().add(Source.EARTH, 10).add(Source.MOON, 20));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.MOONWOOD_PLANKS), new SourceList().add(Source.EARTH, 2).add(Source.MOON, 4));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.MOONWOOD_SLAB), new SourceList().add(Source.EARTH, 1).add(Source.MOON, 2));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ARCANE_WORKBENCH), AffinityManager.getAffinities(new ItemStack(Blocks.CRAFTING_TABLE), server));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_EARTH), new SourceList().add(Source.EARTH, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_SEA), new SourceList().add(Source.SEA, 20));
@@ -314,7 +316,6 @@ public class InitAffinities {
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SAPLING), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_PLANKS), new SourceList().add(Source.SUN, 4), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SLAB), new SourceList().add(Source.SUN, 2), server);
-        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MOONWOOD_PLANKS), new SourceList().add(Source.MOON, 4), server);
     }
     
     protected static void initPotionBonusAffinities() {

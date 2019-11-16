@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_slab",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primalmagic:moonwood_planks"
+    }
+  },
+  "result": {
+    "item": "primalmagic:moonwood_slab",
+    "count": 6
+  }
+}

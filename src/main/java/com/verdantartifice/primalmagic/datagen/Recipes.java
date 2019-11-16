@@ -485,5 +485,11 @@ public class Recipes extends RecipeProvider {
             .setGroup("planks")
             .addCriterion("has_moonwood_log", this.hasItem(ItemTagsPM.MOONWOOD_LOGS))
             .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MOONWOOD_SLAB, 6)
+            .patternLine("###")
+            .key('#', BlocksPM.MOONWOOD_PLANKS)
+            .setGroup("wooden_slab")
+            .addCriterion("has_planks", this.hasItem(BlocksPM.MOONWOOD_PLANKS))
+            .build(consumer);
     }
 }

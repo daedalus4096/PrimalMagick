@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLogBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodPlanksBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodSlabBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodTree;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLogBlock;
@@ -96,7 +97,8 @@ public class InitBlocks {
         registry.register(new SaplingBlockPM(new MoonwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.PLANT)).setRegistryName(PrimalMagic.MODID, "moonwood_sapling"));
         Block moonwoodPlanks = new MoonwoodPlanksBlock();
         registry.register(moonwoodPlanks);
-        
+        registry.register(new MoonwoodSlabBlock(Block.Properties.from(moonwoodPlanks)));
+
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));
         registry.register(new AncientManaFontBlock(Source.SEA));
