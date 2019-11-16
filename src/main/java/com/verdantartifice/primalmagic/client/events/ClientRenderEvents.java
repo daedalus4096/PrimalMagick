@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.client.events;
 
 import java.util.Collections;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.config.Config;
@@ -13,8 +12,6 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -71,35 +68,12 @@ public class ClientRenderEvents {
                     if (event.getLines().get(index) != null && !event.getLines().get(index).contains("     ")) {
                         bottom -= 10;
                     } else if (index > 0 && event.getLines().get(index - 1) != null && event.getLines().get(index - 1).contains("     ")) {
-                        renderSourcesInGui(gui, mc.player, event.getStack(), bottom, event.getX(), event.getY());
+                        SourceList sources = AffinityManager.getAffinities(event.getStack(), mc.world);
+                        GuiUtils.renderSourcesForPlayer(sources, mc.player, event.getX(), event.getY() + bottom - 16);
                         break;
                     }
                 }
             }
         }
-    }
-    
-    protected static void renderSourcesInGui(Screen gui, PlayerEntity player, ItemStack stack, int sd, int sx, int sy) {
-        SourceList sources = AffinityManager.getAffinities(stack, Minecraft.getInstance().world);
-        if (sources == null || sources.isEmpty()) {
-            return;
-        }
-        GlStateManager.pushMatrix();
-        int x = 0;
-        int y = 0;
-        int index = 0;
-        for (Source source : sources.getSourcesSorted()) {
-            if (source != null) {
-                x = sx + (index * 18);
-                y = sy + sd - 16;
-                if (source.isDiscovered(player)) {
-                    GuiUtils.renderSourceIcon(x, y, source, sources.getAmount(source), 999);
-                } else {
-                    GuiUtils.renderUnknownSourceIcon(x, y, sources.getAmount(source), 999);
-                }
-                index++;
-            }
-        }
-        GlStateManager.popMatrix();
     }
 }

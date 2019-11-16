@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -7,9 +8,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -37,9 +36,8 @@ public class IngredientWidget extends Widget {
                 ItemStack toDisplay = matching[index];
                 GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage(), false);
                 if (this.isHovered()) {
-                    Minecraft mc = Minecraft.getInstance();
-                    List<ITextComponent> tooltip = toDisplay.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
-                    GuiUtils.renderCustomTooltip(tooltip, this.x, this.y);
+                    List<ITextComponent> textList = Collections.singletonList(toDisplay.getDisplayName());
+                    GuiUtils.renderCustomTooltip(textList, this.x, this.y);
                 }
             }
         }

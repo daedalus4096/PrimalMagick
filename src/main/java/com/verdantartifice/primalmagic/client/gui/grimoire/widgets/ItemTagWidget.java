@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -9,7 +10,6 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ItemTags;
@@ -51,9 +51,8 @@ public class ItemTagWidget extends Widget {
                 GlStateManager.popMatrix();
             }
             if (this.isHovered()) {
-                Minecraft mc = Minecraft.getInstance();
-                List<ITextComponent> tooltip = toDisplay.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
-                GuiUtils.renderCustomTooltip(tooltip, this.x, this.y);
+                List<ITextComponent> textList = Collections.singletonList(toDisplay.getDisplayName());
+                GuiUtils.renderCustomTooltip(textList, this.x, this.y);
             }
         }
     }

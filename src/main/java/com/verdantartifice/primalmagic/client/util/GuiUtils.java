@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -18,6 +19,7 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -190,6 +192,27 @@ public class GuiUtils {
         }
         GL11.glEnable(3008);
         GL11.glEnable(3553);
+    }
+    
+    public static void renderSourcesForPlayer(@Nullable SourceList sources, @Nullable PlayerEntity player, int startX, int startY) {
+        if (sources == null || sources.isEmpty()) {
+            return;
+        }
+        GlStateManager.pushMatrix();
+        int x = 0;
+        int index = 0;
+        for (Source source : sources.getSourcesSorted()) {
+            if (source != null) {
+                x = startX + (index * 18);
+                if (source.isDiscovered(player)) {
+                    GuiUtils.renderSourceIcon(x, startY, source, sources.getAmount(source), 999);
+                } else {
+                    GuiUtils.renderUnknownSourceIcon(x, startY, sources.getAmount(source), 999);
+                }
+                index++;
+            }
+        }
+        GlStateManager.popMatrix();
     }
     
     public static void renderSourceIcon(int x, int y, @Nullable Source source, int amount, double z) {
