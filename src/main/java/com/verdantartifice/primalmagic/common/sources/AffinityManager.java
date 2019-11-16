@@ -367,6 +367,10 @@ public class AffinityManager {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
+        SourceList affinities = getAffinities(stack, player.world);
+        if (affinities == null || affinities.isEmpty()) {
+            return true;
+        }
         SimpleResearchKey key = getScanResearchKey(stack);
         return (key != null && key.isKnownByStrict(player));
     }
@@ -428,7 +432,7 @@ public class AffinityManager {
     
     protected static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull World world) {
         SourceList sources = getAffinities(stack, world);
-        if (sources == null) {
+        if (sources == null || sources.isEmpty()) {
             return 0;
         }
         double total = 0.0D;
