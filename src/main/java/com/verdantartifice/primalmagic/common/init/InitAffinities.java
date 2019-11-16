@@ -296,6 +296,16 @@ public class InitAffinities {
         AffinityManager.appendAffinities(new ItemStack(Blocks.LANTERN), new SourceList().add(Source.SUN, 15), server);
         
         // Append affinities to Primal Magic blocks
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_SLAB), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_STAIRS), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_WALL), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_BRICKS), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_PILLAR), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_CHISELED), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_RUNED), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_LOG), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.STRIPPED_SUNWOOD_LOG), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_WOOD), new SourceList().add(Source.SUN, 20), server);
@@ -303,6 +313,7 @@ public class InitAffinities {
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_LEAVES), new SourceList().add(Source.SUN, 10), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SAPLING), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_PLANKS), new SourceList().add(Source.SUN, 4), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SLAB), new SourceList().add(Source.SUN, 2), server);
     }
     
     protected static void initPotionBonusAffinities() {
