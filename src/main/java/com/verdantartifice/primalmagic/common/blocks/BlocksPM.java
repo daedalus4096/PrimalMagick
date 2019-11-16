@@ -57,6 +57,8 @@ public class BlocksPM {
     public static final Block STRIPPED_MOONWOOD_LOG = null;
     public static final Block MOONWOOD_WOOD = null;
     public static final Block STRIPPED_MOONWOOD_WOOD = null;
+    public static final Block MOONWOOD_LEAVES = null;
+    public static final Block MOONWOOD_SAPLING = null;
     
     public static final Block ARCANE_WORKBENCH = null;
     public static final Block ANCIENT_FONT_EARTH = null;

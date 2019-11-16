@@ -28,9 +28,9 @@ public class BlockTagsProvider extends TagsProvider<Block> {
     @Override
     protected void registerTags() {
         this.getBuilder(BlockTags.LOGS).add(BlockTagsPM.MOONWOOD_LOGS, BlockTagsPM.SUNWOOD_LOGS);
-        this.getBuilder(BlockTags.LEAVES).add(BlocksPM.SUNWOOD_LEAVES);
+        this.getBuilder(BlockTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES, BlocksPM.SUNWOOD_LEAVES);
         this.getBuilder(BlockTags.PLANKS).add(BlocksPM.SUNWOOD_PLANKS);
-        this.getBuilder(BlockTags.SAPLINGS).add(BlocksPM.SUNWOOD_SAPLING);
+        this.getBuilder(BlockTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING, BlocksPM.SUNWOOD_SAPLING);
         this.getBuilder(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL, BlocksPM.MARBLE_BRICK_WALL, BlocksPM.MARBLE_ENCHANTED_WALL, BlocksPM.MARBLE_ENCHANTED_BRICK_WALL, BlocksPM.MARBLE_SMOKED_WALL, BlocksPM.MARBLE_SMOKED_BRICK_WALL);
         this.getBuilder(BlockTags.WOODEN_SLABS).add(BlocksPM.SUNWOOD_SLAB);
         this.getBuilder(BlockTags.WOODEN_STAIRS).add(BlocksPM.SUNWOOD_STAIRS);

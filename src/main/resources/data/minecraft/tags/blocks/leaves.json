@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "primalmagic:moonwood_leaves",
     "primalmagic:sunwood_leaves"
   ]
 }

@@ -71,6 +71,8 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.STRIPPED_MOONWOOD_LOG, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.STRIPPED_MOONWOOD_LOG.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MOONWOOD_WOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_WOOD.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.STRIPPED_MOONWOOD_WOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.STRIPPED_MOONWOOD_WOOD.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.MOONWOOD_LEAVES, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_LEAVES.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.MOONWOOD_SAPLING, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_SAPLING.getRegistryName()));
         
         registry.register(new BlockItem(BlocksPM.ARCANE_WORKBENCH, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ARCANE_WORKBENCH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_EARTH.getRegistryName()));
