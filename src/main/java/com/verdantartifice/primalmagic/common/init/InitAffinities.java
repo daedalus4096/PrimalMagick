@@ -314,6 +314,7 @@ public class InitAffinities {
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SAPLING), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_PLANKS), new SourceList().add(Source.SUN, 4), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SLAB), new SourceList().add(Source.SUN, 2), server);
+        AffinityManager.appendAffinities(new ItemStack(BlocksPM.MOONWOOD_PLANKS), new SourceList().add(Source.MOON, 4), server);
     }
     
     protected static void initPotionBonusAffinities() {

@@ -29,7 +29,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
     protected void registerTags() {
         this.getBuilder(ItemTags.LOGS).add(ItemTagsPM.MOONWOOD_LOGS, ItemTagsPM.SUNWOOD_LOGS);
         this.getBuilder(ItemTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.asItem(), BlocksPM.SUNWOOD_LEAVES.asItem());
-        this.getBuilder(ItemTags.PLANKS).add(BlocksPM.SUNWOOD_PLANKS.asItem());
+        this.getBuilder(ItemTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.asItem(), BlocksPM.SUNWOOD_PLANKS.asItem());
         this.getBuilder(ItemTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING.asItem(), BlocksPM.SUNWOOD_SAPLING.asItem());
         this.getBuilder(ItemTags.WALLS).add(BlocksPM.MARBLE_WALL.asItem(), BlocksPM.MARBLE_BRICK_WALL.asItem(), BlocksPM.MARBLE_ENCHANTED_WALL.asItem(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.asItem(), BlocksPM.MARBLE_SMOKED_WALL.asItem(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.asItem());
         this.getBuilder(ItemTags.WOODEN_SLABS).add(BlocksPM.SUNWOOD_SLAB.asItem());

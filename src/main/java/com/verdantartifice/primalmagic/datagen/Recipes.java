@@ -480,5 +480,10 @@ public class Recipes extends RecipeProvider {
             .addCriterion("has_moonwood_log", this.hasItem(BlocksPM.MOONWOOD_LOG))
             .addCriterion("has_stripped_moonwood_log", this.hasItem(BlocksPM.STRIPPED_MOONWOOD_LOG))
             .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.MOONWOOD_PLANKS, 4)
+            .addIngredient(ItemTagsPM.MOONWOOD_LOGS)
+            .setGroup("planks")
+            .addCriterion("has_moonwood_log", this.hasItem(ItemTagsPM.MOONWOOD_LOGS))
+            .build(consumer);
     }
 }

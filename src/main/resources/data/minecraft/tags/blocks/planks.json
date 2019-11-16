@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "primalmagic:moonwood_planks",
     "primalmagic:sunwood_planks"
   ]
 }
