@@ -79,8 +79,8 @@ public class InitBlocks {
         registry.register(new SaplingBlockPM(new SunwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.PLANT)).setRegistryName(PrimalMagic.MODID, "sunwood_sapling"));
         Block sunwoodPlanks = new SunwoodPlanksBlock();
         registry.register(sunwoodPlanks);
-        registry.register(new SunwoodSlabBlock());
-        registry.register(new SunwoodStairsBlock(sunwoodPlanks.getDefaultState(), Block.Properties.from(sunwoodPlanks)).setRegistryName(PrimalMagic.MODID, "sunwood_stairs"));
+        registry.register(new SunwoodSlabBlock(Block.Properties.from(sunwoodPlanks)));
+        registry.register(new SunwoodStairsBlock(sunwoodPlanks.getDefaultState(), Block.Properties.from(sunwoodPlanks)));
 
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));
