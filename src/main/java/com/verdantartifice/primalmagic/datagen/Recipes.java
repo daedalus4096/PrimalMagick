@@ -37,6 +37,7 @@ public class Recipes extends RecipeProvider {
         this.registerEnchantedMarbleRecipes(consumer);
         this.registerSmokedMarbleRecipes(consumer);
         this.registerSunwoodRecipes(consumer);
+        this.registerMoonwoodRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.ANALYSIS_TABLE)
             .addIngredient(BlocksPM.WOOD_TABLE)
@@ -460,6 +461,24 @@ public class Recipes extends RecipeProvider {
             .key('#', BlocksPM.SUNWOOD_PLANKS)
             .setGroup("wooden_stairs")
             .addCriterion("has_planks", this.hasItem(BlocksPM.SUNWOOD_PLANKS))
+            .build(consumer);
+    }
+    
+    protected void registerMoonwoodRecipes(Consumer<IFinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MOONWOOD_WOOD, 3)
+            .patternLine("WW")
+            .patternLine("WW")
+            .key('W', BlocksPM.MOONWOOD_LOG)
+            .setGroup("bark")
+            .addCriterion("has_moonwood_log", this.hasItem(BlocksPM.MOONWOOD_LOG))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.STRIPPED_MOONWOOD_WOOD, 3)
+            .patternLine("WW")
+            .patternLine("WW")
+            .key('W', BlocksPM.STRIPPED_MOONWOOD_LOG)
+            .setGroup("stripped_bark")
+            .addCriterion("has_moonwood_log", this.hasItem(BlocksPM.MOONWOOD_LOG))
+            .addCriterion("has_stripped_moonwood_log", this.hasItem(BlocksPM.STRIPPED_MOONWOOD_LOG))
             .build(consumer);
     }
 }

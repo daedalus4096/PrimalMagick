@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "primalmagic:block/moonwood_log_waxing",
+        "side": "primalmagic:block/moonwood_log_waxing"
+    }
+}

@@ -274,6 +274,8 @@ public class InitAffinities {
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "concrete"), AffinityManager.getAffinities(new ItemStack(Items.WHITE_CONCRETE_POWDER), server).add(Source.SEA, 1));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "dead_coral_blocks"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 10));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "dead_corals"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "moonwood_logs"), new SourceList().add(Source.EARTH, 10).add(Source.MOON, 20));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "sunwood_logs"), new SourceList().add(Source.EARTH, 10).add(Source.SUN, 20));
         
         // Register Primal Magic block affinities
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MARBLE_RAW), new SourceList().add(Source.EARTH, 5));
@@ -306,10 +308,6 @@ public class InitAffinities {
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_PILLAR), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_CHISELED), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_RUNED), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
-        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_LOG), new SourceList().add(Source.SUN, 20), server);
-        AffinityManager.appendAffinities(new ItemStack(BlocksPM.STRIPPED_SUNWOOD_LOG), new SourceList().add(Source.SUN, 20), server);
-        AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_WOOD), new SourceList().add(Source.SUN, 20), server);
-        AffinityManager.appendAffinities(new ItemStack(BlocksPM.STRIPPED_SUNWOOD_WOOD), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_LEAVES), new SourceList().add(Source.SUN, 10), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_SAPLING), new SourceList().add(Source.SUN, 20), server);
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.SUNWOOD_PLANKS), new SourceList().add(Source.SUN, 4), server);

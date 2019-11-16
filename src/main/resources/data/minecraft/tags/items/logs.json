@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "#primalmagic:moonwood_logs",
     "#primalmagic:sunwood_logs"
   ]
 }
