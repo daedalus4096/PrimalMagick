@@ -1,24 +1,7 @@
 {
-	"credit": "Made with Blockbench",
-	"parent": "block/block",
+	"parent": "primalmagic:block/pillar",
 	"textures": {
-		"0": "primalmagic:block/marble_pillar",
-		"1": "primalmagic:block/marble_pillar_inner",
-		"particle": "primalmagic:block/marble_pillar"
-	},
-	"elements": [
-		{
-			"name": "pillar",
-			"from": [2, 0, 2],
-			"to": [14, 16, 14],
-			"faces": {
-				"north": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"east": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"south": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"west": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"up": {"uv": [2, 2, 14, 14], "texture": "#1"},
-				"down": {"uv": [2, 2, 14, 14], "texture": "#1"}
-			}
-		}
-	]
+		"side": "primalmagic:block/marble_pillar",
+		"inner": "primalmagic:block/marble_pillar_inner"
+	}
 }
