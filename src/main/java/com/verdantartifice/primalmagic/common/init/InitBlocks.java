@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLogBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodPillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodPlanksBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodSlabBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodStairsBlock;
@@ -102,6 +103,7 @@ public class InitBlocks {
         registry.register(moonwoodPlanks);
         registry.register(new MoonwoodSlabBlock(Block.Properties.from(moonwoodPlanks)));
         registry.register(new MoonwoodStairsBlock(moonwoodPlanks.getDefaultState(), Block.Properties.from(moonwoodPlanks)));
+        registry.register(new MoonwoodPillarBlock());
 
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));

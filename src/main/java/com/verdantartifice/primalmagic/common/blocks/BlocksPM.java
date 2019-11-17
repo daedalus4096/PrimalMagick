@@ -63,6 +63,7 @@ public class BlocksPM {
     public static final Block MOONWOOD_PLANKS = null;
     public static final Block MOONWOOD_SLAB = null;
     public static final Block MOONWOOD_STAIRS = null;
+    public static final Block MOONWOOD_PILLAR = null;
     
     public static final Block ARCANE_WORKBENCH = null;
     public static final Block ANCIENT_FONT_EARTH = null;
