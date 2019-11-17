@@ -4,8 +4,8 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IWorld;
 
 public enum TimePhase implements IStringSerializable {
-    FULL("full", 0.0F, 0.0F, 2),    // Default to block-specified hardness and resistance
-    WAXING("waxing", 6.0F, 12.0F, 1),
+    FULL("full", 0.0F, 0.0F, 10),    // Default to block-specified hardness and resistance
+    WAXING("waxing", 6.0F, 12.0F, 5),
     WANING("waning", 50.0F, 1200.0F, 0),
     FADED("faded", -1.0F, 3600000.0F, 0);
     
