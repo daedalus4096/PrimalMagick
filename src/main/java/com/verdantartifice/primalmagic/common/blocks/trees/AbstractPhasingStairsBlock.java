@@ -38,7 +38,7 @@ public abstract class AbstractPhasingStairsBlock extends StairsBlock {
     
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        TimePhase phase = TimePhase.getSunPhase(context.getWorld());
+        TimePhase phase = this.getCurrentPhase(context.getWorld());
         return super.getStateForPlacement(context).with(PHASE, phase);
     }
     
@@ -56,7 +56,7 @@ public abstract class AbstractPhasingStairsBlock extends StairsBlock {
     @Override
     public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
         super.randomTick(state, worldIn, pos, random);
-        TimePhase newPhase = TimePhase.getSunPhase(worldIn);
+        TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
             worldIn.setBlockState(pos, state.with(PHASE, newPhase), 0x3);
         }
@@ -65,7 +65,7 @@ public abstract class AbstractPhasingStairsBlock extends StairsBlock {
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
         BlockState state = super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-        TimePhase newPhase = TimePhase.getSunPhase(worldIn);
+        TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
             state = state.with(PHASE, newPhase);
         }
