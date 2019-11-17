@@ -52,6 +52,7 @@ public class BlocksPM {
     public static final Block SUNWOOD_PLANKS = null;
     public static final Block SUNWOOD_SLAB = null;
     public static final Block SUNWOOD_STAIRS = null;
+    public static final Block SUNWOOD_PILLAR = null;
     
     public static final Block MOONWOOD_LOG = null;
     public static final Block STRIPPED_MOONWOOD_LOG = null;

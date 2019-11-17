@@ -462,6 +462,12 @@ public class Recipes extends RecipeProvider {
             .setGroup("wooden_stairs")
             .addCriterion("has_planks", this.hasItem(BlocksPM.SUNWOOD_PLANKS))
             .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.SUNWOOD_PILLAR, 2)
+            .patternLine("#")
+            .patternLine("#")
+            .key('#', ItemTagsPM.SUNWOOD_LOGS)
+            .addCriterion("has_sunwood_log", this.hasItem(ItemTagsPM.SUNWOOD_LOGS))
+            .build(consumer);
     }
     
     protected void registerMoonwoodRecipes(Consumer<IFinishedRecipe> consumer) {

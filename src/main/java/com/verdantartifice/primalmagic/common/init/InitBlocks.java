@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodStairsBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodTree;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLogBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodPillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodPlanksBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodSlabBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodStairsBlock;
@@ -87,6 +88,7 @@ public class InitBlocks {
         registry.register(sunwoodPlanks);
         registry.register(new SunwoodSlabBlock(Block.Properties.from(sunwoodPlanks)));
         registry.register(new SunwoodStairsBlock(sunwoodPlanks.getDefaultState(), Block.Properties.from(sunwoodPlanks)));
+        registry.register(new SunwoodPillarBlock());
         
         Block strippedMoonwoodLog = new MoonwoodLogBlock(null).setRegistryName(PrimalMagic.MODID, "stripped_moonwood_log");
         registry.register(strippedMoonwoodLog);
