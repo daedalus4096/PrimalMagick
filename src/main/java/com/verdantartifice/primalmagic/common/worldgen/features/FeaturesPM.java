@@ -9,4 +9,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(PrimalMagic.MODID)
 public class FeaturesPM {
     public static final Feature<NoFeatureConfig> SUNWOOD_TREE = null;
+    public static final Feature<NoFeatureConfig> MOONWOOD_TREE = null;
 }

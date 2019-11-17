@@ -9,6 +9,12 @@ import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.AnalysisTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLogBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodPlanksBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodSlabBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodStairsBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodTree;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLogBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodPlanksBlock;
@@ -81,6 +87,19 @@ public class InitBlocks {
         registry.register(sunwoodPlanks);
         registry.register(new SunwoodSlabBlock(Block.Properties.from(sunwoodPlanks)));
         registry.register(new SunwoodStairsBlock(sunwoodPlanks.getDefaultState(), Block.Properties.from(sunwoodPlanks)));
+        
+        Block strippedMoonwoodLog = new MoonwoodLogBlock(null).setRegistryName(PrimalMagic.MODID, "stripped_moonwood_log");
+        registry.register(strippedMoonwoodLog);
+        registry.register(new MoonwoodLogBlock(strippedMoonwoodLog).setRegistryName(PrimalMagic.MODID, "moonwood_log"));
+        Block strippedMoonwoodWood = new MoonwoodLogBlock(null).setRegistryName(PrimalMagic.MODID, "stripped_moonwood_wood");
+        registry.register(strippedMoonwoodWood);
+        registry.register(new MoonwoodLogBlock(strippedMoonwoodWood).setRegistryName(PrimalMagic.MODID, "moonwood_wood"));
+        registry.register(new MoonwoodLeavesBlock());
+        registry.register(new SaplingBlockPM(new MoonwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.PLANT)).setRegistryName(PrimalMagic.MODID, "moonwood_sapling"));
+        Block moonwoodPlanks = new MoonwoodPlanksBlock();
+        registry.register(moonwoodPlanks);
+        registry.register(new MoonwoodSlabBlock(Block.Properties.from(moonwoodPlanks)));
+        registry.register(new MoonwoodStairsBlock(moonwoodPlanks.getDefaultState(), Block.Properties.from(moonwoodPlanks)));
 
         registry.register(new ArcaneWorkbenchBlock());
         registry.register(new AncientManaFontBlock(Source.EARTH));

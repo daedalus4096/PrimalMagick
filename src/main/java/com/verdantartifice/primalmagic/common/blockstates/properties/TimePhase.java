@@ -40,6 +40,25 @@ public enum TimePhase implements IStringSerializable {
         }
     }
     
+    public static TimePhase getMoonPhase(IWorld world) {
+        float angle = world.getCelestialAngle(1.0F);
+        if (angle < 0.1875F) {
+            return FADED;
+        } else if (angle < 0.25F) {
+            return WANING;
+        } else if (angle < 0.3125F) {
+            return WAXING;
+        } else if (angle < 0.6875F) {
+            return FULL;
+        } else if (angle < 0.75F) {
+            return WAXING;
+        } else if (angle < 0.8125F) {
+            return WANING;
+        } else {
+            return FADED;
+        }
+    }
+    
     @Override
     public String toString() {
         return this.name;

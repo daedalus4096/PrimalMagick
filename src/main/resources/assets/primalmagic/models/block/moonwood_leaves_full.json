@@ -1,0 +1,6 @@
+{
+    "parent": "block/leaves",
+    "textures": {
+        "all": "primalmagic:block/moonwood_leaves_full"
+    }
+}
