@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.MoonwoodTreeFeature;
+import com.verdantartifice.primalmagic.common.worldgen.features.ShrineStructure;
 import com.verdantartifice.primalmagic.common.worldgen.features.SunwoodTreeFeature;
 
 import net.minecraft.world.biome.Biome;
@@ -26,6 +27,7 @@ public class InitWorldGen {
     public static void initFeatures(IForgeRegistry<Feature<?>> registry) {
         registry.register(new SunwoodTreeFeature(NoFeatureConfig::deserialize, false).setRegistryName(PrimalMagic.MODID, "sunwood_tree"));
         registry.register(new MoonwoodTreeFeature(NoFeatureConfig::deserialize, false).setRegistryName(PrimalMagic.MODID, "moonwood_tree"));
+        registry.register(new ShrineStructure(NoFeatureConfig::deserialize).setRegistryName(PrimalMagic.MODID, "shrine"));
     }
 
     public static void initWorldGen() {
