@@ -37,11 +37,38 @@ public class InitWorldGen {
         ForgeRegistries.BIOMES.getValues().stream().filter(InitWorldGen::shouldSpawnMarble).forEach((biome) -> {
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(Feature.ORE, new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.MARBLE_RAW.getDefaultState(), 33), Placement.COUNT_RANGE, new CountRangeConfig(10, 0, 0, 80)));
         });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS).stream().forEach((biome) -> {
+            addShrine(biome, Source.EARTH);
+        });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.SAVANNA).stream().forEach((biome) -> {
+            addShrine(biome, Source.EARTH);
+        });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.RIVER).stream().forEach((biome) -> {
+            addShrine(biome, Source.SEA);
+        });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.BEACH).stream().forEach((biome) -> {
+            addShrine(biome, Source.SEA);
+        });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.SWAMP).stream().forEach((biome) -> {
+            addShrine(biome, Source.SEA);
+        });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.MOUNTAIN).stream().forEach((biome) -> {
+            addShrine(biome, Source.SKY);
+        });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.HILLS).stream().forEach((biome) -> {
+            addShrine(biome, Source.SKY);
+        });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.HOT).stream().filter((biome) -> BiomeDictionary.hasType(biome, BiomeDictionary.Type.DRY)).forEach((biome) -> {
+            addShrine(biome, Source.SUN);
+        });
+        BiomeDictionary.getBiomes(BiomeDictionary.Type.SANDY).stream().forEach((biome) -> {
+            addShrine(biome, Source.SUN);
+        });
         BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).stream().forEach((biome) -> {
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesPM.SUNWOOD_TREE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(0, 0.1F, 1)));
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesPM.MOONWOOD_TREE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(0, 0.1F, 1)));
+            addShrine(biome, Source.MOON);
         });
-        addShrine(Biomes.PLAINS, Source.EARTH);
     }
 
     private static boolean shouldSpawnMarble(@Nonnull Biome biome) {
