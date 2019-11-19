@@ -13,8 +13,10 @@ import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
 import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
@@ -75,5 +77,12 @@ public class ShrinePiece extends TemplateStructurePiece {
         } else {
             return Blocks.AIR;
         }
+    }
+    
+    @Override
+    public boolean addComponentParts(IWorld worldIn, Random randomIn, MutableBoundingBox structureBoundingBoxIn, ChunkPos p_74875_4_) {
+        int i = worldIn.getHeight(Heightmap.Type.WORLD_SURFACE_WG, this.templatePosition.getX(), this.templatePosition.getZ());
+        this.templatePosition = new BlockPos(this.templatePosition.getX(), i, this.templatePosition.getZ());
+        return super.addComponentParts(worldIn, randomIn, structureBoundingBoxIn, p_74875_4_);
     }
 }
