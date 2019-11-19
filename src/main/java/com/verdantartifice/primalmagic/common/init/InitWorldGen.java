@@ -4,8 +4,10 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.MoonwoodTreeFeature;
+import com.verdantartifice.primalmagic.common.worldgen.features.ShrineConfig;
 import com.verdantartifice.primalmagic.common.worldgen.features.ShrineStructure;
 import com.verdantartifice.primalmagic.common.worldgen.features.SunwoodTreeFeature;
 
@@ -18,6 +20,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,7 +30,7 @@ public class InitWorldGen {
     public static void initFeatures(IForgeRegistry<Feature<?>> registry) {
         registry.register(new SunwoodTreeFeature(NoFeatureConfig::deserialize, false).setRegistryName(PrimalMagic.MODID, "sunwood_tree"));
         registry.register(new MoonwoodTreeFeature(NoFeatureConfig::deserialize, false).setRegistryName(PrimalMagic.MODID, "moonwood_tree"));
-        registry.register(new ShrineStructure(NoFeatureConfig::deserialize).setRegistryName(PrimalMagic.MODID, "shrine"));
+        registry.register(new ShrineStructure(ShrineConfig::deserialize).setRegistryName(PrimalMagic.MODID, "shrine"));
     }
 
     public static void initWorldGen() {
@@ -38,6 +41,7 @@ public class InitWorldGen {
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesPM.SUNWOOD_TREE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(0, 0.1F, 1)));
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesPM.MOONWOOD_TREE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(0, 0.1F, 1)));
         });
+        addShrine(Biomes.PLAINS, Source.EARTH);
     }
 
     private static boolean shouldSpawnMarble(@Nonnull Biome biome) {
@@ -48,5 +52,10 @@ public class InitWorldGen {
             Biome.Category cat = biome.getCategory();
             return !Biome.Category.NONE.equals(cat) && !Biome.Category.NETHER.equals(cat) && !Biome.Category.THEEND.equals(cat);
         }
+    }
+    
+    private static void addShrine(@Nonnull Biome biome, @Nonnull Source source) {
+        biome.addStructure(FeaturesPM.SHRINE, new ShrineConfig(source));
+        biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(FeaturesPM.SHRINE, new ShrineConfig(source), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
     }
 }

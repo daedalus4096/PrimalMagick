@@ -4,17 +4,17 @@ import java.util.function.Function;
 
 import com.mojang.datafixers.Dynamic;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.ScatteredStructure;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
-public class ShrineStructure extends ScatteredStructure<NoFeatureConfig> {
-    public ShrineStructure(Function<Dynamic<?>, ? extends NoFeatureConfig> p_i51449_1_) {
+public class ShrineStructure extends ScatteredStructure<ShrineConfig> {
+    public ShrineStructure(Function<Dynamic<?>, ? extends ShrineConfig> p_i51449_1_) {
         super(p_i51449_1_);
     }
 
@@ -45,8 +45,10 @@ public class ShrineStructure extends ScatteredStructure<NoFeatureConfig> {
 
         @Override
         public void init(ChunkGenerator<?> generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn) {
-            // TODO Auto-generated method stub
-            
+            ShrineConfig config = generator.getStructureConfig(biomeIn, FeaturesPM.SHRINE);
+            BlockPos pos = new BlockPos(chunkX * 16, 90, chunkZ * 16);
+            this.components.add(new ShrinePiece(templateManagerIn, config.source, pos));
+            this.recalculateStructureSize();
         }
     }
 }

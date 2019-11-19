@@ -11,5 +11,5 @@ import net.minecraftforge.registries.ObjectHolder;
 public class FeaturesPM {
     public static final Feature<NoFeatureConfig> SUNWOOD_TREE = null;
     public static final Feature<NoFeatureConfig> MOONWOOD_TREE = null;
-    public static final Structure<NoFeatureConfig> SHRINE = null;
+    public static final Structure<ShrineConfig> SHRINE = null;
 }
