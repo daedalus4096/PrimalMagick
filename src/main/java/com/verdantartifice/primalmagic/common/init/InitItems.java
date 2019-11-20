@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.common.init;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.AncientManaFontTEISR;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
@@ -10,6 +12,7 @@ import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -93,6 +96,11 @@ public class InitItems {
     public static void initItems(IForgeRegistry<Item> registry) {
         registry.register(new GrimoireItem());
         registry.register(new ArcanometerItem());
+        for (Source source : Source.SORTED_SOURCES) {
+            for (EssenceType type : EssenceType.values()) {
+                registry.register(new EssenceItem(type, source));
+            }
+        }
         registry.register(new MundaneWandItem());
         registry.register(new ModularWandItem());
         registry.register(new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
