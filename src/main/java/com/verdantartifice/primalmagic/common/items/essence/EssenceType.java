@@ -6,17 +6,19 @@ import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;
 
 public enum EssenceType implements IStringSerializable {
-    DUST("dust", Rarity.COMMON),
-    SHARD("shard", Rarity.UNCOMMON),
-    CRYSTAL("crystal", Rarity.RARE),
-    CLUSTER("cluster", Rarity.EPIC);
+    DUST("dust", Rarity.COMMON, 5),
+    SHARD("shard", Rarity.UNCOMMON, 20),
+    CRYSTAL("crystal", Rarity.RARE, 50),
+    CLUSTER("cluster", Rarity.EPIC, 100);
     
     private final String name;
     private final Rarity rarity;
+    private final int affinity;
     
-    private EssenceType(@Nonnull String name, @Nonnull Rarity rarity) {
+    private EssenceType(@Nonnull String name, @Nonnull Rarity rarity, int affinity) {
         this.name = name;
         this.rarity = rarity;
+        this.affinity = affinity;
     }
 
     @Override
@@ -28,5 +30,9 @@ public enum EssenceType implements IStringSerializable {
     @Nonnull
     public Rarity getRarity() {
         return this.rarity;
+    }
+    
+    public int getAffinity() {
+        return this.affinity;
     }
 }

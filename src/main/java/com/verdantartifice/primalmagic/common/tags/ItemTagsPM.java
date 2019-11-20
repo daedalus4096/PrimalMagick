@@ -14,9 +14,16 @@ public class ItemTagsPM {
     public static final Tag<Item> DEAD_CORAL_BLOCKS = tag("dead_coral_blocks");
     public static final Tag<Item> DEAD_CORAL_PLANTS = tag("dead_coral_plants");
     public static final Tag<Item> DEAD_CORALS = tag("dead_corals");
+    public static final Tag<Item> ESSENCES = tag("essences");
     public static final Tag<Item> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final Tag<Item> SHULKER_BOXES = tag("shulker_boxes");
     public static final Tag<Item> SUNWOOD_LOGS = tag("sunwood_logs");
+    
+    public static final Tag<Item> ESSENCES_DUSTS = tag("essences/dusts");
+    public static final Tag<Item> ESSENCES_TERRESTRIAL_DUSTS = tag("essences/terrestrial_dusts");
+    public static final Tag<Item> ESSENCES_SHARDS = tag("essences/shards");
+    public static final Tag<Item> ESSENCES_CRYSTALS = tag("essences/crystals");
+    public static final Tag<Item> ESSENCES_CLUSTERS = tag("essences/clusters");
     
     private static Tag<Item> tag(String name) {
         return new ItemTags.Wrapper(new ResourceLocation(PrimalMagic.MODID, name));

@@ -3,12 +3,15 @@ package com.verdantartifice.primalmagic.common.init;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
@@ -294,6 +297,14 @@ public class InitAffinities {
         
         // Register Primal Magic item affinities
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.GRIMOIRE), AffinityManager.getAffinities(new ItemStack(Items.ENCHANTED_BOOK), server));
+
+        // Register Primal Magic essence affinities
+        for (Item tagItem : ItemTagsPM.ESSENCES.getAllElements()) {
+            if (tagItem instanceof EssenceItem) {
+                EssenceItem item = (EssenceItem)tagItem;
+                AffinityManager.registerAffinities(new ItemStack(item), new SourceList().add(item.getSource(), item.getEssenceType().getAffinity()));
+            }
+        }
         
         // Append affinities to Vanilla blocks
         AffinityManager.appendAffinities(new ItemStack(Blocks.FURNACE), new SourceList().add(Source.INFERNAL, 5), server);
