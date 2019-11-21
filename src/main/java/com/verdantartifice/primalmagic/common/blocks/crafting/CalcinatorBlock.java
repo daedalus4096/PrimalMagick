@@ -65,4 +65,10 @@ public class CalcinatorBlock extends Block {
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.toRotation(state.get(FACING)));
     }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public int getLightValue(BlockState state) {
+        return state.get(LIT) ? super.getLightValue(state) : 0;
+    }
 }
