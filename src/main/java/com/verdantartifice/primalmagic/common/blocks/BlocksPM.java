@@ -74,4 +74,5 @@ public class BlocksPM {
     public static final Block WAND_ASSEMBLY_TABLE = null;
     public static final Block WOOD_TABLE = null;
     public static final Block ANALYSIS_TABLE = null;
+    public static final Block CALCINATOR = null;
 }

@@ -91,6 +91,7 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.WAND_ASSEMBLY_TABLE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.WAND_ASSEMBLY_TABLE.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.WOOD_TABLE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.WOOD_TABLE.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANALYSIS_TABLE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ANALYSIS_TABLE.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.CALCINATOR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.CALCINATOR.getRegistryName()));
     }
     
     public static void initItems(IForgeRegistry<Item> registry) {
