@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagic.common.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -62,5 +65,58 @@ public class ItemUtils {
         } catch (Exception e) {}
         
         return stack;
+    }
+    
+    @Nonnull
+    public static List<ItemStack> copyItemStackList(List<ItemStack> list) {
+        List<ItemStack> output = new ArrayList<>();
+        for (ItemStack stack : list) {
+            output.add(stack.copy());
+        }
+        return output;
+    }
+    
+    @Nonnull
+    public static List<ItemStack> mergeItemStackIntoList(@Nonnull List<ItemStack> list, @Nonnull ItemStack stackToCopy) {
+        List<ItemStack> output = copyItemStackList(list);
+        ItemStack stack = stackToCopy.copy();
+        
+        // First, scan for existing stacks that can be added to
+        for (ItemStack outStack : output) {
+            if (outStack.isItemEqual(stack)) {
+                if (stack.getCount() + outStack.getCount() <= outStack.getMaxStackSize()) {
+                    // If the output stack can fully absorb the input, grow it and return
+                    outStack.grow(stack.getCount());
+                    return output;
+                } else {
+                    // Otherwise, grow it as much as possible and keep looking
+                    int toGrow = outStack.getMaxStackSize() - outStack.getCount();
+                    outStack.grow(toGrow);
+                    stack.shrink(toGrow);
+                }
+            }
+        }
+        
+        // Then scan for empty slots that can absorb what's left
+        for (int index = 0; index < output.size(); index++) {
+            if (output.get(index).isEmpty()) {
+                output.set(index, stack);
+                return output;
+            }
+        }
+        
+        // Finally, append whatever's left as a new element in the output list
+        output.add(stack);
+        
+        return output;
+    }
+    
+    @Nonnull
+    public static List<ItemStack> mergeItemStackLists(@Nonnull List<ItemStack> list1, @Nonnull List<ItemStack> list2) {
+        List<ItemStack> output = list1;
+        for (ItemStack stack : list2) {
+            output = mergeItemStackIntoList(output, stack);
+        }
+        return output;
     }
 }

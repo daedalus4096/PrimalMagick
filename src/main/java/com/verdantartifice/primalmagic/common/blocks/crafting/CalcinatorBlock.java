@@ -98,13 +98,7 @@ public class CalcinatorBlock extends Block {
     
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
-            TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof CalcinatorTileEntity) {
-                CalcinatorTileEntity cal = (CalcinatorTileEntity)tile;
-                PrimalMagic.LOGGER.debug("Calcinator counter: {}", cal.counter);
-            }
-        }
+        // TODO stub
         return true;
     }
 }
