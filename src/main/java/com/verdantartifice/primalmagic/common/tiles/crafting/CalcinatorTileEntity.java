@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
+import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
@@ -15,23 +16,67 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity {
+public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity, INamedContainerProvider, IInventory {
     protected static final int OUTPUT_CAPACITY = 9;
     
     protected NonNullList<ItemStack> items = NonNullList.withSize(OUTPUT_CAPACITY + 2, ItemStack.EMPTY);
     protected int burnTime;
     protected int cookTime;
     protected int cookTimeTotal;
+    
+    protected final IIntArray calcinatorData = new IIntArray() {
+        @Override
+        public int get(int index) {
+            switch (index) {
+            case 0:
+                return CalcinatorTileEntity.this.burnTime;
+            case 1:
+                return CalcinatorTileEntity.this.cookTime;
+            case 2:
+                return CalcinatorTileEntity.this.cookTimeTotal;
+            default:
+                return 0;
+            }
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch (index) {
+            case 0:
+                CalcinatorTileEntity.this.burnTime = value;
+                break;
+            case 1:
+                CalcinatorTileEntity.this.cookTime = value;
+                break;
+            case 2:
+                CalcinatorTileEntity.this.cookTimeTotal = value;
+                break;
+            }
+        }
+
+        @Override
+        public int size() {
+            return 3;
+        }
+    };
     
     public CalcinatorTileEntity() {
         super(TileEntityTypesPM.CALCINATOR);
@@ -183,5 +228,74 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity 
             }
         }
         return output;
+    }
+
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInv, PlayerEntity player) {
+        return new CalcinatorContainer(windowId, playerInv, this, this.calcinatorData);
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+    }
+
+    @Override
+    public void clear() {
+        this.items.clear();
+    }
+
+    @Override
+    public int getSizeInventory() {
+        return this.items.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack stack : this.items) {
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int index) {
+        return this.items.get(index);
+    }
+
+    @Override
+    public ItemStack decrStackSize(int index, int count) {
+        return ItemStackHelper.getAndSplit(this.items, index, count);
+    }
+
+    @Override
+    public ItemStack removeStackFromSlot(int index) {
+        return ItemStackHelper.getAndRemove(this.items, index);
+    }
+
+    @Override
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        ItemStack slotStack = this.items.get(index);
+        boolean flag = !stack.isEmpty() && stack.isItemEqual(slotStack) && ItemStack.areItemStackTagsEqual(stack, slotStack);
+        this.items.set(index, stack);
+        if (stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
+        }
+        if (index == 0 && !flag) {
+            this.cookTimeTotal = this.getCookTimeTotal();
+            this.cookTime = 0;
+            this.markDirty();
+        }
+    }
+
+    @Override
+    public boolean isUsableByPlayer(PlayerEntity player) {
+        if (this.world.getTileEntity(this.pos) != this) {
+            return false;
+        } else {
+            return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+        }
     }
 }

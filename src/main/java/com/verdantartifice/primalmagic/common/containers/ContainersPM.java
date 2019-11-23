@@ -11,4 +11,5 @@ public class ContainersPM {
     public static final ContainerType<ArcaneWorkbenchContainer> ARCANE_WORKBENCH = null;
     public static final ContainerType<WandAssemblyTableContainer> WAND_ASSEMBLY_TABLE = null;
     public static final ContainerType<AnalysisTableContainer> ANALYSIS_TABLE = null;
+    public static final ContainerType<CalcinatorContainer> CALCINATOR = null;
 }

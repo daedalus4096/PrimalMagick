@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.init;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
 import com.verdantartifice.primalmagic.common.containers.ArcaneWorkbenchContainer;
+import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagic.common.containers.WandAssemblyTableContainer;
 
@@ -27,5 +28,9 @@ public class InitContainers {
         registry.register(IForgeContainerType.create((windowId, inv, data) -> {
             return new AnalysisTableContainer(windowId, inv);
         }).setRegistryName(PrimalMagic.MODID, "analysis_table"));
+        
+        registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+            return new CalcinatorContainer(windowId, inv);
+        }).setRegistryName(PrimalMagic.MODID, "calcinator"));
     }
 }

@@ -98,7 +98,12 @@ public class CalcinatorBlock extends Block {
     
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        // TODO stub
+        if (!worldIn.isRemote) {
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if (tile instanceof CalcinatorTileEntity) {
+                player.openContainer((CalcinatorTileEntity)tile);
+            }
+        }
         return true;
     }
 }
