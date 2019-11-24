@@ -219,7 +219,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
                     if (!stack.isEmpty()) {
                         output.add(stack);
                     }
-                } else if (alwaysGenerateDregs || this.world.rand.nextInt(EssenceType.DUST.getAffinity()) <= amount) {
+                } else if (amount > 0 && (alwaysGenerateDregs || this.world.rand.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
                     ItemStack stack = EssenceItem.getEssence(EssenceType.DUST, source);
                     if (!stack.isEmpty()) {
                         output.add(stack);
