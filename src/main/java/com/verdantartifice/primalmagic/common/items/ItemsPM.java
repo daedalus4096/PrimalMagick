@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ItemsPM {
     public static final Item GRIMOIRE = null;
     public static final Item ARCANOMETER = null;
+    public static final Item ALCHEMICAL_WASTE = null;
     
     public static final Item ESSENCE_DUST_EARTH = null;
     public static final Item ESSENCE_DUST_SEA = null;

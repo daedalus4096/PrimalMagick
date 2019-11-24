@@ -2,20 +2,24 @@ package com.verdantartifice.primalmagic.common.tiles.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
 import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -32,9 +36,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity, INamedContainerProvider, IInventory {
+public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity, INamedContainerProvider, IInventory, IOwnedTileEntity {
     protected static final int OUTPUT_CAPACITY = 9;
     
     protected NonNullList<ItemStack> items = NonNullList.withSize(OUTPUT_CAPACITY + 2, ItemStack.EMPTY);
@@ -42,6 +47,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
     protected int burnTimeTotal;
     protected int cookTime;
     protected int cookTimeTotal;
+    protected UUID ownerUUID;
     
     protected final IIntArray calcinatorData = new IIntArray() {
         @Override
@@ -100,6 +106,14 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
         this.burnTimeTotal = getBurnTime(this.items.get(1));
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
+        
+        this.ownerUUID = null;
+        if (compound.contains("OwnerUUID")) {
+            String ownerUUIDStr = compound.getString("OwnerUUID");
+            if (!ownerUUIDStr.isEmpty()) {
+                this.ownerUUID = UUID.fromString(ownerUUIDStr);
+            }
+        }
     }
     
     @Override
@@ -108,6 +122,9 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
         ItemStackHelper.saveAllItems(compound, this.items);
+        if (this.ownerUUID != null) {
+            compound.putString("OwnerUUID", this.ownerUUID.toString());
+        }
         return compound;
     }
 
@@ -223,12 +240,12 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
                 if (amount >= EssenceType.DUST.getAffinity()) {
                     int count = amount / EssenceType.DUST.getAffinity();
                     amount = amount % EssenceType.DUST.getAffinity();
-                    ItemStack stack = EssenceItem.getEssence(EssenceType.DUST, source, count);
+                    ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, count);
                     if (!stack.isEmpty()) {
                         output.add(stack);
                     }
                 } else if (amount > 0 && (alwaysGenerateDregs || this.world.rand.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
-                    ItemStack stack = EssenceItem.getEssence(EssenceType.DUST, source);
+                    ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, 1);
                     if (!stack.isEmpty()) {
                         output.add(stack);
                     }
@@ -236,6 +253,15 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
             }
         }
         return output;
+    }
+    
+    @Nonnull
+    protected ItemStack getOutputEssence(EssenceType type, Source source, int count) {
+        if (source.isDiscovered(this.getTileOwner())) {
+            return EssenceItem.getEssence(type, source, count);
+        } else {
+            return new ItemStack(ItemsPM.ALCHEMICAL_WASTE, count);
+        }
     }
 
     @Override
@@ -305,5 +331,22 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
         } else {
             return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
         }
+    }
+
+    @Override
+    public void setTileOwner(PlayerEntity owner) {
+        this.ownerUUID = owner.getUniqueID();
+    }
+
+    @Override
+    public PlayerEntity getTileOwner() {
+        PlayerEntity retVal = null;
+        if (this.hasWorld() && this.world instanceof ServerWorld) {
+            Entity entity = ((ServerWorld)this.world).getEntityByUuid(this.ownerUUID);
+            if (entity instanceof PlayerEntity) {
+                retVal = (PlayerEntity)entity;
+            }
+        }
+        return retVal;
     }
 }

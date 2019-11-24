@@ -9,9 +9,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
@@ -113,6 +115,17 @@ public class CalcinatorBlock extends Block {
             }
         }
         return true;
+    }
+    
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        if (!worldIn.isRemote && placer instanceof PlayerEntity) {
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if (tile instanceof CalcinatorTileEntity) {
+                ((CalcinatorTileEntity)tile).setTileOwner((PlayerEntity)placer);
+            }
+        }
     }
     
     @SuppressWarnings("deprecation")
