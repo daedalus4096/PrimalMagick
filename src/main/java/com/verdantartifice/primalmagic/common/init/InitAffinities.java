@@ -272,6 +272,12 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Items.GLOBE_BANNER_PATTERN), AffinityManager.getAffinities(new ItemStack(Items.PAPER), server));
         AffinityManager.registerAffinities(new ItemStack(Items.SWEET_BERRIES), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
         
+        // Append affinities to Vanilla blocks
+        AffinityManager.appendAffinities(new ItemStack(Blocks.FURNACE), new SourceList().add(Source.INFERNAL, 5), server);
+        AffinityManager.appendAffinities(new ItemStack(Blocks.SEA_LANTERN), new SourceList().add(Source.SUN, 15), server);
+        AffinityManager.appendAffinities(new ItemStack(Blocks.CONDUIT), new SourceList().add(Source.SUN, 15), server);
+        AffinityManager.appendAffinities(new ItemStack(Blocks.LANTERN), new SourceList().add(Source.SUN, 15), server);
+        
         // Register Primal Magic tag affinities
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "colored_shulker_boxes"), AffinityManager.getAffinities(new ItemStack(Items.SHULKER_BOX), server));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "concrete"), AffinityManager.getAffinities(new ItemStack(Items.WHITE_CONCRETE_POWDER), server).add(Source.SEA, 1));
@@ -294,6 +300,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_SKY), new SourceList().add(Source.SKY, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_SUN), new SourceList().add(Source.SUN, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_MOON), new SourceList().add(Source.MOON, 20));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.CALCINATOR), AffinityManager.getAffinities(new ItemStack(Blocks.FURNACE), server));
         
         // Register Primal Magic item affinities
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.GRIMOIRE), AffinityManager.getAffinities(new ItemStack(Items.ENCHANTED_BOOK), server));
@@ -305,12 +312,6 @@ public class InitAffinities {
                 AffinityManager.registerAffinities(new ItemStack(item), new SourceList().add(item.getSource(), item.getEssenceType().getAffinity()));
             }
         }
-        
-        // Append affinities to Vanilla blocks
-        AffinityManager.appendAffinities(new ItemStack(Blocks.FURNACE), new SourceList().add(Source.INFERNAL, 5), server);
-        AffinityManager.appendAffinities(new ItemStack(Blocks.SEA_LANTERN), new SourceList().add(Source.SUN, 15), server);
-        AffinityManager.appendAffinities(new ItemStack(Blocks.CONDUIT), new SourceList().add(Source.SUN, 15), server);
-        AffinityManager.appendAffinities(new ItemStack(Blocks.LANTERN), new SourceList().add(Source.SUN, 15), server);
         
         // Append affinities to Primal Magic blocks
         AffinityManager.appendAffinities(new ItemStack(BlocksPM.MARBLE_ENCHANTED_SLAB), new SourceList().add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1), server);
