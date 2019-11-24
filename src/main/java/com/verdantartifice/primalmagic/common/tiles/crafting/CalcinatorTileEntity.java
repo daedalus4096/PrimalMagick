@@ -103,7 +103,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
         this.items = NonNullList.withSize(11, ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.items);
         this.burnTime = compound.getInt("BurnTime");
-        this.burnTimeTotal = getBurnTime(this.items.get(1));
+        this.burnTimeTotal = compound.getInt("BurnTimeTotal");
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
         
@@ -119,6 +119,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
     @Override
     protected CompoundNBT writeToTileNBT(CompoundNBT compound) {
         compound.putInt("BurnTime", this.burnTime);
+        compound.putInt("BurnTimeTotal", this.burnTimeTotal);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
         ItemStackHelper.saveAllItems(compound, this.items);
