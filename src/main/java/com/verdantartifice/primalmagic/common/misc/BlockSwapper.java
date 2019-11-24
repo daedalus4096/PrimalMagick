@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
+import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,6 +19,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -70,8 +73,20 @@ public class BlockSwapper {
             } else {
                 Block targetBlock = Block.getBlockFromItem(this.target.getItem());
                 if (targetBlock != null && targetBlock != Blocks.AIR) {
-                    // If the target is a block, set its default state in the world
-                    world.setBlockState(this.pos, targetBlock.getDefaultState(), 0x3);
+                    // If the target is a block, set its state, with facing if applicable, in the world
+                    BlockState targetState = targetBlock.getDefaultState();
+                    if (state.has(BlockStateProperties.FACING)) {
+                        targetState = targetState.with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING));
+                    } else if (state.has(BlockStateProperties.HORIZONTAL_FACING)) {
+                        targetState = targetState.with(BlockStateProperties.HORIZONTAL_FACING, state.get(BlockStateProperties.HORIZONTAL_FACING));
+                    }
+                    world.setBlockState(this.pos, targetState, 0x3);
+                    
+                    // Set the owner of the new block's tile entity, if applicable
+                    TileEntity tile = world.getTileEntity(this.pos);
+                    if (tile instanceof IOwnedTileEntity) {
+                        ((IOwnedTileEntity)tile).setTileOwner(this.player);
+                    }
                 } else {
                     // Otherwise, spawn an item in the block's place
                     world.removeBlock(this.pos, false);

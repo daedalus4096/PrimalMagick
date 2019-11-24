@@ -33,5 +33,6 @@ public class InitRecipes {
     public static void initWandTransforms() {
         WandTransforms.register(new WandTransformBlock(Blocks.BOOKSHELF, new ItemStack(ItemsPM.GRIMOIRE), CompoundResearchKey.from(SimpleResearchKey.parse("FIRST_STEPS"))));
         WandTransforms.register(new WandTransformBlock(Blocks.CRAFTING_TABLE, new ItemStack(BlocksPM.ARCANE_WORKBENCH), CompoundResearchKey.from(SimpleResearchKey.parse("FIRST_STEPS"))));
+        WandTransforms.register(new WandTransformBlock(Blocks.FURNACE, new ItemStack(BlocksPM.CALCINATOR), CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_ALCHEMY"))));
     }
 }
