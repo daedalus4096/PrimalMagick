@@ -39,6 +39,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
     
     protected NonNullList<ItemStack> items = NonNullList.withSize(OUTPUT_CAPACITY + 2, ItemStack.EMPTY);
     protected int burnTime;
+    protected int burnTimeTotal;
     protected int cookTime;
     protected int cookTimeTotal;
     
@@ -49,8 +50,10 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
             case 0:
                 return CalcinatorTileEntity.this.burnTime;
             case 1:
-                return CalcinatorTileEntity.this.cookTime;
+                return CalcinatorTileEntity.this.burnTimeTotal;
             case 2:
+                return CalcinatorTileEntity.this.cookTime;
+            case 3:
                 return CalcinatorTileEntity.this.cookTimeTotal;
             default:
                 return 0;
@@ -64,9 +67,12 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
                 CalcinatorTileEntity.this.burnTime = value;
                 break;
             case 1:
-                CalcinatorTileEntity.this.cookTime = value;
+                CalcinatorTileEntity.this.burnTimeTotal = value;
                 break;
             case 2:
+                CalcinatorTileEntity.this.cookTime = value;
+                break;
+            case 3:
                 CalcinatorTileEntity.this.cookTimeTotal = value;
                 break;
             }
@@ -74,7 +80,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
 
         @Override
         public int size() {
-            return 3;
+            return 4;
         }
     };
     
@@ -91,6 +97,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
         this.items = NonNullList.withSize(11, ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.items);
         this.burnTime = compound.getInt("BurnTime");
+        this.burnTimeTotal = getBurnTime(this.items.get(1));
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
     }
@@ -118,6 +125,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
             if (this.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
                 if (!this.isBurning() && this.canCalcinate(inputStack)) {
                     this.burnTime = getBurnTime(fuelStack);
+                    this.burnTimeTotal = this.burnTime;
                     if (this.isBurning()) {
                         shouldMarkDirty = true;
                         if (fuelStack.hasContainerItem()) {

@@ -23,13 +23,13 @@ public class CalcinatorContainer extends Container {
     protected final World world;
     
     public CalcinatorContainer(int id, PlayerInventory playerInv) {
-        this(id, playerInv, new Inventory(11), new IntArray(3));
+        this(id, playerInv, new Inventory(11), new IntArray(4));
     }
     
     public CalcinatorContainer(int id, PlayerInventory playerInv, IInventory calcinatorInv, IIntArray calcinatorData) {
         super(ContainersPM.CALCINATOR, id);
         assertInventorySize(calcinatorInv, 11);
-        assertIntArraySize(calcinatorData, 3);
+        assertIntArraySize(calcinatorData, 4);
         this.calcinatorInv = calcinatorInv;
         this.calcinatorData = calcinatorData;
         this.world = playerInv.player.world;
@@ -117,14 +117,18 @@ public class CalcinatorContainer extends Container {
     
     @OnlyIn(Dist.CLIENT)
     public int getCookProgressionScaled() {
-        int i = this.calcinatorData.get(1);
-        int j = this.calcinatorData.get(2);
+        int i = this.calcinatorData.get(2);
+        int j = this.calcinatorData.get(3);
         return j != 0 && i != 0 ? i * 24 / j : 0;
     }
     
     @OnlyIn(Dist.CLIENT)
     public int getBurnLeftScaled() {
-        return this.calcinatorData.get(0) * 13 / 200;
+        int total = this.calcinatorData.get(1);
+        if (total == 0) {
+            total = 200;
+        }
+        return this.calcinatorData.get(0) * 13 / total;
     }
     
     @OnlyIn(Dist.CLIENT)
