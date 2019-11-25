@@ -1,0 +1,16 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "CLUSTER_DESYNTHESIS",
+  "mana": {
+    "sky": 100
+  },
+  "ingredients": [
+    {
+      "item": "primalmagic:essence_cluster_sky"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:essence_crystal_sky",
+    "count": 4
+  }
+}

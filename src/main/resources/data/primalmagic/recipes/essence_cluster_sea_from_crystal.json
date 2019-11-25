@@ -1,0 +1,23 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "CLUSTER_SYNTHESIS",
+  "mana": {
+    "sea": 100
+  },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primalmagic:essence_crystal_sea"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "primalmagic:essence_cluster_sea"
+  }
+}

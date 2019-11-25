@@ -6,6 +6,9 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -19,6 +22,7 @@ import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.data.SingleItemRecipeBuilder;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -38,6 +42,8 @@ public class Recipes extends RecipeProvider {
         this.registerSmokedMarbleRecipes(consumer);
         this.registerSunwoodRecipes(consumer);
         this.registerMoonwoodRecipes(consumer);
+        this.registerEssenceUpgradeRecipes(consumer);
+        this.registerEssenceDowngradeRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.ANALYSIS_TABLE)
             .addIngredient(BlocksPM.WOOD_TABLE)
@@ -185,7 +191,7 @@ public class Recipes extends RecipeProvider {
     protected void registerEnchantedMarbleRecipes(Consumer<IFinishedRecipe> consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(BlocksPM.MARBLE_ENCHANTED, 9)
             .addIngredient(BlocksPM.MARBLE_RAW, 9)
-            .research(SimpleResearchKey.parse("FIRST_STEPS"))
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FIRST_STEPS")))
             .manaCost(new SourceList().add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1))
             .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB, 6)
@@ -511,5 +517,63 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemTagsPM.MOONWOOD_LOGS)
             .addCriterion("has_moonwood_log", this.hasItem(ItemTagsPM.MOONWOOD_LOGS))
             .build(consumer);
+    }
+
+    protected void registerEssenceUpgradeRecipes(Consumer<IFinishedRecipe> consumer) {
+        for (Source source : Source.SORTED_SOURCES) {
+            for (EssenceType baseType : EssenceType.values()) {
+                EssenceType upgradeType = baseType.getUpgrade();
+                if (upgradeType != null) {
+                    ItemStack baseStack = EssenceItem.getEssence(baseType, source);
+                    ItemStack upgradeStack = EssenceItem.getEssence(upgradeType, source);
+                    if (!baseStack.isEmpty() && !upgradeStack.isEmpty()) {
+                        CompoundResearchKey research;
+                        SimpleResearchKey baseResearch = SimpleResearchKey.parse(upgradeType.getName().toUpperCase() + "_SYNTHESIS");
+                        if (source.getDiscoverKey() == null) {
+                            research = CompoundResearchKey.from(baseResearch);
+                        } else {
+                            research = CompoundResearchKey.from(true, baseResearch, source.getDiscoverKey());
+                        }
+                        String name = "essence_" + upgradeType.getName() + "_" + source.getTag() + "_from_" + baseType.getName();
+                        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(upgradeStack.getItem())
+                            .patternLine("###")
+                            .patternLine("#Q#")
+                            .patternLine("###")
+                            .key('#', baseStack.getItem())
+                            .key('Q', Items.QUARTZ)
+                            .research(research)
+                            .manaCost(new SourceList().add(source, upgradeType.getAffinity()))
+                            .build(consumer, new ResourceLocation(PrimalMagic.MODID, name));
+                    }
+                }
+            }
+        }
+    }
+    
+    protected void registerEssenceDowngradeRecipes(Consumer<IFinishedRecipe> consumer) {
+        for (Source source : Source.SORTED_SOURCES) {
+            for (EssenceType baseType : EssenceType.values()) {
+                EssenceType downgradeType = baseType.getDowngrade();
+                if (downgradeType != null) {
+                    ItemStack baseStack = EssenceItem.getEssence(baseType, source);
+                    ItemStack downgradeStack = EssenceItem.getEssence(downgradeType, source);
+                    if (!baseStack.isEmpty() && !downgradeStack.isEmpty()) {
+                        CompoundResearchKey research;
+                        SimpleResearchKey baseResearch = SimpleResearchKey.parse(baseType.getName().toUpperCase() + "_DESYNTHESIS");
+                        if (source.getDiscoverKey() == null) {
+                            research = CompoundResearchKey.from(baseResearch);
+                        } else {
+                            research = CompoundResearchKey.from(true, baseResearch, source.getDiscoverKey());
+                        }
+                        String name = "essence_" + downgradeType.getName() + "_" + source.getTag() + "_from_" + baseType.getName();
+                        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(downgradeStack.getItem(), 4)
+                            .addIngredient(baseStack.getItem())
+                            .research(research)
+                            .manaCost(new SourceList().add(source, baseType.getAffinity()))
+                            .build(consumer, new ResourceLocation(PrimalMagic.MODID, name));
+                    }
+                }
+            }
+        }
     }
 }

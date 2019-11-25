@@ -1,0 +1,16 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "SHARD_DESYNTHESIS",
+  "mana": {
+    "sun": 20
+  },
+  "ingredients": [
+    {
+      "item": "primalmagic:essence_shard_sun"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:essence_dust_sun",
+    "count": 4
+  }
+}

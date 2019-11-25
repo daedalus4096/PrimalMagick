@@ -1,0 +1,16 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "CLUSTER_DESYNTHESIS",
+  "mana": {
+    "sun": 100
+  },
+  "ingredients": [
+    {
+      "item": "primalmagic:essence_cluster_sun"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:essence_crystal_sun",
+    "count": 4
+  }
+}

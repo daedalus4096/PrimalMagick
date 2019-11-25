@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
-import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
@@ -31,7 +31,7 @@ public class ArcaneShapedRecipeBuilder {
     protected final List<String> pattern = new ArrayList<>();
     protected final Map<Character, Ingredient> key = new LinkedHashMap<>();
     protected String group;
-    protected SimpleResearchKey research;
+    protected CompoundResearchKey research;
     protected SourceList manaCosts;
     
     protected ArcaneShapedRecipeBuilder(IItemProvider result, int count) {
@@ -80,7 +80,7 @@ public class ArcaneShapedRecipeBuilder {
         return this;
     }
     
-    public ArcaneShapedRecipeBuilder research(SimpleResearchKey research) {
+    public ArcaneShapedRecipeBuilder research(CompoundResearchKey research) {
         this.research = research.copy();
         return this;
     }
@@ -146,10 +146,10 @@ public class ArcaneShapedRecipeBuilder {
         protected final String group;
         protected final List<String> pattern;
         protected final Map<Character, Ingredient> key;
-        protected final SimpleResearchKey research;
+        protected final CompoundResearchKey research;
         protected final SourceList manaCosts;
         
-        public Result(ResourceLocation id, Item result, int count, String group, List<String> pattern, Map<Character, Ingredient> key, SimpleResearchKey research, SourceList manaCosts) {
+        public Result(ResourceLocation id, Item result, int count, String group, List<String> pattern, Map<Character, Ingredient> key, CompoundResearchKey research, SourceList manaCosts) {
             this.id = id;
             this.result = result;
             this.count = count;

@@ -1,0 +1,23 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "SHARD_SYNTHESIS",
+  "mana": {
+    "sky": 20
+  },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primalmagic:essence_dust_sky"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "primalmagic:essence_shard_sky"
+  }
+}

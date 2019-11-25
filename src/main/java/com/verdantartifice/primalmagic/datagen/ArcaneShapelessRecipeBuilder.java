@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
-import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
@@ -25,7 +25,7 @@ public class ArcaneShapelessRecipeBuilder {
     protected final int count;
     protected final List<Ingredient> ingredients = new ArrayList<>();
     protected String group;
-    protected SimpleResearchKey research;
+    protected CompoundResearchKey research;
     protected SourceList manaCosts;
 
     protected ArcaneShapelessRecipeBuilder(IItemProvider result, int count) {
@@ -69,7 +69,7 @@ public class ArcaneShapelessRecipeBuilder {
         return this;
     }
     
-    public ArcaneShapelessRecipeBuilder research(SimpleResearchKey research) {
+    public ArcaneShapelessRecipeBuilder research(CompoundResearchKey research) {
         this.research = research.copy();
         return this;
     }
@@ -116,10 +116,10 @@ public class ArcaneShapelessRecipeBuilder {
         protected final int count;
         protected final String group;
         protected final List<Ingredient> ingredients;
-        protected final SimpleResearchKey research;
+        protected final CompoundResearchKey research;
         protected final SourceList manaCosts;
         
-        public Result(ResourceLocation id, Item result, int count, String group, List<Ingredient> ingredients, SimpleResearchKey research, SourceList manaCosts) {
+        public Result(ResourceLocation id, Item result, int count, String group, List<Ingredient> ingredients, CompoundResearchKey research, SourceList manaCosts) {
             this.id = id;
             this.result = result;
             this.count = count;

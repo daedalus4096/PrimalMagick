@@ -11,6 +11,246 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "SHARD_SYNTHESIS",
+            "name": "primalmagic.research.shard_synthesis.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "BASIC_ALCHEMY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.shard_synthesis.text.stage.1",
+                    "recipes": [
+                        "primalmagic:essence_shard_earth_from_dust",
+                        "primalmagic:essence_shard_sea_from_dust",
+                        "primalmagic:essence_shard_sky_from_dust",
+                        "primalmagic:essence_shard_sun_from_dust",
+                        "primalmagic:essence_shard_moon_from_dust"
+                    ]
+                }
+            ],
+            "addenda": [
+                {
+                    "text": "primalmagic.research.shard_synthesis.text.addenda.1",
+                    "required_research": ["t_discover_blood"],
+                    "recipes": [ "primalmagic:essence_shard_blood_from_dust" ]
+                },
+                {
+                    "text": "primalmagic.research.shard_synthesis.text.addenda.2",
+                    "required_research": ["t_discover_infernal"],
+                    "recipes": [ "primalmagic:essence_shard_infernal_from_dust" ]
+                },
+                {
+                    "text": "primalmagic.research.shard_synthesis.text.addenda.3",
+                    "required_research": ["t_discover_void"],
+                    "recipes": [ "primalmagic:essence_shard_void_from_dust" ]
+                },
+                {
+                    "text": "primalmagic.research.shard_synthesis.text.addenda.4",
+                    "required_research": ["t_discover_hallowed"],
+                    "recipes": [ "primalmagic:essence_shard_hallowed_from_dust" ]
+                }
+            ]
+        },
+        {
+            "key": "SHARD_DESYNTHESIS",
+            "name": "primalmagic.research.shard_desynthesis.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "SHARD_SYNTHESIS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.shard_desynthesis.text.stage.1",
+                    "recipes": [
+                        "primalmagic:essence_dust_earth_from_shard",
+                        "primalmagic:essence_dust_sea_from_shard",
+                        "primalmagic:essence_dust_sky_from_shard",
+                        "primalmagic:essence_dust_sun_from_shard",
+                        "primalmagic:essence_dust_moon_from_shard"
+                    ]
+                }
+            ],
+            "addenda": [
+                {
+                    "text": "primalmagic.research.shard_desynthesis.text.addenda.1",
+                    "required_research": ["t_discover_blood"],
+                    "recipes": [ "primalmagic:essence_dust_blood_from_shard" ]
+                },
+                {
+                    "text": "primalmagic.research.shard_desynthesis.text.addenda.2",
+                    "required_research": ["t_discover_infernal"],
+                    "recipes": [ "primalmagic:essence_dust_infernal_from_shard" ]
+                },
+                {
+                    "text": "primalmagic.research.shard_desynthesis.text.addenda.3",
+                    "required_research": ["t_discover_void"],
+                    "recipes": [ "primalmagic:essence_dust_void_from_shard" ]
+                },
+                {
+                    "text": "primalmagic.research.shard_desynthesis.text.addenda.4",
+                    "required_research": ["t_discover_hallowed"],
+                    "recipes": [ "primalmagic:essence_dust_hallowed_from_shard" ]
+                }
+            ]
+        },
+        {
+            "key": "CRYSTAL_SYNTHESIS",
+            "name": "primalmagic.research.crystal_synthesis.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "SHARD_SYNTHESIS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.crystal_synthesis.text.stage.1",
+                    "recipes": [
+                        "primalmagic:essence_crystal_earth_from_shard",
+                        "primalmagic:essence_crystal_sea_from_shard",
+                        "primalmagic:essence_crystal_sky_from_shard",
+                        "primalmagic:essence_crystal_sun_from_shard",
+                        "primalmagic:essence_crystal_moon_from_shard"
+                    ]
+                }
+            ],
+            "addenda": [
+                {
+                    "text": "primalmagic.research.crystal_synthesis.text.addenda.1",
+                    "required_research": ["t_discover_blood"],
+                    "recipes": [ "primalmagic:essence_crystal_blood_from_shard" ]
+                },
+                {
+                    "text": "primalmagic.research.crystal_synthesis.text.addenda.2",
+                    "required_research": ["t_discover_infernal"],
+                    "recipes": [ "primalmagic:essence_crystal_infernal_from_shard" ]
+                },
+                {
+                    "text": "primalmagic.research.crystal_synthesis.text.addenda.3",
+                    "required_research": ["t_discover_void"],
+                    "recipes": [ "primalmagic:essence_crystal_void_from_shard" ]
+                },
+                {
+                    "text": "primalmagic.research.crystal_synthesis.text.addenda.4",
+                    "required_research": ["t_discover_hallowed"],
+                    "recipes": [ "primalmagic:essence_crystal_hallowed_from_shard" ]
+                }
+            ]
+        },
+        {
+            "key": "CRYSTAL_DESYNTHESIS",
+            "name": "primalmagic.research.crystal_desynthesis.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "CRYSTAL_SYNTHESIS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.crystal_desynthesis.text.stage.1",
+                    "recipes": [
+                        "primalmagic:essence_shard_earth_from_crystal",
+                        "primalmagic:essence_shard_sea_from_crystal",
+                        "primalmagic:essence_shard_sky_from_crystal",
+                        "primalmagic:essence_shard_sun_from_crystal",
+                        "primalmagic:essence_shard_moon_from_crystal"
+                    ]
+                }
+            ],
+            "addenda": [
+                {
+                    "text": "primalmagic.research.crystal_desynthesis.text.addenda.1",
+                    "required_research": ["t_discover_blood"],
+                    "recipes": [ "primalmagic:essence_shard_blood_from_crystal" ]
+                },
+                {
+                    "text": "primalmagic.research.crystal_desynthesis.text.addenda.2",
+                    "required_research": ["t_discover_infernal"],
+                    "recipes": [ "primalmagic:essence_shard_infernal_from_crystal" ]
+                },
+                {
+                    "text": "primalmagic.research.crystal_desynthesis.text.addenda.3",
+                    "required_research": ["t_discover_void"],
+                    "recipes": [ "primalmagic:essence_shard_void_from_crystal" ]
+                },
+                {
+                    "text": "primalmagic.research.crystal_desynthesis.text.addenda.4",
+                    "required_research": ["t_discover_hallowed"],
+                    "recipes": [ "primalmagic:essence_shard_hallowed_from_crystal" ]
+                }
+            ]
+        },
+        {
+            "key": "CLUSTER_SYNTHESIS",
+            "name": "primalmagic.research.cluster_synthesis.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "CRYSTAL_SYNTHESIS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.cluster_synthesis.text.stage.1",
+                    "recipes": [
+                        "primalmagic:essence_cluster_earth_from_crystal",
+                        "primalmagic:essence_cluster_sea_from_crystal",
+                        "primalmagic:essence_cluster_sky_from_crystal",
+                        "primalmagic:essence_cluster_sun_from_crystal",
+                        "primalmagic:essence_cluster_moon_from_crystal"
+                    ]
+                }
+            ],
+            "addenda": [
+                {
+                    "text": "primalmagic.research.cluster_synthesis.text.addenda.1",
+                    "required_research": ["t_discover_blood"],
+                    "recipes": [ "primalmagic:essence_cluster_blood_from_crystal" ]
+                },
+                {
+                    "text": "primalmagic.research.cluster_synthesis.text.addenda.2",
+                    "required_research": ["t_discover_infernal"],
+                    "recipes": [ "primalmagic:essence_cluster_infernal_from_crystal" ]
+                },
+                {
+                    "text": "primalmagic.research.cluster_synthesis.text.addenda.3",
+                    "required_research": ["t_discover_void"],
+                    "recipes": [ "primalmagic:essence_cluster_void_from_crystal" ]
+                },
+                {
+                    "text": "primalmagic.research.cluster_synthesis.text.addenda.4",
+                    "required_research": ["t_discover_hallowed"],
+                    "recipes": [ "primalmagic:essence_cluster_hallowed_from_crystal" ]
+                }
+            ]
+        },
+        {
+            "key": "CLUSTER_DESYNTHESIS",
+            "name": "primalmagic.research.cluster_desynthesis.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "CLUSTER_SYNTHESIS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.cluster_desynthesis.text.stage.1",
+                    "recipes": [
+                        "primalmagic:essence_crystal_earth_from_cluster",
+                        "primalmagic:essence_crystal_sea_from_cluster",
+                        "primalmagic:essence_crystal_sky_from_cluster",
+                        "primalmagic:essence_crystal_sun_from_cluster",
+                        "primalmagic:essence_crystal_moon_from_cluster"
+                    ]
+                }
+            ],
+            "addenda": [
+                {
+                    "text": "primalmagic.research.cluster_desynthesis.text.addenda.1",
+                    "required_research": ["t_discover_blood"],
+                    "recipes": [ "primalmagic:essence_crystal_blood_from_cluster" ]
+                },
+                {
+                    "text": "primalmagic.research.cluster_desynthesis.text.addenda.2",
+                    "required_research": ["t_discover_infernal"],
+                    "recipes": [ "primalmagic:essence_crystal_infernal_from_cluster" ]
+                },
+                {
+                    "text": "primalmagic.research.cluster_desynthesis.text.addenda.3",
+                    "required_research": ["t_discover_void"],
+                    "recipes": [ "primalmagic:essence_crystal_void_from_cluster" ]
+                },
+                {
+                    "text": "primalmagic.research.cluster_desynthesis.text.addenda.4",
+                    "required_research": ["t_discover_hallowed"],
+                    "recipes": [ "primalmagic:essence_crystal_hallowed_from_cluster" ]
+                }
+            ]
         }
     ]
 }

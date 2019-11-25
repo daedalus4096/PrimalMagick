@@ -1,0 +1,16 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "CRYSTAL_DESYNTHESIS",
+  "mana": {
+    "sky": 50
+  },
+  "ingredients": [
+    {
+      "item": "primalmagic:essence_crystal_sky"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:essence_shard_sky",
+    "count": 4
+  }
+}

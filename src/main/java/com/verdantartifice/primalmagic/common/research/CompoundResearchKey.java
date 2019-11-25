@@ -83,6 +83,15 @@ public class CompoundResearchKey {
     }
     
     @Nonnull
+    public CompoundResearchKey copy() {
+        CompoundResearchKey key = new CompoundResearchKey(this.requireAll);
+        for (SimpleResearchKey simpleKey : this.keys) {
+            key.keys.add(simpleKey.copy());
+        }
+        return key;
+    }
+    
+    @Nonnull
     public List<SimpleResearchKey> getKeys() {
         return Collections.unmodifiableList(this.keys);
     }

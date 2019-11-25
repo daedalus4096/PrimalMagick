@@ -1,0 +1,23 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "CRYSTAL_SYNTHESIS",
+  "mana": {
+    "sun": 50
+  },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primalmagic:essence_shard_sun"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "primalmagic:essence_crystal_sun"
+  }
+}

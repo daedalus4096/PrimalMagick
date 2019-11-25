@@ -35,4 +35,32 @@ public enum EssenceType implements IStringSerializable {
     public int getAffinity() {
         return this.affinity;
     }
+    
+    public EssenceType getUpgrade() {
+        switch (this) {
+        case DUST:
+            return SHARD;
+        case SHARD:
+            return CRYSTAL;
+        case CRYSTAL:
+            return CLUSTER;
+        case CLUSTER:
+        default:
+            return null;
+        }
+    }
+    
+    public EssenceType getDowngrade() {
+        switch (this) {
+        case CLUSTER:
+            return CRYSTAL;
+        case CRYSTAL:
+            return SHARD;
+        case SHARD:
+            return DUST;
+        case DUST:
+        default:
+            return null;
+        }
+    }
 }

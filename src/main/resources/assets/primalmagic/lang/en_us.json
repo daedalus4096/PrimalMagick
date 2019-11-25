@@ -212,6 +212,48 @@
     "primalmagic.research.basic_alchemy.title": "Basic Alchemy",
     "primalmagic.research.basic_alchemy.text.stage.1": "Basic alchemy: Lorem ipsum",
     
+    "primalmagic.research.shard_synthesis.title": "Shard Synthesis",
+    "primalmagic.research.shard_synthesis.text.stage.1": "How to make shards from dust!",
+    "primalmagic.research.shard_synthesis.text.addenda.1": "It works for blood too",
+    "primalmagic.research.shard_synthesis.text.addenda.2": "It works for infernal too",
+    "primalmagic.research.shard_synthesis.text.addenda.3": "It works for void too",
+    "primalmagic.research.shard_synthesis.text.addenda.4": "It works for hallowed too",
+    
+    "primalmagic.research.shard_desynthesis.title": "Shard Desynthesis",
+    "primalmagic.research.shard_desynthesis.text.stage.1": "How to make dust from shards!",
+    "primalmagic.research.shard_desynthesis.text.addenda.1": "It works for blood too",
+    "primalmagic.research.shard_desynthesis.text.addenda.2": "It works for infernal too",
+    "primalmagic.research.shard_desynthesis.text.addenda.3": "It works for void too",
+    "primalmagic.research.shard_desynthesis.text.addenda.4": "It works for hallowed too",
+    
+    "primalmagic.research.crystal_synthesis.title": "Crystal Synthesis",
+    "primalmagic.research.crystal_synthesis.text.stage.1": "How to make crystals from shards!",
+    "primalmagic.research.crystal_synthesis.text.addenda.1": "It works for blood too",
+    "primalmagic.research.crystal_synthesis.text.addenda.2": "It works for infernal too",
+    "primalmagic.research.crystal_synthesis.text.addenda.3": "It works for void too",
+    "primalmagic.research.crystal_synthesis.text.addenda.4": "It works for hallowed too",
+    
+    "primalmagic.research.crystal_desynthesis.title": "Crystal Desynthesis",
+    "primalmagic.research.crystal_desynthesis.text.stage.1": "How to make shards from crystals!",
+    "primalmagic.research.crystal_desynthesis.text.addenda.1": "It works for blood too",
+    "primalmagic.research.crystal_desynthesis.text.addenda.2": "It works for infernal too",
+    "primalmagic.research.crystal_desynthesis.text.addenda.3": "It works for void too",
+    "primalmagic.research.crystal_desynthesis.text.addenda.4": "It works for hallowed too",
+    
+    "primalmagic.research.cluster_synthesis.title": "Cluster Synthesis",
+    "primalmagic.research.cluster_synthesis.text.stage.1": "How to make clusters from crystals!",
+    "primalmagic.research.cluster_synthesis.text.addenda.1": "It works for blood too",
+    "primalmagic.research.cluster_synthesis.text.addenda.2": "It works for infernal too",
+    "primalmagic.research.cluster_synthesis.text.addenda.3": "It works for void too",
+    "primalmagic.research.cluster_synthesis.text.addenda.4": "It works for hallowed too",
+    
+    "primalmagic.research.cluster_desynthesis.title": "Cluster Desynthesis",
+    "primalmagic.research.cluster_desynthesis.text.stage.1": "How to make crystals from clusters!",
+    "primalmagic.research.cluster_desynthesis.text.addenda.1": "It works for blood too",
+    "primalmagic.research.cluster_desynthesis.text.addenda.2": "It works for infernal too",
+    "primalmagic.research.cluster_desynthesis.text.addenda.3": "It works for void too",
+    "primalmagic.research.cluster_desynthesis.text.addenda.4": "It works for hallowed too",
+    
     "primalmagic.research.basic_sorcery.title": "Basic Sorcery",
     "primalmagic.research.basic_sorcery.text.stage.1": "Basic sorcery: Lorem ipsum",
     
