@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
+import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCapItem;
@@ -69,7 +70,7 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.SUNWOOD_PLANKS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_PLANKS.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.SUNWOOD_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_SLAB.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.SUNWOOD_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_STAIRS.getRegistryName()));
-        registry.register(new BlockItem(BlocksPM.SUNWOOD_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_PILLAR.getRegistryName()));
+        registry.register(new BurnableBlockItem(BlocksPM.SUNWOOD_PILLAR, 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SUNWOOD_PILLAR.getRegistryName()));
 
         registry.register(new BlockItem(BlocksPM.MOONWOOD_LOG, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_LOG.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.STRIPPED_MOONWOOD_LOG, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.STRIPPED_MOONWOOD_LOG.getRegistryName()));
@@ -80,17 +81,17 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.MOONWOOD_PLANKS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_PLANKS.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MOONWOOD_SLAB, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_SLAB.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.MOONWOOD_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_STAIRS.getRegistryName()));
-        registry.register(new BlockItem(BlocksPM.MOONWOOD_PILLAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_PILLAR.getRegistryName()));
+        registry.register(new BurnableBlockItem(BlocksPM.MOONWOOD_PILLAR, 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_PILLAR.getRegistryName()));
 
-        registry.register(new BlockItem(BlocksPM.ARCANE_WORKBENCH, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ARCANE_WORKBENCH.getRegistryName()));
+        registry.register(new BurnableBlockItem(BlocksPM.ARCANE_WORKBENCH, 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ARCANE_WORKBENCH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_EARTH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_SEA, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_SEA.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_SKY, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_SKY.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_SUN, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_SUN.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_MOON, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_MOON.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.WAND_ASSEMBLY_TABLE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.WAND_ASSEMBLY_TABLE.getRegistryName()));
-        registry.register(new BlockItem(BlocksPM.WOOD_TABLE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.WOOD_TABLE.getRegistryName()));
-        registry.register(new BlockItem(BlocksPM.ANALYSIS_TABLE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ANALYSIS_TABLE.getRegistryName()));
+        registry.register(new BurnableBlockItem(BlocksPM.WOOD_TABLE, 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.WOOD_TABLE.getRegistryName()));
+        registry.register(new BurnableBlockItem(BlocksPM.ANALYSIS_TABLE, 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ANALYSIS_TABLE.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.CALCINATOR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.CALCINATOR.getRegistryName()));
     }
     
