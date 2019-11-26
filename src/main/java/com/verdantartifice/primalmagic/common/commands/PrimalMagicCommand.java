@@ -114,6 +114,7 @@ public class PrimalMagicCommand {
             knowledge.clearResearch();
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.reset", target.getName()), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.research.reset.target", source.getName()));
         }
         return 0;
     }
@@ -129,6 +130,7 @@ public class PrimalMagicCommand {
             ResearchManager.forceGrantWithAllParents(target, key);
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), key.toString()), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.research.grant.target", source.getName(), key.toString()));
         }
         return 0;
     }
@@ -144,6 +146,7 @@ public class PrimalMagicCommand {
             ResearchManager.forceRevokeWithAllChildren(target, key);
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.revoke", target.getName(), key.toString()), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.research.revoke.target", source.getName(), key.toString()));
         }
         return 0;
     }
@@ -183,7 +186,8 @@ public class PrimalMagicCommand {
             int oldStage = knowledge.getResearchStage(key);
             if (ResearchManager.progressResearch(target, key)) {
                 int newStage = knowledge.getResearchStage(key);
-                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.progress.success", key.toString(), oldStage, newStage), true);
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.progress.success", key.toString(), target.getName(), oldStage, newStage), true);
+                target.sendMessage(new TranslationTextComponent("commands.primalmagic.research.progress.target", key.toString(), source.getName(), oldStage, newStage));
             } else {
                 source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.progress.failure", key.toString(), oldStage), true);
             }
@@ -199,6 +203,7 @@ public class PrimalMagicCommand {
             knowledge.clearKnowledge();
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.reset", target.getName()), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.knowledge.reset.target", source.getName()));
         }
         return 0;
     }
@@ -228,6 +233,7 @@ public class PrimalMagicCommand {
         } else {
             if (ResearchManager.addKnowledge(target, type, points)) {
                 source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.success", points, type.name(), target.getName().getString()), true);
+                target.sendMessage(new TranslationTextComponent("commands.primalmagic.knowledge.add.target", points, type.name(), source.getName()));
             } else {
                 source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.failure", target.getName().getString()), true);
             }
@@ -240,20 +246,22 @@ public class PrimalMagicCommand {
         try {
             stack = item.createStack(1, false);
         } catch (CommandSyntaxException e) {
-            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.failure", target.getName().getString()).applyTextStyle(TextFormatting.RED), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.failure", target.getName()).applyTextStyle(TextFormatting.RED), true);
             return 0;
         }
         if (AffinityManager.setScanned(stack, target)) {
-            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.success", target.getName().getString(), item.getItem().getRegistryName().toString()), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.success", target.getName(), item.getItem().getRegistryName().toString()), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.scans.grant.target", source.getName(), item.getItem().getRegistryName().toString()));
         } else {
-            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.failure", target.getName().getString()).applyTextStyle(TextFormatting.RED), true);            
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.failure", target.getName()).applyTextStyle(TextFormatting.RED), true);            
         }
         return 0;
     }
     
     private static int grantAllScanResearch(CommandSource source, ServerPlayerEntity target) {
         int count = AffinityManager.setAllScanned(target);
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant_all", count, target.getName().getString()), true);
+        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant_all", count, target.getName()), true);
+        target.sendMessage(new TranslationTextComponent("commands.primalmagic.scans.grant_all.target", count, source.getName()));
         return 0;
     }
 }
