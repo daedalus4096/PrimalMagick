@@ -103,11 +103,15 @@
     "item.primalmagic.essence_cluster_void": "Void Cluster",
     "item.primalmagic.essence_cluster_hallowed": "Hallowed Cluster",
     "item.primalmagic.alchemical_waste": "Alchemical Waste",
+    "item.primalmagic.bloody_flesh": "Bloody Flesh",
     "item.primalmagic.mundane_wand": "Mundane Wand",
     "item.primalmagic.modular_wand": "%1$s %2$s %3$s Wand",
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.apprentice_wand_gem_item": "Apprentice's Wand Gem",
+    
+    "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
+    "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     
@@ -311,6 +315,7 @@
     "event.primalmagic.scan.fail": "You are unable to scan that",
     "event.primalmagic.scan.repeat": "You learn nothing new from scanning that",
     "event.primalmagic.scan.toobig": "There are too many items there to scan completely",
+    "event.primalmagic.discover_source.blood": "Your blood sings with power as warmth spreads through you. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.infernal": "The fiery aura of this place seethes with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.void": "The emptiness of this place nonetheless teems with magic. You believe this may be a new primal source!",
     
