@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
+import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,7 +32,23 @@ public class ItemStackWidget extends Widget {
     
     @Override
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        Minecraft mc = Minecraft.getInstance();
+        
+        // Draw stack icon
         GuiUtils.renderItemStack(this.stack, this.x, this.y, this.getMessage(), false);
+        
+        // Draw amount string if applicable
+        if (this.stack.getCount() > 1) {
+            ITextComponent amountText = new StringTextComponent(Integer.toString(this.stack.getCount()));
+            int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.pushMatrix();
+            GlStateManager.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
+            GlStateManager.scaled(0.5D, 0.5D, 0.5D);
+            mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
+            GlStateManager.popMatrix();
+        }
+        
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
