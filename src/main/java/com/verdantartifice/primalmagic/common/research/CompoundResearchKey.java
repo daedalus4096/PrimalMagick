@@ -144,6 +144,14 @@ public class CompoundResearchKey {
         }
     }
     
+    public boolean containsStripped(@Nullable SimpleResearchKey simpleKey) {
+        if (simpleKey == null) {
+            return false;
+        } else {
+            return this.keys.stream().map((k) -> k.stripStage()).collect(Collectors.toList()).contains(simpleKey.stripStage());
+        }
+    }
+    
     @Override
     public String toString() {
         String glue = this.requireAll ? "&&" : "||";

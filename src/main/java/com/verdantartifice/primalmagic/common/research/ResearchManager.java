@@ -103,6 +103,42 @@ public class ResearchManager {
         }
     }
     
+    public static void forceRevokeWithAllChildren(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+        if (player != null && key != null) {
+            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+            if (knowledge != null && knowledge.isResearchComplete(key)) {
+                for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
+                    CompoundResearchKey parentResearch = entry.getParentResearch();
+                    if (parentResearch != null && parentResearch.containsStripped(key)) {
+                        revokeResearch(player, entry.getKey());
+                    }
+                }
+                revokeResearch(player, key.stripStage());
+            }
+        }
+    }
+    
+    public static boolean revokeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+        return revokeResearch(player, key, true);
+    }
+    
+    public static boolean revokeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync) {
+        if (player == null || key == null) {
+            return false;
+        }
+        
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        }
+
+        knowledge.removeResearch(key);
+        if (sync) {
+            SYNC_LIST.put(player.getName().getString(), Boolean.TRUE);
+        }
+        return true;
+    }
+    
     public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
         return progressResearch(player, key, true);
     }

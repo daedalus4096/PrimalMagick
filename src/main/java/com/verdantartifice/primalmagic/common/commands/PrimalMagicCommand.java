@@ -41,6 +41,9 @@ public class PrimalMagicCommand {
                     .then(Commands.literal("grant")
                         .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return grantResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
                     )
+                    .then(Commands.literal("revoke")
+                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return revokeResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                    )
                     .then(Commands.literal("details")
                         .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return detailResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
                     )
@@ -126,6 +129,21 @@ public class PrimalMagicCommand {
             ResearchManager.forceGrantWithAllParents(target, key);
             knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), key.toString()), true);
+        }
+        return 0;
+    }
+    
+    private static int revokeResearch(CommandSource source, ServerPlayerEntity target, ResearchInput input) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        SimpleResearchKey key = input.getKey();
+        if (knowledge == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.error").applyTextStyle(TextFormatting.RED), true);
+        } else if (ResearchEntries.getEntry(key) == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.noexist", key.toString()).applyTextStyle(TextFormatting.RED), true);
+        } else {
+            ResearchManager.forceRevokeWithAllChildren(target, key);
+            knowledge.sync(target);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.revoke", target.getName(), key.toString()), true);
         }
         return 0;
     }

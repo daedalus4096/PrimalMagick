@@ -279,6 +279,7 @@
     "commands.primalmagic.research.list": "All research for %1$s: %2$s",
     "commands.primalmagic.research.reset": "Resetting all research for %1$s",
     "commands.primalmagic.research.grant": "Granting research to %1$s: %2$s",
+    "commands.primalmagic.research.revoke": "Revoking research from %1$s: %2$s",
     "commands.primalmagic.research.details.1": "Research %1$s of player %2$s:",
     "commands.primalmagic.research.details.2": "  Status: %1$s",
     "commands.primalmagic.research.details.3": "  Current stage: %1$d",
