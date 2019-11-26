@@ -52,12 +52,12 @@ public class PlayerEvents {
         if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER)) {
             knowledge.addResearch(Source.INFERNAL.getDiscoverKey());
             knowledge.sync(player);
-            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.infernal").applyTextStyle(TextFormatting.GREEN), true);
+            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.infernal").applyTextStyle(TextFormatting.GREEN), false);
         }
         if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.END)) {
             knowledge.addResearch(Source.VOID.getDiscoverKey());
             knowledge.sync(player);
-            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.void").applyTextStyle(TextFormatting.GREEN), true);
+            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.void").applyTextStyle(TextFormatting.GREEN), false);
         }
     }
     
