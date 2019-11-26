@@ -125,9 +125,8 @@ public class ResearchManager {
         }
         
         ResearchEntry entry = ResearchEntries.getEntry(key);
-        boolean popups;
+        boolean popups = true;
         if (entry != null) {
-            popups = true;
             ResearchStage currentStage = null;
             if (!entry.getStages().isEmpty()) {
                 int cs = knowledge.getResearchStage(key);
@@ -152,23 +151,23 @@ public class ResearchManager {
                     // TODO process attunement grants
                 }
             }
-            if (popups) {
-                if (sync) {
-                    knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
-                    if (!noFlags) {
-                        knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
-                    } else {
-                        noFlags = false;
-                    }
+        }
+        if (popups) {
+            if (sync) {
+                knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
+                if (!noFlags) {
+                    knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
+                } else {
+                    noFlags = false;
                 }
-                for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
-                    if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
-                        for (ResearchAddendum addendum : searchEntry.getAddenda()) {
-                            if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key)) {
-                                ITextComponent nameComp = new TranslationTextComponent(searchEntry.getNameTranslationKey());
-                                player.sendMessage(new TranslationTextComponent("event.primalmagic.add_addendum", nameComp));
-                                knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
-                            }
+            }
+            for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
+                if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
+                    for (ResearchAddendum addendum : searchEntry.getAddenda()) {
+                        if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key)) {
+                            ITextComponent nameComp = new TranslationTextComponent(searchEntry.getNameTranslationKey());
+                            player.sendMessage(new TranslationTextComponent("event.primalmagic.add_addendum", nameComp));
+                            knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
                         }
                     }
                 }
