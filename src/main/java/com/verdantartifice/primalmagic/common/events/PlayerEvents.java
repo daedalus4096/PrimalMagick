@@ -5,13 +5,17 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -22,18 +26,38 @@ import net.minecraftforge.fml.common.Mod;
 public class PlayerEvents {
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntity() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)event.getEntity();
-            if (!player.world.isRemote) {
-                if (player.ticksExisted % 20 == 0) {
-                    if (ResearchManager.popSyncList(player.getName().getString()) != null) {
-                        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                        if (knowledge != null) {
-                            knowledge.sync((ServerPlayerEntity)player);
-                        }
+        if (!event.getEntity().world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
+            ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
+            if (player.ticksExisted % 20 == 0) {
+                if (ResearchManager.popSyncList(player.getName().getString()) != null) {
+                    IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+                    if (knowledge != null) {
+                        knowledge.sync(player);
                     }
                 }
             }
+            if (player.ticksExisted % 200 == 0) {
+                checkEnvironmentalResearch(player);
+            }
+        }
+    }
+    
+    protected static void checkEnvironmentalResearch(ServerPlayerEntity player) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null || !knowledge.isResearchKnown(SimpleResearchKey.parse("FIRST_STEPS"))) {
+            return;
+        }
+        
+        Biome biome = player.world.getBiome(player.getPosition());
+        if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER)) {
+            knowledge.addResearch(Source.INFERNAL.getDiscoverKey());
+            knowledge.sync(player);
+            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.infernal").applyTextStyle(TextFormatting.GREEN), true);
+        }
+        if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.END)) {
+            knowledge.addResearch(Source.VOID.getDiscoverKey());
+            knowledge.sync(player);
+            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.void").applyTextStyle(TextFormatting.GREEN), true);
         }
     }
     
