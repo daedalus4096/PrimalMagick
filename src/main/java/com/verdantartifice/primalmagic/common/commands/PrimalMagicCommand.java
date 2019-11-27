@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.commands;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,10 +15,13 @@ import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeAr
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeInput;
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchInput;
+import com.verdantartifice.primalmagic.common.commands.arguments.SourceArgument;
+import com.verdantartifice.primalmagic.common.commands.arguments.SourceInput;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -71,6 +75,15 @@ public class PrimalMagicCommand {
                         .then(Commands.argument("item", ItemArgument.item()).executes((context) -> { return grantScanResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ItemArgument.getItem(context, "item")); }))
                     )
                     .then(Commands.literal("grant_all").executes((context) -> { return grantAllScanResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
+                )
+            )
+            .then(Commands.literal("sources")
+                .then(Commands.argument("target", EntityArgument.player())
+                    .then(Commands.literal("list").executes((context) -> { return listUnlockedSources(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
+                    .then(Commands.literal("unlock_all").executes((context) -> { return unlockAllSources(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
+                    .then(Commands.literal("unlock")
+                        .then(Commands.argument("source", SourceArgument.source()).executes((context) -> { return unlockSource(context.getSource(), EntityArgument.getPlayer(context, "target"), SourceArgument.getSource(context, "source")); }))
+                    )
                 )
             )
         );
@@ -262,6 +275,46 @@ public class PrimalMagicCommand {
         int count = AffinityManager.setAllScanned(target);
         source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant_all", count, target.getName()), true);
         target.sendMessage(new TranslationTextComponent("commands.primalmagic.scans.grant_all.target", count, source.getName()));
+        return 0;
+    }
+
+    private static int listUnlockedSources(CommandSource source, ServerPlayerEntity target) {
+        List<String> unlockedTags = Source.SORTED_SOURCES.stream()
+                                        .filter((s) -> s.isDiscovered(target))
+                                        .map((s) -> s.getTag().toUpperCase())
+                                        .collect(Collectors.toList());
+        String tagStr = String.join(", ", unlockedTags);
+        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.sources.list", target.getName(), tagStr), true);
+        return 0;
+    }
+
+    private static int unlockAllSources(CommandSource source, ServerPlayerEntity target) {
+        int unlocked = 0;
+        for (Source toUnlock : Source.SOURCES.values()) {
+            if (!toUnlock.isDiscovered(target)) {
+                if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
+                    unlocked++;
+                }
+            }
+        }
+        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.sources.unlock_all", target.getName(), unlocked), true);
+        target.sendMessage(new TranslationTextComponent("commands.primalmagic.sources.unlock_all.target", source.getName(), unlocked));
+        return 0;
+    }
+
+    private static int unlockSource(CommandSource source, ServerPlayerEntity target, SourceInput input) {
+        String tag = input.getSourceTag();
+        Source toUnlock = Source.getSource(tag.toLowerCase());
+        if (toUnlock == null) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.source.noexist", tag).applyTextStyle(TextFormatting.RED), true);
+        } else if (toUnlock.isDiscovered(target)) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.sources.unlock.already_unlocked", target.getName(), tag.toUpperCase()).applyTextStyle(TextFormatting.RED), true);
+        } else if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.sources.unlock.success", target.getName(), tag.toUpperCase()), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.sources.unlock.target", source.getName(), tag.toUpperCase()));
+        } else {
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.sources.unlock.failure", target.getName(), tag.toUpperCase()).applyTextStyle(TextFormatting.RED), true);
+        }
         return 0;
     }
 }
