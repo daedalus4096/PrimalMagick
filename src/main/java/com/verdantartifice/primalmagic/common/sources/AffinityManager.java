@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.FakeContainer;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
@@ -393,6 +394,7 @@ public class AffinityManager {
             if (obsPoints > 0) {
                 knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
             }
+            ResearchManager.checkScanTriggers(player, stack.getItem());
             if (sync) {
                 knowledge.sync(player);
             }

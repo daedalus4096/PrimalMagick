@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagic.common.init;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.ScanSourceUnlockTrigger;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -13,6 +16,7 @@ public class InitResearch {
         initDisciplines();
         initResearchFiles();
         ResearchManager.parseAllResearch();
+        initScanResearch();
     }
     
     private static void initDisciplines() {
@@ -33,5 +37,9 @@ public class InitResearch {
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/runeworking"));
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/ritual"));
         ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/magitech"));
+    }
+    
+    private static void initScanResearch() {
+        ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB, Source.HALLOWED));
     }
 }

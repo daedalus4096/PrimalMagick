@@ -104,6 +104,7 @@
     "item.primalmagic.essence_cluster_hallowed": "Hallowed Cluster",
     "item.primalmagic.alchemical_waste": "Alchemical Waste",
     "item.primalmagic.bloody_flesh": "Bloody Flesh",
+    "item.primalmagic.hallowed_orb": "Hallowed Orb",
     "item.primalmagic.mundane_wand": "Mundane Wand",
     "item.primalmagic.modular_wand": "%1$s %2$s %3$s Wand",
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
@@ -112,6 +113,8 @@
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",
+    "tooltip.primalmagic.hallowed_orb.1": "A sense of peace washes over",
+    "tooltip.primalmagic.hallowed_orb.2": "you as you hold this",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     
@@ -326,6 +329,7 @@
     "event.primalmagic.discover_source.blood": "Your blood sings with power as warmth spreads through you. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.infernal": "The fiery aura of this place seethes with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.void": "The emptiness of this place nonetheless teems with magic. You believe this may be a new primal source!",
+    "event.primalmagic.discover_source.hallowed": "This object seems to radiate a magic of harmony. You believe this may be a new primal source!",
     
     "primalmagic.crafting.mana_tooltip": "%1$d %2$s mana",
     "primalmagic.crafting.no_mana": "No mana cost",

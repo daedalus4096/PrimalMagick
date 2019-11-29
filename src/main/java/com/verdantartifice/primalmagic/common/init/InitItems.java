@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.BloodyFleshItem;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
+import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
 import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
@@ -112,5 +113,6 @@ public class InitItems {
         registry.register(new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(PrimalMagic.MODID, "magnifying_glass"));
         registry.register(new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(PrimalMagic.MODID, "alchemical_waste"));
         registry.register(new BloodyFleshItem());
+        registry.register(new HallowedOrbItem());
     }
 }

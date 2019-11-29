@@ -2,8 +2,10 @@ package com.verdantartifice.primalmagic.common.research;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,6 +21,8 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -26,6 +30,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class ResearchManager {
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
     private static final Map<String, Boolean> SYNC_LIST = new ConcurrentHashMap<>();
+    private static final List<IScanTrigger> SCAN_TRIGGERS = new ArrayList<>();
     
     public static boolean noFlags = false;
     
@@ -273,6 +278,21 @@ public class ResearchManager {
                 }
             } else {
                 PrimalMagic.LOGGER.warn("Research file not found: {}", location.toString());
+            }
+        }
+    }
+    
+    public static boolean registerScanTrigger(@Nullable IScanTrigger trigger) {
+        if (trigger == null) {
+            return false;
+        }
+        return SCAN_TRIGGERS.add(trigger);
+    }
+    
+    public static void checkScanTriggers(ServerPlayerEntity player, IItemProvider itemProvider) {
+        for (IScanTrigger trigger : SCAN_TRIGGERS) {
+            if (trigger.matches(player, itemProvider)) {
+                trigger.onMatch(player, itemProvider);
             }
         }
     }
