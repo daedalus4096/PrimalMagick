@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.blocks.misc;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
+import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,12 +21,12 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.Mirror;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -33,11 +34,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class AnalysisTableBlock extends Block {
-    protected static final VoxelShape PART_TOP = Block.makeCuboidShape(0.0D, 12.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape PART_BASE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 2.0D, 13.0D);
-    protected static final VoxelShape PART_STAND = Block.makeCuboidShape(6.0D, 2.0D, 6.0D, 10.0D, 12.0D, 10.0D);
-    protected static final VoxelShape SHAPE = VoxelShapes.or(PART_TOP, PART_BASE, PART_STAND);
-    
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/analysis_table"));
+
     protected static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
     public AnalysisTableBlock() {

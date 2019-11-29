@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntity;
+import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,6 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -30,7 +32,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,16 +40,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class CalcinatorBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    
-    protected static final VoxelShape PART_LEG1 = Block.makeCuboidShape(2, 0, 2, 5, 2, 5);
-    protected static final VoxelShape PART_LEG2 = Block.makeCuboidShape(11, 0, 2, 14, 2, 5);
-    protected static final VoxelShape PART_LEG3 = Block.makeCuboidShape(11, 0, 11, 14, 2, 14);
-    protected static final VoxelShape PART_LEG4 = Block.makeCuboidShape(2, 0, 11, 5, 2, 14);
-    protected static final VoxelShape PART_BODY = Block.makeCuboidShape(2, 2, 2, 14, 11, 14);
-    protected static final VoxelShape PART_TOP1 = Block.makeCuboidShape(3, 11, 3, 13, 12, 13);
-    protected static final VoxelShape PART_TOP2 = Block.makeCuboidShape(4, 12, 4, 12, 13, 12);
-    protected static final VoxelShape PART_STACK = Block.makeCuboidShape(6, 13, 6, 10, 16, 10);
-    protected static final VoxelShape SHAPE = VoxelShapes.or(PART_LEG1, PART_LEG2, PART_LEG3, PART_LEG4, PART_BODY, PART_TOP1, PART_TOP2, PART_STACK);
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/calcinator"));
     
     public CalcinatorBlock() {
         super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).lightValue(13).sound(SoundType.STONE));
