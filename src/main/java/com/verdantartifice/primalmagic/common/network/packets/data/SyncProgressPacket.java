@@ -74,6 +74,7 @@ public class SyncProgressPacket implements IMessageToServer {
                     }
                 }
             });
+            ctx.get().setPacketHandled(true);
         }
         
         protected static boolean checkAndConsumePrerequisites(PlayerEntity player, SimpleResearchKey key) {

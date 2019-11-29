@@ -76,6 +76,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
                     }
                 }
             });
+            ctx.get().setPacketHandled(true);
         }
     }
 }

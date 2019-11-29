@@ -38,6 +38,7 @@ public class AnalysisActionPacket implements IMessageToServer {
                     ((AnalysisTableContainer)player.openContainer).doScan();
                 }
             });
+            ctx.get().setPacketHandled(true);
         }
     }
 }

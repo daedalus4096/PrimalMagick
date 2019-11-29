@@ -47,6 +47,7 @@ public class ScanItemPacket implements IMessageToServer {
                     }
                 }
             });
+            ctx.get().setPacketHandled(true);
         }
     }
 }

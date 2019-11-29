@@ -58,6 +58,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
                     }
                 }
             });
+            ctx.get().setPacketHandled(true);
         }
     }
 }

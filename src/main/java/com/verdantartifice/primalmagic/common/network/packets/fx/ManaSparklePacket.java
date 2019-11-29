@@ -67,6 +67,7 @@ public class ManaSparklePacket implements IMessageToClient {
             ctx.get().enqueueWork(() -> {
                 FxDispatcher.INSTANCE.manaSparkle(message.x1, message.y1, message.z1, message.x2, message.y2, message.z2, message.maxAge, message.color);
             });
+            ctx.get().setPacketHandled(true);
         }
     }
 }

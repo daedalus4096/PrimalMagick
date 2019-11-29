@@ -65,6 +65,7 @@ public class WandPoofPacket implements IMessageToClient {
                 }
                 FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, side);
             });
+            ctx.get().setPacketHandled(true);
         }
     }
 }

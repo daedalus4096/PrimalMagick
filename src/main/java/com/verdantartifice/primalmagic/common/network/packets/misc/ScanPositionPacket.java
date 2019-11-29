@@ -84,6 +84,7 @@ public class ScanPositionPacket implements IMessageToServer {
                     }
                 }
             });
+            ctx.get().setPacketHandled(true);
         }
     }
 }
