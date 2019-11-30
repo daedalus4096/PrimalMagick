@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.capabilities.PlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerKnowledge;
 
 import net.minecraft.entity.Entity;
@@ -15,6 +16,7 @@ public class CapabilityEvents {
     public static void attachEntityCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof PlayerEntity) {
             event.addCapability(PlayerKnowledge.Provider.NAME, new PlayerKnowledge.Provider());
+            event.addCapability(PlayerCooldowns.Provider.NAME, new PlayerCooldowns.Provider());
         }
     }
 }

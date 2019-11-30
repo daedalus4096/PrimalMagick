@@ -11,8 +11,16 @@ public class PrimalMagicCapabilities {
     @CapabilityInject(IPlayerKnowledge.class)
     public static final Capability<IPlayerKnowledge> KNOWLEDGE = null;
     
+    @CapabilityInject(IPlayerCooldowns.class)
+    public static final Capability<IPlayerCooldowns> COOLDOWNS = null;
+    
     @Nullable
     public static IPlayerKnowledge getKnowledge(@Nonnull PlayerEntity player) {
         return player.getCapability(KNOWLEDGE, null).orElse(null);
+    }
+    
+    @Nullable
+    public static IPlayerCooldowns getCooldowns(@Nonnull PlayerEntity player) {
+        return player.getCapability(COOLDOWNS, null).orElse(null);
     }
 }
