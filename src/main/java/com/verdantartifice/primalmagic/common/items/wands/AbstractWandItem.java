@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
@@ -126,7 +127,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         PlayerEntity player = Minecraft.getInstance().player;
+        
         if (PrimalMagic.proxy.isShiftDown()) {
+            // Add detailed mana information
             for (Source source : Source.SORTED_SOURCES) {
                 if (source.isDiscovered(player)) {
                     ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
@@ -134,7 +137,24 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     tooltip.add(line);
                 }
             }
+            
+            // Add inscribed spell listing
+            List<SpellPackage> spells = this.getSpells(stack);
+            int activeIndex = this.getActiveSpellIndex(stack);
+            if (!spells.isEmpty()) {
+                tooltip.add(new TranslationTextComponent("primalmagic.spells.wand_header"));
+                for (int index = 0; index < spells.size(); index++) {
+                    SpellPackage spell = spells.get(index);
+                    StringBuilder sb = new StringBuilder("  ");
+                    if (index == activeIndex) {
+                        sb.append("*");
+                    }
+                    sb.append(spell.getName());
+                    tooltip.add(new StringTextComponent(sb.toString()));
+                }
+            }
         } else {
+            // Add mana summary
             StringBuilder sb = new StringBuilder();
             boolean first = true;
             for (Source source : Source.SORTED_SOURCES) {
@@ -149,6 +169,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 }
             }
             tooltip.add(new StringTextComponent(sb.toString()));
+            
+            // Add active spell
+            SpellPackage activeSpell = this.getActiveSpell(stack);
+            if (activeSpell != null) {
+                tooltip.add(new TranslationTextComponent("primalmagic.spells.short_wand_header", activeSpell.getName()));
+            }
         }
     }
     

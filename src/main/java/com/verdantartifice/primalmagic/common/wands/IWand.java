@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagic.common.wands;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -35,4 +38,16 @@ public interface IWand {
 
     @Nullable
     public IInteractWithWand getTileInUse(@Nonnull ItemStack wandStack, @Nonnull World world);
+    
+    @Nonnull
+    public List<SpellPackage> getSpells(@Nullable ItemStack stack);
+    
+    public int getActiveSpellIndex(@Nullable ItemStack stack);
+    
+    @Nullable
+    public SpellPackage getActiveSpell(@Nullable ItemStack stack);
+    
+    public boolean setActiveSpellIndex(@Nullable ItemStack stack, int index);
+    
+    public boolean addSpell(@Nullable ItemStack stack, @Nullable SpellPackage spell);
 }

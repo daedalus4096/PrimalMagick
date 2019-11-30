@@ -1,10 +1,14 @@
 package com.verdantartifice.primalmagic.common.items.wands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandTEISR;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -12,6 +16,9 @@ import com.verdantartifice.primalmagic.common.wands.WandGem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.IntNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -87,7 +94,84 @@ public class ModularWandItem extends AbstractWandItem {
             this.setWandCore(stack, WandCore.HEARTWOOD);
             this.setWandCap(stack, WandCap.IRON);
             this.setWandGem(stack, WandGem.APPRENTICE);
+            
+            // TODO Remove after testing is complete
+            this.addSpell(stack, new SpellPackage("Test Spell"));
+            this.setActiveSpellIndex(stack, 0);
+            
             items.add(stack);
+        }
+    }
+
+    @Override
+    public List<SpellPackage> getSpells(ItemStack stack) {
+        List<SpellPackage> retVal = new ArrayList<>();
+        if (stack != null) {
+            ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
+            for (int index = 0; index < spellTagsList.size(); index++) {
+                CompoundNBT spellTag = spellTagsList.getCompound(index);
+                SpellPackage newSpell = new SpellPackage();
+                newSpell.deserializeNBT(spellTag);
+                retVal.add(newSpell);
+            }
+        }
+        return retVal;
+    }
+
+    @Override
+    public int getActiveSpellIndex(ItemStack stack) {
+        return (stack != null && stack.getTag().contains("ActiveSpell")) ? stack.getTag().getInt("ActiveSpell") : -1;
+    }
+    
+    @Override
+    public SpellPackage getActiveSpell(ItemStack stack) {
+        SpellPackage retVal = null;
+        if (stack != null) {
+            ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
+            int index = this.getActiveSpellIndex(stack);
+            if (index >= 0 && index < spellTagsList.size()) {
+                CompoundNBT spellTag = spellTagsList.getCompound(index);
+                retVal = new SpellPackage();
+                retVal.deserializeNBT(spellTag);
+            }
+        }
+        return retVal;
+    }
+
+    @Override
+    public boolean setActiveSpellIndex(ItemStack stack, int index) {
+        if (stack == null) {
+            return false;
+        } else if (index >= -1 && index < this.getSpells(stack).size()) {
+            stack.setTagInfo("ActiveSpell", new IntNBT(index));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addSpell(ItemStack stack, SpellPackage spell) {
+        if (stack == null || spell == null) {
+            return false;
+        }
+        
+        WandCore core = this.getWandCore(stack);
+        if (core == null) {
+            return false;
+        }
+        
+        List<SpellPackage> existingSpells = this.getSpells(stack);
+        if (existingSpells.size() >= core.getSpellSlots()) {
+            return false;
+        }
+        
+        if (!stack.getTag().contains("Spells")) {
+            ListNBT newList = new ListNBT();
+            newList.add(spell.serializeNBT());
+            stack.setTagInfo("Spells", newList);
+            return true;
+        } else {
+            return stack.getTag().getList("Spells", 10).add(spell.serializeNBT());
         }
     }
 }
