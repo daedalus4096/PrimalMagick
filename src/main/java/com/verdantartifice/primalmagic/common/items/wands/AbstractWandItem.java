@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
@@ -220,7 +221,21 @@ public abstract class AbstractWandItem extends Item implements IWand {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack stack = playerIn.getHeldItem(handIn);
         playerIn.setActiveHand(handIn);
-        return new ActionResult<>(ActionResultType.SUCCESS, stack);
+        SpellPackage activeSpell = this.getActiveSpell(stack);
+        if (activeSpell != null && !SpellManager.isOnCooldown(playerIn)) {
+            SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());
+            if (worldIn.isRemote) {
+                return new ActionResult<>(ActionResultType.SUCCESS, stack);
+            } else if (this.consumeMana(stack, playerIn, activeSpell.getManaCost())) {
+                SpellManager.castSpell(playerIn, activeSpell);
+                playerIn.swingArm(handIn);
+                return new ActionResult<>(ActionResultType.SUCCESS, stack);
+            } else {
+                return new ActionResult<>(ActionResultType.FAIL, stack);
+            }
+        } else {
+            return new ActionResult<>(ActionResultType.SUCCESS, stack);
+        }
     }
     
     @Override

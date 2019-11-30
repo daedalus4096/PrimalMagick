@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.spells;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 
@@ -24,5 +25,9 @@ public class SpellManager {
                 cooldowns.sync((ServerPlayerEntity)player);
             }
         }
+    }
+    
+    public static void castSpell(PlayerEntity player, SpellPackage spell) {
+        PrimalMagic.LOGGER.info("Casting spell {}", spell.getName());
     }
 }
