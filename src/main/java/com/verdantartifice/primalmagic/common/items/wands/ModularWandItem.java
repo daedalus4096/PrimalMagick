@@ -112,7 +112,7 @@ public class ModularWandItem extends AbstractWandItem {
             ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
             for (int index = 0; index < spellTagsList.size(); index++) {
                 CompoundNBT spellTag = spellTagsList.getCompound(index);
-                ISpellPackage newSpell = SpellFactory.fromNBT(spellTag);
+                ISpellPackage newSpell = SpellFactory.getPackageFromNBT(spellTag);
                 if (newSpell != null) {
                     retVal.add(newSpell);
                 }
@@ -143,7 +143,7 @@ public class ModularWandItem extends AbstractWandItem {
             int index = this.getActiveSpellIndex(stack);
             if (index >= 0 && index < spellTagsList.size()) {
                 CompoundNBT spellTag = spellTagsList.getCompound(index);
-                retVal = SpellFactory.fromNBT(spellTag);
+                retVal = SpellFactory.getPackageFromNBT(spellTag);
             }
         }
         return retVal;
