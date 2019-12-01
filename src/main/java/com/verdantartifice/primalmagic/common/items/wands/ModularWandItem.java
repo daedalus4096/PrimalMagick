@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandTEI
 import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellFactory;
 import com.verdantartifice.primalmagic.common.spells.TouchSpellPackage;
+import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -98,7 +99,9 @@ public class ModularWandItem extends AbstractWandItem {
             this.setWandGem(stack, WandGem.APPRENTICE);
             
             // TODO Remove after testing is complete
-            this.addSpell(stack, new TouchSpellPackage("Test Spell"));
+            ISpellPackage spell = new TouchSpellPackage("Test Spell");
+            spell.setPayload(new EarthDamageSpellPayload(5));
+            this.addSpell(stack, spell);
             this.setActiveSpellIndex(stack, 0);
             
             items.add(stack);

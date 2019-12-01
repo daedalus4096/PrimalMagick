@@ -5,7 +5,15 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import net.minecraft.nbt.CompoundNBT;
 
 public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
-    protected static final String TYPE = "earth_damage";
+    public static final String TYPE = "earth_damage";
+    
+    public EarthDamageSpellPayload() {
+        super();
+    }
+    
+    public EarthDamageSpellPayload(int power) {
+        super(power);
+    }
     
     @Override
     public CompoundNBT serializeNBT() {

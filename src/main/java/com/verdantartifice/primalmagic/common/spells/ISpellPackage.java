@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,6 +23,11 @@ public interface ISpellPackage extends INBTSerializable<CompoundNBT> {
     public String getName();
 
     public void setName(@Nullable String name);
+    
+    @Nullable
+    public ISpellPayload getPayload();
+    
+    public void setPayload(@Nullable ISpellPayload payload);
 
     public int getCooldownTicks();
 

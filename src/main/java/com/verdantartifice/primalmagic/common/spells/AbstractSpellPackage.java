@@ -7,19 +7,21 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
 import net.minecraft.nbt.CompoundNBT;
 
 public abstract class AbstractSpellPackage implements ISpellPackage {
     protected UUID spellUUID;
     protected String name;
+    protected ISpellPayload payload;
     
     public AbstractSpellPackage() {
         this.spellUUID = UUID.randomUUID();
     }
     
     public AbstractSpellPackage(@Nullable String name) {
-        super();
+        this();
         this.name = name;
     }
     
@@ -44,6 +46,17 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
     public void setName(@Nullable String name) {
         this.name = name;
     }
+    
+    @Override
+    @Nullable
+    public ISpellPayload getPayload() {
+        return this.payload;
+    }
+    
+    @Override
+    public void setPayload(@Nullable ISpellPayload payload) {
+        this.payload = payload;
+    }
 
     @Override
     public CompoundNBT serializeNBT() {
@@ -54,6 +67,9 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
         if (this.name != null) {
             nbt.putString("SpellName", this.name);
         }
+        if (this.payload != null) {
+            nbt.put("SpellPayload", this.payload.serializeNBT());
+        }
         return nbt;
     }
 
@@ -61,6 +77,11 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
     public void deserializeNBT(CompoundNBT nbt) {
         this.spellUUID = nbt.getUniqueId("SpellUUID");
         this.name = nbt.getString("SpellName");
+        if (nbt.contains("SpellPayload")) {
+            this.payload = SpellFactory.getPayloadFromNBT(nbt.getCompound("SpellPayload"));
+        } else {
+            this.payload = null;
+        }
     }
     
     @Override
