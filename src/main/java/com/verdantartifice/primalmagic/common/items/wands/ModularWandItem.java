@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandTEI
 import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellFactory;
 import com.verdantartifice.primalmagic.common.spells.TouchSpellPackage;
-import com.verdantartifice.primalmagic.common.spells.AbstractSpellPackage;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;

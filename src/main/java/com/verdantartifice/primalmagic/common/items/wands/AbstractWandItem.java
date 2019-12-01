@@ -227,7 +227,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             if (worldIn.isRemote) {
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
             } else if (this.consumeMana(stack, playerIn, activeSpell.getManaCost())) {
-                SpellManager.castSpell(playerIn, activeSpell);
+                activeSpell.cast(worldIn, playerIn);
                 playerIn.swingArm(handIn);
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
             } else {

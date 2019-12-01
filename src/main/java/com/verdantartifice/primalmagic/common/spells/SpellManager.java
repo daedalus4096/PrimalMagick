@@ -32,10 +32,6 @@ public class SpellManager {
         }
     }
     
-    public static void castSpell(PlayerEntity player, ISpellPackage spell) {
-        PrimalMagic.LOGGER.info("Casting spell {}", spell.getName());
-    }
-    
     public static void cycleActiveSpell(@Nullable PlayerEntity player, @Nullable ItemStack wandStack) {
         if (wandStack != null && wandStack.getItem() instanceof IWand) {
             IWand wand = (IWand)wandStack.getItem();
