@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.spells;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.wands.IWand;
