@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagic.common.spells.payloads;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.nbt.CompoundNBT;
-
 public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "earth_damage";
     
@@ -16,10 +14,8 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
-        nbt.putString("PayloadType", TYPE);
-        return nbt;
+    protected String getPayloadType() {
+        return TYPE;
     }
     
     @Override

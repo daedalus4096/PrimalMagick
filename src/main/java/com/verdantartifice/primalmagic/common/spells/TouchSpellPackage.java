@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.spells;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -23,12 +22,10 @@ public class TouchSpellPackage extends AbstractSpellPackage {
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = super.serializeNBT();
-        tag.putString("SpellType", TYPE);
-        return tag;
+    protected String getPackageType() {
+        return TYPE;
     }
-
+    
     @Override
     public void cast(World world, PlayerEntity caster) {
         if (this.payload != null) {

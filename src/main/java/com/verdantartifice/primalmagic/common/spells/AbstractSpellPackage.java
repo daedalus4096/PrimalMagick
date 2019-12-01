@@ -58,9 +58,12 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
         this.payload = payload;
     }
 
+    protected abstract String getPackageType();
+
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = new CompoundNBT();
+        nbt.putString("SpellType", this.getPackageType());
         if (this.spellUUID != null) {
             nbt.putUniqueId("SpellUUID", this.spellUUID);
         }
