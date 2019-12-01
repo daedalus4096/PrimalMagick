@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.proxy;
 
+import com.verdantartifice.primalmagic.client.config.KeyBindings;
 import com.verdantartifice.primalmagic.client.gui.AnalysisTableScreen;
 import com.verdantartifice.primalmagic.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagic.client.gui.CalcinatorScreen;
@@ -18,8 +19,13 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         super.clientSetup(event);
+        this.registerKeybinds();
         this.registerScreens();
         this.registerTERs();
+    }
+    
+    private void registerKeybinds() {
+        KeyBindings.init();
     }
     
     private void registerScreens() {

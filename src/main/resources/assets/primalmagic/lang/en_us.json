@@ -333,6 +333,8 @@
     "event.primalmagic.discover_source.infernal": "The fiery aura of this place seethes with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.void": "The emptiness of this place nonetheless teems with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.hallowed": "This object seems to radiate a magic of harmony. You believe this may be a new primal source!",
+    "event.primalmagic.cycle_spell": "Active spell changed to: %1$s",
+    "event.primalmagic.cycle_spell.none": "Active spell changed to: none",
     
     "primalmagic.crafting.mana_tooltip": "%1$d %2$s mana",
     "primalmagic.crafting.no_mana": "No mana cost",
@@ -367,6 +369,9 @@
     "primalmagic.research.t_dummy.text": "Research Discovery",
     "primalmagic.research.b_dummy.text": "Item Discovery",
     "primalmagic.research.u_dummy.text": "Unknown Discovery",
+    
+    "key.categories.primalmagic": "Primal Magic",
+    "key.primalmagic.change_spell": "Cycle Active Spell",
     
     "itemGroup.primalmagic": "Primal Magic"
 }

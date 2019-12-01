@@ -26,6 +26,12 @@ public class MundaneWandItem extends AbstractWandItem {
         // Mundane wands can't carry spells
         return Collections.emptyList();
     }
+    
+    @Override
+    public int getSpellCount(ItemStack stack) {
+        // Mundane wands can't carry spells
+        return 0;
+    }
 
     @Override
     public int getActiveSpellIndex(ItemStack stack) {

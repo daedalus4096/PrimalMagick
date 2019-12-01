@@ -42,6 +42,8 @@ public interface IWand {
     @Nonnull
     public List<SpellPackage> getSpells(@Nullable ItemStack stack);
     
+    public int getSpellCount(@Nullable ItemStack stack);
+    
     public int getActiveSpellIndex(@Nullable ItemStack stack);
     
     @Nullable

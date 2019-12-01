@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressP
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActionPacket;
+import com.verdantartifice.primalmagic.common.network.packets.misc.CycleActiveSpellPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
@@ -44,6 +45,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, ScanPositionPacket.class, ScanPositionPacket::encode, ScanPositionPacket::decode, ScanPositionPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, AnalysisActionPacket.class, AnalysisActionPacket::encode, AnalysisActionPacket::decode, AnalysisActionPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncCooldownsPacket.class, SyncCooldownsPacket::encode, SyncCooldownsPacket::decode, SyncCooldownsPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, CycleActiveSpellPacket.class, CycleActiveSpellPacket::encode, CycleActiveSpellPacket::decode, CycleActiveSpellPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

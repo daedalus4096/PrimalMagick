@@ -117,6 +117,15 @@ public class ModularWandItem extends AbstractWandItem {
         }
         return retVal;
     }
+    
+    @Override
+    public int getSpellCount(ItemStack stack) {
+        if (stack != null) {
+            return stack.getTag().getList("Spells", 10).size();
+        } else {
+            return 0;
+        }
+    }
 
     @Override
     public int getActiveSpellIndex(ItemStack stack) {
