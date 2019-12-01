@@ -9,35 +9,38 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.common.util.INBTSerializable;
 
-public class SpellPackage implements INBTSerializable<CompoundNBT> {
+public abstract class AbstractSpellPackage implements ISpellPackage {
     protected UUID spellUUID;
     protected String name;
     
-    public SpellPackage() {
+    public AbstractSpellPackage() {
         this.spellUUID = UUID.randomUUID();
     }
     
-    public SpellPackage(@Nullable String name) {
+    public AbstractSpellPackage(@Nullable String name) {
         super();
         this.name = name;
     }
     
+    @Override
     @Nonnull
     public UUID getSpellUUID() {
         return this.spellUUID;
     }
     
+    @Override
     public void setSpellUUID(@Nonnull UUID spellUuid) {
         this.spellUUID = spellUuid;
     }
     
+    @Override
     @Nullable
     public String getName() {
         return this.name;
     }
     
+    @Override
     public void setName(@Nullable String name) {
         this.name = name;
     }
@@ -60,11 +63,13 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
         this.name = nbt.getString("SpellName");
     }
     
+    @Override
     public int getCooldownTicks() {
         // TODO Calculate actual value
         return 40;
     }
     
+    @Override
     @Nonnull
     public SourceList getManaCost() {
         // TODO Calculate actual cost

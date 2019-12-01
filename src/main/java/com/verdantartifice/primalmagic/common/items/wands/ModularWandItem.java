@@ -8,7 +8,10 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandTEISR;
-import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.SpellFactory;
+import com.verdantartifice.primalmagic.common.spells.TouchSpellPackage;
+import com.verdantartifice.primalmagic.common.spells.AbstractSpellPackage;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -96,7 +99,7 @@ public class ModularWandItem extends AbstractWandItem {
             this.setWandGem(stack, WandGem.APPRENTICE);
             
             // TODO Remove after testing is complete
-            this.addSpell(stack, new SpellPackage("Test Spell"));
+            this.addSpell(stack, new TouchSpellPackage("Test Spell"));
             this.setActiveSpellIndex(stack, 0);
             
             items.add(stack);
@@ -104,15 +107,16 @@ public class ModularWandItem extends AbstractWandItem {
     }
 
     @Override
-    public List<SpellPackage> getSpells(ItemStack stack) {
-        List<SpellPackage> retVal = new ArrayList<>();
+    public List<ISpellPackage> getSpells(ItemStack stack) {
+        List<ISpellPackage> retVal = new ArrayList<>();
         if (stack != null) {
             ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
             for (int index = 0; index < spellTagsList.size(); index++) {
                 CompoundNBT spellTag = spellTagsList.getCompound(index);
-                SpellPackage newSpell = new SpellPackage();
-                newSpell.deserializeNBT(spellTag);
-                retVal.add(newSpell);
+                ISpellPackage newSpell = SpellFactory.fromNBT(spellTag);
+                if (newSpell != null) {
+                    retVal.add(newSpell);
+                }
             }
         }
         return retVal;
@@ -133,15 +137,14 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     @Override
-    public SpellPackage getActiveSpell(ItemStack stack) {
-        SpellPackage retVal = null;
+    public ISpellPackage getActiveSpell(ItemStack stack) {
+        ISpellPackage retVal = null;
         if (stack != null) {
             ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
             int index = this.getActiveSpellIndex(stack);
             if (index >= 0 && index < spellTagsList.size()) {
                 CompoundNBT spellTag = spellTagsList.getCompound(index);
-                retVal = new SpellPackage();
-                retVal.deserializeNBT(spellTag);
+                retVal = SpellFactory.fromNBT(spellTag);
             }
         }
         return retVal;
@@ -159,7 +162,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
 
     @Override
-    public boolean addSpell(ItemStack stack, SpellPackage spell) {
+    public boolean addSpell(ItemStack stack, ISpellPackage spell) {
         if (stack == null || spell == null) {
             return false;
         }
@@ -169,7 +172,7 @@ public class ModularWandItem extends AbstractWandItem {
             return false;
         }
         
-        List<SpellPackage> existingSpells = this.getSpells(stack);
+        List<ISpellPackage> existingSpells = this.getSpells(stack);
         if (existingSpells.size() >= core.getSpellSlots()) {
             return false;
         }

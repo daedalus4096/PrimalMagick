@@ -32,7 +32,7 @@ public class SpellManager {
         }
     }
     
-    public static void castSpell(PlayerEntity player, SpellPackage spell) {
+    public static void castSpell(PlayerEntity player, ISpellPackage spell) {
         PrimalMagic.LOGGER.info("Casting spell {}", spell.getName());
     }
     
@@ -46,7 +46,7 @@ public class SpellManager {
             wand.setActiveSpellIndex(wandStack, newIndex);
             
             if (player != null) {
-                SpellPackage spell = wand.getActiveSpell(wandStack);
+                ISpellPackage spell = wand.getActiveSpell(wandStack);
                 if (spell == null) {
                     player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell.none"));
                 } else {
