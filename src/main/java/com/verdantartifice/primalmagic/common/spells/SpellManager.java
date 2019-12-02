@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.player.PlayerEntity;

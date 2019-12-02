@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.MundaneWandTEISR;
-import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

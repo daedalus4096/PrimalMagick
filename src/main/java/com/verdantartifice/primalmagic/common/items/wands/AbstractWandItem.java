@@ -9,8 +9,8 @@ import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
-import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
+import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 

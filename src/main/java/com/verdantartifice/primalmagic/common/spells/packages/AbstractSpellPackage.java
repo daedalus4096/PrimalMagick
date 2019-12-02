@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.spells;
+package com.verdantartifice.primalmagic.common.spells.packages;
 
 import java.util.UUID;
 
@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellFactory;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
 import net.minecraft.entity.player.PlayerEntity;

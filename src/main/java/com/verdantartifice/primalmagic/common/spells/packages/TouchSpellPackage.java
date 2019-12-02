@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.spells;
+package com.verdantartifice.primalmagic.common.spells.packages;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;

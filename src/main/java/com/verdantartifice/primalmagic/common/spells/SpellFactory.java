@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.spells;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.packages.TouchSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 

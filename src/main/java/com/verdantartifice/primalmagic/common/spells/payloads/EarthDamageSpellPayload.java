@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.spells.payloads;
 
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

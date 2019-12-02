@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.spells;
+package com.verdantartifice.primalmagic.common.spells.packages;
 
 import java.util.UUID;
 

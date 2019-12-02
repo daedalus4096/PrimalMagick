@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.SourceList;
-import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
