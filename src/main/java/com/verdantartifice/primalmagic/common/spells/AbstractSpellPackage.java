@@ -5,7 +5,6 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
@@ -96,7 +95,10 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
     @Override
     @Nonnull
     public SourceList getManaCost() {
-        // TODO Calculate actual cost
-        return new SourceList().add(Source.EARTH, 5);
+        SourceList retVal = new SourceList();
+        if (this.payload != null) {
+            retVal.add(this.payload.getManaCost());
+        }
+        return retVal;
     }
 }

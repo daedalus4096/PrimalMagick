@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
 
 import net.minecraft.block.BlockState;
@@ -46,4 +47,8 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         }
     }
 
+    @Override
+    public SourceList getManaCost() {
+        return new SourceList().add(this.getSource(), this.power);
+    }
 }
