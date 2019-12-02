@@ -22,4 +22,9 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     public Source getSource() {
         return Source.EARTH;
     }
+    
+    @Override
+    protected float getTotalDamage() {
+        return 3.0F + this.power;
+    }
 }
