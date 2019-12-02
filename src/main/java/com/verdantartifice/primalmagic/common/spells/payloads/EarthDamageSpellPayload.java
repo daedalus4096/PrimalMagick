@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
@@ -35,6 +35,6 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     
     @Override
     public void playSounds(World world, PlayerEntity caster) {
-        world.playSound(null, caster.getPosition(), SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+        world.playSound(null, caster.getPosition(), SoundsPM.ROCKSLIDE, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
 }

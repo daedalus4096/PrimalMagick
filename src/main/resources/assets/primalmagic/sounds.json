@@ -16,5 +16,13 @@
         "sounds": [
             "primalmagic:scan"
         ]
+    },
+    "rockslide": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:rockslide1",
+            "primalmagic:rockslide2",
+            "primalmagic:rockslide3"
+        ]
     }
 }

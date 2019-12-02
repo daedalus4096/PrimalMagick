@@ -11,6 +11,7 @@ public class InitSounds {
         registry.register(createEvent("page"));
         registry.register(createEvent("poof"));
         registry.register(createEvent("scan"));
+        registry.register(createEvent("rockslide"));
     }
     
     private static SoundEvent createEvent(String name) {
