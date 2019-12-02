@@ -116,9 +116,6 @@ public class ArcaneShapedRecipeBuilder {
         if (this.research == null) {
             throw new IllegalStateException("No research is defined for arcane shaped recipe " + id + "!");
         }
-        if (this.manaCosts == null || this.manaCosts.isEmpty()) {
-            throw new IllegalStateException("No mana cost is defined for arcane shaped recipe " + id + "!");
-        }
         
         Set<Character> set = new HashSet<>(this.key.keySet());
         set.remove(' ');
@@ -169,11 +166,13 @@ public class ArcaneShapedRecipeBuilder {
                 json.addProperty("research", this.research.toString());
             }
             
-            JsonObject manaJson = new JsonObject();
-            for (Source source : this.manaCosts.getSourcesSorted()) {
-                manaJson.addProperty(source.getTag(), this.manaCosts.getAmount(source));
+            if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
+                JsonObject manaJson = new JsonObject();
+                for (Source source : this.manaCosts.getSourcesSorted()) {
+                    manaJson.addProperty(source.getTag(), this.manaCosts.getAmount(source));
+                }
+                json.add("mana", manaJson);
             }
-            json.add("mana", manaJson);
             
             JsonArray patternJson = new JsonArray();
             for (String str : this.pattern) {

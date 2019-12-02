@@ -72,6 +72,14 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemTags.PLANKS)
             .addCriterion("has_planks", this.hasItem(ItemTags.PLANKS))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELL_SCROLL_BLANK)
+            .patternLine("  S")
+            .patternLine("PPP")
+            .patternLine("S  ")
+            .key('S', Tags.Items.RODS_WOODEN)
+            .key('P', Items.PAPER)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY")))
+            .build(consumer);
     }
 
     protected void registerMarbleRecipes(Consumer<IFinishedRecipe> consumer) {

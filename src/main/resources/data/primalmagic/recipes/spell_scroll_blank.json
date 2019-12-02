@@ -1,0 +1,20 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "BASIC_SORCERY",
+  "pattern": [
+    "  S",
+    "PPP",
+    "S  "
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "primalmagic:spell_scroll_blank"
+  }
+}
