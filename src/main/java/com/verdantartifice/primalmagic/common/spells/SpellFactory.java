@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.spells;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.packages.SelfSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.packages.TouchSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
@@ -16,6 +17,8 @@ public class SpellFactory {
         ISpellPackage retVal = null;
         if (TouchSpellPackage.TYPE.equals(type)) {
             retVal = new TouchSpellPackage();
+        } else if (SelfSpellPackage.TYPE.equals(type)) {
+            retVal = new SelfSpellPackage();
         } else {
             return null;
         }
