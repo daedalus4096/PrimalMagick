@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.ISpellPackage;
 
@@ -42,6 +45,11 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
                 entityTarget.getEntity().attackEntityFrom(DamageSource.causeThrownDamage(entityTarget.getEntity(), caster), this.getTotalDamage());
             }
         }
+        this.applySecondaryEffects(target, spell, world, caster);
+    }
+    
+    protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nonnull ISpellPackage spell, @Nonnull World world, @Nonnull PlayerEntity caster) {
+        // Do nothing by default
     }
 
     @Override
