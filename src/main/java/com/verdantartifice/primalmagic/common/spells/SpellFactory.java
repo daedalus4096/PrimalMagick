@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.packages.SelfSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.packages.TouchSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.payloads.FrostDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -32,6 +33,8 @@ public class SpellFactory {
         ISpellPayload retVal = null;
         if (EarthDamageSpellPayload.TYPE.equals(type)) {
             retVal = new EarthDamageSpellPayload();
+        } else if (FrostDamageSpellPayload.TYPE.equals(type)) {
+            retVal = new FrostDamageSpellPayload();
         } else {
             return null;
         }

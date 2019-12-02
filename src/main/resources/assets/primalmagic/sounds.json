@@ -24,5 +24,13 @@
             "primalmagic:rockslide2",
             "primalmagic:rockslide3"
         ]
+    },
+    "ice": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:ice1",
+            "primalmagic:ice2",
+            "primalmagic:ice3"
+        ]
     }
 }
