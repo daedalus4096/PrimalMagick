@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
 import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
+import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandGemItem;
@@ -105,6 +106,8 @@ public class InitItems {
                 registry.register(new EssenceItem(type, source));
             }
         }
+        registry.register(new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(PrimalMagic.MODID, "spell_scroll_blank"));
+        registry.register(new SpellScrollItem());
         registry.register(new MundaneWandItem());
         registry.register(new ModularWandItem());
         registry.register(new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));

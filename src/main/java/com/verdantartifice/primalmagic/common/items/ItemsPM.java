@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ItemsPM {
     public static final Item GRIMOIRE = null;
     public static final Item ARCANOMETER = null;
+    public static final Item MAGNIFYING_GLASS = null;
     public static final Item ALCHEMICAL_WASTE = null;
     public static final Item BLOODY_FLESH = null;
     public static final Item HALLOWED_ORB = null;
@@ -53,10 +54,11 @@ public class ItemsPM {
     public static final Item ESSENCE_CLUSTER_VOID = null;
     public static final Item ESSENCE_CLUSTER_HALLOWED = null;
     
+    public static final Item SPELL_SCROLL_BLANK = null;
+    public static final Item SPELL_SCROLL_FILLED = null;
     public static final Item MUNDANE_WAND = null;
     public static final Item MODULAR_WAND = null;
     public static final Item HEARTWOOD_WAND_CORE_ITEM = null;
     public static final Item IRON_WAND_CAP_ITEM = null;
     public static final Item APPRENTICE_WAND_GEM_ITEM = null;
-    public static final Item MAGNIFYING_GLASS = null;
 }
