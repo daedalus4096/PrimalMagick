@@ -36,7 +36,7 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
 
     @Override
     public void execute(RayTraceResult target, ISpellPackage spell, World world, PlayerEntity caster) {
-        if (target.getType() == RayTraceResult.Type.ENTITY) {
+        if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null) {
                 entityTarget.getEntity().attackEntityFrom(DamageSource.causeThrownDamage(entityTarget.getEntity(), caster), this.getTotalDamage());

@@ -8,7 +8,9 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.World;
 
 public abstract class AbstractSpellPackage implements ISpellPackage {
     protected UUID spellUUID;
@@ -100,5 +102,12 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
             retVal.add(this.payload.getManaCost());
         }
         return retVal;
+    }
+    
+    @Override
+    public void cast(World world, PlayerEntity caster) {
+        if (this.payload != null) {
+            this.payload.playSounds(world, caster);
+        }
     }
 }

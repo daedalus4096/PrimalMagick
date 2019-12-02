@@ -28,6 +28,7 @@ public class TouchSpellPackage extends AbstractSpellPackage {
     
     @Override
     public void cast(World world, PlayerEntity caster) {
+        super.cast(world, caster);
         if (this.payload != null) {
             double reachDistance = caster.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
             Vec3d eyePos = caster.getEyePosition(1.0F);
