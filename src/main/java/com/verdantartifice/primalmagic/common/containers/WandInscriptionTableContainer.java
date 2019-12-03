@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.containers;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.SpellScrollFilledSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagic.common.crafting.WandInscriptionRecipe;
@@ -66,8 +67,7 @@ public class WandInscriptionTableContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        // TODO Auto-generated method stub
-        return false;
+        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.WAND_INSCRIPTION_TABLE);
     }
 
     @Override
