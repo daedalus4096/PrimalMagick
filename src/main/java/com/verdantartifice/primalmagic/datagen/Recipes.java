@@ -62,8 +62,6 @@ public class Recipes extends RecipeProvider {
             .addCriterion("has_iron_ingot", this.hasItem(Tags.Items.INGOTS_IRON))
             .addCriterion("has_glass_pane", this.hasItem(Tags.Items.GLASS_PANES_COLORLESS))
             .build(consumer);
-        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL)
-            .build(consumer, "primalmagic:wand_assembly");
         ShapedRecipeBuilder.shapedRecipe(BlocksPM.WOOD_TABLE)
             .patternLine("SSS")
             .patternLine(" P ")
@@ -80,6 +78,11 @@ public class Recipes extends RecipeProvider {
             .key('P', Items.PAPER)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY")))
             .build(consumer);
+
+        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL)
+            .build(consumer, "primalmagic:wand_assembly");
+        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_INSCRIPTION_SPECIAL)
+            .build(consumer, "primalmagic:wand_inscription");
     }
 
     protected void registerMarbleRecipes(Consumer<IFinishedRecipe> consumer) {

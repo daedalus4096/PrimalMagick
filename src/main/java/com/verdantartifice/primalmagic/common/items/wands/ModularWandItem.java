@@ -164,7 +164,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
 
     @Override
-    public boolean addSpell(ItemStack stack, ISpellPackage spell) {
+    public boolean canAddSpell(ItemStack stack, ISpellPackage spell) {
         if (stack == null || spell == null) {
             return false;
         }
@@ -178,14 +178,23 @@ public class ModularWandItem extends AbstractWandItem {
         if (existingSpells.size() >= core.getSpellSlots()) {
             return false;
         }
-        
-        if (!stack.getTag().contains("Spells")) {
-            ListNBT newList = new ListNBT();
-            newList.add(spell.serializeNBT());
-            stack.setTagInfo("Spells", newList);
-            return true;
+
+        return true;
+    }
+
+    @Override
+    public boolean addSpell(ItemStack stack, ISpellPackage spell) {
+        if (this.canAddSpell(stack, spell)) {
+            if (!stack.getTag().contains("Spells")) {
+                ListNBT newList = new ListNBT();
+                newList.add(spell.serializeNBT());
+                stack.setTagInfo("Spells", newList);
+                return true;
+            } else {
+                return stack.getTag().getList("Spells", 10).add(spell.serializeNBT());
+            }
         } else {
-            return stack.getTag().getList("Spells", 10).add(spell.serializeNBT());
+            return false;
         }
     }
 }

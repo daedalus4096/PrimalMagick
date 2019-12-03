@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.ShapelessArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.WandAssemblyRecipe;
+import com.verdantartifice.primalmagic.common.crafting.WandInscriptionRecipe;
 import com.verdantartifice.primalmagic.common.crafting.WandTransformBlock;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
@@ -28,6 +29,7 @@ public class InitRecipes {
         registry.register(new ShapelessArcaneRecipe.Serializer().setRegistryName(PrimalMagic.MODID, "arcane_crafting_shapeless"));
         registry.register(new ShapedArcaneRecipe.Serializer().setRegistryName(PrimalMagic.MODID, "arcane_crafting_shaped"));
         registry.register(new SpecialRecipeSerializer<>(WandAssemblyRecipe::new).setRegistryName(PrimalMagic.MODID, "wand_assembly_special"));
+        registry.register(new SpecialRecipeSerializer<>(WandInscriptionRecipe::new).setRegistryName(PrimalMagic.MODID, "wand_inscription_special"));
     }
     
     public static void initWandTransforms() {

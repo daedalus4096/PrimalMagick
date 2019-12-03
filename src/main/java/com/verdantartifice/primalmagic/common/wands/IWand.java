@@ -51,5 +51,7 @@ public interface IWand {
     
     public boolean setActiveSpellIndex(@Nullable ItemStack stack, int index);
     
+    public boolean canAddSpell(@Nullable ItemStack stack, @Nullable ISpellPackage spell);
+    
     public boolean addSpell(@Nullable ItemStack stack, @Nullable ISpellPackage spell);
 }

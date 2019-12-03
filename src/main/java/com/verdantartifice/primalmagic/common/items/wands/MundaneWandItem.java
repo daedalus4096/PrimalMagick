@@ -50,6 +50,12 @@ public class MundaneWandItem extends AbstractWandItem {
         // Mundane wands can't carry spells
         return false;
     }
+    
+    @Override
+    public boolean canAddSpell(ItemStack stack, ISpellPackage spell) {
+        // Mundane wands can't carry spells
+        return false;
+    }
 
     @Override
     public boolean addSpell(ItemStack stack, ISpellPackage spell) {
