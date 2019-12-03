@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.client.gui.AnalysisTableScreen;
 import com.verdantartifice.primalmagic.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagic.client.gui.CalcinatorScreen;
 import com.verdantartifice.primalmagic.client.gui.WandAssemblyTableScreen;
+import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
@@ -34,6 +35,7 @@ public class ClientProxy extends CommonProxy {
         ScreenManager.registerFactory(ContainersPM.WAND_ASSEMBLY_TABLE, WandAssemblyTableScreen::new);
         ScreenManager.registerFactory(ContainersPM.ANALYSIS_TABLE, AnalysisTableScreen::new);
         ScreenManager.registerFactory(ContainersPM.CALCINATOR, CalcinatorScreen::new);
+        ScreenManager.registerFactory(ContainersPM.WAND_INSCRIPTION_TABLE, WandInscriptionTableScreen::new);
     }
     
     private void registerTERs() {
