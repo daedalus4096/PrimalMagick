@@ -3,11 +3,9 @@ package com.verdantartifice.primalmagic.common.containers;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagic.common.containers.slots.WandCapSlot;
-import com.verdantartifice.primalmagic.common.containers.slots.WandCoreSlot;
-import com.verdantartifice.primalmagic.common.containers.slots.WandGemSlot;
-import com.verdantartifice.primalmagic.common.crafting.WandAssemblyRecipe;
+import com.verdantartifice.primalmagic.common.containers.slots.SpellScrollFilledSlot;
+import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
+import com.verdantartifice.primalmagic.common.crafting.WandInscriptionRecipe;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,47 +23,42 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class WandAssemblyTableContainer extends Container {
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "wand_assembly");
-    
+public class WandInscriptionTableContainer extends Container {
+    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "wand_inscription");
+
     protected final IWorldPosCallable worldPosCallable;
-    protected final WandComponentInventory componentInv = new WandComponentInventory();
+    protected final InscriptionComponentInventory componentInv = new InscriptionComponentInventory();
     protected final CraftResultInventory resultInv = new CraftResultInventory();
     protected final PlayerEntity player;
-    protected final Slot coreSlot;
-    protected final Slot capSlot;
-    protected final Slot gemSlot;
+    protected final Slot wandSlot;
+    protected final Slot scrollSlot;
     
-    public WandAssemblyTableContainer(int windowId, PlayerInventory inv) {
+    public WandInscriptionTableContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
     }
-    
-    public WandAssemblyTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
-        super(ContainersPM.WAND_ASSEMBLY_TABLE, windowId);
+
+    public WandInscriptionTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
+        super(ContainersPM.WAND_INSCRIPTION_TABLE, windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         
         // Slot 0: Result
         this.addSlot(new CraftingResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
-        // Slot 1: Wand core
-        this.coreSlot = this.addSlot(new WandCoreSlot(this.componentInv, 0, 48, 35));
+        // Slot 1: Input wand
+        this.wandSlot = this.addSlot(new WandSlot(this.componentInv, 0, 30, 35));
         
-        // Slot 2: Wand gem
-        this.gemSlot = this.addSlot(new WandGemSlot(this.componentInv, 1, 48, 17));
+        // Slot 2: Input scroll
+        this.scrollSlot = this.addSlot(new SpellScrollFilledSlot(this.componentInv, 1, 66, 35));
         
-        // Slots 3-4: Wand caps
-        this.capSlot = this.addSlot(new WandCapSlot(this.componentInv, 2, 30, 53));
-        this.addSlot(new WandCapSlot(this.componentInv, 3, 66, 17));
-        
-        // Slots 5-31: Player backpack
+        // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 this.addSlot(new Slot(inv, j + (i * 9) + 9, 8 + (j * 18), 84 + (i * 18)));
             }
         }
         
-        // Slots 32-40: Player hotbar
+        // Slots 30-38: Player hotbar
         for (int i = 0; i < 9; i++) {
             this.addSlot(new Slot(inv, i, 8 + (i * 18), 142));
         }
@@ -73,9 +66,10 @@ public class WandAssemblyTableContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.WAND_ASSEMBLY_TABLE);
+        // TODO Auto-generated method stub
+        return false;
     }
-    
+
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
@@ -95,47 +89,39 @@ public class WandAssemblyTableContainer extends Container {
                 this.worldPosCallable.consume((world, blockPos) -> {
                     slotStack.getItem().onCreated(slotStack, world, playerIn);
                 });
-                if (!this.mergeItemStack(slotStack, 5, 41, true)) {
+                if (!this.mergeItemStack(slotStack, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onSlotChange(slotStack, stack);
-            } else if (index >= 5 && index < 32) {
-                if (this.coreSlot.isItemValid(slotStack)) {
+            } else if (index >= 3 && index < 30) {
+                if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.gemSlot.isItemValid(slotStack)) {
+                } else if (this.scrollSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.capSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 3, 5, false)) {
-                        return ItemStack.EMPTY;
-                    }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 32, 41, false)) {
+                    if (!this.mergeItemStack(slotStack, 30, 39, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (index >= 32 && index < 41) {
-                if (this.coreSlot.isItemValid(slotStack)) {
+            } else if (index >= 30 && index < 39) {
+                if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.gemSlot.isItemValid(slotStack)) {
+                } else if (this.scrollSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.capSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 3, 5, false)) {
-                        return ItemStack.EMPTY;
-                    }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 5, 32, false)) {
+                    if (!this.mergeItemStack(slotStack, 3, 30, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.mergeItemStack(slotStack, 5, 41, false)) {
+            } else if (!this.mergeItemStack(slotStack, 3, 39, false)) {
                 return ItemStack.EMPTY;
             }
             
@@ -175,8 +161,8 @@ public class WandAssemblyTableContainer extends Container {
             ServerPlayerEntity spe = (ServerPlayerEntity)this.player;
             ItemStack stack = ItemStack.EMPTY;
             Optional<? extends IRecipe<?>> opt = world.getServer().getRecipeManager().getRecipe(RECIPE_LOC);
-            if (opt.isPresent() && opt.get() instanceof WandAssemblyRecipe) {
-                WandAssemblyRecipe recipe = (WandAssemblyRecipe)opt.get();
+            if (opt.isPresent() && opt.get() instanceof WandInscriptionRecipe) {
+                WandInscriptionRecipe recipe = (WandInscriptionRecipe)opt.get();
                 if (recipe.matches(this.componentInv, world)) {
                     stack = recipe.getCraftingResult(this.componentInv);
                 }
@@ -186,9 +172,9 @@ public class WandAssemblyTableContainer extends Container {
         }
     }
 
-    protected class WandComponentInventory extends CraftingInventory {
-        public WandComponentInventory() {
-            super(WandAssemblyTableContainer.this, 2, 2);
+    protected class InscriptionComponentInventory extends CraftingInventory {
+        public InscriptionComponentInventory() {
+            super(WandInscriptionTableContainer.this, 2, 1);
         }
         
         @Override

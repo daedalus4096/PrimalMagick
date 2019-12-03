@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.containers.ArcaneWorkbenchContaine
 import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagic.common.containers.WandAssemblyTableContainer;
+import com.verdantartifice.primalmagic.common.containers.WandInscriptionTableContainer;
 
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -32,5 +33,9 @@ public class InitContainers {
         registry.register(IForgeContainerType.create((windowId, inv, data) -> {
             return new CalcinatorContainer(windowId, inv);
         }).setRegistryName(PrimalMagic.MODID, "calcinator"));
+        
+        registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+            return new WandInscriptionTableContainer(windowId, inv);
+        }).setRegistryName(PrimalMagic.MODID, "wand_inscription_table"));
     }
 }

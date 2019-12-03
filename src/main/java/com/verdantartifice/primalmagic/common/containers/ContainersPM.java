@@ -12,4 +12,5 @@ public class ContainersPM {
     public static final ContainerType<WandAssemblyTableContainer> WAND_ASSEMBLY_TABLE = null;
     public static final ContainerType<AnalysisTableContainer> ANALYSIS_TABLE = null;
     public static final ContainerType<CalcinatorContainer> CALCINATOR = null;
+    public static final ContainerType<WandInscriptionTableContainer> WAND_INSCRIPTION_TABLE = null;
 }
