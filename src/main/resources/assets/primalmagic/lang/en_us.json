@@ -346,6 +346,9 @@
     "primalmagic.analysis.no_item": "No item analyzed",
     "primalmagic.analysis.no_affinities": "No affinities detected",
     
+    "primalmagic.spell.property.power": "Power",
+    "primalmagic.spell.property.duration": "Duration",
+    
     "primalmagic.grimoire.index_header": "Disciplines",
     "primalmagic.grimoire.addendum_header": "Addendum %1$d",
     "primalmagic.grimoire.requirements_header": "Requirements",

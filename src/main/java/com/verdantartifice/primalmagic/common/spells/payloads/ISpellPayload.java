@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import java.util.Collection;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,4 +26,11 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     public SourceList getManaCost();
     
     public void playSounds(@Nonnull World world, @Nonnull PlayerEntity caster);
+    
+    public Collection<SpellProperty> getProperties();
+    
+    @Nullable
+    public SpellProperty getProperty(String name);
+    
+    public int getPropertyValue(String name);
 }

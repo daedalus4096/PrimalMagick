@@ -1,12 +1,14 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import java.util.Map;
+
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
@@ -17,28 +19,20 @@ import net.minecraft.world.World;
 public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "frost_damage";
     
-    protected int duration;
-    
     public FrostDamageSpellPayload() {
         super();
     }
     
     public FrostDamageSpellPayload(int power, int duration) {
         super(power);
-        this.duration = duration;
+        this.getProperty("duration").setValue(duration);
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
-        nbt.putInt("Duration", this.duration);
-        return nbt;
-    }
-    
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        super.deserializeNBT(nbt);
-        this.duration = nbt.getInt("Duration");
+    protected Map<String, SpellProperty> initProperties() {
+        Map<String, SpellProperty> propMap = super.initProperties();
+        propMap.put("duration", new SpellProperty("duration", "primalmagic.spell.property.duration", 1, 5));
+        return propMap;
     }
 
     @Override
@@ -53,7 +47,7 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
 
     @Override
     protected float getTotalDamage() {
-        return 3.0F + this.power;
+        return 3.0F + this.getPropertyValue("power");
     }
 
     @Override
@@ -66,8 +60,8 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
-                int duration = 20 * this.duration;
-                int potency = (int)((1.0F + this.power) / 3.0F);
+                int duration = 20 * this.getPropertyValue("duration");
+                int potency = (int)((1.0F + this.getPropertyValue("power")) / 3.0F);
                 ((LivingEntity)entityTarget.getEntity()).addPotionEffect(new EffectInstance(Effects.SLOWNESS, duration, potency));
             }
         }

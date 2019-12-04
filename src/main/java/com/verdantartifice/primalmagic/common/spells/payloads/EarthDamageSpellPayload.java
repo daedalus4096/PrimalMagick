@@ -35,7 +35,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     
     @Override
     protected float getTotalDamage() {
-        return 3.0F + this.power;
+        return 3.0F + this.getPropertyValue("power");
     }
     
     @Override

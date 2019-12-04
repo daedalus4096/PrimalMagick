@@ -1,38 +1,35 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
-    protected int power;
-    
-    public AbstractDamageSpellPayload() {}
+    public AbstractDamageSpellPayload() {
+        super();
+    }
     
     public AbstractDamageSpellPayload(int power) {
-        this.power = power;
+        super();
+        this.getProperty("power").setValue(power);
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
-        nbt.putInt("Power", this.power);
-        return nbt;
-    }
-    
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        super.deserializeNBT(nbt);
-        this.power = nbt.getInt("Power");
+    protected Map<String, SpellProperty> initProperties() {
+        Map<String, SpellProperty> propMap = super.initProperties();
+        propMap.put("power", new SpellProperty("power", "primalmagic.spell.property.power", 1, 5));
+        return propMap;
     }
     
     protected abstract float getTotalDamage();
@@ -54,6 +51,6 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
 
     @Override
     public SourceList getManaCost() {
-        return new SourceList().add(this.getSource(), this.power);
+        return new SourceList().add(this.getSource(), this.getPropertyValue("power"));
     }
 }
