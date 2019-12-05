@@ -97,6 +97,7 @@ public class InitItems {
         registry.register(new BurnableBlockItem(BlocksPM.ANALYSIS_TABLE, 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.ANALYSIS_TABLE.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.CALCINATOR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.CALCINATOR.getRegistryName()));
         registry.register(new BurnableBlockItem(BlocksPM.WAND_INSCRIPTION_TABLE, 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.WAND_INSCRIPTION_TABLE.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.SPELLCRAFTING_ALTAR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.SPELLCRAFTING_ALTAR.getRegistryName()));
     }
     
     public static void initItems(IForgeRegistry<Item> registry) {

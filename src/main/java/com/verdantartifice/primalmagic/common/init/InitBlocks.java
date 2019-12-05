@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.common.blocks.base.SaplingBlockPM;
 import com.verdantartifice.primalmagic.common.blocks.base.StairsBlockPM;
 import com.verdantartifice.primalmagic.common.blocks.crafting.ArcaneWorkbenchBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
+import com.verdantartifice.primalmagic.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandAssemblyTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandInscriptionTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
@@ -118,5 +119,6 @@ public class InitBlocks {
         registry.register(new AnalysisTableBlock());
         registry.register(new CalcinatorBlock());
         registry.register(new WandInscriptionTableBlock());
+        registry.register(new SpellcraftingAltarBlock());
     }
 }
