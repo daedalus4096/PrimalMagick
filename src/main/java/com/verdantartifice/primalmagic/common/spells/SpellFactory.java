@@ -13,32 +13,42 @@ import net.minecraft.nbt.CompoundNBT;
 
 public class SpellFactory {
     @Nullable
-    public static ISpellPackage getPackageFromNBT(CompoundNBT tag) {
-        String type = tag.getString("SpellType");
-        ISpellPackage retVal = null;
+    public static ISpellPackage getPackageFromType(String type) {
         if (TouchSpellPackage.TYPE.equals(type)) {
-            retVal = new TouchSpellPackage();
+            return new TouchSpellPackage();
         } else if (SelfSpellPackage.TYPE.equals(type)) {
-            retVal = new SelfSpellPackage();
+            return new SelfSpellPackage();
         } else {
             return null;
         }
-        retVal.deserializeNBT(tag);
+    }
+    
+    @Nullable
+    public static ISpellPackage getPackageFromNBT(CompoundNBT tag) {
+        ISpellPackage retVal = getPackageFromType(tag.getString("SpellType"));
+        if (retVal != null) {
+            retVal.deserializeNBT(tag);
+        }
         return retVal;
+    }
+
+    @Nullable
+    public static ISpellPayload getPayloadFromType(String type) {
+        if (EarthDamageSpellPayload.TYPE.equals(type)) {
+            return new EarthDamageSpellPayload();
+        } else if (FrostDamageSpellPayload.TYPE.equals(type)) {
+            return new FrostDamageSpellPayload();
+        } else {
+            return null;
+        }
     }
     
     @Nullable
     public static ISpellPayload getPayloadFromNBT(CompoundNBT tag) {
-        String type = tag.getString("PayloadType");
-        ISpellPayload retVal = null;
-        if (EarthDamageSpellPayload.TYPE.equals(type)) {
-            retVal = new EarthDamageSpellPayload();
-        } else if (FrostDamageSpellPayload.TYPE.equals(type)) {
-            retVal = new FrostDamageSpellPayload();
-        } else {
-            return null;
+        ISpellPayload retVal = getPayloadFromType(tag.getString("PayloadType"));
+        if (retVal != null) {
+            retVal.deserializeNBT(tag);
         }
-        retVal.deserializeNBT(tag);
         return retVal;
     }
 }
