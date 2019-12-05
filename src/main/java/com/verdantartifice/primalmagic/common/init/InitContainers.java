@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
 import com.verdantartifice.primalmagic.common.containers.ArcaneWorkbenchContainer;
 import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
+import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.containers.WandAssemblyTableContainer;
 import com.verdantartifice.primalmagic.common.containers.WandInscriptionTableContainer;
 
@@ -37,5 +38,9 @@ public class InitContainers {
         registry.register(IForgeContainerType.create((windowId, inv, data) -> {
             return new WandInscriptionTableContainer(windowId, inv);
         }).setRegistryName(PrimalMagic.MODID, "wand_inscription_table"));
+        
+        registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+            return new SpellcraftingAltarContainer(windowId, inv);
+        }).setRegistryName(PrimalMagic.MODID, "spellcrafting_altar"));
     }
 }
