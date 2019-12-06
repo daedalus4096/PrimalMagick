@@ -10,10 +10,10 @@ import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagic.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.WandInventory;
 import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
-import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellFactory;
+import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
-import com.verdantartifice.primalmagic.common.spells.packages.TouchSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
@@ -30,6 +30,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class SpellcraftingAltarContainer extends Container {
@@ -43,7 +44,8 @@ public class SpellcraftingAltarContainer extends Container {
     protected final Slot wandSlot;
     protected final Slot scrollSlot;
     
-    protected String spellName;
+    protected String spellName = "";
+    protected int spellPackageTypeIndex = 0;
 
     public SpellcraftingAltarContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -87,13 +89,16 @@ public class SpellcraftingAltarContainer extends Container {
     
     protected ISpellPackage getSpellPackage() {
         // TODO construct real spell from selected parameters
-        ISpellPackage spell = new TouchSpellPackage(this.getSpellName());
-        spell.setPayload(new EarthDamageSpellPayload(5));
+        ISpellPackage spell = SpellFactory.getPackageFromType(SpellManager.getPackageTypes().get(this.getSpellPackageTypeIndex()));
+        if (spell != null) {
+            spell.setName(this.getSpellName());
+            spell.setPayload(new EarthDamageSpellPayload(5));
+        }
         return spell;
     }
     
     public String getSpellName() {
-        return (this.spellName == null) ? this.getDefaultSpellName() : this.spellName;
+        return (this.spellName == null || this.spellName.isEmpty()) ? this.getDefaultSpellName() : this.spellName;
     }
     
     protected String getDefaultSpellName() {
@@ -106,6 +111,15 @@ public class SpellcraftingAltarContainer extends Container {
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
+    }
+    
+    public int getSpellPackageTypeIndex() {
+        return MathHelper.clamp(this.spellPackageTypeIndex, 0, SpellManager.getPackageTypes().size() - 1);
+    }
+    
+    public void setSpellPackageTypeIndex(int index) {
+        PrimalMagic.LOGGER.debug("Setting crafted spell package type index to {}", index);
+        this.spellPackageTypeIndex = index;
     }
     
     @Override

@@ -1,14 +1,19 @@
 package com.verdantartifice.primalmagic.client.gui;
 
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.SetSpellNamePacket;
+import com.verdantartifice.primalmagic.common.spells.SpellManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -31,16 +36,6 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     protected void init() {
         super.init();
         this.minecraft.keyboardListener.enableRepeatEvents(true);
-        this.nameField = new TextFieldWidget(this.font, this.guiLeft + 31, this.guiTop + 12, 103, 12, "");
-        this.nameField.setCanLoseFocus(false);
-        this.nameField.changeFocus(true);
-        this.nameField.setTextColor(-1);
-        this.nameField.setDisabledTextColour(-1);
-        this.nameField.setEnableBackgroundDrawing(false);
-        this.nameField.setMaxStringLength(35);
-        this.nameField.func_212954_a(this::updateName);
-        this.children.add(this.nameField);
-        this.func_212928_a(this.nameField);
     }
     
     @Override
@@ -63,9 +58,29 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         }
         return !this.nameField.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) && !this.nameField.func_212955_f() ? super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) : true;
     }
+    
+    protected void initWidgets() {
+        this.buttons.clear();
+        this.children.clear();
+        
+        this.nameField = new TextFieldWidget(this.font, this.guiLeft + 31, this.guiTop + 12, 103, 12, "");
+        this.nameField.setCanLoseFocus(false);
+        this.nameField.changeFocus(true);
+        this.nameField.setTextColor(-1);
+        this.nameField.setDisabledTextColour(-1);
+        this.nameField.setEnableBackgroundDrawing(false);
+        this.nameField.setMaxStringLength(35);
+        this.nameField.func_212954_a(this::updateName);
+        this.children.add(this.nameField);
+        this.func_212928_a(this.nameField);
+        
+        this.addButton(new CyclicBoundedSpinnerButton(this.guiLeft + 7, this.guiTop + 32, false, 0, SpellManager.getPackageTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(this.guiLeft + 97, this.guiTop + 32, true, 0, SpellManager.getPackageTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
+    }
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
+        this.initWidgets();
         this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
@@ -86,6 +101,71 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         if (!name.isEmpty()) {
             this.container.setSpellName(name);
             PacketHandler.sendToServer(new SetSpellNamePacket(this.container.windowId, name));
+        }
+    }
+    
+    private void updateSpellPackageTypeIndex(int index) {
+        this.container.setSpellPackageTypeIndex(index);
+        // TODO send packet to server
+    }
+    
+    protected static class CyclicBoundedSpinnerButton extends Button {
+        protected final boolean isIncrement;
+        protected final int min;
+        protected final int max;
+        protected final Supplier<Integer> getter;
+        protected final Consumer<Integer> setter;
+        
+        public CyclicBoundedSpinnerButton(int xPos, int yPos, boolean increment, int min, int max, Supplier<Integer> getter, Consumer<Integer> setter) {
+            super(xPos, yPos, 7, 11, "", new Handler());
+            this.isIncrement = increment;
+            this.min = min;
+            this.max = max;
+            this.getter = getter;
+            this.setter = setter;
+        }
+        
+        @Override
+        public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+            Minecraft mc = Minecraft.getInstance();
+            mc.getTextureManager().bindTexture(TEXTURE);
+            this.blit(this.x, this.y, this.isIncrement ? 212 : 219, this.isHovered() ? 11 : 0, this.width, this.height);
+        }
+        
+        public boolean isIncrement() {
+            return isIncrement;
+        }
+
+        public int getMin() {
+            return min;
+        }
+
+        public int getMax() {
+            return max;
+        }
+
+        public Supplier<Integer> getGetter() {
+            return getter;
+        }
+
+        public Consumer<Integer> getSetter() {
+            return setter;
+        }
+
+        private static class Handler implements IPressable {
+            @Override
+            public void onPress(Button button) {
+                if (button instanceof CyclicBoundedSpinnerButton) {
+                    CyclicBoundedSpinnerButton spinner = (CyclicBoundedSpinnerButton)button;
+                    int newVal = spinner.getGetter().get().intValue() + (spinner.isIncrement() ? 1 : -1);
+                    if (newVal < spinner.getMin()) {
+                        newVal = spinner.getMax();
+                    } else if (newVal > spinner.getMax()) {
+                        newVal = spinner.getMin();
+                    }
+                    spinner.getSetter().accept(Integer.valueOf(newVal));
+                }
+            }
         }
     }
 }
