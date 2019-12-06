@@ -82,8 +82,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
 
     public SourceList getManaCosts() {
-        // TODO get cost from constructed spell package
-        return new SourceList().add(Source.EARTH, 1);
+        return this.getSpellPackage().getManaCost();
     }
     
     protected ISpellPackage getSpellPackage() {
