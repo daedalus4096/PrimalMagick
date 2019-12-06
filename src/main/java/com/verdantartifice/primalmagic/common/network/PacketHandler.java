@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActio
 import com.verdantartifice.primalmagic.common.network.packets.misc.CycleActiveSpellPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
+import com.verdantartifice.primalmagic.common.network.packets.misc.SetSpellNamePacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -46,6 +47,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, AnalysisActionPacket.class, AnalysisActionPacket::encode, AnalysisActionPacket::decode, AnalysisActionPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncCooldownsPacket.class, SyncCooldownsPacket::encode, SyncCooldownsPacket::decode, SyncCooldownsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, CycleActiveSpellPacket.class, CycleActiveSpellPacket::encode, CycleActiveSpellPacket::decode, CycleActiveSpellPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SetSpellNamePacket.class, SetSpellNamePacket::encode, SetSpellNamePacket::decode, SetSpellNamePacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

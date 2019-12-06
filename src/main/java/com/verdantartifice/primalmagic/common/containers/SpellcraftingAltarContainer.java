@@ -42,6 +42,8 @@ public class SpellcraftingAltarContainer extends Container {
     protected final PlayerEntity player;
     protected final Slot wandSlot;
     protected final Slot scrollSlot;
+    
+    protected String spellName;
 
     public SpellcraftingAltarContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -86,9 +88,25 @@ public class SpellcraftingAltarContainer extends Container {
     
     protected ISpellPackage getSpellPackage() {
         // TODO construct real spell from selected parameters
-        ISpellPackage spell = new TouchSpellPackage("Crafted Spell");
+        ISpellPackage spell = new TouchSpellPackage(this.getSpellName());
         spell.setPayload(new EarthDamageSpellPayload(5));
         return spell;
+    }
+    
+    public String getSpellName() {
+        return (this.spellName == null) ? this.getDefaultSpellName() : this.spellName;
+    }
+    
+    protected String getDefaultSpellName() {
+        // TODO Determine default spell name based on spell package
+        return "Crafted Spell";
+    }
+    
+    public void setSpellName(String name) {
+        this.spellName = name;
+        this.worldPosCallable.consume((world, blockPos) -> {
+            this.slotChangedCraftingGrid(world);
+        });
     }
     
     @Override
