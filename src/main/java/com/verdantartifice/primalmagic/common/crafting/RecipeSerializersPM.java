@@ -12,4 +12,5 @@ public class RecipeSerializersPM {
     public static final IRecipeSerializer<ShapedArcaneRecipe> ARCANE_CRAFTING_SHAPED = null;
     public static final SpecialRecipeSerializer<WandAssemblyRecipe> WAND_ASSEMBLY_SPECIAL = null;
     public static final SpecialRecipeSerializer<WandInscriptionRecipe> WAND_INSCRIPTION_SPECIAL = null;
+    public static final SpecialRecipeSerializer<SpellcraftingRecipe> SPELLCRAFTING_SPECIAL = null;
 }

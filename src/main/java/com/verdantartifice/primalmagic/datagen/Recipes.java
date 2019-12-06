@@ -83,6 +83,8 @@ public class Recipes extends RecipeProvider {
             .build(consumer, "primalmagic:wand_assembly");
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_INSCRIPTION_SPECIAL)
             .build(consumer, "primalmagic:wand_inscription");
+        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.SPELLCRAFTING_SPECIAL)
+            .build(consumer, "primalmagic:spellcrafting");
     }
 
     protected void registerMarbleRecipes(Consumer<IFinishedRecipe> consumer) {
