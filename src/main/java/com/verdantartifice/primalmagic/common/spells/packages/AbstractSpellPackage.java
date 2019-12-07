@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellFactory;
+import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
+import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +19,8 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
     protected UUID spellUUID;
     protected String name;
     protected ISpellPayload payload;
+    protected ISpellMod primaryMod;
+    protected ISpellMod secondaryMod;
     
     public AbstractSpellPackage() {
         this.spellUUID = UUID.randomUUID();
@@ -59,6 +63,26 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
     public void setPayload(@Nullable ISpellPayload payload) {
         this.payload = payload;
     }
+    
+    @Override
+    public ISpellMod getPrimaryMod() {
+        return this.primaryMod;
+    }
+    
+    @Override
+    public void setPrimaryMod(ISpellMod mod) {
+        this.primaryMod = mod;
+    }
+    
+    @Override
+    public ISpellMod getSecondaryMod() {
+        return this.secondaryMod;
+    }
+    
+    @Override
+    public void setSecondaryMod(ISpellMod mod) {
+        this.secondaryMod = mod;
+    }
 
     protected abstract String getPackageType();
 
@@ -75,6 +99,12 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
         if (this.payload != null) {
             nbt.put("SpellPayload", this.payload.serializeNBT());
         }
+        if (this.primaryMod != null) {
+            nbt.put("PrimaryMod", this.primaryMod.serializeNBT());
+        }
+        if (this.secondaryMod != null) {
+            nbt.put("SecondaryMod", this.secondaryMod.serializeNBT());
+        }
         return nbt;
     }
 
@@ -86,6 +116,16 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
             this.payload = SpellFactory.getPayloadFromNBT(nbt.getCompound("SpellPayload"));
         } else {
             this.payload = null;
+        }
+        if (nbt.contains("PrimaryMod")) {
+            this.primaryMod = SpellFactory.getModFromNBT(nbt.getCompound("PrimaryMod"));
+        } else {
+            this.primaryMod = new EmptySpellMod();
+        }
+        if (nbt.contains("SecondaryMod")) {
+            this.secondaryMod = SpellFactory.getModFromNBT(nbt.getCompound("SecondaryMod"));
+        } else {
+            this.secondaryMod = new EmptySpellMod();
         }
     }
     

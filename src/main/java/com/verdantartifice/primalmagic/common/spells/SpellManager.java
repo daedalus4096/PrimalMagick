@@ -20,6 +20,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class SpellManager {
     protected static final List<String> PACKAGE_TYPES = new ArrayList<>();
     protected static final List<String> PAYLOAD_TYPES = new ArrayList<>();
+    protected static final List<String> MOD_TYPES = new ArrayList<>();
     
     @Nonnull
     public static List<String> getPackageTypes() {
@@ -40,6 +41,17 @@ public class SpellManager {
     public static void registerPayloadType(String type) {
         if (type != null && !type.isEmpty()) {
             PAYLOAD_TYPES.add(type);
+        }
+    }
+    
+    @Nonnull
+    public static List<String> getModTypes() {
+        return Collections.unmodifiableList(MOD_TYPES);
+    }
+    
+    public static void registerModType(String type) {
+        if (type != null && !type.isEmpty()) {
+            MOD_TYPES.add(type);
         }
     }
     

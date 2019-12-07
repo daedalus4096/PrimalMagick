@@ -51,8 +51,6 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setMaxStringLength(35);
         this.nameField.func_212954_a(this::updateName);
-        
-        PrimalMagic.LOGGER.debug("Font height: {}", this.font.FONT_HEIGHT);
     }
     
     @Override

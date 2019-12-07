@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellFactory;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
+import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.wands.IWand;
@@ -96,6 +97,8 @@ public class SpellcraftingAltarContainer extends Container {
         if (spell != null) {
             spell.setName(this.getSpellName());
             spell.setPayload(new EarthDamageSpellPayload(5));
+            spell.setPrimaryMod(new EmptySpellMod());
+            spell.setSecondaryMod(new EmptySpellMod());
         }
         return spell;
     }
@@ -141,7 +144,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellPrimaryModTypeIndex(int index) {
-        index = MathHelper.clamp(index, 0, 0);  // get size-1 from spell manager
+        index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
         PrimalMagic.LOGGER.debug("Setting crafted spell mod 1 type index to {}", index);
         this.spellPrimaryModTypeIndex = index;
     }
@@ -151,7 +154,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellSecondaryModTypeIndex(int index) {
-        index = MathHelper.clamp(index, 0, 0);  // get size-1 from spell manager
+        index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
         PrimalMagic.LOGGER.debug("Setting crafted spell mod 2 type index to {}", index);
         this.spellSecondaryModTypeIndex = index;
     }

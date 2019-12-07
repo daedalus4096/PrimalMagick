@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.spells;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
+import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.packages.SelfSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.packages.TouchSpellPackage;
@@ -46,6 +48,24 @@ public class SpellFactory {
     @Nullable
     public static ISpellPayload getPayloadFromNBT(CompoundNBT tag) {
         ISpellPayload retVal = getPayloadFromType(tag.getString("PayloadType"));
+        if (retVal != null) {
+            retVal.deserializeNBT(tag);
+        }
+        return retVal;
+    }
+    
+    @Nullable
+    public static ISpellMod getModFromType(String type) {
+        if (EmptySpellMod.TYPE.equals(type)) {
+            return new EmptySpellMod();
+        } else {
+            return null;
+        }
+    }
+    
+    @Nullable
+    public static ISpellMod getModFromNBT(CompoundNBT tag) {
+        ISpellMod retVal = getModFromType(tag.getString("ModType"));
         if (retVal != null) {
             retVal.deserializeNBT(tag);
         }
