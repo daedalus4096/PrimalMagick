@@ -46,6 +46,9 @@ public class SpellcraftingAltarContainer extends Container {
     
     protected String spellName = "";
     protected int spellPackageTypeIndex = 0;
+    protected int spellPayloadTypeIndex = 0;
+    protected int spellPrimaryModTypeIndex = 0;
+    protected int spellSecondaryModTypeIndex = 0;
 
     public SpellcraftingAltarContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -114,12 +117,43 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public int getSpellPackageTypeIndex() {
-        return MathHelper.clamp(this.spellPackageTypeIndex, 0, SpellManager.getPackageTypes().size() - 1);
+        return this.spellPackageTypeIndex;
     }
     
     public void setSpellPackageTypeIndex(int index) {
+        index = MathHelper.clamp(index, 0, SpellManager.getPackageTypes().size() - 1);
         PrimalMagic.LOGGER.debug("Setting crafted spell package type index to {}", index);
         this.spellPackageTypeIndex = index;
+    }
+    
+    public int getSpellPayloadTypeIndex() {
+        return this.spellPayloadTypeIndex;
+    }
+    
+    public void setSpellPayloadTypeIndex(int index) {
+        index = MathHelper.clamp(index, 0, SpellManager.getPayloadTypes().size() - 1);
+        PrimalMagic.LOGGER.debug("Setting crafted spell payload type index to {}", index);
+        this.spellPayloadTypeIndex = index;
+    }
+    
+    public int getSpellPrimaryModTypeIndex() {
+        return this.spellPrimaryModTypeIndex;
+    }
+    
+    public void setSpellPrimaryModTypeIndex(int index) {
+        index = MathHelper.clamp(index, 0, 0);  // get size-1 from spell manager
+        PrimalMagic.LOGGER.debug("Setting crafted spell mod 1 type index to {}", index);
+        this.spellPrimaryModTypeIndex = index;
+    }
+    
+    public int getSpellSecondaryModTypeIndex() {
+        return this.spellSecondaryModTypeIndex;
+    }
+    
+    public void setSpellSecondaryModTypeIndex(int index) {
+        index = MathHelper.clamp(index, 0, 0);  // get size-1 from spell manager
+        PrimalMagic.LOGGER.debug("Setting crafted spell mod 2 type index to {}", index);
+        this.spellSecondaryModTypeIndex = index;
     }
     
     @Override
