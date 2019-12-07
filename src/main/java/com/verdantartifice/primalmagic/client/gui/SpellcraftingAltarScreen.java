@@ -9,7 +9,9 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
-import com.verdantartifice.primalmagic.common.network.packets.misc.SetSpellNamePacket;
+import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellAttributeTypeIndexPacket;
+import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellNamePacket;
+import com.verdantartifice.primalmagic.common.spells.SpellAttribute;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 
 import net.minecraft.client.Minecraft;
@@ -170,22 +172,22 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     
     private void updateSpellPackageTypeIndex(int index) {
         this.container.setSpellPackageTypeIndex(index);
-        // TODO send packet to server
+        PacketHandler.sendToServer(new SetSpellAttributeTypeIndexPacket(this.container.windowId, SpellAttribute.PACKAGE, index));
     }
     
     private void updateSpellPayloadTypeIndex(int index) {
         this.container.setSpellPayloadTypeIndex(index);
-        // TODO send packet to server
+        PacketHandler.sendToServer(new SetSpellAttributeTypeIndexPacket(this.container.windowId, SpellAttribute.PAYLOAD, index));
     }
     
     private void updateSpellPrimaryModTypeIndex(int index) {
         this.container.setSpellPrimaryModTypeIndex(index);
-        // TODO send packet to server
+        PacketHandler.sendToServer(new SetSpellAttributeTypeIndexPacket(this.container.windowId, SpellAttribute.PRIMARY_MOD, index));
     }
     
     private void updateSpellSecondaryModTypeIndex(int index) {
         this.container.setSpellSecondaryModTypeIndex(index);
-        // TODO send packet to server
+        PacketHandler.sendToServer(new SetSpellAttributeTypeIndexPacket(this.container.windowId, SpellAttribute.SECONDARY_MOD, index));
     }
     
     protected static class CyclicBoundedSpinnerButton extends Button {

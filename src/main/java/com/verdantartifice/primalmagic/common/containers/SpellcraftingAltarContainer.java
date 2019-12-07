@@ -13,9 +13,7 @@ import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellFactory;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
-import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
-import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -92,13 +90,15 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellPackage getSpellPackage() {
-        // TODO construct real spell from selected parameters
         ISpellPackage spell = SpellFactory.getPackageFromType(SpellManager.getPackageTypes().get(this.getSpellPackageTypeIndex()));
         if (spell != null) {
             spell.setName(this.getSpellName());
-            spell.setPayload(new EarthDamageSpellPayload(5));
-            spell.setPrimaryMod(new EmptySpellMod());
-            spell.setSecondaryMod(new EmptySpellMod());
+            spell.setPayload(SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes().get(this.getSpellPayloadTypeIndex())));
+            // TODO set payload properties
+            spell.setPrimaryMod(SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellPrimaryModTypeIndex())));
+            // TODO set primary mod properties
+            spell.setSecondaryMod(SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellSecondaryModTypeIndex())));
+            // TODO set secondary mod properties
         }
         return spell;
     }
@@ -127,6 +127,9 @@ public class SpellcraftingAltarContainer extends Container {
         index = MathHelper.clamp(index, 0, SpellManager.getPackageTypes().size() - 1);
         PrimalMagic.LOGGER.debug("Setting crafted spell package type index to {}", index);
         this.spellPackageTypeIndex = index;
+        this.worldPosCallable.consume((world, blockPos) -> {
+            this.slotChangedCraftingGrid(world);
+        });
     }
     
     public int getSpellPayloadTypeIndex() {
@@ -137,6 +140,9 @@ public class SpellcraftingAltarContainer extends Container {
         index = MathHelper.clamp(index, 0, SpellManager.getPayloadTypes().size() - 1);
         PrimalMagic.LOGGER.debug("Setting crafted spell payload type index to {}", index);
         this.spellPayloadTypeIndex = index;
+        this.worldPosCallable.consume((world, blockPos) -> {
+            this.slotChangedCraftingGrid(world);
+        });
     }
     
     public int getSpellPrimaryModTypeIndex() {
@@ -147,6 +153,9 @@ public class SpellcraftingAltarContainer extends Container {
         index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
         PrimalMagic.LOGGER.debug("Setting crafted spell mod 1 type index to {}", index);
         this.spellPrimaryModTypeIndex = index;
+        this.worldPosCallable.consume((world, blockPos) -> {
+            this.slotChangedCraftingGrid(world);
+        });
     }
     
     public int getSpellSecondaryModTypeIndex() {
@@ -157,6 +166,9 @@ public class SpellcraftingAltarContainer extends Container {
         index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
         PrimalMagic.LOGGER.debug("Setting crafted spell mod 2 type index to {}", index);
         this.spellSecondaryModTypeIndex = index;
+        this.worldPosCallable.consume((world, blockPos) -> {
+            this.slotChangedCraftingGrid(world);
+        });
     }
     
     @Override

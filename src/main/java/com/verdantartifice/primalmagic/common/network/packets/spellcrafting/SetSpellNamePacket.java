@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.network.packets.misc;
+package com.verdantartifice.primalmagic.common.network.packets.spellcrafting;
 
 import java.util.function.Supplier;
 
