@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.spells;
 
-public enum SpellAttribute {
+public enum SpellComponent {
     PACKAGE,
     PAYLOAD,
     PRIMARY_MOD,

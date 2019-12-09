@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActio
 import com.verdantartifice.primalmagic.common.network.packets.misc.CycleActiveSpellPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
-import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellAttributeTypeIndexPacket;
+import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellNamePacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 
@@ -49,7 +49,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SyncCooldownsPacket.class, SyncCooldownsPacket::encode, SyncCooldownsPacket::decode, SyncCooldownsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, CycleActiveSpellPacket.class, CycleActiveSpellPacket::encode, CycleActiveSpellPacket::decode, CycleActiveSpellPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetSpellNamePacket.class, SetSpellNamePacket::encode, SetSpellNamePacket::decode, SetSpellNamePacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SetSpellAttributeTypeIndexPacket.class, SetSpellAttributeTypeIndexPacket::encode, SetSpellAttributeTypeIndexPacket::decode, SetSpellAttributeTypeIndexPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket::encode, SetSpellComponentTypeIndexPacket::decode, SetSpellComponentTypeIndexPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

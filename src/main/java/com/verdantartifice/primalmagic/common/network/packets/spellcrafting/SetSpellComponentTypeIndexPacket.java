@@ -5,41 +5,41 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
-import com.verdantartifice.primalmagic.common.spells.SpellAttribute;
+import com.verdantartifice.primalmagic.common.spells.SpellComponent;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class SetSpellAttributeTypeIndexPacket implements IMessageToServer {
+public class SetSpellComponentTypeIndexPacket implements IMessageToServer {
     protected int windowId;
-    protected SpellAttribute attr;
+    protected SpellComponent attr;
     protected int index;
 
-    public SetSpellAttributeTypeIndexPacket() {
+    public SetSpellComponentTypeIndexPacket() {
         this.windowId = -1;
         this.attr = null;
         this.index = -1;
     }
     
-    public SetSpellAttributeTypeIndexPacket(int windowId, SpellAttribute attr, int index) {
+    public SetSpellComponentTypeIndexPacket(int windowId, SpellComponent attr, int index) {
         this.windowId = windowId;
         this.attr = attr;
         this.index = index;
     }
     
-    public static void encode(SetSpellAttributeTypeIndexPacket message, PacketBuffer buf) {
+    public static void encode(SetSpellComponentTypeIndexPacket message, PacketBuffer buf) {
         buf.writeInt(message.windowId);
         buf.writeString(message.attr.name());
         buf.writeInt(message.index);
     }
     
-    public static SetSpellAttributeTypeIndexPacket decode(PacketBuffer buf) {
-        SetSpellAttributeTypeIndexPacket message = new SetSpellAttributeTypeIndexPacket();
+    public static SetSpellComponentTypeIndexPacket decode(PacketBuffer buf) {
+        SetSpellComponentTypeIndexPacket message = new SetSpellComponentTypeIndexPacket();
         message.windowId = buf.readInt();
         String attrStr = buf.readString();
         try {
-            message.attr = SpellAttribute.valueOf(attrStr);
+            message.attr = SpellComponent.valueOf(attrStr);
         } catch (Exception e) {
             PrimalMagic.LOGGER.warn("Received SetSpellAttributeTypeIndexPacket with unexpected attr value {}", attrStr);
             message.attr = null;
@@ -49,7 +49,7 @@ public class SetSpellAttributeTypeIndexPacket implements IMessageToServer {
     }
     
     public static class Handler {
-        public static void onMessage(SetSpellAttributeTypeIndexPacket message, Supplier<NetworkEvent.Context> ctx) {
+        public static void onMessage(SetSpellComponentTypeIndexPacket message, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
                 ServerPlayerEntity player = ctx.get().getSender();
                 if (player.openContainer != null && player.openContainer.windowId == message.windowId && player.openContainer instanceof SpellcraftingAltarContainer) {
