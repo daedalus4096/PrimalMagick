@@ -29,6 +29,14 @@ public class SpellProperty {
         return new TranslationTextComponent(this.translationKey);
     }
     
+    public int getMin() {
+        return min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
     public int getValue() {
         return this.value;
     }

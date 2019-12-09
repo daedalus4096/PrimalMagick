@@ -11,8 +11,10 @@ import com.verdantartifice.primalmagic.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.WandInventory;
 import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellComponent;
 import com.verdantartifice.primalmagic.common.spells.SpellFactory;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
+import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
@@ -50,6 +52,7 @@ public class SpellcraftingAltarContainer extends Container {
     protected int spellPayloadTypeIndex = 0;
     protected int spellPrimaryModTypeIndex = 0;
     protected int spellSecondaryModTypeIndex = 0;
+    protected ISpellPackage spellPackageCache = null;
 
     public SpellcraftingAltarContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -88,19 +91,23 @@ public class SpellcraftingAltarContainer extends Container {
     }
 
     public SourceList getManaCosts() {
-        return this.getFinalSpellPackage().getManaCost();
+        return this.getSpellPackage().getManaCost();
     }
     
-    protected ISpellPackage getFinalSpellPackage() {
+    public ISpellPackage getSpellPackage() {
+        if (this.spellPackageCache == null) {
+            this.spellPackageCache = this.makeFinalSpellPackage();
+        }
+        return this.spellPackageCache;
+    }
+    
+    protected ISpellPackage makeFinalSpellPackage() {
         ISpellPackage spell = this.getSpellPackageComponent();
         if (spell != null) {
             spell.setName(this.getSpellName());
             spell.setPayload(this.getSpellPayloadComponent());
-            // TODO set payload properties
             spell.setPrimaryMod(this.getSpellPrimaryModComponent());
-            // TODO set primary mod properties
             spell.setSecondaryMod(this.getSpellSecondaryModComponent());
-            // TODO set secondary mod properties
         }
         return spell;
     }
@@ -116,12 +123,13 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellName(String name) {
         this.spellName = name;
+        this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
     
-    public ISpellPackage getSpellPackageComponent() {
+    protected ISpellPackage getSpellPackageComponent() {
         return SpellFactory.getPackageFromType(SpellManager.getPackageTypes().get(this.getSpellPackageTypeIndex()));
     }
     
@@ -132,12 +140,13 @@ public class SpellcraftingAltarContainer extends Container {
     public void setSpellPackageTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getPackageTypes().size() - 1);
         this.spellPackageTypeIndex = index;
+        this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
     
-    public ISpellPayload getSpellPayloadComponent() {
+    protected ISpellPayload getSpellPayloadComponent() {
         return SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes().get(this.getSpellPayloadTypeIndex()));
     }
     
@@ -148,12 +157,13 @@ public class SpellcraftingAltarContainer extends Container {
     public void setSpellPayloadTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getPayloadTypes().size() - 1);
         this.spellPayloadTypeIndex = index;
+        this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
     
-    public ISpellMod getSpellPrimaryModComponent() {
+    protected ISpellMod getSpellPrimaryModComponent() {
         return SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellPrimaryModTypeIndex()));
     }
     
@@ -164,12 +174,13 @@ public class SpellcraftingAltarContainer extends Container {
     public void setSpellPrimaryModTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
         this.spellPrimaryModTypeIndex = index;
+        this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
     
-    public ISpellMod getSpellSecondaryModComponent() {
+    protected ISpellMod getSpellSecondaryModComponent() {
         return SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellSecondaryModTypeIndex()));
     }
     
@@ -180,9 +191,28 @@ public class SpellcraftingAltarContainer extends Container {
     public void setSpellSecondaryModTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
         this.spellSecondaryModTypeIndex = index;
+        this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
+    }
+    
+    public void setSpellPropertyValue(SpellComponent component, String name, int value) {
+        ISpellPackage spell = this.getSpellPackage();
+        SpellProperty property = null;
+        if (component == SpellComponent.PAYLOAD && spell.getPayload() != null) {
+            property = spell.getPayload().getProperty(name);
+        } else if (component == SpellComponent.PRIMARY_MOD && spell.getPrimaryMod() != null) {
+            property = spell.getPrimaryMod().getProperty(name);
+        } else if (component == SpellComponent.SECONDARY_MOD && spell.getSecondaryMod() != null) {
+            property = spell.getSecondaryMod().getProperty(name);
+        }
+        if (property != null) {
+            property.setValue(value);
+            this.worldPosCallable.consume((world, blockPos) -> {
+                this.slotChangedCraftingGrid(world);
+            });
+        }
     }
     
     @Override
@@ -282,7 +312,7 @@ public class SpellcraftingAltarContainer extends Container {
                 if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe)) {
                     stack = recipe.getCraftingResult(this.scrollInv);
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {
-                        ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getFinalSpellPackage());
+                        ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());
                     }
                 }
             }
