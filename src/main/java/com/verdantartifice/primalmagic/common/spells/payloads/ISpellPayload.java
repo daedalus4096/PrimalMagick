@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +28,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     
     public void playSounds(@Nonnull World world, @Nonnull PlayerEntity caster);
     
-    public Collection<SpellProperty> getProperties();
+    public List<SpellProperty> getProperties();
     
     @Nullable
     public SpellProperty getProperty(String name);

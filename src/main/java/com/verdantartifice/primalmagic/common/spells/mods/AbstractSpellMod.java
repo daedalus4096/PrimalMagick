@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagic.common.spells.mods;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -45,8 +45,8 @@ public abstract class AbstractSpellMod implements ISpellMod {
     }
     
     @Override
-    public Collection<SpellProperty> getProperties() {
-        return Collections.unmodifiableCollection(this.properties.values());
+    public List<SpellProperty> getProperties() {
+        return this.properties.values().stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
     }
 
     @Override

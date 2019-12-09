@@ -131,7 +131,6 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellPackageTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getPackageTypes().size() - 1);
-        PrimalMagic.LOGGER.debug("Setting crafted spell package type index to {}", index);
         this.spellPackageTypeIndex = index;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
@@ -148,7 +147,6 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellPayloadTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getPayloadTypes().size() - 1);
-        PrimalMagic.LOGGER.debug("Setting crafted spell payload type index to {}", index);
         this.spellPayloadTypeIndex = index;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
@@ -165,7 +163,6 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellPrimaryModTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
-        PrimalMagic.LOGGER.debug("Setting crafted spell mod 1 type index to {}", index);
         this.spellPrimaryModTypeIndex = index;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
@@ -182,7 +179,6 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellSecondaryModTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
-        PrimalMagic.LOGGER.debug("Setting crafted spell mod 2 type index to {}", index);
         this.spellSecondaryModTypeIndex = index;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);

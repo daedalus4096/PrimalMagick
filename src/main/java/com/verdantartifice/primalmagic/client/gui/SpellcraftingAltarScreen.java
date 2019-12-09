@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetS
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellNamePacket;
 import com.verdantartifice.primalmagic.common.spells.SpellComponent;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
+import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -22,7 +23,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -97,7 +97,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.texts.put(new Vec3i(x + 8, y + 2, 81), this.container.getSpellPackageComponent().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, SpellManager.getPackageTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
         
-        y += 36;
+        y = startY + 48;
         this.texts.put(new Vec3i(x, y + 2, 97), new TranslationTextComponent("primalmagic.spell.payload.header"));
         
         y += 12;
@@ -105,34 +105,46 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.texts.put(new Vec3i(x + 8, y + 2, 81), this.container.getSpellPayloadComponent().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, SpellManager.getPayloadTypes().size() - 1, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
         
-        y += 12;
-        this.texts.put(new Vec3i(x + 16, y + 2, 73), new StringTextComponent("Property 1"));  // TODO get real property name from container package
-
-        y += 12;
-        this.texts.put(new Vec3i(x + 16, y + 2, 73), new StringTextComponent("Property 2"));  // TODO get real property name from container package
+        for (SpellProperty property : this.container.getSpellPayloadComponent().getProperties()) {
+            y += 12;
+            // TODO add decrement spinner
+            // TODO add property value label
+            // TODO add increment spinner
+            this.texts.put(new Vec3i(x + 16, y + 2, 73), property.getDescription());
+        }
         
         x += 101;
         y = startY;
         this.texts.put(new Vec3i(x, y + 2, 97), new TranslationTextComponent("primalmagic.spell.primary_mod.header"));
         
         y += 12;
-        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, 0, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getModTypes().size() - 1, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 81), this.container.getSpellPrimaryModComponent().getTypeName());
-        this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, 0, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, SpellManager.getModTypes().size() - 1, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
         
-        y += 12;
-        this.texts.put(new Vec3i(x + 16, y + 2, 73), new StringTextComponent("Property 1"));  // TODO get real property name from container mod
+        for (SpellProperty property : this.container.getSpellPrimaryModComponent().getProperties()) {
+            y += 12;
+            // TODO add decrement spinner
+            // TODO add property value label
+            // TODO add increment spinner
+            this.texts.put(new Vec3i(x + 16, y + 2, 73), property.getDescription());
+        }
         
-        y += 24;
+        y = startY + 48;
         this.texts.put(new Vec3i(x, y + 2, 97), new TranslationTextComponent("primalmagic.spell.secondary_mod.header"));
         
         y += 12;
-        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, 0, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getModTypes().size() - 1, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 81), this.container.getSpellSecondaryModComponent().getTypeName());
-        this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, 0, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, SpellManager.getModTypes().size() - 1, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
         
-        y += 12;
-        this.texts.put(new Vec3i(x + 16, y + 2, 73), new StringTextComponent("Property 1"));  // TODO get real property name from container mod
+        for (SpellProperty property : this.container.getSpellSecondaryModComponent().getProperties()) {
+            y += 12;
+            // TODO add decrement spinner
+            // TODO add property value label
+            // TODO add increment spinner
+            this.texts.put(new Vec3i(x + 16, y + 2, 73), property.getDescription());
+        }
     }
 
     @Override

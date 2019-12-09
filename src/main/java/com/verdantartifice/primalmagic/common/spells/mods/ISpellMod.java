@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.spells.mods;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -12,7 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ISpellMod extends INBTSerializable<CompoundNBT> {
-    public Collection<SpellProperty> getProperties();
+    public List<SpellProperty> getProperties();
     
     @Nullable
     public SpellProperty getProperty(String name);
