@@ -10,6 +10,8 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public abstract class AbstractSpellMod implements ISpellMod {
     protected final Map<String, SpellProperty> properties;
@@ -55,5 +57,10 @@ public abstract class AbstractSpellMod implements ISpellMod {
     @Override
     public int getPropertyValue(String name) {
         return this.properties.containsKey(name) ? this.properties.get(name).getValue() : 0;
+    }
+    
+    @Override
+    public ITextComponent getTypeName() {
+        return new TranslationTextComponent("primalmagic.spell.mod.type." + this.getModType());
     }
 }

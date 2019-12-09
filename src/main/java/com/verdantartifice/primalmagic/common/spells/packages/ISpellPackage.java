@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -39,6 +40,9 @@ public interface ISpellPackage extends INBTSerializable<CompoundNBT> {
     public ISpellMod getSecondaryMod();
     
     public void setSecondaryMod(@Nullable ISpellMod mod);
+    
+    @Nonnull
+    public ITextComponent getTypeName();
 
     public int getCooldownTicks();
 

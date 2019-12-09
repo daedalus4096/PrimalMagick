@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -33,4 +34,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     public SpellProperty getProperty(String name);
     
     public int getPropertyValue(String name);
+    
+    @Nonnull
+    public ITextComponent getTypeName();
 }

@@ -13,7 +13,9 @@ import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellFactory;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
+import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -86,18 +88,18 @@ public class SpellcraftingAltarContainer extends Container {
     }
 
     public SourceList getManaCosts() {
-        return this.getSpellPackage().getManaCost();
+        return this.getFinalSpellPackage().getManaCost();
     }
     
-    protected ISpellPackage getSpellPackage() {
-        ISpellPackage spell = SpellFactory.getPackageFromType(SpellManager.getPackageTypes().get(this.getSpellPackageTypeIndex()));
+    protected ISpellPackage getFinalSpellPackage() {
+        ISpellPackage spell = this.getSpellPackageComponent();
         if (spell != null) {
             spell.setName(this.getSpellName());
-            spell.setPayload(SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes().get(this.getSpellPayloadTypeIndex())));
+            spell.setPayload(this.getSpellPayloadComponent());
             // TODO set payload properties
-            spell.setPrimaryMod(SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellPrimaryModTypeIndex())));
+            spell.setPrimaryMod(this.getSpellPrimaryModComponent());
             // TODO set primary mod properties
-            spell.setSecondaryMod(SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellSecondaryModTypeIndex())));
+            spell.setSecondaryMod(this.getSpellSecondaryModComponent());
             // TODO set secondary mod properties
         }
         return spell;
@@ -119,6 +121,10 @@ public class SpellcraftingAltarContainer extends Container {
         });
     }
     
+    public ISpellPackage getSpellPackageComponent() {
+        return SpellFactory.getPackageFromType(SpellManager.getPackageTypes().get(this.getSpellPackageTypeIndex()));
+    }
+    
     public int getSpellPackageTypeIndex() {
         return this.spellPackageTypeIndex;
     }
@@ -130,6 +136,10 @@ public class SpellcraftingAltarContainer extends Container {
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
+    }
+    
+    public ISpellPayload getSpellPayloadComponent() {
+        return SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes().get(this.getSpellPayloadTypeIndex()));
     }
     
     public int getSpellPayloadTypeIndex() {
@@ -145,6 +155,10 @@ public class SpellcraftingAltarContainer extends Container {
         });
     }
     
+    public ISpellMod getSpellPrimaryModComponent() {
+        return SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellPrimaryModTypeIndex()));
+    }
+    
     public int getSpellPrimaryModTypeIndex() {
         return this.spellPrimaryModTypeIndex;
     }
@@ -156,6 +170,10 @@ public class SpellcraftingAltarContainer extends Container {
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
+    }
+    
+    public ISpellMod getSpellSecondaryModComponent() {
+        return SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellSecondaryModTypeIndex()));
     }
     
     public int getSpellSecondaryModTypeIndex() {
@@ -268,7 +286,7 @@ public class SpellcraftingAltarContainer extends Container {
                 if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe)) {
                     stack = recipe.getCraftingResult(this.scrollInv);
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {
-                        ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());
+                        ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getFinalSpellPackage());
                     }
                 }
             }

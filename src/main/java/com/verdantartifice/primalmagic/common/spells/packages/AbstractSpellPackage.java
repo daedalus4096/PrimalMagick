@@ -13,6 +13,8 @@ import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public abstract class AbstractSpellPackage implements ISpellPackage {
@@ -127,6 +129,11 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
         } else {
             this.secondaryMod = new EmptySpellMod();
         }
+    }
+    
+    @Override
+    public ITextComponent getTypeName() {
+        return new TranslationTextComponent("primalmagic.spell.package.type." + this.getPackageType());
     }
     
     @Override

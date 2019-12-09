@@ -23,6 +23,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -89,19 +90,19 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         int x = startX;
         int y = startY;
         
-        this.texts.put(new Vec3i(x, y + 2, 97), new StringTextComponent("Spell Type"));
+        this.texts.put(new Vec3i(x, y + 2, 97), new TranslationTextComponent("primalmagic.spell.package.header"));
         
         y += 12;
         this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getPackageTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
-        this.texts.put(new Vec3i(x + 8, y + 2, 81), new StringTextComponent("Temp Type Name"));  // TODO get real type name from container package
+        this.texts.put(new Vec3i(x + 8, y + 2, 81), this.container.getSpellPackageComponent().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, SpellManager.getPackageTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
         
         y += 36;
-        this.texts.put(new Vec3i(x, y + 2, 97), new StringTextComponent("Spell Payload"));
+        this.texts.put(new Vec3i(x, y + 2, 97), new TranslationTextComponent("primalmagic.spell.payload.header"));
         
         y += 12;
         this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getPayloadTypes().size() - 1, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
-        this.texts.put(new Vec3i(x + 8, y + 2, 81), new StringTextComponent("Temp Payload Name"));  // TODO get real payload name from container package
+        this.texts.put(new Vec3i(x + 8, y + 2, 81), this.container.getSpellPayloadComponent().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, SpellManager.getPayloadTypes().size() - 1, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
         
         y += 12;
@@ -112,22 +113,22 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         
         x += 101;
         y = startY;
-        this.texts.put(new Vec3i(x, y + 2, 97), new StringTextComponent("Primary Mod"));
+        this.texts.put(new Vec3i(x, y + 2, 97), new TranslationTextComponent("primalmagic.spell.primary_mod.header"));
         
         y += 12;
         this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, 0, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
-        this.texts.put(new Vec3i(x + 8, y + 2, 81), new StringTextComponent("Temp Mod Name"));  // TODO get real mod name from container
+        this.texts.put(new Vec3i(x + 8, y + 2, 81), this.container.getSpellPrimaryModComponent().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, 0, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
         
         y += 12;
         this.texts.put(new Vec3i(x + 16, y + 2, 73), new StringTextComponent("Property 1"));  // TODO get real property name from container mod
         
         y += 24;
-        this.texts.put(new Vec3i(x, y + 2, 97), new StringTextComponent("Secondary Mod"));
+        this.texts.put(new Vec3i(x, y + 2, 97), new TranslationTextComponent("primalmagic.spell.secondary_mod.header"));
         
         y += 12;
         this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, 0, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
-        this.texts.put(new Vec3i(x + 8, y + 2, 81), new StringTextComponent("Temp Mod Name"));  // TODO get real mod name from container
+        this.texts.put(new Vec3i(x + 8, y + 2, 81), this.container.getSpellSecondaryModComponent().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 90, y, true, 0, 0, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
         
         y += 12;

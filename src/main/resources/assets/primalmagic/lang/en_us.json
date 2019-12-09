@@ -347,6 +347,18 @@
     "primalmagic.analysis.no_item": "No item analyzed",
     "primalmagic.analysis.no_affinities": "No affinities detected",
     
+    "primalmagic.spell.package.header": "Spell Type",
+    "primalmagic.spell.package.type.touch": "Touch",
+    "primalmagic.spell.package.type.self": "Self",
+    
+    "primalmagic.spell.payload.header": "Spell Payload",
+    "primalmagic.spell.payload.type.earth_damage": "Stone",
+    "primalmagic.spell.payload.type.frost_damage": "Frost",
+    
+    "primalmagic.spell.primary_mod.header": "Primary Mod",
+    "primalmagic.spell.secondary_mod.header": "Secondary Mod",
+    "primalmagic.spell.mod.type.none": "No Mod",
+    
     "primalmagic.spell.property.power": "Power",
     "primalmagic.spell.property.duration": "Duration",
     
