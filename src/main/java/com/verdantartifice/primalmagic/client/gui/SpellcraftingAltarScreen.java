@@ -7,11 +7,14 @@ import java.util.function.Supplier;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellNamePacket;
+import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellComponent;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
@@ -92,6 +95,12 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         int startY = this.guiTop + 32;
         int x = startX;
         int y = startY;
+        
+        SourceList manaCost = this.container.getSpellPackage().getManaCost();
+        if (manaCost != null && !manaCost.isEmpty()) {
+            Source source = manaCost.getSourcesSorted().get(0);
+            this.addButton(new ManaCostWidget(source, manaCost.getAmount(source), this.guiLeft + 28, this.guiTop + 8));
+        }
         
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.package.header"));
         
