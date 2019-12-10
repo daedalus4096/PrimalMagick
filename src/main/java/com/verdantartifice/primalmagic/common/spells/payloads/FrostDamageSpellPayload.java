@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
@@ -31,7 +32,7 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("duration", new SpellProperty("duration", "primalmagic.spell.property.duration", 1, 5));
+        propMap.put("duration", new SpellProperty("duration", "primalmagic.spell.property.duration", 0, 5));
         return propMap;
     }
 
@@ -57,7 +58,7 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
 
     @Override
     protected void applySecondaryEffects(RayTraceResult target, ISpellPackage spell, World world, PlayerEntity caster) {
-        if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
+        if (target != null && target.getType() == RayTraceResult.Type.ENTITY && this.getPropertyValue("duration") > 0) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
                 int duration = 20 * this.getPropertyValue("duration");
@@ -65,5 +66,10 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
                 ((LivingEntity)entityTarget.getEntity()).addPotionEffect(new EffectInstance(Effects.SLOWNESS, duration, potency));
             }
         }
+    }
+    
+    @Override
+    public SourceList getManaCost() {
+        return super.getManaCost().add(this.getSource(), this.getPropertyValue("duration"));
     }
 }
