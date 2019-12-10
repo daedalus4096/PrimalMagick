@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import java.util.Optional;
 
+import javax.annotation.Nonnull;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.SpellScrollBlankSlot;
@@ -34,6 +36,8 @@ import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class SpellcraftingAltarContainer extends Container {
@@ -113,12 +117,26 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public String getSpellName() {
-        return (this.spellName == null || this.spellName.isEmpty()) ? this.getDefaultSpellName() : this.spellName;
+        return (this.spellName == null || this.spellName.isEmpty()) ? this.getDefaultSpellName().getString() : this.spellName;
     }
     
-    protected String getDefaultSpellName() {
-        // TODO Determine default spell name based on spell package
-        return "Crafted Spell";
+    @Nonnull
+    public ITextComponent getDefaultSpellName() {
+        ITextComponent packagePiece = this.getSpellPackageComponent().getDefaultNamePiece();
+        ITextComponent payloadPiece = this.getSpellPayloadComponent().getDefaultNamePiece();
+        ITextComponent primaryModPiece = this.getSpellPrimaryModComponent().getDefaultNamePiece();
+        ITextComponent secondaryModPiece = this.getSpellSecondaryModComponent().getDefaultNamePiece();
+        boolean primaryActive = this.getSpellPrimaryModComponent().isActive();
+        boolean secondaryActive = this.getSpellSecondaryModComponent().isActive();
+        if (!primaryActive && !secondaryActive) {
+            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.0", packagePiece, payloadPiece);
+        } else if (primaryActive && secondaryActive) {
+            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.2", packagePiece, payloadPiece, primaryModPiece, secondaryModPiece);
+        } else if (primaryActive) {
+            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", packagePiece, payloadPiece, primaryModPiece);
+        } else {
+            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", packagePiece, payloadPiece, secondaryModPiece);
+        }
     }
     
     public void setSpellName(String name) {

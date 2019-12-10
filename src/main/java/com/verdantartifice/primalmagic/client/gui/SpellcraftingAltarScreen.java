@@ -56,6 +56,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setMaxStringLength(35);
         this.nameField.func_212954_a(this::updateName);
+        this.nameField.setText(this.container.getDefaultSpellName().getString());
     }
     
     @Override
@@ -181,30 +182,47 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     }
     
     private void updateName(String name) {
-        if (!name.isEmpty()) {
-            this.container.setSpellName(name);
-            PacketHandler.sendToServer(new SetSpellNamePacket(this.container.windowId, name));
+        if (name.isEmpty()) {
+            name = this.container.getDefaultSpellName().getString();
         }
+        this.container.setSpellName(name);
+        PacketHandler.sendToServer(new SetSpellNamePacket(this.container.windowId, name));
     }
     
     private void updateSpellPackageTypeIndex(int index) {
+        boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
         this.container.setSpellPackageTypeIndex(index);
         PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.PACKAGE, index));
+        if (recalcName) {
+            this.nameField.setText(this.container.getDefaultSpellName().getString());
+        }
     }
     
     private void updateSpellPayloadTypeIndex(int index) {
+        boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
         this.container.setSpellPayloadTypeIndex(index);
         PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.PAYLOAD, index));
+        if (recalcName) {
+            this.nameField.setText(this.container.getDefaultSpellName().getString());
+        }
     }
     
     private void updateSpellPrimaryModTypeIndex(int index) {
+        boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
         this.container.setSpellPrimaryModTypeIndex(index);
         PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.PRIMARY_MOD, index));
+        if (recalcName) {
+            this.nameField.setText(this.container.getDefaultSpellName().getString());
+        }
     }
     
     private void updateSpellSecondaryModTypeIndex(int index) {
+        boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
         this.container.setSpellSecondaryModTypeIndex(index);
         PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.SECONDARY_MOD, index));
+        if (recalcName) {
+            this.nameField.setText(this.container.getDefaultSpellName().getString());
+        }
     }
     
     private void updateSpellPayloadPropertyValue(String name, int value) {

@@ -85,6 +85,18 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
     public void setSecondaryMod(ISpellMod mod) {
         this.secondaryMod = mod;
     }
+    
+    @Override
+    public int getActiveModCount() {
+        int retVal = 0;
+        if (this.primaryMod != null && this.primaryMod.isActive()) {
+            retVal++;
+        }
+        if (this.secondaryMod != null && this.secondaryMod.isActive()) {
+            retVal++;
+        }
+        return retVal;
+    }
 
     protected abstract String getPackageType();
 
@@ -134,6 +146,11 @@ public abstract class AbstractSpellPackage implements ISpellPackage {
     @Override
     public ITextComponent getTypeName() {
         return new TranslationTextComponent("primalmagic.spell.package.type." + this.getPackageType());
+    }
+    
+    @Override
+    public ITextComponent getDefaultNamePiece() {
+        return new TranslationTextComponent("primalmagic.spell.package.default_name." + this.getPackageType());
     }
     
     @Override

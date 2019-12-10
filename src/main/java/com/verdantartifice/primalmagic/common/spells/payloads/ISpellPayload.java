@@ -37,4 +37,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     
     @Nonnull
     public ITextComponent getTypeName();
+    
+    @Nonnull
+    public ITextComponent getDefaultNamePiece();
 }

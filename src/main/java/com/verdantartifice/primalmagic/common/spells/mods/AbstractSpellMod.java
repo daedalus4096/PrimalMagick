@@ -45,6 +45,11 @@ public abstract class AbstractSpellMod implements ISpellMod {
     }
     
     @Override
+    public boolean isActive() {
+        return true;
+    }
+    
+    @Override
     public List<SpellProperty> getProperties() {
         return this.properties.values().stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
     }
@@ -62,5 +67,10 @@ public abstract class AbstractSpellMod implements ISpellMod {
     @Override
     public ITextComponent getTypeName() {
         return new TranslationTextComponent("primalmagic.spell.mod.type." + this.getModType());
+    }
+    
+    @Override
+    public ITextComponent getDefaultNamePiece() {
+        return new TranslationTextComponent("primalmagic.spell.mod.default_name." + this.getModType());
     }
 }

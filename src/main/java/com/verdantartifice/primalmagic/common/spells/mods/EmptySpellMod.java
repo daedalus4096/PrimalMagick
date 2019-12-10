@@ -8,6 +8,11 @@ public class EmptySpellMod extends AbstractSpellMod {
     }
     
     @Override
+    public boolean isActive() {
+        return false;
+    }
+    
+    @Override
     protected String getModType() {
         return TYPE;
     }

@@ -41,8 +41,13 @@ public interface ISpellPackage extends INBTSerializable<CompoundNBT> {
     
     public void setSecondaryMod(@Nullable ISpellMod mod);
     
+    public int getActiveModCount();
+    
     @Nonnull
     public ITextComponent getTypeName();
+    
+    @Nonnull
+    public ITextComponent getDefaultNamePiece();
 
     public int getCooldownTicks();
 

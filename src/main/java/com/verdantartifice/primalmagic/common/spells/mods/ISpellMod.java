@@ -12,6 +12,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ISpellMod extends INBTSerializable<CompoundNBT> {
+    public boolean isActive();
+    
     public List<SpellProperty> getProperties();
     
     @Nullable
@@ -21,4 +23,7 @@ public interface ISpellMod extends INBTSerializable<CompoundNBT> {
     
     @Nonnull
     public ITextComponent getTypeName();
+    
+    @Nonnull
+    public ITextComponent getDefaultNamePiece();
 }
