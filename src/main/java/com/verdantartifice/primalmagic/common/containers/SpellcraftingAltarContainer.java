@@ -68,24 +68,24 @@ public class SpellcraftingAltarContainer extends Container {
         this.player = inv.player;
         
         // Slot 0: Result
-        this.addSlot(new SpellcraftingResultSlot(this.player, this.scrollInv, this.wandInv, this::getManaCosts, this.resultInv, 0, 188, 8));
+        this.addSlot(new SpellcraftingResultSlot(this.player, this.scrollInv, this.wandInv, this::getManaCosts, this.resultInv, 0, 206, 8));
         
         // Slot 1: Input wand
         this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 8, 8));
 
         // Slot 2: Blank scroll
-        this.scrollSlot = this.addSlot(new SpellScrollBlankSlot(this.scrollInv, 0, 142, 8));
+        this.scrollSlot = this.addSlot(new SpellScrollBlankSlot(this.scrollInv, 0, 160, 8));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(inv, j + (i * 9) + 9, 26 + (j * 18), 140 + (i * 18)));
+                this.addSlot(new Slot(inv, j + (i * 9) + 9, 35 + (j * 18), 140 + (i * 18)));
             }
         }
         
         // Slots 30-38: Player hotbar
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new Slot(inv, i, 26 + (i * 18), 198));
+            this.addSlot(new Slot(inv, i, 35 + (i * 18), 198));
         }
     }
 
