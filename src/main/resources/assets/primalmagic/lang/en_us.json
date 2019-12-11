@@ -353,8 +353,10 @@
     
     "primalmagic.spell.package.header": "Spell Type",
     "primalmagic.spell.package.type.touch": "Touch",
+    "primalmagic.spell.package.type.projectile": "Projectile",
     "primalmagic.spell.package.type.self": "Self",
     "primalmagic.spell.package.default_name.touch": "Hand",
+    "primalmagic.spell.package.default_name.projectile": "Missile",
     "primalmagic.spell.package.default_name.self": "Self",
     
     "primalmagic.spell.payload.header": "Spell Payload",

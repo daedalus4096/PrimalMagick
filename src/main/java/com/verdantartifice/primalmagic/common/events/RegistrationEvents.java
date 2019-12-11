@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.init.InitBlocks;
 import com.verdantartifice.primalmagic.common.init.InitContainers;
+import com.verdantartifice.primalmagic.common.init.InitEntities;
 import com.verdantartifice.primalmagic.common.init.InitItems;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
 import com.verdantartifice.primalmagic.common.init.InitSounds;
@@ -10,6 +11,7 @@ import com.verdantartifice.primalmagic.common.init.InitTileEntities;
 import com.verdantartifice.primalmagic.common.init.InitWorldGen;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -57,5 +59,10 @@ public class RegistrationEvents {
     @SubscribeEvent
     public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
         InitWorldGen.initFeatures(event.getRegistry());
+    }
+    
+    @SubscribeEvent
+    public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event) {
+        InitEntities.initEntityTypes(event.getRegistry());
     }
 }

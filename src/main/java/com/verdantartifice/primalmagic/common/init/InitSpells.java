@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.init;
 
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
+import com.verdantartifice.primalmagic.common.spells.packages.ProjectileSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.packages.SelfSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.packages.TouchSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
@@ -16,6 +17,7 @@ public class InitSpells {
 
     private static void registerSpellPayloadTypes() {
         SpellManager.registerPackageType(TouchSpellPackage.TYPE);
+        SpellManager.registerPackageType(ProjectileSpellPackage.TYPE);
         SpellManager.registerPackageType(SelfSpellPackage.TYPE);
     }
 
