@@ -6,11 +6,12 @@ import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.network.IPacket;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class SpellProjectileEntity extends ThrowableEntity {
-
     public SpellProjectileEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
         super(type, worldIn);
     }
@@ -38,4 +39,8 @@ public class SpellProjectileEntity extends ThrowableEntity {
 
     }
 
+    @Override
+    public IPacket<?> createSpawnPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 }

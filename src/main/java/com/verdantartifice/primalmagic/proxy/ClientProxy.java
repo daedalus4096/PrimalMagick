@@ -8,13 +8,16 @@ import com.verdantartifice.primalmagic.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagic.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
+import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientProxy extends CommonProxy {
@@ -24,6 +27,7 @@ public class ClientProxy extends CommonProxy {
         this.registerKeybinds();
         this.registerScreens();
         this.registerTERs();
+        this.registerEntityRenderers();
     }
     
     private void registerKeybinds() {
@@ -42,6 +46,10 @@ public class ClientProxy extends CommonProxy {
     
     private void registerTERs() {
         ClientRegistry.bindTileEntitySpecialRenderer(AncientManaFontTileEntity.class, new AncientManaFontTER());
+    }
+    
+    private void registerEntityRenderers() {
+        RenderingRegistry.registerEntityRenderingHandler(SpellProjectileEntity.class, SpellProjectileRenderer::new);
     }
     
     @Override
