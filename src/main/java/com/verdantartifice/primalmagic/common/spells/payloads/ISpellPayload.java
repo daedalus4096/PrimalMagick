@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
-    public void execute(@Nullable RayTraceResult target, @Nonnull ISpellPackage spell, @Nonnull World world, @Nonnull PlayerEntity caster);
+    public void execute(@Nullable RayTraceResult target, @Nonnull ISpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster);
     
     @Nonnull
     public Source getSource();
@@ -26,7 +26,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     @Nonnull
     public SourceList getManaCost();
     
-    public void playSounds(@Nonnull World world, @Nonnull PlayerEntity caster);
+    public void playSounds(@Nonnull World world, @Nonnull LivingEntity caster);
     
     public List<SpellProperty> getProperties();
     

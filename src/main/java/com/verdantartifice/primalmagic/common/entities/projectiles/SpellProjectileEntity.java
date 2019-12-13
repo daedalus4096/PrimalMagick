@@ -57,8 +57,10 @@ public class SpellProjectileEntity extends ThrowableEntity {
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        // TODO execute spell payload on impacted target
         if (!this.world.isRemote) {
+            if (this.spell != null && this.spell.getPayload() != null) {
+                this.spell.getPayload().execute(result, this.spell, this.world, this.getThrower());
+            }
             this.remove();
         }
     }
