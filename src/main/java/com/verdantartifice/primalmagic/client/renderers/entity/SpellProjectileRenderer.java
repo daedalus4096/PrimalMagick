@@ -52,6 +52,11 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         GlStateManager.color4f(r, g, b, 1.0F);
         this.bindEntityTexture(entity);
         this.model.render(entity, 0.0F, 0.0F, 0.0F, yaw, pitch, 0.015625F);
+        GlStateManager.enableBlend();
+        GlStateManager.color4f(r, g, b, 0.5F);
+        GlStateManager.scalef(1.5F, 1.5F, 1.5F);
+        this.model.render(entity, 0.0F, 0.0F, 0.0F, yaw, pitch, 0.015625F);
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
