@@ -25,7 +25,7 @@ public class ProjectileSpellPackage extends AbstractSpellPackage {
     public void cast(World world, PlayerEntity caster) {
         super.cast(world, caster);
         if (this.payload != null) {
-            SpellProjectileEntity projectile = new SpellProjectileEntity(world, caster);
+            SpellProjectileEntity projectile = new SpellProjectileEntity(world, caster, this);
             projectile.shoot(caster, caster.rotationPitch, caster.rotationYaw, 0.0F, 1.5F, 0.0F);
             world.addEntity(projectile);
         }

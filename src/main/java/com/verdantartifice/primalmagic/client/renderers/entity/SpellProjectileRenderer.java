@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.entity;
 
+import java.awt.Color;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.models.SpellProjectileModel;
@@ -38,11 +40,16 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         float yaw = this.rotLerp(entity.prevRotationYaw, entity.rotationYaw, partialTicks);
         float pitch = MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch);
         float ticks = (float)entity.ticksExisted + partialTicks;
+        Color c = new Color(entity.getColor());
+        float r = (float)c.getRed() / 255.0F;
+        float g = (float)c.getGreen() / 255.0F;
+        float b = (float)c.getBlue() / 255.0F;
         GlStateManager.pushMatrix();
         GlStateManager.translated(x, y + 0.15D, z);
         GlStateManager.rotatef(MathHelper.sin(ticks * 0.1F) * 180.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotatef(MathHelper.cos(ticks * 0.1F) * 180.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.rotatef(MathHelper.sin(ticks * 0.15F) * 360.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.color4f(r, g, b, 1.0F);
         this.bindEntityTexture(entity);
         this.model.render(entity, 0.0F, 0.0F, 0.0F, yaw, pitch, 0.015625F);
         GlStateManager.popMatrix();
