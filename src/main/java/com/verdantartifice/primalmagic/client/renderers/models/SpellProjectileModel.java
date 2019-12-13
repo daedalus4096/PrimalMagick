@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.client.renderers.models;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -22,7 +21,6 @@ public class SpellProjectileModel extends EntityModel<SpellProjectileEntity> {
     
     @Override
     public void render(SpellProjectileEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        PrimalMagic.LOGGER.debug("Calling SpellProjectileModel#render with scale {}", scale);
         this.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         this.renderer.render(scale);
     }

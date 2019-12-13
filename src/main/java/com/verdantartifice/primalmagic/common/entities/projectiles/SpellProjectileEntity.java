@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.entities.projectiles;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 
 import net.minecraft.entity.EntityType;
@@ -26,7 +25,6 @@ public class SpellProjectileEntity extends ThrowableEntity {
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        PrimalMagic.LOGGER.debug("Spell projectile impact");
         // TODO execute spell payload on impacted target
         if (!this.world.isRemote) {
             this.remove();
