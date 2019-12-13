@@ -16,17 +16,17 @@ public class InitSpells {
     }
 
     private static void registerSpellPayloadTypes() {
-        SpellManager.registerPackageType(TouchSpellPackage.TYPE);
-        SpellManager.registerPackageType(ProjectileSpellPackage.TYPE);
-        SpellManager.registerPackageType(SelfSpellPackage.TYPE);
+        SpellManager.registerPackageType(TouchSpellPackage.TYPE, TouchSpellPackage::new);
+        SpellManager.registerPackageType(ProjectileSpellPackage.TYPE, ProjectileSpellPackage::new);
+        SpellManager.registerPackageType(SelfSpellPackage.TYPE, SelfSpellPackage::new);
     }
 
     private static void registerSpellPackageTypes() {
-        SpellManager.registerPayloadType(EarthDamageSpellPayload.TYPE);
-        SpellManager.registerPayloadType(FrostDamageSpellPayload.TYPE);
+        SpellManager.registerPayloadType(EarthDamageSpellPayload.TYPE, EarthDamageSpellPayload::new);
+        SpellManager.registerPayloadType(FrostDamageSpellPayload.TYPE, FrostDamageSpellPayload::new);
     }
 
     private static void registerSpellModTypes() {
-        SpellManager.registerModType(EmptySpellMod.TYPE);
+        SpellManager.registerModType(EmptySpellMod.TYPE, EmptySpellMod::new);
     }
 }

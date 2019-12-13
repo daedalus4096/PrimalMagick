@@ -2,14 +2,19 @@ package com.verdantartifice.primalmagic.common.spells;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,14 +27,24 @@ public class SpellManager {
     protected static final List<String> PAYLOAD_TYPES = new ArrayList<>();
     protected static final List<String> MOD_TYPES = new ArrayList<>();
     
+    protected static final Map<String, Supplier<ISpellPackage>> PACKAGE_SUPPLIERS = new HashMap<>();
+    protected static final Map<String, Supplier<ISpellPayload>> PAYLOAD_SUPPLIERS = new HashMap<>();
+    protected static final Map<String, Supplier<ISpellMod>> MOD_SUPPLIERS = new HashMap<>();
+    
     @Nonnull
     public static List<String> getPackageTypes() {
         return Collections.unmodifiableList(PACKAGE_TYPES);
     }
     
-    public static void registerPackageType(String type) {
-        if (type != null && !type.isEmpty()) {
+    @Nullable
+    public static Supplier<ISpellPackage> getPackageSupplier(String type) {
+        return PACKAGE_SUPPLIERS.get(type);
+    }
+    
+    public static void registerPackageType(String type, Supplier<ISpellPackage> supplier) {
+        if (type != null && !type.isEmpty() && supplier != null) {
             PACKAGE_TYPES.add(type);
+            PACKAGE_SUPPLIERS.put(type, supplier);
         }
     }
     
@@ -38,9 +53,15 @@ public class SpellManager {
         return Collections.unmodifiableList(PAYLOAD_TYPES);
     }
     
-    public static void registerPayloadType(String type) {
-        if (type != null && !type.isEmpty()) {
+    @Nullable
+    public static Supplier<ISpellPayload> getPayloadSupplier(String type) {
+        return PAYLOAD_SUPPLIERS.get(type);
+    }
+    
+    public static void registerPayloadType(String type, Supplier<ISpellPayload> supplier) {
+        if (type != null && !type.isEmpty() && supplier != null) {
             PAYLOAD_TYPES.add(type);
+            PAYLOAD_SUPPLIERS.put(type, supplier);
         }
     }
     
@@ -49,9 +70,15 @@ public class SpellManager {
         return Collections.unmodifiableList(MOD_TYPES);
     }
     
-    public static void registerModType(String type) {
+    @Nullable
+    public static Supplier<ISpellMod> getModSupplier(String type) {
+        return MOD_SUPPLIERS.get(type);
+    }
+    
+    public static void registerModType(String type, Supplier<ISpellMod> supplier) {
         if (type != null && !type.isEmpty()) {
             MOD_TYPES.add(type);
+            MOD_SUPPLIERS.put(type, supplier);
         }
     }
     
