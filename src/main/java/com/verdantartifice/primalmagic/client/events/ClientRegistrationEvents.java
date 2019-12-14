@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
+import com.verdantartifice.primalmagic.client.fx.particles.SpellSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
@@ -29,6 +30,7 @@ public class ClientRegistrationEvents {
     public static void registerParticleTypes(RegistryEvent.Register<ParticleType<?>> event) {
         event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "wand_poof"));
         event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "mana_sparkle"));
+        event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "spell_sparkle"));
     }
     
     @SubscribeEvent
@@ -36,6 +38,7 @@ public class ClientRegistrationEvents {
         Minecraft mc = Minecraft.getInstance();
         mc.particles.registerFactory(ParticleTypesPM.WAND_POOF, WandPoofParticle.Factory::new);
         mc.particles.registerFactory(ParticleTypesPM.MANA_SPARKLE, ManaSparkleParticle.Factory::new);
+        mc.particles.registerFactory(ParticleTypesPM.SPELL_SPARKLE, SpellSparkleParticle.Factory::new);
     }
     
     @SubscribeEvent

@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetS
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellNamePacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -52,6 +53,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SetSpellNamePacket.class, SetSpellNamePacket::encode, SetSpellNamePacket::decode, SetSpellNamePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket::encode, SetSpellComponentTypeIndexPacket::decode, SetSpellComponentTypeIndexPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket::encode, SetSpellComponentPropertyPacket::decode, SetSpellComponentPropertyPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SpellTrailPacket.class, SpellTrailPacket::encode, SpellTrailPacket::decode, SpellTrailPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

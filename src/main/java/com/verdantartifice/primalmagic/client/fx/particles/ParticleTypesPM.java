@@ -12,4 +12,5 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ParticleTypesPM {
     public static final BasicParticleType WAND_POOF = null;
     public static final BasicParticleType MANA_SPARKLE = null;
+    public static final BasicParticleType SPELL_SPARKLE = null;
 }

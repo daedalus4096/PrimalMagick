@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.common.entities.projectiles;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
 import net.minecraft.entity.EntityType;
@@ -53,6 +55,18 @@ public class SpellProjectileEntity extends ThrowableEntity {
     
     protected void setColor(int color) {
         this.getDataManager().set(COLOR, Integer.valueOf(color));
+    }
+    
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.world.isRemote && this.isAlive() && this.ticksExisted % 2 == 0 && this.spell != null && this.spell.getPayload() != null) {
+            PacketHandler.sendToAllAround(
+                    new SpellTrailPacket(this.posX, this.posY, this.posZ, this.spell.getPayload().getSource().getColor()), 
+                    this.dimension, 
+                    this.getPosition(), 
+                    64.0D);
+        }
     }
 
     @Override
