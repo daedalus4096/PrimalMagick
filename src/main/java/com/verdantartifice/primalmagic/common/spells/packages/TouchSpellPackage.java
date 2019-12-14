@@ -1,8 +1,12 @@
 package com.verdantartifice.primalmagic.common.spells.packages;
 
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
@@ -44,6 +48,14 @@ public class TouchSpellPackage extends AbstractSpellPackage {
                 result = blockResult;
             } else {
                 result = (eyePos.squareDistanceTo(entityResult.getHitVec()) <= eyePos.squareDistanceTo(blockResult.getHitVec())) ? entityResult : blockResult;
+            }
+            if (!world.isRemote) {
+                Vec3d hitVec = result.getHitVec();
+                PacketHandler.sendToAllAround(
+                        new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, this.payload.getSource().getColor()), 
+                        world.getDimension().getType(), 
+                        new BlockPos(hitVec), 
+                        64.0D);
             }
             this.payload.execute(result, this, world, caster);
         }
