@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
 import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
@@ -14,6 +15,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -73,6 +75,11 @@ public class SpellProjectileEntity extends ThrowableEntity {
     protected void onImpact(RayTraceResult result) {
         if (!this.world.isRemote) {
             if (this.spell != null && this.spell.getPayload() != null) {
+                PacketHandler.sendToAllAround(
+                        new SpellImpactPacket(this.posX, this.posY, this.posZ, this.spell.getPayload().getSource().getColor()), 
+                        this.dimension, 
+                        new BlockPos(result.getHitVec()), 
+                        64.0D);
                 this.spell.getPayload().execute(result, this.spell, this.world, this.getThrower());
             }
             this.remove();
