@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.MundaneWandTEISR;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ public class MundaneWandItem extends AbstractWandItem {
     }
 
     @Override
-    public List<ISpellPackage> getSpells(ItemStack stack) {
+    public List<SpellPackage> getSpells(ItemStack stack) {
         // Mundane wands can't carry spells
         return Collections.emptyList();
     }
@@ -40,7 +40,7 @@ public class MundaneWandItem extends AbstractWandItem {
     }
     
     @Override
-    public ISpellPackage getActiveSpell(ItemStack stack) {
+    public SpellPackage getActiveSpell(ItemStack stack) {
         // Mundane wands can't carry spells
         return null;
     }
@@ -52,13 +52,13 @@ public class MundaneWandItem extends AbstractWandItem {
     }
     
     @Override
-    public boolean canAddSpell(ItemStack stack, ISpellPackage spell) {
+    public boolean canAddSpell(ItemStack stack, SpellPackage spell) {
         // Mundane wands can't carry spells
         return false;
     }
 
     @Override
-    public boolean addSpell(ItemStack stack, ISpellPackage spell) {
+    public boolean addSpell(ItemStack stack, SpellPackage spell) {
         // Mundane wands can't carry spells
         return false;
     }

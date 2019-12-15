@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagic.common.init;
 
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
-import com.verdantartifice.primalmagic.common.spells.packages.ProjectileSpellPackage;
-import com.verdantartifice.primalmagic.common.spells.packages.SelfSpellPackage;
-import com.verdantartifice.primalmagic.common.spells.packages.TouchSpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.FrostDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVehicle;
+import com.verdantartifice.primalmagic.common.spells.vehicles.SelfSpellVehicle;
+import com.verdantartifice.primalmagic.common.spells.vehicles.TouchSpellVehicle;
 
 public class InitSpells {
     public static void initSpells() {
@@ -16,9 +16,9 @@ public class InitSpells {
     }
 
     private static void registerSpellPayloadTypes() {
-        SpellManager.registerPackageType(TouchSpellPackage.TYPE, TouchSpellPackage::new);
-        SpellManager.registerPackageType(ProjectileSpellPackage.TYPE, ProjectileSpellPackage::new);
-        SpellManager.registerPackageType(SelfSpellPackage.TYPE, SelfSpellPackage::new);
+        SpellManager.registerVehicleType(TouchSpellVehicle.TYPE, TouchSpellVehicle::new);
+        SpellManager.registerVehicleType(ProjectileSpellVehicle.TYPE, ProjectileSpellVehicle::new);
+        SpellManager.registerVehicleType(SelfSpellVehicle.TYPE, SelfSpellVehicle::new);
     }
 
     private static void registerSpellPackageTypes() {

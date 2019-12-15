@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.spells.payloads;
 
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.SoundCategory;
@@ -38,7 +38,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    protected void applySecondaryEffects(RayTraceResult target, ISpellPackage spell, World world, LivingEntity caster) {
+    protected void applySecondaryEffects(RayTraceResult target, SpellPackage spell, World world, LivingEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {

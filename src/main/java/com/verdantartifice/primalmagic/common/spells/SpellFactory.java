@@ -5,21 +5,21 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
+import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 
 import net.minecraft.nbt.CompoundNBT;
 
 public class SpellFactory {
     @Nullable
-    public static ISpellPackage getPackageFromType(String type) {
-        Supplier<ISpellPackage> factory = SpellManager.getPackageSupplier(type);
+    public static ISpellVehicle getVehicleFromType(String type) {
+        Supplier<ISpellVehicle> factory = SpellManager.getVehicleSupplier(type);
         return (factory == null) ? null : factory.get();
     }
     
     @Nullable
-    public static ISpellPackage getPackageFromNBT(CompoundNBT tag) {
-        ISpellPackage retVal = getPackageFromType(tag.getString("SpellType"));
+    public static ISpellVehicle getVehicleFromNBT(CompoundNBT tag) {
+        ISpellVehicle retVal = getVehicleFromType(tag.getString("VehicleType"));
         if (retVal != null) {
             retVal.deserializeNBT(tag);
         }

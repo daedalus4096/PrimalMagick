@@ -13,8 +13,8 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
+import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,28 +23,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class SpellManager {
-    protected static final List<String> PACKAGE_TYPES = new ArrayList<>();
+    protected static final List<String> VEHICLE_TYPES = new ArrayList<>();
     protected static final List<String> PAYLOAD_TYPES = new ArrayList<>();
     protected static final List<String> MOD_TYPES = new ArrayList<>();
     
-    protected static final Map<String, Supplier<ISpellPackage>> PACKAGE_SUPPLIERS = new HashMap<>();
+    protected static final Map<String, Supplier<ISpellVehicle>> VEHICLE_SUPPLIERS = new HashMap<>();
     protected static final Map<String, Supplier<ISpellPayload>> PAYLOAD_SUPPLIERS = new HashMap<>();
     protected static final Map<String, Supplier<ISpellMod>> MOD_SUPPLIERS = new HashMap<>();
     
     @Nonnull
-    public static List<String> getPackageTypes() {
-        return Collections.unmodifiableList(PACKAGE_TYPES);
+    public static List<String> getVehicleTypes() {
+        return Collections.unmodifiableList(VEHICLE_TYPES);
     }
     
     @Nullable
-    public static Supplier<ISpellPackage> getPackageSupplier(String type) {
-        return PACKAGE_SUPPLIERS.get(type);
+    public static Supplier<ISpellVehicle> getVehicleSupplier(String type) {
+        return VEHICLE_SUPPLIERS.get(type);
     }
     
-    public static void registerPackageType(String type, Supplier<ISpellPackage> supplier) {
+    public static void registerVehicleType(String type, Supplier<ISpellVehicle> supplier) {
         if (type != null && !type.isEmpty() && supplier != null) {
-            PACKAGE_TYPES.add(type);
-            PACKAGE_SUPPLIERS.put(type, supplier);
+            VEHICLE_TYPES.add(type);
+            VEHICLE_SUPPLIERS.put(type, supplier);
         }
     }
     
@@ -111,7 +111,7 @@ public class SpellManager {
             wand.setActiveSpellIndex(wandStack, newIndex);
             
             if (player != null) {
-                ISpellPackage spell = wand.getActiveSpell(wandStack);
+                SpellPackage spell = wand.getActiveSpell(wandStack);
                 if (spell == null) {
                     player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell.none"));
                 } else {

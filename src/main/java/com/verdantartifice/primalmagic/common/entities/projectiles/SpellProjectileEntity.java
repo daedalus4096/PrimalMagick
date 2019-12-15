@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -23,14 +23,14 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class SpellProjectileEntity extends ThrowableEntity {
     protected static final DataParameter<Integer> COLOR = EntityDataManager.createKey(SpellProjectileEntity.class, DataSerializers.VARINT);
     
-    protected final ISpellPackage spell;
+    protected final SpellPackage spell;
     
     public SpellProjectileEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
         super(type, worldIn);
         this.spell = null;
     }
     
-    public SpellProjectileEntity(World world, LivingEntity thrower, ISpellPackage spell) {
+    public SpellProjectileEntity(World world, LivingEntity thrower, SpellPackage spell) {
         super(EntityTypesPM.SPELL_PROJECTILE, thrower, world);
         this.spell = spell;
         if (spell != null && spell.getPayload() != null) {
@@ -38,7 +38,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
         }
     }
     
-    public SpellProjectileEntity(World world, double x, double y, double z, ISpellPackage spell) {
+    public SpellProjectileEntity(World world, double x, double y, double z, SpellPackage spell) {
         super(EntityTypesPM.SPELL_PROJECTILE, x, y, z, world);
         this.spell = spell;
         if (spell != null && spell.getPayload() != null) {
@@ -47,7 +47,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
     }
     
     @Nullable
-    public ISpellPackage getSpell() {
+    public SpellPackage getSpell() {
         return this.spell;
     }
     

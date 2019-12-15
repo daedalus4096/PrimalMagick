@@ -102,12 +102,12 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
             this.addButton(new ManaCostWidget(source, manaCost.getAmount(source), this.guiLeft + 28, this.guiTop + 8));
         }
         
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.package.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.vehicle.header"));
         
         y += 12;
-        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getPackageTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
-        this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getTypeName());
-        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, SpellManager.getPackageTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getVehicleTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
+        this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getVehicle().getTypeName());
+        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, SpellManager.getVehicleTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
         
         y = startY + 48;
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.payload.header"));

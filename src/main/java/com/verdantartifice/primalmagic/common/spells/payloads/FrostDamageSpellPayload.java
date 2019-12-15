@@ -5,8 +5,8 @@ import java.util.Map;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.EffectInstance;
@@ -56,7 +56,7 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected void applySecondaryEffects(RayTraceResult target, ISpellPackage spell, World world, LivingEntity caster) {
+    protected void applySecondaryEffects(RayTraceResult target, SpellPackage spell, World world, LivingEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY && this.getPropertyValue("duration") > 0) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {

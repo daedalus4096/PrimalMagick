@@ -4,10 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.spells.SpellFactory;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
-import com.verdantartifice.primalmagic.common.spells.packages.TouchSpellPackage;
-import com.verdantartifice.primalmagic.common.spells.payloads.FrostDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -30,35 +27,28 @@ public class SpellScrollItem extends Item {
     }
     
     @Nullable
-    public ISpellPackage getSpell(@Nonnull ItemStack stack) {
-        ISpellPackage spell = null;
+    public SpellPackage getSpell(@Nonnull ItemStack stack) {
+        SpellPackage spell = null;
         if (stack.hasTag() && stack.getTag().contains("Spell")) {
-            spell = SpellFactory.getPackageFromNBT(stack.getTag().getCompound("Spell"));
+            spell = new SpellPackage(stack.getTag().getCompound("Spell"));
         }
         return spell;
     }
     
-    public void setSpell(@Nonnull ItemStack stack, @Nonnull ISpellPackage spell) {
+    public void setSpell(@Nonnull ItemStack stack, @Nonnull SpellPackage spell) {
         stack.setTagInfo("Spell", spell.serializeNBT());
     }
 
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
-        ISpellPackage spell = this.getSpell(stack);
+        SpellPackage spell = this.getSpell(stack);
         String spellName = (spell == null) ? "none" : spell.getName();
         return new TranslationTextComponent(this.getTranslationKey(stack), spellName).applyTextStyle(TextFormatting.ITALIC);
     }
     
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        // TODO Remove after testing is complete
-        if (this.isInGroup(group)) {
-            ItemStack stack = new ItemStack(this);
-            ISpellPackage spell = new TouchSpellPackage("Frost Touch");
-            spell.setPayload(new FrostDamageSpellPayload(5, 4));
-            this.setSpell(stack, spell);
-            items.add(stack);
-        }
+        // Do nothing; don't include filled spell scrolls in the creative tab
     }
     
     @Override
@@ -66,7 +56,7 @@ public class SpellScrollItem extends Item {
         ItemStack stack = playerIn.getHeldItem(handIn);
         playerIn.setActiveHand(handIn);
         if (!worldIn.isRemote) {
-            ISpellPackage spell = this.getSpell(stack);
+            SpellPackage spell = this.getSpell(stack);
             if (spell != null) {
                 spell.cast(worldIn, playerIn);
                 stack.shrink(1);

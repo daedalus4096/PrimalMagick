@@ -16,10 +16,11 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellComponent;
 import com.verdantartifice.primalmagic.common.spells.SpellFactory;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
+import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -56,7 +57,7 @@ public class SpellcraftingAltarContainer extends Container {
     protected int spellPayloadTypeIndex = 0;
     protected int spellPrimaryModTypeIndex = 0;
     protected int spellSecondaryModTypeIndex = 0;
-    protected ISpellPackage spellPackageCache = null;
+    protected SpellPackage spellPackageCache = null;
 
     public SpellcraftingAltarContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -98,21 +99,20 @@ public class SpellcraftingAltarContainer extends Container {
         return this.getSpellPackage().getManaCost();
     }
     
-    public ISpellPackage getSpellPackage() {
+    public SpellPackage getSpellPackage() {
         if (this.spellPackageCache == null) {
             this.spellPackageCache = this.makeFinalSpellPackage();
         }
         return this.spellPackageCache;
     }
     
-    protected ISpellPackage makeFinalSpellPackage() {
-        ISpellPackage spell = this.getSpellPackageComponent();
-        if (spell != null) {
-            spell.setName(this.getSpellName());
-            spell.setPayload(this.getSpellPayloadComponent());
-            spell.setPrimaryMod(this.getSpellPrimaryModComponent());
-            spell.setSecondaryMod(this.getSpellSecondaryModComponent());
-        }
+    protected SpellPackage makeFinalSpellPackage() {
+        SpellPackage spell = new SpellPackage();
+        spell.setName(this.getSpellName());
+        spell.setVehicle(this.getSpellVehicleComponent());
+        spell.setPayload(this.getSpellPayloadComponent());
+        spell.setPrimaryMod(this.getSpellPrimaryModComponent());
+        spell.setSecondaryMod(this.getSpellSecondaryModComponent());
         return spell;
     }
     
@@ -122,20 +122,20 @@ public class SpellcraftingAltarContainer extends Container {
     
     @Nonnull
     public ITextComponent getDefaultSpellName() {
-        ITextComponent packagePiece = this.getSpellPackageComponent().getDefaultNamePiece();
+        ITextComponent vehiclePiece = this.getSpellVehicleComponent().getDefaultNamePiece();
         ITextComponent payloadPiece = this.getSpellPayloadComponent().getDefaultNamePiece();
         ITextComponent primaryModPiece = this.getSpellPrimaryModComponent().getDefaultNamePiece();
         ITextComponent secondaryModPiece = this.getSpellSecondaryModComponent().getDefaultNamePiece();
         boolean primaryActive = this.getSpellPrimaryModComponent().isActive();
         boolean secondaryActive = this.getSpellSecondaryModComponent().isActive();
         if (!primaryActive && !secondaryActive) {
-            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.0", packagePiece, payloadPiece);
+            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
         } else if (primaryActive && secondaryActive) {
-            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.2", packagePiece, payloadPiece, primaryModPiece, secondaryModPiece);
+            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
         } else if (primaryActive) {
-            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", packagePiece, payloadPiece, primaryModPiece);
+            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
         } else {
-            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", packagePiece, payloadPiece, secondaryModPiece);
+            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
         }
     }
     
@@ -147,8 +147,8 @@ public class SpellcraftingAltarContainer extends Container {
         });
     }
     
-    protected ISpellPackage getSpellPackageComponent() {
-        return SpellFactory.getPackageFromType(SpellManager.getPackageTypes().get(this.getSpellPackageTypeIndex()));
+    protected ISpellVehicle getSpellVehicleComponent() {
+        return SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes().get(this.getSpellPackageTypeIndex()));
     }
     
     public int getSpellPackageTypeIndex() {
@@ -156,7 +156,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellPackageTypeIndex(int index) {
-        index = MathHelper.clamp(index, 0, SpellManager.getPackageTypes().size() - 1);
+        index = MathHelper.clamp(index, 0, SpellManager.getVehicleTypes().size() - 1);
         this.spellPackageTypeIndex = index;
         this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
@@ -216,7 +216,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellPropertyValue(SpellComponent component, String name, int value) {
-        ISpellPackage spell = this.getSpellPackage();
+        SpellPackage spell = this.getSpellPackage();
         SpellProperty property = null;
         if (component == SpellComponent.PAYLOAD && spell.getPayload() != null) {
             property = spell.getPayload().getProperty(name);

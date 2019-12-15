@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
-import com.verdantartifice.primalmagic.common.spells.packages.ISpellPackage;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
@@ -140,12 +140,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
             }
             
             // Add inscribed spell listing
-            List<ISpellPackage> spells = this.getSpells(stack);
+            List<SpellPackage> spells = this.getSpells(stack);
             int activeIndex = this.getActiveSpellIndex(stack);
             if (!spells.isEmpty()) {
                 tooltip.add(new TranslationTextComponent("primalmagic.spells.wand_header"));
                 for (int index = 0; index < spells.size(); index++) {
-                    ISpellPackage spell = spells.get(index);
+                    SpellPackage spell = spells.get(index);
                     StringBuilder sb = new StringBuilder("  ");
                     if (index == activeIndex) {
                         sb.append("*");
@@ -172,7 +172,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             tooltip.add(new StringTextComponent(sb.toString()));
             
             // Add active spell
-            ISpellPackage activeSpell = this.getActiveSpell(stack);
+            SpellPackage activeSpell = this.getActiveSpell(stack);
             if (activeSpell != null) {
                 tooltip.add(new TranslationTextComponent("primalmagic.spells.short_wand_header", activeSpell.getName()));
             }
@@ -221,7 +221,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack stack = playerIn.getHeldItem(handIn);
         playerIn.setActiveHand(handIn);
-        ISpellPackage activeSpell = this.getActiveSpell(stack);
+        SpellPackage activeSpell = this.getActiveSpell(stack);
         if (activeSpell != null && !SpellManager.isOnCooldown(playerIn)) {
             SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());
             if (worldIn.isRemote) {
