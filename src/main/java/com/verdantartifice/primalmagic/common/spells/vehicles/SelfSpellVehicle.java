@@ -14,7 +14,7 @@ public class SelfSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "self";
     
     @Override
-    protected String getPackageType() {
+    protected String getVehicleType() {
         return TYPE;
     }
 

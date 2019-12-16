@@ -327,7 +327,7 @@ public class SpellcraftingAltarContainer extends Container {
             Optional<? extends IRecipe<?>> opt = world.getServer().getRecipeManager().getRecipe(RECIPE_LOC);
             if (opt.isPresent() && opt.get() instanceof SpellcraftingRecipe) {
                 SpellcraftingRecipe recipe = (SpellcraftingRecipe)opt.get();
-                if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe)) {
+                if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
                     stack = recipe.getCraftingResult(this.scrollInv);
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {
                         ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());

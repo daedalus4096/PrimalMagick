@@ -5,12 +5,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public abstract class AbstractSpellVehicle implements ISpellVehicle {
-    protected abstract String getPackageType();
+    protected abstract String getVehicleType();
 
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = new CompoundNBT();
-        nbt.putString("VehicleType", this.getPackageType());
+        nbt.putString("VehicleType", this.getVehicleType());
         return nbt;
     }
     
@@ -24,11 +24,11 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
 
     @Override
     public ITextComponent getTypeName() {
-        return new TranslationTextComponent("primalmagic.spell.vehicle.type." + this.getPackageType());
+        return new TranslationTextComponent("primalmagic.spell.vehicle.type." + this.getVehicleType());
     }
     
     @Override
     public ITextComponent getDefaultNamePiece() {
-        return new TranslationTextComponent("primalmagic.spell.vehicle.default_name." + this.getPackageType());
+        return new TranslationTextComponent("primalmagic.spell.vehicle.default_name." + this.getVehicleType());
     }
 }

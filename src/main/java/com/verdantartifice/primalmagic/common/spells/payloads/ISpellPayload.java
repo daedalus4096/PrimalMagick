@@ -20,6 +20,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     public void execute(@Nullable RayTraceResult target, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster);
     
+    public boolean isActive();
+    
     @Nonnull
     public Source getSource();
     

@@ -76,6 +76,12 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     public void setSecondaryMod(@Nullable ISpellMod secondaryMod) {
         this.secondaryMod = secondaryMod;
     }
+    
+    public boolean isValid() {
+        return this.vehicle != null && this.vehicle.isActive() &&
+                this.payload != null && this.payload.isActive() &&
+                this.name != null && !this.name.isEmpty();
+    }
 
     @Override
     public CompoundNBT serializeNBT() {

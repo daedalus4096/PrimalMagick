@@ -10,7 +10,7 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "projectile";
     
     @Override
-    protected String getPackageType() {
+    protected String getVehicleType() {
         return TYPE;
     }
 

@@ -352,22 +352,26 @@
     "primalmagic.spell.default_name_format.mods.2": "%4$s %3$s %2$s %1$s",
     
     "primalmagic.spell.vehicle.header": "Spell Type",
+    "primalmagic.spell.vehicle.type.none": "None",
     "primalmagic.spell.vehicle.type.touch": "Touch",
     "primalmagic.spell.vehicle.type.projectile": "Projectile",
     "primalmagic.spell.vehicle.type.self": "Self",
+    "primalmagic.spell.vehicle.default_name.none": "",
     "primalmagic.spell.vehicle.default_name.touch": "Hand",
     "primalmagic.spell.vehicle.default_name.projectile": "Missile",
     "primalmagic.spell.vehicle.default_name.self": "Self",
     
     "primalmagic.spell.payload.header": "Spell Payload",
+    "primalmagic.spell.payload.type.none": "None",
     "primalmagic.spell.payload.type.earth_damage": "Stone",
     "primalmagic.spell.payload.type.frost_damage": "Frost",
+    "primalmagic.spell.payload.default_name.none": "",
     "primalmagic.spell.payload.default_name.earth_damage": "Stone",
     "primalmagic.spell.payload.default_name.frost_damage": "Frost",
     
     "primalmagic.spell.primary_mod.header": "Primary Mod",
     "primalmagic.spell.secondary_mod.header": "Secondary Mod",
-    "primalmagic.spell.mod.type.none": "No Mod",
+    "primalmagic.spell.mod.type.none": "None",
     "primalmagic.spell.mod.default_name.none": "",
     
     "primalmagic.spell.property.power": "Power",

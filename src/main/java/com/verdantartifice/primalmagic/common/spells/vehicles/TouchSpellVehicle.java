@@ -19,7 +19,7 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "touch";
     
     @Override
-    protected String getPackageType() {
+    protected String getVehicleType() {
         return TYPE;
     }
     
