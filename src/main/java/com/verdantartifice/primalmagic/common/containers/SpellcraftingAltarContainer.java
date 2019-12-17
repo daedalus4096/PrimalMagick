@@ -99,6 +99,10 @@ public class SpellcraftingAltarContainer extends Container {
         return this.getSpellPackage().getManaCost();
     }
     
+    public PlayerEntity getPlayer() {
+        return this.player;
+    }
+    
     public SpellPackage getSpellPackage() {
         if (this.spellPackageCache == null) {
             this.spellPackageCache = this.makeFinalSpellPackage();
@@ -148,7 +152,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellVehicle getSpellVehicleComponent() {
-        return SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes().get(this.getSpellPackageTypeIndex()));
+        return SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes(this.player).get(this.getSpellPackageTypeIndex()));
     }
     
     public int getSpellPackageTypeIndex() {
@@ -156,7 +160,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellPackageTypeIndex(int index) {
-        index = MathHelper.clamp(index, 0, SpellManager.getVehicleTypes().size() - 1);
+        index = MathHelper.clamp(index, 0, SpellManager.getVehicleTypes(this.player).size() - 1);
         this.spellPackageTypeIndex = index;
         this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
@@ -165,7 +169,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellPayload getSpellPayloadComponent() {
-        return SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes().get(this.getSpellPayloadTypeIndex()));
+        return SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes(this.player).get(this.getSpellPayloadTypeIndex()));
     }
     
     public int getSpellPayloadTypeIndex() {
@@ -173,7 +177,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellPayloadTypeIndex(int index) {
-        index = MathHelper.clamp(index, 0, SpellManager.getPayloadTypes().size() - 1);
+        index = MathHelper.clamp(index, 0, SpellManager.getPayloadTypes(this.player).size() - 1);
         this.spellPayloadTypeIndex = index;
         this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
@@ -182,7 +186,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellMod getSpellPrimaryModComponent() {
-        return SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellPrimaryModTypeIndex()));
+        return SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellPrimaryModTypeIndex()));
     }
     
     public int getSpellPrimaryModTypeIndex() {
@@ -190,7 +194,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellPrimaryModTypeIndex(int index) {
-        index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
+        index = MathHelper.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellPrimaryModTypeIndex = index;
         this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
@@ -199,7 +203,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellMod getSpellSecondaryModComponent() {
-        return SpellFactory.getModFromType(SpellManager.getModTypes().get(this.getSpellSecondaryModTypeIndex()));
+        return SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellSecondaryModTypeIndex()));
     }
     
     public int getSpellSecondaryModTypeIndex() {
@@ -207,7 +211,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellSecondaryModTypeIndex(int index) {
-        index = MathHelper.clamp(index, 0, SpellManager.getModTypes().size() - 1);
+        index = MathHelper.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellSecondaryModTypeIndex = index;
         this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {

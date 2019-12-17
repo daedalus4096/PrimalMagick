@@ -18,19 +18,19 @@ public class InitSpells {
     }
 
     private static void registerSpellPayloadTypes() {
-        SpellManager.registerVehicleType(EmptySpellVehicle.TYPE, EmptySpellVehicle::new);
-        SpellManager.registerVehicleType(TouchSpellVehicle.TYPE, TouchSpellVehicle::new);
-        SpellManager.registerVehicleType(ProjectileSpellVehicle.TYPE, ProjectileSpellVehicle::new);
-        SpellManager.registerVehicleType(SelfSpellVehicle.TYPE, SelfSpellVehicle::new);
+        SpellManager.registerVehicleType(EmptySpellVehicle.TYPE, EmptySpellVehicle::new, EmptySpellVehicle::getResearch);
+        SpellManager.registerVehicleType(TouchSpellVehicle.TYPE, TouchSpellVehicle::new, TouchSpellVehicle::getResearch);
+        SpellManager.registerVehicleType(ProjectileSpellVehicle.TYPE, ProjectileSpellVehicle::new, ProjectileSpellVehicle::getResearch);
+        SpellManager.registerVehicleType(SelfSpellVehicle.TYPE, SelfSpellVehicle::new, SelfSpellVehicle::getResearch);
     }
 
     private static void registerSpellPackageTypes() {
-        SpellManager.registerPayloadType(EmptySpellPayload.TYPE, EmptySpellPayload::new);
-        SpellManager.registerPayloadType(EarthDamageSpellPayload.TYPE, EarthDamageSpellPayload::new);
-        SpellManager.registerPayloadType(FrostDamageSpellPayload.TYPE, FrostDamageSpellPayload::new);
+        SpellManager.registerPayloadType(EmptySpellPayload.TYPE, EmptySpellPayload::new, EmptySpellPayload::getResearch);
+        SpellManager.registerPayloadType(EarthDamageSpellPayload.TYPE, EarthDamageSpellPayload::new, EarthDamageSpellPayload::getResearch);
+        SpellManager.registerPayloadType(FrostDamageSpellPayload.TYPE, FrostDamageSpellPayload::new, FrostDamageSpellPayload::getResearch);
     }
 
     private static void registerSpellModTypes() {
-        SpellManager.registerModType(EmptySpellMod.TYPE, EmptySpellMod::new);
+        SpellManager.registerModType(EmptySpellMod.TYPE, EmptySpellMod::new, EmptySpellMod::getResearch);
     }
 }

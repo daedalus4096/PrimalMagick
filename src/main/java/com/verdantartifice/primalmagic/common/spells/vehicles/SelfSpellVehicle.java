@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.spells.vehicles;
 
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,7 +14,12 @@ import net.minecraft.world.World;
 
 public class SelfSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "self";
+    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY"));
     
+    public static CompoundResearchKey getResearch() {
+        return RESEARCH;
+    }
+
     @Override
     protected String getVehicleType() {
         return TYPE;

@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.common.spells.vehicles;
 
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,6 +10,11 @@ import net.minecraft.world.World;
 
 public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "projectile";
+    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_VEHICLE_PROJECTILE"));
+    
+    public static CompoundResearchKey getResearch() {
+        return RESEARCH;
+    }
     
     @Override
     protected String getVehicleType() {

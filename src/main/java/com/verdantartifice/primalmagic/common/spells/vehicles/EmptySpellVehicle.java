@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.spells.vehicles;
 
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,5 +22,9 @@ public class EmptySpellVehicle extends AbstractSpellVehicle {
     @Override
     protected String getVehicleType() {
         return TYPE;
+    }
+    
+    public static CompoundResearchKey getResearch() {
+        return null;
     }
 }

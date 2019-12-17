@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
@@ -39,5 +40,9 @@ public class EmptySpellPayload extends AbstractSpellPayload {
     @Override
     protected String getPayloadType() {
         return TYPE;
+    }
+    
+    public static CompoundResearchKey getResearch() {
+        return null;
     }
 }

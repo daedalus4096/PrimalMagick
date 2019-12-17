@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.spells.payloads;
 
 import java.util.Map;
 
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -18,7 +20,8 @@ import net.minecraft.world.World;
 
 public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "frost_damage";
-    
+    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_FROST"));
+
     public FrostDamageSpellPayload() {
         super();
     }
@@ -26,6 +29,10 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload {
     public FrostDamageSpellPayload(int power, int duration) {
         super(power);
         this.getProperty("duration").setValue(duration);
+    }
+    
+    public static CompoundResearchKey getResearch() {
+        return RESEARCH;
     }
     
     @Override

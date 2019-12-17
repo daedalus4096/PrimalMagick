@@ -96,6 +96,10 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         int x = startX;
         int y = startY;
         
+        int vehicleMax = SpellManager.getVehicleTypes(this.container.getPlayer()).size() - 1;
+        int payloadMax = SpellManager.getPayloadTypes(this.container.getPlayer()).size() - 1;
+        int modMax = SpellManager.getModTypes(this.container.getPlayer()).size() - 1;
+
         SourceList manaCost = this.container.getSpellPackage().getManaCost();
         if (manaCost != null && !manaCost.isEmpty()) {
             Source source = manaCost.getSourcesSorted().get(0);
@@ -105,17 +109,17 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.vehicle.header"));
         
         y += 12;
-        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getVehicleTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, vehicleMax, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getVehicle().getTypeName());
-        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, SpellManager.getVehicleTypes().size() - 1, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, vehicleMax, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
         
         y = startY + 48;
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.payload.header"));
         
         y += 12;
-        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getPayloadTypes().size() - 1, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, payloadMax, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getPayload().getTypeName());
-        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, SpellManager.getPayloadTypes().size() - 1, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, payloadMax, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
         
         for (SpellProperty property : this.container.getSpellPackage().getPayload().getProperties()) {
             y += 12;
@@ -130,9 +134,9 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.primary_mod.header"));
         
         y += 12;
-        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getModTypes().size() - 1, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, modMax, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getPrimaryMod().getTypeName());
-        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, SpellManager.getModTypes().size() - 1, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, modMax, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
         
         for (SpellProperty property : this.container.getSpellPackage().getPrimaryMod().getProperties()) {
             y += 12;
@@ -146,9 +150,9 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.secondary_mod.header"));
         
         y += 12;
-        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, SpellManager.getModTypes().size() - 1, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, modMax, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getSecondaryMod().getTypeName());
-        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, SpellManager.getModTypes().size() - 1, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, modMax, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
         
         for (SpellProperty property : this.container.getSpellPackage().getSecondaryMod().getProperties()) {
             y += 12;

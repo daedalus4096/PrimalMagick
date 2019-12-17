@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
@@ -13,6 +15,7 @@ import net.minecraft.world.World;
 
 public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "earth_damage";
+    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY"));
     
     public EarthDamageSpellPayload() {
         super();
@@ -20,6 +23,10 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     
     public EarthDamageSpellPayload(int power) {
         super(power);
+    }
+    
+    public static CompoundResearchKey getResearch() {
+        return RESEARCH;
     }
     
     @Override

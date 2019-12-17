@@ -77,10 +77,7 @@
             "stages": [
                 {
                     "text": "primalmagic.research.unlock_sorcery.text.stage.1",
-                    "required_item": ["minecraft:stick", "tag:minecraft:logs"],
-                    "required_craft": ["minecraft:crafting_table"],
-                    "required_knowledge": ["OBSERVATION;2", "THEORY;3"],
-                    "required_research": ["m_dummy", "t_dummy", "b_dummy", "u_dummy"]
+                    "required_item": ["minecraft:stick"]
                 },
                 {
                     "text": "primalmagic.research.unlock_sorcery.text.stage.2"
