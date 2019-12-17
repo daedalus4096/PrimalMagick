@@ -32,5 +32,11 @@
             "primalmagic:ice2",
             "primalmagic:ice3"
         ]
+    },
+    "electric": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:electric"
+        ]
     }
 }

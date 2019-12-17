@@ -13,6 +13,7 @@ public class InitSounds {
         registry.register(createEvent("scan"));
         registry.register(createEvent("rockslide"));
         registry.register(createEvent("ice"));
+        registry.register(createEvent("electric"));
     }
     
     private static SoundEvent createEvent(String name) {

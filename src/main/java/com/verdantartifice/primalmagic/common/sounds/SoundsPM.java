@@ -12,4 +12,5 @@ public class SoundsPM {
     public static final SoundEvent SCAN = null;
     public static final SoundEvent ROCKSLIDE = null;
     public static final SoundEvent ICE = null;
+    public static final SoundEvent ELECTRIC = null;
 }

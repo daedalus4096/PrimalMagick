@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.EmptySpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.FrostDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.payloads.LightningDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.EmptySpellVehicle;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVehicle;
 import com.verdantartifice.primalmagic.common.spells.vehicles.SelfSpellVehicle;
@@ -28,6 +29,7 @@ public class InitSpells {
         SpellManager.registerPayloadType(EmptySpellPayload.TYPE, EmptySpellPayload::new, EmptySpellPayload::getResearch);
         SpellManager.registerPayloadType(EarthDamageSpellPayload.TYPE, EarthDamageSpellPayload::new, EarthDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(FrostDamageSpellPayload.TYPE, FrostDamageSpellPayload::new, FrostDamageSpellPayload::getResearch);
+        SpellManager.registerPayloadType(LightningDamageSpellPayload.TYPE, LightningDamageSpellPayload::new, LightningDamageSpellPayload::getResearch);
     }
 
     private static void registerSpellModTypes() {
