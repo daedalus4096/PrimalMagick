@@ -38,6 +38,7 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -132,7 +133,9 @@ public class SpellcraftingAltarContainer extends Container {
         ITextComponent secondaryModPiece = this.getSpellSecondaryModComponent().getDefaultNamePiece();
         boolean primaryActive = this.getSpellPrimaryModComponent().isActive();
         boolean secondaryActive = this.getSpellSecondaryModComponent().isActive();
-        if (!primaryActive && !secondaryActive) {
+        if (vehiclePiece == null || payloadPiece == null || vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
+            return new StringTextComponent("");
+        } else if (!primaryActive && !secondaryActive) {
             return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
         } else if (primaryActive && secondaryActive) {
             return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
