@@ -48,6 +48,18 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "SPELL_PAYLOAD_SOLAR",
+            "name": "primalmagic.research.spell_payload_solar.title",
+            "discipline": "SORCERY",
+            "parents": [ "BASIC_SORCERY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_solar.text.stage.1"
+                }
+            ],
+            "addenda": []
         }
     ]
 }

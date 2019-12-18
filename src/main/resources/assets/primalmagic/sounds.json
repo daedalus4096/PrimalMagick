@@ -38,5 +38,13 @@
         "sounds": [
             "primalmagic:electric"
         ]
+    },
+    "sunbeam": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:sunbeam1",
+            "primalmagic:sunbeam2",
+            "primalmagic:sunbeam3"
+        ]
     }
 }
