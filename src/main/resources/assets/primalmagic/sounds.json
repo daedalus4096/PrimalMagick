@@ -46,5 +46,11 @@
             "primalmagic:sunbeam2",
             "primalmagic:sunbeam3"
         ]
+    },
+    "moonbeam": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:moonbeam"
+        ]
     }
 }

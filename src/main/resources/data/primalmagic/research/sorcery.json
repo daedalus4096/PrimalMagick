@@ -60,6 +60,18 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "SPELL_PAYLOAD_LUNAR",
+            "name": "primalmagic.research.spell_payload_lunar.title",
+            "discipline": "SORCERY",
+            "parents": [ "BASIC_SORCERY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_lunar.text.stage.1"
+                }
+            ],
+            "addenda": []
         }
     ]
 }
