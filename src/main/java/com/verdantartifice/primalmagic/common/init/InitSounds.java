@@ -16,6 +16,7 @@ public class InitSounds {
         registry.register(createEvent("electric"));
         registry.register(createEvent("sunbeam"));
         registry.register(createEvent("moonbeam"));
+        registry.register(createEvent("blood"));
     }
     
     private static SoundEvent createEvent(String name) {

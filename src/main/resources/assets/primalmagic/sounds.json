@@ -52,5 +52,11 @@
         "sounds": [
             "primalmagic:moonbeam"
         ]
+    },
+    "blood": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:blood"
+        ]
     }
 }

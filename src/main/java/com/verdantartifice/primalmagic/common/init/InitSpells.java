@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.init;
 
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
+import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.EmptySpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.FrostDamageSpellPayload;
@@ -34,6 +35,7 @@ public class InitSpells {
         SpellManager.registerPayloadType(LightningDamageSpellPayload.TYPE, LightningDamageSpellPayload::new, LightningDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(SolarDamageSpellPayload.TYPE, SolarDamageSpellPayload::new, SolarDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(LunarDamageSpellPayload.TYPE, LunarDamageSpellPayload::new, LunarDamageSpellPayload::getResearch);
+        SpellManager.registerPayloadType(BloodDamageSpellPayload.TYPE, BloodDamageSpellPayload::new, BloodDamageSpellPayload::getResearch);
     }
 
     private static void registerSpellModTypes() {

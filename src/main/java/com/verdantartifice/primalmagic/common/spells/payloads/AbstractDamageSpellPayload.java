@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -33,13 +34,17 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     }
     
     protected abstract float getTotalDamage();
+    
+    protected DamageSource getDamageSource(Entity target, LivingEntity source) {
+        return DamageSource.causeThrownDamage(target, source);
+    }
 
     @Override
     public void execute(RayTraceResult target, SpellPackage spell, World world, LivingEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null) {
-                entityTarget.getEntity().attackEntityFrom(DamageSource.causeThrownDamage(entityTarget.getEntity(), caster), this.getTotalDamage());
+                entityTarget.getEntity().attackEntityFrom(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage());
             }
         }
         this.applySecondaryEffects(target, spell, world, caster);
