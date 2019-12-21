@@ -58,7 +58,7 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage() {
+    protected float getTotalDamage(Entity target) {
         return 3.0F + this.getPropertyValue("power");
     }
 

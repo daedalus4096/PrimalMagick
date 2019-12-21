@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPa
 import com.verdantartifice.primalmagic.common.spells.payloads.EmptySpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.FlameDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.FrostDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.payloads.HolyDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.LightningDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.LunarDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.SolarDamageSpellPayload;
@@ -40,6 +41,7 @@ public class InitSpells {
         SpellManager.registerPayloadType(BloodDamageSpellPayload.TYPE, BloodDamageSpellPayload::new, BloodDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(FlameDamageSpellPayload.TYPE, FlameDamageSpellPayload::new, FlameDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(VoidDamageSpellPayload.TYPE, VoidDamageSpellPayload::new, VoidDamageSpellPayload::getResearch);
+        SpellManager.registerPayloadType(HolyDamageSpellPayload.TYPE, HolyDamageSpellPayload::new, HolyDamageSpellPayload::getResearch);
     }
 
     private static void registerSpellModTypes() {

@@ -64,5 +64,11 @@
         "sounds": [
             "primalmagic:whispers"
         ]
+    },
+    "angels": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:angels"
+        ]
     }
 }

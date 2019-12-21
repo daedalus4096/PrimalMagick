@@ -10,15 +10,15 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class LightningDamageSpellPayload extends AbstractDamageSpellPayload {
-    public static final String TYPE = "lightning_damage";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_LIGHTNING"));
+public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
+    public static final String TYPE = "holy_damage";
+    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_HOLY"));
     
-    public LightningDamageSpellPayload() {
+    public HolyDamageSpellPayload() {
         super();
     }
     
-    public LightningDamageSpellPayload(int power) {
+    public HolyDamageSpellPayload(int power) {
         super(power);
     }
     
@@ -28,17 +28,21 @@ public class LightningDamageSpellPayload extends AbstractDamageSpellPayload {
     
     @Override
     public Source getSource() {
-        return Source.SKY;
+        return Source.HALLOWED;
     }
 
     @Override
     public void playSounds(World world, LivingEntity caster) {
-        world.playSound(null, caster.getPosition(), SoundsPM.ELECTRIC, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+        world.playSound(null, caster.getPosition(), SoundsPM.ANGELS, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
 
     @Override
     protected float getTotalDamage(Entity target) {
-        return 2.0F * this.getPropertyValue("power");
+        int damage = 3 + this.getPropertyValue("power");
+        if (target instanceof LivingEntity && ((LivingEntity)target).isEntityUndead()) {
+            damage *= 2;
+        }
+        return (float)damage;
     }
 
     @Override

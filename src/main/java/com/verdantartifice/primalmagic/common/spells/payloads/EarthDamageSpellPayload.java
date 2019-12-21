@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -40,7 +41,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    protected float getTotalDamage() {
+    protected float getTotalDamage(Entity target) {
         return 3.0F + this.getPropertyValue("power");
     }
     
@@ -55,7 +56,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
                 } else {
                     knockbackVec = target.getHitVec().subtract(caster.getEyePosition(1.0F)).scale(-1.0D).normalize();
                 }
-                ((LivingEntity)entityTarget.getEntity()).knockBack(caster, 0.25F * this.getTotalDamage(), knockbackVec.x, knockbackVec.z);
+                ((LivingEntity)entityTarget.getEntity()).knockBack(caster, 0.25F * this.getTotalDamage(entityTarget.getEntity()), knockbackVec.x, knockbackVec.z);
             }
         }
     }

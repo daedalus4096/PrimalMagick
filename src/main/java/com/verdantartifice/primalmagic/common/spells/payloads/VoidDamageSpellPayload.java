@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -53,7 +54,7 @@ public class VoidDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage() {
+    protected float getTotalDamage(Entity target) {
         return 3.0F + this.getPropertyValue("power");
     }
 
