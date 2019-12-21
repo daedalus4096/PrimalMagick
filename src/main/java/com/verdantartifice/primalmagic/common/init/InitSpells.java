@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.init;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.payloads.BreakSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.EmptySpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.FlameDamageSpellPayload;
@@ -43,6 +44,7 @@ public class InitSpells {
         SpellManager.registerPayloadType(FlameDamageSpellPayload.TYPE, FlameDamageSpellPayload::new, FlameDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(VoidDamageSpellPayload.TYPE, VoidDamageSpellPayload::new, VoidDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(HolyDamageSpellPayload.TYPE, HolyDamageSpellPayload::new, HolyDamageSpellPayload::getResearch);
+        SpellManager.registerPayloadType(BreakSpellPayload.TYPE, BreakSpellPayload::new, BreakSpellPayload::getResearch);
         SpellManager.registerPayloadType(HealingSpellPayload.TYPE, HealingSpellPayload::new, HealingSpellPayload::getResearch);
     }
 
