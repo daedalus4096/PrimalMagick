@@ -120,6 +120,18 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "SPELL_PAYLOAD_HEALING",
+            "name": "primalmagic.research.spell_payload_healing.title",
+            "discipline": "SORCERY",
+            "parents": [ "SPELL_PAYLOAD_SOLAR" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_healing.text.stage.1"
+                }
+            ],
+            "addenda": []
         }
     ]
 }

@@ -298,6 +298,9 @@
     "primalmagic.research.spell_payload_holy.title": "Spell Payload: Holy",
     "primalmagic.research.spell_payload_holy.text.stage.1": "Holy spells: Lorem ipsum",
     
+    "primalmagic.research.spell_payload_healing.title": "Spell Payload: Healing",
+    "primalmagic.research.spell_payload_healing.text.stage.1": "Healing spells: Lorem ipsum",
+    
     "primalmagic.research.basic_manaweaving.title": "Basic Manaweaving",
     "primalmagic.research.basic_manaweaving.text.stage.1": "Basic manaweaving: Lorem ipsum",
     
@@ -399,6 +402,7 @@
     "primalmagic.spell.payload.type.flame_damage": "Flame",
     "primalmagic.spell.payload.type.void_damage": "Void",
     "primalmagic.spell.payload.type.holy_damage": "Holy",
+    "primalmagic.spell.payload.type.healing": "Healing",
     "primalmagic.spell.payload.default_name.none": "",
     "primalmagic.spell.payload.default_name.earth_damage": "Stone",
     "primalmagic.spell.payload.default_name.frost_damage": "Frost",
@@ -409,6 +413,7 @@
     "primalmagic.spell.payload.default_name.flame_damage": "Flame",
     "primalmagic.spell.payload.default_name.void_damage": "Void",
     "primalmagic.spell.payload.default_name.holy_damage": "Holy",
+    "primalmagic.spell.payload.default_name.healing": "Healing",
         
     "primalmagic.spell.primary_mod.header": "Primary Mod",
     "primalmagic.spell.secondary_mod.header": "Secondary Mod",

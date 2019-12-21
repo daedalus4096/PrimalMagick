@@ -18,4 +18,5 @@ public class SoundsPM {
     public static final SoundEvent BLOOD = null;
     public static final SoundEvent WHISPERS = null;
     public static final SoundEvent ANGELS = null;
+    public static final SoundEvent HEAL = null;
 }

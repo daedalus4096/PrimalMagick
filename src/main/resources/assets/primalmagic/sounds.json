@@ -70,5 +70,11 @@
         "sounds": [
             "primalmagic:angels"
         ]
+    },
+    "heal": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:heal"
+        ]
     }
 }
