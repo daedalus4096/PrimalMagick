@@ -58,5 +58,11 @@
         "sounds": [
             "primalmagic:blood"
         ]
+    },
+    "whispers": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:whispers"
+        ]
     }
 }

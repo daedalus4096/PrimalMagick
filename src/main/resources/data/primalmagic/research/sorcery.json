@@ -96,6 +96,18 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "SPELL_PAYLOAD_VOID",
+            "name": "primalmagic.research.spell_payload_void.title",
+            "discipline": "SORCERY",
+            "parents": [ "BASIC_SORCERY", "t_discover_void" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_void.text.stage.1"
+                }
+            ],
+            "addenda": []
         }
     ]
 }

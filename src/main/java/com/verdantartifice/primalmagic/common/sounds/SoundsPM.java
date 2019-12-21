@@ -16,4 +16,5 @@ public class SoundsPM {
     public static final SoundEvent SUNBEAM = null;
     public static final SoundEvent MOONBEAM = null;
     public static final SoundEvent BLOOD = null;
+    public static final SoundEvent WHISPERS = null;
 }
