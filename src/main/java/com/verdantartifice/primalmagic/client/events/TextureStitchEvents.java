@@ -18,6 +18,7 @@ public class TextureStitchEvents {
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_core_slot"));
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_cap_slot"));
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_gem_slot"));
+            event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_slot"));
         }
     }
 }
