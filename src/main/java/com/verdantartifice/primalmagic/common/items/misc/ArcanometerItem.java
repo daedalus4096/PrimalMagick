@@ -4,13 +4,13 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerTEISR;
-import com.verdantartifice.primalmagic.client.util.RayTraceUtils;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
+import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

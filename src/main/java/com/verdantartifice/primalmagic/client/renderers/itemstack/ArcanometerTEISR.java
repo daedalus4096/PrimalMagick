@@ -4,9 +4,9 @@ import java.lang.reflect.Method;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.util.RayTraceUtils;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
+import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;

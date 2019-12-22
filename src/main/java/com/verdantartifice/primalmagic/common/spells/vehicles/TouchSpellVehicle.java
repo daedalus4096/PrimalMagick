@@ -5,9 +5,9 @@ import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPack
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -38,7 +38,7 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
             Vec3d lookVector = caster.getLook(1.0F);
             Vec3d reachPos = eyePos.add(lookVector.scale(reachDistance));
             AxisAlignedBB aabb = caster.getBoundingBox().expand(lookVector.scale(reachDistance)).grow(1.0D, 1.0D, 1.0D);
-            EntityRayTraceResult entityResult = ProjectileHelper.func_221269_a(world, caster, eyePos, reachPos, aabb, (testEntity) -> {
+            EntityRayTraceResult entityResult = RayTraceUtils.rayTraceEntities(world, caster, eyePos, reachPos, aabb, (testEntity) -> {
                 return !testEntity.isSpectator();
             }, (reachDistance * reachDistance));
             BlockRayTraceResult blockResult = world.rayTraceBlocks(new RayTraceContext(eyePos, reachPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.SOURCE_ONLY, caster));
