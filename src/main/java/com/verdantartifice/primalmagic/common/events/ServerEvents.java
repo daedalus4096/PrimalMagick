@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagic.common.events;
 
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagic.common.misc.BlockSwapper;
 
 import net.minecraft.world.World;
@@ -20,6 +22,7 @@ public class ServerEvents {
         }
         if (event.phase != TickEvent.Phase.START) {
             tickBlockSwappers(event.world);
+            tickBlockBreakers(event.world);
         }
     }
     
@@ -32,6 +35,23 @@ public class ServerEvents {
                     swapper.execute(world);
                 }
             }
+        }
+    }
+    
+    protected static void tickBlockBreakers(World world) {
+        Queue<BlockBreaker> breakerQueue = BlockBreaker.getWorldBreakers(world);
+        if (breakerQueue != null) {
+            Queue<BlockBreaker> newQueue = new LinkedBlockingQueue<>();
+            while (!breakerQueue.isEmpty()) {
+                BlockBreaker breaker = breakerQueue.poll();
+                if (breaker != null) {
+                    BlockBreaker newBreaker = breaker.execute(world);
+                    if (newBreaker != null) {
+                        newQueue.offer(newBreaker);
+                    }
+                }
+            }
+            BlockBreaker.setWorldBreakerQueue(world, newQueue);
         }
     }
 }
