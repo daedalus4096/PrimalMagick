@@ -234,7 +234,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 return new ActionResult<>(ActionResultType.FAIL, stack);
             }
         } else {
-            return new ActionResult<>(ActionResultType.SUCCESS, stack);
+            return new ActionResult<>(ActionResultType.PASS, stack);
         }
     }
     
