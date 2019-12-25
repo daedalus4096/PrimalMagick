@@ -11,9 +11,11 @@ import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
+import com.verdantartifice.primalmagic.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.Screen;
@@ -48,6 +50,7 @@ public class ClientProxy extends CommonProxy {
     
     private void registerTERs() {
         ClientRegistry.bindTileEntitySpecialRenderer(AncientManaFontTileEntity.class, new AncientManaFontTER());
+        ClientRegistry.bindTileEntitySpecialRenderer(WandChargerTileEntity.class, new WandChargerTER());
     }
     
     private void registerEntityRenderers() {
