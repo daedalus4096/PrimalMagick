@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.containers.WandAssemblyTableContainer;
+import com.verdantartifice.primalmagic.common.containers.WandChargerContainer;
 import com.verdantartifice.primalmagic.common.containers.WandInscriptionTableContainer;
 
 import net.minecraft.inventory.container.ContainerType;
@@ -42,5 +43,9 @@ public class InitContainers {
         registry.register(IForgeContainerType.create((windowId, inv, data) -> {
             return new SpellcraftingAltarContainer(windowId, inv);
         }).setRegistryName(PrimalMagic.MODID, "spellcrafting_altar"));
+        
+        registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+            return new WandChargerContainer(windowId, inv);
+        }).setRegistryName(PrimalMagic.MODID, "wand_charger"));
     }
 }

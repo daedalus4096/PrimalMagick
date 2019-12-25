@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.common.tiles.mana;
 
+import com.verdantartifice.primalmagic.common.containers.WandChargerContainer;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
@@ -77,9 +79,8 @@ public class WandChargerTileEntity extends TilePM implements ITickableTileEntity
     }
 
     @Override
-    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-        // TODO Auto-generated method stub
-        return null;
+    public Container createMenu(int windowId, PlayerInventory playerInv, PlayerEntity player) {
+        return new WandChargerContainer(windowId, playerInv, this, this.chargerData);
     }
 
     @Override
@@ -139,8 +140,23 @@ public class WandChargerTileEntity extends TilePM implements ITickableTileEntity
         if (this.canCharge()) {
             EssenceItem essence = (EssenceItem)inputStack.getItem();
             IWand wand = (IWand)wandStack.getItem();
-            wand.addMana(wandStack, essence.getSource(), essence.getEssenceType().getAffinity());
+            wand.addMana(wandStack, essence.getSource(), this.getManaForEssenceType(essence.getEssenceType()));
             inputStack.shrink(1);
+        }
+    }
+    
+    protected int getManaForEssenceType(EssenceType type) {
+        switch (type) {
+        case DUST:
+            return 1;
+        case SHARD:
+            return 10;
+        case CRYSTAL:
+            return 100;
+        case CLUSTER:
+            return 1000;
+        default:
+            return 0;
         }
     }
 

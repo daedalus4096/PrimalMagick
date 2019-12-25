@@ -14,4 +14,5 @@ public class ContainersPM {
     public static final ContainerType<CalcinatorContainer> CALCINATOR = null;
     public static final ContainerType<WandInscriptionTableContainer> WAND_INSCRIPTION_TABLE = null;
     public static final ContainerType<SpellcraftingAltarContainer> SPELLCRAFTING_ALTAR = null;
+    public static final ContainerType<WandChargerContainer> WAND_CHARGER = null;
 }
