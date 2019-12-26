@@ -1,29 +1,28 @@
 package com.verdantartifice.primalmagic.common.tiles.mana;
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagic.common.containers.WandChargerContainer;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class WandChargerTileEntity extends TilePM implements ITickableTileEntity, INamedContainerProvider, IInventory {
-    protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
+public class WandChargerTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider {
     protected int chargeTime;
     protected int chargeTimeTotal;
     
@@ -59,13 +58,16 @@ public class WandChargerTileEntity extends TilePM implements ITickableTileEntity
     };
     
     public WandChargerTileEntity() {
-        super(TileEntityTypesPM.WAND_CHARGER);
+        super(TileEntityTypesPM.WAND_CHARGER, 2);
+    }
+    
+    @Override
+    protected Set<Integer> getSyncedSlotIndices() {
+        return ImmutableSet.of(Integer.valueOf(1));
     }
     
     @Override
     protected void readFromTileNBT(CompoundNBT compound) {
-        this.items = NonNullList.withSize(2, ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.items);
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
     }
@@ -74,7 +76,6 @@ public class WandChargerTileEntity extends TilePM implements ITickableTileEntity
     protected CompoundNBT writeToTileNBT(CompoundNBT compound) {
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
-        ItemStackHelper.saveAllItems(compound, this.items);
         return compound;
     }
 
@@ -114,6 +115,7 @@ public class WandChargerTileEntity extends TilePM implements ITickableTileEntity
         
         if (shouldMarkDirty) {
             this.markDirty();
+            this.syncTile(false);
         }
     }
     
@@ -161,61 +163,14 @@ public class WandChargerTileEntity extends TilePM implements ITickableTileEntity
     }
 
     @Override
-    public void clear() {
-        this.items.clear();
-    }
-
-    @Override
-    public int getSizeInventory() {
-        return this.items.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        for (ItemStack stack : this.items) {
-            if (!stack.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int index) {
-        return this.items.get(index);
-    }
-
-    @Override
-    public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.items, index, count);
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.items, index);
-    }
-
-    @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
+        super.setInventorySlotContents(index, stack);
         ItemStack slotStack = this.items.get(index);
         boolean flag = !stack.isEmpty() && stack.isItemEqual(slotStack) && ItemStack.areItemStackTagsEqual(stack, slotStack);
-        this.items.set(index, stack);
-        if (stack.getCount() > this.getInventoryStackLimit()) {
-            stack.setCount(this.getInventoryStackLimit());
-        }
         if (index == 0 && !flag) {
             this.chargeTimeTotal = this.getChargeTimeTotal();
             this.chargeTime = 0;
             this.markDirty();
-        }
-    }
-
-    @Override
-    public boolean isUsableByPlayer(PlayerEntity player) {
-        if (this.world.getTileEntity(this.pos) != this) {
-            return false;
-        } else {
-            return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
         }
     }
 }
