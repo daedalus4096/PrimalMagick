@@ -17,8 +17,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 
 public class TileInventoryPM extends TilePM implements ISidedInventory {
-    protected final NonNullList<ItemStack> items;
-    protected final NonNullList<ItemStack> syncedItems;
+    protected NonNullList<ItemStack> items;
+    protected NonNullList<ItemStack> syncedItems;
     protected final Set<Integer> syncedSlotIndices;
     protected final int[] faceSlots;
     
@@ -151,5 +151,55 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
     public void syncTile(boolean rerender) {
         super.syncTile(rerender);
         this.syncSlots(null);
+    }
+    
+    @Override
+    public void onMessageFromClient(CompoundNBT nbt, ServerPlayerEntity player) {
+        super.onMessageFromClient(nbt, player);
+        if (nbt.contains("RequestSync")) {
+            this.syncSlots(player);
+        }
+    }
+    
+    @Override
+    public void onMessageFromServer(CompoundNBT nbt) {
+        super.onMessageFromServer(nbt);
+        if (nbt.contains("ItemsSynced")) {
+            this.syncedItems = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+            ListNBT tagList = nbt.getList("ItemsSynced", 10);
+            for (int index = 0; index < tagList.size(); index++) {
+                CompoundNBT slotTag = tagList.getCompound(index);
+                byte slotIndex = slotTag.getByte("Slot");
+                if (this.isSyncedSlot(slotIndex)) {
+                    this.syncedItems.set(slotIndex, ItemStack.read(slotTag));
+                }
+            }
+        }
+    }
+    
+    @Override
+    public void read(CompoundNBT compound) {
+        super.read(compound);
+        this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, this.items);
+    }
+    
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
+        ItemStackHelper.saveAllItems(compound, this.items);
+        return compound;
+    }
+    
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (!this.world.isRemote) {
+            this.syncSlots(null);
+        } else {
+            CompoundNBT nbt = new CompoundNBT();
+            nbt.putBoolean("RequestSync", true);
+            this.sendMessageToServer(nbt);
+        }
     }
 }
