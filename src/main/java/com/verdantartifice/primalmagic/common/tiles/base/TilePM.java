@@ -1,6 +1,10 @@
 package com.verdantartifice.primalmagic.common.tiles.base;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -50,5 +54,25 @@ public class TilePM extends TileEntity {
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         this.readFromTileNBT(pkt.getNbtCompound());
+    }
+    
+    public void sendMessageToClient(CompoundNBT nbt, @Nullable ServerPlayerEntity player) {
+        if (player == null) {
+            // TODO send packet to all around
+        } else {
+            // TODO send packet to just the given player
+        }
+    }
+    
+    public void sendMessageToServer(CompoundNBT nbt) {
+        // TODO send packet to server
+    }
+    
+    public void onMessageFromClient(CompoundNBT nbt, @Nonnull ServerPlayerEntity player) {
+        // Do nothing by default
+    }
+    
+    public void onMessageFromServer(CompoundNBT nbt) {
+        // Do nothing by default
     }
 }

@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncCooldowns
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchFlagsPacket;
+import com.verdantartifice.primalmagic.common.network.packets.data.TileToClientPacket;
+import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.CycleActiveSpellPacket;
@@ -56,6 +58,8 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket::encode, SetSpellComponentPropertyPacket::decode, SetSpellComponentPropertyPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SpellTrailPacket.class, SpellTrailPacket::encode, SpellTrailPacket::decode, SpellTrailPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SpellImpactPacket.class, SpellImpactPacket::encode, SpellImpactPacket::decode, SpellImpactPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, TileToClientPacket.class, TileToClientPacket::encode, TileToClientPacket::decode, TileToClientPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, TileToServerPacket.class, TileToServerPacket::encode, TileToServerPacket::decode, TileToServerPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
