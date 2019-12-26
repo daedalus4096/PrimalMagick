@@ -16,14 +16,12 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
-import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
@@ -32,17 +30,15 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity, INamedContainerProvider, IInventory, IOwnedTileEntity {
+public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IOwnedTileEntity {
     protected static final int OUTPUT_CAPACITY = 9;
     
-    protected NonNullList<ItemStack> items = NonNullList.withSize(OUTPUT_CAPACITY + 2, ItemStack.EMPTY);
     protected int burnTime;
     protected int burnTimeTotal;
     protected int cookTime;
@@ -91,7 +87,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
     };
     
     public CalcinatorTileEntity() {
-        super(TileEntityTypesPM.CALCINATOR);
+        super(TileEntityTypesPM.CALCINATOR, OUTPUT_CAPACITY + 2);
     }
     
     protected boolean isBurning() {
@@ -100,8 +96,6 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
     
     @Override
     protected void readFromTileNBT(CompoundNBT compound) {
-        this.items = NonNullList.withSize(11, ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.items);
         this.burnTime = compound.getInt("BurnTime");
         this.burnTimeTotal = compound.getInt("BurnTimeTotal");
         this.cookTime = compound.getInt("CookTime");
@@ -122,7 +116,6 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
         compound.putInt("BurnTimeTotal", this.burnTimeTotal);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        ItemStackHelper.saveAllItems(compound, this.items);
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
@@ -179,6 +172,7 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
         }
         if (shouldMarkDirty) {
             this.markDirty();
+            this.syncTile(false);
         }
     }
 
@@ -276,61 +270,14 @@ public class CalcinatorTileEntity extends TilePM implements ITickableTileEntity,
     }
 
     @Override
-    public void clear() {
-        this.items.clear();
-    }
-
-    @Override
-    public int getSizeInventory() {
-        return this.items.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        for (ItemStack stack : this.items) {
-            if (!stack.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int index) {
-        return this.items.get(index);
-    }
-
-    @Override
-    public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.items, index, count);
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.items, index);
-    }
-
-    @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
+        super.setInventorySlotContents(index, stack);
         ItemStack slotStack = this.items.get(index);
         boolean flag = !stack.isEmpty() && stack.isItemEqual(slotStack) && ItemStack.areItemStackTagsEqual(stack, slotStack);
-        this.items.set(index, stack);
-        if (stack.getCount() > this.getInventoryStackLimit()) {
-            stack.setCount(this.getInventoryStackLimit());
-        }
         if (index == 0 && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;
             this.markDirty();
-        }
-    }
-
-    @Override
-    public boolean isUsableByPlayer(PlayerEntity player) {
-        if (this.world.getTileEntity(this.pos) != this) {
-            return false;
-        } else {
-            return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
         }
     }
 
