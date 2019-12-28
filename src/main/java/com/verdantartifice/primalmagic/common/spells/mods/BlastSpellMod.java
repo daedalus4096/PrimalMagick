@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.spells.mods;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,7 +13,15 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class BlastSpellMod extends AbstractSpellMod {
@@ -60,8 +69,33 @@ public class BlastSpellMod extends AbstractSpellMod {
     @Nonnull
     public Set<RayTraceResult> getBlastTargets(RayTraceResult origin, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();
-        // TODO calculate blasted blocks
-        // TODO calculate blasted entities
+        BlockPos hitPos = new BlockPos(origin.getHitVec());
+        int power = this.getPropertyValue("power");
+        double sqDistance = (double)(power * power);
+        int searchRadius = power + 1;
+        
+        // Calculate blasted blocks
+        for (int i = -searchRadius; i <= searchRadius; i++) {
+            for (int j = -searchRadius; j <= searchRadius; j++) {
+                for (int k = -searchRadius; k <= searchRadius; k++) {
+                    BlockPos searchPos = hitPos.add(i, j, k);
+                    BlockState state = world.getBlockState(searchPos);
+                    if (!state.isAir(world, searchPos) && hitPos.withinDistance(searchPos, power)) {
+                        retVal.add(new BlockRayTraceResult(new Vec3d(searchPos.getX(), searchPos.getY(), searchPos.getZ()), Direction.UP, searchPos, false));
+                    }
+                }
+            }
+        }
+        
+        // Calculate blasted entities
+        AxisAlignedBB aabb = new AxisAlignedBB(hitPos).grow(power + 1);
+        List<Entity> entities = world.getEntitiesInAABBexcluding(null, aabb, e -> !e.isSpectator());
+        for (Entity entity : entities) {
+            if (origin.getHitVec().squareDistanceTo(entity.getPositionVec()) <= sqDistance) {
+                retVal.add(new EntityRayTraceResult(entity));
+            }
+        }
+        
         return retVal;
     }
 }
