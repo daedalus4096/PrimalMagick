@@ -155,4 +155,17 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
         }
         return retVal;
     }
+    
+    @Nullable
+    public <T extends ISpellMod> T getMod(Class<T> clazz, String tiebreakerProperty) {
+        T primary = clazz.isInstance(this.primaryMod) ? clazz.cast(this.primaryMod) : null;
+        T secondary = clazz.isInstance(this.secondaryMod) ? clazz.cast(this.secondaryMod) : null;
+        if (primary != null && secondary != null) {
+            return secondary.getPropertyValue(tiebreakerProperty) > primary.getPropertyValue(tiebreakerProperty) ? secondary : primary;
+        } else if (primary != null) {
+            return primary;
+        } else {
+            return secondary;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.init;
 
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
+import com.verdantartifice.primalmagic.common.spells.mods.BlastSpellMod;
 import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.BreakSpellPayload;
@@ -50,5 +51,6 @@ public class InitSpells {
 
     private static void registerSpellModTypes() {
         SpellManager.registerModType(EmptySpellMod.TYPE, EmptySpellMod::new, EmptySpellMod::getResearch);
+        SpellManager.registerModType(BlastSpellMod.TYPE, BlastSpellMod::new, BlastSpellMod::getResearch);
     }
 }

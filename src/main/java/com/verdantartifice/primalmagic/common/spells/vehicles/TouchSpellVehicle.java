@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPack
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.spells.mods.BlastSpellMod;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -56,7 +57,15 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
                         new BlockPos(hitVec), 
                         64.0D);
             }
-            spell.getPayload().execute(result, spell, world, caster);
+
+            BlastSpellMod blastMod = spell.getMod(BlastSpellMod.class, "power");
+            if (blastMod != null) {
+                for (RayTraceResult target : blastMod.getBlastTargets(result, world)) {
+                    spell.getPayload().execute(target, spell, world, caster);
+                }
+            } else {
+                spell.getPayload().execute(result, spell, world, caster);
+            }
         }
     }
 }

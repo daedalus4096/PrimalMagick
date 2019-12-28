@@ -305,6 +305,9 @@
     "primalmagic.research.spell_payload_healing.title": "Spell Payload: Healing",
     "primalmagic.research.spell_payload_healing.text.stage.1": "Healing spells: Lorem ipsum",
     
+    "primalmagic.research.spell_mod_blast.title": "Spell Mod: Blast",
+    "primalmagic.research.spell_mod_blast.text.stage.1": "Blast spells: Lorem ipsum",
+    
     "primalmagic.research.basic_manaweaving.title": "Basic Manaweaving",
     "primalmagic.research.basic_manaweaving.text.stage.1": "Basic manaweaving: Lorem ipsum",
     
@@ -424,7 +427,9 @@
     "primalmagic.spell.primary_mod.header": "Primary Mod",
     "primalmagic.spell.secondary_mod.header": "Secondary Mod",
     "primalmagic.spell.mod.type.none": "None",
+    "primalmagic.spell.mod.type.blast": "Blast",
     "primalmagic.spell.mod.default_name.none": "",
+    "primalmagic.spell.mod.default_name.blast": "Explosive",
     
     "primalmagic.spell.property.power": "Power",
     "primalmagic.spell.property.duration": "Duration",

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.spells.mods.BlastSpellMod;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -80,7 +81,15 @@ public class SpellProjectileEntity extends ThrowableEntity {
                         this.dimension, 
                         new BlockPos(result.getHitVec()), 
                         64.0D);
-                this.spell.getPayload().execute(result, this.spell, this.world, this.getThrower());
+
+                BlastSpellMod blastMod = this.spell.getMod(BlastSpellMod.class, "power");
+                if (blastMod != null) {
+                    for (RayTraceResult target : blastMod.getBlastTargets(result, this.world)) {
+                        this.spell.getPayload().execute(target, this.spell, world, this.getThrower());
+                    }
+                } else {
+                    this.spell.getPayload().execute(result, this.spell, this.world, this.getThrower());
+                }
             }
             this.remove();
         }
