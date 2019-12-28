@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.common.spells.vehicles;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,6 +12,7 @@ import net.minecraft.world.World;
 
 public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "projectile";
+    public static final int COST_MODIFIER = 5;
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_VEHICLE_PROJECTILE"));
     
     public static CompoundResearchKey getResearch() {
@@ -28,5 +31,16 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
             projectile.shoot(caster, caster.rotationPitch, caster.rotationYaw, 0.0F, 1.5F, 0.0F);
             world.addEntity(projectile);
         }
+    }
+    
+    @Override
+    public SourceList modifyManaCost(SourceList cost) {
+        SourceList newCost = cost.copy();
+        for (Source source : newCost.getSources()) {
+            if (newCost.getAmount(source) > 0) {
+                newCost.add(source, COST_MODIFIER);
+            }
+        }
+        return newCost;
     }
 }

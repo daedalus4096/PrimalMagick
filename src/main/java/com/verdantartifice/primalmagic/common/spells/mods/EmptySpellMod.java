@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.spells.mods;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 public class EmptySpellMod extends AbstractSpellMod {
     public static final String TYPE = "none";
@@ -21,5 +22,10 @@ public class EmptySpellMod extends AbstractSpellMod {
     
     public static CompoundResearchKey getResearch() {
         return null;
+    }
+    
+    @Override
+    public SourceList modifyManaCost(SourceList cost) {
+        return cost;
     }
 }

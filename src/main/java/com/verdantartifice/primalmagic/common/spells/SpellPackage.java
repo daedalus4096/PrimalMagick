@@ -121,9 +121,17 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     @Nonnull
     public SourceList getManaCost() {
         SourceList retVal = new SourceList();
-        // TODO Factor in vehicle and mods
         if (this.payload != null) {
             retVal.add(this.payload.getManaCost());
+        }
+        if (this.vehicle != null) {
+            retVal = this.vehicle.modifyManaCost(retVal);
+        }
+        if (this.primaryMod != null) {
+            retVal = this.primaryMod.modifyManaCost(retVal);
+        }
+        if (this.secondaryMod != null) {
+            retVal = this.secondaryMod.modifyManaCost(retVal);
         }
         return retVal;
     }
