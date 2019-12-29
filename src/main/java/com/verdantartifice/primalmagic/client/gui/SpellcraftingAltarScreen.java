@@ -123,9 +123,9 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         
         for (SpellProperty property : this.container.getSpellPackage().getPayload().getProperties()) {
             y += 12;
-            this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPayloadPropertyValue(property.getName(), v)));
+            this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v)));
             this.texts.put(new Vec3i(x + 18, y + 2, 7), new StringTextComponent(Integer.toString(property.getValue())));
-            this.addButton(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.container.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPayloadPropertyValue(property.getName(), v)));
+            this.addButton(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.container.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v)));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.getStringWidth(property.getDescription().getFormattedText()))), property.getDescription());
         }
         
@@ -140,9 +140,9 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         
         for (SpellProperty property : this.container.getSpellPackage().getPrimaryMod().getProperties()) {
             y += 12;
-            this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPrimaryModPropertyValue(property.getName(), v)));
+            this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v)));
             this.texts.put(new Vec3i(x + 18, y + 2, 7), new StringTextComponent(Integer.toString(property.getValue())));
-            this.addButton(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.container.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPrimaryModPropertyValue(property.getName(), v)));
+            this.addButton(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.container.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v)));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.getStringWidth(property.getDescription().getFormattedText()))), property.getDescription());
         }
         
@@ -156,9 +156,9 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         
         for (SpellProperty property : this.container.getSpellPackage().getSecondaryMod().getProperties()) {
             y += 12;
-            this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellSecondaryModPropertyValue(property.getName(), v)));
+            this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v)));
             this.texts.put(new Vec3i(x + 18, y + 2, 7), new StringTextComponent(Integer.toString(property.getValue())));
-            this.addButton(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.container.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellSecondaryModPropertyValue(property.getName(), v)));
+            this.addButton(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.container.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v)));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.getStringWidth(property.getDescription().getFormattedText()))), property.getDescription());
         }
     }
@@ -238,19 +238,9 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         }
     }
     
-    private void updateSpellPayloadPropertyValue(String name, int value) {
-        this.container.getSpellPackage().getPayload().getProperty(name).setValue(value);
-        PacketHandler.sendToServer(new SetSpellComponentPropertyPacket(this.container.windowId, SpellComponent.PAYLOAD, name, value));
-    }
-    
-    private void updateSpellPrimaryModPropertyValue(String name, int value) {
-        this.container.getSpellPackage().getPrimaryMod().getProperty(name).setValue(value);
-        PacketHandler.sendToServer(new SetSpellComponentPropertyPacket(this.container.windowId, SpellComponent.PRIMARY_MOD, name, value));
-    }
-    
-    private void updateSpellSecondaryModPropertyValue(String name, int value) {
-        this.container.getSpellPackage().getSecondaryMod().getProperty(name).setValue(value);
-        PacketHandler.sendToServer(new SetSpellComponentPropertyPacket(this.container.windowId, SpellComponent.SECONDARY_MOD, name, value));
+    private void updateSpellPropertyValue(SpellComponent component, String name, int value) {
+        this.container.setSpellPropertyValue(component, name, value);
+        PacketHandler.sendToServer(new SetSpellComponentPropertyPacket(this.container.windowId, component, name, value));
     }
     
     protected static class CyclicBoundedSpinnerButton extends Button {

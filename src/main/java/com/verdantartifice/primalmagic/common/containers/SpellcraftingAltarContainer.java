@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.containers;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
@@ -59,6 +61,7 @@ public class SpellcraftingAltarContainer extends Container {
     protected int spellPrimaryModTypeIndex = 0;
     protected int spellSecondaryModTypeIndex = 0;
     protected SpellPackage spellPackageCache = null;
+    protected Map<SpellComponent, Map<String, Integer>> spellPropertyCache = new HashMap<>();
 
     public SpellcraftingAltarContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -68,6 +71,9 @@ public class SpellcraftingAltarContainer extends Container {
         super(ContainersPM.SPELLCRAFTING_ALTAR, windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
+        for (SpellComponent comp : SpellComponent.values()) {
+            this.spellPropertyCache.put(comp, new HashMap<>());
+        }
         
         // Slot 0: Result
         this.addSlot(new SpellcraftingResultSlot(this.player, this.scrollInv, this.wandInv, this::getManaCosts, this.resultInv, 0, 206, 8));
@@ -172,7 +178,15 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellPayload getSpellPayloadComponent() {
-        return SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes(this.player).get(this.getSpellPayloadTypeIndex()));
+        ISpellPayload retVal = SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes(this.player).get(this.getSpellPayloadTypeIndex()));
+        if (retVal != null) {
+            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.PAYLOAD).entrySet()) {
+                if (retVal.getProperty(entry.getKey()) != null) {
+                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
+                }
+            }
+        }
+        return retVal;
     }
     
     public int getSpellPayloadTypeIndex() {
@@ -189,7 +203,15 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellMod getSpellPrimaryModComponent() {
-        return SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellPrimaryModTypeIndex()));
+        ISpellMod retVal = SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellPrimaryModTypeIndex()));
+        if (retVal != null) {
+            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.PRIMARY_MOD).entrySet()) {
+                if (retVal.getProperty(entry.getKey()) != null) {
+                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
+                }
+            }
+        }
+        return retVal;
     }
     
     public int getSpellPrimaryModTypeIndex() {
@@ -206,7 +228,15 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellMod getSpellSecondaryModComponent() {
-        return SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellSecondaryModTypeIndex()));
+        ISpellMod retVal = SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellSecondaryModTypeIndex()));
+        if (retVal != null) {
+            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.SECONDARY_MOD).entrySet()) {
+                if (retVal.getProperty(entry.getKey()) != null) {
+                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
+                }
+            }
+        }
+        return retVal;
     }
     
     public int getSpellSecondaryModTypeIndex() {
@@ -234,6 +264,7 @@ public class SpellcraftingAltarContainer extends Container {
         }
         if (property != null) {
             property.setValue(value);
+            this.spellPropertyCache.get(component).put(name, value);
             this.worldPosCallable.consume((world, blockPos) -> {
                 this.slotChangedCraftingGrid(world);
             });
