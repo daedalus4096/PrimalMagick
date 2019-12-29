@@ -53,7 +53,7 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
             BlastSpellMod blastMod = spell.getMod(BlastSpellMod.class, "power");
             if (!world.isRemote) {
                 Vec3d hitVec = result.getHitVec();
-                int radius = blastMod == null ? 1 : blastMod.getPropertyValue("power");
+                int radius = blastMod == null ? 1 : blastMod.getModdedPropertyValue("power", spell);
                 PacketHandler.sendToAllAround(
                         new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
                         world.getDimension().getType(), 
@@ -62,7 +62,7 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
             }
 
             if (blastMod != null) {
-                for (RayTraceResult target : blastMod.getBlastTargets(result, world)) {
+                for (RayTraceResult target : blastMod.getBlastTargets(result, spell, world)) {
                     spell.getPayload().execute(target, result.getHitVec(), spell, world, caster);
                 }
             } else {

@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -37,8 +38,8 @@ public class LightningDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage(Entity target) {
-        return 2.0F * this.getPropertyValue("power");
+    protected float getTotalDamage(Entity target, SpellPackage spell) {
+        return 2.0F * this.getModdedPropertyValue("power", spell);
     }
 
     @Override

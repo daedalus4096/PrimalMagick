@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.block.BlockState;
@@ -67,10 +68,10 @@ public class BlastSpellMod extends AbstractSpellMod {
     }
 
     @Nonnull
-    public Set<RayTraceResult> getBlastTargets(RayTraceResult origin, World world) {
+    public Set<RayTraceResult> getBlastTargets(RayTraceResult origin, SpellPackage spell, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();
         BlockPos hitPos = new BlockPos(origin.getHitVec());
-        int power = this.getPropertyValue("power");
+        int power = this.getModdedPropertyValue("power", spell);
         double sqDistance = (double)(power * power);
         int searchRadius = power + 1;
         

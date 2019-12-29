@@ -53,7 +53,7 @@ public class BreakSpellPayload extends AbstractSpellPayload {
             BlockPos pos = blockTarget.getPos();
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
-            BlockBreaker.enqueue(world, new BlockBreaker(this.getPropertyValue("power"), pos, state, durability, durability, player));
+            BlockBreaker.enqueue(world, new BlockBreaker(this.getModdedPropertyValue("power", spell), pos, state, durability, durability, player));
         }
     }
 

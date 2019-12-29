@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -62,6 +63,17 @@ public abstract class AbstractSpellMod implements ISpellMod {
     @Override
     public int getPropertyValue(String name) {
         return this.properties.containsKey(name) ? this.properties.get(name).getValue() : 0;
+    }
+    
+    public int getModdedPropertyValue(String name, SpellPackage spell) {
+        int retVal = this.getPropertyValue(name);
+        if (retVal > 0 && ("power".equals(name) || "duration".equals(name))) {
+            AmplifySpellMod ampMod = spell.getMod(AmplifySpellMod.class, "power");
+            if (ampMod != null) {
+                retVal += ampMod.getPropertyValue("power");
+            }
+        }
+        return retVal;
     }
     
     @Override

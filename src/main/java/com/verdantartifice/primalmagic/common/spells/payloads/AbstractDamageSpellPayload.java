@@ -34,7 +34,7 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         return propMap;
     }
     
-    protected abstract float getTotalDamage(Entity target);
+    protected abstract float getTotalDamage(Entity target, SpellPackage spell);
     
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
         return DamageSource.causeThrownDamage(target, source);
@@ -45,7 +45,7 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null) {
-                entityTarget.getEntity().attackEntityFrom(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity()));
+                entityTarget.getEntity().attackEntityFrom(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity(), spell));
             }
         }
         this.applySecondaryEffects(target, blastPoint, spell, world, caster);

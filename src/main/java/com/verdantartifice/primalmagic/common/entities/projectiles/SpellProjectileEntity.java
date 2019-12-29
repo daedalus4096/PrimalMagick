@@ -77,7 +77,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
         if (!this.world.isRemote) {
             if (this.spell != null && this.spell.getPayload() != null) {
                 BlastSpellMod blastMod = this.spell.getMod(BlastSpellMod.class, "power");
-                int radius = blastMod == null ? 1 : blastMod.getPropertyValue("power");
+                int radius = blastMod == null ? 1 : blastMod.getModdedPropertyValue("power", this.spell);
                 PacketHandler.sendToAllAround(
                         new SpellImpactPacket(this.posX, this.posY, this.posZ, radius, this.spell.getPayload().getSource().getColor()), 
                         this.dimension, 
@@ -85,7 +85,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
                         64.0D);
 
                 if (blastMod != null) {
-                    for (RayTraceResult target : blastMod.getBlastTargets(result, this.world)) {
+                    for (RayTraceResult target : blastMod.getBlastTargets(result, this.spell, this.world)) {
                         this.spell.getPayload().execute(target, result.getHitVec(), this.spell, this.world, this.getThrower());
                     }
                 } else {

@@ -59,8 +59,8 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage(Entity target) {
-        return 3.0F + this.getPropertyValue("power");
+    protected float getTotalDamage(Entity target, SpellPackage spell) {
+        return 3.0F + this.getModdedPropertyValue("power", spell);
     }
 
     @Override
@@ -70,11 +70,12 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
 
     @Override
     protected void applySecondaryEffects(RayTraceResult target, Vec3d blastPoint, SpellPackage spell, World world, LivingEntity caster) {
-        if (target != null && target.getType() == RayTraceResult.Type.ENTITY && this.getPropertyValue("duration") > 0) {
+        int duration = this.getModdedPropertyValue("duration", spell);
+        if (target != null && target.getType() == RayTraceResult.Type.ENTITY && duration > 0) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
-                entity.setFire(this.getPropertyValue("duration"));
+                entity.setFire(duration);
             }
         }
     }

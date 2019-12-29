@@ -49,9 +49,9 @@ public class HealingSpellPayload extends AbstractSpellPayload {
             if (entityTarget.getEntity() instanceof LivingEntity) {
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 if (entity.isEntityUndead()) {
-                    entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(caster, caster), 1.5F * this.getPropertyValue("power"));
+                    entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(caster, caster), 1.5F * this.getModdedPropertyValue("power", spell));
                 } else {
-                    entity.heal((float)this.getPropertyValue("power"));
+                    entity.heal((float)this.getModdedPropertyValue("power", spell));
                 }
             }
         }

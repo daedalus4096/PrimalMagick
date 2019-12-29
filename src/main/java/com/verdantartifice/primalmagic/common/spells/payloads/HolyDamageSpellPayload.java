@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -37,8 +38,8 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage(Entity target) {
-        int damage = 3 + this.getPropertyValue("power");
+    protected float getTotalDamage(Entity target, SpellPackage spell) {
+        int damage = 3 + this.getModdedPropertyValue("power", spell);
         if (target instanceof LivingEntity && ((LivingEntity)target).isEntityUndead()) {
             damage *= 2;
         }

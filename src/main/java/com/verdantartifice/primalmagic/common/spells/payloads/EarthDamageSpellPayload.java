@@ -41,8 +41,8 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    protected float getTotalDamage(Entity target) {
-        return 3.0F + this.getPropertyValue("power");
+    protected float getTotalDamage(Entity target, SpellPackage spell) {
+        return 3.0F + this.getModdedPropertyValue("power", spell);
     }
     
     @Override
@@ -57,7 +57,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
                     Vec3d knockbackSource = blastPoint == null || blastPoint.equals(target.getHitVec()) ? caster.getEyePosition(1.0F) : blastPoint;
                     knockbackVec = target.getHitVec().subtract(knockbackSource).scale(-1.0D).normalize();
                 }
-                ((LivingEntity)entityTarget.getEntity()).knockBack(caster, 0.25F * this.getTotalDamage(entityTarget.getEntity()), knockbackVec.x, knockbackVec.z);
+                ((LivingEntity)entityTarget.getEntity()).knockBack(caster, 0.25F * this.getTotalDamage(entityTarget.getEntity(), spell), knockbackVec.x, knockbackVec.z);
             }
         }
     }
