@@ -12,14 +12,16 @@ public class SpellImpactPacket implements IMessageToClient {
     protected double x;
     protected double y;
     protected double z;
+    protected int radius;
     protected int color;
     
     public SpellImpactPacket() {}
     
-    public SpellImpactPacket(double x, double y, double z, int color) {
+    public SpellImpactPacket(double x, double y, double z, int radius, int color) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.radius = radius;
         this.color = color;
     }
     
@@ -27,6 +29,7 @@ public class SpellImpactPacket implements IMessageToClient {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
         buf.writeDouble(message.z);
+        buf.writeInt(message.radius);
         buf.writeInt(message.color);
     }
     
@@ -35,6 +38,7 @@ public class SpellImpactPacket implements IMessageToClient {
         message.x = buf.readDouble();
         message.y = buf.readDouble();
         message.z = buf.readDouble();
+        message.radius = buf.readInt();
         message.color = buf.readInt();
         return message;
     }
@@ -42,7 +46,7 @@ public class SpellImpactPacket implements IMessageToClient {
     public static class Handler {
         public static void onMessage(SpellImpactPacket message, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                FxDispatcher.INSTANCE.spellImpact(message.x, message.y, message.z, message.color);
+                FxDispatcher.INSTANCE.spellImpact(message.x, message.y, message.z, message.radius, message.color);
             });
             ctx.get().setPacketHandled(true);
         }

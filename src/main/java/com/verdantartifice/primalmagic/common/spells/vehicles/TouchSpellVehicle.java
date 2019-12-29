@@ -49,16 +49,18 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
             } else {
                 result = (eyePos.squareDistanceTo(entityResult.getHitVec()) <= eyePos.squareDistanceTo(blockResult.getHitVec())) ? entityResult : blockResult;
             }
+
+            BlastSpellMod blastMod = spell.getMod(BlastSpellMod.class, "power");
             if (!world.isRemote) {
                 Vec3d hitVec = result.getHitVec();
+                int radius = blastMod == null ? 1 : blastMod.getPropertyValue("power");
                 PacketHandler.sendToAllAround(
-                        new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, spell.getPayload().getSource().getColor()), 
+                        new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
                         world.getDimension().getType(), 
                         new BlockPos(hitVec), 
                         64.0D);
             }
 
-            BlastSpellMod blastMod = spell.getMod(BlastSpellMod.class, "power");
             if (blastMod != null) {
                 for (RayTraceResult target : blastMod.getBlastTargets(result, world)) {
                     spell.getPayload().execute(target, spell, world, caster);

@@ -85,20 +85,21 @@ public class FxDispatcher {
         }
     }
     
-    public void spellImpact(double x, double y, double z, int color) {
+    public void spellImpact(double x, double y, double z, int radius, int color) {
         Color c = new Color(color);
         float r = c.getRed() / 255.0F;
         float g = c.getGreen() / 255.0F;
         float b = c.getBlue() / 255.0F;
-        this.spellImpact(x, y, z, r, g, b);
+        this.spellImpact(x, y, z, radius, r, g, b);
     }
     
-    public void spellImpact(double x, double y, double z, float r, float g, float b) {
+    public void spellImpact(double x, double y, double z, int radius, float r, float g, float b) {
         Random rng = getWorld().rand;
-        for (int index = 0; index < 15 + rng.nextInt(11); index++) {
-            double dx = (rng.nextFloat() * 0.05D) * (rng.nextBoolean() ? 1 : -1);
-            double dy = (rng.nextFloat() * 0.05D) * (rng.nextBoolean() ? 1 : -1);
-            double dz = (rng.nextFloat() * 0.05D) * (rng.nextBoolean() ? 1 : -1);
+        int count = (15 + rng.nextInt(11)) * radius;
+        for (int index = 0; index < count; index++) {
+            double dx = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
+            double dy = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
+            double dz = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
             Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.SPELL_SPARKLE, x, y, z, dx, dy, dz);
             if (p != null) {
                 p.setColor(r, g, b);
