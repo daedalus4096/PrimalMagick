@@ -115,6 +115,7 @@
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.apprentice_wand_gem_item": "Apprentice's Wand Gem",
+    "item.primalmagic.creative_wand_gem_item": "Creative Wand Gem",
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",
@@ -126,6 +127,7 @@
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
     
     "primalmagic.wand_gem.apprentice.name": "Apprentice's",
+    "primalmagic.wand_gem.creative.name": "Creative",
     
     "primalmagic.research_discipline.BASICS": "Fundamentals",
     "primalmagic.research_discipline.ALCHEMY": "Alchemy",

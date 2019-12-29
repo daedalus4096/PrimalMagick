@@ -43,18 +43,34 @@ public abstract class AbstractWandItem extends Item implements IWand {
 
     @Override
     public int getMana(ItemStack stack, Source source) {
-        int retVal = 0;
-        if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getTag())) {
-            retVal = stack.getTag().getInt(source.getTag());
+        if (this.getMaxMana(stack) == -1) {
+            return -1;
+        } else {
+            int retVal = 0;
+            if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getTag())) {
+                retVal = stack.getTag().getInt(source.getTag());
+            }
+            return retVal;
         }
-        return retVal;
+    }
+    
+    protected ITextComponent getManaText(ItemStack stack, Source source) {
+        int mana = this.getMana(stack, source);
+        if (mana == -1) {
+            return new StringTextComponent(Character.toString('\u221E'));
+        } else {
+            return new StringTextComponent(Integer.toString(mana));
+        }
     }
 
     @Override
     public SourceList getAllMana(ItemStack stack) {
         SourceList retVal = new SourceList();
+        boolean isInfinite = this.getMaxMana(stack) == -1;
         for (Source source : Source.SORTED_SOURCES) {
-            if (stack.hasTag() && stack.getTag().contains(source.getTag())) {
+            if (isInfinite) {
+                retVal.set(source, -1);
+            } else if (stack.hasTag() && stack.getTag().contains(source.getTag())) {
                 retVal.merge(source, stack.getTag().getInt(source.getTag()));
             } else {
                 retVal.merge(source, 0);
@@ -65,13 +81,22 @@ public abstract class AbstractWandItem extends Item implements IWand {
 
     public abstract int getMaxMana(ItemStack stack);
     
+    protected ITextComponent getMaxManaText(ItemStack stack) {
+        int mana = this.getMaxMana(stack);
+        if (mana == -1) {
+            return new StringTextComponent(Character.toString('\u221E'));
+        } else {
+            return new StringTextComponent(Integer.toString(mana));
+        }
+    }
+    
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
         stack.setTagInfo(source.getTag(), new IntNBT(amount));
     }
 
     @Override
     public int addMana(ItemStack stack, Source source, int amount) {
-        if (stack == null || source == null) {
+        if (stack == null || source == null || this.getMaxMana(stack) == -1) {
             return 0;
         }
         int toStore = this.getMana(stack, source) + amount;
@@ -85,7 +110,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (stack == null || player == null || source == null) {
             return false;
         }
-        if (this.containsMana(stack, player, source, amount)) {
+        if (this.getMaxMana(stack) == -1) {
+            return true;
+        } else if (this.containsMana(stack, player, source, amount)) {
             this.setMana(stack, source, this.getMana(stack, source) - amount);
             return true;
         } else {
@@ -98,7 +125,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (stack == null || player == null || sources == null) {
             return false;
         }
-        if (this.containsMana(stack, player, sources)) {
+        if (this.getMaxMana(stack) == -1) {
+            return true;
+        } else if (this.containsMana(stack, player, sources)) {
             for (Source source : sources.getSources()) {
                 this.setMana(stack, source, this.getMana(stack, source) - sources.getAmount(source));
             }
@@ -110,7 +139,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public boolean containsMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
-        return this.getMana(stack, source) >= amount;
+        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= amount;
     }
     
     @Override
@@ -134,7 +163,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             for (Source source : Source.SORTED_SOURCES) {
                 if (source.isDiscovered(player)) {
                     ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
-                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getFormattedText(), this.getMana(stack, source), this.getMaxMana(stack));
+                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getFormattedText(), this.getManaText(stack, source), this.getMaxManaText(stack));
                     tooltip.add(line);
                 }
             }
@@ -163,8 +192,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     if (!first) {
                         sb.append("/");
                     }
-                    int mana = this.getMana(stack, source);
-                    ITextComponent manaStr = new StringTextComponent(Integer.toString(mana)).applyTextStyle(source.getChatColor());
+                    ITextComponent manaStr = this.getManaText(stack, source).applyTextStyle(source.getChatColor());
                     sb.append(manaStr.getFormattedText());
                     first = false;
                 }

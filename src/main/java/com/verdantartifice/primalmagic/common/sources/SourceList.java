@@ -102,6 +102,24 @@ public class SourceList {
     }
     
     @Nonnull
+    public SourceList set(@Nullable Source source, int amount) {
+        if (source != null) {
+            this.sources.put(source, Integer.valueOf(amount));
+        }
+        return this;
+    }
+    
+    @Nonnull
+    public SourceList set(@Nullable SourceList list) {
+        if (list != null) {
+            for (Source source : list.getSources()) {
+                this.set(source, list.getAmount(source));
+            }
+        }
+        return this;
+    }
+    
+    @Nonnull
     public Set<Source> getSources() {
         return Collections.unmodifiableSet(this.sources.keySet());
     }

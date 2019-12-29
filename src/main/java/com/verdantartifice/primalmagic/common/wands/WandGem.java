@@ -17,6 +17,7 @@ public class WandGem {
     protected static final Map<String, WandGem> REGISTRY = new HashMap<>();
     
     public static final WandGem APPRENTICE = new WandGem("apprentice", 75);
+    public static final WandGem CREATIVE = new WandGem("creative", -1);
     
     protected final String tag;
     protected final int capacity;
