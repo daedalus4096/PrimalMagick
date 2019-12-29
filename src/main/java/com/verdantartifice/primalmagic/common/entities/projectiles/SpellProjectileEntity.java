@@ -86,10 +86,10 @@ public class SpellProjectileEntity extends ThrowableEntity {
 
                 if (blastMod != null) {
                     for (RayTraceResult target : blastMod.getBlastTargets(result, this.world)) {
-                        this.spell.getPayload().execute(target, this.spell, world, this.getThrower());
+                        this.spell.getPayload().execute(target, result.getHitVec(), this.spell, this.world, this.getThrower());
                     }
                 } else {
-                    this.spell.getPayload().execute(result, this.spell, this.world, this.getThrower());
+                    this.spell.getPayload().execute(result, null, this.spell, this.world, this.getThrower());
                 }
             }
             this.remove();

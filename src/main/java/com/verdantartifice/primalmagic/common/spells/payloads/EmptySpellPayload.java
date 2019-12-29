@@ -7,13 +7,14 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class EmptySpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "none";
 
     @Override
-    public void execute(RayTraceResult target, SpellPackage spell, World world, LivingEntity caster) {
+    public void execute(RayTraceResult target, Vec3d blastPoint, SpellPackage spell, World world, LivingEntity caster) {
         // Do nothing
     }
 

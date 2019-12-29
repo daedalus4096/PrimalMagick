@@ -14,6 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
@@ -40,17 +41,17 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void execute(RayTraceResult target, SpellPackage spell, World world, LivingEntity caster) {
+    public void execute(RayTraceResult target, Vec3d blastPoint, SpellPackage spell, World world, LivingEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null) {
                 entityTarget.getEntity().attackEntityFrom(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity()));
             }
         }
-        this.applySecondaryEffects(target, spell, world, caster);
+        this.applySecondaryEffects(target, blastPoint, spell, world, caster);
     }
     
-    protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster) {
+    protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nullable Vec3d blastPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster) {
         // Do nothing by default
     }
 

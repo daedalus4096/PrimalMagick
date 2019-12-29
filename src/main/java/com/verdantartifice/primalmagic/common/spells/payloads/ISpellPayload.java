@@ -13,12 +13,13 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
-    public void execute(@Nullable RayTraceResult target, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster);
+    public void execute(@Nullable RayTraceResult target, @Nullable Vec3d blastPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster);
     
     public boolean isActive();
     
@@ -30,6 +31,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     
     public void playSounds(@Nonnull World world, @Nonnull LivingEntity caster);
     
+    @Nonnull
     public List<SpellProperty> getProperties();
     
     @Nullable

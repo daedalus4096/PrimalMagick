@@ -43,10 +43,10 @@ public class SelfSpellVehicle extends AbstractSpellVehicle {
             
             if (blastMod != null) {
                 for (RayTraceResult target : blastMod.getBlastTargets(result, world)) {
-                    spell.getPayload().execute(target, spell, world, caster);
+                    spell.getPayload().execute(target, result.getHitVec(), spell, world, caster);
                 }
             } else {
-                spell.getPayload().execute(result, spell, world, caster);
+                spell.getPayload().execute(result, null, spell, world, caster);
             }
         }
     }

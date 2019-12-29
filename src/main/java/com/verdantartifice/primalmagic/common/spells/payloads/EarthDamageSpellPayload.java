@@ -46,7 +46,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    protected void applySecondaryEffects(RayTraceResult target, SpellPackage spell, World world, LivingEntity caster) {
+    protected void applySecondaryEffects(RayTraceResult target, Vec3d blastPoint, SpellPackage spell, World world, LivingEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
@@ -54,7 +54,8 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
                 if (entityTarget.getEntity().equals(caster)) {
                     knockbackVec = caster.getLookVec().scale(-1.0D).normalize();
                 } else {
-                    knockbackVec = target.getHitVec().subtract(caster.getEyePosition(1.0F)).scale(-1.0D).normalize();
+                    Vec3d knockbackSource = blastPoint == null || blastPoint.equals(target.getHitVec()) ? caster.getEyePosition(1.0F) : blastPoint;
+                    knockbackVec = target.getHitVec().subtract(knockbackSource).scale(-1.0D).normalize();
                 }
                 ((LivingEntity)entityTarget.getEntity()).knockBack(caster, 0.25F * this.getTotalDamage(entityTarget.getEntity()), knockbackVec.x, knockbackVec.z);
             }

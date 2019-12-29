@@ -18,6 +18,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class BreakSpellPayload extends AbstractSpellPayload {
@@ -45,7 +46,7 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, SpellPackage spell, World world, LivingEntity caster) {
+    public void execute(RayTraceResult target, Vec3d blastPoint, SpellPackage spell, World world, LivingEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.BLOCK && caster instanceof PlayerEntity) {
             BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
             PlayerEntity player = (PlayerEntity)caster;
