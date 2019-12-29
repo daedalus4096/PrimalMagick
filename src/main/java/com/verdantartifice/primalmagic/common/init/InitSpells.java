@@ -23,19 +23,19 @@ import com.verdantartifice.primalmagic.common.spells.vehicles.TouchSpellVehicle;
 
 public class InitSpells {
     public static void initSpells() {
-        registerSpellPackageTypes();
+        registerSpellVehicleTypes();
         registerSpellPayloadTypes();
         registerSpellModTypes();
     }
 
-    private static void registerSpellPayloadTypes() {
+    private static void registerSpellVehicleTypes() {
         SpellManager.registerVehicleType(EmptySpellVehicle.TYPE, EmptySpellVehicle::new, EmptySpellVehicle::getResearch);
         SpellManager.registerVehicleType(TouchSpellVehicle.TYPE, TouchSpellVehicle::new, TouchSpellVehicle::getResearch);
         SpellManager.registerVehicleType(ProjectileSpellVehicle.TYPE, ProjectileSpellVehicle::new, ProjectileSpellVehicle::getResearch);
         SpellManager.registerVehicleType(SelfSpellVehicle.TYPE, SelfSpellVehicle::new, SelfSpellVehicle::getResearch);
     }
 
-    private static void registerSpellPackageTypes() {
+    private static void registerSpellPayloadTypes() {
         SpellManager.registerPayloadType(EmptySpellPayload.TYPE, EmptySpellPayload::new, EmptySpellPayload::getResearch);
         SpellManager.registerPayloadType(EarthDamageSpellPayload.TYPE, EarthDamageSpellPayload::new, EarthDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(FrostDamageSpellPayload.TYPE, FrostDamageSpellPayload::new, FrostDamageSpellPayload::getResearch);

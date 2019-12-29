@@ -56,7 +56,7 @@ public class SpellcraftingAltarContainer extends Container {
     protected final Slot scrollSlot;
     
     protected String spellName = "";
-    protected int spellPackageTypeIndex = 0;
+    protected int spellVehicleTypeIndex = 0;
     protected int spellPayloadTypeIndex = 0;
     protected int spellPrimaryModTypeIndex = 0;
     protected int spellSecondaryModTypeIndex = 0;
@@ -161,16 +161,16 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellVehicle getSpellVehicleComponent() {
-        return SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes(this.player).get(this.getSpellPackageTypeIndex()));
+        return SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes(this.player).get(this.getSpellVehicleTypeIndex()));
     }
     
-    public int getSpellPackageTypeIndex() {
-        return this.spellPackageTypeIndex;
+    public int getSpellVehicleTypeIndex() {
+        return this.spellVehicleTypeIndex;
     }
     
-    public void setSpellPackageTypeIndex(int index) {
+    public void setSpellVehicleTypeIndex(int index) {
         index = MathHelper.clamp(index, 0, SpellManager.getVehicleTypes(this.player).size() - 1);
-        this.spellPackageTypeIndex = index;
+        this.spellVehicleTypeIndex = index;
         this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);

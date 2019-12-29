@@ -109,9 +109,9 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.vehicle.header"));
         
         y += 12;
-        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, vehicleMax, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, vehicleMax, this.container::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getVehicle().getTypeName());
-        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, vehicleMax, this.container::getSpellPackageTypeIndex, this::updateSpellPackageTypeIndex));
+        this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, vehicleMax, this.container::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex));
         
         y = startY + 48;
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.payload.header"));
@@ -202,10 +202,10 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         PacketHandler.sendToServer(new SetSpellNamePacket(this.container.windowId, name));
     }
     
-    private void updateSpellPackageTypeIndex(int index) {
+    private void updateSpellVehicleTypeIndex(int index) {
         boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
-        this.container.setSpellPackageTypeIndex(index);
-        PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.PACKAGE, index));
+        this.container.setSpellVehicleTypeIndex(index);
+        PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.VEHICLE, index));
         if (recalcName) {
             this.nameField.setText(this.container.getDefaultSpellName().getString());
         }

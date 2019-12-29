@@ -55,8 +55,8 @@ public class SetSpellComponentTypeIndexPacket implements IMessageToServer {
                 if (player.openContainer != null && player.openContainer.windowId == message.windowId && player.openContainer instanceof SpellcraftingAltarContainer) {
                     SpellcraftingAltarContainer container = (SpellcraftingAltarContainer)player.openContainer;
                     switch (message.attr) {
-                    case PACKAGE:
-                        container.setSpellPackageTypeIndex(message.index);
+                    case VEHICLE:
+                        container.setSpellVehicleTypeIndex(message.index);
                         break;
                     case PAYLOAD:
                         container.setSpellPayloadTypeIndex(message.index);

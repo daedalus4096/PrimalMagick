@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.spells;
 
 public enum SpellComponent {
-    PACKAGE,
+    VEHICLE,
     PAYLOAD,
     PRIMARY_MOD,
     SECONDARY_MOD
