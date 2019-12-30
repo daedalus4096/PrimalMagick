@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
+import com.verdantartifice.primalmagic.common.spells.mods.QuickenSpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 
@@ -114,8 +115,12 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     }
 
     public int getCooldownTicks() {
-        // TODO Calculate actual value
-        return 40;
+        int retVal = 60;
+        QuickenSpellMod quickenMod = this.getMod(QuickenSpellMod.class, "haste");
+        if (quickenMod != null) {
+            retVal -= (10 * quickenMod.getPropertyValue("haste"));
+        }
+        return retVal;
     }
     
     @Nonnull

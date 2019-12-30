@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.mods.AmplifySpellMod;
 import com.verdantartifice.primalmagic.common.spells.mods.BlastSpellMod;
 import com.verdantartifice.primalmagic.common.spells.mods.EmptySpellMod;
+import com.verdantartifice.primalmagic.common.spells.mods.QuickenSpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.BreakSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
@@ -54,5 +55,6 @@ public class InitSpells {
         SpellManager.registerModType(EmptySpellMod.TYPE, EmptySpellMod::new, EmptySpellMod::getResearch);
         SpellManager.registerModType(AmplifySpellMod.TYPE, AmplifySpellMod::new, AmplifySpellMod::getResearch);
         SpellManager.registerModType(BlastSpellMod.TYPE, BlastSpellMod::new, BlastSpellMod::getResearch);
+        SpellManager.registerModType(QuickenSpellMod.TYPE, QuickenSpellMod::new, QuickenSpellMod::getResearch);
     }
 }

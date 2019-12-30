@@ -168,6 +168,18 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "SPELL_MOD_QUICKEN",
+            "name": "primalmagic.research.spell_mod_quicken.title",
+            "discipline": "SORCERY",
+            "parents": [ "SPELL_MOD_AMPLIFY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_mod_quicken.text.stage.1"
+                }
+            ],
+            "addenda": []
         }
     ]
 }
