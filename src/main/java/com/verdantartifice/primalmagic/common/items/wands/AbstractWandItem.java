@@ -179,7 +179,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     if (index == activeIndex) {
                         sb.append("*");
                     }
-                    sb.append(spell.getName());
+                    sb.append(spell.getName().getFormattedText());
                     tooltip.add(new StringTextComponent(sb.toString()));
                 }
             }

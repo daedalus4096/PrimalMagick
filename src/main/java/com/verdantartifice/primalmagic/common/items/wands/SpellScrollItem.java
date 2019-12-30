@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class SpellScrollItem extends Item {
     public SpellScrollItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP));
         this.setRegistryName(PrimalMagic.MODID, "spell_scroll_filled");
     }
     
@@ -42,8 +42,18 @@ public class SpellScrollItem extends Item {
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
         SpellPackage spell = this.getSpell(stack);
-        String spellName = (spell == null) ? "none" : spell.getName();
+        ITextComponent spellName = (spell == null) ? new TranslationTextComponent("tooltip.primalmagic.none") : spell.getName();
         return new TranslationTextComponent(this.getTranslationKey(stack), spellName).applyTextStyle(TextFormatting.ITALIC);
+    }
+    
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        SpellPackage spell = this.getSpell(stack);
+        if (spell == null) {
+            return Rarity.COMMON;
+        } else {
+            return spell.getRarity();
+        }
     }
     
     @Override

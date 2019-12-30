@@ -10,7 +10,10 @@ import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -32,8 +35,8 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     }
     
     @Nonnull
-    public String getName() {
-        return this.name;
+    public ITextComponent getName() {
+        return new StringTextComponent(this.name).applyTextStyle(this.getRarity().color);
     }
     
     public void setName(@Nullable String name) {
@@ -159,6 +162,19 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
             retVal++;
         }
         return retVal;
+    }
+    
+    @Nonnull
+    public Rarity getRarity() {
+        int mods = this.getActiveModCount();
+        switch (mods) {
+        case 2:
+            return Rarity.EPIC;
+        case 1:
+            return Rarity.RARE;
+        default:
+            return Rarity.UNCOMMON;
+        }
     }
     
     @Nullable
