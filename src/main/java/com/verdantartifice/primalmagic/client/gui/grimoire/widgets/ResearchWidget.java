@@ -17,8 +17,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ResearchWidget extends Widget {
-    protected static final ResourceLocation BAG_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_chest.png");
-    protected static final ResourceLocation TUBE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_flask.png");
+    protected static final ResourceLocation BAG_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_bag.png");
+    protected static final ResourceLocation TUBE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_tube.png");
     protected static final ResourceLocation MAP_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_map.png");
     protected static final ResourceLocation UNKNOWN_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_unknown.png");
     protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
