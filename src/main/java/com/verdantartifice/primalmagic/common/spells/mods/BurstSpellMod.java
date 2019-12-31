@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +24,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class BurstSpellMod extends AbstractSpellMod {
@@ -33,9 +35,10 @@ public class BurstSpellMod extends AbstractSpellMod {
         super();
     }
     
-    public BurstSpellMod(int radius) {
+    public BurstSpellMod(int radius, int power) {
         super();
         this.getProperty("radius").setValue(radius);
+        this.getProperty("power").setValue(power);
     }
     
     public static CompoundResearchKey getResearch() {
@@ -46,17 +49,18 @@ public class BurstSpellMod extends AbstractSpellMod {
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
         propMap.put("radius", new SpellProperty("radius", "primalmagic.spell.property.radius", 1, 5));
+        propMap.put("power", new SpellProperty("power", "primalmagic.spell.property.power", 0, 5));
         return propMap;
     }
     
     @Override
     public SourceList modifyManaCost(SourceList cost) {
         SourceList newCost = cost.copy();
-        int power = this.getPropertyValue("radius");
+        float power = (this.getPropertyValue("radius") + this.getPropertyValue("power")) / 2.0F;
         for (Source source : cost.getSources()) {
             int amount = cost.getAmount(source);
             if (amount > 0) {
-                newCost.add(source, amount * power);
+                newCost.add(source, (int)(amount * power));
             }
         }
         return newCost;
@@ -70,29 +74,56 @@ public class BurstSpellMod extends AbstractSpellMod {
     @Nonnull
     public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();
-        BlockPos hitPos = new BlockPos(origin.getHitVec());
-        int power = this.getPropertyValue("radius");
-        double sqDistance = (double)(power * power);
-        int searchRadius = power + 1;
+        Set<BlockPos> affectedBlocks = new HashSet<>();
+        Vec3d hitVec = origin.getHitVec();
+        BlockPos hitPos = new BlockPos(hitVec);
+        int radius = this.getPropertyValue("radius");
+        int power = this.getModdedPropertyValue("power", spell);
+        double sqRadius = (double)(radius * radius);
+        int searchRadius = radius + 1;
+        Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.Mode.NONE);
         
         // Calculate blasted blocks
-        for (int i = -searchRadius; i <= searchRadius; i++) {
-            for (int j = -searchRadius; j <= searchRadius; j++) {
-                for (int k = -searchRadius; k <= searchRadius; k++) {
-                    BlockPos searchPos = hitPos.add(i, j, k);
-                    BlockState state = world.getBlockState(searchPos);
-                    if (!state.isAir(world, searchPos) && hitPos.withinDistance(searchPos, power)) {
-                        retVal.add(new BlockRayTraceResult(new Vec3d(searchPos.getX(), searchPos.getY(), searchPos.getZ()), Direction.UP, searchPos, false));
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
+                for (int k = 0; k < 16; k++) {
+                    if (i == 0 || i == 15 || j == 0 || j == 15 || k == 0 || k == 15) {
+                        // Calculate a direction vector for the burst
+                        Vec3d dirVec = new Vec3d((double)i / 15.0D * 2.0D - 1.0D, (double)j / 15.0D * 2.0D - 1.0D, (double)k / 15.0D * 2.0D - 1.0D).normalize();
+                        Vec3d curVec = new Vec3d(hitVec.x, hitVec.y, hitVec.z);
+                        float remainingPower = (float)power;
+                        
+                        while (remainingPower > 0.0F && curVec.squareDistanceTo(hitVec) < sqRadius) {
+                            // Add the current block to the result set if it hasn't already been hit
+                            BlockPos curPos = new BlockPos(curVec);
+                            if (affectedBlocks.add(curPos)) {
+                                Vec3d relVec = curVec.subtract(hitVec);
+                                Direction dir = Direction.getFacingFromVector(relVec.x, relVec.y, relVec.z);
+                                retVal.add(new BlockRayTraceResult(curVec, dir, curPos, false));
+                            }
+                            
+                            // Decrement the remaining power based on the block's explosion resistance
+                            BlockState blockState = world.getBlockState(curPos);
+                            IFluidState fluidState = world.getFluidState(curPos);
+                            if (!blockState.isAir(world, curPos) || !fluidState.isEmpty()) {
+                                float resistance = Math.max(blockState.getExplosionResistance(world, curPos, null, explosion), fluidState.getExplosionResistance(world, curPos, null, explosion));
+                                remainingPower -= (resistance + 0.3F) * 0.3F;
+                            }
+                            
+                            // Progress analysis along the current direction vector, dissipating some power
+                            curVec = curVec.add(dirVec.scale(0.3D));
+                            remainingPower -= 0.225F;
+                        }
                     }
                 }
             }
         }
         
         // Calculate blasted entities
-        AxisAlignedBB aabb = new AxisAlignedBB(hitPos).grow(power + 1);
+        AxisAlignedBB aabb = new AxisAlignedBB(hitPos).grow(searchRadius);
         List<Entity> entities = world.getEntitiesInAABBexcluding(null, aabb, e -> !e.isSpectator());
         for (Entity entity : entities) {
-            if (origin.getHitVec().squareDistanceTo(entity.getPositionVec()) <= sqDistance) {
+            if (origin.getHitVec().squareDistanceTo(entity.getPositionVec()) <= sqRadius) {
                 retVal.add(new EntityRayTraceResult(entity));
             }
         }
