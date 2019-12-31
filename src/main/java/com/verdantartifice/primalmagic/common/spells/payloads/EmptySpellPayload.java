@@ -14,7 +14,7 @@ public class EmptySpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "none";
 
     @Override
-    public void execute(RayTraceResult target, Vec3d blastPoint, SpellPackage spell, World world, LivingEntity caster) {
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster) {
         // Do nothing
     }
 

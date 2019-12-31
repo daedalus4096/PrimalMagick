@@ -25,15 +25,15 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class BlastSpellMod extends AbstractSpellMod {
-    public static final String TYPE = "blast";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_BLAST"));
+public class BurstSpellMod extends AbstractSpellMod {
+    public static final String TYPE = "burst";
+    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_BURST"));
 
-    public BlastSpellMod() {
+    public BurstSpellMod() {
         super();
     }
     
-    public BlastSpellMod(int power) {
+    public BurstSpellMod(int power) {
         super();
         this.getProperty("power").setValue(power);
     }
@@ -68,7 +68,7 @@ public class BlastSpellMod extends AbstractSpellMod {
     }
 
     @Nonnull
-    public Set<RayTraceResult> getBlastTargets(RayTraceResult origin, SpellPackage spell, World world) {
+    public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();
         BlockPos hitPos = new BlockPos(origin.getHitVec());
         int power = this.getModdedPropertyValue("power", spell);

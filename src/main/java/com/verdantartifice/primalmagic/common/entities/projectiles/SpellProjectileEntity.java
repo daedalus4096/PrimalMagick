@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
-import com.verdantartifice.primalmagic.common.spells.mods.BlastSpellMod;
+import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -76,16 +76,16 @@ public class SpellProjectileEntity extends ThrowableEntity {
     protected void onImpact(RayTraceResult result) {
         if (!this.world.isRemote) {
             if (this.spell != null && this.spell.getPayload() != null) {
-                BlastSpellMod blastMod = this.spell.getMod(BlastSpellMod.class, "power");
-                int radius = blastMod == null ? 1 : blastMod.getModdedPropertyValue("power", this.spell);
+                BurstSpellMod burstMod = this.spell.getMod(BurstSpellMod.class, "power");
+                int radius = burstMod == null ? 1 : burstMod.getModdedPropertyValue("power", this.spell);
                 PacketHandler.sendToAllAround(
                         new SpellImpactPacket(this.posX, this.posY, this.posZ, radius, this.spell.getPayload().getSource().getColor()), 
                         this.dimension, 
                         new BlockPos(result.getHitVec()), 
                         64.0D);
 
-                if (blastMod != null) {
-                    for (RayTraceResult target : blastMod.getBlastTargets(result, this.spell, this.world)) {
+                if (burstMod != null) {
+                    for (RayTraceResult target : burstMod.getBurstTargets(result, this.spell, this.world)) {
                         this.spell.getPayload().execute(target, result.getHitVec(), this.spell, this.world, this.getThrower());
                     }
                 } else {

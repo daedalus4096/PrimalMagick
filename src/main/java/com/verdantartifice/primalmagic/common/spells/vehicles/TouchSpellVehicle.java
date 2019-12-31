@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPack
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
-import com.verdantartifice.primalmagic.common.spells.mods.BlastSpellMod;
+import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,10 +50,10 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
                 result = (eyePos.squareDistanceTo(entityResult.getHitVec()) <= eyePos.squareDistanceTo(blockResult.getHitVec())) ? entityResult : blockResult;
             }
 
-            BlastSpellMod blastMod = spell.getMod(BlastSpellMod.class, "power");
+            BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "power");
             if (!world.isRemote) {
                 Vec3d hitVec = result.getHitVec();
-                int radius = blastMod == null ? 1 : blastMod.getModdedPropertyValue("power", spell);
+                int radius = burstMod == null ? 1 : burstMod.getModdedPropertyValue("power", spell);
                 PacketHandler.sendToAllAround(
                         new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
                         world.getDimension().getType(), 
@@ -61,8 +61,8 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
                         64.0D);
             }
 
-            if (blastMod != null) {
-                for (RayTraceResult target : blastMod.getBlastTargets(result, spell, world)) {
+            if (burstMod != null) {
+                for (RayTraceResult target : burstMod.getBurstTargets(result, spell, world)) {
                     spell.getPayload().execute(target, result.getHitVec(), spell, world, caster);
                 }
             } else {

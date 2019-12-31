@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
-    public void execute(@Nullable RayTraceResult target, @Nullable Vec3d blastPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster);
+    public void execute(@Nullable RayTraceResult target, @Nullable Vec3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster);
     
     public boolean isActive();
     

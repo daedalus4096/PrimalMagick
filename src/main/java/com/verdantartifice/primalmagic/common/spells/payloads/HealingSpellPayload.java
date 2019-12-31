@@ -43,7 +43,7 @@ public class HealingSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vec3d blastPoint, SpellPackage spell, World world, LivingEntity caster) {
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() instanceof LivingEntity) {

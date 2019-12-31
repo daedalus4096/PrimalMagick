@@ -158,13 +158,13 @@
             "addenda": []
         },
         {
-            "key": "SPELL_MOD_BLAST",
-            "name": "primalmagic.research.spell_mod_blast.title",
+            "key": "SPELL_MOD_BURST",
+            "name": "primalmagic.research.spell_mod_burst.title",
             "discipline": "SORCERY",
             "parents": [ "BASIC_SORCERY" ],
             "stages": [
                 {
-                    "text": "primalmagic.research.spell_mod_blast.text.stage.1"
+                    "text": "primalmagic.research.spell_mod_burst.text.stage.1"
                 }
             ],
             "addenda": []

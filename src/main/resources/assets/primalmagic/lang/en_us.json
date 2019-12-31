@@ -311,8 +311,8 @@
     "primalmagic.research.spell_mod_amplify.title": "Spell Mod: Amplify",
     "primalmagic.research.spell_mod_amplify.text.stage.1": "Amplify spells: Lorem ipsum",
     
-    "primalmagic.research.spell_mod_blast.title": "Spell Mod: Blast",
-    "primalmagic.research.spell_mod_blast.text.stage.1": "Blast spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_burst.title": "Spell Mod: Burst",
+    "primalmagic.research.spell_mod_burst.text.stage.1": "Burst spells: Lorem ipsum",
     
     "primalmagic.research.spell_mod_quicken.title": "Spell Mod: Quicken",
     "primalmagic.research.spell_mod_quicken.text.stage.1": "Quicken spells: Lorem ipsum",
@@ -437,11 +437,11 @@
     "primalmagic.spell.secondary_mod.header": "Secondary Mod",
     "primalmagic.spell.mod.type.none": "None",
     "primalmagic.spell.mod.type.amplify": "Amplify",
-    "primalmagic.spell.mod.type.blast": "Blast",
+    "primalmagic.spell.mod.type.burst": "Burst",
     "primalmagic.spell.mod.type.quicken": "Quicken",
     "primalmagic.spell.mod.default_name.none": "",
     "primalmagic.spell.mod.default_name.amplify": "Amplified",
-    "primalmagic.spell.mod.default_name.blast": "Explosive",
+    "primalmagic.spell.mod.default_name.burst": "Bursting",
     "primalmagic.spell.mod.default_name.quicken": "Quickened",
     
     "primalmagic.spell.property.power": "Power",

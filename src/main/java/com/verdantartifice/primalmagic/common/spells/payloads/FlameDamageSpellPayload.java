@@ -69,7 +69,7 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected void applySecondaryEffects(RayTraceResult target, Vec3d blastPoint, SpellPackage spell, World world, LivingEntity caster) {
+    protected void applySecondaryEffects(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster) {
         int duration = this.getModdedPropertyValue("duration", spell);
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY && duration > 0) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
