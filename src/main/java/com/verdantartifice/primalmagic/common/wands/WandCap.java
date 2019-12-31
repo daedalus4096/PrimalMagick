@@ -11,26 +11,29 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
 
 public class WandCap {
     protected static final Map<String, WandCap> REGISTRY = new HashMap<>();
     
-    public static final WandCap IRON = new WandCap("iron", 1.1F);
+    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1F);
     
     protected final String tag;
+    protected final Rarity rarity;
     protected final float costModifier;
     protected final ModelResourceLocation mrl;
     
-    public WandCap(@Nonnull String tag, float costModifier) {
-        this(tag, costModifier, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_cap"), ""));
+    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, float costModifier) {
+        this(tag, rarity, costModifier, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_cap"), ""));
     }
     
-    public WandCap(@Nonnull String tag, float costModifier, @Nonnull ModelResourceLocation mrl) {
+    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, float costModifier, @Nonnull ModelResourceLocation mrl) {
         if (REGISTRY.containsKey(tag)) {
             throw new IllegalArgumentException("Wand cap " + tag + " already registered!");
         }
         this.tag = tag;
+        this.rarity = rarity;
         this.costModifier = costModifier;
         this.mrl = mrl;
         REGISTRY.put(tag, this);
@@ -39,6 +42,11 @@ public class WandCap {
     @Nonnull
     public String getTag() {
         return this.tag;
+    }
+    
+    @Nonnull
+    public Rarity getRarity() {
+        return this.rarity;
     }
     
     public float getCostModifier() {

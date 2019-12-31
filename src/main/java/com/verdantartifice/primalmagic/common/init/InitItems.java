@@ -113,10 +113,15 @@ public class InitItems {
         registry.register(new SpellScrollItem());
         registry.register(new MundaneWandItem());
         registry.register(new ModularWandItem());
-        registry.register(new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
-        registry.register(new WandCapItem(WandCap.IRON, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
-        registry.register(new WandGemItem(WandGem.APPRENTICE, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
-        registry.register(new WandGemItem(WandGem.CREATIVE, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
+        for (WandCore core : WandCore.getAllWandCores()) {
+            registry.register(new WandCoreItem(core, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+        }
+        for (WandCap cap : WandCap.getAllWandCaps()) {
+            registry.register(new WandCapItem(cap, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+        }
+        for (WandGem gem : WandGem.getAllWandGems()) {
+            registry.register(new WandGemItem(gem, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+        }
         registry.register(new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(PrimalMagic.MODID, "magnifying_glass"));
         registry.register(new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(PrimalMagic.MODID, "alchemical_waste"));
         registry.register(new BloodyFleshItem());

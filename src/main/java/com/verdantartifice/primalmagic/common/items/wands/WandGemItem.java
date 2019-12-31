@@ -4,6 +4,8 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 
 public class WandGemItem extends Item {
     protected final WandGem gem;
@@ -16,5 +18,10 @@ public class WandGemItem extends Item {
 
     public WandGem getWandGem() {
         return this.gem;
+    }
+    
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return this.gem.getRarity();
     }
 }

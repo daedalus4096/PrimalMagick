@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.common.wands.WandGem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.IntNBT;
 import net.minecraft.nbt.ListNBT;
@@ -85,6 +86,24 @@ public class ModularWandItem extends AbstractWandItem {
         WandGem gem = this.getWandGem(stack);
         ITextComponent gemName = (gem == null) ? new StringTextComponent("Unknown's") : new TranslationTextComponent(gem.getNameTranslationKey());
         return new TranslationTextComponent("item.primalmagic.modular_wand", gemName, capName, coreName);
+    }
+    
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        Rarity retVal = Rarity.COMMON;
+        WandCore core = this.getWandCore(stack);
+        if (core != null && core.getRarity().compareTo(retVal) > 0) {
+            retVal = core.getRarity();
+        }
+        WandCap cap = this.getWandCap(stack);
+        if (cap != null && cap.getRarity().compareTo(retVal) > 0) {
+            retVal = cap.getRarity();
+        }
+        WandGem gem = this.getWandGem(stack);
+        if (gem != null && gem.getRarity().compareTo(retVal) > 0) {
+            retVal = gem.getRarity();
+        }
+        return retVal;
     }
     
     @Override

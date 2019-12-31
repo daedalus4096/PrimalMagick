@@ -4,6 +4,8 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 
 public class WandCapItem extends Item {
     protected final WandCap cap;
@@ -16,5 +18,10 @@ public class WandCapItem extends Item {
 
     public WandCap getWandCap() {
         return this.cap;
+    }
+    
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return this.cap.getRarity();
     }
 }

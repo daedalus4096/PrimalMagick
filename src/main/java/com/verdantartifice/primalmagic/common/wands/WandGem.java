@@ -11,28 +11,31 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
 
 public class WandGem {
     protected static final Map<String, WandGem> REGISTRY = new HashMap<>();
     
-    public static final WandGem APPRENTICE = new WandGem("apprentice", 75);
-    public static final WandGem CREATIVE = new WandGem("creative", -1);
+    public static final WandGem APPRENTICE = new WandGem("apprentice", Rarity.COMMON, 75);
+    public static final WandGem CREATIVE = new WandGem("creative", Rarity.EPIC, -1);
     
     protected final String tag;
     protected final int capacity;
+    protected final Rarity rarity;
     protected final ModelResourceLocation mrl;
     
-    public WandGem(@Nonnull String tag, int capacity) {
-        this(tag, capacity, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_gem"), ""));
+    public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity) {
+        this(tag, rarity, capacity, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_gem"), ""));
     }
     
-    public WandGem(@Nonnull String tag, int capacity, @Nonnull ModelResourceLocation mrl) {
+    public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity, @Nonnull ModelResourceLocation mrl) {
         if (REGISTRY.containsKey(tag)) {
             throw new IllegalArgumentException("Wand gem " + tag + " already registered!");
         }
         this.tag = tag;
         this.capacity = capacity;
+        this.rarity = rarity;
         this.mrl = mrl;
         REGISTRY.put(tag, this);
     }
@@ -44,6 +47,11 @@ public class WandGem {
     
     public int getCapacity() {
         return this.capacity;
+    }
+    
+    @Nonnull
+    public Rarity getRarity() {
+        return this.rarity;
     }
     
     @Nonnull
