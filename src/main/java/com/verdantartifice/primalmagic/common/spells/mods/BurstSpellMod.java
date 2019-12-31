@@ -33,9 +33,9 @@ public class BurstSpellMod extends AbstractSpellMod {
         super();
     }
     
-    public BurstSpellMod(int power) {
+    public BurstSpellMod(int radius) {
         super();
-        this.getProperty("power").setValue(power);
+        this.getProperty("radius").setValue(radius);
     }
     
     public static CompoundResearchKey getResearch() {
@@ -45,14 +45,14 @@ public class BurstSpellMod extends AbstractSpellMod {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("power", new SpellProperty("power", "primalmagic.spell.property.power", 1, 5));
+        propMap.put("radius", new SpellProperty("radius", "primalmagic.spell.property.radius", 1, 5));
         return propMap;
     }
     
     @Override
     public SourceList modifyManaCost(SourceList cost) {
         SourceList newCost = cost.copy();
-        int power = this.getPropertyValue("power");
+        int power = this.getPropertyValue("radius");
         for (Source source : cost.getSources()) {
             int amount = cost.getAmount(source);
             if (amount > 0) {
@@ -71,7 +71,7 @@ public class BurstSpellMod extends AbstractSpellMod {
     public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();
         BlockPos hitPos = new BlockPos(origin.getHitVec());
-        int power = this.getModdedPropertyValue("power", spell);
+        int power = this.getPropertyValue("radius");
         double sqDistance = (double)(power * power);
         int searchRadius = power + 1;
         

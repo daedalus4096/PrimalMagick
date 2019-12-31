@@ -30,10 +30,10 @@ public class SelfSpellVehicle extends AbstractSpellVehicle {
     public void execute(SpellPackage spell, World world, PlayerEntity caster) {
         if (spell.getPayload() != null) {
             RayTraceResult result = new EntityRayTraceResult(caster);
-            BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "power");
+            BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
             if (!world.isRemote) {
                 Vec3d hitVec = caster.getEyePosition(1.0F);
-                int radius = burstMod == null ? 1 : burstMod.getModdedPropertyValue("power", spell);
+                int radius = burstMod == null ? 1 : burstMod.getPropertyValue("radius");
                 PacketHandler.sendToAllAround(
                         new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
                         world.getDimension().getType(), 

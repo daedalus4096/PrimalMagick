@@ -76,8 +76,8 @@ public class SpellProjectileEntity extends ThrowableEntity {
     protected void onImpact(RayTraceResult result) {
         if (!this.world.isRemote) {
             if (this.spell != null && this.spell.getPayload() != null) {
-                BurstSpellMod burstMod = this.spell.getMod(BurstSpellMod.class, "power");
-                int radius = burstMod == null ? 1 : burstMod.getModdedPropertyValue("power", this.spell);
+                BurstSpellMod burstMod = this.spell.getMod(BurstSpellMod.class, "radius");
+                int radius = burstMod == null ? 1 : burstMod.getPropertyValue("radius");
                 PacketHandler.sendToAllAround(
                         new SpellImpactPacket(this.posX, this.posY, this.posZ, radius, this.spell.getPayload().getSource().getColor()), 
                         this.dimension, 
