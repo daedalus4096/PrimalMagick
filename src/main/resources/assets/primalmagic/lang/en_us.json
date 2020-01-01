@@ -317,6 +317,9 @@
     "primalmagic.research.spell_mod_quicken.title": "Spell Mod: Quicken",
     "primalmagic.research.spell_mod_quicken.text.stage.1": "Quicken spells: Lorem ipsum",
     
+    "primalmagic.research.spell_mod_mine.title": "Spell Mod: Mine",
+    "primalmagic.research.spell_mod_mine.text.stage.1": "Mine spells: Lorem ipsum",
+    
     "primalmagic.research.basic_manaweaving.title": "Basic Manaweaving",
     "primalmagic.research.basic_manaweaving.text.stage.1": "Basic manaweaving: Lorem ipsum",
     
@@ -439,10 +442,12 @@
     "primalmagic.spell.mod.type.amplify": "Amplify",
     "primalmagic.spell.mod.type.burst": "Burst",
     "primalmagic.spell.mod.type.quicken": "Quicken",
+    "primalmagic.spell.mod.type.mine": "Mine",
     "primalmagic.spell.mod.default_name.none": "",
     "primalmagic.spell.mod.default_name.amplify": "Amplified",
     "primalmagic.spell.mod.default_name.burst": "Bursting",
     "primalmagic.spell.mod.default_name.quicken": "Quickened",
+    "primalmagic.spell.mod.default_name.mine": "Delayed",
     
     "primalmagic.spell.property.power": "Power",
     "primalmagic.spell.property.duration": "Duration",
