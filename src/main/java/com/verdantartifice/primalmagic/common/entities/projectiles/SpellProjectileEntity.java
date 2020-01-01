@@ -74,7 +74,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
     protected void onImpact(RayTraceResult result) {
         if (!this.world.isRemote) {
             if (this.spell != null && this.spell.getPayload() != null) {
-                SpellManager.executeSpellPayload(this.spell, result, this.world, this.getThrower());
+                SpellManager.executeSpellPayload(this.spell, result, this.world, this.getThrower(), true);
             }
             this.remove();
         }

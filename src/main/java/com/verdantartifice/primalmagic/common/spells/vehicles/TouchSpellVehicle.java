@@ -46,7 +46,7 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
             } else {
                 result = (eyePos.squareDistanceTo(entityResult.getHitVec()) <= eyePos.squareDistanceTo(blockResult.getHitVec())) ? entityResult : blockResult;
             }
-            SpellManager.executeSpellPayload(spell, result, world, caster);
+            SpellManager.executeSpellPayload(spell, result, world, caster, true);
         }
     }
 }

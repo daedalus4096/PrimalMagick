@@ -9,10 +9,12 @@ import com.verdantartifice.primalmagic.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagic.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.renderers.entity.SpellMineRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
+import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
@@ -55,6 +57,7 @@ public class ClientProxy extends CommonProxy {
     
     private void registerEntityRenderers() {
         RenderingRegistry.registerEntityRenderingHandler(SpellProjectileEntity.class, SpellProjectileRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SpellMineEntity.class, SpellMineRenderer::new);
     }
     
     @Override

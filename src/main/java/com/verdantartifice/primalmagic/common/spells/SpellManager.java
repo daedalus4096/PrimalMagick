@@ -11,11 +11,13 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
+import com.verdantartifice.primalmagic.common.spells.mods.MineSpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.wands.IWand;
@@ -151,18 +153,22 @@ public class SpellManager {
         }
     }
     
-    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull LivingEntity caster) {
+    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull LivingEntity caster, boolean allowMine) {
         if (!world.isRemote && spell.getPayload() != null) {
             Vec3d hitVec = result.getHitVec();
             BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
-            int radius = burstMod == null ? 1 : burstMod.getPropertyValue("radius");
+            MineSpellMod mineMod = spell.getMod(MineSpellMod.class, "duration");
+            int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue("radius");
             PacketHandler.sendToAllAround(
                     new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
                     world.getDimension().getType(), 
                     new BlockPos(hitVec), 
                     64.0D);
             
-            if (burstMod != null) {
+            if (allowMine && mineMod != null) {
+                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, mineMod.getModdedPropertyValue("duration", spell));
+                world.addEntity(mineEntity);
+            } else if (burstMod != null) {
                 for (RayTraceResult target : burstMod.getBurstTargets(result, spell, world)) {
                     spell.getPayload().execute(target, result.getHitVec(), spell, world, caster);
                 }

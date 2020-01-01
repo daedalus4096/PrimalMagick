@@ -27,7 +27,7 @@ public class SelfSpellVehicle extends AbstractSpellVehicle {
     public void execute(SpellPackage spell, World world, PlayerEntity caster) {
         if (spell.getPayload() != null) {
             RayTraceResult result = new EntityRayTraceResult(caster, caster.getEyePosition(1.0F));
-            SpellManager.executeSpellPayload(spell, result, world, caster);
+            SpellManager.executeSpellPayload(spell, result, world, caster, true);
         }
     }
 }
