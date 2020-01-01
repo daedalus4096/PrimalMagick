@@ -11,16 +11,23 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 
 public class SpellManager {
     protected static final List<String> VEHICLE_TYPES = new ArrayList<>();
@@ -139,6 +146,27 @@ public class SpellManager {
                 } else {
                     player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell", spell.getName()));
                 }
+            }
+        }
+    }
+    
+    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull LivingEntity caster) {
+        if (!world.isRemote && spell.getPayload() != null) {
+            Vec3d hitVec = result.getHitVec();
+            BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
+            int radius = burstMod == null ? 1 : burstMod.getPropertyValue("radius");
+            PacketHandler.sendToAllAround(
+                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
+                    world.getDimension().getType(), 
+                    caster.getPosition(), 
+                    64.0D);
+            
+            if (burstMod != null) {
+                for (RayTraceResult target : burstMod.getBurstTargets(result, spell, world)) {
+                    spell.getPayload().execute(target, result.getHitVec(), spell, world, caster);
+                }
+            } else {
+                spell.getPayload().execute(result, null, spell, world, caster);
             }
         }
     }

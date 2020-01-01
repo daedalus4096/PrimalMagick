@@ -4,10 +4,9 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
-import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
+import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
-import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +15,6 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -76,21 +74,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
     protected void onImpact(RayTraceResult result) {
         if (!this.world.isRemote) {
             if (this.spell != null && this.spell.getPayload() != null) {
-                BurstSpellMod burstMod = this.spell.getMod(BurstSpellMod.class, "radius");
-                int radius = burstMod == null ? 1 : burstMod.getPropertyValue("radius");
-                PacketHandler.sendToAllAround(
-                        new SpellImpactPacket(this.posX, this.posY, this.posZ, radius, this.spell.getPayload().getSource().getColor()), 
-                        this.dimension, 
-                        new BlockPos(result.getHitVec()), 
-                        64.0D);
-
-                if (burstMod != null) {
-                    for (RayTraceResult target : burstMod.getBurstTargets(result, this.spell, this.world)) {
-                        this.spell.getPayload().execute(target, result.getHitVec(), this.spell, this.world, this.getThrower());
-                    }
-                } else {
-                    this.spell.getPayload().execute(result, null, this.spell, this.world, this.getThrower());
-                }
+                SpellManager.executeSpellPayload(this.spell, result, this.world, this.getThrower());
             }
             this.remove();
         }

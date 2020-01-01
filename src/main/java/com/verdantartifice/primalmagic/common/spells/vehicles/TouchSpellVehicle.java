@@ -1,16 +1,13 @@
 package com.verdantartifice.primalmagic.common.spells.vehicles;
 
-import com.verdantartifice.primalmagic.common.network.PacketHandler;
-import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
-import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
@@ -49,25 +46,7 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
             } else {
                 result = (eyePos.squareDistanceTo(entityResult.getHitVec()) <= eyePos.squareDistanceTo(blockResult.getHitVec())) ? entityResult : blockResult;
             }
-
-            BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
-            if (!world.isRemote) {
-                Vec3d hitVec = result.getHitVec();
-                int radius = burstMod == null ? 1 : burstMod.getPropertyValue("radius");
-                PacketHandler.sendToAllAround(
-                        new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
-                        world.getDimension().getType(), 
-                        new BlockPos(hitVec), 
-                        64.0D);
-            }
-
-            if (burstMod != null) {
-                for (RayTraceResult target : burstMod.getBurstTargets(result, spell, world)) {
-                    spell.getPayload().execute(target, result.getHitVec(), spell, world, caster);
-                }
-            } else {
-                spell.getPayload().execute(result, null, spell, world, caster);
-            }
+            SpellManager.executeSpellPayload(spell, result, world, caster);
         }
     }
 }
