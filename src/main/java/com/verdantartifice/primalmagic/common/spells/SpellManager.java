@@ -24,6 +24,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -158,7 +159,7 @@ public class SpellManager {
             PacketHandler.sendToAllAround(
                     new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
                     world.getDimension().getType(), 
-                    caster.getPosition(), 
+                    new BlockPos(hitVec), 
                     64.0D);
             
             if (burstMod != null) {
