@@ -36,6 +36,7 @@ public class SpellMineEntity extends Entity {
     protected SpellPackage spell;
     protected LivingEntity caster;
     protected UUID casterId;
+    protected int currentLife = 0;
     
     public SpellMineEntity(EntityType<?> entityTypeIn, World worldIn) {
         super(entityTypeIn, worldIn);
@@ -109,6 +110,7 @@ public class SpellMineEntity extends Entity {
         if (compound.contains("Caster", 10)) {
             this.casterId = NBTUtil.readUniqueId(compound.getCompound("Caster"));
         }
+        
         this.spell = null;
         if (compound.contains("Spell", 10)) {
             this.spell = new SpellPackage(compound.getCompound("Spell"));
@@ -116,6 +118,12 @@ public class SpellMineEntity extends Entity {
         if (this.spell != null && !this.spell.isValid()) {
             this.spell = null;
         }
+        if (this.spell != null && this.spell.getPayload() != null) {
+            this.setColor(this.spell.getPayload().getSource().getColor());
+        }
+        
+        this.currentLife = compound.getInt("CurrentLife");
+        this.setLifespan(compound.getInt("Lifespan"));
     }
 
     @Override
@@ -126,6 +134,8 @@ public class SpellMineEntity extends Entity {
         if (this.spell != null) {
             compound.put("Spell", this.spell.serializeNBT());
         }
+        compound.putInt("CurrentLife", this.currentLife);
+        compound.putInt("Lifespan", this.getLifespan());
     }
 
     @Override
@@ -139,14 +149,14 @@ public class SpellMineEntity extends Entity {
         if (!this.world.isRemote && (this.spell == null || !this.spell.isValid() || this.getCaster() == null)) {
             this.remove();
         }
-        if (this.ticksExisted > this.getLifespan()) {
+        if (++this.currentLife > this.getLifespan()) {
             this.remove();
         }
         if (!this.world.isRemote && this.isAlive()) {
-            if (!this.isArmed() && this.ticksExisted >= ARMING_TIME) {
+            if (!this.isArmed() && this.currentLife >= ARMING_TIME) {
                 this.setArmed(true);
             }
-            if (this.isArmed() && this.ticksExisted % 5 == 0) {
+            if (this.isArmed() && this.currentLife % 5 == 0) {
                 // Scan for living entities within a block
                 AxisAlignedBB aabb = new AxisAlignedBB(this.getPositionVec(), this.getPositionVec()).grow(1.0D);
                 List<Entity> entityList = this.world.getEntitiesInAABBexcluding(this, aabb, e -> (e instanceof LivingEntity));
