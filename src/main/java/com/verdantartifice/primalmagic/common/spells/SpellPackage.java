@@ -146,7 +146,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     
     public void cast(World world, PlayerEntity caster) {
         if (this.payload != null) {
-            this.payload.playSounds(world, caster);
+            this.payload.playSounds(world, caster.getPosition());
         }
         if (this.vehicle != null) {
             this.vehicle.execute(this, world, caster);

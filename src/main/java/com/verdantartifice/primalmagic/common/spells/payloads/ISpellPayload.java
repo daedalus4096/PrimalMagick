@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
@@ -29,7 +30,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     @Nonnull
     public SourceList getManaCost();
     
-    public void playSounds(@Nonnull World world, @Nonnull LivingEntity caster);
+    public void playSounds(@Nonnull World world, @Nonnull BlockPos origin);
     
     @Nonnull
     public List<SpellProperty> getProperties();

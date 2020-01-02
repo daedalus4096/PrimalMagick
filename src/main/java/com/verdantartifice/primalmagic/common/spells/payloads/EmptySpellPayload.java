@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -34,7 +35,7 @@ public class EmptySpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, LivingEntity caster) {
+    public void playSounds(World world, BlockPos origin) {
         // Do nothing
     }
 

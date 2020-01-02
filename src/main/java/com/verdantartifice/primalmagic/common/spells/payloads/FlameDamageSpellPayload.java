@@ -14,6 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -49,8 +50,8 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, LivingEntity caster) {
-        world.playSound(null, caster.getPosition(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(World world, BlockPos origin) {
+        world.playSound(null, origin, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
     
     @Override

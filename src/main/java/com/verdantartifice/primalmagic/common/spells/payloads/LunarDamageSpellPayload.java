@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -50,8 +51,8 @@ public class LunarDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, LivingEntity caster) {
-        world.playSound(null, caster.getPosition(), SoundsPM.MOONBEAM, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(World world, BlockPos origin) {
+        world.playSound(null, origin, SoundsPM.MOONBEAM, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
 
     @Override

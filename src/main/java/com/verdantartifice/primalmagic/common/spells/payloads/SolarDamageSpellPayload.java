@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -48,8 +49,8 @@ public class SolarDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, LivingEntity caster) {
-        world.playSound(null, caster.getPosition(), SoundsPM.SUNBEAM, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(World world, BlockPos origin) {
+        world.playSound(null, origin, SoundsPM.SUNBEAM, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
 
     @Override

@@ -165,7 +165,7 @@ public class SpellMineEntity extends Entity {
                     if (entity.isAlive()) {
                         // If found, execute the spell payload on them then remove self
                         if (this.spell != null && this.spell.getPayload() != null) {
-                            this.spell.getPayload().playSounds(this.world, this.getCaster());
+                            this.spell.getPayload().playSounds(this.world, this.getPosition());
                         }
                         SpellManager.executeSpellPayload(this.spell, new EntityRayTraceResult(entity), this.world, this.getCaster(), false);
                         found = true;

@@ -68,8 +68,8 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, LivingEntity caster) {
-        world.playSound(null, caster.getPosition(), SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(World world, BlockPos origin) {
+        world.playSound(null, origin, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
 
     @Override

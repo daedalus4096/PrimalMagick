@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
@@ -33,8 +34,8 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, LivingEntity caster) {
-        world.playSound(null, caster.getPosition(), SoundsPM.ANGELS, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(World world, BlockPos origin) {
+        world.playSound(null, origin, SoundsPM.ANGELS, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
 
     @Override
