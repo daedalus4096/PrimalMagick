@@ -93,7 +93,7 @@ public class BurstSpellMod extends AbstractSpellMod {
                         Vec3d curVec = new Vec3d(hitVec.x, hitVec.y, hitVec.z);
                         float remainingPower = (float)power;
                         
-                        while (remainingPower > 0.0F && curVec.squareDistanceTo(hitVec) < sqRadius) {
+                        while (remainingPower >= 0.0F && curVec.squareDistanceTo(hitVec) < sqRadius) {
                             // Add the current block to the result set if it hasn't already been hit
                             BlockPos curPos = new BlockPos(curVec);
                             if (affectedBlocks.add(curPos)) {
@@ -110,9 +110,8 @@ public class BurstSpellMod extends AbstractSpellMod {
                                 remainingPower -= (resistance + 0.3F) * 0.3F;
                             }
                             
-                            // Progress analysis along the current direction vector, dissipating some power
+                            // Progress analysis along the current direction vector
                             curVec = curVec.add(dirVec.scale(0.3D));
-                            remainingPower -= 0.225F;
                         }
                     }
                 }

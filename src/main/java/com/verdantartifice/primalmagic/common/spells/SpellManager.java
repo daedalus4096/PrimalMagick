@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
@@ -169,7 +170,8 @@ public class SpellManager {
                 SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, mineMod.getModdedPropertyValue("duration", spell));
                 world.addEntity(mineEntity);
             } else if (burstMod != null) {
-                for (RayTraceResult target : burstMod.getBurstTargets(result, spell, world)) {
+                Set<RayTraceResult> targetSet = burstMod.getBurstTargets(result, spell, world);
+                for (RayTraceResult target : targetSet) {
                     spell.getPayload().execute(target, result.getHitVec(), spell, world, caster);
                 }
             } else {
