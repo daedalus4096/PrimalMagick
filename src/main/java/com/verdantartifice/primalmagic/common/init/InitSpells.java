@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.spells.mods.MineSpellMod;
 import com.verdantartifice.primalmagic.common.spells.mods.QuickenSpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.BreakSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.payloads.ConjureLavaSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ConjureWaterSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.EmptySpellPayload;
@@ -52,6 +53,7 @@ public class InitSpells {
         SpellManager.registerPayloadType(BreakSpellPayload.TYPE, BreakSpellPayload::new, BreakSpellPayload::getResearch);
         SpellManager.registerPayloadType(ConjureWaterSpellPayload.TYPE, ConjureWaterSpellPayload::new, ConjureWaterSpellPayload::getResearch);
         SpellManager.registerPayloadType(HealingSpellPayload.TYPE, HealingSpellPayload::new, HealingSpellPayload::getResearch);
+        SpellManager.registerPayloadType(ConjureLavaSpellPayload.TYPE, ConjureLavaSpellPayload::new, ConjureLavaSpellPayload::getResearch);
     }
 
     private static void registerSpellModTypes() {

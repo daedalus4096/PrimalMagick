@@ -311,6 +311,9 @@
     "primalmagic.research.spell_payload_healing.title": "Spell Payload: Healing",
     "primalmagic.research.spell_payload_healing.text.stage.1": "Healing spells: Lorem ipsum",
     
+    "primalmagic.research.spell_payload_conjure_lava.title": "Spell Payload: Conjure Lava",
+    "primalmagic.research.spell_payload_conjure_lava.text.stage.1": "Lava conjuration spells: Lorem ipsum",
+    
     "primalmagic.research.spell_mod_amplify.title": "Spell Mod: Amplify",
     "primalmagic.research.spell_mod_amplify.text.stage.1": "Amplify spells: Lorem ipsum",
     
@@ -427,6 +430,7 @@
     "primalmagic.spell.payload.type.break": "Break",
     "primalmagic.spell.payload.type.conjure_water": "Conjure Water",
     "primalmagic.spell.payload.type.healing": "Healing",
+    "primalmagic.spell.payload.type.conjure_lava": "Conjure Lava",
     "primalmagic.spell.payload.default_name.none": "",
     "primalmagic.spell.payload.default_name.earth_damage": "Stone",
     "primalmagic.spell.payload.default_name.frost_damage": "Frost",
@@ -440,6 +444,7 @@
     "primalmagic.spell.payload.default_name.break": "Shattering",
     "primalmagic.spell.payload.default_name.conjure_water": "Water",
     "primalmagic.spell.payload.default_name.healing": "Healing",
+    "primalmagic.spell.payload.default_name.conjure_lava": "Lava",
         
     "primalmagic.spell.primary_mod.header": "Primary Mod",
     "primalmagic.spell.secondary_mod.header": "Secondary Mod",

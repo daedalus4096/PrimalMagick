@@ -158,6 +158,18 @@
             "addenda": []
         },
         {
+            "key": "SPELL_PAYLOAD_CONJURE_LAVA",
+            "name": "primalmagic.research.spell_payload_conjure_lava.title",
+            "discipline": "SORCERY",
+            "parents": [ "SPELL_PAYLOAD_CONJURE_WATER", "SPELL_PAYLOAD_FLAME" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_conjure_lava.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SPELL_MOD_AMPLIFY",
             "name": "primalmagic.research.spell_mod_amplify.title",
             "discipline": "SORCERY",
