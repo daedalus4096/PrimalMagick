@@ -4,32 +4,24 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
-import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class ConjureWaterSpellPayload extends AbstractSpellPayload {
+public class ConjureWaterSpellPayload extends AbstractConjureFluidSpellPayload {
     public static final String TYPE = "conjure_water";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_WATER"));
+    protected static final int MANA_COST = 10;
 
     public ConjureWaterSpellPayload() {
-        super();
+        super(Fluids.WATER);
     }
     
     public static CompoundResearchKey getResearch() {
         return RESEARCH;
-    }
-
-    @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -39,7 +31,7 @@ public class ConjureWaterSpellPayload extends AbstractSpellPayload {
 
     @Override
     public SourceList getManaCost() {
-        return new SourceList().add(this.getSource(), 10);
+        return new SourceList().add(this.getSource(), MANA_COST);
     }
 
     @Override
