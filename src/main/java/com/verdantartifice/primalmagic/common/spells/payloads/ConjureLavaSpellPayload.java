@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class ConjureLavaSpellPayload extends AbstractConjureFluidSpellPayload {
     public static final String TYPE = "conjure_lava";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_LAVA"));
-    protected static final int MANA_COST = 25;
+    protected static final int MANA_COST = 200;
 
     public ConjureLavaSpellPayload() {
         super(Fluids.LAVA);

@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class ConjureWaterSpellPayload extends AbstractConjureFluidSpellPayload {
     public static final String TYPE = "conjure_water";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_WATER"));
-    protected static final int MANA_COST = 10;
+    protected static final int MANA_COST = 25;
 
     public ConjureWaterSpellPayload() {
         super(Fluids.WATER);
