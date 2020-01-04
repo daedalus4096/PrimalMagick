@@ -64,7 +64,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
         boolean isReplaceable = material.isReplaceable();
         if (world.isAirBlock(pos) || !isSolid || isReplaceable || (block instanceof ILiquidContainer && ((ILiquidContainer)block).canContainFluid(world, pos, state, this.fluid))) {
             if (world.dimension.doesWaterVaporize() && this.fluid.isIn(FluidTags.WATER)) {
-                world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+                world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
                 for (int index = 0; index < 8; index++) {
                     world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), 0.0F, 0.0F, 0.0F);
                 }
