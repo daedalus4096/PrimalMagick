@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.spells.vehicles;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,6 +21,5 @@ public interface ISpellVehicle extends INBTSerializable<CompoundNBT> {
     @Nonnull
     public ITextComponent getDefaultNamePiece();
     
-    @Nonnull
-    public SourceList modifyManaCost(@Nonnull SourceList cost);
+    public int getBaseManaCostModifier();
 }

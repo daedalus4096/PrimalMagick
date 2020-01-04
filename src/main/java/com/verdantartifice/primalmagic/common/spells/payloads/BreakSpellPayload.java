@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagic.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
@@ -63,8 +62,8 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public SourceList getManaCost() {
-        return new SourceList().add(this.getSource(), this.getPropertyValue("power"));
+    public int getBaseManaCost() {
+        return this.getPropertyValue("power");
     }
 
     @Override

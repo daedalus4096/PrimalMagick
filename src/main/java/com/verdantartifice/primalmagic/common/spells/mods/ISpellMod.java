@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -28,6 +27,7 @@ public interface ISpellMod extends INBTSerializable<CompoundNBT> {
     @Nonnull
     public ITextComponent getDefaultNamePiece();
     
-    @Nonnull
-    public SourceList modifyManaCost(@Nonnull SourceList cost);
+    public int getBaseManaCostModifier();
+    
+    public int getManaCostMultiplier();
 }

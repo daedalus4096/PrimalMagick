@@ -4,8 +4,6 @@ import java.util.Map;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 public class MineSpellMod extends AbstractSpellMod {
@@ -33,14 +31,13 @@ public class MineSpellMod extends AbstractSpellMod {
     }
     
     @Override
-    public SourceList modifyManaCost(SourceList cost) {
-        SourceList newCost = cost.copy();
-        for (Source source : newCost.getSources()) {
-            if (newCost.getAmount(source) > 0) {
-                newCost.add(source, this.getPropertyValue("duration"));
-            }
-        }
-        return newCost;
+    public int getBaseManaCostModifier() {
+        return this.getPropertyValue("duration");
+    }
+    
+    @Override
+    public int getManaCostMultiplier() {
+        return 1;
     }
 
     @Override

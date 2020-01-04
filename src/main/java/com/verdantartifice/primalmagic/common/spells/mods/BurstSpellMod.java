@@ -9,8 +9,6 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
@@ -54,16 +52,15 @@ public class BurstSpellMod extends AbstractSpellMod {
     }
     
     @Override
-    public SourceList modifyManaCost(SourceList cost) {
-        SourceList newCost = cost.copy();
-        float power = (this.getPropertyValue("radius") + this.getPropertyValue("power")) / 2.0F;
-        for (Source source : cost.getSources()) {
-            int amount = cost.getAmount(source);
-            if (amount > 0) {
-                newCost.add(source, (int)(amount * power));
-            }
-        }
-        return newCost;
+    public int getBaseManaCostModifier() {
+        // TODO Auto-generated method stub
+        return this.getPropertyValue("power");
+    }
+    
+    @Override
+    public int getManaCostMultiplier() {
+        int radius = this.getPropertyValue("radius");
+        return 1 + (radius * radius);
     }
 
     @Override

@@ -5,7 +5,6 @@ import java.util.Map;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
@@ -82,7 +81,7 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    public SourceList getManaCost() {
-        return super.getManaCost().add(this.getSource(), this.getPropertyValue("duration"));
+    public int getBaseManaCost() {
+        return this.getPropertyValue("power") + this.getPropertyValue("duration");
     }
 }

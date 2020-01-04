@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.common.spells.payloads;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.SoundCategory;
@@ -14,7 +13,6 @@ import net.minecraft.world.World;
 public class ConjureLavaSpellPayload extends AbstractConjureFluidSpellPayload {
     public static final String TYPE = "conjure_lava";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_LAVA"));
-    protected static final int MANA_COST = 200;
 
     public ConjureLavaSpellPayload() {
         super(Fluids.LAVA);
@@ -30,8 +28,8 @@ public class ConjureLavaSpellPayload extends AbstractConjureFluidSpellPayload {
     }
 
     @Override
-    public SourceList getManaCost() {
-        return new SourceList().add(this.getSource(), MANA_COST);
+    public int getBaseManaCost() {
+        return 200;
     }
 
     @Override

@@ -6,7 +6,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
@@ -28,7 +27,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
     public Source getSource();
     
     @Nonnull
-    public SourceList getManaCost();
+    public int getBaseManaCost();
     
     public void playSounds(@Nonnull World world, @Nonnull BlockPos origin);
     

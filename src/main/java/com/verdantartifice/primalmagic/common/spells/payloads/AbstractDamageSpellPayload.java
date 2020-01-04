@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
@@ -53,10 +52,5 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     
     protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nullable Vec3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster) {
         // Do nothing by default
-    }
-
-    @Override
-    public SourceList getManaCost() {
-        return new SourceList().add(this.getSource(), this.getPropertyValue("power"));
     }
 }

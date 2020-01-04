@@ -46,4 +46,9 @@ public class LightningDamageSpellPayload extends AbstractDamageSpellPayload {
     protected String getPayloadType() {
         return TYPE;
     }
+    
+    @Override
+    public int getBaseManaCost() {
+        return 2 * this.getPropertyValue("power");
+    }
 }

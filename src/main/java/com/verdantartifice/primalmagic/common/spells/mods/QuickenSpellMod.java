@@ -4,8 +4,6 @@ import java.util.Map;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 public class QuickenSpellMod extends AbstractSpellMod {
@@ -33,16 +31,13 @@ public class QuickenSpellMod extends AbstractSpellMod {
     }
 
     @Override
-    public SourceList modifyManaCost(SourceList cost) {
-        SourceList newCost = cost.copy();
-        int haste = this.getPropertyValue("haste");
-        for (Source source : cost.getSources()) {
-            int amount = cost.getAmount(source);
-            if (amount > 0) {
-                newCost.add(source, amount * haste);
-            }
-        }
-        return newCost;
+    public int getBaseManaCostModifier() {
+        return 0;
+    }
+    
+    @Override
+    public int getManaCostMultiplier() {
+        return 1 + this.getPropertyValue("haste");
     }
 
     @Override

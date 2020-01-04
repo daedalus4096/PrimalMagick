@@ -67,4 +67,9 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     public void playSounds(World world, BlockPos origin) {
         world.playSound(null, origin, SoundsPM.ROCKSLIDE, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
+    
+    @Override
+    public int getBaseManaCost() {
+        return 2 * this.getPropertyValue("power");
+    }
 }

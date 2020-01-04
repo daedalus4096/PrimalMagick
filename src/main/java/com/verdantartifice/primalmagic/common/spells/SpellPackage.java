@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.spells;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagic.common.spells.mods.QuickenSpellMod;
@@ -128,20 +129,27 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     
     @Nonnull
     public SourceList getManaCost() {
-        SourceList retVal = new SourceList();
-        if (this.payload != null) {
-            retVal.add(this.payload.getManaCost());
+        if (this.payload == null) {
+            return new SourceList();
         }
+        
+        Source source = this.payload.getSource();
+        int baseManaCost = this.payload.getBaseManaCost();
+        int baseModifier = 0;
+        int multiplier = 1;
+        
         if (this.vehicle != null) {
-            retVal = this.vehicle.modifyManaCost(retVal);
+            baseModifier += this.vehicle.getBaseManaCostModifier();
         }
         if (this.primaryMod != null) {
-            retVal = this.primaryMod.modifyManaCost(retVal);
+            baseModifier += this.primaryMod.getBaseManaCostModifier();
+            multiplier *= this.primaryMod.getManaCostMultiplier();
         }
         if (this.secondaryMod != null) {
-            retVal = this.secondaryMod.modifyManaCost(retVal);
+            baseModifier += this.secondaryMod.getBaseManaCostModifier();
+            multiplier *= this.secondaryMod.getManaCostMultiplier();
         }
-        return retVal;
+        return new SourceList().add(source, (baseManaCost + baseModifier) * multiplier);
     }
     
     public void cast(World world, PlayerEntity caster) {

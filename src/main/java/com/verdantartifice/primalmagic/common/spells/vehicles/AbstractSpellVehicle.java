@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagic.common.spells.vehicles;
 
-import com.verdantartifice.primalmagic.common.sources.SourceList;
-
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -35,8 +33,8 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
     }
     
     @Override
-    public SourceList modifyManaCost(SourceList cost) {
+    public int getBaseManaCostModifier() {
         // No change by default
-        return cost;
+        return 0;
     }
 }
