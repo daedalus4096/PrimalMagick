@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -73,8 +74,8 @@ public class SpellProjectileEntity extends ThrowableEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         if (!this.world.isRemote) {
-            if (this.spell != null && this.spell.getPayload() != null) {
-                SpellManager.executeSpellPayload(this.spell, result, this.world, this.getThrower(), true);
+            if (this.spell != null && this.spell.getPayload() != null && this.getThrower() instanceof PlayerEntity) {
+                SpellManager.executeSpellPayload(this.spell, result, this.world, (PlayerEntity)this.getThrower(), true);
             }
             this.remove();
         }

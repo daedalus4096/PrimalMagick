@@ -23,7 +23,6 @@ import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -154,7 +153,7 @@ public class SpellManager {
         }
     }
     
-    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull LivingEntity caster, boolean allowMine) {
+    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull PlayerEntity caster, boolean allowMine) {
         if (!world.isRemote && spell.getPayload() != null) {
             Vec3d hitVec = result.getHitVec();
             BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");

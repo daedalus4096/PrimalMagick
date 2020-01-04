@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -45,14 +44,13 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster) {
-        if (target != null && target.getType() == RayTraceResult.Type.BLOCK && caster instanceof PlayerEntity) {
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
+        if (target != null && target.getType() == RayTraceResult.Type.BLOCK) {
             BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
-            PlayerEntity player = (PlayerEntity)caster;
             BlockPos pos = blockTarget.getPos();
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
-            BlockBreaker.enqueue(world, new BlockBreaker(this.getModdedPropertyValue("power", spell), pos, state, durability, durability, player));
+            BlockBreaker.enqueue(world, new BlockBreaker(this.getModdedPropertyValue("power", spell), pos, state, durability, durability, caster));
         }
     }
 

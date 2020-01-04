@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
@@ -34,7 +35,7 @@ public class SpellMineEntity extends Entity {
     protected static final int ARMING_TIME = 60;
     
     protected SpellPackage spell;
-    protected LivingEntity caster;
+    protected PlayerEntity caster;
     protected UUID casterId;
     protected int currentLife = 0;
     
@@ -43,7 +44,7 @@ public class SpellMineEntity extends Entity {
         this.spell = null;
     }
     
-    public SpellMineEntity(World world, Vec3d pos, LivingEntity caster, SpellPackage spell, int duration) {
+    public SpellMineEntity(World world, Vec3d pos, PlayerEntity caster, SpellPackage spell, int duration) {
         super(EntityTypesPM.SPELL_MINE, world);
         this.setPosition(pos.x, pos.y, pos.z);
         this.spell = spell;
@@ -85,11 +86,11 @@ public class SpellMineEntity extends Entity {
     }
     
     @Nullable
-    public LivingEntity getCaster() {
+    public PlayerEntity getCaster() {
         if (this.caster == null && this.casterId != null && this.world instanceof ServerWorld) {
             Entity entity = ((ServerWorld)this.world).getEntityByUuid(this.casterId);
-            if (entity instanceof LivingEntity) {
-                this.caster = (LivingEntity)entity;
+            if (entity instanceof PlayerEntity) {
+                this.caster = (PlayerEntity)entity;
             } else {
                 this.casterId = null;
             }

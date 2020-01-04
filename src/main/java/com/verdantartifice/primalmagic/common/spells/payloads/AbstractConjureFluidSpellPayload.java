@@ -8,7 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ILiquidContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
@@ -34,16 +33,15 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
     }
     
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster) {
-        if (target != null && target.getType() == RayTraceResult.Type.BLOCK && caster instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)caster;
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
+        if (target != null && target.getType() == RayTraceResult.Type.BLOCK) {
             BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
             BlockPos targetPos = blockTarget.getPos();
             ItemStack stack = this.getSimulatedItemStack(this.fluid);
-            if (world.isBlockModifiable(player, targetPos) && player.canPlayerEdit(targetPos, blockTarget.getFace(), stack)) {
+            if (world.isBlockModifiable(caster, targetPos) && caster.canPlayerEdit(targetPos, blockTarget.getFace(), stack)) {
                 BlockState state = world.getBlockState(targetPos);
                 BlockPos placePos = (state.getBlock() instanceof ILiquidContainer && this.fluid == Fluids.WATER) ? targetPos : targetPos.offset(blockTarget.getFace());
-                this.placeFluid(player, world, placePos, blockTarget);
+                this.placeFluid(caster, world, placePos, blockTarget);
             }
         }
     }
