@@ -94,7 +94,7 @@ public class BurstSpellMod extends AbstractSpellMod {
                             // Add the current block to the result set if it hasn't already been hit
                             BlockPos curPos = new BlockPos(curVec);
                             if (affectedBlocks.add(curPos)) {
-                                Vec3d relVec = curVec.subtract(hitVec);
+                                Vec3d relVec = hitVec.subtract(curVec);
                                 Direction dir = Direction.getFacingFromVector(relVec.x, relVec.y, relVec.z);
                                 retVal.add(new BlockRayTraceResult(curVec, dir, curPos, false));
                             }
