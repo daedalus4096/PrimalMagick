@@ -14,10 +14,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -64,10 +61,8 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
         boolean isReplaceable = material.isReplaceable();
         if (world.isAirBlock(pos) || !isSolid || isReplaceable || (block instanceof ILiquidContainer && ((ILiquidContainer)block).canContainFluid(world, pos, state, this.fluid))) {
             if (world.dimension.doesWaterVaporize() && this.fluid.isIn(FluidTags.WATER)) {
-                world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-                for (int index = 0; index < 8; index++) {
-                    world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), 0.0F, 0.0F, 0.0F);
-                }
+                // Do nothing for water in the Nether or similar dimensions
+                return;
             } else if (block instanceof ILiquidContainer && this.fluid == Fluids.WATER) {
                 ((ILiquidContainer)block).receiveFluid(world, pos, state, this.fluid.getStillFluidState(false));
             } else {
