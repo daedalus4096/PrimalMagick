@@ -171,7 +171,7 @@ public class SpellManager {
             } else if (burstMod != null) {
                 Set<RayTraceResult> targetSet = burstMod.getBurstTargets(result, spell, world);
                 for (RayTraceResult target : targetSet) {
-                    spell.getPayload().execute(target, result.getHitVec(), spell, world, caster);
+                    spell.getPayload().execute(target, hitVec, spell, world, caster);
                 }
             } else {
                 spell.getPayload().execute(result, null, spell, world, caster);
