@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetS
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -60,6 +61,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SpellImpactPacket.class, SpellImpactPacket::encode, SpellImpactPacket::decode, SpellImpactPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, TileToClientPacket.class, TileToClientPacket::encode, TileToClientPacket::decode, TileToClientPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, TileToServerPacket.class, TileToServerPacket::encode, TileToServerPacket::decode, TileToServerPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, TeleportArrivalPacket.class, TeleportArrivalPacket::encode, TeleportArrivalPacket::decode, TeleportArrivalPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

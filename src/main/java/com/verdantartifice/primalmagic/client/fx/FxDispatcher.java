@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -104,6 +105,13 @@ public class FxDispatcher {
             if (p != null) {
                 p.setColor(r, g, b);
             }
+        }
+    }
+    
+    public void teleportArrival(double x, double y, double z) {
+        World world = getWorld();
+        for (int i = 0; i < 32; i++) {
+            world.addParticle(ParticleTypes.PORTAL, x, y + world.rand.nextDouble() * 2.0D, z, world.rand.nextGaussian(), 0.0D, world.rand.nextGaussian());
         }
     }
 }
