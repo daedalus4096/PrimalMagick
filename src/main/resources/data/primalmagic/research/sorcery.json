@@ -182,6 +182,18 @@
             "addenda": []
         },
         {
+            "key": "SPELL_PAYLOAD_TELEPORT",
+            "name": "primalmagic.research.spell_payload_teleport.title",
+            "discipline": "SORCERY",
+            "parents": [ "SPELL_PAYLOAD_VOID" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_teleport.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SPELL_MOD_AMPLIFY",
             "name": "primalmagic.research.spell_mod_amplify.title",
             "discipline": "SORCERY",

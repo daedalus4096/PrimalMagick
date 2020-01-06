@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagic.common.spells.payloads.HolyDamageSpellPay
 import com.verdantartifice.primalmagic.common.spells.payloads.LightningDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.LunarDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.SolarDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.payloads.TeleportSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.VoidDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.EmptySpellVehicle;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVehicle;
@@ -56,6 +57,7 @@ public class InitSpells {
         SpellManager.registerPayloadType(FlightSpellPayload.TYPE, FlightSpellPayload::new, FlightSpellPayload::getResearch);
         SpellManager.registerPayloadType(HealingSpellPayload.TYPE, HealingSpellPayload::new, HealingSpellPayload::getResearch);
         SpellManager.registerPayloadType(ConjureLavaSpellPayload.TYPE, ConjureLavaSpellPayload::new, ConjureLavaSpellPayload::getResearch);
+        SpellManager.registerPayloadType(TeleportSpellPayload.TYPE, TeleportSpellPayload::new, TeleportSpellPayload::getResearch);
     }
 
     private static void registerSpellModTypes() {
