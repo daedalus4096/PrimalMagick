@@ -123,6 +123,8 @@
     "tooltip.primalmagic.hallowed_orb.2": "you as you hold this",
     "tooltip.primalmagic.none": "none",
     
+    "effect.primalmagic.flying": "Flying",
+    
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
