@@ -146,6 +146,18 @@
             "addenda": []
         },
         {
+            "key": "SPELL_PAYLOAD_FLIGHT",
+            "name": "primalmagic.research.spell_payload_flight.title",
+            "discipline": "SORCERY",
+            "parents": [ "SPELL_PAYLOAD_LIGHTNING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_flight.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SPELL_PAYLOAD_HEALING",
             "name": "primalmagic.research.spell_payload_healing.title",
             "discipline": "SORCERY",

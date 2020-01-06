@@ -310,6 +310,9 @@
     "primalmagic.research.spell_payload_conjure_water.title": "Spell Payload: Conjure Water",
     "primalmagic.research.spell_payload_conjure_water.text.stage.1": "Water conjuration spells: Lorem ipsum",
     
+    "primalmagic.research.spell_payload_flight.title": "Spell Payload: Flight",
+    "primalmagic.research.spell_payload_flight.text.stage.1": "Flight spells: Lorem ipsum",
+    
     "primalmagic.research.spell_payload_healing.title": "Spell Payload: Healing",
     "primalmagic.research.spell_payload_healing.text.stage.1": "Healing spells: Lorem ipsum",
     
@@ -431,6 +434,7 @@
     "primalmagic.spell.payload.type.holy_damage": "Holy",
     "primalmagic.spell.payload.type.break": "Break",
     "primalmagic.spell.payload.type.conjure_water": "Conjure Water",
+    "primalmagic.spell.payload.type.flight": "Flight",
     "primalmagic.spell.payload.type.healing": "Healing",
     "primalmagic.spell.payload.type.conjure_lava": "Conjure Lava",
     "primalmagic.spell.payload.default_name.none": "",
@@ -445,6 +449,7 @@
     "primalmagic.spell.payload.default_name.holy_damage": "Holy",
     "primalmagic.spell.payload.default_name.break": "Shattering",
     "primalmagic.spell.payload.default_name.conjure_water": "Water",
+    "primalmagic.spell.payload.default_name.flight": "Flight",
     "primalmagic.spell.payload.default_name.healing": "Healing",
     "primalmagic.spell.payload.default_name.conjure_lava": "Lava",
         

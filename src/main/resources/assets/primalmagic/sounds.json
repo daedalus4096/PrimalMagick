@@ -76,5 +76,11 @@
         "sounds": [
             "primalmagic:heal"
         ]
+    },
+    "wingflap": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:wingflap"
+        ]
     }
 }
