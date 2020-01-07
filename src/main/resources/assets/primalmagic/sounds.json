@@ -82,5 +82,13 @@
         "sounds": [
             "primalmagic:wingflap"
         ]
+    },
+    "coins": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:coins1",
+            "primalmagic:coins2",
+            "primalmagic:coins3"
+        ]
     }
 }

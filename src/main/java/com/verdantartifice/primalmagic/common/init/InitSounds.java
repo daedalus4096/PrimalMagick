@@ -21,6 +21,7 @@ public class InitSounds {
         registry.register(createEvent("angels"));
         registry.register(createEvent("heal"));
         registry.register(createEvent("wingflap"));
+        registry.register(createEvent("coins"));
     }
     
     private static SoundEvent createEvent(String name) {
