@@ -21,4 +21,5 @@ public class SoundsPM {
     public static final SoundEvent HEAL = null;
     public static final SoundEvent WINGFLAP = null;
     public static final SoundEvent COINS = null;
+    public static final SoundEvent EGG_CRACK = null;
 }

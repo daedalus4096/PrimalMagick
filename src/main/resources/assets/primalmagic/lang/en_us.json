@@ -319,6 +319,9 @@
     "primalmagic.research.spell_payload_luck.title": "Spell Payload: Luck",
     "primalmagic.research.spell_payload_luck.text.stage.1": "Luck spells: Lorem ipsum",
     
+    "primalmagic.research.spell_payload_conjure_animal.title": "Spell Payload: Conjure Animal",
+    "primalmagic.research.spell_payload_conjure_animal.text.stage.1": "Animal conjuration spells: Lorem ipsum",
+    
     "primalmagic.research.spell_payload_conjure_lava.title": "Spell Payload: Conjure Lava",
     "primalmagic.research.spell_payload_conjure_lava.text.stage.1": "Lava conjuration spells: Lorem ipsum",
     
@@ -443,6 +446,7 @@
     "primalmagic.spell.payload.type.flight": "Flight",
     "primalmagic.spell.payload.type.healing": "Healing",
     "primalmagic.spell.payload.type.luck": "Luck",
+    "primalmagic.spell.payload.type.conjure_animal": "Conjure Animal",
     "primalmagic.spell.payload.type.conjure_lava": "Conjure Lava",
     "primalmagic.spell.payload.type.teleport": "Teleport",
     "primalmagic.spell.payload.default_name.none": "",
@@ -460,6 +464,7 @@
     "primalmagic.spell.payload.default_name.flight": "Flight",
     "primalmagic.spell.payload.default_name.healing": "Healing",
     "primalmagic.spell.payload.default_name.luck": "Lucky",
+    "primalmagic.spell.payload.default_name.conjure_animal": "Beast",
     "primalmagic.spell.payload.default_name.conjure_lava": "Lava",
     "primalmagic.spell.payload.default_name.teleport": "Teleport",
         

@@ -8,7 +8,10 @@ import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -61,5 +64,19 @@ public class RayTraceUtils {
         } else {
             return new EntityRayTraceResult(hitEntity, hitVec);
         }
+    }
+    
+    @Nullable
+    public static BlockRayTraceResult getBlockResultFromEntityResult(@Nullable EntityRayTraceResult entityResult) {
+        if (entityResult == null) {
+            return null;
+        }
+        BlockPos targetPos = new BlockPos(entityResult.getHitVec());
+        Vec3d entityVec = entityResult.getEntity().getPositionVec();
+        BlockPos entityPos = new BlockPos(entityVec);
+        Vec3d targetVec = new Vec3d(targetPos.getX() + 0.5D, targetPos.getY() + 0.5D, targetPos.getZ() + 0.5D);
+        Vec3d dirVec = entityVec.subtract(targetVec);
+        Direction dir = Direction.getFacingFromVector(dirVec.x, dirVec.y, dirVec.z);
+        return new BlockRayTraceResult(entityResult.getHitVec(), dir, entityPos, false);
     }
 }

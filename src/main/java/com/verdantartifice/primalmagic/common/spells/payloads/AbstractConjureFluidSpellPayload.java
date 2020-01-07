@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.spells.payloads;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,7 +16,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -44,16 +44,9 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
                     this.placeFluid(caster, world, placePos, blockTarget);
                 }
             } else if (target.getType() == RayTraceResult.Type.ENTITY) {
-                EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
-                BlockPos targetPos = new BlockPos(entityTarget.getHitVec());
-                Vec3d entityVec = entityTarget.getEntity().getPositionVec();
-                BlockPos entityPos = new BlockPos(entityVec);
-                Vec3d targetVec = new Vec3d(targetPos.getX() + 0.5D, targetPos.getY() + 0.5D, targetPos.getZ() + 0.5D);
-                Vec3d dirVec = entityVec.subtract(targetVec);
-                Direction dir = Direction.getFacingFromVector(dirVec.x, dirVec.y, dirVec.z);
-                BlockRayTraceResult blockTarget = new BlockRayTraceResult(entityTarget.getHitVec(), dir, entityPos, false);
-                if (world.isBlockModifiable(caster, entityPos) && caster.canPlayerEdit(entityPos, dir, stack)) {
-                    this.placeFluid(caster, world, entityPos, blockTarget);
+                BlockRayTraceResult blockTarget = RayTraceUtils.getBlockResultFromEntityResult((EntityRayTraceResult)target);
+                if (world.isBlockModifiable(caster, blockTarget.getPos()) && caster.canPlayerEdit(blockTarget.getPos(), blockTarget.getFace(), stack)) {
+                    this.placeFluid(caster, world, blockTarget.getPos(), blockTarget);
                 }
             }
         }

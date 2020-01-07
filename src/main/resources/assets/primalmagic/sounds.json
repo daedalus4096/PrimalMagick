@@ -90,5 +90,11 @@
             "primalmagic:coins2",
             "primalmagic:coins3"
         ]
+    },
+    "egg_crack": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:egg_crack"
+        ]
     }
 }
