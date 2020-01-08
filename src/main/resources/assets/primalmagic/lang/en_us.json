@@ -328,6 +328,9 @@
     "primalmagic.research.spell_payload_teleport.title": "Spell Payload: Teleport",
     "primalmagic.research.spell_payload_teleport.text.stage.1": "Teleport spells: Lorem ipsum",
     
+    "primalmagic.research.spell_payload_consecrate.title": "Spell Payload: Consecrate",
+    "primalmagic.research.spell_payload_consecrate.text.stage.1": "Consecrate spells: Lorem ipsum",
+    
     "primalmagic.research.spell_mod_amplify.title": "Spell Mod: Amplify",
     "primalmagic.research.spell_mod_amplify.text.stage.1": "Amplify spells: Lorem ipsum",
     
@@ -449,6 +452,7 @@
     "primalmagic.spell.payload.type.conjure_animal": "Conjure Animal",
     "primalmagic.spell.payload.type.conjure_lava": "Conjure Lava",
     "primalmagic.spell.payload.type.teleport": "Teleport",
+    "primalmagic.spell.payload.type.consecrate": "Consecrate",
     "primalmagic.spell.payload.default_name.none": "",
     "primalmagic.spell.payload.default_name.earth_damage": "Stone",
     "primalmagic.spell.payload.default_name.frost_damage": "Frost",
@@ -467,6 +471,7 @@
     "primalmagic.spell.payload.default_name.conjure_animal": "Beast",
     "primalmagic.spell.payload.default_name.conjure_lava": "Lava",
     "primalmagic.spell.payload.default_name.teleport": "Teleport",
+    "primalmagic.spell.payload.default_name.consecrate": "Consecration",
         
     "primalmagic.spell.primary_mod.header": "Primary Mod",
     "primalmagic.spell.secondary_mod.header": "Secondary Mod",
