@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.blocks.crafting.WandInscriptionTab
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.AnalysisTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
@@ -122,5 +123,7 @@ public class InitBlocks {
         registry.register(new WandInscriptionTableBlock());
         registry.register(new SpellcraftingAltarBlock());
         registry.register(new WandChargerBlock());
+        
+        registry.register(new ConsecrationFieldBlock());
     }
 }
