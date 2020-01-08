@@ -39,7 +39,7 @@ public class TouchSpellVehicle extends AbstractSpellVehicle {
             EntityRayTraceResult entityResult = RayTraceUtils.rayTraceEntities(world, caster, eyePos, reachPos, aabb, (testEntity) -> {
                 return !testEntity.isSpectator();
             }, (reachDistance * reachDistance));
-            BlockRayTraceResult blockResult = world.rayTraceBlocks(new RayTraceContext(eyePos, reachPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.SOURCE_ONLY, caster));
+            BlockRayTraceResult blockResult = world.rayTraceBlocks(new RayTraceContext(eyePos, reachPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, caster));
             RayTraceResult result;
             if (entityResult == null) {
                 result = blockResult;
