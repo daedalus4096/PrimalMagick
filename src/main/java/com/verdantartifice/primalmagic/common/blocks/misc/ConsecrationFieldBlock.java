@@ -12,19 +12,24 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ConsecrationFieldBlock extends Block {
-    protected static final Material MATERIAL = new Material(MaterialColor.AIR, false, false, true, false, true, false, true, PushReaction.NORMAL);
+    protected static final Material MATERIAL = new Material(MaterialColor.AIR, false, false, false, false, true, false, true, PushReaction.NORMAL);
 
     public ConsecrationFieldBlock() {
         super(Block.Properties.create(MATERIAL).hardnessAndResistance(-1, 3600000).lightValue(15).noDrops());
@@ -38,11 +43,18 @@ public class ConsecrationFieldBlock extends Block {
         FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Source.HALLOWED.getColor());
     }
     
-    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return VoxelShapes.empty();
+    }
+    
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        // TODO Return empty voxel shape for player selections
-        return super.getCollisionShape(state, worldIn, pos, context);
+        if (context.getEntity() instanceof PlayerEntity || !(context.getEntity() instanceof LivingEntity)) {
+            return VoxelShapes.empty();
+        } else {
+            return VoxelShapes.fullCube();
+        }
     }
     
     @Override
@@ -53,5 +65,14 @@ public class ConsecrationFieldBlock extends Block {
     @Override
     public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
         return ItemStack.EMPTY;
+    }
+    
+    @Override
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        if (entityIn instanceof PlayerEntity && entityIn.ticksExisted % 5 == 0) {
+            PlayerEntity player = (PlayerEntity)entityIn;
+            player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 100));
+            player.addPotionEffect(new EffectInstance(Effects.SATURATION, 100));
+        }
     }
 }

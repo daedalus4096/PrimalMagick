@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import javax.annotation.Nonnull;
+
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -9,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -27,8 +31,27 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
     
     @Override
     public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
-        // TODO Auto-generated method stub
-
+        if (target != null) {
+            if (target.getType() == RayTraceResult.Type.BLOCK) {
+                BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
+                if (world.getBlockState(blockTarget.getPos()).isSolid()) {
+                    for (int offset = 1; offset <= 2; offset++) {
+                        BlockPos targetPos = blockTarget.getPos().offset(blockTarget.getFace(), offset);
+                        this.placeField(world, targetPos);
+                    }
+                }
+            } else if (target.getType() == RayTraceResult.Type.ENTITY) {
+                BlockPos hitPos = new BlockPos(target.getHitVec());
+                this.placeField(world, hitPos);
+                this.placeField(world, hitPos.up());
+            }
+        }
+    }
+    
+    protected void placeField(@Nonnull World world, @Nonnull BlockPos pos) {
+        if (world.isAirBlock(pos) && world.getBlockState(pos) != BlocksPM.CONSECRATION_FIELD.getDefaultState()) {
+            world.setBlockState(pos, BlocksPM.CONSECRATION_FIELD.getDefaultState(), 0x3);
+        }
     }
 
     @Override
