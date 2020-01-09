@@ -218,6 +218,18 @@
             "addenda": []
         },
         {
+            "key": "SPELL_PAYLOAD_CONSECRATE",
+            "name": "primalmagic.research.spell_payload_consecrate.title",
+            "discipline": "SORCERY",
+            "parents": [ "SPELL_PAYLOAD_HOLY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_consecrate.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SPELL_MOD_AMPLIFY",
             "name": "primalmagic.research.spell_mod_amplify.title",
             "discipline": "SORCERY",
