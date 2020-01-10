@@ -1,17 +1,22 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
+import com.verdantartifice.primalmagic.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -43,8 +48,12 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
     
     @Override
     public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
-        // TODO Auto-generated method stub
-
+        if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
+            EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
+            UUID entityId = entityTarget.getEntity().getUniqueID();
+            int ticks = this.getModdedPropertyValue("duration", spell) * TICKS_PER_DURATION;
+            EntitySwapper.enqueue(world, new EntitySwapper(entityId, EntityType.WOLF, Optional.of(Integer.valueOf(ticks)), 0));
+        }
     }
 
     @Override
