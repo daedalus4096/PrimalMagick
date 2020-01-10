@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.misc;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -11,9 +12,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec2f;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class EntitySwapper {
     protected static final Map<Integer, Queue<EntitySwapper>> REGISTRY = new HashMap<>();
@@ -56,9 +68,44 @@ public class EntitySwapper {
     
     @Nullable
     public EntitySwapper execute(@Nonnull World world) {
-        // TODO Do swap
         PrimalMagic.LOGGER.info("Doing entity swap");
+        if (!world.isRemote && world instanceof ServerWorld) {
+            ServerWorld serverWorld = (ServerWorld)world;
+            Entity target = serverWorld.getEntityByUuid(this.targetId);
+            if (target != null && this.isValidTarget(target)) {
+                if (target.isPassenger()) {
+                    target.stopRiding();
+                }
+                if (target.isBeingRidden()) {
+                    target.removePassengers();
+                }
+                
+                EntityType<?> oldType = target.getType();
+                Vec3d targetPos = target.getPositionVec();
+                Vec2f targetRots = target.getPitchYaw();
+                ITextComponent customName = target.getCustomName();
+                
+                PacketHandler.sendToAllAround(new WandPoofPacket(targetPos.x, targetPos.y, targetPos.z, Color.WHITE.getRGB(), true, null), 
+                        world.dimension.getType(), new BlockPos(targetPos), 32.0D);
+                
+                target.remove();
+                Entity newEntity = this.entityType.create(world, null, customName, null, new BlockPos(targetPos), SpawnReason.MOB_SUMMONED, false, false);
+                world.addEntity(newEntity);
+                newEntity.setPositionAndRotation(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
+                
+                if (this.polymorphDuration.isPresent()) {
+                    int ticks = this.polymorphDuration.get().intValue();
+                    return new EntitySwapper(newEntity.getUniqueID(), oldType, Optional.empty(), ticks);
+                } else {
+                    return null;
+                }
+            }
+        }
         return null;
+    }
+    
+    protected boolean isValidTarget(Entity entity) {
+        return (entity instanceof LivingEntity) && !(entity instanceof PlayerEntity);
     }
     
     public void decrementDelay() {

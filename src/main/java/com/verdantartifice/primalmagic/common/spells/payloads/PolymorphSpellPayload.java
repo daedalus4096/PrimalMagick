@@ -50,9 +50,11 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
     public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
-            UUID entityId = entityTarget.getEntity().getUniqueID();
-            int ticks = this.getModdedPropertyValue("duration", spell) * TICKS_PER_DURATION;
-            EntitySwapper.enqueue(world, new EntitySwapper(entityId, EntityType.WOLF, Optional.of(Integer.valueOf(ticks)), 0));
+            if (!entityTarget.getEntity().getType().equals(EntityType.WOLF) && entityTarget.getEntity().isNonBoss()) {
+                UUID entityId = entityTarget.getEntity().getUniqueID();
+                int ticks = this.getModdedPropertyValue("duration", spell) * TICKS_PER_DURATION;
+                EntitySwapper.enqueue(world, new EntitySwapper(entityId, EntityType.WOLF, Optional.of(Integer.valueOf(ticks)), 0));
+            }
         }
     }
 
