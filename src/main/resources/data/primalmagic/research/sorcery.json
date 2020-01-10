@@ -182,6 +182,18 @@
             "addenda": []
         },
         {
+            "key": "SPELL_PAYLOAD_POLYMORPH",
+            "name": "primalmagic.research.spell_payload_polymorph.title",
+            "discipline": "SORCERY",
+            "parents": [ "SPELL_PAYLOAD_LUNAR" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_payload_polymorph.text.stage.1"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SPELL_PAYLOAD_CONJURE_ANIMAL",
             "name": "primalmagic.research.spell_payload_conjure_animal.title",
             "discipline": "SORCERY",
