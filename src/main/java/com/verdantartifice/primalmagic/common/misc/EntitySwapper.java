@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 
@@ -20,6 +21,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
@@ -95,6 +97,9 @@ public class EntitySwapper {
                 
                 if (this.polymorphDuration.isPresent()) {
                     int ticks = this.polymorphDuration.get().intValue();
+                    if (newEntity instanceof LivingEntity) {
+                        ((LivingEntity)newEntity).addPotionEffect(new EffectInstance(EffectsPM.POLYMORPH, ticks));
+                    }
                     return new EntitySwapper(newEntity.getUniqueID(), oldType, Optional.empty(), ticks);
                 } else {
                     return null;
