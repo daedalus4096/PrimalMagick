@@ -13,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
@@ -88,9 +89,9 @@ public class SpellMineEntity extends Entity {
     @Nullable
     public PlayerEntity getCaster() {
         if (this.caster == null && this.casterId != null && this.world instanceof ServerWorld) {
-            Entity entity = ((ServerWorld)this.world).getEntityByUuid(this.casterId);
-            if (entity instanceof PlayerEntity) {
-                this.caster = (PlayerEntity)entity;
+            List<ServerPlayerEntity> players = ((ServerWorld)this.world).getPlayers((spe) -> spe.getUniqueID().equals(this.casterId));
+            if (!players.isEmpty()) {
+                this.caster = players.get(0);
             } else {
                 this.casterId = null;
             }
@@ -147,7 +148,7 @@ public class SpellMineEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
-        if (!this.world.isRemote && (this.spell == null || !this.spell.isValid() || this.getCaster() == null)) {
+        if (!this.world.isRemote && (this.spell == null || !this.spell.isValid())) {
             this.remove();
         }
         if (++this.currentLife > this.getLifespan()) {
@@ -168,7 +169,9 @@ public class SpellMineEntity extends Entity {
                         if (this.spell != null && this.spell.getPayload() != null) {
                             this.spell.getPayload().playSounds(this.world, this.getPosition());
                         }
-                        SpellManager.executeSpellPayload(this.spell, new EntityRayTraceResult(entity, this.getPositionVec().add(0.0D, 0.5D, 0.0D)), this.world, this.getCaster(), false);
+                        if (this.getCaster() != null) {
+                            SpellManager.executeSpellPayload(this.spell, new EntityRayTraceResult(entity, this.getPositionVec().add(0.0D, 0.5D, 0.0D)), this.world, this.getCaster(), false);
+                        }
                         found = true;
                     }
                 }
