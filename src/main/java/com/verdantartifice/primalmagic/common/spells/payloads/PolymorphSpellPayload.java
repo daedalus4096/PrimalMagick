@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -52,8 +53,9 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (!entityTarget.getEntity().getType().equals(EntityType.WOLF) && entityTarget.getEntity().isNonBoss()) {
                 UUID entityId = entityTarget.getEntity().getUniqueID();
+                CompoundNBT originalData = entityTarget.getEntity().writeWithoutTypeId(new CompoundNBT());
                 int ticks = this.getModdedPropertyValue("duration", spell) * TICKS_PER_DURATION;
-                EntitySwapper.enqueue(world, new EntitySwapper(entityId, EntityType.WOLF, Optional.of(Integer.valueOf(ticks)), 0));
+                EntitySwapper.enqueue(world, new EntitySwapper(entityId, EntityType.WOLF, originalData, Optional.of(Integer.valueOf(ticks)), 0));
             }
         }
     }
