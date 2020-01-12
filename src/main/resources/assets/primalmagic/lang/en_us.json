@@ -497,6 +497,7 @@
     "primalmagic.spell.property.duration": "Duration",
     "primalmagic.spell.property.haste": "Haste",
     "primalmagic.spell.property.radius": "Radius",
+    "primalmagic.spell.property.range": "Range",
     
     "primalmagic.grimoire.index_header": "Disciplines",
     "primalmagic.grimoire.addendum_header": "Addendum %1$d",
