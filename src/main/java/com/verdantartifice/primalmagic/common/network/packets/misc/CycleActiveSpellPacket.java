@@ -11,12 +11,22 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class CycleActiveSpellPacket implements IMessageToServer {
+    protected boolean reverse = false;
+    
     public CycleActiveSpellPacket() {}
     
-    public static void encode(CycleActiveSpellPacket message, PacketBuffer buf) {}
+    public CycleActiveSpellPacket(boolean reverse) {
+        this.reverse = reverse;
+    }
+    
+    public static void encode(CycleActiveSpellPacket message, PacketBuffer buf) {
+        buf.writeBoolean(message.reverse);
+    }
     
     public static CycleActiveSpellPacket decode(PacketBuffer buf) {
-        return new CycleActiveSpellPacket();
+        CycleActiveSpellPacket message = new CycleActiveSpellPacket();
+        message.reverse = buf.readBoolean();
+        return message;
     }
     
     public static class Handler {
@@ -25,9 +35,9 @@ public class CycleActiveSpellPacket implements IMessageToServer {
                 ServerPlayerEntity player = ctx.get().getSender();
                 if (player != null) {
                     if (player.getHeldItemMainhand().getItem() instanceof IWand) {
-                        SpellManager.cycleActiveSpell(player, player.getHeldItemMainhand());
+                        SpellManager.cycleActiveSpell(player, player.getHeldItemMainhand(), message.reverse);
                     } else if (player.getHeldItemOffhand().getItem() instanceof IWand) {
-                        SpellManager.cycleActiveSpell(player, player.getHeldItemOffhand());
+                        SpellManager.cycleActiveSpell(player, player.getHeldItemOffhand(), message.reverse);
                     }
                 }
             });

@@ -133,12 +133,15 @@ public class SpellManager {
         }
     }
     
-    public static void cycleActiveSpell(@Nullable PlayerEntity player, @Nullable ItemStack wandStack) {
+    public static void cycleActiveSpell(@Nullable PlayerEntity player, @Nullable ItemStack wandStack, boolean reverse) {
         if (wandStack != null && wandStack.getItem() instanceof IWand) {
             IWand wand = (IWand)wandStack.getItem();
-            int newIndex = wand.getActiveSpellIndex(wandStack) + 1;
+            int newIndex = wand.getActiveSpellIndex(wandStack) + (reverse ? -1 : 1);
             if (newIndex >= wand.getSpellCount(wandStack)) {
                 newIndex = -1;
+            }
+            if (newIndex < -1) {
+                newIndex = wand.getSpellCount(wandStack) - 1;
             }
             wand.setActiveSpellIndex(wandStack, newIndex);
             

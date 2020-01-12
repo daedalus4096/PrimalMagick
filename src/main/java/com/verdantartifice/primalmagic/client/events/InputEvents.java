@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.client.events;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.config.KeyBindings;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
@@ -17,7 +19,8 @@ public class InputEvents {
     @SubscribeEvent
     public static void onKeyInput(InputEvent.KeyInputEvent event) {
         if (KeyBindings.changeSpellKey.isPressed()) {
-            PacketHandler.sendToServer(new CycleActiveSpellPacket());
+            boolean shift = (event.getModifiers() & GLFW.GLFW_MOD_SHIFT) != 0;
+            PacketHandler.sendToServer(new CycleActiveSpellPacket(shift));
         }
     }
 }
