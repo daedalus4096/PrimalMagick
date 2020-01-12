@@ -1,5 +1,12 @@
 {
 	"textures": [
-		"primalmagic:spell_sparkle"
+        "primalmagic:spell_sparkle_0",
+        "primalmagic:spell_sparkle_1",
+        "primalmagic:spell_sparkle_2",
+        "primalmagic:spell_sparkle_3",
+        "primalmagic:spell_sparkle_4",
+        "primalmagic:spell_sparkle_5",
+        "primalmagic:spell_sparkle_6",
+        "primalmagic:spell_sparkle_7"
 	]
 }

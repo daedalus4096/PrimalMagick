@@ -34,6 +34,12 @@ public class SpellSparkleParticle extends SpriteTexturedParticle {
     public IParticleRenderType getRenderType() {
         return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
+    
+    @Override
+    public void tick() {
+        super.tick();
+        this.selectSpriteWithAge(this.spriteSet);
+    }
 
     @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory<BasicParticleType> {
