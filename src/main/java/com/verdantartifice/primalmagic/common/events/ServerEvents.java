@@ -6,6 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagic.common.misc.BlockSwapper;
+import com.verdantartifice.primalmagic.common.misc.EntitySwapper;
 
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
@@ -23,6 +24,7 @@ public class ServerEvents {
         if (event.phase != TickEvent.Phase.START) {
             tickBlockSwappers(event.world);
             tickBlockBreakers(event.world);
+            tickEntitySwappers(event.world);
         }
     }
     
@@ -52,6 +54,28 @@ public class ServerEvents {
                 }
             }
             BlockBreaker.setWorldBreakerQueue(world, newQueue);
+        }
+    }
+    
+    protected static void tickEntitySwappers(World world) {
+        Queue<EntitySwapper> swapperQueue = EntitySwapper.getWorldSwappers(world);
+        if (swapperQueue != null) {
+            Queue<EntitySwapper> newQueue = new LinkedBlockingQueue<>();
+            while (!swapperQueue.isEmpty()) {
+                EntitySwapper swapper = swapperQueue.poll();
+                if (swapper != null) {
+                    if (swapper.isReady()) {
+                        EntitySwapper newSwapper = swapper.execute(world);
+                        if (newSwapper!= null) {
+                            newQueue.offer(newSwapper);
+                        }
+                    } else {
+                        swapper.decrementDelay();
+                        newQueue.offer(swapper);
+                    }
+                }
+            }
+            EntitySwapper.setWorldSwapperQueue(world, newQueue);
         }
     }
 }

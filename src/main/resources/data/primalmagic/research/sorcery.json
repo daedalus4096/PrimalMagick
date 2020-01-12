@@ -170,13 +170,13 @@
             "addenda": []
         },
         {
-            "key": "SPELL_PAYLOAD_LUCK",
-            "name": "primalmagic.research.spell_payload_luck.title",
+            "key": "SPELL_PAYLOAD_POLYMORPH",
+            "name": "primalmagic.research.spell_payload_polymorph.title",
             "discipline": "SORCERY",
             "parents": [ "SPELL_PAYLOAD_LUNAR" ],
             "stages": [
                 {
-                    "text": "primalmagic.research.spell_payload_luck.text.stage.1"
+                    "text": "primalmagic.research.spell_payload_polymorph.text.stage.1"
                 }
             ],
             "addenda": []

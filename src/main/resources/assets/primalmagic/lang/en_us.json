@@ -125,6 +125,7 @@
     "tooltip.primalmagic.none": "none",
     
     "effect.primalmagic.flying": "Flying",
+    "effect.primalmagic.polymorph": "Polymorph",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     
@@ -317,8 +318,8 @@
     "primalmagic.research.spell_payload_healing.title": "Spell Payload: Healing",
     "primalmagic.research.spell_payload_healing.text.stage.1": "Healing spells: Lorem ipsum",
     
-    "primalmagic.research.spell_payload_luck.title": "Spell Payload: Luck",
-    "primalmagic.research.spell_payload_luck.text.stage.1": "Luck spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_polymorph.title": "Spell Payload: Polymorph",
+    "primalmagic.research.spell_payload_polymorph.text.stage.1": "Polymorph spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_conjure_animal.title": "Spell Payload: Conjure Animal",
     "primalmagic.research.spell_payload_conjure_animal.text.stage.1": "Animal conjuration spells: Lorem ipsum",
@@ -449,7 +450,7 @@
     "primalmagic.spell.payload.type.conjure_water": "Conjure Water",
     "primalmagic.spell.payload.type.flight": "Flight",
     "primalmagic.spell.payload.type.healing": "Healing",
-    "primalmagic.spell.payload.type.luck": "Luck",
+    "primalmagic.spell.payload.type.polymorph": "Polymorph",
     "primalmagic.spell.payload.type.conjure_animal": "Conjure Animal",
     "primalmagic.spell.payload.type.conjure_lava": "Conjure Lava",
     "primalmagic.spell.payload.type.teleport": "Teleport",
@@ -468,7 +469,7 @@
     "primalmagic.spell.payload.default_name.conjure_water": "Water",
     "primalmagic.spell.payload.default_name.flight": "Flight",
     "primalmagic.spell.payload.default_name.healing": "Healing",
-    "primalmagic.spell.payload.default_name.luck": "Lucky",
+    "primalmagic.spell.payload.default_name.polymorph": "Morphing",
     "primalmagic.spell.payload.default_name.conjure_animal": "Beast",
     "primalmagic.spell.payload.default_name.conjure_lava": "Lava",
     "primalmagic.spell.payload.default_name.teleport": "Teleport",

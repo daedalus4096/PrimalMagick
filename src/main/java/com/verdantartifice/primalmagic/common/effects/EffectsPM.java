@@ -8,4 +8,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(PrimalMagic.MODID)
 public class EffectsPM {
     public static final Effect FLYING = null;
+    public static final Effect POLYMORPH = null;
 }

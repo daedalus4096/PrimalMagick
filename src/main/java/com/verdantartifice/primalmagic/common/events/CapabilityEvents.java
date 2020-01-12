@@ -3,9 +3,11 @@ package com.verdantartifice.primalmagic.common.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.WorldEntitySwappers;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,5 +20,10 @@ public class CapabilityEvents {
             event.addCapability(PlayerKnowledge.Provider.NAME, new PlayerKnowledge.Provider());
             event.addCapability(PlayerCooldowns.Provider.NAME, new PlayerCooldowns.Provider());
         }
+    }
+    
+    @SubscribeEvent
+    public static void attachWorldCapability(AttachCapabilitiesEvent<World> event) {
+        event.addCapability(WorldEntitySwappers.Provider.NAME, new WorldEntitySwappers.Provider());
     }
 }
