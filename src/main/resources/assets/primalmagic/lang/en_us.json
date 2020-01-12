@@ -282,6 +282,9 @@
     "primalmagic.research.spell_vehicle_projectile.title": "Spell Type: Projectile",
     "primalmagic.research.spell_vehicle_projectile.text.stage.1": "Projectile spells: Lorem ipsum",
     
+    "primalmagic.research.spell_vehicle_bolt.title": "Spell Type: Bolt",
+    "primalmagic.research.spell_vehicle_bolt.text.stage.1": "Bolt spells: Lorem ipsum",
+    
     "primalmagic.research.spell_payload_frost.title": "Spell Payload: Frost",
     "primalmagic.research.spell_payload_frost.text.stage.1": "Frost spells: Lorem ipsum",
     
@@ -429,10 +432,12 @@
     "primalmagic.spell.vehicle.type.none": "None",
     "primalmagic.spell.vehicle.type.touch": "Touch",
     "primalmagic.spell.vehicle.type.projectile": "Projectile",
+    "primalmagic.spell.vehicle.type.bolt": "Bolt",
     "primalmagic.spell.vehicle.type.self": "Self",
     "primalmagic.spell.vehicle.default_name.none": "",
     "primalmagic.spell.vehicle.default_name.touch": "Hand",
     "primalmagic.spell.vehicle.default_name.projectile": "Missile",
+    "primalmagic.spell.vehicle.default_name.bolt": "Bolt",
     "primalmagic.spell.vehicle.default_name.self": "Self",
     
     "primalmagic.spell.payload.header": "Spell Payload",

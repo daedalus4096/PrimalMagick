@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagic.common.spells.payloads.PolymorphSpellPayl
 import com.verdantartifice.primalmagic.common.spells.payloads.SolarDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.TeleportSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.VoidDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.vehicles.BoltSpellVehicle;
 import com.verdantartifice.primalmagic.common.spells.vehicles.EmptySpellVehicle;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVehicle;
 import com.verdantartifice.primalmagic.common.spells.vehicles.SelfSpellVehicle;
@@ -41,6 +42,7 @@ public class InitSpells {
         SpellManager.registerVehicleType(EmptySpellVehicle.TYPE, EmptySpellVehicle::new, EmptySpellVehicle::getResearch);
         SpellManager.registerVehicleType(TouchSpellVehicle.TYPE, TouchSpellVehicle::new, TouchSpellVehicle::getResearch);
         SpellManager.registerVehicleType(ProjectileSpellVehicle.TYPE, ProjectileSpellVehicle::new, ProjectileSpellVehicle::getResearch);
+        SpellManager.registerVehicleType(BoltSpellVehicle.TYPE, BoltSpellVehicle::new, BoltSpellVehicle::getResearch);
         SpellManager.registerVehicleType(SelfSpellVehicle.TYPE, SelfSpellVehicle::new, SelfSpellVehicle::getResearch);
     }
 
