@@ -46,10 +46,12 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     
     @Override
     protected void drawFx(World world, SpellPackage spell, Vec3d source, Vec3d target) {
-        PacketHandler.sendToAllAround(
-                new SpellBoltPacket(source, target, spell.getPayload().getSource().getColor()), 
-                world.dimension.getType(), 
-                new BlockPos(source), 
-                64.0D);
+        if (spell.getPayload() != null) {
+            PacketHandler.sendToAllAround(
+                    new SpellBoltPacket(source, target, spell.getPayload().getSource().getColor()), 
+                    world.dimension.getType(), 
+                    new BlockPos(source), 
+                    64.0D);
+        }
     }
 }
