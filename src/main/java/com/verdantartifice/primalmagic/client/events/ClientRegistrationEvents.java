@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagic.client.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticleData;
 import com.verdantartifice.primalmagic.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
+import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
@@ -31,6 +33,7 @@ public class ClientRegistrationEvents {
         event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "wand_poof"));
         event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "mana_sparkle"));
         event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "spell_sparkle"));
+        event.getRegistry().register(new ParticleType<>(false, SpellBoltParticleData.DESERIALIZER).setRegistryName(PrimalMagic.MODID, "spell_bolt"));
     }
     
     @SubscribeEvent
@@ -39,6 +42,7 @@ public class ClientRegistrationEvents {
         mc.particles.registerFactory(ParticleTypesPM.WAND_POOF, WandPoofParticle.Factory::new);
         mc.particles.registerFactory(ParticleTypesPM.MANA_SPARKLE, ManaSparkleParticle.Factory::new);
         mc.particles.registerFactory(ParticleTypesPM.SPELL_SPARKLE, SpellSparkleParticle.Factory::new);
+        mc.particles.registerFactory(ParticleTypesPM.SPELL_BOLT, SpellBoltParticle.Factory::new);
     }
     
     @SubscribeEvent

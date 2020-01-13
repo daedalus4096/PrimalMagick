@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
     protected abstract double getReachDistance(@Nonnull PlayerEntity caster);
     
-    protected void drawFx(@Nonnull SpellPackage spell, Vec3d source, Vec3d target) {
+    protected void drawFx(@Nonnull World world, @Nonnull SpellPackage spell, Vec3d source, Vec3d target) {
         // Do nothing by default
     }
     
@@ -40,7 +40,7 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
             } else {
                 result = (eyePos.squareDistanceTo(entityResult.getHitVec()) <= eyePos.squareDistanceTo(blockResult.getHitVec())) ? entityResult : blockResult;
             }
-            this.drawFx(spell, eyePos, result.getHitVec());
+            this.drawFx(world, spell, eyePos, result.getHitVec());
             SpellManager.executeSpellPayload(spell, result, world, caster, true);
         }
     }
