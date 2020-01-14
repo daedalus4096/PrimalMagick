@@ -12,7 +12,6 @@ import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -24,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SpellBoltParticle extends Particle {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/particle/spell_bolt.png");
-    protected static final float WIDTH = 0.66F;
+    protected static final float WIDTH = 3F;
     
     protected final Vec3d source;
     protected final Vec3d target;
@@ -43,53 +42,34 @@ public class SpellBoltParticle extends Particle {
     public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
         Minecraft mc = Minecraft.getInstance();
         mc.textureManager.bindTexture(TEXTURE);
+        Vec3d interpVec = new Vec3d(interpPosX, interpPosY, interpPosZ);
+        Vec3d modSource = this.source.subtract(interpVec);
+        Vec3d modTarget = this.target.subtract(interpVec);
 
-        RenderHelper.disableStandardItemLighting();
-        GlStateManager.depthMask(false);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.alphaFunc(516, 0.003921569F);
-        
+        GL11.glDepthMask(false);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        GL11.glDisable(GL11.GL_CULL_FACE);
+
         GlStateManager.pushMatrix();
-        GlStateManager.translated(this.target.x, this.target.y, this.target.z);
-        GlStateManager.color4f(this.particleRed, this.particleGreen, this.particleBlue, 1.0F);
         
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder bb = tess.getBuffer();
-        bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        bb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_TEX);
         
-        bb.pos(-WIDTH, WIDTH, WIDTH).tex(0.0D, 1.0D).endVertex();
-        bb.pos(-WIDTH, -WIDTH, WIDTH).tex(0.0D, 0.0D).endVertex();
-        bb.pos(WIDTH, -WIDTH, WIDTH).tex(1.0D, 0.0D).endVertex();
-        bb.pos(WIDTH, WIDTH, WIDTH).tex(1.0D, 1.0D).endVertex();
-        
-        bb.pos(-WIDTH, WIDTH, -WIDTH).tex(0.0D, 1.0D).endVertex();
-        bb.pos(WIDTH, WIDTH, -WIDTH).tex(1.0D, 1.0D).endVertex();
-        bb.pos(WIDTH, -WIDTH, -WIDTH).tex(1.0D, 0.0D).endVertex();
-        bb.pos(-WIDTH, -WIDTH, -WIDTH).tex(0.0D, 0.0D).endVertex();
-        
-        bb.pos(WIDTH, WIDTH, -WIDTH).tex(0.0D, 1.0D).endVertex();
-        bb.pos(WIDTH, WIDTH, WIDTH).tex(1.0D, 1.0D).endVertex();
-        bb.pos(WIDTH, -WIDTH, WIDTH).tex(1.0D, 0.0D).endVertex();
-        bb.pos(WIDTH, -WIDTH, -WIDTH).tex(0.0D, 0.0D).endVertex();
-        
-        bb.pos(-WIDTH, -WIDTH, WIDTH).tex(1.0D, 0.0D).endVertex();
-        bb.pos(-WIDTH, WIDTH, WIDTH).tex(1.0D, 1.0D).endVertex();
-        bb.pos(-WIDTH, WIDTH, -WIDTH).tex(0.0D, 1.0D).endVertex();
-        bb.pos(-WIDTH, -WIDTH, -WIDTH).tex(0.0D, 0.0D).endVertex();
-        
-        bb.pos(WIDTH, WIDTH, -WIDTH).tex(1.0D, 0.0D).endVertex();
-        bb.pos(-WIDTH, WIDTH, -WIDTH).tex(0.0D, 0.0D).endVertex();
-        bb.pos(-WIDTH, WIDTH, WIDTH).tex(0.0D, 1.0D).endVertex();
-        bb.pos(WIDTH, WIDTH, WIDTH).tex(1.0D, 1.0D).endVertex();
-        
-        bb.pos(WIDTH, -WIDTH, -WIDTH).tex(1.0D, 0.0D).endVertex();
-        bb.pos(WIDTH, -WIDTH, WIDTH).tex(1.0D, 1.0D).endVertex();
-        bb.pos(-WIDTH, -WIDTH, WIDTH).tex(0.0D, 1.0D).endVertex();
-        bb.pos(-WIDTH, -WIDTH, -WIDTH).tex(0.0D, 0.0D).endVertex();
+        GlStateManager.lineWidth(WIDTH);
+        GlStateManager.color4f(this.particleRed, this.particleGreen, this.particleBlue, 1.0F);
+        bb.pos(modSource.x, modSource.y, modSource.z).tex(0.0D, 0.0D).endVertex();
+        bb.pos(modTarget.x, modTarget.y, modTarget.z).tex(1.0D, 1.0D).endVertex();
         
         tess.draw();
         
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glDepthMask(true);
+
         GlStateManager.popMatrix();
     }
 
