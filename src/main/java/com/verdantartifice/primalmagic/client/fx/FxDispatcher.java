@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Random;
 
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
+import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticleData;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
@@ -112,6 +113,21 @@ public class FxDispatcher {
         World world = getWorld();
         for (int i = 0; i < 32; i++) {
             world.addParticle(ParticleTypes.PORTAL, x, y + world.rand.nextDouble() * 2.0D, z, world.rand.nextGaussian(), 0.0D, world.rand.nextGaussian());
+        }
+    }
+    
+    public void spellBolt(double sx, double sy, double sz, double tx, double ty, double tz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellBolt(sx, sy, sz, tx, ty, tz, r, g, b);
+    }
+    
+    public void spellBolt(double sx, double sy, double sz, double tx, double ty, double tz, float r, float g, float b) {
+        Particle p = Minecraft.getInstance().particles.addParticle(new SpellBoltParticleData(tx, ty, tz), sx, sy, sz, 0.0D, 0.0D, 0.0D);
+        if (p != null) {
+            p.setColor(r, g, b);
         }
     }
 }

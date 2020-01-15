@@ -161,7 +161,15 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellVehicle getSpellVehicleComponent() {
-        return SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes(this.player).get(this.getSpellVehicleTypeIndex()));
+        ISpellVehicle retVal = SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes(this.player).get(this.getSpellVehicleTypeIndex()));
+        if (retVal != null) {
+            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.VEHICLE).entrySet()) {
+                if (retVal.getProperty(entry.getKey()) != null) {
+                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
+                }
+            }
+        }
+        return retVal;
     }
     
     public int getSpellVehicleTypeIndex() {
@@ -255,7 +263,9 @@ public class SpellcraftingAltarContainer extends Container {
     public void setSpellPropertyValue(SpellComponent component, String name, int value) {
         SpellPackage spell = this.getSpellPackage();
         SpellProperty property = null;
-        if (component == SpellComponent.PAYLOAD && spell.getPayload() != null) {
+        if (component == SpellComponent.VEHICLE && spell.getVehicle() != null) {
+            property = spell.getVehicle().getProperty(name);
+        } else if (component == SpellComponent.PAYLOAD && spell.getPayload() != null) {
             property = spell.getPayload().getProperty(name);
         } else if (component == SpellComponent.PRIMARY_MOD && spell.getPrimaryMod() != null) {
             property = spell.getPrimaryMod().getProperty(name);

@@ -113,6 +113,14 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getVehicle().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, vehicleMax, this.container::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex));
         
+        for (SpellProperty property : this.container.getSpellPackage().getVehicle().getProperties()) {
+            y += 12;
+            this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v)));
+            this.texts.put(new Vec3i(x + 18, y + 2, 7), new StringTextComponent(Integer.toString(property.getValue())));
+            this.addButton(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.container.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v)));
+            this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.getStringWidth(property.getDescription().getFormattedText()))), property.getDescription());
+        }
+        
         y = startY + 48;
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.payload.header"));
         
