@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagic.common.util;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.util.math.Vec3d;
 
 public class LineSegment {
-    protected final Vec3d start;
-    protected final Vec3d end;
+    protected Vec3d start;
+    protected Vec3d end;
     
     public LineSegment(Vec3d start, Vec3d end) {
         this.start = start;
@@ -28,5 +30,10 @@ public class LineSegment {
     
     public Vec3d getDelta() {
         return this.end.subtract(this.start);
+    }
+    
+    public void perturb(@Nonnull Vec3d perturbStart, @Nonnull Vec3d perturbEnd) {
+        this.start = this.start.add(perturbStart);
+        this.end = this.end.add(perturbEnd);
     }
 }

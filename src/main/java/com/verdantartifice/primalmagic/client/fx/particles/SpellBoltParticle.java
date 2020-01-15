@@ -30,12 +30,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SpellBoltParticle extends Particle {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/particle/spell_bolt.png");
-    protected static final float WIDTH = 3F;
+    protected static final float WIDTH = 6F;
     protected static final double MAX_DISPLACEMENT = 0.5D;
-    protected static final int GENERATIONS = 6;
+    protected static final double PERTURB_DISTANCE = 0.002D;
+    protected static final int GENERATIONS = 5;
     
     protected final Vec3d delta;
-    protected List<LineSegment> segmentList;
+    protected final List<LineSegment> segmentList;
+    protected final List<Vec3d> perturbList;
     
     protected SpellBoltParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, Vec3d target) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
@@ -43,34 +45,45 @@ public class SpellBoltParticle extends Particle {
         this.motionX = 0.0D;
         this.motionY = 0.0D;
         this.motionZ = 0.0D;
-        this.maxAge = 30;
+        this.maxAge = 10;
         this.segmentList = this.calcSegments();
+        this.perturbList = this.calcPerturbs();
     }
     
     @Nonnull
     protected List<LineSegment> calcSegments() {
         List<LineSegment> retVal = new ArrayList<>();
-        double curOffset = MAX_DISPLACEMENT;
+        double curDisplacement = MAX_DISPLACEMENT;
         
         retVal.add(new LineSegment(Vec3d.ZERO, this.delta));
         for (int gen = 0; gen < GENERATIONS; gen++) {
             List<LineSegment> tempList = new ArrayList<>();
             for (LineSegment segment : retVal) {
                 Vec3d midpoint = segment.getMiddle();
-                midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), this.world.rand).scale(curOffset));
+                midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), this.world.rand).scale(curDisplacement));
                 tempList.add(new LineSegment(segment.getStart(), midpoint));
                 tempList.add(new LineSegment(midpoint, segment.getEnd()));
             }
             retVal = tempList;
-            curOffset /= 2.0D;
+            curDisplacement /= 2.0D;
+        }
+        return retVal;
+    }
+    
+    @Nonnull
+    protected List<Vec3d> calcPerturbs() {
+        // Generate a perturbation vector for each point in the segment list, except for the start and end points
+        List<Vec3d> retVal = new ArrayList<>();
+        retVal.add(Vec3d.ZERO);
+        for (LineSegment segment : this.segmentList) {
+            retVal.add(segment.getEnd().equals(this.delta) ? Vec3d.ZERO : VectorUtils.getRandomUnitVector(this.world.rand).scale(PERTURB_DISTANCE * this.world.rand.nextDouble()));
         }
         return retVal;
     }
     
     @Override
     public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-        Minecraft mc = Minecraft.getInstance();
-        mc.textureManager.bindTexture(TEXTURE);
+        Minecraft.getInstance().textureManager.bindTexture(TEXTURE);
 
         GL11.glDepthMask(false);
         GL11.glEnable(GL11.GL_BLEND);
@@ -86,7 +99,9 @@ public class SpellBoltParticle extends Particle {
         
         GlStateManager.lineWidth(WIDTH);
         GlStateManager.color4f(this.particleRed, this.particleGreen, this.particleBlue, 1.0F);
-        for (LineSegment segment : this.segmentList) {
+        for (int index = 0; index < this.segmentList.size(); index++) {
+            LineSegment segment = this.segmentList.get(index);
+            segment.perturb(this.perturbList.get(index), this.perturbList.get(index + 1));
             bb.pos(segment.getStart().x, segment.getStart().y, segment.getStart().z).tex(0.0D, 0.0D).endVertex();
             bb.pos(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).tex(1.0D, 1.0D).endVertex();
         }
