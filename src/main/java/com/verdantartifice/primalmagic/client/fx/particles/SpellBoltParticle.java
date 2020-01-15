@@ -31,7 +31,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class SpellBoltParticle extends Particle {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/particle/spell_bolt.png");
     protected static final float WIDTH = 3F;
-    protected static final double MAX_DISPLACEMENT = 1.0D;
+    protected static final double MAX_DISPLACEMENT = 0.5D;
     protected static final int GENERATIONS = 6;
     
     protected final Vec3d delta;
@@ -57,7 +57,7 @@ public class SpellBoltParticle extends Particle {
             List<LineSegment> tempList = new ArrayList<>();
             for (LineSegment segment : retVal) {
                 Vec3d midpoint = segment.getMiddle();
-                midpoint = midpoint.add(VectorUtils.getRandomUnitVector(this.world.rand).scale(curOffset));
+                midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), this.world.rand).scale(curOffset));
                 tempList.add(new LineSegment(segment.getStart(), midpoint));
                 tempList.add(new LineSegment(midpoint, segment.getEnd()));
             }

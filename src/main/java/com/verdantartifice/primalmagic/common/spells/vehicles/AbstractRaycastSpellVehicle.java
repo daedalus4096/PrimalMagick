@@ -40,7 +40,7 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
             } else {
                 result = (eyePos.squareDistanceTo(entityResult.getHitVec()) <= eyePos.squareDistanceTo(blockResult.getHitVec())) ? entityResult : blockResult;
             }
-            this.drawFx(world, spell, eyePos, result.getHitVec());
+            this.drawFx(world, spell, eyePos.add(lookVector.scale(0.1D)), result.getHitVec());
             SpellManager.executeSpellPayload(spell, result, world, caster, true);
         }
     }
