@@ -16,6 +16,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -74,6 +75,10 @@ public class SpellProjectileEntity extends ThrowableEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         if (!this.world.isRemote) {
+            if (result.getType() == RayTraceResult.Type.ENTITY && ((EntityRayTraceResult)result).getEntity() instanceof SpellProjectileEntity) {
+                // Don't collide with other spell projectiles
+                return;
+            }
             if (this.spell != null && this.spell.getPayload() != null && this.getThrower() instanceof PlayerEntity) {
                 SpellManager.executeSpellPayload(this.spell, result, this.world, (PlayerEntity)this.getThrower(), true);
             }

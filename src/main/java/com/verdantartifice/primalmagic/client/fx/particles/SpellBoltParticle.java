@@ -95,15 +95,14 @@ public class SpellBoltParticle extends Particle {
         
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder bb = tess.getBuffer();
-        bb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_TEX);
+        bb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_TEX_COLOR);
         
         GlStateManager.lineWidth(WIDTH);
-        GlStateManager.color4f(this.particleRed, this.particleGreen, this.particleBlue, 1.0F);
         for (int index = 0; index < this.segmentList.size(); index++) {
             LineSegment segment = this.segmentList.get(index);
             segment.perturb(this.perturbList.get(index), this.perturbList.get(index + 1));
-            bb.pos(segment.getStart().x, segment.getStart().y, segment.getStart().z).tex(0.0D, 0.0D).endVertex();
-            bb.pos(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).tex(1.0D, 1.0D).endVertex();
+            bb.pos(segment.getStart().x, segment.getStart().y, segment.getStart().z).tex(0.0D, 0.0D).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).endVertex();
+            bb.pos(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).tex(1.0D, 1.0D).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).endVertex();
         }
         
         tess.draw();
