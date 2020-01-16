@@ -288,6 +288,18 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "SPELL_MOD_FORK",
+            "name": "primalmagic.research.spell_mod_fork.title",
+            "discipline": "SORCERY",
+            "parents": [ "SPELL_MOD_MINE", "SPELL_MOD_QUICKEN" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.spell_mod_fork.text.stage.1"
+                }
+            ],
+            "addenda": []
         }
     ]
 }
