@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.ManaCostWidget;
@@ -85,7 +87,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     @Override
     public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
         // Close the screen if Escape was pressed
-        if (p_keyPressed_1_ == 256) {
+        if (p_keyPressed_1_ == GLFW.GLFW_KEY_ESCAPE) {
             this.minecraft.player.closeScreen();
         }
         
