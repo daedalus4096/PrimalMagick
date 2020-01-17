@@ -19,6 +19,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Display widget for showing all the possible itemstacks for a given tag.  Used
+ * on the requirements and recipe pages.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class ItemTagWidget extends Widget {
     protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
@@ -37,6 +43,7 @@ public class ItemTagWidget extends Widget {
         Tag<Item> itemTag = ItemTags.getCollection().getOrCreate(this.tag);
         Collection<Item> tagContents = itemTag.getAllElements();
         if (tagContents != null && !tagContents.isEmpty()) {
+            // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
             Item[] tagContentsArray = tagContents.toArray(new Item[tagContents.size()]);
             ItemStack toDisplay = new ItemStack(tagContentsArray[index], 1);
@@ -51,6 +58,7 @@ public class ItemTagWidget extends Widget {
                 GlStateManager.popMatrix();
             }
             if (this.isHovered()) {
+                // If hovered, show a tooltip with the display name of the current matching itemstack
                 List<ITextComponent> textList = Collections.singletonList(toDisplay.getDisplayName());
                 GuiUtils.renderCustomTooltip(textList, this.x, this.y);
             }

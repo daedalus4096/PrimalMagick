@@ -15,6 +15,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Display widget for showing a specific required research entry on the requirements page.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class ResearchWidget extends Widget {
     protected static final ResourceLocation BAG_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_bag.png");
@@ -35,6 +40,8 @@ public class ResearchWidget extends Widget {
     @Override
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        
+        // Pick the icon to show based on the prefix of the research key
         ResourceLocation loc;
         if (this.key.getRootKey().startsWith("m_")) {
             loc = MAP_TEXTURE;
@@ -46,6 +53,7 @@ public class ResearchWidget extends Widget {
             loc = UNKNOWN_TEXTURE;
         }
         
+        // Render the icon
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -66,6 +74,7 @@ public class ResearchWidget extends Widget {
         }
         
         if (this.isHovered()) {
+            // Render tooltip
             ITextComponent text = new TranslationTextComponent("primalmagic.research." + this.key.getRootKey() + ".text");
             GuiUtils.renderCustomTooltip(Collections.singletonList(text), this.x, this.y);
         }

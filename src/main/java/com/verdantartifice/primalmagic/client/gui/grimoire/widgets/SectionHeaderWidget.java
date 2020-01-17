@@ -9,6 +9,11 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Display widget to mark a new section of research entries (e.g. "Updated") in the grimoire index.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class SectionHeaderWidget extends Widget {
     public SectionHeaderWidget(int xIn, int yIn, String msg) {
@@ -26,6 +31,7 @@ public class SectionHeaderWidget extends Widget {
         if (strWidth <= this.width) {
             mc.fontRenderer.drawString(this.getMessage(), this.x + this.width / 2 - strWidth / 2, this.y + (this.height - 8) / 2, Color.BLACK.getRGB());
         } else {
+            // Scale the string down to fit on one line, if need be
             float scale = (float)this.width / (float)strWidth;
             GlStateManager.pushMatrix();
             GlStateManager.translatef(this.x, this.y + dy + (1.0F * scale), 0.0F);
