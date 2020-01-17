@@ -14,6 +14,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
+/**
+ * Base class for grimoire shaped recipe pages.
+ * 
+ * @author Daedalus4096
+ * @param <T> type of recipe, e.g. ShapedArcaneRecipe
+ */
 @OnlyIn(Dist.CLIENT)
 public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> extends AbstractRecipePage {
     protected T recipe;

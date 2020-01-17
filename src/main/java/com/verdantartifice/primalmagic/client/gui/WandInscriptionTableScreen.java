@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * GUI screen for wand inscription table block.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class WandInscriptionTableScreen extends ContainerScreen<WandInscriptionTableContainer> {

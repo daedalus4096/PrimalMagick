@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.Mod;
  * @see {@link com.verdantartifice.primalmagic.client.events.ClientModLifecycleEvents}
  * @see {@link com.verdantartifice.primalmagic.client.events.ClientRegistrationEvents}
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @Mod(PrimalMagic.MODID)
 public class PrimalMagic {

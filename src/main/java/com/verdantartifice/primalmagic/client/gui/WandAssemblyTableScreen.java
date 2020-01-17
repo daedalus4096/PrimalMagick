@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * GUI screen for wand assembly table block.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class WandAssemblyTableScreen extends ContainerScreen<WandAssemblyTableContainer> {

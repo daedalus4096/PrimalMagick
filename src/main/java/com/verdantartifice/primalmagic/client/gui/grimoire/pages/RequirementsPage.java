@@ -24,6 +24,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Grimoire page showing the requirements needed to advance a research entry to its next stage.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class RequirementsPage extends AbstractPage {
     protected ResearchStage stage;

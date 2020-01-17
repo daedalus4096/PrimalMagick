@@ -10,7 +10,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 /**
  * Define and register custom client key-bindings.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 public class KeyBindings {
     public static KeyBinding changeSpellKey;    // Key for changing the active spell of a wand

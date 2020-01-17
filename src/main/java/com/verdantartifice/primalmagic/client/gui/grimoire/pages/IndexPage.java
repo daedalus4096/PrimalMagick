@@ -14,6 +14,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Grimoire page showing the list of available disciplines.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class IndexPage extends AbstractPage {
     protected List<ResearchDiscipline> contents = new ArrayList<>();
@@ -55,6 +60,7 @@ public class IndexPage extends AbstractPage {
     
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        // Add a button to the screen for each discipline in the page contents
         for (ResearchDiscipline discipline : this.getDisciplines()) {
             String text = (new TranslationTextComponent(discipline.getNameTranslationKey())).getFormattedText();
             screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, discipline));

@@ -10,6 +10,11 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.item.crafting.ShapelessRecipe;
 
+/**
+ * Factory class to create an appropriate grimoire recipe page for a given recipe type.
+ * 
+ * @author Daedalus4096
+ */
 public class RecipePageFactory {
     @Nullable
     public static AbstractRecipePage createPage(@Nonnull IRecipe<?> recipe) {

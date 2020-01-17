@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 /**
  * Respond to client-only rendering events.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT)

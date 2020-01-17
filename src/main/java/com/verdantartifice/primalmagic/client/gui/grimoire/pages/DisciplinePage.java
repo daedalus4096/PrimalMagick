@@ -17,6 +17,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Grimoire page showing the list of available research entries in a discipline.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class DisciplinePage extends AbstractPage {
     protected ResearchDiscipline discipline;
@@ -62,10 +67,12 @@ public class DisciplinePage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         for (Object obj : this.getContents()) {
             if (obj instanceof ResearchEntry) {
+                // If the current content object is a research entry, add a button for it to the screen
                 ResearchEntry entry = (ResearchEntry)obj;
                 String text = (new TranslationTextComponent(entry.getNameTranslationKey())).getFormattedText();
                 screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, text, screen, entry));
             } else if (obj instanceof ITextComponent) {
+                // If the current content object is a text component, add a section header with that text to the screen
                 String text = ((ITextComponent)obj).getFormattedText();
                 screen.addWidgetToScreen(new SectionHeaderWidget(x + 12 + (side * 140), y, text));
             }

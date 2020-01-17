@@ -14,6 +14,12 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Base class for grimoire shapeless recipe pages.
+ * 
+ * @author Daedalus4096
+ * @param <T> type of recipe, e.g. ShapelessArcaneRecipe
+ */
 @OnlyIn(Dist.CLIENT)
 public abstract class AbstractShapelessRecipePage<T extends IRecipe<?>> extends AbstractRecipePage {
     protected T recipe;

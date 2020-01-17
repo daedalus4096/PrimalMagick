@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * Particle type shown when transforming a block with a wand.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class WandPoofParticle extends SpriteTexturedParticle {

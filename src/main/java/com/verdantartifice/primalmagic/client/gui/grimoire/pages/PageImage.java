@@ -10,6 +10,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * An image element to be rendered on a grimoire page.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class PageImage extends AbstractGui implements IPageElement {
     public int x, y, width, height, adjustedWidth, adjustedHeight;
@@ -18,6 +23,7 @@ public class PageImage extends AbstractGui implements IPageElement {
     
     @Nullable
     public static PageImage parse(String str) {
+        // Parse the string representation of a page image into an element
         String[] tokens = str.split(":");
         if (tokens.length != 7) {
             return null;
@@ -33,6 +39,7 @@ public class PageImage extends AbstractGui implements IPageElement {
             image.adjustedWidth = (int)(image.width * image.scale);
             image.adjustedHeight = (int)(image.height * image.scale);
             if (image.adjustedWidth > 208 || image.adjustedHeight > 140) {
+                // If the adjusted size of the image is too big, abort
                 return null;
             }
             return image;
@@ -43,6 +50,7 @@ public class PageImage extends AbstractGui implements IPageElement {
 
     @Override
     public void render(int side, int x, int y) {
+        // Render the image at this element's resource location to the screen
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.pushMatrix();

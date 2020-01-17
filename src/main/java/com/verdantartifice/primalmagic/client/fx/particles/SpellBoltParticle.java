@@ -30,7 +30,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * Particle type shown when casting a bolt-vehicle spell.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class SpellBoltParticle extends Particle {

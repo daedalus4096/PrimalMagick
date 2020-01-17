@@ -15,7 +15,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 /**
  * GUI element for the toast that shows when you complete a research entry.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 public class ResearchToast implements IToast {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/hud.png");

@@ -44,6 +44,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * GUI screen for the grimoire research browser.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
@@ -78,11 +83,15 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
+        // Determine if we need to update the GUI based on how long it's been since the last refresh
         long millis = System.currentTimeMillis();
         if (millis > this.lastCheck) {
+            // Update more frequently if waiting for the server to process a progression
             this.lastCheck = this.progressing ? (millis + 250L) : (millis + 2000L);
             this.initPages();
             this.initButtons();
+            
+            // Reset to the first page of the entry if the current stage has advanced
             if (this.currentStageIndex > this.lastStageIndex) {
                 this.progressing = false;
                 this.lastStageIndex = this.currentStageIndex;
@@ -90,6 +99,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 this.updateNavButtonVisibility();
             }
         }
+        
         this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
@@ -119,6 +129,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     protected void initPages() {
+        // Parse grimoire pages based on the current topic
         this.pages.clear();
         if (this.container.getTopic() == null) {
             this.parseIndexPages();
@@ -133,6 +144,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int current = 0;
         this.buttons.clear();
         this.children.clear();
+        
+        // Initialize buttons for the two visible pages
         for (AbstractPage page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
                 this.initPageButtons(page, current % 2, this.scaledLeft + 23, this.scaledTop + 9);
@@ -142,6 +155,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 break;
             }
         }
+        
+        // Create navigation buttons and update their visibility
         this.nextPageButton = new PageButton(this.guiLeft + 258, this.guiTop + 172, this, true);
         this.prevPageButton = new PageButton(this.guiLeft - 12, this.guiTop + 172, this, false);
         this.backButton = new BackButton(this.guiLeft + 120, this.guiTop + 172, this);
@@ -170,6 +185,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        // Render the grimoire background
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
 
@@ -184,6 +200,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         this.blit(0, 0, 0, 0, this.xSize, this.ySize);
         GlStateManager.popMatrix();
         
+        // Render the two visible pages
         int current = 0;
         for (AbstractPage page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
@@ -202,12 +219,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     private List<ResearchDiscipline> buildDisciplineList() {
+        // Gather a list of all research disciplines, sorted by their display names
         return ResearchDisciplines.getAllDisciplines().stream()
                                     .sorted(Comparator.comparing(d -> (new TranslationTextComponent(d.getNameTranslationKey())).getString()))
                                     .collect(Collectors.toList());
     }
     
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
+        // Gather a list of all research entries for the given discipline, sorted by their display names
         return discipline.getEntries().stream()
                 .sorted(Comparator.comparing(e -> (new TranslationTextComponent(e.getNameTranslationKey())).getString()))
                 .collect(Collectors.toList());
@@ -220,12 +239,15 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             return;
         }
         
-        int heightRemaining = 182;
+        // Add each unlocked research discipline to the current index page
+        int heightRemaining = 182;  // Leave enough room for the page header
         IndexPage tempPage = new IndexPage(true);
         for (ResearchDiscipline discipline : disciplines) {
             if (discipline.getUnlockResearchKey() == null || discipline.getUnlockResearchKey().isKnownByStrict(Minecraft.getInstance().player)) {
                 tempPage.addDiscipline(discipline);
                 heightRemaining -= 12;
+                
+                // If there isn't enough room for another discipline, start a new page
                 if (heightRemaining < 12 && !tempPage.getDisciplines().isEmpty()) {
                     heightRemaining = 210;
                     this.pages.add(tempPage);
@@ -233,6 +255,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 }
             }
         }
+        
+        // Add the final page to the collection, if it's not empty
         if (!tempPage.getDisciplines().isEmpty()) {
             this.pages.add(tempPage);
         }
@@ -513,6 +537,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     public void goBack() {
+        // Pop the last viewed topic off the history stack and open a new screen for it
         if (!HISTORY.isEmpty()) {
             Object lastTopic = HISTORY.remove(HISTORY.size() - 1);
             this.container.setTopic(lastTopic);
@@ -528,12 +553,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     @Override
     public void onClose() {
+        // Clear the topic history when closing the screen
         HISTORY.clear();
         super.onClose();
     }
     
     @Override
     public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+        // Clear the topic history when closing the screen
         if (p_keyPressed_1_ == GLFW.GLFW_KEY_ESCAPE) {
             HISTORY.clear();
         }

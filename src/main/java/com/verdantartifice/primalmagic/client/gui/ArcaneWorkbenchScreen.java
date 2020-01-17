@@ -21,7 +21,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * GUI screen for arcane workbench block.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContainer> {

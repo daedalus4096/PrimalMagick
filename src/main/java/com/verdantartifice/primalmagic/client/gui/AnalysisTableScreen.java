@@ -26,7 +26,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * GUI screen for analysis table block.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer> {

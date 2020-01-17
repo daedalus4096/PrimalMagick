@@ -8,6 +8,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * A string element to be rendered on a grimoire page.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class PageString implements IPageElement {
     protected String str;
@@ -22,6 +27,7 @@ public class PageString implements IPageElement {
 
     @Override
     public void render(int side, int x, int y) {
+        // Render this element's string to the screen
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -33,6 +39,7 @@ public class PageString implements IPageElement {
         Minecraft mc = Minecraft.getInstance();
         y += mc.fontRenderer.FONT_HEIGHT;
         if (this.str.endsWith("~B")) {
+            // If this element ends with a <BR> tag, leave some extra vertical space after it
             y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66D);
         }
         return y;

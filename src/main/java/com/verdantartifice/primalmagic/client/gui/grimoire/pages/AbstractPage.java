@@ -13,6 +13,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Root class for all grimoire pages.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public abstract class AbstractPage extends AbstractGui {
     private static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
@@ -33,15 +38,16 @@ public abstract class AbstractPage extends AbstractGui {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
         if (this.renderTopTitleBar()) {
-            this.blit(x + 10 + (side * 140), y + 18, 24, 184, 96, 5);
+            this.blit(x + 10 + (side * 140), y + 18, 24, 184, 96, 5);   // Render the separator bar above the title text
         }
-        this.blit(x + 10 + (side * 140), y + 35, 24, 184, 96, 5);
+        this.blit(x + 10 + (side * 140), y + 35, 24, 184, 96, 5);   // Render the separator bar below the title text
         String headerText = new TranslationTextComponent(this.getTitleTranslationKey()).getFormattedText();
         int offset = mc.fontRenderer.getStringWidth(headerText);
         int indent = 124;
         if (offset <= 124) {
             mc.fontRenderer.drawString(headerText, x - 3 + (side * 140) + (indent / 2) - (offset / 2), y + 25, Color.BLACK.getRGB());
         } else {
+            // Scale down the title text if necessary to make it fit on one line
             float scale = 124.0F / offset;
             GlStateManager.pushMatrix();
             GlStateManager.translatef(x - 3 + (side * 140) + (indent / 2) - (offset / 2 * scale), y + 25 + (1.0F * scale), 0.0F);

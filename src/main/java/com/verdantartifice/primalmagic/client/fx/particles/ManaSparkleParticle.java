@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * Particle type shown when draining a mana font with a wand.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class ManaSparkleParticle extends SpriteTexturedParticle {

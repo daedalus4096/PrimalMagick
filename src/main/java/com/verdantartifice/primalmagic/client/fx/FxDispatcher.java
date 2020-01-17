@@ -19,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * Create client-side special effects, usually involving particles.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class FxDispatcher {

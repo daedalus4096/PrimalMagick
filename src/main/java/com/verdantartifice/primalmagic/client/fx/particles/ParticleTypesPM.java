@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ObjectHolder;
 /**
  * Object holder for mod particle types.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 @ObjectHolder(PrimalMagic.MODID)

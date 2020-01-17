@@ -14,7 +14,7 @@ import net.minecraft.util.registry.Registry;
 /**
  * Particle data, specifically target point, for spell bolts
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 public class SpellBoltParticleData implements IParticleData {
     public static final IParticleData.IDeserializer<SpellBoltParticleData> DESERIALIZER = new IParticleData.IDeserializer<SpellBoltParticleData>() {

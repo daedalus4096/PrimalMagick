@@ -12,6 +12,11 @@ import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Grimoire page showing the page elements for a research stage.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class StagePage extends AbstractPage {
     protected ResearchStage stage;

@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * GUI screen for the calcinator block.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class CalcinatorScreen extends ContainerScreen<CalcinatorContainer> {

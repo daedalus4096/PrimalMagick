@@ -37,7 +37,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * GUI screen for the spellcrafting altar block.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltarContainer> {
@@ -301,7 +301,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     /**
      * Spinner button that updates an int value.  Has a minimum and maximum value, and wraps the value around.
      * 
-     * @author Michael Bunting
+     * @author Daedalus4096
      */
     protected static class CyclicBoundedSpinnerButton extends Button {
         protected final boolean isIncrement;

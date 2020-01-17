@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 /**
  * Respond to client-only Forge registration events.
  * 
- * @author Michael Bunting
+ * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
