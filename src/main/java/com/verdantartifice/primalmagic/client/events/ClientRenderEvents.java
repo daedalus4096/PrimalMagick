@@ -22,6 +22,11 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Respond to client-only rendering events.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT)
 public class ClientRenderEvents {
@@ -29,6 +34,8 @@ public class ClientRenderEvents {
     public static void renderTooltip(ItemTooltipEvent event) {
         Minecraft mc = Minecraft.getInstance();
         Screen gui = mc.currentScreen;
+        
+        // Make the tooltip changes for showing primal affinities on an itemstack
         if (gui instanceof ContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHelper.isMouseGrabbed() && event.getItemStack() != null) {
             SourceList sources = AffinityManager.getAffinities(event.getItemStack(), mc.world);
             if (sources == null || sources.isEmpty()) {
@@ -60,6 +67,8 @@ public class ClientRenderEvents {
     public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground event) {
         Minecraft mc = Minecraft.getInstance();
         Screen gui = mc.currentScreen;
+        
+        // Show the source images for primal affinities for an itemstack
         if (gui instanceof ContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHelper.isMouseGrabbed() && event.getStack() != null) {
             int bottom = event.getHeight();
             if (!event.getLines().isEmpty()) {

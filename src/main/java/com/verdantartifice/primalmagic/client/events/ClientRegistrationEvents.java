@@ -25,6 +25,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Respond to client-only Forge registration events.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrationEvents {
@@ -45,6 +50,11 @@ public class ClientRegistrationEvents {
         mc.particles.registerFactory(ParticleTypesPM.SPELL_BOLT, SpellBoltParticle.Factory::new);
     }
     
+    /**
+     * Register special model resource locations that must be loaded even if not tied to a block state.
+     * 
+     * @param event
+     */
     @SubscribeEvent
     public static void onModelRegister(ModelRegistryEvent event) {
         ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), ""));

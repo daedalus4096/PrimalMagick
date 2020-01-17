@@ -13,13 +13,18 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Respond to client-only input-related events.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT)
 public class InputEvents {
     @SubscribeEvent
     public static void onKeyInput(InputEvent.KeyInputEvent event) {
         if (KeyBindings.changeSpellKey.isPressed()) {
-            boolean shift = (event.getModifiers() & GLFW.GLFW_MOD_SHIFT) != 0;
+            boolean shift = (event.getModifiers() & GLFW.GLFW_MOD_SHIFT) != 0;  // Cycle spells in reverse if shift is pressed as well
             PacketHandler.sendToServer(new CycleActiveSpellPacket(shift));
         }
     }

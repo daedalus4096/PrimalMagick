@@ -13,6 +13,18 @@ import net.minecraft.item.ItemGroup;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Main class of the Primal Magic mod.  Most initialization doesn't happen here,
+ * but rather in response to Forge events.
+ * 
+ * @see {@link com.verdantartifice.primalmagic.common.events.ModLifecycleEvents}
+ * @see {@link com.verdantartifice.primalmagic.common.events.ServerLifecycleEvents}
+ * @see {@link com.verdantartifice.primalmagic.common.events.RegistrationEvents}
+ * @see {@link com.verdantartifice.primalmagic.client.events.ClientModLifecycleEvents}
+ * @see {@link com.verdantartifice.primalmagic.client.events.ClientRegistrationEvents}
+ * 
+ * @author Michael Bunting
+ */
 @Mod(PrimalMagic.MODID)
 public class PrimalMagic {
     public static final String MODID = "primalmagic";
