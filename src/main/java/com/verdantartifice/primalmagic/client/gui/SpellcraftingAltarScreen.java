@@ -32,6 +32,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * GUI screen for the spellcrafting altar block.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltarContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/spellcrafting_altar.png");
@@ -51,6 +56,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         super.init();
         this.minecraft.keyboardListener.enableRepeatEvents(true);
         
+        // Set up the spell name text entry widget
         this.nameField = new TextFieldWidget(this.font, this.guiLeft + 49, this.guiTop + 12, 103, 12, "");
         this.nameField.setCanLoseFocus(false);
         this.nameField.changeFocus(true);
@@ -64,6 +70,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     
     @Override
     public void resize(Minecraft p_resize_1_, int p_resize_2_, int p_resize_3_) {
+        // Preserve spell name text upon GUI re-initialization
         String str = this.nameField.getText();
         this.init(p_resize_1_, p_resize_2_, p_resize_3_);
         this.nameField.setText(str);
@@ -77,9 +84,12 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     
     @Override
     public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+        // Close the screen if Escape was pressed
         if (p_keyPressed_1_ == 256) {
             this.minecraft.player.closeScreen();
         }
+        
+        // Otherwise, process the text entry
         return !this.nameField.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) && !this.nameField.func_212955_f() ? super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) : true;
     }
     
@@ -100,6 +110,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         int payloadMax = SpellManager.getPayloadTypes(this.container.getPlayer()).size() - 1;
         int modMax = SpellManager.getModTypes(this.container.getPlayer()).size() - 1;
 
+        // Init mana cost indicator
         SourceList manaCost = this.container.getSpellPackage().getManaCost();
         if (manaCost != null && !manaCost.isEmpty()) {
             Source source = manaCost.getSourcesSorted().get(0);
@@ -108,11 +119,13 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.vehicle.header"));
         
+        // Init spell vehicle type selector
         y += 12;
         this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, vehicleMax, this.container::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getVehicle().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, vehicleMax, this.container::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex));
         
+        // Init spell vehicle property selectors, if any
         for (SpellProperty property : this.container.getSpellPackage().getVehicle().getProperties()) {
             y += 12;
             this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v)));
@@ -124,11 +137,13 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         y = startY + 48;
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.payload.header"));
         
+        // Init spell payload type selector
         y += 12;
         this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, payloadMax, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getPayload().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, payloadMax, this.container::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
         
+        // Init spell payload property selectors, if any
         for (SpellProperty property : this.container.getSpellPackage().getPayload().getProperties()) {
             y += 12;
             this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v)));
@@ -137,15 +152,18 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.getStringWidth(property.getDescription().getFormattedText()))), property.getDescription());
         }
         
+        // Move to the top of the right-hand column
         x += 110;
         y = startY;
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.primary_mod.header"));
         
+        // Init primary spell mod type selector
         y += 12;
         this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, modMax, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getPrimaryMod().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, modMax, this.container::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
         
+        // Init primary spell mod property selectors, if any
         for (SpellProperty property : this.container.getSpellPackage().getPrimaryMod().getProperties()) {
             y += 12;
             this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v)));
@@ -157,11 +175,13 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         y = startY + 48;
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslationTextComponent("primalmagic.spell.secondary_mod.header"));
         
+        // Init secondary spell mod type selector
         y += 12;
         this.addButton(new CyclicBoundedSpinnerButton(x, y, false, 0, modMax, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.container.getSpellPackage().getSecondaryMod().getTypeName());
         this.addButton(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, modMax, this.container::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
         
+        // Init secondary spell mod property selectors, if any
         for (SpellProperty property : this.container.getSpellPackage().getSecondaryMod().getProperties()) {
             y += 12;
             this.addButton(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.container.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v)));
@@ -186,12 +206,17 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
+        
+        // Render the GUI background
         this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        
+        // Render the text entry widget's background
         this.blit(this.guiLeft + 46, this.guiTop + 8, 0, this.ySize, 110, 16);
     }
     
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        // Render any text entries generated during initWidgets
         int color = 0x404040;
         String str;
         int strWidth;
@@ -203,17 +228,24 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     }
     
     private void updateName(String name) {
+        // Use the default name for the selected spell component types if no name has been entered
         if (name.isEmpty()) {
             name = this.container.getDefaultSpellName().getString();
         }
+        
+        // Update the spell name on both client and server sides
         this.container.setSpellName(name);
         PacketHandler.sendToServer(new SetSpellNamePacket(this.container.windowId, name));
     }
     
     private void updateSpellVehicleTypeIndex(int index) {
         boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
+        
+        // Update the spell vehicle type on both client and server sides
         this.container.setSpellVehicleTypeIndex(index);
         PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.VEHICLE, index));
+        
+        // Recalculate the spell name if using the default or the spell name is empty
         if (recalcName) {
             this.nameField.setText(this.container.getDefaultSpellName().getString());
         }
@@ -221,8 +253,12 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     
     private void updateSpellPayloadTypeIndex(int index) {
         boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
+        
+        // Update the spell payload type on both client and server sides
         this.container.setSpellPayloadTypeIndex(index);
         PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.PAYLOAD, index));
+        
+        // Recalculate the spell name if using the default or the spell name is empty
         if (recalcName) {
             this.nameField.setText(this.container.getDefaultSpellName().getString());
         }
@@ -230,8 +266,12 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     
     private void updateSpellPrimaryModTypeIndex(int index) {
         boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
+        
+        // Update the spell's primary mod type on both client and server sides
         this.container.setSpellPrimaryModTypeIndex(index);
         PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.PRIMARY_MOD, index));
+
+        // Recalculate the spell name if using the default or the spell name is empty
         if (recalcName) {
             this.nameField.setText(this.container.getDefaultSpellName().getString());
         }
@@ -239,18 +279,28 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
     
     private void updateSpellSecondaryModTypeIndex(int index) {
         boolean recalcName = this.nameField.getText().isEmpty() || this.nameField.getText().equals(this.container.getDefaultSpellName().getString());
+        
+        // Update the spell's secondary mod type on both client and server sides
         this.container.setSpellSecondaryModTypeIndex(index);
         PacketHandler.sendToServer(new SetSpellComponentTypeIndexPacket(this.container.windowId, SpellComponent.SECONDARY_MOD, index));
+
+        // Recalculate the spell name if using the default or the spell name is empty
         if (recalcName) {
             this.nameField.setText(this.container.getDefaultSpellName().getString());
         }
     }
     
     private void updateSpellPropertyValue(SpellComponent component, String name, int value) {
+        // Update the property value for the given spell component on both client and server sides
         this.container.setSpellPropertyValue(component, name, value);
         PacketHandler.sendToServer(new SetSpellComponentPropertyPacket(this.container.windowId, component, name, value));
     }
     
+    /**
+     * Spinner button that updates an int value.  Has a minimum and maximum value, and wraps the value around.
+     * 
+     * @author Michael Bunting
+     */
     protected static class CyclicBoundedSpinnerButton extends Button {
         protected final boolean isIncrement;
         protected final int min;
@@ -299,12 +349,18 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
             public void onPress(Button button) {
                 if (button instanceof CyclicBoundedSpinnerButton) {
                     CyclicBoundedSpinnerButton spinner = (CyclicBoundedSpinnerButton)button;
+                    
+                    // Caluclate the new value
                     int newVal = spinner.getGetter().get().intValue() + (spinner.isIncrement() ? 1 : -1);
+                    
+                    // Wrap the value around if beyond min or max
                     if (newVal < spinner.getMin()) {
                         newVal = spinner.getMax();
                     } else if (newVal > spinner.getMax()) {
                         newVal = spinner.getMin();
                     }
+                    
+                    // Update the owner with the new value
                     spinner.getSetter().accept(Integer.valueOf(newVal));
                 }
             }

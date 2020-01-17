@@ -18,6 +18,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * GUI screen for arcane workbench block.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/arcane_workbench.png");
@@ -44,6 +49,7 @@ public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContai
     
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
         IArcaneRecipe activeArcaneRecipe = this.container.getActiveArcaneRecipe();
         if (activeArcaneRecipe == null || activeArcaneRecipe.getManaCosts() == null || activeArcaneRecipe.getManaCosts().isEmpty()) {
             ITextComponent text = new TranslationTextComponent("primalmagic.crafting.no_mana");
@@ -57,6 +63,8 @@ public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContai
     protected void initWidgets() {
         this.buttons.clear();
         this.children.clear();
+        
+        // Show mana cost widgets, if the active recipe has a mana cost
         IArcaneRecipe activeArcaneRecipe = this.container.getActiveArcaneRecipe();
         if (activeArcaneRecipe != null) {
             SourceList manaCosts = activeArcaneRecipe.getManaCosts();

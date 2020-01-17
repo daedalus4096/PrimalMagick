@@ -10,6 +10,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Particle type shown when transforming a block with a wand.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 public class WandPoofParticle extends SpriteTexturedParticle {
     protected final IAnimatedSprite spriteSet;
@@ -43,7 +48,7 @@ public class WandPoofParticle extends SpriteTexturedParticle {
             this.setExpired();
         } else {
             this.selectSpriteWithAge(this.spriteSet);
-            this.motionY += 0.004D;
+            this.motionY += 0.004D; // Poof clouds should float up, rather than be affected by gravity
             this.move(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.9D;
             this.motionY *= 0.9D;

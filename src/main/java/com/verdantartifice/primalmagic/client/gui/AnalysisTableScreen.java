@@ -23,6 +23,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * GUI screen for analysis table block.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_table.png");
@@ -54,6 +59,8 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         ITextComponent text = null;
         ItemStack lastScannedStack = this.container.getLastScannedStack();
+        
+        // Generate text in the case that no item has been analyzed, or the item has no affinities
         if (lastScannedStack == null || lastScannedStack.isEmpty()) {
             text = new TranslationTextComponent("primalmagic.analysis.no_item");
         } else {
@@ -62,6 +69,8 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
                 text = new TranslationTextComponent("primalmagic.analysis.no_affinities");
             }
         }
+        
+        // Render any generated text
         if (text != null) {
             int width = this.font.getStringWidth(text.getFormattedText());
             int x = 1 + (this.getXSize() - width) / 2;
@@ -73,9 +82,12 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
     protected void initWidgets() {
         this.buttons.clear();
         this.children.clear();
+        
         this.addButton(new ImageButton(this.guiLeft + 78, this.guiTop + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
             PacketHandler.sendToServer(new AnalysisActionPacket(this.container.windowId));
         }));
+        
+        // Show affinity widgets, if the last scanned stack has affinities
         ItemStack lastScannedStack = this.container.getLastScannedStack();
         if (lastScannedStack != null && !lastScannedStack.isEmpty()) {
             SourceList sources = AffinityManager.getAffinities(lastScannedStack, this.world);

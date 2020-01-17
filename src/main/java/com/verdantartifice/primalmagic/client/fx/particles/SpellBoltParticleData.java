@@ -11,6 +11,11 @@ import net.minecraft.particles.ParticleType;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 
+/**
+ * Particle data, specifically target point, for spell bolts
+ * 
+ * @author Michael Bunting
+ */
 public class SpellBoltParticleData implements IParticleData {
     public static final IParticleData.IDeserializer<SpellBoltParticleData> DESERIALIZER = new IParticleData.IDeserializer<SpellBoltParticleData>() {
         @Override

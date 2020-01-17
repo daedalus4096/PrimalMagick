@@ -11,6 +11,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Particle type shown when draining a mana font with a wand.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 public class ManaSparkleParticle extends SpriteTexturedParticle {
     protected final IAnimatedSprite spriteSet;
@@ -82,6 +87,8 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
             double theta = tpl * t;
             double radius = 0.5D * Math.sin(Math.PI * t);
             this.age++;
+            
+            // Compute position along spiral path 
             this.posX = this.initX + (this.dist * this.cosYaw * this.cosPitch * t) + (radius * this.cosYaw * this.sinPitch * Math.sin(theta)) + (radius * this.sinYaw * this.cosPitch * Math.sin(theta));
             this.posY = this.initY + (radius * this.cosPitch * Math.cos(theta)) + (this.dist * this.sinPitch * t);
             this.posZ = this.initZ - (radius * this.cosYaw * this.cosPitch * Math.sin(theta)) - (radius * this.cosYaw * this.sinPitch * Math.cos(theta)) + (this.dist * this.sinYaw * this.cosPitch * t);

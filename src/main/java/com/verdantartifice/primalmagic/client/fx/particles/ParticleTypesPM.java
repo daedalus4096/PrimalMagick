@@ -8,6 +8,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 
+/**
+ * Object holder for mod particle types.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 @ObjectHolder(PrimalMagic.MODID)
 public class ParticleTypesPM {

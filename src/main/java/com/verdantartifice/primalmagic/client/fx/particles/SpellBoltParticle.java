@@ -27,6 +27,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Particle type shown when casting a bolt-vehicle spell.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 public class SpellBoltParticle extends Particle {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/particle/spell_bolt.png");
@@ -55,6 +60,7 @@ public class SpellBoltParticle extends Particle {
         List<LineSegment> retVal = new ArrayList<>();
         double curDisplacement = MAX_DISPLACEMENT;
         
+        // Fractally generate a series of line segments, splitting each at the midpoint and adding an orthogonal displacement
         retVal.add(new LineSegment(Vec3d.ZERO, this.delta));
         for (int gen = 0; gen < GENERATIONS; gen++) {
             List<LineSegment> tempList = new ArrayList<>();
@@ -97,10 +103,14 @@ public class SpellBoltParticle extends Particle {
         BufferBuilder bb = tess.getBuffer();
         bb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_TEX_COLOR);
         
+        // Draw each line segment as an OpenGL line
         GlStateManager.lineWidth(WIDTH);
         for (int index = 0; index < this.segmentList.size(); index++) {
             LineSegment segment = this.segmentList.get(index);
+            
+            // Move the endpoints of each segment along their computed motion path before rendering to make the bolt move
             segment.perturb(this.perturbList.get(index), this.perturbList.get(index + 1));
+            
             bb.pos(segment.getStart().x, segment.getStart().y, segment.getStart().z).tex(0.0D, 0.0D).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).endVertex();
             bb.pos(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).tex(1.0D, 1.0D).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).endVertex();
         }

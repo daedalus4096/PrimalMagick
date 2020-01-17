@@ -10,6 +10,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Particle type shown during spell trails and impacts.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 public class SpellSparkleParticle extends SpriteTexturedParticle {
     protected final IAnimatedSprite spriteSet;

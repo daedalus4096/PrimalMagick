@@ -16,6 +16,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Create client-side special effects, usually involving particles.
+ * 
+ * @author Michael Bunting
+ */
 @OnlyIn(Dist.CLIENT)
 public class FxDispatcher {
     public static final FxDispatcher INSTANCE = new FxDispatcher();
@@ -33,6 +38,7 @@ public class FxDispatcher {
     }
     
     public void wandPoof(double x, double y, double z, float r, float g, float b, boolean sound, Direction side) {
+        // Release a cluster of poof clouds when transforming a block with a wand
         Random rng = getWorld().rand;
         if (sound) {
             getWorld().playSound(x, y, z, SoundsPM.POOF, SoundCategory.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
@@ -62,6 +68,7 @@ public class FxDispatcher {
     }
     
     public void manaSparkle(double x1, double y1, double z1, double x2, double y2, double z2, int maxAge, float r, float g, float b) {
+        // Show a particle when draining a mana font with a wand
         double vx = (x2 - x1) / (double)maxAge;
         double vy = (y2 - y1) / (double)maxAge;
         double vz = (z2 - z1) / (double)maxAge;
@@ -81,6 +88,7 @@ public class FxDispatcher {
     }
     
     public void spellTrail(double x, double y, double z, float r, float g, float b) {
+        // Show a particle trailing behind a spell projectile
         Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.SPELL_SPARKLE, x, y, z, 0.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
@@ -96,6 +104,7 @@ public class FxDispatcher {
     }
     
     public void spellImpact(double x, double y, double z, int radius, float r, float g, float b) {
+        // Show a cluster of particles at the impact point of a spell
         Random rng = getWorld().rand;
         int count = (15 + rng.nextInt(11)) * radius;
         for (int index = 0; index < count; index++) {
@@ -110,6 +119,7 @@ public class FxDispatcher {
     }
     
     public void teleportArrival(double x, double y, double z) {
+        // Show a cluster of particles at the point where a player arrives from a teleport spell; similar to Ender Pearl effect
         World world = getWorld();
         for (int i = 0; i < 32; i++) {
             world.addParticle(ParticleTypes.PORTAL, x, y + world.rand.nextDouble() * 2.0D, z, world.rand.nextGaussian(), 0.0D, world.rand.nextGaussian());
@@ -125,6 +135,7 @@ public class FxDispatcher {
     }
     
     public void spellBolt(double sx, double sy, double sz, double tx, double ty, double tz, float r, float g, float b) {
+        // Show a spell bolt "particle"
         Particle p = Minecraft.getInstance().particles.addParticle(new SpellBoltParticleData(tx, ty, tz), sx, sy, sz, 0.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
