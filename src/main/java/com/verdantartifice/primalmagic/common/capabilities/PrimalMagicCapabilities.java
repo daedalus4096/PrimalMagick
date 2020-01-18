@@ -8,6 +8,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 
+/**
+ * Access point for all capabilities defined by the mod.  Capabilities are injected with the output 
+ * of their registered factories post-registration.
+ * 
+ * @author Daedalus4096
+ */
 public class PrimalMagicCapabilities {
     @CapabilityInject(IPlayerKnowledge.class)
     public static final Capability<IPlayerKnowledge> KNOWLEDGE = null;

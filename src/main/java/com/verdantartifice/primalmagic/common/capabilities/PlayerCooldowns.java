@@ -18,8 +18,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
+/**
+ * Default implementation of the player cooldown capability.
+ * 
+ * @author Daedalus4096
+ */
 public class PlayerCooldowns implements IPlayerCooldowns {
-    private final Map<CooldownType, Long> cooldowns = new ConcurrentHashMap<>();
+    private final Map<CooldownType, Long> cooldowns = new ConcurrentHashMap<>();    // Map of cooldown types to recovery times, in system milliseconds
 
     @Override
     public CompoundNBT serializeNBT() {
@@ -67,6 +72,7 @@ public class PlayerCooldowns implements IPlayerCooldowns {
         if (type == null) {
             return false;
         }
+        // The cooldown is still active if the stored recovery time is greater than the current system time
         return (this.cooldowns.getOrDefault(type, Long.valueOf(0)).longValue() > System.currentTimeMillis());
     }
 
@@ -89,11 +95,17 @@ public class PlayerCooldowns implements IPlayerCooldowns {
         }
     }
     
+    /**
+     * Capability provider for the player cooldowns capability.  Used to attach capability data to the owner.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.events.CapabilityEvents}
+     */
     public static class Provider implements ICapabilitySerializable<CompoundNBT> {
         public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_cooldowns");
         
         private final IPlayerCooldowns instance = PrimalMagicCapabilities.COOLDOWNS.getDefaultInstance();
-        private final LazyOptional<IPlayerCooldowns> holder = LazyOptional.of(() -> instance);
+        private final LazyOptional<IPlayerCooldowns> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
 
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -115,18 +127,32 @@ public class PlayerCooldowns implements IPlayerCooldowns {
         }
     }
     
+    /**
+     * Storage manager for the player cooldowns capability.  Used to register the capability.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
+     */
     public static class Storage implements Capability.IStorage<IPlayerCooldowns> {
         @Override
         public INBT writeNBT(Capability<IPlayerCooldowns> capability, IPlayerCooldowns instance, Direction side) {
+            // Use the instance's pre-defined serialization
             return instance.serializeNBT();
         }
 
         @Override
         public void readNBT(Capability<IPlayerCooldowns> capability, IPlayerCooldowns instance, Direction side, INBT nbt) {
+            // Use the instance's pre-defined deserialization
             instance.deserializeNBT((CompoundNBT)nbt);
         }
     }
     
+    /**
+     * Factory for the player cooldowns capability.  Used to register the capability.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
+     */
     public static class Factory implements Callable<IPlayerCooldowns> {
         @Override
         public IPlayerCooldowns call() throws Exception {

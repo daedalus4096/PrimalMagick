@@ -16,8 +16,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
+/**
+ * Default implementation of the world entity swappers capability.
+ * 
+ * @author Daedalus4096
+ */
 public class WorldEntitySwappers implements IWorldEntitySwappers {
-    private final Queue<EntitySwapper> swappers = new LinkedBlockingQueue<>();
+    private final Queue<EntitySwapper> swappers = new LinkedBlockingQueue<>();  // Queue of active entity swappers for the world
 
     @Override
     public CompoundNBT serializeNBT() {
@@ -43,6 +48,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
             CompoundNBT swapperTag = swapperList.getCompound(index);
             EntitySwapper swapper = new EntitySwapper(swapperTag);
             if (swapper.isValid()) {
+                // Only accept valid swappers
                 this.swappers.offer(swapper);
             }
         }
@@ -67,6 +73,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
         if (queue == null) {
             return false;
         } else {
+            // Make a shallow copy of the given queue
             this.swappers.clear();
             for (EntitySwapper swapper : queue) {
                 this.enqueue(swapper);
@@ -75,11 +82,17 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
         }
     }
     
+    /**
+     * Capability provider for the world entity swapper capability.  Used to attach capability data to the owner.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.events.CapabilityEvents}
+     */
     public static class Provider implements ICapabilitySerializable<CompoundNBT> {
         public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_world_entity_swappers");
 
         private final IWorldEntitySwappers instance = PrimalMagicCapabilities.ENTITY_SWAPPERS.getDefaultInstance();
-        private final LazyOptional<IWorldEntitySwappers> holder = LazyOptional.of(() -> instance);
+        private final LazyOptional<IWorldEntitySwappers> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
         
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -101,18 +114,32 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
         }
     }
     
+    /**
+     * Storage manager for the world entity swapper capability.  Used to register the capability.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
+     */
     public static class Storage implements Capability.IStorage<IWorldEntitySwappers> {
         @Override
         public INBT writeNBT(Capability<IWorldEntitySwappers> capability, IWorldEntitySwappers instance, Direction side) {
+            // Use the instance's pre-defined serialization
             return instance.serializeNBT();
         }
 
         @Override
         public void readNBT(Capability<IWorldEntitySwappers> capability, IWorldEntitySwappers instance, Direction side, INBT nbt) {
+            // Use the instance's pre-defined deserialization
             instance.deserializeNBT((CompoundNBT)nbt);
         }
     }
     
+    /**
+     * Factory for the world entity swapper capability.  Used to register the capability.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
+     */
     public static class Factory implements Callable<IWorldEntitySwappers> {
         @Override
         public IWorldEntitySwappers call() throws Exception {

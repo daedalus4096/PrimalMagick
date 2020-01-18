@@ -30,17 +30,23 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
+/**
+ * Default implementation of the player knowledge capability.
+ * 
+ * @author Daedalus4096
+ */
 public class PlayerKnowledge implements IPlayerKnowledge {
-    private final Set<String> research = ConcurrentHashMap.newKeySet();
-    private final Map<String, Integer> stages = new ConcurrentHashMap<>();
-    private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();
-    private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();
+    private final Set<String> research = ConcurrentHashMap.newKeySet();             // Set of known research
+    private final Map<String, Integer> stages = new ConcurrentHashMap<>();          // Map of research keys to current stage numbers
+    private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>(); // Map of research keys to attached flag sets
+    private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
 
     @Override
     @Nonnull
     public CompoundNBT serializeNBT() {
         CompoundNBT rootTag = new CompoundNBT();
         
+        // Serialize known research, including stage number and attached flags
         ListNBT researchList = new ListNBT();
         for (String res : this.research) {
             CompoundNBT tag = new CompoundNBT();
@@ -61,6 +67,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
         rootTag.put("research", researchList);
         
+        // Serialize knowledge types, including accrued points
         ListNBT knowledgeList = new ListNBT();
         for (IPlayerKnowledge.KnowledgeType knowledgeKey : this.knowledge.keySet()) {
             if (knowledgeKey != null) {
@@ -87,6 +94,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.clearResearch();
         this.clearKnowledge();
         
+        // Deserialize known research, including stage number and attached flags
         ListNBT researchList = nbt.getList("research", 10);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundNBT tag = researchList.getCompound(index);
@@ -109,6 +117,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 }
             }
         }
+
+        // Deserialize knowledge types, including accrued points
         ListNBT knowledgeList = nbt.getList("knowledge", 10);
         for (int index = 0; index < knowledgeList.size(); index++) {
             CompoundNBT tag = knowledgeList.getCompound(index);
@@ -139,6 +149,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     @Nonnull
     public Set<SimpleResearchKey> getResearchSet() {
+        // Map the stored strings to parsed keys, filtering out failures
         return Collections.unmodifiableSet(this.research.stream()
                                             .map(s -> SimpleResearchKey.parse(s))
                                             .filter(Objects::nonNull)
@@ -151,6 +162,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (!this.isResearchKnown(research)) {
             return ResearchStatus.UNKNOWN;
         } else {
+            // Research is complete if it is known and its current stage exceeds the number of stages defined in its entry
             ResearchEntry entry = ResearchEntries.getEntry(research);
             if (entry == null || entry.getStages().isEmpty() || this.getResearchStage(research) > entry.getStages().size()) {
                 return ResearchStatus.COMPLETE;
@@ -173,6 +185,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if ("".equals(research.getRootKey())) {
             return true;
         }
+
+        // If a specific stage is specified in the given key, check if the current stage meets it
         if (research.hasStage() && this.getResearchStage(research) < research.getStage()) {
             return false;
         } else {
@@ -226,6 +240,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
         Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
         if (researchFlags == null) {
+            // Create and store a set if no flags are currently attached to the research
             researchFlags = EnumSet.noneOf(ResearchFlag.class);
             this.flags.put(research.getRootKey(), researchFlags);
         }
@@ -246,6 +261,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (researchFlags != null) {
             boolean retVal = researchFlags.remove(flag);
             if (researchFlags.isEmpty()) {
+                // Remove empty flag sets to prevent data bloat
                 this.flags.remove(researchKeyStr);
             }
             return retVal;
@@ -292,6 +308,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (type == null) {
             return 0;
         } else {
+            // Calculate knowledge levels based on the knowledge type's progression value
             return (int)Math.floor((double)this.getKnowledgeRaw(type) / (double)type.getProgression());
         }
     }
@@ -309,17 +326,25 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     public void sync(@Nullable ServerPlayerEntity player) {
         if (player != null) {
             PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
+            
+            // Remove all popup flags after syncing to prevent spam
             for (String keyStr : this.flags.keySet()) {
                 this.removeResearchFlagInner(keyStr, ResearchFlag.POPUP);
             }
         }
     }
     
+    /**
+     * Capability provider for the player knowledge capability.  Used to attach capability data to the owner.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.events.CapabilityEvents}
+     */
     public static class Provider implements ICapabilitySerializable<CompoundNBT> {
         public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_knowledge");
         
         private final IPlayerKnowledge instance = PrimalMagicCapabilities.KNOWLEDGE.getDefaultInstance();
-        private final LazyOptional<IPlayerKnowledge> holder = LazyOptional.of(() -> instance);
+        private final LazyOptional<IPlayerKnowledge> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
         
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -341,18 +366,32 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
     }
 
+    /**
+     * Storage manager for the player knowledge capability.  Used to register the capability.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
+     */
     public static class Storage implements Capability.IStorage<IPlayerKnowledge> {
         @Override
         public INBT writeNBT(Capability<IPlayerKnowledge> capability, IPlayerKnowledge instance, Direction side) {
+            // Use the instance's pre-defined serialization
             return instance.serializeNBT();
         }
 
         @Override
         public void readNBT(Capability<IPlayerKnowledge> capability, IPlayerKnowledge instance, Direction side, INBT nbt) {
+            // Use the instance's pre-defined deserialization
             instance.deserializeNBT((CompoundNBT)nbt);
         }
     }
     
+    /**
+     * Factory for the player knowledge capability.  Used to register the capability.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
+     */
     public static class Factory implements Callable<IPlayerKnowledge> {
         @Override
         public IPlayerKnowledge call() throws Exception {
