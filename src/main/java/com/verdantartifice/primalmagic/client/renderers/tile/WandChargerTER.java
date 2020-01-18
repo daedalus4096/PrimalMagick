@@ -10,6 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Custom tile entity renderer for wand charger blocks.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
+ */
 @SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class WandChargerTER extends TileEntityRenderer<WandChargerTileEntity> {
@@ -18,11 +24,12 @@ public class WandChargerTER extends TileEntityRenderer<WandChargerTileEntity> {
         super.render(tileEntityIn, x, y, z, partialTicks, destroyStage);
         ItemStack wandStack = tileEntityIn.getSyncedStackInSlot(1).copy();
         if (!wandStack.isEmpty()) {
+            // Render the wand in the center of the charger
             wandStack.setCount(1);
             int rot = (int)(this.getWorld().getWorldInfo().getGameTime() % 360);
             GlStateManager.pushMatrix();
             GlStateManager.translated(x + 0.5D, y + 0.5D, z + 0.5D);
-            GlStateManager.rotated(rot, 0.0D, 1.0D, 0.0D);
+            GlStateManager.rotated(rot, 0.0D, 1.0D, 0.0D);  // Spin the wand around its Y-axis
             GlStateManager.scaled(0.5D, 0.5D, 0.5D);
             Minecraft.getInstance().getItemRenderer().renderItem(wandStack, ItemCameraTransforms.TransformType.GUI);
             GlStateManager.popMatrix();

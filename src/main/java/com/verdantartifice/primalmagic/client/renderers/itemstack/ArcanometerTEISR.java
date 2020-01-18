@@ -23,6 +23,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Custom item stack renderer for the arcanometer.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem}
+ */
 @SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
@@ -36,6 +42,7 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
     private static boolean isRenderingScreen = false;
 
     static {
+        // The renderModel method of ItemRenderer is private, but we need it; so, expose it via reflection
         try {
             RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, int.class, ItemStack.class);
             RENDER_MODEL_METHOD.setAccessible(true);
@@ -60,6 +67,7 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
             }
             
             if (!isRenderingScreen) {
+                // We might be asked to show another arcanometer on screen; don't recurse in that case
                 isRenderingScreen = true;
                 
                 // Determine what to show on the screen
@@ -87,6 +95,7 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
     }
     
     protected ModelResourceLocation getModelResourceLocation(ItemStack stack) {
+        // Determine which model to use based on the scan state of the arcanometer item stack
         Minecraft mc = Minecraft.getInstance();
         IItemPropertyGetter propGetter = stack.getItem().getPropertyGetter(SCAN_STATE_PROPERTY);
         if (propGetter != null) {

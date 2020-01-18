@@ -15,12 +15,19 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Custom item stack renderer for a mundane wand.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem}
+ */
 @OnlyIn(Dist.CLIENT)
 public class MundaneWandTEISR extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation CORE_MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), "");
     private static Method RENDER_MODEL_METHOD;
 
     static {
+        // The renderModel method of ItemRenderer is private, but we need it; so, expose it via reflection
         try {
             RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, int.class, ItemStack.class);
             RENDER_MODEL_METHOD.setAccessible(true);
@@ -38,6 +45,7 @@ public class MundaneWandTEISR extends ItemStackTileEntityRenderer {
 
             IBakedModel model = mc.getModelManager().getModel(CORE_MRL);
             try {
+                // Render the wand core
                 RENDER_MODEL_METHOD.invoke(itemRenderer, model, Integer.valueOf(-1), itemStackIn);
             } catch (Exception e) {
                 PrimalMagic.LOGGER.catching(e);

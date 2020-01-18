@@ -24,6 +24,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Custom item stack renderer for ancient mana fonts.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock}
+ */
 @OnlyIn(Dist.CLIENT)
 public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/mana_font_core.png");
@@ -31,6 +37,7 @@ public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
     private static Method RENDER_MODEL_METHOD;
     
     static {
+        // The renderModel method of ItemRenderer is private, but we need it; so, expose it via reflection
         try {
             RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, int.class, ItemStack.class);
             RENDER_MODEL_METHOD.setAccessible(true);
@@ -72,37 +79,43 @@ public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
             
             GlStateManager.pushMatrix();
             GlStateManager.translated(0.5D, 0.5D, 0.5D);
-            GlStateManager.rotated(45.0D, 0.0D, 0.0D, 1.0D);
+            GlStateManager.rotated(45.0D, 0.0D, 0.0D, 1.0D);    // Tilt the core onto its diagonal
             GlStateManager.rotated(45.0D, 1.0D, 0.0D, 0.0D);
             GlStateManager.color4f(r, g, b, 1.0F);
 
             bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
             
+            // Draw the south face of the core
             bb.pos(-ds, ds, ds).tex(0.0D, 1.0D).endVertex();
             bb.pos(-ds, -ds, ds).tex(0.0D, 0.0D).endVertex();
             bb.pos(ds, -ds, ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(ds, ds, ds).tex(1.0D, 1.0D).endVertex();
             
+            // Draw the north face of the core
             bb.pos(-ds, ds, -ds).tex(0.0D, 1.0D).endVertex();
             bb.pos(ds, ds, -ds).tex(1.0D, 1.0D).endVertex();
             bb.pos(ds, -ds, -ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(-ds, -ds, -ds).tex(0.0D, 0.0D).endVertex();
             
+            // Draw the east face of the core
             bb.pos(ds, ds, -ds).tex(0.0D, 1.0D).endVertex();
             bb.pos(ds, ds, ds).tex(1.0D, 1.0D).endVertex();
             bb.pos(ds, -ds, ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(ds, -ds, -ds).tex(0.0D, 0.0D).endVertex();
             
+            // Draw the west face of the core
             bb.pos(-ds, -ds, ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(-ds, ds, ds).tex(1.0D, 1.0D).endVertex();
             bb.pos(-ds, ds, -ds).tex(0.0D, 1.0D).endVertex();
             bb.pos(-ds, -ds, -ds).tex(0.0D, 0.0D).endVertex();
             
+            // Draw the top face of the core
             bb.pos(ds, ds, -ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(-ds, ds, -ds).tex(0.0D, 0.0D).endVertex();
             bb.pos(-ds, ds, ds).tex(0.0D, 1.0D).endVertex();
             bb.pos(ds, ds, ds).tex(1.0D, 1.0D).endVertex();
             
+            // Draw the bottom face of the core
             bb.pos(ds, -ds, -ds).tex(1.0D, 0.0D).endVertex();
             bb.pos(ds, -ds, ds).tex(1.0D, 1.0D).endVertex();
             bb.pos(-ds, -ds, ds).tex(0.0D, 1.0D).endVertex();

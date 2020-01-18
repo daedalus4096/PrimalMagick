@@ -26,6 +26,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Utility methods for dealing with GUI rendering.
+ * 
+ * @author Daedalus4096
+ */
 @OnlyIn(Dist.CLIENT)
 public class GuiUtils {
     public static boolean renderItemStack(ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
@@ -35,21 +40,26 @@ public class GuiUtils {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             
+            // Preserve previous values for lighting and rescale-normal GL attributes
             boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
             boolean isRescaleNormalEnabled = GL11.glIsEnabled(32826);
             
             GlStateManager.pushMatrix();
-            GlStateManager.translatef(0.0F, 0.0F, 32.0F);
+            GlStateManager.translatef(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableLighting();
             RenderHelper.enableGUIStandardItemLighting();
+            
+            // Render the item stack into the GUI and, if applicable, its stack size and/or damage bar
             itemRenderer.renderItemAndEffectIntoGUI(stack, x, y);
             if (!hideStackOverlay) {
                 itemRenderer.renderItemOverlayIntoGUI(mc.fontRenderer, stack, x, y, text);
             }
+            
             GlStateManager.popMatrix();
             
+            // Return the lighting and rescale-normal attributes to their previous values
             if (isRescaleNormalEnabled) {
                 GlStateManager.enableRescaleNormal();
             } else {
@@ -77,10 +87,12 @@ public class GuiUtils {
         Minecraft mc = Minecraft.getInstance();
         double scaleFactor = mc.mainWindow.getGuiScaleFactor();
         
+        // Preserve previous value for the lighting GL attribute
         boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
         GlStateManager.disableRescaleNormal();
         GlStateManager.disableLighting();
 
+        // Determine whether to flip the tooltip box to the other side of the mouse
         int max = 240;
         double mouseX = mc.mouseHelper.getMouseX();
         boolean flip = false;
@@ -92,12 +104,14 @@ public class GuiUtils {
             }
         }
         
+        // Break up each line of the tooltip to fit in the available X-space
         List<String> parsedList = new ArrayList<>();
         for (ITextComponent text : textList)  {
             List<String> strList = mc.fontRenderer.listFormattedStringToWidth(text.getFormattedText(), max);
             parsedList.addAll(strList);
         }
         
+        // Determine the total dimensions of the tooltip text
         int totalHeight = -2;
         int widestLineWidth = 0;
         for (String str : parsedList) {
@@ -121,7 +135,9 @@ public class GuiUtils {
         }
         
         float prevZ = mc.getItemRenderer().zLevel;
-        mc.getItemRenderer().zLevel = 300.0F;
+        mc.getItemRenderer().zLevel = 300.0F;   // Bring the tooltip up in the Z-order
+        
+        // Render the tooltip box
         int var10 = -267386864;
         drawGradientRect(sX - 3, sY - 4, sX + widestLineWidth + 3, sY - 3, var10, var10);
         drawGradientRect(sX - 3, sY + totalHeight + 3, sX + widestLineWidth + 3, sY + totalHeight + 4, var10, var10);
@@ -135,6 +151,7 @@ public class GuiUtils {
         drawGradientRect(sX - 3, sY - 3, sX + widestLineWidth + 3, sY - 3 + 1, var11, var11);
         drawGradientRect(sX - 3, sY + totalHeight + 2, sX + widestLineWidth + 3, sY + totalHeight + 3, var12, var12);
 
+        // Render the tooltip text
         for (int i = 0; i < parsedList.size(); i++) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef(sX, sY, 0.0F);
@@ -153,6 +170,7 @@ public class GuiUtils {
             GlStateManager.popMatrix();
         }
 
+        // Restore changed attribute to their previous values
         mc.getItemRenderer().zLevel = prevZ;
         if (isLightingEnabled) {
             GlStateManager.enableLighting();
@@ -164,6 +182,8 @@ public class GuiUtils {
     
     public static void drawGradientRect(int left, int top, int right, int bottom, int color1, int color2) {
         boolean blendOn = GL11.glIsEnabled(3042);
+        
+        // Calculate RGBA components for each color
         float a1 = (color1 >> 24 & 0xFF) / 255.0F;
         float r1 = (color1 >> 16 & 0xFF) / 255.0F;
         float g1 = (color1 >> 8 & 0xFF) / 255.0F;
@@ -172,12 +192,17 @@ public class GuiUtils {
         float r2 = (color2 >> 16 & 0xFF) / 255.0F;
         float g2 = (color2 >> 8 & 0xFF) / 255.0F;
         float b2 = (color2 & 0xFF) / 255.0F;
+        
+        // Bring the rect up in the Z-order
         double z = 300.0D;
+        
         GL11.glDisable(3553);
         GL11.glEnable(3042);
         GL11.glDisable(3008);
         GL11.glBlendFunc(770, 771);
         GL11.glShadeModel(7425);
+        
+        // Draw the rectangle
         Tessellator tess = Tessellator.getInstance();
         tess.getBuffer().begin(7, DefaultVertexFormats.POSITION_COLOR);
         tess.getBuffer().pos(right, top, z).color(r1, g1, b1, a1).endVertex();
@@ -185,6 +210,8 @@ public class GuiUtils {
         tess.getBuffer().pos(left, bottom, z).color(r2, g2, b2, a2).endVertex();
         tess.getBuffer().pos(right, bottom, z).color(r2, g2, b2, a2).endVertex();
         tess.draw();
+        
+        // Restore changed GL attributes
         GL11.glShadeModel(7424);
         GlStateManager.blendFunc(770, 771);
         if (!blendOn) {
@@ -201,9 +228,13 @@ public class GuiUtils {
         GlStateManager.pushMatrix();
         int x = 0;
         int index = 0;
+        
+        // Render each source in the list in prescribed order
         for (Source source : sources.getSourcesSorted()) {
             if (source != null) {
                 x = startX + (index * 18);
+                
+                // If the source hasn't been discovered by the player, render an unknown icon instead
                 if (source.isDiscovered(player)) {
                     GuiUtils.renderSourceIcon(x, startY, source, sources.getAmount(source), 999);
                 } else {
@@ -226,6 +257,7 @@ public class GuiUtils {
     }
     
     protected static void renderSourceIcon(int x, int y, @Nonnull ResourceLocation imageLoc, int amount, double z) {
+        // Preserve previous values for blend and lighting GL attributes
         boolean isBlendOn = GL11.glIsEnabled(3042);
         boolean isLightingEnabled = GL11.glIsEnabled(2896);
         
@@ -241,6 +273,7 @@ public class GuiUtils {
         mc.getTextureManager().bindTexture(imageLoc);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
+        // Render the source's icon
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder bb = tess.getBuffer();
         bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
@@ -252,6 +285,7 @@ public class GuiUtils {
 
         GlStateManager.popMatrix();
         
+        // Render an amount string for the source, if an amount has been given
         if (amount > 0) {
             GlStateManager.pushMatrix();
             GlStateManager.scaled(0.5D, 0.5D, 1.0D);
@@ -262,6 +296,7 @@ public class GuiUtils {
             GlStateManager.popMatrix();
         }
         
+        // Restore changed GL attributes
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         if (!isBlendOn) {
             GlStateManager.disableBlend();
