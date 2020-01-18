@@ -37,7 +37,6 @@ public class PrimalMagicCommand {
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralCommandNode<CommandSource> node = dispatcher.register(Commands.literal("primalmagic")
             .requires((source) -> { return source.hasPermissionLevel(2); })
-            .then(Commands.literal("help").executes((context) -> { return showHelp(context.getSource()); }))
             .then(Commands.literal("research")
                 .then(Commands.argument("target", EntityArgument.player())
                     .then(Commands.literal("list").executes((context) -> { return listResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
@@ -92,17 +91,6 @@ public class PrimalMagicCommand {
         }).redirect(node));
     }
 
-    private static int showHelp(CommandSource source) {
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.1").applyTextStyle(TextFormatting.DARK_GREEN), true);
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.2").applyTextStyle(TextFormatting.DARK_GREEN), true);
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.3"), true);
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.4").applyTextStyle(TextFormatting.DARK_GREEN), true);
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.5"), true);
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.6").applyTextStyle(TextFormatting.DARK_GREEN), true);
-        source.sendFeedback(new TranslationTextComponent("commands.primalmagic.help.7"), true);
-        return 0;
-    }
-    
     private static int listResearch(CommandSource source, ServerPlayerEntity target) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
         if (knowledge == null) {
