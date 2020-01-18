@@ -4,6 +4,11 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Input predicate for a research discipline.  Determines if a given string represents a valid argument.
+ * 
+ * @author Daedalus4096
+ */
 public class DisciplineInput implements Predicate<String> {
     protected final String disciplineKey;
     

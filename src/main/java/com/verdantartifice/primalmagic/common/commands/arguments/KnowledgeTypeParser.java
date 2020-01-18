@@ -4,6 +4,11 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 
+/**
+ * Debug command argument parser for a knowledge type.  Reads the argument from the command line.
+ * 
+ * @author Daedalus4096
+ */
 public class KnowledgeTypeParser {
     protected final StringReader reader;
     protected IPlayerKnowledge.KnowledgeType type;
@@ -17,6 +22,7 @@ public class KnowledgeTypeParser {
     }
     
     public void readKey() throws CommandSyntaxException {
+        // Read all valid characters from the command input string
         int i = this.reader.getCursor();
         while (this.reader.canRead() && this.isValidResearchCharacter(this.reader.peek())) {
             this.reader.skip();

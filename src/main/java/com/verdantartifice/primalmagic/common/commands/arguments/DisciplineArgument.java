@@ -11,6 +11,11 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 
+/**
+ * Debug command argument definition for a research discipline.
+ * 
+ * @author Daedalus4096
+ */
 public class DisciplineArgument implements ArgumentType<DisciplineInput> {
     public static DisciplineArgument discipline() {
         return new DisciplineArgument();
@@ -28,6 +33,7 @@ public class DisciplineArgument implements ArgumentType<DisciplineInput> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+        // Suggest all registered research disciplines for tab completion
         String remaining = builder.getRemaining().toUpperCase();
         for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
             String key = discipline.getKey().toUpperCase();

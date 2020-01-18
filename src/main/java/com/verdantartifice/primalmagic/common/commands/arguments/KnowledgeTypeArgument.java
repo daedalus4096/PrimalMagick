@@ -10,6 +10,11 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 
+/**
+ * Debug command argument definition for a knowledge type enum.
+ * 
+ * @author Daedalus4096
+ */
 public class KnowledgeTypeArgument implements ArgumentType<KnowledgeTypeInput> {
     public static KnowledgeTypeArgument knowledgeType() {
         return new KnowledgeTypeArgument();
@@ -27,6 +32,7 @@ public class KnowledgeTypeArgument implements ArgumentType<KnowledgeTypeInput> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+        // Suggest all defined knowledge types for tab completion
         String remaining = builder.getRemaining().toUpperCase();
         for (IPlayerKnowledge.KnowledgeType type : IPlayerKnowledge.KnowledgeType.values()) {
             String key = type.name().toUpperCase();

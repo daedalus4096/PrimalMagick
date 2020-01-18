@@ -11,6 +11,11 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
+/**
+ * Debug command argument definition for a research entry.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchArgument implements ArgumentType<ResearchInput> {
     public static ResearchArgument research() {
         return new ResearchArgument();
@@ -28,6 +33,7 @@ public class ResearchArgument implements ArgumentType<ResearchInput> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+        // Suggest all defined research entries for tab completion
         String remaining = builder.getRemaining().toUpperCase();
         for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
             String key = entry.getKey().getRootKey().toUpperCase();

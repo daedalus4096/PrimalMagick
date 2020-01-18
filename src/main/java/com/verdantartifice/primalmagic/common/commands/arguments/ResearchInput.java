@@ -6,6 +6,11 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
+/**
+ * Input predicate for a research entry.  Determines if a given string represents a valid argument.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchInput implements Predicate<SimpleResearchKey> {
     protected final SimpleResearchKey key;
     

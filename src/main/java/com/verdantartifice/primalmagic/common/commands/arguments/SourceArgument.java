@@ -10,6 +10,11 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
+/**
+ * Debug command argument definition for a source.
+ * 
+ * @author Daedalus4096
+ */
 public class SourceArgument implements ArgumentType<SourceInput> {
     public static SourceArgument source() {
         return new SourceArgument();
@@ -27,6 +32,7 @@ public class SourceArgument implements ArgumentType<SourceInput> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+        // Suggest all defined sources for tab completion
         String remaining = builder.getRemaining().toUpperCase();
         for (Source source : Source.SOURCES.values()) {
             String key = source.getTag().toUpperCase();

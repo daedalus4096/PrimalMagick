@@ -7,6 +7,11 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge.KnowledgeType;
 
+/**
+ * Input predicate for a knowledge type.  Determines if a given string represents a valid argument.
+ * 
+ * @author Daedalus4096
+ */
 public class KnowledgeTypeInput implements Predicate<IPlayerKnowledge.KnowledgeType> {
     protected final IPlayerKnowledge.KnowledgeType type;
     

@@ -4,6 +4,11 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
+/**
+ * Debug command argument parser for a research entry.  Reads the argument from the command line.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchParser {
     protected final StringReader reader;
     protected SimpleResearchKey key;
@@ -17,6 +22,7 @@ public class ResearchParser {
     }
     
     public void readKey() throws CommandSyntaxException {
+        // Read all valid characters from the command input string
         int i = this.reader.getCursor();
         while (this.reader.canRead() && this.isValidResearchCharacter(this.reader.peek())) {
             this.reader.skip();
