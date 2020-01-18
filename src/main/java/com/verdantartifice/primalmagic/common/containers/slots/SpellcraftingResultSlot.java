@@ -12,6 +12,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.item.ItemStack;
 
+/**
+ * Custom GUI slot for spellcrafting altar outputs.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellcraftingResultSlot extends CraftingResultSlot {
     protected final WandInventory wandInventory;
     protected final PlayerEntity player;
@@ -26,6 +31,7 @@ public class SpellcraftingResultSlot extends CraftingResultSlot {
     
     @Override
     protected void onCrafting(ItemStack stack) {
+        // Deduct the cost of the spell from the wand
         SourceList manaCosts = this.costSupplier.get();
         if (manaCosts != null && !manaCosts.isEmpty()) {
             ItemStack wandStack = this.wandInventory.getStackInSlot(0);

@@ -14,6 +14,11 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 
+/**
+ * Server data container for the analysis table GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class AnalysisTableContainer extends Container {
     protected final IInventory analysisInventory = new Inventory(2) {
         public int getInventoryStackLimit() {
@@ -65,14 +70,17 @@ public class AnalysisTableContainer extends Container {
             ItemStack slotStack = slot.getStack();
             stack = slotStack.copy();
             if (index == 0) {
+                // If transferring the input item, move it into the player's backpack or hotbar
                 if (!this.mergeItemStack(slotStack, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 2 && index < 29) {
+                // If transferring from the player's backpack, attempt to place it in the input item slot
                 if (!this.mergeItemStack(slotStack, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 29 && index < 38) {
+                // If transferring from the player's hotbar, attempt to place it in the input item slot
                 if (!this.mergeItemStack(slotStack, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
@@ -98,6 +106,7 @@ public class AnalysisTableContainer extends Container {
     
     public void doScan() {
         if (!this.player.world.isRemote && this.player instanceof ServerPlayerEntity) {
+            // Move the input item into the recently-scanned slot and mark it as scanned
             ItemStack stack = this.analysisInventory.getStackInSlot(0).copy();
             if (!stack.isEmpty()) {
                 this.analysisInventory.setInventorySlotContents(0, ItemStack.EMPTY);

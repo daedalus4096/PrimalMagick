@@ -24,6 +24,11 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+/**
+ * Server data container for the wand inscription table GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class WandInscriptionTableContainer extends Container {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "wand_inscription");
 
@@ -72,6 +77,7 @@ public class WandInscriptionTableContainer extends Container {
 
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
+        // Return components to the player's inventory when the GUI is closed
         super.onContainerClosed(playerIn);
         this.worldPosCallable.consume((world, blockPos) -> {
             this.clearContainer(playerIn, world, this.componentInv);
@@ -86,6 +92,7 @@ public class WandInscriptionTableContainer extends Container {
             ItemStack slotStack = slot.getStack();
             stack = slotStack.copy();
             if (index == 0) {
+                // If transferring the output item, trigger its created handler then move it into the player's backpack or hotbar
                 this.worldPosCallable.consume((world, blockPos) -> {
                     slotStack.getItem().onCreated(slotStack, world, playerIn);
                 });
@@ -94,6 +101,7 @@ public class WandInscriptionTableContainer extends Container {
                 }
                 slot.onSlotChange(slotStack, stack);
             } else if (index >= 3 && index < 30) {
+                // If transferring from the backpack, move wands and blank scrolls to the appropriate slots, and everything else to the hotbar
                 if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -108,6 +116,7 @@ public class WandInscriptionTableContainer extends Container {
                     }
                 }
             } else if (index >= 30 && index < 39) {
+                // If transferring from the hotbar, move wands and blank scrolls to the appropriate slots, and everything else to the backpack
                 if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -122,6 +131,7 @@ public class WandInscriptionTableContainer extends Container {
                     }
                 }
             } else if (!this.mergeItemStack(slotStack, 3, 39, false)) {
+                // Move all other transfers to the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
@@ -162,11 +172,14 @@ public class WandInscriptionTableContainer extends Container {
             ItemStack stack = ItemStack.EMPTY;
             Optional<? extends IRecipe<?>> opt = world.getServer().getRecipeManager().getRecipe(RECIPE_LOC);
             if (opt.isPresent() && opt.get() instanceof WandInscriptionRecipe) {
+                // If the inputs are valid for inscribing a spell onto a wand, show the output
                 WandInscriptionRecipe recipe = (WandInscriptionRecipe)opt.get();
                 if (recipe.matches(this.componentInv, world)) {
                     stack = recipe.getCraftingResult(this.componentInv);
                 }
             }
+            
+            // Send a packet to the client to update its GUI with the shown output
             this.resultInv.setInventorySlotContents(0, stack);
             spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
         }

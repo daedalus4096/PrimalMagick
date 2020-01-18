@@ -25,6 +25,11 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+/**
+ * Server data container for the wand assembly table GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class WandAssemblyTableContainer extends Container {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "wand_assembly");
     
@@ -78,6 +83,7 @@ public class WandAssemblyTableContainer extends Container {
     
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
+        // Return crafting inputs to the player's inventory when GUI is closed
         super.onContainerClosed(playerIn);
         this.worldPosCallable.consume((world, blockPos) -> {
             this.clearContainer(playerIn, world, this.componentInv);
@@ -92,6 +98,7 @@ public class WandAssemblyTableContainer extends Container {
             ItemStack slotStack = slot.getStack();
             stack = slotStack.copy();
             if (index == 0) {
+                // If transferring the output item, trigger its created handler then move it into the player's backpack or hotbar
                 this.worldPosCallable.consume((world, blockPos) -> {
                     slotStack.getItem().onCreated(slotStack, world, playerIn);
                 });
@@ -100,6 +107,7 @@ public class WandAssemblyTableContainer extends Container {
                 }
                 slot.onSlotChange(slotStack, stack);
             } else if (index >= 5 && index < 32) {
+                // If transferring from the backpack, move cores, caps, and gems to the appropriate slots, and everything else to the hotbar
                 if (this.coreSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -118,6 +126,7 @@ public class WandAssemblyTableContainer extends Container {
                     }
                 }
             } else if (index >= 32 && index < 41) {
+                // If transferring from the hotbar, move cores, caps, and gems to the appropriate slots, and everything else to the backpack
                 if (this.coreSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -136,6 +145,7 @@ public class WandAssemblyTableContainer extends Container {
                     }
                 }
             } else if (!this.mergeItemStack(slotStack, 5, 41, false)) {
+                // Move all other transfers to the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
@@ -176,11 +186,14 @@ public class WandAssemblyTableContainer extends Container {
             ItemStack stack = ItemStack.EMPTY;
             Optional<? extends IRecipe<?>> opt = world.getServer().getRecipeManager().getRecipe(RECIPE_LOC);
             if (opt.isPresent() && opt.get() instanceof WandAssemblyRecipe) {
+                // If the inputs make a valid wand, show the output
                 WandAssemblyRecipe recipe = (WandAssemblyRecipe)opt.get();
                 if (recipe.matches(this.componentInv, world)) {
                     stack = recipe.getCraftingResult(this.componentInv);
                 }
             }
+            
+            // Send a packet to the client to update its GUI with the shown output
             this.resultInv.setInventorySlotContents(0, stack);
             spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
         }

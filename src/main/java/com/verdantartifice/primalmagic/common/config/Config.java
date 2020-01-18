@@ -12,6 +12,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
 
+/**
+ * Definition of common and client configuration files for the mod.
+ * 
+ * @author Daedalus4096
+ */
 @Mod.EventBusSubscriber
 public class Config {
     protected static final String CATEGORY_MISC = "misc";
@@ -29,6 +34,7 @@ public class Config {
     }
     
     protected static void buildCommonConfigSpec() {
+        // Define the common config file spec
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         
         builder.comment("Misc settings").push(CATEGORY_MISC);
@@ -39,6 +45,7 @@ public class Config {
     }
     
     protected static void buildClientConfigSpec() {
+        // Define the client-only config file spec
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         
         builder.comment("Misc settings").push(CATEGORY_MISC);
@@ -60,6 +67,7 @@ public class Config {
     
     public static void register() {
         if (IS_REGISTERED) {
+            // Only allow registration once
             throw new IllegalStateException("Primal Magic config spec is already registered!");
         }
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG_SPEC);

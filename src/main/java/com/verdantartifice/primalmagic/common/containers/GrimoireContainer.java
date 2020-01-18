@@ -8,6 +8,11 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 
+/**
+ * Server data container for the grimoire GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class GrimoireContainer extends Container {
     protected Object topic;
     
@@ -26,7 +31,7 @@ public class GrimoireContainer extends Container {
     }
     
     /**
-     * New topic can either be null (for the category index), a ResearchDiscipline (for a listing
+     * New topic can either be null (for the discipline index), a ResearchDiscipline (for a listing
      * of that discipline's entries), or a ResearchEntry (for details of that entry).
      * @param newTopic
      */

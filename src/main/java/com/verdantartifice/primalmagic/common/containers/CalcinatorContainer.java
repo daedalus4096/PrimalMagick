@@ -17,6 +17,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Server data container for the calcinator GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class CalcinatorContainer extends Container {
     protected final IInventory calcinatorInv;
     protected final IIntArray calcinatorData;
@@ -79,11 +84,13 @@ public class CalcinatorContainer extends Container {
             stack = slotStack.copy();
             
             if (index >= 2 && index < 11) {
+                // If transferring calcinator output, move it to the player's backpack or hotbar
                 if (!this.mergeItemStack(slotStack, 11, 47, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onSlotChange(slotStack, stack);
             } else if (index != 0 && index != 1) {
+                // If transferring from the backpack or hotbar, move fuel to the fuel slot and anything else to the input slot
                 if (this.isFuel(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -94,6 +101,7 @@ public class CalcinatorContainer extends Container {
                     }
                 }
             } else {
+                // Move all other transfers to the player's backpack or hotbar
                 if (!this.mergeItemStack(slotStack, 11, 47, false)) {
                     return ItemStack.EMPTY;
                 }
@@ -117,6 +125,7 @@ public class CalcinatorContainer extends Container {
     
     @OnlyIn(Dist.CLIENT)
     public int getCookProgressionScaled() {
+        // Determine how much of the cook arrow to show
         int i = this.calcinatorData.get(2);
         int j = this.calcinatorData.get(3);
         return j != 0 && i != 0 ? i * 24 / j : 0;
@@ -124,6 +133,7 @@ public class CalcinatorContainer extends Container {
     
     @OnlyIn(Dist.CLIENT)
     public int getBurnLeftScaled() {
+        // Determine how much of the fuel burn timer to show
         int total = this.calcinatorData.get(1);
         if (total == 0) {
             total = 200;

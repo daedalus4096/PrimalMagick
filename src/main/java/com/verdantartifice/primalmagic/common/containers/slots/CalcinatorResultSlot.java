@@ -5,6 +5,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
+/**
+ * Custom GUI slot for calcinator outputs.
+ * 
+ * @author Daedalus4096
+ */
 public class CalcinatorResultSlot extends Slot {
     protected final PlayerEntity player;
     protected int removeCount = 0;
@@ -16,6 +21,7 @@ public class CalcinatorResultSlot extends Slot {
     
     @Override
     public boolean isItemValid(ItemStack stack) {
+        // Don't allow anything to be dropped into the slot
         return false;
     }
     

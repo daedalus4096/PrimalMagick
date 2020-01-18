@@ -15,6 +15,11 @@ import net.minecraft.util.IntArray;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Server data container for the wand charger GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class WandChargerContainer extends Container {
     protected final IInventory chargerInv;
     protected final IIntArray chargerData;
@@ -66,6 +71,7 @@ public class WandChargerContainer extends Container {
             ItemStack slotStack = slot.getStack();
             stack = slotStack.copy();
             if (index >= 2 && index < 29) {
+                // If transferring from the backpack, move wands and essences to the appropriate slots, and everything else to the hotbar
                 if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -80,6 +86,7 @@ public class WandChargerContainer extends Container {
                     }
                 }
             } else if (index >= 29 && index < 38) {
+                // If transferring from the hotbar, move wands and essences to the appropriate slots, and everything else to the backpack
                 if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -94,6 +101,7 @@ public class WandChargerContainer extends Container {
                     }
                 }
             } else if (!this.mergeItemStack(slotStack, 2, 38, false)) {
+                // Move all other transfers to the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
@@ -117,6 +125,7 @@ public class WandChargerContainer extends Container {
     
     @OnlyIn(Dist.CLIENT)
     public int getChargeProgressionScaled() {
+        // Determine how much of the charge arrow to show
         int i = this.chargerData.get(0);
         int j = this.chargerData.get(1);
         return j != 0 && i != 0 ? i * 24 / j : 0;

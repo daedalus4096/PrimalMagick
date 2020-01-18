@@ -12,6 +12,11 @@ import net.minecraft.inventory.IRecipeHolder;
 import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.item.ItemStack;
 
+/**
+ * Custom GUI slot for arcane crafting results.
+ * 
+ * @author Daedalus4096
+ */
 public class ArcaneCraftingResultSlot extends CraftingResultSlot {
     protected final WandInventory wandInventory;
     protected final PlayerEntity player;
@@ -25,6 +30,7 @@ public class ArcaneCraftingResultSlot extends CraftingResultSlot {
     @Override
     protected void onCrafting(ItemStack stack) {
         if (this.inventory instanceof IRecipeHolder) {
+            // Consume the recipe's mana cost from the wand
             IRecipeHolder holder = (IRecipeHolder)this.inventory;
             if (holder.getRecipeUsed() != null && holder.getRecipeUsed() instanceof IArcaneRecipe) {
                 SourceList manaCosts = ((IArcaneRecipe)holder.getRecipeUsed()).getManaCosts();

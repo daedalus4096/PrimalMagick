@@ -27,6 +27,11 @@ import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
 
+/**
+ * Server data container for the arcane workbench GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class ArcaneWorkbenchContainer extends Container {
     protected final CraftingInventory craftingInv = new CraftingInventory(this, 3, 3);
     protected final WandInventory wandInv = new WandInventory(this);
@@ -45,13 +50,13 @@ public class ArcaneWorkbenchContainer extends Container {
         this.worldPosCallable = callable;
         this.player = inv.player;
         
-        // Slot 0
+        // Slot 0: Workbench output
         this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 138, 52));
         
-        // Slot 1
+        // Slot 1: Crafting wand
         this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52));
         
-        // Slots 2-10
+        // Slots 2-10: Crafting inputs
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
@@ -59,14 +64,14 @@ public class ArcaneWorkbenchContainer extends Container {
             }
         }
         
-        // Slots 11-37
+        // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 9; j++) {
                 this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 101 + i * 18));
             }
         }
         
-        // Slots 38-46
+        // Slots 38-46: Player hotbar
         for (i = 0; i < 9; i++) {
             this.addSlot(new Slot(inv, i, 8 + i * 18, 159));
         }
@@ -84,6 +89,7 @@ public class ArcaneWorkbenchContainer extends Container {
     
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
+        // Return crafting inputs and wand to the player's inventory when GUI is closed
         super.onContainerClosed(playerIn);
         this.worldPosCallable.consume((world, blockPos) -> {
             this.clearContainer(playerIn, world, this.wandInv);
@@ -99,6 +105,7 @@ public class ArcaneWorkbenchContainer extends Container {
             ItemStack slotStack = slot.getStack();
             stack = slotStack.copy();
             if (index == 0) {
+                // If transferring the output item, trigger its created handler then move it into the player's backpack or hotbar
                 this.worldPosCallable.consume((world, blockPos) -> {
                     slotStack.getItem().onCreated(slotStack, world, playerIn);
                 });
@@ -107,6 +114,7 @@ public class ArcaneWorkbenchContainer extends Container {
                 }
                 slot.onSlotChange(slotStack, stack);
             } else if (index >= 11 && index < 38) {
+                // If transferring from the player's backpack, put wands in the wand slot and everything else into the hotbar
                 if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -117,6 +125,7 @@ public class ArcaneWorkbenchContainer extends Container {
                     }
                 }
             } else if (index >= 38 && index < 47) {
+                // If transferring from the player's hotbar, put wands in the wand slot and everything else into the backpack
                 if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -127,6 +136,7 @@ public class ArcaneWorkbenchContainer extends Container {
                     }
                 }
             } else if (!this.mergeItemStack(slotStack, 11, 47, false)) {
+                // Move all other transfers into the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
@@ -176,6 +186,7 @@ public class ArcaneWorkbenchContainer extends Container {
             ItemStack stack = ItemStack.EMPTY;
             Optional<IArcaneRecipe> arcaneOptional = world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.ARCANE_CRAFTING, this.craftingInv, world);
             if (arcaneOptional.isPresent()) {
+                // If the inputs match a defined arcane recipe, show the output if the player can use it
                 IArcaneRecipe recipe = arcaneOptional.get();
                 if (this.canUseArcaneRecipe(world, spe, recipe)) {
                     stack = recipe.getCraftingResult(this.craftingInv);
@@ -183,18 +194,22 @@ public class ArcaneWorkbenchContainer extends Container {
             } else {
                 Optional<ICraftingRecipe> vanillaOptional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, this.craftingInv, world);
                 if (vanillaOptional.isPresent()) {
+                    // If the inputs match a defined vanilla recipe, show the output if the player can use it
                     ICraftingRecipe recipe = vanillaOptional.get();
                     if (this.resultInv.canUseRecipe(world, spe, recipe)) {
                         stack = recipe.getCraftingResult(this.craftingInv);
                     }
                 }
             }
+            
+            // Send a packet to the client to update its GUI with the shown output
             this.resultInv.setInventorySlotContents(0, stack);
             spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
         }
     }
     
     protected boolean canUseArcaneRecipe(World world, ServerPlayerEntity player, IArcaneRecipe recipe) {
+        // Players must know the correct research and the wand must have enough mana in order to use the recipe
         return this.resultInv.canUseRecipe(world, player, recipe) &&
                 (recipe.getRequiredResearch() == null || recipe.getRequiredResearch().isKnownByStrict(player)) &&
                 (recipe.getManaCosts().isEmpty() || this.wandContainsEnoughMana(player, recipe));

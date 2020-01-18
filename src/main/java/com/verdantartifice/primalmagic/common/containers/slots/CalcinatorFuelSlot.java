@@ -7,6 +7,11 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
+/**
+ * Custom GUI slot for calcinator fuel.
+ * 
+ * @author Daedalus4096
+ */
 public class CalcinatorFuelSlot extends Slot {
     protected final CalcinatorContainer container;
 
@@ -17,11 +22,13 @@ public class CalcinatorFuelSlot extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
+        // Only allow valid calcinator fuel or empty buckets
         return this.container.isFuel(stack) || this.isBucket(stack);
     }
     
     @Override
     public int getItemStackLimit(ItemStack stack) {
+        // Only one empty bucket at a time
         return this.isBucket(stack) ? 1 : super.getItemStackLimit(stack);
     }
     

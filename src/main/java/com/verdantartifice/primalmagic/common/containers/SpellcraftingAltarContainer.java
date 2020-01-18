@@ -44,6 +44,11 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+/**
+ * Server data container for the spellcrafting altar GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellcraftingAltarContainer extends Container {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "spellcrafting");
 
@@ -118,6 +123,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected SpellPackage makeFinalSpellPackage() {
+        // Assemble the final spell package from the input types and properties
         SpellPackage spell = new SpellPackage();
         spell.setName(this.getSpellName());
         spell.setVehicle(this.getSpellVehicleComponent());
@@ -133,6 +139,7 @@ public class SpellcraftingAltarContainer extends Container {
     
     @Nonnull
     public ITextComponent getDefaultSpellName() {
+        // Don't use getSpellPackage here, or it will cause infinite recursion
         ITextComponent vehiclePiece = this.getSpellVehicleComponent().getDefaultNamePiece();
         ITextComponent payloadPiece = this.getSpellPayloadComponent().getDefaultNamePiece();
         ITextComponent primaryModPiece = this.getSpellPrimaryModComponent().getDefaultNamePiece();
@@ -140,19 +147,25 @@ public class SpellcraftingAltarContainer extends Container {
         boolean primaryActive = this.getSpellPrimaryModComponent().isActive();
         boolean secondaryActive = this.getSpellSecondaryModComponent().isActive();
         if (vehiclePiece == null || payloadPiece == null || vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
+            // If the constructed spell is invalid, don't show a default name
             return new StringTextComponent("");
         } else if (!primaryActive && !secondaryActive) {
+            // No mods selected
             return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
         } else if (primaryActive && secondaryActive) {
+            // Two mods selected
             return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
         } else if (primaryActive) {
+            // Only a primary mod selected
             return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
         } else {
+            // Only a secondary mod selected
             return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
         }
     }
     
     public void setSpellName(String name) {
+        // Clear the spell package cache and trigger a regeneration of the output item on change
         this.spellName = name;
         this.spellPackageCache = null;
         this.worldPosCallable.consume((world, blockPos) -> {
@@ -161,6 +174,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellVehicle getSpellVehicleComponent() {
+        // Construct a new spell vehicle from the saved type index and populate it with any cached properties
         ISpellVehicle retVal = SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes(this.player).get(this.getSpellVehicleTypeIndex()));
         if (retVal != null) {
             for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.VEHICLE).entrySet()) {
@@ -177,6 +191,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellVehicleTypeIndex(int index) {
+        // Clear the spell package cache and trigger a regeneration of the output item on change
         index = MathHelper.clamp(index, 0, SpellManager.getVehicleTypes(this.player).size() - 1);
         this.spellVehicleTypeIndex = index;
         this.spellPackageCache = null;
@@ -186,6 +201,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellPayload getSpellPayloadComponent() {
+        // Construct a new spell payload from the saved type index and populate it with any cached properties
         ISpellPayload retVal = SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes(this.player).get(this.getSpellPayloadTypeIndex()));
         if (retVal != null) {
             for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.PAYLOAD).entrySet()) {
@@ -202,6 +218,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellPayloadTypeIndex(int index) {
+        // Clear the spell package cache and trigger a regeneration of the output item on change
         index = MathHelper.clamp(index, 0, SpellManager.getPayloadTypes(this.player).size() - 1);
         this.spellPayloadTypeIndex = index;
         this.spellPackageCache = null;
@@ -211,6 +228,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellMod getSpellPrimaryModComponent() {
+        // Construct a new spell mod from the saved type index and populate it with any cached properties
         ISpellMod retVal = SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellPrimaryModTypeIndex()));
         if (retVal != null) {
             for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.PRIMARY_MOD).entrySet()) {
@@ -227,6 +245,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellPrimaryModTypeIndex(int index) {
+        // Clear the spell package cache and trigger a regeneration of the output item on change
         index = MathHelper.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellPrimaryModTypeIndex = index;
         this.spellPackageCache = null;
@@ -236,6 +255,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     protected ISpellMod getSpellSecondaryModComponent() {
+        // Construct a new spell mod from the saved type index and populate it with any cached properties
         ISpellMod retVal = SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellSecondaryModTypeIndex()));
         if (retVal != null) {
             for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.SECONDARY_MOD).entrySet()) {
@@ -252,6 +272,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     public void setSpellSecondaryModTypeIndex(int index) {
+        // Clear the spell package cache and trigger a regeneration of the output item on change
         index = MathHelper.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellSecondaryModTypeIndex = index;
         this.spellPackageCache = null;
@@ -263,6 +284,8 @@ public class SpellcraftingAltarContainer extends Container {
     public void setSpellPropertyValue(SpellComponent component, String name, int value) {
         SpellPackage spell = this.getSpellPackage();
         SpellProperty property = null;
+        
+        // Determine which property is to be changed
         if (component == SpellComponent.VEHICLE && spell.getVehicle() != null) {
             property = spell.getVehicle().getProperty(name);
         } else if (component == SpellComponent.PAYLOAD && spell.getPayload() != null) {
@@ -272,6 +295,8 @@ public class SpellcraftingAltarContainer extends Container {
         } else if (component == SpellComponent.SECONDARY_MOD && spell.getSecondaryMod() != null) {
             property = spell.getSecondaryMod().getProperty(name);
         }
+        
+        // Set and cache the changed value, then trigger a regeneration of the output item
         if (property != null) {
             property.setValue(value);
             this.spellPropertyCache.get(component).put(name, value);
@@ -283,6 +308,7 @@ public class SpellcraftingAltarContainer extends Container {
     
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
+        // Return input scroll and wand to the player's inventory when the GUI is closed
         super.onContainerClosed(playerIn);
         this.worldPosCallable.consume((world, blockPos) -> {
             this.clearContainer(playerIn, world, this.wandInv);
@@ -298,6 +324,7 @@ public class SpellcraftingAltarContainer extends Container {
             ItemStack slotStack = slot.getStack();
             stack = slotStack.copy();
             if (index == 0) {
+                // If transferring the output item, trigger its created handler then move it into the player's backpack or hotbar
                 this.worldPosCallable.consume((world, blockPos) -> {
                     slotStack.getItem().onCreated(slotStack, world, playerIn);
                 });
@@ -306,6 +333,7 @@ public class SpellcraftingAltarContainer extends Container {
                 }
                 slot.onSlotChange(slotStack, stack);
             } else if (index >= 3 && index < 30) {
+                // If transferring from the backpack, move wands or blank scrolls to the appropriate slot, and anything else to the hotbar
                 if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -320,6 +348,7 @@ public class SpellcraftingAltarContainer extends Container {
                     }
                 }
             } else if (index >= 30 && index < 39) {
+                // If transferring from the hotbar, move wands or blank scrolls to the appropriate slot, and anything else to the backpack
                 if (this.wandSlot.isItemValid(slotStack)) {
                     if (!this.mergeItemStack(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
@@ -334,6 +363,7 @@ public class SpellcraftingAltarContainer extends Container {
                     }
                 }
             } else if (!this.mergeItemStack(slotStack, 3, 39, false)) {
+                // Move all other transfers to the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
@@ -374,6 +404,7 @@ public class SpellcraftingAltarContainer extends Container {
             ItemStack stack = ItemStack.EMPTY;
             Optional<? extends IRecipe<?>> opt = world.getServer().getRecipeManager().getRecipe(RECIPE_LOC);
             if (opt.isPresent() && opt.get() instanceof SpellcraftingRecipe) {
+                // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
                 SpellcraftingRecipe recipe = (SpellcraftingRecipe)opt.get();
                 if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
                     stack = recipe.getCraftingResult(this.scrollInv);
@@ -382,6 +413,8 @@ public class SpellcraftingAltarContainer extends Container {
                     }
                 }
             }
+
+            // Send a packet to the client to update its GUI with the shown output
             this.resultInv.setInventorySlotContents(0, stack);
             spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
         }
