@@ -33,6 +33,11 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+/**
+ * Block definition for the wand inscription table.
+ * 
+ * @author Daedalus4096
+ */
 public class WandInscriptionTableBlock extends Block {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/wand_inscription_table"));
 
@@ -51,6 +56,7 @@ public class WandInscriptionTableBlock extends Block {
     
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
+        // Make the block face the player when placed
         return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
     
@@ -72,6 +78,7 @@ public class WandInscriptionTableBlock extends Block {
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
+            // Open the GUI for the wand inscription table
             NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
                 @Override
                 public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {

@@ -20,6 +20,11 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
+/**
+ * Base definition for leaf blocks that phase in and out over time.
+ * 
+ * @author Daedalus4096
+ */
 public abstract class AbstractPhasingLeavesBlock extends LeavesBlock {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
 
@@ -28,6 +33,12 @@ public abstract class AbstractPhasingLeavesBlock extends LeavesBlock {
         this.setDefaultState(this.getDefaultState().with(PHASE, TimePhase.FULL));
     }
     
+    /**
+     * Get the current phase of the block based on the current game time.
+     * 
+     * @param world the game world
+     * @return the block's current phase
+     */
     protected abstract TimePhase getCurrentPhase(IWorld world);
     
     @Override
@@ -38,17 +49,20 @@ public abstract class AbstractPhasingLeavesBlock extends LeavesBlock {
     
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
+        // Set the block's phase upon placement
         TimePhase phase = this.getCurrentPhase(context.getWorld());
         return super.getStateForPlacement(context).with(PHASE, phase);
     }
     
     @Override
     public BlockRenderLayer getRenderLayer() {
+        // Even though not all phases are translucent, this method isn't world-aware
         return BlockRenderLayer.TRANSLUCENT;
     }
     
     @Override
     public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
+        // Periodically check to see if the block's phase needs to be updated
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
@@ -58,6 +72,7 @@ public abstract class AbstractPhasingLeavesBlock extends LeavesBlock {
     
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes
         BlockState state = super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
@@ -69,6 +84,7 @@ public abstract class AbstractPhasingLeavesBlock extends LeavesBlock {
     @Override
     public float getBlockHardness(BlockState blockState, IBlockReader worldIn, BlockPos pos) {
         if (blockState.get(PHASE) == TimePhase.FULL) {
+            // If the block is fully phased in, use its default hardness as those aren't all the same
             return this.blockHardness;
         } else {
             return blockState.get(PHASE).getHardness();
@@ -78,6 +94,7 @@ public abstract class AbstractPhasingLeavesBlock extends LeavesBlock {
     @Override
     public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, Entity exploder, Explosion explosion) {
         if (state.get(PHASE) == TimePhase.FULL) {
+            // If the block is fully phased in, use its default resistance as those aren't all the same
             return this.blockResistance;
         } else {
             return state.get(PHASE).getResistance();

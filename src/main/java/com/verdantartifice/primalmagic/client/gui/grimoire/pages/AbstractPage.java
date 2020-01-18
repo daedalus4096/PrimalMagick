@@ -22,10 +22,31 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class AbstractPage extends AbstractGui {
     private static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
 
+    /**
+     * Render this grimoire page
+     * 
+     * @param side which side of the grimoire to render on, 0 for left, 1 for right
+     * @param x
+     * @param y
+     * @param mouseX
+     * @param mouseY
+     */
     public abstract void render(int side, int x, int y, int mouseX, int mouseY);
     
+    /**
+     * Get the translation key for this page's title
+     * @return the translation key for this page's title
+     */
     protected abstract String getTitleTranslationKey();
     
+    /**
+     * Create the widgets to show on this grimoire page
+     * 
+     * @param screen the screen object to which widgets should be added
+     * @param side which side of the grimoire to render on, 0 for left, 1 for right
+     * @param x
+     * @param y
+     */
     public abstract void initWidgets(GrimoireScreen screen, int side, int x, int y);
     
     protected boolean renderTopTitleBar() {

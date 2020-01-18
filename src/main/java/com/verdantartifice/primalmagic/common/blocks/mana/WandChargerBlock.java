@@ -21,6 +21,11 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+/**
+ * Block definition for the wand charger.
+ * 
+ * @author Daedalus4096
+ */
 public class WandChargerBlock extends Block {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/wand_charger"));
     
@@ -47,6 +52,7 @@ public class WandChargerBlock extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
         super.eventReceived(state, worldIn, pos, id, param);
         TileEntity tile = worldIn.getTileEntity(pos);
         return (tile == null) ? false : tile.receiveClientEvent(id, param);
@@ -55,6 +61,7 @@ public class WandChargerBlock extends Block {
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
+            // Open the GUI for the wand charger
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof WandChargerTileEntity) {
                 player.openContainer((WandChargerTileEntity)tile);
@@ -66,6 +73,7 @@ public class WandChargerBlock extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof WandChargerTileEntity) {

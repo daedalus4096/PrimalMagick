@@ -17,6 +17,11 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for a pillar of any type (e.g. marble).
+ * 
+ * @author Daedalus4096
+ */
 public class PillarBlock extends Block {
     protected static final VoxelShape SHAPE_BASE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/pillar"));
     protected static final VoxelShape SHAPE_BOTTOM = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/pillar_bottom"));
@@ -31,6 +36,7 @@ public class PillarBlock extends Block {
     
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        // Determine the block's shape based on its "type" blockstate property
         switch (state.get(PROPERTY_TYPE)) {
         case BOTTOM:
             return SHAPE_BOTTOM;
@@ -49,11 +55,13 @@ public class PillarBlock extends Block {
     
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
+        // Determine the appropriate pillar state when this block is placed in the world
         return this.getCurrentState(context.getWorld(), context.getPos());
     }
     
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        // Determine the appropriate pillar state when one of this block's neighbors is updated
         return this.getCurrentState(worldIn, currentPos);
     }
     
@@ -62,12 +70,16 @@ public class PillarBlock extends Block {
         boolean down = (world.getBlockState(pos.down()).getBlock() instanceof PillarBlock);
         
         if (up && down) {
+            // If there are pillar blocks both above and below this block, use the base pillar type
             return this.getDefaultState().with(PROPERTY_TYPE, Type.BASE);
         } else if (up) {
+            // If there is a pillar block above this block but not below, use the bottom pillar type
             return this.getDefaultState().with(PROPERTY_TYPE, Type.BOTTOM);
         } else if (down) {
+            // If there is a pillar block below this block but not above, use the top pillar type
             return this.getDefaultState().with(PROPERTY_TYPE, Type.TOP);
         } else {
+            // If there are no pillar blocks immediately above or below this block, use the base pillar type
             return this.getDefaultState().with(PROPERTY_TYPE, Type.BASE);
         }
     }

@@ -8,6 +8,11 @@ import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
+/**
+ * Definition for a sunwood tree.  Used by sunwood saplings to spawn the sunwood tree worldgen feature.
+ * 
+ * @author Daedalus4096
+ */
 public class SunwoodTree extends Tree {
     @Override
     protected AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {

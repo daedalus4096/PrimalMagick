@@ -28,6 +28,11 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
+/**
+ * Base definition for log blocks that phase in and out over time.
+ * 
+ * @author Daedalus4096
+ */
 public abstract class AbstractPhasingLogBlock extends LogBlock {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
     
@@ -39,6 +44,12 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
         this.strippedVersion = stripped;
     }
     
+    /**
+     * Get the current phase of the block based on the current game time.
+     * 
+     * @param world the game world
+     * @return the block's current phase
+     */
     protected abstract TimePhase getCurrentPhase(IWorld world);
     
     @Override
@@ -49,12 +60,14 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
+        // Set the block's phase upon placement
         TimePhase phase = this.getCurrentPhase(context.getWorld());
         return super.getStateForPlacement(context).with(PHASE, phase);
     }
     
     @Override
     public BlockRenderLayer getRenderLayer() {
+        // Even though not all phases are translucent, this method isn't world-aware
         return BlockRenderLayer.TRANSLUCENT;
     }
     
@@ -66,6 +79,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
+        // Periodically check to see if the block's phase needs to be updated
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
@@ -76,6 +90,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     @SuppressWarnings("deprecation")
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes
         BlockState state = super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
@@ -87,6 +102,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     @Override
     public float getBlockHardness(BlockState blockState, IBlockReader worldIn, BlockPos pos) {
         if (blockState.get(PHASE) == TimePhase.FULL) {
+            // If the block is fully phased in, use its default hardness as those aren't all the same
             return this.blockHardness;
         } else {
             return blockState.get(PHASE).getHardness();
@@ -96,6 +112,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     @Override
     public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, Entity exploder, Explosion explosion) {
         if (state.get(PHASE) == TimePhase.FULL) {
+            // If the block is fully phased in, use its default resistance as those aren't all the same
             return this.blockResistance;
         } else {
             return state.get(PHASE).getResistance();
@@ -105,6 +122,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.strippedVersion != null && player != null && player.getHeldItem(handIn).getItem() instanceof AxeItem) {
+            // If the player right-clicks on the log with an axe, replace this block with its stripped version
             worldIn.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isRemote) {
                 worldIn.setBlockState(pos, this.strippedVersion.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS)).with(PHASE, state.get(PHASE)), 11);

@@ -8,6 +8,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for sunwood logs.
+ * 
+ * @author Daedalus4096
+ */
 public class SunwoodLogBlock extends AbstractPhasingLogBlock {
     public SunwoodLogBlock(Block stripped) {
         super(stripped, MaterialColor.GOLD, Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).tickRandomly().sound(SoundType.WOOD));

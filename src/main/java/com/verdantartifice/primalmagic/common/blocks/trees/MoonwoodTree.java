@@ -8,6 +8,11 @@ import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
+/**
+ * Definition for a moonwood tree.  Used by moonwood saplings to spawn the moonwood tree worldgen feature.
+ * 
+ * @author Daedalus4096
+ */
 public class MoonwoodTree extends Tree {
     @Override
     protected AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {

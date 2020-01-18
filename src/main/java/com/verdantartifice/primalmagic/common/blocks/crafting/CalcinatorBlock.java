@@ -37,6 +37,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Block definition for the calcinator.
+ * 
+ * @author Daedalus4096
+ */
 public class CalcinatorBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -61,6 +66,7 @@ public class CalcinatorBlock extends Block {
     
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
+        // Make the block face the player when placed
         return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
     
@@ -77,6 +83,7 @@ public class CalcinatorBlock extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public int getLightValue(BlockState state) {
+        // Only give off light if the calcinator is lit
         return state.get(LIT) ? super.getLightValue(state) : 0;
     }
     
@@ -93,6 +100,7 @@ public class CalcinatorBlock extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
         super.eventReceived(state, worldIn, pos, id, param);
         TileEntity tile = worldIn.getTileEntity(pos);
         return (tile == null) ? false : tile.receiveClientEvent(id, param);
@@ -101,6 +109,7 @@ public class CalcinatorBlock extends Block {
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
+            // Open the GUI for the calcinator
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof CalcinatorTileEntity) {
                 player.openContainer((CalcinatorTileEntity)tile);
@@ -112,6 +121,8 @@ public class CalcinatorBlock extends Block {
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        
+        // Set the calcinator tile entity's owner when placed by a player.  Needed so that the tile entity can do research checks.
         if (!worldIn.isRemote && placer instanceof PlayerEntity) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof CalcinatorTileEntity) {
@@ -123,6 +134,7 @@ public class CalcinatorBlock extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof CalcinatorTileEntity) {

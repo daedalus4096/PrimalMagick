@@ -6,6 +6,11 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import net.minecraft.block.Block;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for moonwood slabs.
+ * 
+ * @author Daedalus4096
+ */
 public class MoonwoodSlabBlock extends AbstractPhasingSlabBlock {
     public MoonwoodSlabBlock(Block.Properties properties) {
         super(properties);

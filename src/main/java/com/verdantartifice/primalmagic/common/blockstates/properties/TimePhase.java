@@ -3,11 +3,16 @@ package com.verdantartifice.primalmagic.common.blockstates.properties;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IWorld;
 
+/**
+ * Representation of the current phase of a block that phases in and out over time.
+ * 
+ * @author Daedalus4096
+ */
 public enum TimePhase implements IStringSerializable {
-    FULL("full", 0.0F, 0.0F, 10),    // Default to block-specified hardness and resistance
-    WAXING("waxing", 6.0F, 12.0F, 5),
-    WANING("waning", 50.0F, 1200.0F, 0),
-    FADED("faded", -1.0F, 3600000.0F, 0);
+    FULL("full", 0.0F, 0.0F, 10),           // The block is fully phased in; use default attributes and full light
+    WAXING("waxing", 6.0F, 12.0F, 5),       // The block is mostly phased in; increased hardness/resistance and half light
+    WANING("waning", 50.0F, 1200.0F, 0),    // The block is mostly phased out; very high hardness/resistance and no light
+    FADED("faded", -1.0F, 3600000.0F, 0);   // The block is fully phased out; unbreakable and no light
     
     private final String name;
     private final float hardness;
@@ -24,38 +29,38 @@ public enum TimePhase implements IStringSerializable {
     public static TimePhase getSunPhase(IWorld world) {
         float angle = world.getCelestialAngle(1.0F);
         if (angle < 0.1875F) {
-            return FULL;
+            return FULL;    // Afternoon
         } else if (angle < 0.25F) {
-            return WAXING;
+            return WAXING;  // Just before sunset
         } else if (angle < 0.3125F) {
-            return WANING;
+            return WANING;  // Just after sunset
         } else if (angle < 0.6875F) {
-            return FADED;
+            return FADED;   // Night
         } else if (angle < 0.75F) {
-            return WANING;
+            return WANING;  // Just before sunrise
         } else if (angle < 0.8125F) {
-            return WAXING;
+            return WAXING;  // Just after sunrise
         } else {
-            return FULL;
+            return FULL;    // Morning
         }
     }
     
     public static TimePhase getMoonPhase(IWorld world) {
         float angle = world.getCelestialAngle(1.0F);
         if (angle < 0.1875F) {
-            return FADED;
+            return FADED;   // Afternoon
         } else if (angle < 0.25F) {
-            return WANING;
+            return WANING;  // Just before sunset
         } else if (angle < 0.3125F) {
-            return WAXING;
+            return WAXING;  // Just after sunset
         } else if (angle < 0.6875F) {
-            return FULL;
+            return FULL;    // Night
         } else if (angle < 0.75F) {
-            return WAXING;
+            return WAXING;  // Just before sunrise
         } else if (angle < 0.8125F) {
-            return WANING;
+            return WANING;  // Just after sunrise
         } else {
-            return FADED;
+            return FADED;   // Morning
         }
     }
     

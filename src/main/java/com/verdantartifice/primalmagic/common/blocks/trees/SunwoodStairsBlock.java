@@ -6,6 +6,11 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import net.minecraft.block.BlockState;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for sunwood stairs.
+ * 
+ * @author Daedalus4096
+ */
 public class SunwoodStairsBlock extends AbstractPhasingStairsBlock {
     public SunwoodStairsBlock(BlockState state, Properties properties) {
         super(state, properties);

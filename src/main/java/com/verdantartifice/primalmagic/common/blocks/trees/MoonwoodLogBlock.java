@@ -8,6 +8,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for moonwood logs.
+ * 
+ * @author Daedalus4096
+ */
 public class MoonwoodLogBlock extends AbstractPhasingLogBlock {
     public MoonwoodLogBlock(Block stripped) {
         super(stripped, MaterialColor.IRON, Block.Properties.create(Material.WOOD, MaterialColor.IRON).hardnessAndResistance(2.0F).tickRandomly().sound(SoundType.WOOD));

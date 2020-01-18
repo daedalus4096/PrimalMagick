@@ -8,6 +8,11 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for moonwood leaves.
+ * 
+ * @author Daedalus4096
+ */
 public class MoonwoodLeavesBlock extends AbstractPhasingLeavesBlock {
     public MoonwoodLeavesBlock() {
         super(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT));

@@ -13,6 +13,11 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
+/**
+ * Block definition for a plain wooden table.
+ * 
+ * @author Daedalus4096
+ */
 public class WoodTableBlock extends Block {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/wood_table"));
 

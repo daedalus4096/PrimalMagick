@@ -17,6 +17,11 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+/**
+ * Block definition for the ancient mana font.
+ * 
+ * @author Daedalus4096
+ */
 public class AncientManaFontBlock extends Block {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/mana_font_ancient"));
 
@@ -50,6 +55,7 @@ public class AncientManaFontBlock extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
         super.eventReceived(state, worldIn, pos, id, param);
         TileEntity tile = worldIn.getTileEntity(pos);
         return (tile == null) ? false : tile.receiveClientEvent(id, param);

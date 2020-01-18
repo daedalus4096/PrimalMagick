@@ -9,6 +9,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for sunwood pillars.
+ * 
+ * @author Daedalus4096
+ */
 public class SunwoodPillarBlock extends AbstractPhasingPillarBlock {
     public SunwoodPillarBlock() {
         super(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).tickRandomly().sound(SoundType.WOOD));

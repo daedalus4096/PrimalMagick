@@ -8,6 +8,11 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for sunwood leaves.
+ * 
+ * @author Daedalus4096
+ */
 public class SunwoodLeavesBlock extends AbstractPhasingLeavesBlock {
     public SunwoodLeavesBlock() {
         super(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT));

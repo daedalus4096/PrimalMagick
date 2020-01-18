@@ -6,6 +6,11 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import net.minecraft.block.BlockState;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for moonwood stairs.
+ * 
+ * @author Daedalus4096
+ */
 public class MoonwoodStairsBlock extends AbstractPhasingStairsBlock {
     public MoonwoodStairsBlock(BlockState state, Properties properties) {
         super(state, properties);

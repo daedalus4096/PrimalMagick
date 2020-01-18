@@ -71,6 +71,10 @@ public abstract class AbstractSourceWidget extends Widget {
         }
     }
     
+    /**
+     * Get the translation key for this widget's tooltip
+     * @return the translation key for this widget's tooltip
+     */
     protected abstract String getTooltipTranslationKey();
     
     @Override

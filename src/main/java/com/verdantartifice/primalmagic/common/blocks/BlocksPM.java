@@ -5,6 +5,11 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import net.minecraft.block.Block;
 import net.minecraftforge.registries.ObjectHolder;
 
+/**
+ * Object holder for mod blocks.  Actual values populated by Forge post-registration.
+ * 
+ * @author Daedalus4096
+ */
 @ObjectHolder(PrimalMagic.MODID)
 public class BlocksPM {
     public static final Block MARBLE_RAW = null;

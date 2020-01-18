@@ -9,6 +9,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for moonwood pillars.
+ * 
+ * @author Daedalus4096
+ */
 public class MoonwoodPillarBlock extends AbstractPhasingPillarBlock {
     public MoonwoodPillarBlock() {
         super(Block.Properties.create(Material.WOOD, MaterialColor.IRON).hardnessAndResistance(2.0F).tickRandomly().sound(SoundType.WOOD));

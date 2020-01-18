@@ -9,7 +9,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 
 /**
- * Object holder for mod particle types.
+ * Object holder for mod particle types.  Actual values populated by Forge post-registration.
  * 
  * @author Daedalus4096
  */

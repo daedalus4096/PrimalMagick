@@ -22,6 +22,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+/**
+ * Block definition for the wand assembly table.
+ * 
+ * @author Daedalus4096
+ */
 public class WandAssemblyTableBlock extends Block {
     public WandAssemblyTableBlock() {
         super(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE));
@@ -31,6 +36,7 @@ public class WandAssemblyTableBlock extends Block {
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
+            // Open the GUI for the wand assembly table
             NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
                 @Override
                 public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {

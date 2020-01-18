@@ -28,7 +28,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Block definition for the consecration field.
+ * 
+ * @author Daedalus4096
+ */
 public class ConsecrationFieldBlock extends Block {
+    // Define a replaceable, transparent material that does not block movement
     protected static final Material MATERIAL = new Material(MaterialColor.AIR, false, false, false, false, true, false, true, PushReaction.NORMAL);
 
     public ConsecrationFieldBlock() {
@@ -39,17 +45,20 @@ public class ConsecrationFieldBlock extends Block {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        // Show glittering particles
         super.animateTick(stateIn, worldIn, pos, rand);
         FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Source.HALLOWED.getColor());
     }
     
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        // Don't show a selection highlight when mousing over the field
         return VoxelShapes.empty();
     }
     
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        // The field should only have a collision box for living, non-player entities; everything else can pass through it
         if (context.getEntity() instanceof PlayerEntity || !(context.getEntity() instanceof LivingEntity)) {
             return VoxelShapes.empty();
         } else {
@@ -64,11 +73,13 @@ public class ConsecrationFieldBlock extends Block {
     
     @Override
     public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+        // Don't work with the creative pick-block feature, as this block has no corresponding item block
         return ItemStack.EMPTY;
     }
     
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        // While a player is in the field, give them regeneration and hunger recovery for a few seconds
         if (entityIn instanceof PlayerEntity && entityIn.ticksExisted % 5 == 0) {
             PlayerEntity player = (PlayerEntity)entityIn;
             player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 100));

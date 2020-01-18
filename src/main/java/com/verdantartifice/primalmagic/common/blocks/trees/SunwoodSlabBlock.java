@@ -6,6 +6,11 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import net.minecraft.block.Block;
 import net.minecraft.world.IWorld;
 
+/**
+ * Block definition for sunwood slabs.
+ * 
+ * @author Daedalus4096
+ */
 public class SunwoodSlabBlock extends AbstractPhasingSlabBlock {
     public SunwoodSlabBlock(Block.Properties properties) {
         super(properties);
