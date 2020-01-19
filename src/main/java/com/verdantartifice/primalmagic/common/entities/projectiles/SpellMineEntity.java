@@ -27,13 +27,19 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+/**
+ * Definition for a spell mine entity.  Sits in the world until another entity collides with it, at which point it executes a
+ * given spell package upon the colliding entity.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellMineEntity extends Entity {
     protected static final DataParameter<Integer> COLOR = EntityDataManager.createKey(SpellMineEntity.class, DataSerializers.VARINT);
     protected static final DataParameter<Boolean> ARMED = EntityDataManager.createKey(SpellMineEntity.class, DataSerializers.BOOLEAN);
     protected static final DataParameter<Integer> LIFESPAN = EntityDataManager.createKey(SpellMineEntity.class, DataSerializers.VARINT);
     
-    protected static final int DURATION_FACTOR = 4800;
-    protected static final int ARMING_TIME = 60;
+    protected static final int DURATION_FACTOR = 4800;  // Number of ticks to live per duration of the mine
+    protected static final int ARMING_TIME = 60;        // Number of ticks before switching to an armed state
     
     protected SpellPackage spell;
     protected PlayerEntity caster;
@@ -53,6 +59,7 @@ public class SpellMineEntity extends Entity {
         this.casterId = caster.getUniqueID();
         this.setLifespan(duration * DURATION_FACTOR);
         if (spell != null && spell.getPayload() != null) {
+            // Store the spell payload's color for use in rendering
             this.setColor(spell.getPayload().getSource().getColor());
         }
     }
@@ -89,6 +96,7 @@ public class SpellMineEntity extends Entity {
     @Nullable
     public PlayerEntity getCaster() {
         if (this.caster == null && this.casterId != null && this.world instanceof ServerWorld) {
+            // If the caster cache is empty, find the entity matching the caster's unique ID
             List<ServerPlayerEntity> players = ((ServerWorld)this.world).getPlayers((spe) -> spe.getUniqueID().equals(this.casterId));
             if (!players.isEmpty()) {
                 this.caster = players.get(0);

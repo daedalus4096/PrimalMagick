@@ -7,6 +7,11 @@ import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjecti
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.registries.ObjectHolder;
 
+/**
+ * Object holder for mod entity types.  Actual values populated by Forge post-registration.
+ * 
+ * @author Daedalus4096
+ */
 @ObjectHolder(PrimalMagic.MODID)
 public class EntityTypesPM {
     public static final EntityType<SpellProjectileEntity> SPELL_PROJECTILE = null;

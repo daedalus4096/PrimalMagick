@@ -7,6 +7,11 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraft.world.GameType;
 
+/**
+ * Definition for a potion effect type that grants creative flight for the duration.
+ * 
+ * @author Daedalus4096
+ */
 public class FlyingEffect extends Effect {
     public FlyingEffect(EffectType typeIn, int liquidColorIn) {
         super(typeIn, liquidColorIn);
@@ -15,6 +20,7 @@ public class FlyingEffect extends Effect {
     @Override
     public void applyAttributesModifiersToEntity(LivingEntity entityLivingBaseIn, AbstractAttributeMap attributeMapIn, int amplifier) {
         if (!entityLivingBaseIn.world.isRemote && entityLivingBaseIn instanceof ServerPlayerEntity) {
+            // Set the allowFlying player ability when this effect is applied and send the change to clients
             ServerPlayerEntity player = (ServerPlayerEntity)entityLivingBaseIn;
             player.abilities.allowFlying = true;
             player.sendPlayerAbilities();
@@ -27,11 +33,12 @@ public class FlyingEffect extends Effect {
         if (!entityLivingBaseIn.world.isRemote && entityLivingBaseIn instanceof ServerPlayerEntity) {
             ServerPlayerEntity player = (ServerPlayerEntity)entityLivingBaseIn;
             GameType type = player.world.getWorldInfo().getGameType();
-            player.abilities.allowFlying = (type == GameType.CREATIVE || type == GameType.SPECTATOR);
+            player.abilities.allowFlying = (type == GameType.CREATIVE || type == GameType.SPECTATOR);   // Cancel flight ability if not appropriate for game mode
             if (!player.abilities.allowFlying) {
+                // If flying is no longer allowed, end the player's flight
                 player.abilities.isFlying = false;
             }
-            player.sendPlayerAbilities();
+            player.sendPlayerAbilities();   // Send ability changes to clients
         }
         super.removeAttributesModifiersFromEntity(entityLivingBaseIn, attributeMapIn, amplifier);
     }

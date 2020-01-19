@@ -13,6 +13,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Wand transformation that turns a block into something else.
+ * 
+ * @author Daedalus4096
+ */
 public class WandTransformBlock implements IWandTransform {
     protected final Block target;
     protected final ItemStack result;
@@ -26,11 +31,13 @@ public class WandTransformBlock implements IWandTransform {
 
     @Override
     public boolean isValid(World world, PlayerEntity player, BlockPos pos) {
+        // The expected block type must be at the given world position and the given player must know the right research
         return (world.getBlockState(pos).getBlock() == this.target) && (this.research == null || this.research.isKnownBy(player));
     }
 
     @Override
     public void execute(World world, PlayerEntity player, BlockPos pos) {
+        // Enqueue a block swapper to be executed on the world next tick
         // TODO Fire player crafting event for result
         BlockState state = world.getBlockState(pos);
         BlockSwapper.enqueue(world, new BlockSwapper(pos, state, this.result, player));

@@ -24,6 +24,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+/**
+ * Definition for a shapeless arcane recipe.  Like a vanilla shapeless recipe, but has research and optional mana requirements.
+ * 
+ * @author Daedalus4096
+ * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
+ */
 public class ShapelessArcaneRecipe implements IArcaneRecipe {
     protected final ResourceLocation id;
     protected final String group;

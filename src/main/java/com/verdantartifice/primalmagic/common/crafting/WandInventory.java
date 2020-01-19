@@ -9,6 +9,11 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
+/**
+ * Special crafting inventory for holding a wand.
+ * 
+ * @author Daedalus4096
+ */
 public class WandInventory implements IInventory {
     protected final NonNullList<ItemStack> stackWand = NonNullList.withSize(1, ItemStack.EMPTY);
     protected final Container container;
@@ -44,6 +49,7 @@ public class WandInventory implements IInventory {
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
+        // Update the callback container's crafting state when a wand is removed from this inventory
         ItemStack stack = ItemStackHelper.getAndRemove(this.stackWand, 0);
         this.container.onCraftMatrixChanged(this);
         return stack;
@@ -51,6 +57,7 @@ public class WandInventory implements IInventory {
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
+        // Update the callback container's crafting state when this inventory's contents are changed
         this.stackWand.set(0, stack);
         this.container.onCraftMatrixChanged(this);
     }
@@ -70,6 +77,7 @@ public class WandInventory implements IInventory {
     
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
+        // Only wands can be added to this inventory
         return stack.getItem() instanceof IWand;
     }
 }

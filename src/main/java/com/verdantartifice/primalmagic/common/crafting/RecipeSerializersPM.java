@@ -6,6 +6,11 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraftforge.registries.ObjectHolder;
 
+/**
+ * Object holder for mod recipe serializers.  Actual values populated by Forge post-registration.
+ * 
+ * @author Daedalus4096
+ */
 @ObjectHolder(PrimalMagic.MODID)
 public class RecipeSerializersPM {
     public static final IRecipeSerializer<ShapelessArcaneRecipe> ARCANE_CRAFTING_SHAPELESS = null;

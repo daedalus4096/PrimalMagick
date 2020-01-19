@@ -9,6 +9,11 @@ import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+/**
+ * Special definition for a spellcrafting recipe.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellcraftingRecipe extends SpecialRecipe {
     public SpellcraftingRecipe(ResourceLocation idIn) {
         super(idIn);

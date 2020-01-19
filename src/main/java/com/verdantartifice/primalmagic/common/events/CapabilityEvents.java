@@ -12,11 +12,17 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Handlers for capability-related events.
+ * 
+ * @author Daedalus4096
+ */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class CapabilityEvents {
     @SubscribeEvent
     public static void attachEntityCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof PlayerEntity) {
+            // Only attach these capabilities to players, not other types of entities
             event.addCapability(PlayerKnowledge.Provider.NAME, new PlayerKnowledge.Provider());
             event.addCapability(PlayerCooldowns.Provider.NAME, new PlayerCooldowns.Provider());
         }

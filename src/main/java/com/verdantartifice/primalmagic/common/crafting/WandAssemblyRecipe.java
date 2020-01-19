@@ -13,6 +13,11 @@ import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+/**
+ * Special definition for a wand assembly recipe.
+ * 
+ * @author Daedalus4096
+ */
 public class WandAssemblyRecipe extends SpecialRecipe {
     public WandAssemblyRecipe(ResourceLocation idIn) {
         super(idIn);
@@ -25,6 +30,7 @@ public class WandAssemblyRecipe extends SpecialRecipe {
         ItemStack capStack1 = inv.getStackInSlot(2);
         ItemStack capStack2 = inv.getStackInSlot(3);
         
+        // Make sure the crafting inventory has a core, a gem, and two identical caps
         return !coreStack.isEmpty() && (coreStack.getItem() instanceof WandCoreItem) &&
                !gemStack.isEmpty() && (gemStack.getItem() instanceof WandGemItem) &&
                !capStack1.isEmpty() && (capStack1.getItem() instanceof WandCapItem) &&
@@ -39,6 +45,7 @@ public class WandAssemblyRecipe extends SpecialRecipe {
         ItemStack wandStack = new ItemStack(ItemsPM.MODULAR_WAND);
         ModularWandItem wandItem = (ModularWandItem)wandStack.getItem();
         
+        // Set the components of the modular wand
         wandItem.setWandCore(wandStack, ((WandCoreItem)coreStack.getItem()).getWandCore());
         wandItem.setWandGem(wandStack, ((WandGemItem)gemStack.getItem()).getWandGem());
         wandItem.setWandCap(wandStack, ((WandCapItem)capStack.getItem()).getWandCap());

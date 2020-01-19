@@ -4,6 +4,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Registry for defined wand transformations.
+ * 
+ * @author Daedalus4096
+ */
 public class WandTransforms {
     protected static final Set<IWandTransform> REGISTRY = new HashSet<>();
     

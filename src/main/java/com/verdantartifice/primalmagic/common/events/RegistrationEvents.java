@@ -24,6 +24,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Handlers for registration related events.
+ * 
+ * @author Daedalus4096
+ */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class RegistrationEvents {
     @SubscribeEvent

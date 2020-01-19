@@ -27,6 +27,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+/**
+ * Definition for a shaped arcane recipe.  Like a vanilla shaped recipe, but has research and optional mana requirements.
+ * 
+ * @author Daedalus4096
+ * @see {@link net.minecraft.item.crafting.ShapedRecipe}
+ */
 public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<CraftingInventory> {
     protected final int recipeWidth;
     protected final int recipeHeight;
@@ -50,6 +56,9 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
 
     @Override
     public boolean matches(CraftingInventory inv, World worldIn) {
+        // Determine if the contents of the given crafting recipe match this recipe.  Shift the recipe window
+        // around the available space until a match is found or the search space exhausted.  E.g. a 2x2 recipe
+        // could be shoved up against any of the four corners of the 3x3 crafting grid.
         for (int i = 0; i <= inv.getWidth() - this.recipeWidth; i++) {
             for (int j = 0; j <= inv.getHeight() - this.recipeHeight; j++) {
                 if (this.checkMatch(inv, i, j, true)) {
@@ -137,14 +146,19 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     protected static Map<String, Ingredient> deserializeKey(JsonObject jsonObject) {
         Map<String, Ingredient> map = new HashMap<>();
         for (Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+            // Validate each key in the given JSON object
             if (entry.getKey().length() != 1) {
                 throw new JsonSyntaxException("Invalid key entry: '" + (String)entry.getKey() + "' is an invalid symbol (must be 1 character only).");
             }
             if (" ".equals(entry.getKey())) {
                 throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
             }
+            
+            // Store the key and corresponding deserialized ingredient for return
             map.put(entry.getKey(), Ingredient.deserialize(entry.getValue()));
         }
+        
+        // Include an entry for empty space in the recipe
         map.put(" ", Ingredient.EMPTY);
         return map;
     }
@@ -156,6 +170,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         
         for (int i = 0; i < pattern.length; i++) {
             for (int j = 0; j < pattern[0].length(); j++) {
+                // For each symbol in the pattern, add the corresponding ingredient from the key to the returned list
                 String s = pattern[i].substring(j, j + 1);
                 Ingredient ingredient = keys.get(s);
                 if (ingredient == null) {
@@ -166,6 +181,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             }
         }
         
+        // Make sure all ingredients from the key were used in the pattern
         if (!keySet.isEmpty()) {
             throw new JsonSyntaxException("Key defines symbols that aren't used in pattern: " + keySet);
         } else {
@@ -218,6 +234,8 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
 
     protected static String[] patternFromJson(JsonArray jsonArray) {
         String[] astring = new String[jsonArray.size()];
+        
+        // Validate the pattern strings in the given JSON array
         if (astring.length > 3) {
             throw new JsonSyntaxException("Invalid pattern: too many rows, 3 is maximum");
         } else if (astring.length == 0) {

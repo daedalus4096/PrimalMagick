@@ -21,6 +21,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+/**
+ * Definition for a spell projectile entity.  Shot from a wand or scroll, they fly through the world until colliding with a
+ * block or another entity, at which point it executes a given spell package upon the collider.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellProjectileEntity extends ThrowableEntity {
     protected static final DataParameter<Integer> COLOR = EntityDataManager.createKey(SpellProjectileEntity.class, DataSerializers.VARINT);
     
@@ -35,6 +41,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
         super(EntityTypesPM.SPELL_PROJECTILE, thrower, world);
         this.spell = spell;
         if (spell != null && spell.getPayload() != null) {
+            // Store the spell payload's color for use in rendering
             this.setColor(spell.getPayload().getSource().getColor());
         }
     }
@@ -43,6 +50,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
         super(EntityTypesPM.SPELL_PROJECTILE, x, y, z, world);
         this.spell = spell;
         if (spell != null && spell.getPayload() != null) {
+            // Store the spell payload's color for use in rendering
             this.setColor(spell.getPayload().getSource().getColor());
         }
     }
@@ -64,6 +72,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
     public void tick() {
         super.tick();
         if (!this.world.isRemote && this.isAlive() && this.ticksExisted % 2 == 0 && this.spell != null && this.spell.getPayload() != null) {
+            // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
                     new SpellTrailPacket(this.posX, this.posY, this.posZ, this.spell.getPayload().getSource().getColor()), 
                     this.dimension, 
