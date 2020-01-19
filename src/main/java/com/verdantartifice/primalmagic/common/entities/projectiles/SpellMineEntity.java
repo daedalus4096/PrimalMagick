@@ -97,9 +97,9 @@ public class SpellMineEntity extends Entity {
     public PlayerEntity getCaster() {
         if (this.caster == null && this.casterId != null && this.world instanceof ServerWorld) {
             // If the caster cache is empty, find the entity matching the caster's unique ID
-            List<ServerPlayerEntity> players = ((ServerWorld)this.world).getPlayers((spe) -> spe.getUniqueID().equals(this.casterId));
-            if (!players.isEmpty()) {
-                this.caster = players.get(0);
+            ServerPlayerEntity player = ((ServerWorld)this.world).getServer().getPlayerList().getPlayerByUUID(this.casterId);
+            if (player != null) {
+                this.caster = player;
             } else {
                 this.casterId = null;
             }
