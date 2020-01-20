@@ -18,6 +18,11 @@ import net.minecraft.potion.Potions;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Point of registration for primal affinities on blocks and items.
+ * 
+ * @author Daedalus4096
+ */
 public class InitAffinities {
     public static void initAffinities(MinecraftServer server) {
         initItemAffinities(server);
@@ -333,6 +338,7 @@ public class InitAffinities {
     }
     
     protected static void initPotionBonusAffinities() {
+        // Register bonus affinities to be applied to potions based on the type of potion
         AffinityManager.registerPotionBonusAffinity(Potions.NIGHT_VISION, new SourceList().add(Source.SUN, 2));
         AffinityManager.registerPotionBonusAffinity(Potions.LONG_NIGHT_VISION, new SourceList().add(Source.SUN, 5));
         AffinityManager.registerPotionBonusAffinity(Potions.INVISIBILITY, new SourceList().add(Source.MOON, 2));
@@ -374,6 +380,8 @@ public class InitAffinities {
     }
     
     protected static void initEnchantmentBonusAffinities() {
+        // Register bonus affinities to be applied to books and enchanted items based on enchantment type.  The amount
+        // of the bonus is based on the enchantment level.
         AffinityManager.registerEnchantmentBonusAffinity(Enchantments.PROTECTION, Source.EARTH);
         AffinityManager.registerEnchantmentBonusAffinity(Enchantments.FIRE_PROTECTION, Source.INFERNAL);
         AffinityManager.registerEnchantmentBonusAffinity(Enchantments.FEATHER_FALLING, Source.SKY);

@@ -5,6 +5,11 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 
+/**
+ * Object holder for mod items.  Actual values populated by Forge post-registration.
+ * 
+ * @author Daedalus4096
+ */
 @ObjectHolder(PrimalMagic.MODID)
 public class ItemsPM {
     public static final Item GRIMOIRE = null;

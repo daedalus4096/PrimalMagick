@@ -32,6 +32,12 @@ import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVeh
 import com.verdantartifice.primalmagic.common.spells.vehicles.SelfSpellVehicle;
 import com.verdantartifice.primalmagic.common.spells.vehicles.TouchSpellVehicle;
 
+/**
+ * Point of registration for mod spell vehicles, spell payloads, and spell mods.  Registration order
+ * determines the order in which they appear in the spellcrafting GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class InitSpells {
     public static void initSpells() {
         registerSpellVehicleTypes();

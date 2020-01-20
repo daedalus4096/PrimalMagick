@@ -9,6 +9,11 @@ import com.verdantartifice.primalmagic.common.capabilities.WorldEntitySwappers;
 
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
+/**
+ * Point of registration for mod capabilities.
+ * 
+ * @author Daedalus4096
+ */
 public class InitCapabilities {
     public static void initCapabilities() {
         CapabilityManager.INSTANCE.register(IPlayerKnowledge.class, new PlayerKnowledge.Storage(), new PlayerKnowledge.Factory());

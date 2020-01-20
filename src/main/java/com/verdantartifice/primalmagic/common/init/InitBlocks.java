@@ -38,8 +38,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraftforge.registries.IForgeRegistry;
 
+/**
+ * Point of registration for mod blocks.
+ * 
+ * @author Daedalus4096
+ */
 public class InitBlocks {
     public static void initBlocks(IForgeRegistry<Block> registry) {
+        // Register raw marble blocks
         Block marbleRaw = new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_raw");
         registry.register(marbleRaw);
         registry.register(new SlabBlock(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_slab"));
@@ -54,6 +60,7 @@ public class InitBlocks {
         registry.register(new Block(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_chiseled"));
         registry.register(new Block(Block.Properties.from(marbleRaw)).setRegistryName(PrimalMagic.MODID, "marble_runed"));
 
+        // Register enchanted marble blocks
         Block marbleEnchanted = new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(3.0F, 12.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_enchanted");
         registry.register(marbleEnchanted);
         registry.register(new SlabBlock(Block.Properties.from(marbleEnchanted)).setRegistryName(PrimalMagic.MODID, "marble_enchanted_slab"));
@@ -68,6 +75,7 @@ public class InitBlocks {
         registry.register(new Block(Block.Properties.from(marbleEnchanted)).setRegistryName(PrimalMagic.MODID, "marble_enchanted_chiseled"));
         registry.register(new Block(Block.Properties.from(marbleEnchanted)).setRegistryName(PrimalMagic.MODID, "marble_enchanted_runed"));
 
+        // Register smoked marble blocks
         Block marbleSmoked = new Block(Block.Properties.create(Material.ROCK, MaterialColor.OBSIDIAN).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "marble_smoked");
         registry.register(marbleSmoked);
         registry.register(new SlabBlock(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_slab"));
@@ -82,6 +90,7 @@ public class InitBlocks {
         registry.register(new Block(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_chiseled"));
         registry.register(new Block(Block.Properties.from(marbleSmoked)).setRegistryName(PrimalMagic.MODID, "marble_smoked_runed"));
 
+        // Register sunwood blocks
         Block strippedSunwoodLog = new SunwoodLogBlock(null).setRegistryName(PrimalMagic.MODID, "stripped_sunwood_log");
         registry.register(strippedSunwoodLog);
         registry.register(new SunwoodLogBlock(strippedSunwoodLog).setRegistryName(PrimalMagic.MODID, "sunwood_log"));
@@ -96,6 +105,7 @@ public class InitBlocks {
         registry.register(new SunwoodStairsBlock(sunwoodPlanks.getDefaultState(), Block.Properties.from(sunwoodPlanks)));
         registry.register(new SunwoodPillarBlock());
         
+        // Register moonwood blocks
         Block strippedMoonwoodLog = new MoonwoodLogBlock(null).setRegistryName(PrimalMagic.MODID, "stripped_moonwood_log");
         registry.register(strippedMoonwoodLog);
         registry.register(new MoonwoodLogBlock(strippedMoonwoodLog).setRegistryName(PrimalMagic.MODID, "moonwood_log"));
@@ -110,12 +120,15 @@ public class InitBlocks {
         registry.register(new MoonwoodStairsBlock(moonwoodPlanks.getDefaultState(), Block.Properties.from(moonwoodPlanks)));
         registry.register(new MoonwoodPillarBlock());
 
-        registry.register(new ArcaneWorkbenchBlock());
+        // Register mana fonts
         registry.register(new AncientManaFontBlock(Source.EARTH));
         registry.register(new AncientManaFontBlock(Source.SEA));
         registry.register(new AncientManaFontBlock(Source.SKY));
         registry.register(new AncientManaFontBlock(Source.SUN));
         registry.register(new AncientManaFontBlock(Source.MOON));
+
+        // Register devices
+        registry.register(new ArcaneWorkbenchBlock());
         registry.register(new WandAssemblyTableBlock());
         registry.register(new WoodTableBlock());
         registry.register(new AnalysisTableBlock());
@@ -124,6 +137,7 @@ public class InitBlocks {
         registry.register(new SpellcraftingAltarBlock());
         registry.register(new WandChargerBlock());
         
+        // Register misc blocks
         registry.register(new ConsecrationFieldBlock());
     }
 }

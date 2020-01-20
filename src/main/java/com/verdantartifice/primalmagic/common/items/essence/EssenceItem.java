@@ -13,6 +13,11 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+/**
+ * Item definition for magical essences.
+ * 
+ * @author Daedalus4096
+ */
 public class EssenceItem extends Item {
     protected static final Map<EssenceType, Map<Source, Item>> ESSENCES = new HashMap<>();
     
@@ -27,7 +32,7 @@ public class EssenceItem extends Item {
 
     public EssenceItem(@Nonnull EssenceType type, @Nonnull Source source) {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(type.getRarity()));
-        this.setRegistryName(PrimalMagic.MODID, "essence_" + type.getName() + "_" + source.getTag());
+        this.setRegistryName(PrimalMagic.MODID, "essence_" + type.getName() + "_" + source.getTag());   // e.g. essence_dust_earth
         this.type = type;
         this.source = source;
         register(type, source, this);

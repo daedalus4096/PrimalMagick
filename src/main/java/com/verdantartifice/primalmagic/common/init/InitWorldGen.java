@@ -26,6 +26,12 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
+/**
+ * Point of registration for mod worldgen features and structures.  Also performs actual worldgen changes
+ * when called during common setup.
+ * 
+ * @author Daedalus4096
+ */
 public class InitWorldGen {
     public static void initFeatures(IForgeRegistry<Feature<?>> registry) {
         registry.register(new SunwoodTreeFeature(NoFeatureConfig::deserialize, false).setRegistryName(PrimalMagic.MODID, "sunwood_tree"));
@@ -34,15 +40,20 @@ public class InitWorldGen {
     }
 
     public static void initWorldGen() {
+        // Add raw marble seams to all non-Nether, non-End biomes
         ForgeRegistries.BIOMES.getValues().stream().filter(InitWorldGen::shouldSpawnMarble).forEach((biome) -> {
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(Feature.ORE, new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.MARBLE_RAW.getDefaultState(), 33), Placement.COUNT_RANGE, new CountRangeConfig(10, 0, 0, 80)));
         });
+        
+        // Add Earth shrines to plains and savanna type biomes
         BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS).stream().forEach((biome) -> {
             addShrine(biome, Source.EARTH);
         });
         BiomeDictionary.getBiomes(BiomeDictionary.Type.SAVANNA).stream().forEach((biome) -> {
             addShrine(biome, Source.EARTH);
         });
+        
+        // Add Sea shrines to river, beach, and swamp type biomes
         BiomeDictionary.getBiomes(BiomeDictionary.Type.RIVER).stream().forEach((biome) -> {
             addShrine(biome, Source.SEA);
         });
@@ -52,18 +63,24 @@ public class InitWorldGen {
         BiomeDictionary.getBiomes(BiomeDictionary.Type.SWAMP).stream().forEach((biome) -> {
             addShrine(biome, Source.SEA);
         });
+        
+        // Add Sky shrines to mountain and hill type biomes
         BiomeDictionary.getBiomes(BiomeDictionary.Type.MOUNTAIN).stream().forEach((biome) -> {
             addShrine(biome, Source.SKY);
         });
         BiomeDictionary.getBiomes(BiomeDictionary.Type.HILLS).stream().forEach((biome) -> {
             addShrine(biome, Source.SKY);
         });
+        
+        // Add Sun shrines to hot+dry and sandy type biomes
         BiomeDictionary.getBiomes(BiomeDictionary.Type.HOT).stream().filter((biome) -> BiomeDictionary.hasType(biome, BiomeDictionary.Type.DRY)).forEach((biome) -> {
             addShrine(biome, Source.SUN);
         });
         BiomeDictionary.getBiomes(BiomeDictionary.Type.SANDY).stream().forEach((biome) -> {
             addShrine(biome, Source.SUN);
         });
+        
+        // Add Moon shrines to forest type biomes.  Also add sunwood and moonwood trees.
         BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).stream().forEach((biome) -> {
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesPM.SUNWOOD_TREE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(0, 0.1F, 1)));
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesPM.MOONWOOD_TREE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(0, 0.1F, 1)));
@@ -82,6 +99,7 @@ public class InitWorldGen {
     }
     
     private static void addShrine(@Nonnull Biome biome, @Nonnull Source source) {
+        // Structures must be added as both a structure and a feature of the biome in order to spawn
         biome.addStructure(FeaturesPM.SHRINE, new ShrineConfig(source));
         biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(FeaturesPM.SHRINE, new ShrineConfig(source), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
     }

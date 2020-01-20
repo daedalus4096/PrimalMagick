@@ -19,6 +19,12 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+/**
+ * Item defintion for a grimoire.  The grimoire serves as a research browser and is the primary mechanism of
+ * progression in the mod.
+ * 
+ * @author Daedalus4096
+ */
 public class GrimoireItem extends Item implements INamedContainerProvider {
     public GrimoireItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON));
@@ -27,6 +33,7 @@ public class GrimoireItem extends Item implements INamedContainerProvider {
     
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        // Open the grimoire GUI on right click
         if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity) {
             NetworkHooks.openGui((ServerPlayerEntity)playerIn, this);
         }

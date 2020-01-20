@@ -4,6 +4,11 @@ import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 
+/**
+ * Block item definition for a block that can be used as fuel in a furnace or similar device.
+ * 
+ * @author Daedalus4096
+ */
 public class BurnableBlockItem extends BlockItem {
     protected final int burnTicks;
     

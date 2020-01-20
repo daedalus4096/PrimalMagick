@@ -9,6 +9,11 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.registries.IForgeRegistry;
 
+/**
+ * Point of registration for mod entity types.
+ * 
+ * @author Daedalus4096
+ */
 public class InitEntities {
     public static void initEntityTypes(IForgeRegistry<EntityType<?>> registry) {
         registry.register(EntityType.Builder.<SpellProjectileEntity>create(SpellProjectileEntity::new, EntityClassification.MISC)

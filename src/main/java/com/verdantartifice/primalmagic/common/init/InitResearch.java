@@ -11,6 +11,11 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Point of registration for mod research data.
+ * 
+ * @author Daedalus4096
+ */
 public class InitResearch {
     public static void initResearch() {
         initDisciplines();

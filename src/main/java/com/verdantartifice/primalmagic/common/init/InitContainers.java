@@ -14,6 +14,11 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.registries.IForgeRegistry;
 
+/**
+ * Point of registration for mod data container types.
+ * 
+ * @author Daedalus4096
+ */
 public class InitContainers {
     public static void initContainers(IForgeRegistry<ContainerType<?>> registry) {
         registry.register(IForgeContainerType.create((windowId, inv, data) -> {

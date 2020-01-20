@@ -21,6 +21,11 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraftforge.registries.IForgeRegistry;
 
+/**
+ * Point of registration for mod recipe types and serializers, as well as other crafting related things.
+ * 
+ * @author Daedalus4096
+ */
 public class InitRecipes {
     public static void initRecipeTypes() {
         RecipeTypesPM.ARCANE_CRAFTING = IRecipeType.register(PrimalMagic.MODID + ":arcane_crafting");

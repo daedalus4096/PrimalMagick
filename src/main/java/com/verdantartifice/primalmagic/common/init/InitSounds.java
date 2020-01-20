@@ -6,6 +6,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
+/**
+ * Point of registration for mod sound events.
+ * 
+ * @author Daedalus4096
+ */
 public class InitSounds {
     public static void initSoundEvents(IForgeRegistry<SoundEvent> registry) {
         registry.register(createEvent("page"));

@@ -30,6 +30,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Item definition for an arcanometer.  An arcanometer is a PKE meter-like device that scans the 
+ * primal affinities of blocks and items.  It is intended to be an upgrade to the analysis table.
+ *  
+ * @author Daedalus4096
+ */
 public class ArcanometerItem extends Item {
     public ArcanometerItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON).setTEISR(() -> ArcanometerTEISR::new));
@@ -47,6 +53,8 @@ public class ArcanometerItem extends Item {
                     if (world == null) {
                         world = entity.world;
                     }
+                    
+                    // If the currently moused-over block/item has not yet been scanned, raise the antennae
                     if (isMouseOverScannable(RayTraceUtils.getMouseOver(), world, (PlayerEntity)entity)) {
                         this.incrementScanState();
                     } else {
@@ -72,9 +80,11 @@ public class ArcanometerItem extends Item {
         if (result == null || world == null) {
             return false;
         } else if (result.getType() == RayTraceResult.Type.ENTITY) {
+            // If the current mouseover is an entity, try to get its corresponding item and scan that if it has one
             ItemStack stack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
             return !stack.isEmpty() && !AffinityManager.isScanned(stack, player);
         } else if (result.getType() == RayTraceResult.Type.BLOCK) {
+            // If the current mouseover is a block, try to get its corresponding block item and scan that
             BlockPos pos = ((BlockRayTraceResult)result).getPos();
             ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock());
             return !stack.isEmpty() && !AffinityManager.isScanned(stack, player);
@@ -88,6 +98,7 @@ public class ArcanometerItem extends Item {
         if (worldIn.isRemote) {
             RayTraceResult result = RayTraceUtils.getMouseOver();
             if (result != null && result.getType() != RayTraceResult.Type.MISS) {
+                // If something is being moused over, play the sound effect for the player and send a scan packet to the server
                 worldIn.playSound(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, SoundsPM.SCAN, SoundCategory.MASTER, 1.0F, 1.0F);
                 if (result.getType() == RayTraceResult.Type.ENTITY) {
                     ItemStack entityStack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());

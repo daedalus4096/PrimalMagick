@@ -23,6 +23,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Item definition for bloody flesh.  Bloody flesh drops from human-like mobs and unlocks the Blood source when eaten.
+ * 
+ * @author Daedalus4096
+ */
 public class BloodyFleshItem extends Item {
     public BloodyFleshItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(3).saturation(0.3F).meat().setAlwaysEdible().build()));
@@ -35,6 +40,7 @@ public class BloodyFleshItem extends Item {
             PlayerEntity player = (PlayerEntity)entityLiving;
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
             if (knowledge != null && knowledge.isResearchKnown(SimpleResearchKey.parse("FIRST_STEPS")) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
+                // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
                 ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
                 player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.blood").applyTextStyle(TextFormatting.GREEN), false);
             }

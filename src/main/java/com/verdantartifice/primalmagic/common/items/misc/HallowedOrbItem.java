@@ -15,6 +15,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Item definition for a hallowed orb.  A hallowed orb unlocks the Hallowed source when scanned on an
+ * analysis table or with an arcanometer.
+ * 
+ * @author Daedalus4096
+ */
 public class HallowedOrbItem extends Item {
     public HallowedOrbItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE));

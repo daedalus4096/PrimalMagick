@@ -1,10 +1,16 @@
 package com.verdantartifice.primalmagic.common.items.essence;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;
 
+/**
+ * Definition of an essence type, e.g. the quality of an essence item.
+ * 
+ * @author Daedalus4096
+ */
 public enum EssenceType implements IStringSerializable {
     DUST("dust", Rarity.COMMON, 5),
     SHARD("shard", Rarity.UNCOMMON, 20),
@@ -36,7 +42,9 @@ public enum EssenceType implements IStringSerializable {
         return this.affinity;
     }
     
+    @Nullable
     public EssenceType getUpgrade() {
+        // Get the next quality up, or null if it's already highest
         switch (this) {
         case DUST:
             return SHARD;
@@ -50,7 +58,9 @@ public enum EssenceType implements IStringSerializable {
         }
     }
     
+    @Nullable
     public EssenceType getDowngrade() {
+        // Get the next quality down, or null if it's already lowest
         switch (this) {
         case CLUSTER:
             return CRYSTAL;

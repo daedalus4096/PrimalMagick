@@ -9,6 +9,11 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraftforge.registries.IForgeRegistry;
 
+/**
+ * Point of registration for mod potion effect types.
+ * 
+ * @author Daedalus4096
+ */
 public class InitEffects {
     public static void initEffects(IForgeRegistry<Effect> registry) {
         registry.register(new FlyingEffect(EffectType.BENEFICIAL, Source.SKY.getColor()).setRegistryName(PrimalMagic.MODID, "flying"));
