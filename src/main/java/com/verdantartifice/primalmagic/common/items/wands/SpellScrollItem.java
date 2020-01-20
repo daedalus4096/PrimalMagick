@@ -20,6 +20,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+/**
+ * Item definition for a filled spell scroll.  These can be used to cast their held spell directly or
+ * to be inscribed onto a wand.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellScrollItem extends Item {
     public SpellScrollItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP));
@@ -28,6 +34,7 @@ public class SpellScrollItem extends Item {
     
     @Nullable
     public SpellPackage getSpell(@Nonnull ItemStack stack) {
+        // Get the held spell from the given scroll stack's NBT data
         SpellPackage spell = null;
         if (stack.hasTag() && stack.getTag().contains("Spell")) {
             spell = new SpellPackage(stack.getTag().getCompound("Spell"));
@@ -36,11 +43,13 @@ public class SpellScrollItem extends Item {
     }
     
     public void setSpell(@Nonnull ItemStack stack, @Nonnull SpellPackage spell) {
+        // Save the given spell into the scroll stack's NBT data
         stack.setTagInfo("Spell", spell.serializeNBT());
     }
 
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
+        // A scroll's name is determined by that of the spell it holds (e.g. "Scroll of Lightning Bolt")
         SpellPackage spell = this.getSpell(stack);
         ITextComponent spellName = (spell == null) ? new TranslationTextComponent("tooltip.primalmagic.none") : spell.getName();
         return new TranslationTextComponent(this.getTranslationKey(stack), spellName).applyTextStyle(TextFormatting.ITALIC);
@@ -48,6 +57,7 @@ public class SpellScrollItem extends Item {
     
     @Override
     public Rarity getRarity(ItemStack stack) {
+        // A scroll's rarity is determined by that of its held spell
         SpellPackage spell = this.getSpell(stack);
         if (spell == null) {
             return Rarity.COMMON;
@@ -63,10 +73,12 @@ public class SpellScrollItem extends Item {
     
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        // Cast the held spell, if any, and consume the scroll
         ItemStack stack = playerIn.getHeldItem(handIn);
         playerIn.setActiveHand(handIn);
         if (!worldIn.isRemote) {
             SpellPackage spell = this.getSpell(stack);
+            // TODO Check to see if the player's spells are on cooldown
             if (spell != null) {
                 spell.cast(worldIn, playerIn);
                 stack.shrink(1);

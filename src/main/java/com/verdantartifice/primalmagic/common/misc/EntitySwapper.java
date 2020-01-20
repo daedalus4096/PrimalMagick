@@ -30,6 +30,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.INBTSerializable;
 
+/**
+ * Definition of an entity swapper data structure.  Processed during server ticks to replace a specific
+ * entity with another of a given type.  Optionally schedules a second swapper to reverse the original
+ * swap.  Rather than a static registry, entity swappers are stored in a capability attached to the
+ * relevant world.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.capabilities.IWorldEntitySwappers}
+ */
 public class EntitySwapper implements INBTSerializable<CompoundNBT> {
     protected UUID targetId = null;
     protected EntityType<?> entityType = null;
@@ -48,18 +57,21 @@ public class EntitySwapper implements INBTSerializable<CompoundNBT> {
     }
     
     public EntitySwapper(CompoundNBT tag) {
+        // Attempt to deserialize an entity swapper from the given NBT data
         this();
         this.deserializeNBT(tag);
     }
     
     public static boolean enqueue(@Nonnull World world, @Nullable EntitySwapper swapper) {
         if (swapper == null) {
+            // Don't allow empty swappers in the queue
             return false;
         } else {
             IWorldEntitySwappers swappers = PrimalMagicCapabilities.getEntitySwappers(world);
             if (swappers == null) {
                 return false;
             } else {
+                // Store the new swapper in the world capability
                 return swappers.enqueue(swapper);
             }
         }
@@ -89,8 +101,12 @@ public class EntitySwapper implements INBTSerializable<CompoundNBT> {
         if (!world.isRemote && world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
             Entity target = serverWorld.getEntityByUuid(this.targetId);
+            
+            // Only proceed if this is a valid swapper and the target is allowed to be swapped
             if (this.isValid() && target != null && this.isValidTarget(target)) {
                 LivingEntity livingTarget = (LivingEntity)target;
+                
+                // Dismount the target from any mounts and dismount any other entities riding the target
                 if (livingTarget.isPassenger()) {
                     livingTarget.stopRiding();
                 }
@@ -105,19 +121,24 @@ public class EntitySwapper implements INBTSerializable<CompoundNBT> {
                 double healthPercentage = (double)livingTarget.getHealth() / (double)livingTarget.getMaxHealth();
                 Collection<EffectInstance> activeEffects = livingTarget.getActivePotionEffects();
                 
+                // If the original, pre-swapped entity had it's NBT data preserved in this swapper, prepare it for loading into the new entity
                 CompoundNBT data = null;
                 if (this.originalData != null) {
                     data = new CompoundNBT();
                     data.put("EntityTag", this.pruneData(this.originalData, this.polymorphDuration.isPresent()));
                 }
                 
+                // Send an FX packet to all nearby player clients
                 PacketHandler.sendToAllAround(new WandPoofPacket(targetPos.x, targetPos.y, targetPos.z, Color.WHITE.getRGB(), true, null), 
                         world.dimension.getType(), new BlockPos(targetPos), 32.0D);
                 
+                // Remove the target entity and spawn a new one of the target type into the world
                 livingTarget.remove();
                 Entity newEntity = this.entityType.create(world, data, customName, null, new BlockPos(targetPos), SpawnReason.MOB_SUMMONED, false, false);
                 world.addEntity(newEntity);
                 newEntity.setPositionAndRotation(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
+                
+                // Carry over the previous entity's percentage health and active potion effects
                 if (newEntity instanceof LivingEntity) {
                     LivingEntity newLivingEntity = (LivingEntity)newEntity;
                     newLivingEntity.setHealth((float)(healthPercentage * newLivingEntity.getMaxHealth()));
@@ -127,6 +148,7 @@ public class EntitySwapper implements INBTSerializable<CompoundNBT> {
                 }
                 
                 if (this.polymorphDuration.isPresent()) {
+                    // If this is a temporary swap, create a new entity swapper to swap back
                     int ticks = this.polymorphDuration.get().intValue();
                     if (newEntity instanceof LivingEntity) {
                         ((LivingEntity)newEntity).addPotionEffect(new EffectInstance(EffectsPM.POLYMORPH, ticks));
@@ -141,6 +163,7 @@ public class EntitySwapper implements INBTSerializable<CompoundNBT> {
     }
     
     protected boolean isValidTarget(Entity entity) {
+        // Only living, non-player entities may be swapped (e.g. no boats, etc)
         return (entity instanceof LivingEntity) && !(entity instanceof PlayerEntity);
     }
     

@@ -26,6 +26,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+/**
+ * Item definition for a modular wand.  Modular wands are made up of cores, caps, and gems, and their
+ * properties are determined by those components.
+ * 
+ * @author Daedalus4096
+ */
 public class ModularWandItem extends AbstractWandItem {
     public ModularWandItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setTEISR(() -> ModularWandTEISR::new));
@@ -34,6 +40,7 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public int getMaxMana(ItemStack stack) {
+        // The maximum amount of mana a wand can hold is determined by its gem
         WandGem gem = this.getWandGem(stack);
         return (gem == null) ? 25 : gem.getCapacity();
     }
@@ -79,6 +86,8 @@ public class ModularWandItem extends AbstractWandItem {
     
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
+        // A modular wand's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Wand")
+        // TODO Use translation text components for unknown components
         WandCore core = this.getWandCore(stack);
         ITextComponent coreName = (core == null) ? new StringTextComponent("Unknown") : new TranslationTextComponent(core.getNameTranslationKey());
         WandCap cap = this.getWandCap(stack);
@@ -90,6 +99,7 @@ public class ModularWandItem extends AbstractWandItem {
     
     @Override
     public Rarity getRarity(ItemStack stack) {
+        // A modular wand's rarity is the highest of those of its components
         Rarity retVal = Rarity.COMMON;
         WandCore core = this.getWandCore(stack);
         if (core != null && core.getRarity().compareTo(retVal) > 0) {
@@ -108,6 +118,7 @@ public class ModularWandItem extends AbstractWandItem {
     
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+        // Populate the creative pane with a NBT-complete modular wand(s)
         if (this.isInGroup(group)) {
             ItemStack stack = new ItemStack(this);
             this.setWandCore(stack, WandCore.HEARTWOOD);
@@ -119,6 +130,7 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public List<SpellPackage> getSpells(ItemStack stack) {
+        // Deserialize the list of inscribed spells from the given wand stack's NBT data
         List<SpellPackage> retVal = new ArrayList<>();
         if (stack != null) {
             ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
@@ -144,11 +156,13 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public int getActiveSpellIndex(ItemStack stack) {
+        // Return -1 if no active spell is selected
         return (stack != null && stack.getTag().contains("ActiveSpell")) ? stack.getTag().getInt("ActiveSpell") : -1;
     }
     
     @Override
     public SpellPackage getActiveSpell(ItemStack stack) {
+        // Deserialize the active inscribed spell from the given wand stack's NBT data
         SpellPackage retVal = null;
         if (stack != null) {
             ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
@@ -166,6 +180,7 @@ public class ModularWandItem extends AbstractWandItem {
         if (stack == null) {
             return false;
         } else if (index >= -1 && index < this.getSpells(stack).size()) {
+            // -1 is a valid value and means "no active spell"
             stack.setTagInfo("ActiveSpell", new IntNBT(index));
             return true;
         }
@@ -178,11 +193,13 @@ public class ModularWandItem extends AbstractWandItem {
             return false;
         }
         
+        // The number of spells which can be inscribed onto a wand is determined by its core
         WandCore core = this.getWandCore(stack);
         if (core == null) {
             return false;
         }
         
+        // TODO Include bonus spell slots from the core in determination
         List<SpellPackage> existingSpells = this.getSpells(stack);
         if (existingSpells.size() >= core.getSpellSlots()) {
             return false;
@@ -194,6 +211,7 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public boolean addSpell(ItemStack stack, SpellPackage spell) {
         if (this.canAddSpell(stack, spell)) {
+            // Save the given spell into the wand stack's NBT data
             if (!stack.getTag().contains("Spells")) {
                 ListNBT newList = new ListNBT();
                 newList.add(spell.serializeNBT());

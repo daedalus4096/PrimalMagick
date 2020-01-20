@@ -27,6 +27,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
 
+/**
+ * Definition of a block swapper data structure.  Processed during server ticks to replace a given source
+ * block with a target block/item.  If the target is a block, it is placed into the world; otherwise, an
+ * item entity is spawned.  Also tracks all active block swappers in a static registry.
+ * 
+ * @author Daedalus4096
+ */
 public class BlockSwapper {
     protected static final Map<Integer, Queue<BlockSwapper>> REGISTRY = new HashMap<>();
     
@@ -44,6 +51,7 @@ public class BlockSwapper {
     
     public static boolean enqueue(@Nonnull World world, @Nullable BlockSwapper swapper) {
         if (swapper == null) {
+            // Don't allow null swappers in the queue
             return false;
         } else {
             return getWorldSwappers(world).offer(swapper);
@@ -55,6 +63,7 @@ public class BlockSwapper {
         int dim = world.getDimension().getType().getId();
         Queue<BlockSwapper> swapperQueue = REGISTRY.get(Integer.valueOf(dim));
         if (swapperQueue == null) {
+            // If no swapper queue is defined for the world, create one
             swapperQueue = new LinkedBlockingQueue<>();
             REGISTRY.put(Integer.valueOf(dim), swapperQueue);
         }

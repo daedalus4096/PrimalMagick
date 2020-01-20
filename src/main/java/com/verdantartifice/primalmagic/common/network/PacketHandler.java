@@ -32,6 +32,11 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
+/**
+ * Handler class for processing packets.  Responsible for all custom communication between the client and the server.
+ * 
+ * @author Daedalus4096
+ */
 public class PacketHandler {
     private static final String PROTOCOL_VERSION = Integer.toString(1);
     
@@ -67,14 +72,17 @@ public class PacketHandler {
     }
     
     public static void sendToServer(IMessageToServer message) {
+        // Send a packet from a client to the server
         INSTANCE.sendToServer(message);
     }
     
     public static void sendToPlayer(IMessageToClient message, ServerPlayerEntity player) {
+        // Send a message from the server to a specific player's client
         INSTANCE.sendTo(message, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
     }
     
     public static void sendToAllAround(IMessageToClient message, DimensionType dimension, BlockPos center, double radius) {
+        // Send a message to the clients of all players within a given distance of the given world position
         INSTANCE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, radius, dimension)), message);
     }
 }

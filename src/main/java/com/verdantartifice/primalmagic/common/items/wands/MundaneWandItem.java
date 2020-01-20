@@ -10,6 +10,12 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+/**
+ * Item definition for a mundane wand.  Unlike modular wands, mundane wands cannot be inscribed with
+ * spells.  They don't do much and are primarily meant to start the player on their progression path.
+ * 
+ * @author Daedalus4096
+ */
 public class MundaneWandItem extends AbstractWandItem {
     public MundaneWandItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setTEISR(() -> MundaneWandTEISR::new));
@@ -18,6 +24,7 @@ public class MundaneWandItem extends AbstractWandItem {
 
     @Override
     public int getMaxMana(ItemStack stack) {
+        // With no gem, a mundane wand's mana capacity is low and fixed
         return 25;
     }
 

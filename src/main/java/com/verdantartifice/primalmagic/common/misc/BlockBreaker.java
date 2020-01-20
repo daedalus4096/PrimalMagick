@@ -21,6 +21,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
+/**
+ * Definition of a block breaker data structure.  Processed during server ticks to gradually break blocks
+ * without continued player interaction.  They decrease a given "durability" value for the block by a 
+ * given power value each tick, removing the block when that durability hits zero.  Also tracks all
+ * active block breakers in a static registry.
+ * 
+ * @author Daedalus4096
+ */
 public class BlockBreaker {
     protected static final Map<Integer, Queue<BlockBreaker>> REGISTRY = new HashMap<>();
     
@@ -42,6 +50,7 @@ public class BlockBreaker {
     
     public static boolean enqueue(@Nonnull World world, @Nullable BlockBreaker breaker) {
         if (breaker == null) {
+            // Don't allow null breakers in the queue
             return false;
         } else {
             return getWorldBreakers(world).offer(breaker);
@@ -53,6 +62,7 @@ public class BlockBreaker {
         int dim = world.getDimension().getType().getId();
         Queue<BlockBreaker> breakerQueue = REGISTRY.get(Integer.valueOf(dim));
         if (breakerQueue == null) {
+            // If no breaker queue is defined for the world, create one
             breakerQueue = new LinkedBlockingQueue<>();
             REGISTRY.put(Integer.valueOf(dim), breakerQueue);
         }
@@ -60,6 +70,7 @@ public class BlockBreaker {
     }
     
     public static void setWorldBreakerQueue(@Nonnull World world, @Nonnull Queue<BlockBreaker> breakerQueue) {
+        // Replace the world's breaker queue with the given one
         int dim = world.getDimension().getType().getId();
         REGISTRY.put(Integer.valueOf(dim), breakerQueue);
     }
@@ -69,8 +80,12 @@ public class BlockBreaker {
         BlockBreaker retVal = null;
         BlockState state = world.getBlockState(this.pos);
         if (state == this.targetBlock) {
+            // Only allow block breakers to act on blocks that could normally be broken by a player
             if (world.canMineBlockBody(this.player, this.pos) && state.getBlockHardness(world, this.pos) >= 0.0F) {
+                // Send packets showing the visual effects of the block breaker's progress
                 world.sendBlockBreakProgress(this.pos.hashCode(), this.pos, (int)((1.0F - this.currentDurability / this.maxDurability) * 10.0F));
+                
+                // Calculate new block durability and check to see if the block breaking is done
                 float newDurability = this.currentDurability - this.power;
                 if (newDurability <= 0.0F) {
                     // Do block break
@@ -85,6 +100,13 @@ public class BlockBreaker {
         return retVal;
     }
     
+    /**
+     * Attempt to harvest this breaker's block in the given world
+     * 
+     * @param world the world to break in
+     * @return true if the block was successfully harvested, false otherwise
+     * @see {@link net.minecraft.server.management.PlayerInteractionManager#tryHarvestBlock(BlockPos)}
+     */
     protected boolean doHarvest(@Nonnull World world) {
         if (world.isRemote || !(this.player instanceof ServerPlayerEntity)) {
             return false;
@@ -125,6 +147,14 @@ public class BlockBreaker {
         }
     }
     
+    /**
+     * Actually remove this breaker's block from the give world and, if specified, do its drops.
+     * 
+     * @param world the world to break in
+     * @param canHarvest whether the player is able to harvest this block for drops
+     * @return true if the block is successfully removed, false otherwise
+     * @see {@link net.minecraft.server.management.PlayerInteractionManager#removeBlock}
+     */
     protected boolean removeBlock(@Nonnull World world, boolean canHarvest) {
         BlockState state = world.getBlockState(this.pos);
         boolean removed = state.removedByPlayer(world, this.pos, this.player, canHarvest, world.getFluidState(this.pos));

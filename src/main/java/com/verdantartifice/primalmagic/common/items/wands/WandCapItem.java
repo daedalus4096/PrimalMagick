@@ -7,6 +7,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 
+/**
+ * Item definition for a wand cap.  May be used to construct modular wands.
+ * 
+ * @author Daedalus4096
+ */
 public class WandCapItem extends Item {
     protected final WandCap cap;
 

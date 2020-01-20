@@ -36,6 +36,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Base item definition for a wand.  Wands store mana for use in crafting and, optionally, casting spells.
+ * They are replenished by drawing from mana fonts or being charged in a wand charger.
+ * 
+ * @author Daedalus4096
+ */
 public abstract class AbstractWandItem extends Item implements IWand {
     public AbstractWandItem(Properties properties) {
         super(properties);
@@ -44,8 +50,10 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public int getMana(ItemStack stack, Source source) {
         if (this.getMaxMana(stack) == -1) {
+            // If the given wand stack has infinite mana, return that
             return -1;
         } else {
+            // Otherwise get the current mana for that source from the stack's NBT tag
             int retVal = 0;
             if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getTag())) {
                 retVal = stack.getTag().getInt(source.getTag());
@@ -57,8 +65,10 @@ public abstract class AbstractWandItem extends Item implements IWand {
     protected ITextComponent getManaText(ItemStack stack, Source source) {
         int mana = this.getMana(stack, source);
         if (mana == -1) {
+            // If the given wand stack has infinte mana, show the infinity symbol
             return new StringTextComponent(Character.toString('\u221E'));
         } else {
+            // Otherwise show the current mana for that source from the stack's NBT tag
             return new StringTextComponent(Integer.toString(mana));
         }
     }
@@ -69,6 +79,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         boolean isInfinite = this.getMaxMana(stack) == -1;
         for (Source source : Source.SORTED_SOURCES) {
             if (isInfinite) {
+                // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
                 retVal.set(source, -1);
             } else if (stack.hasTag() && stack.getTag().contains(source.getTag())) {
                 retVal.merge(source, stack.getTag().getInt(source.getTag()));
@@ -79,26 +90,39 @@ public abstract class AbstractWandItem extends Item implements IWand {
         return retVal;
     }
 
+    /**
+     * Get the maximum amount of mana that can be held by the given wand stack.
+     * 
+     * @param stack the wand stack whose maximum mana to return
+     * @return the maximum amount of mana that can be held by the given wand stack
+     */
     public abstract int getMaxMana(ItemStack stack);
     
     protected ITextComponent getMaxManaText(ItemStack stack) {
         int mana = this.getMaxMana(stack);
         if (mana == -1) {
+            // If the given wand stack has infinte mana, show the infinity symbol
             return new StringTextComponent(Character.toString('\u221E'));
         } else {
+            // Otherwise show the max mana for that source from the stack's NBT tag
             return new StringTextComponent(Integer.toString(mana));
         }
     }
     
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
+        // Save the given amount of mana for the given source into the stack's NBT tag
         stack.setTagInfo(source.getTag(), new IntNBT(amount));
     }
 
     @Override
     public int addMana(ItemStack stack, Source source, int amount) {
+        // If the parameters are invalid or the given wand stack has infinite mana, do nothing
         if (stack == null || source == null || this.getMaxMana(stack) == -1) {
             return 0;
         }
+        
+        // Otherwise, increment and set the new mana total for the source into the wand's data, returning
+        // any leftover mana that wouldn't fit
         int toStore = this.getMana(stack, source) + amount;
         int leftover = Math.max(toStore - this.getMaxMana(stack), 0);
         this.setMana(stack, source, Math.min(toStore, this.getMaxMana(stack)));
@@ -111,11 +135,14 @@ public abstract class AbstractWandItem extends Item implements IWand {
             return false;
         }
         if (this.getMaxMana(stack) == -1) {
+            // If the wand stack has infinite mana, return success without consuming anything
             return true;
         } else if (this.containsMana(stack, player, source, amount)) {
+            // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
             this.setMana(stack, source, this.getMana(stack, source) - amount);
             return true;
         } else {
+            // Otherwise return failure
             return false;
         }
     }
@@ -126,19 +153,23 @@ public abstract class AbstractWandItem extends Item implements IWand {
             return false;
         }
         if (this.getMaxMana(stack) == -1) {
+            // If the wand stack has infinite mana, return success without consuming anything
             return true;
         } else if (this.containsMana(stack, player, sources)) {
+            // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
             for (Source source : sources.getSources()) {
                 this.setMana(stack, source, this.getMana(stack, source) - sources.getAmount(source));
             }
             return true;
         } else {
+            // Otherwise return failure
             return false;
         }
     }
     
     @Override
     public boolean containsMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+        // A wand stack with infinite mana always contains the requested amount of mana
         return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= amount;
     }
     
@@ -161,6 +192,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (PrimalMagic.proxy.isShiftDown()) {
             // Add detailed mana information
             for (Source source : Source.SORTED_SOURCES) {
+                // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
                     ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
                     ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getFormattedText(), this.getManaText(stack, source), this.getMaxManaText(stack));
@@ -177,6 +209,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     SpellPackage spell = spells.get(index);
                     StringBuilder sb = new StringBuilder("  ");
                     if (index == activeIndex) {
+                        // Prefix the active spell name with an asterisk to distinguish it
                         sb.append("*");
                     }
                     sb.append(spell.getName().getFormattedText());
@@ -188,6 +221,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             StringBuilder sb = new StringBuilder();
             boolean first = true;
             for (Source source : Source.SORTED_SOURCES) {
+                // Only include a mana source in the summary if it's been discovered
                 if (source.isDiscovered(player)) {
                     if (!first) {
                         sb.append("/");
@@ -219,6 +253,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public IInteractWithWand getTileInUse(ItemStack wandStack, World world) {
+        // Look up the world coordinates of the wand-interactable tile entity currently in use from NBT, then query the world for it
         if (wandStack.hasTag() && wandStack.getTag().contains("UsingX") && wandStack.getTag().contains("UsingY") && wandStack.getTag().contains("UsingZ")) {
             BlockPos pos = new BlockPos(wandStack.getTag().getInt("UsingX"), wandStack.getTag().getInt("UsingY"), wandStack.getTag().getInt("UsingZ"));
             TileEntity tile = world.getTileEntity(pos);
@@ -231,6 +266,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public <T extends TileEntity & IInteractWithWand> void setTileInUse(ItemStack wandStack, T tile) {
+        // Save the position of the wand-interactable tile entity so it can be looked up later
         wandStack.setTagInfo("UsingX", new IntNBT(tile.getPos().getX()));
         wandStack.setTagInfo("UsingY", new IntNBT(tile.getPos().getY()));
         wandStack.setTagInfo("UsingZ", new IntNBT(tile.getPos().getZ()));
@@ -251,10 +287,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
         playerIn.setActiveHand(handIn);
         SpellPackage activeSpell = this.getActiveSpell(stack);
         if (activeSpell != null && !SpellManager.isOnCooldown(playerIn)) {
+            // If the wand has an active spell and spells are off the player's cooldown, attempt to cast the spell on right-click
             SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());
             if (worldIn.isRemote) {
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
             } else if (this.consumeMana(stack, playerIn, activeSpell.getManaCost())) {
+                // If the wand contains enough mana, consume it and cast the spell
                 activeSpell.cast(worldIn, playerIn);
                 playerIn.swingArm(handIn);
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
@@ -268,17 +306,24 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+        // Bypass wand functionality if the player is sneaking
         if (context.getPlayer().isSneaking()) {
             return ActionResultType.PASS;
         }
+        
+        // If the mouseover target is a wand-sensitive block, trigger that initial interaction
         BlockState bs = context.getWorld().getBlockState(context.getPos());
         if (bs.getBlock() instanceof IInteractWithWand) {
             return ((IInteractWithWand)bs.getBlock()).onWandRightClick(context.getItem(), context.getWorld(), context.getPlayer(), context.getPos(), context.getFace());
         }
+        
+        // If the mouseover target is a wand-sensitive tile entity, trigger that initial interaction
         TileEntity tile = context.getWorld().getTileEntity(context.getPos());
         if (tile != null && tile instanceof IInteractWithWand) {
             return ((IInteractWithWand)tile).onWandRightClick(context.getItem(), context.getWorld(), context.getPlayer(), context.getPos(), context.getFace());
         }
+        
+        // Otherwise, see if the mouseover target is a valid target for wand transformation
         for (IWandTransform transform : WandTransforms.getAll()) {
             if (transform.isValid(context.getWorld(), context.getPlayer(), context.getPos())) {
                 if (!context.getPlayer().canPlayerEdit(context.getPos(), context.getFace(), context.getItem())) {
@@ -295,6 +340,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity living, int count) {
+        // If the player continues to hold the interact button, continue the interaction with the last wand-sensitive block/tile interacted with
         if (living instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)living;
             IInteractWithWand wandable = this.getTileInUse(stack, player.world);
@@ -306,6 +352,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+        // Once interaction ceases, clear the last-interacted coordinates
         super.onPlayerStoppedUsing(stack, worldIn, entityLiving, timeLeft);
         this.clearTileInUse(stack);
     }
@@ -317,6 +364,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public boolean canContinueUsing(ItemStack oldStack, ItemStack newStack) {
+        // Don't break wand interaction just because the stack NBT changes
         return true;
     }
 }

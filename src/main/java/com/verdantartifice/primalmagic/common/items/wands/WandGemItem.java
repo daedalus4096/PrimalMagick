@@ -7,6 +7,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 
+/**
+ * Item definition for a wand gem.  May be used to construct modular wands.
+ * 
+ * @author Daedalus4096
+ */
 public class WandGemItem extends Item {
     protected final WandGem gem;
 
