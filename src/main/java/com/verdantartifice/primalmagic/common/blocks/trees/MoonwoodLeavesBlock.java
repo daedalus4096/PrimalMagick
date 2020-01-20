@@ -9,7 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.world.IWorld;
 
 /**
- * Block definition for moonwood leaves.
+ * Block definition for moonwood leaves.  They are decorative blocks that fade out of existence and become indestructable during the day.
  * 
  * @author Daedalus4096
  */

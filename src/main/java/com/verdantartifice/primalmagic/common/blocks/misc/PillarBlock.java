@@ -18,7 +18,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 
 /**
- * Block definition for a pillar of any type (e.g. marble).
+ * Block definition for a pillar of any type (e.g. marble).  Pillars are decorative blocks that change
+ * their shape depending on whether other pillar blocks are placed immediately above or below them.
  * 
  * @author Daedalus4096
  */

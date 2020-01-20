@@ -7,7 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.world.IWorld;
 
 /**
- * Block definition for sunwood stairs.
+ * Block definition for sunwood stairs.  They are decorative blocks that fade out of existence and become indestructable at night.
  * 
  * @author Daedalus4096
  */

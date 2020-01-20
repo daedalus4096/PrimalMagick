@@ -38,7 +38,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
- * Block definition for the calcinator.
+ * Block definition for the calcinator.  A calcinator is like a furnace, but instead of smelting items
+ * it melts them down into magical essences.
  * 
  * @author Daedalus4096
  */

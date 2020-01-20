@@ -23,7 +23,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 /**
- * Block definition for the wand assembly table.
+ * Block definition for the wand assembly table.  A wand assembly table allows a player to construct a
+ * modular wand from component cores, caps, and gems.
  * 
  * @author Daedalus4096
  */

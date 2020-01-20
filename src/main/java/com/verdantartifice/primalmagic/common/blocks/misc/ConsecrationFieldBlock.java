@@ -29,7 +29,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
- * Block definition for the consecration field.
+ * Block definition for the consecration field.  Consecration fields prevent entry by non-player mobs
+ * and grant players health and hunger recovery while standing inside.
  * 
  * @author Daedalus4096
  */

@@ -7,7 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.IWorld;
 
 /**
- * Block definition for sunwood slabs.
+ * Block definition for sunwood slabs.  They are decorative blocks that fade out of existence and become indestructable at night.
  * 
  * @author Daedalus4096
  */

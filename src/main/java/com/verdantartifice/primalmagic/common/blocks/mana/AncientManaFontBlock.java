@@ -18,7 +18,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 /**
- * Block definition for the ancient mana font.
+ * Block definition for the ancient mana font.  Ancient mana fonts are found in shrines placed into the
+ * world at generation time, and may be drained with a wand to power it with mana.
  * 
  * @author Daedalus4096
  */

@@ -10,6 +10,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 /**
  * Definition for a sunwood tree.  Used by sunwood saplings to spawn the sunwood tree worldgen feature.
+ * They fade out of existence and become indestructable at night.
  * 
  * @author Daedalus4096
  */

@@ -34,7 +34,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 /**
- * Block definition for the wand inscription table.
+ * Block definition for the wand inscription table.  A wand inscription table allows a player to take a
+ * spell from a filled spell scroll and inscribe it onto a modular wand for repeated casting.
  * 
  * @author Daedalus4096
  */

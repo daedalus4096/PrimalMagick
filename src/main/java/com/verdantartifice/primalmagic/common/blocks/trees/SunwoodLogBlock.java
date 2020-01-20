@@ -9,7 +9,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.world.IWorld;
 
 /**
- * Block definition for sunwood logs.
+ * Block definition for sunwood logs.  They are decorative blocks that fade out of existence and become indestructable at night.
  * 
  * @author Daedalus4096
  */

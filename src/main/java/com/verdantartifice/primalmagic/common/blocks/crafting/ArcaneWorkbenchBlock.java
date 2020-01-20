@@ -27,7 +27,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 /**
- * Block definition for the arcane workbench.
+ * Block definition for the arcane workbench.  An arcane workbench is like a normal workbench, but can
+ * be used to craft arcane recipes requiring mana.
  * 
  * @author Daedalus4096
  */

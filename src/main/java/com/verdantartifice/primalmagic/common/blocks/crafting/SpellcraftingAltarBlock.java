@@ -23,7 +23,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 /**
- * Block definition for the spellcrafting altar.
+ * Block definition for the spellcrafting altar.  A spellcrafting altar allows a player to define a spell
+ * from known vehicles, payloads, and mods, then scribe that spell onto a blank scroll for casting or
+ * inscription onto a wand.
  * 
  * @author Daedalus4096
  */

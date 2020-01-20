@@ -7,7 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.IWorld;
 
 /**
- * Block definition for moonwood slabs.
+ * Block definition for moonwood slabs.  They are decorative blocks that fade out of existence and become indestructable during the day.
  * 
  * @author Daedalus4096
  */

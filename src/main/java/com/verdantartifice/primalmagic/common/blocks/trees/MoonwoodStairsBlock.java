@@ -7,7 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.world.IWorld;
 
 /**
- * Block definition for moonwood stairs.
+ * Block definition for moonwood stairs.  They are decorative blocks that fade out of existence and become indestructable during the day.
  * 
  * @author Daedalus4096
  */

@@ -10,6 +10,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 /**
  * Definition for a moonwood tree.  Used by moonwood saplings to spawn the moonwood tree worldgen feature.
+ * They fade out of existence and become indestructable during the day.
  * 
  * @author Daedalus4096
  */

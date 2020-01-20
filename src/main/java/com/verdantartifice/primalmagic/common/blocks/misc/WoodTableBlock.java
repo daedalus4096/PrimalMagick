@@ -14,7 +14,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 /**
- * Block definition for a plain wooden table.
+ * Block definition for a plain wooden table.  Wood tables are decorative blocks used as components
+ * for other devices, such as the analysis table.
  * 
  * @author Daedalus4096
  */

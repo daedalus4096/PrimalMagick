@@ -9,7 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.world.IWorld;
 
 /**
- * Block definition for sunwood leaves.
+ * Block definition for sunwood leaves.  They are decorative blocks that fade out of existence and become indestructable at night.
  * 
  * @author Daedalus4096
  */

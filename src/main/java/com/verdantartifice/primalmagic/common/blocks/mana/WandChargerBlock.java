@@ -22,7 +22,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 /**
- * Block definition for the wand charger.
+ * Block definition for the wand charger.  A wand charger allows a player to charge a wand with mana by
+ * feeding it magical essence.  The type and amount of mana gained are determined by the essence used.
+ * It is intended as an alternative to mana fonts, especially early in mod progression.
  * 
  * @author Daedalus4096
  */

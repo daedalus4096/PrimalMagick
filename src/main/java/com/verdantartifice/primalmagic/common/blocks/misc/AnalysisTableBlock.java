@@ -34,7 +34,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 /**
- * Block definition for the analysis table.
+ * Block definition for the analysis table.  The analysis table allows a player to analyze blocks and items,
+ * determining their primal affinities and generating observation-type knowledge.  It is primarily used early
+ * in mod progression until it is replaced by the arcanometer.
  * 
  * @author Daedalus4096
  */
