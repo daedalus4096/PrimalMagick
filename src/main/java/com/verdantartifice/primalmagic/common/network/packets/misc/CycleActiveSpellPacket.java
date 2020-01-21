@@ -10,6 +10,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet sent to trigger an update of an equipped wand's NBT for spell selection on the server.
+ * 
+ * @author Daedalus4096
+ */
 public class CycleActiveSpellPacket implements IMessageToServer {
     protected boolean reverse = false;
     
@@ -31,9 +36,11 @@ public class CycleActiveSpellPacket implements IMessageToServer {
     
     public static class Handler {
         public static void onMessage(CycleActiveSpellPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayerEntity player = ctx.get().getSender();
                 if (player != null) {
+                    // Mainhand takes priority over the offhand in case two wands are equipped
                     if (player.getHeldItemMainhand().getItem() instanceof IWand) {
                         SpellManager.cycleActiveSpell(player, player.getHeldItemMainhand(), message.reverse);
                     } else if (player.getHeldItemOffhand().getItem() instanceof IWand) {
@@ -41,6 +48,8 @@ public class CycleActiveSpellPacket implements IMessageToServer {
                     }
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

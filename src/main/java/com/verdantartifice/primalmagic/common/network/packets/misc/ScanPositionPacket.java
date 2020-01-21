@@ -21,6 +21,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.items.IItemHandler;
 
+/**
+ * Packet sent to trigger a server-side scan of a particular block in the world.  Used by the
+ * arcanometer.  Will also scan inventory contents if the block has an inventory.
+ * 
+ * @author Daedalus4096
+ */
 public class ScanPositionPacket implements IMessageToServer {
     protected BlockPos pos;
     
@@ -44,20 +50,27 @@ public class ScanPositionPacket implements IMessageToServer {
     
     public static class Handler {
         public static void onMessage(ScanPositionPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayerEntity player = ctx.get().getSender();
                 World world = player.getEntityWorld();
+
+                // Only process blocks that are currently loaded into the world.  Safety check to prevent
+                // resource thrashing from falsified packets.
                 if (message.pos != null && world.isBlockPresent(message.pos)) {
                     IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                     if (knowledge == null) {
                         return;
                     }
                     
+                    // Scan the block
                     boolean found = false;
                     ItemStack posStack = new ItemStack(world.getBlockState(message.pos).getBlock());
                     if (!AffinityManager.isScanned(posStack, player)) {
                         found = AffinityManager.setScanned(posStack, player, false);
                     }
+                    
+                    // If the given block has an inventory, scan its contents too
                     IItemHandler handler = InventoryUtils.getItemHandler(world, message.pos, Direction.UP);
                     if (handler != null) {
                         int scanCount = 0;
@@ -65,6 +78,7 @@ public class ScanPositionPacket implements IMessageToServer {
                         for (int slot = 0; slot < handler.getSlots(); slot++) {
                             chestStack = handler.getStackInSlot(slot);
                             if (chestStack != null && !chestStack.isEmpty()) {
+                                // Limit how much of an inventory can be scanned
                                 if (scanCount >= AffinityManager.MAX_SCAN_COUNT) {
                                     player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.toobig").applyTextStyle(TextFormatting.RED), true);
                                     break;
@@ -76,6 +90,8 @@ public class ScanPositionPacket implements IMessageToServer {
                             }
                         }
                     }
+                    
+                    // If at least one unscanned item was processed, send a success message
                     if (found) {
                         player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").applyTextStyle(TextFormatting.GREEN), true);
                         knowledge.sync(player);
@@ -84,6 +100,8 @@ public class ScanPositionPacket implements IMessageToServer {
                     }
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

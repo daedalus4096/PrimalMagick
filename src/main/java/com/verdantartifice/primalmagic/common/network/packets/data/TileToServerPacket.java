@@ -13,6 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet to sync tile entity data from the client to the server.  Primarily used to request a sync of
+ * tile inventory data upon the tile entity loading into the world.
+ * 
+ * @author Daedalus4096
+ */
 public class TileToServerPacket implements IMessageToServer {
     protected BlockPos pos;
     protected CompoundNBT data;
@@ -42,9 +48,12 @@ public class TileToServerPacket implements IMessageToServer {
     public static class Handler {
         @SuppressWarnings("deprecation")
         public static void onMessage(TileToServerPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayerEntity sender = ctx.get().getSender();
                 World world = sender.world;
+                // Only process tile entities that are currently loaded into the world.  Safety check to prevent
+                // resource thrashing from falsified packets.
                 if (world != null && world.isBlockLoaded(message.pos)) {
                     TileEntity tile = world.getTileEntity(message.pos);
                     if (tile != null && tile instanceof TilePM) {
@@ -52,6 +61,8 @@ public class TileToServerPacket implements IMessageToServer {
                     }
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

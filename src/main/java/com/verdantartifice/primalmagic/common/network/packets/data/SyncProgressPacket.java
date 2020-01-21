@@ -20,6 +20,11 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet to progress a research entry to its next stage on the server.
+ * 
+ * @author Daedalus4096
+ */
 public class SyncProgressPacket implements IMessageToServer {
     protected SimpleResearchKey key;
     protected boolean firstSync;
@@ -58,10 +63,12 @@ public class SyncProgressPacket implements IMessageToServer {
     
     public static class Handler {
         public static void onMessage(SyncProgressPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (message.key != null) {
                     PlayerEntity player = ctx.get().getSender();
                     if (message.firstSync != message.key.isKnownBy(player)) {
+                        // If called for, ensure that prerequisites for the next stage are checked and consumed
                         if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {
                             return;
                         }
@@ -74,6 +81,8 @@ public class SyncProgressPacket implements IMessageToServer {
                     }
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
         

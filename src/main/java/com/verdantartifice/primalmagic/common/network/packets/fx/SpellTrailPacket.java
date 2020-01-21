@@ -8,6 +8,11 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet sent from the server to trigger a spell trail particle effect on the client.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellTrailPacket implements IMessageToClient {
     protected double x;
     protected double y;
@@ -41,9 +46,12 @@ public class SpellTrailPacket implements IMessageToClient {
     
     public static class Handler {
         public static void onMessage(SpellTrailPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 FxDispatcher.INSTANCE.spellTrail(message.x, message.y, message.z, message.color);
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

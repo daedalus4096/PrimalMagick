@@ -9,6 +9,11 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet sent from the server to trigger a spell bolt particle effect on the client.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellBoltPacket implements IMessageToClient {
     protected double x1;
     protected double y1;
@@ -58,9 +63,12 @@ public class SpellBoltPacket implements IMessageToClient {
     
     public static class Handler {
         public static void onMessage(SpellBoltPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 FxDispatcher.INSTANCE.spellBolt(message.x1, message.y1, message.z1, message.x2, message.y2, message.z2, message.color);
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

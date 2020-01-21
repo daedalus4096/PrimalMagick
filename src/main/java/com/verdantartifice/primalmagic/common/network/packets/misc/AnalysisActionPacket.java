@@ -9,6 +9,12 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet sent to trigger a server-side scan of the slotted item on an analysis table.  Necessary to
+ * keep the inventories in sync and properly credit the resulting research.
+ * 
+ * @author Daedalus4096
+ */
 public class AnalysisActionPacket implements IMessageToServer {
     protected int windowId;
     
@@ -32,12 +38,16 @@ public class AnalysisActionPacket implements IMessageToServer {
     
     public static class Handler {
         public static void onMessage(AnalysisActionPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayerEntity player = ctx.get().getSender();
                 if (player.openContainer != null && player.openContainer.windowId == message.windowId && player.openContainer instanceof AnalysisTableContainer) {
+                    // Trigger the scan if the open container window matches the given one
                     ((AnalysisTableContainer)player.openContainer).doScan();
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

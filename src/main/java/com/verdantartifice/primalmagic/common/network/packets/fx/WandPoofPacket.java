@@ -13,6 +13,11 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet sent from the server to trigger a wand poof particle effect on the client.
+ * 
+ * @author Daedalus4096
+ */
 public class WandPoofPacket implements IMessageToClient {
     protected double x;
     protected double y;
@@ -58,6 +63,7 @@ public class WandPoofPacket implements IMessageToClient {
     
     public static class Handler {
         public static void onMessage(WandPoofPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 Direction side = null;
                 if (message.face >= 0) {
@@ -65,6 +71,8 @@ public class WandPoofPacket implements IMessageToClient {
                 }
                 FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, side);
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

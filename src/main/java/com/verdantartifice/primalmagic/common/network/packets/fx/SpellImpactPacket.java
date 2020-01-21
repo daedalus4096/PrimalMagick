@@ -8,6 +8,11 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet sent from the server to trigger a spell impact particle effect on the client.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellImpactPacket implements IMessageToClient {
     protected double x;
     protected double y;
@@ -45,9 +50,12 @@ public class SpellImpactPacket implements IMessageToClient {
     
     public static class Handler {
         public static void onMessage(SpellImpactPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 FxDispatcher.INSTANCE.spellImpact(message.x, message.y, message.z, message.radius, message.color);
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

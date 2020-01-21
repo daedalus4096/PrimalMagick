@@ -12,6 +12,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet sent to trigger a server-side scan of a given item stack.  Used by the arcanometer for
+ * scanning item entities in the world.
+ * 
+ * @author Daedalus4096
+ */
 public class ScanItemPacket implements IMessageToServer {
     protected ItemStack stack;
     
@@ -35,6 +41,7 @@ public class ScanItemPacket implements IMessageToServer {
 
     public static class Handler {
         public static void onMessage(ScanItemPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (message.stack != null && !message.stack.isEmpty()) {
                     ServerPlayerEntity player = ctx.get().getSender();
@@ -47,6 +54,8 @@ public class ScanItemPacket implements IMessageToServer {
                     }
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

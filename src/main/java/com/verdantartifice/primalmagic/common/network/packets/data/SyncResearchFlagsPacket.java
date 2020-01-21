@@ -11,6 +11,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet to update research entry flag data on the server (e.g. when a user clicks an "updated" entry
+ * in the grimoire, it should clear the flag).
+ * 
+ * @author Daedalus4096
+ */
 public class SyncResearchFlagsPacket implements IMessageToServer {
     protected SimpleResearchKey key;
     protected boolean isNew;
@@ -53,11 +59,13 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
     
     public static class Handler {
         public static void onMessage(SyncResearchFlagsPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (message.key != null) {
                     PlayerEntity player = ctx.get().getSender();
                     IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                     if (knowledge != null) {
+                        // Add or remove each flag from the research entry as appropriate
                         if (message.isNew) {
                             knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.NEW);
                         } else {
@@ -76,6 +84,8 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
                     }
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

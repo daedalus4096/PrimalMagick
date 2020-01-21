@@ -12,6 +12,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet to sync cooldown capability data from the server to the client.
+ * 
+ * @author Daedalus4096
+ */
 public class SyncCooldownsPacket implements IMessageToClient {
     protected CompoundNBT data;
 
@@ -36,6 +41,7 @@ public class SyncCooldownsPacket implements IMessageToClient {
     
     public static class Handler {
         public static void onMessage(SyncCooldownsPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 PlayerEntity player = Minecraft.getInstance().player;
                 IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
@@ -43,6 +49,8 @@ public class SyncCooldownsPacket implements IMessageToClient {
                     cooldowns.deserializeNBT(message.data);
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

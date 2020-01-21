@@ -11,6 +11,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet sent to update the value of a spell component's property on the server in the spellcrafting altar GUI.
+ * 
+ * @author Daedalus4096
+ */
 public class SetSpellComponentPropertyPacket implements IMessageToServer {
     protected int windowId;
     protected SpellComponent attr;
@@ -55,13 +60,17 @@ public class SetSpellComponentPropertyPacket implements IMessageToServer {
     
     public static class Handler {
         public static void onMessage(SetSpellComponentPropertyPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayerEntity player = ctx.get().getSender();
                 if (player.openContainer != null && player.openContainer.windowId == message.windowId && player.openContainer instanceof SpellcraftingAltarContainer) {
+                    // Update the property value if the open container window matches the given one
                     SpellcraftingAltarContainer container = (SpellcraftingAltarContainer)player.openContainer;
                     container.setSpellPropertyValue(message.attr, message.name, message.value);
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }

@@ -13,6 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+/**
+ * Packet to sync tile entity data from the server to the client.  Primarily used to sync tile entity
+ * inventory data to the client for rendering purposes.  See the wand charger for an example.
+ * 
+ * @author Daedalus4096
+ */
 public class TileToClientPacket implements IMessageToClient {
     protected BlockPos pos;
     protected CompoundNBT data;
@@ -42,8 +48,11 @@ public class TileToClientPacket implements IMessageToClient {
     public static class Handler {
         @SuppressWarnings("deprecation")
         public static void onMessage(TileToClientPacket message, Supplier<NetworkEvent.Context> ctx) {
+            // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 World world = Minecraft.getInstance().world;
+                // Only process tile entities that are currently loaded into the world.  Safety check to prevent
+                // resource thrashing from falsified packets.
                 if (world != null && world.isBlockLoaded(message.pos)) {
                     TileEntity tile = world.getTileEntity(message.pos);
                     if (tile != null && tile instanceof TilePM) {
@@ -51,6 +60,8 @@ public class TileToClientPacket implements IMessageToClient {
                     }
                 }
             });
+            
+            // Mark the packet as handled so we don't get warning log spam
             ctx.get().setPacketHandled(true);
         }
     }
