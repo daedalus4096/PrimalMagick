@@ -10,6 +10,13 @@ import javax.annotation.Nullable;
 
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Definition of a research discipline.  A discipline represents a collection of research entries of
+ * similar type (e.g. alchemy).  They are unlocked, yielding access to their entries, by completing
+ * other research entries.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchDiscipline {
     protected String key;
     protected CompoundResearchKey unlockResearchKey;
@@ -59,6 +66,7 @@ public class ResearchDiscipline {
     
     public boolean addEntry(@Nullable ResearchEntry entry) {
         if (entry == null || this.entries.containsKey(entry.getKey())) {
+            // Don't allow null or duplicate entries in a discipline
             return false;
         } else {
             this.entries.put(entry.getKey(), entry);

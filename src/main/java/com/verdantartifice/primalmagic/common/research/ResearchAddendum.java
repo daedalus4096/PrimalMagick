@@ -13,6 +13,13 @@ import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Definition of a research addendum.  An addendum is an addon to a research entry that is separately
+ * unlocked with additional research if the entry itself is already unlocked.  Addenda have their own
+ * text and may grant new recipes to the player.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchAddendum {
     protected ResearchEntry researchEntry;
     protected String textTranslationKey;
@@ -31,6 +38,7 @@ public class ResearchAddendum {
     
     @Nonnull
     public static ResearchAddendum parse(@Nonnull ResearchEntry entry, @Nonnull JsonObject obj) throws Exception {
+        // Parse a research addendum from a research definition file
         ResearchAddendum addendum = create(entry, obj.getAsJsonPrimitive("text").getAsString());
         if (addendum == null) {
             throw new JsonParseException("Illegal addendum text in research JSON");

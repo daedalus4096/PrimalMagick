@@ -42,10 +42,21 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * Primary access point for affinity-related methods.  Also stores block/item affinity data.
+ * 
+ * @author Daedalus4096
+ */
 public class AffinityManager {
+    // Map of block/item hash code to affinity source list
     protected static final Map<Integer, SourceList> REGISTRY = new ConcurrentHashMap<>();
+    
+    // Map of potion resource location to bonus affinity source list
     protected static final Map<ResourceLocation, SourceList> POTION_BONUS_REGISTRY = new ConcurrentHashMap<>();
+    
+    // Map of enchantment resource location to bonus affinity source; amount is determined by enchantment level
     protected static final Map<ResourceLocation, Source> ENCHANTMENT_BONUS_REGISTRY = new ConcurrentHashMap<>();
+    
     protected static final int MAX_AFFINITY = 100;
     protected static final int HISTORY_LIMIT = 100;
     
@@ -58,6 +69,8 @@ public class AffinityManager {
         if (sources == null) {
             sources = new SourceList();
         }
+        
+        // Register affinities for this stack's hash code
         REGISTRY.put(Integer.valueOf(ItemUtils.getHashCode(stack)), sources);
     }
     
@@ -69,6 +82,7 @@ public class AffinityManager {
             sources = new SourceList();
         }
         for (Item item : ItemTags.getCollection().getOrCreate(tag).getAllElements()) {
+            // Register affinities for each item in the tag
             registerAffinities(new ItemStack(item, 1), sources);
         }
     }
@@ -81,25 +95,32 @@ public class AffinityManager {
             sources = new SourceList();
         }
         for (Block block : BlockTags.getCollection().getOrCreate(tag).getAllElements()) {
+            // Register affinities for each block in the tag
             registerAffinities(new ItemStack(block, 1), sources);
         }
     }
     
     public static void appendAffinities(@Nullable ItemStack stack, @Nullable SourceList sources, @Nonnull MinecraftServer server) {
+        // Merge the given affinities to any already registered for the given itemstack
         appendAffinities(stack, sources, server.getRecipeManager(), new ArrayList<>());
     }
     
     protected static void appendAffinities(@Nullable ItemStack stack, @Nullable SourceList sources, @Nonnull RecipeManager recipeManager, @Nonnull List<String> history) {
+        // Merge the given affinities to any already registered for the given itemstack
         if (stack == null || stack.isEmpty()) {
             return;
         }
         if (sources == null) {
             sources = new SourceList();
         }
+        
+        // If the given object has no affinities registered yet, assume an empty list
         SourceList originalAffinities = getAffinities(stack, recipeManager, history);
         if (originalAffinities == null) {
             originalAffinities = new SourceList();
         }
+        
+        // Merge, don't add, the two affinity lists
         registerAffinities(stack, originalAffinities.merge(sources));
     }
     
@@ -121,6 +142,7 @@ public class AffinityManager {
     }
     
     public static boolean isRegistered(@Nullable ItemStack stack) {
+        // See if the given itemstack has been registered, first with its NBT data intact, and if that fails try again without it
         return REGISTRY.containsKey(Integer.valueOf(ItemUtils.getHashCode(stack, false))) ||
                REGISTRY.containsKey(Integer.valueOf(ItemUtils.getHashCode(stack, true)));
     }
@@ -149,6 +171,8 @@ public class AffinityManager {
                 retVal = generateAffinities(stack, recipeManager, history);
             }
         }
+        
+        // Append any needed bonus affinities for NBT data, then cap the result to a reasonable value
         return capAffinities(addBonusAffinities(stack, retVal), MAX_AFFINITY);
     }
     
@@ -195,7 +219,10 @@ public class AffinityManager {
     protected static SourceList generateAffinitiesFromRecipes(@Nonnull ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull List<String> history) {
         SourceList retVal = null;
         int maxValue = Integer.MAX_VALUE;
+        
+        // Look up all recipes with the given item as an output
         for (IRecipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(stack)).collect(Collectors.toList())) {
+            // Compute the affinities from the recipe's ingredients
             SourceList ingSources = generateAffinitiesFromIngredients(recipe, recipeManager, history);
             if (recipe instanceof IArcaneRecipe) {
                 // Add affinities from mana costs
@@ -290,6 +317,8 @@ public class AffinityManager {
         
         int maxValue = Integer.MAX_VALUE;
         ItemStack retVal = ItemStack.EMPTY;
+        
+        // Scan through all of the ingredient's possible matches to determine which one to use for affinity computation
         for (ItemStack stack : ingredient.getMatchingStacks()) {
             SourceList stackSources = getAffinities(stack, recipeManager, history);
             if (stackSources != null) {
@@ -355,6 +384,7 @@ public class AffinityManager {
         if (stack == null || stack.isEmpty()) {
             return null;
         } else {
+            // Generate a research key based on the given itemstack's hash code after its NBT data has been stripped
             return getScanResearchKey(ItemUtils.getHashCode(stack, true));
         }
     }
@@ -370,6 +400,7 @@ public class AffinityManager {
         }
         SourceList affinities = getAffinities(stack, player.world);
         if (affinities == null || affinities.isEmpty()) {
+            // If the given itemstack has no affinities, consider it already scanned
             return true;
         }
         SimpleResearchKey key = getScanResearchKey(stack);
@@ -377,6 +408,7 @@ public class AffinityManager {
     }
     
     public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayerEntity player) {
+        // Scan the given itemstack and sync the data to the player's client
         return setScanned(stack, player, true);
     }
     
@@ -388,13 +420,20 @@ public class AffinityManager {
         if (knowledge == null) {
             return false;
         }
+        
+        // Generate a research key for the itemstack and add that research to the player
         SimpleResearchKey key = getScanResearchKey(stack);
         if (key != null && knowledge.addResearch(key)) {
+            // Determine how many observation points the itemstack is worth and add those to the player's knowledge
             int obsPoints = getObservationPoints(stack, player.getEntityWorld());
             if (obsPoints > 0) {
                 knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
             }
+            
+            // Check to see if any scan triggers need to be run for the item
             ResearchManager.checkScanTriggers(player, stack.getItem());
+            
+            // Sync the research/knowledge changes to the player's client if requested
             if (sync) {
                 knowledge.sync(player);
             }
@@ -415,35 +454,50 @@ public class AffinityManager {
         int count = 0;
         SimpleResearchKey key;
         ItemStack stack;
+        
+        // Iterate over all registered items in the game
         for (Item item : ForgeRegistries.ITEMS) {
+            // Generate a research key for the itemstack and add that research to the player
             stack = new ItemStack(item);
             key = getScanResearchKey(stack);
             if (key != null && knowledge.addResearch(key)) {
                 count++;
+
+                // Determine how many observation points the itemstack is worth and add those to the player's knowledge
                 int obsPoints = getObservationPoints(stack, player.getEntityWorld());
                 if (obsPoints > 0) {
                     knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
                 }
+                
+                // TODO Check to see if any scan triggers need to be run for the item
             }
         }
+        
+        // If any items were successfully scanned, sync the research/knowledge changes to the player's clien
         if (count > 0) {
             knowledge.sync(player);
         }
+        
+        // Return the number of items successfully scanned
         return count;
     }
     
     protected static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull World world) {
+        // Calculate observation points for the itemstack based on its affinities
         SourceList sources = getAffinities(stack, world);
         if (sources == null || sources.isEmpty()) {
             return 0;
         }
         double total = 0.0D;
         for (Source source : sources.getSources()) {
+            // Not all sources are worth the same amount of observation points
             total += (sources.getAmount(source) * source.getObservationMultiplier());
         }
         if (total > 0.0D) {
             total = Math.sqrt(total);
         }
+        
+        // Round up to ensure that any item with affinities generates at least one observation point
         return MathHelper.ceil(total);
     }
 }

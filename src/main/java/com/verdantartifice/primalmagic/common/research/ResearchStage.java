@@ -21,6 +21,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Definition of a research stage, a portion of a research entry.  A research stage contains text to be
+ * displayed in the grimoire, an optional list of granted recipes, and an optional set of completion
+ * requirements.  A player must satisfy those requirements in order to complete a stage and progress to
+ * the next one in the entry.  In the most common case, a research entry contains two stages: one with
+ * a set of requirements, and a second that grants recipes.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchStage {
     protected ResearchEntry researchEntry;
     protected String textTranslationKey;
@@ -43,6 +52,7 @@ public class ResearchStage {
     
     @Nonnull
     public static ResearchStage parse(@Nonnull ResearchEntry entry, @Nonnull JsonObject obj) throws Exception {
+        // Parse a research entry from a research definition file
         ResearchStage stage = create(entry, obj.getAsJsonPrimitive("text").getAsString());
         if (stage == null) {
             throw new JsonParseException("Illegal stage text in research JSON");
@@ -57,6 +67,7 @@ public class ResearchStage {
             stage.mustCraft = JsonUtils.toOres(obj.get("required_craft").getAsJsonArray());
             List<Integer> references = new ArrayList<>();
             for (Object craftObj : stage.mustCraft) {
+                // For each item or tag that must be crafted, compute its hash code and store it for future comparison 
                 int code = (craftObj instanceof ItemStack) ? 
                         ItemUtils.getHashCode((ItemStack)craftObj) :
                         ("tag:" + craftObj.toString()).hashCode();
@@ -167,16 +178,20 @@ public class ResearchStage {
             return Collections.emptyList();
         }
         if (player == null) {
+            // If the player is invalid, return false for all requirements
             return Collections.nCopies(this.mustObtain.size(), Boolean.FALSE);
         }
         
         List<Boolean> retVal = new ArrayList<>();
         for (Object obj : this.mustObtain) {
             if (obj instanceof ItemStack) {
+                // If the obtain requirement is a specific itemstack, check if the player is carrying some
                 retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ItemStack)obj)));
             } else if (obj instanceof ResourceLocation) {
+                // If the obtain requirement is a tag, check if the player is carrying one of any of the tag's contents
                 retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obj, 1)));
             } else {
+                // If the obtain requirement is invalid, just assume the player has it
                 retVal.add(Boolean.TRUE);
             }
         }
@@ -188,15 +203,18 @@ public class ResearchStage {
             return Collections.emptyList();
         }
         if (player == null) {
+            // If the player is invalid, return false for all requirements
             return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
         }
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
         if (knowledge == null) {
+            // If the player's knowledge capability is invalid, return false for all requirements
             return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
         }
         
         List<Boolean> retVal = new ArrayList<>();
         for (Integer craftRef : this.craftReference) {
+            // Check if the player knows the special research entry corresponding to the required hash code
             retVal.add(Boolean.valueOf(knowledge.isResearchKnown(SimpleResearchKey.parse("[#]" + craftRef.intValue()))));
         }
         return retVal;
@@ -207,15 +225,18 @@ public class ResearchStage {
             return Collections.emptyList();
         }
         if (player == null) {
+            // If the player is invalid, return false for all requirements
             return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
         }
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
         if (knowledge == null) {
+            // If the player's knowledge capability is invalid, return false for all requirements
             return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
         }
         
         List<Boolean> retVal = new ArrayList<>();
         for (Knowledge knowPacket : this.requiredKnowledge) {
+            // Check if the player has enough levels in each required type of knowledge
             retVal.add(Boolean.valueOf(knowledge.getKnowledge(knowPacket.getType()) >= knowPacket.getAmount()));
         }
         return retVal;
@@ -226,11 +247,13 @@ public class ResearchStage {
             return Collections.emptyList();
         }
         if (player == null) {
+            // If the player is invalid, return false for all requirements
             return Collections.nCopies(this.requiredResearch.getKeys().size(), Boolean.FALSE);
         }
         
         List<Boolean> retVal = new ArrayList<>();
         for (SimpleResearchKey key : this.requiredResearch.getKeys()) {
+            // Do a strict knowledge check for each required research entry
             retVal.add(Boolean.valueOf(key.isKnownByStrict(player)));
         }
         return retVal;

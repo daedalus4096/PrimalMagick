@@ -9,6 +9,11 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 
+/**
+ * Data object identifying a specific research entry, or a specific stage in that research entry.
+ * 
+ * @author Daedalus4096
+ */
 public class SimpleResearchKey {
     protected String rootKey;
     protected Integer stage;
@@ -21,11 +26,14 @@ public class SimpleResearchKey {
     @Nullable
     public static SimpleResearchKey parse(@Nullable String keyStr) {
         if (keyStr == null) {
+            // Invalid key string
             return null;
         } else if (keyStr.contains("@")) {
+            // Key string indicates a specific stage of a research entry
             String[] tokens = keyStr.split("@");
             return new SimpleResearchKey(tokens[0], MathHelper.getInt(tokens[1], 0));
         } else {
+            // Key string indicates a research entry without a specific stage
             return new SimpleResearchKey(keyStr, null);
         }
     }
@@ -61,6 +69,8 @@ public class SimpleResearchKey {
         if (knowledge == null) {
             return false;
         } else {
+            // To be known, the given player must have progressed to at least the stage specified in
+            // this key.  If no stage is specified, the player must have started the research.
             return knowledge.isResearchKnown(this);
         }
     }
@@ -73,6 +83,9 @@ public class SimpleResearchKey {
         if (knowledge == null) {
             return false;
         }
+        
+        // To be known strictly, the given player must have progressed to at least the stage specified
+        // in this key.  If no stage is specified, the player must have completed the research.
         if (this.hasStage()) {
             if (!knowledge.isResearchKnown(this)) {
                 return false;

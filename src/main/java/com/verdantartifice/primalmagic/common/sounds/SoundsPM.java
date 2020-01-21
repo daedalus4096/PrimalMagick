@@ -5,6 +5,11 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
+/**
+ * Object holder for mod sound events.  Actual values populated by Forge post-registration.
+ * 
+ * @author Daedalus4096
+ */
 @ObjectHolder(PrimalMagic.MODID)
 public class SoundsPM {
     public static final SoundEvent PAGE = null;

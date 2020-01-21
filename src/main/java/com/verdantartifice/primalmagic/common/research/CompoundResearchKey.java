@@ -16,6 +16,12 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.entity.player.PlayerEntity;
 
+/**
+ * Data object identifying multiple research entries/stages at once.  Comprised of multiple simple
+ * research keys, and may be satisfied by either all of them or just one.
+ * 
+ * @author Daedalus4096
+ */
 public class CompoundResearchKey {
     protected List<SimpleResearchKey> keys = new ArrayList<>();
     protected boolean requireAll;
@@ -38,12 +44,15 @@ public class CompoundResearchKey {
                 PrimalMagic.LOGGER.error("Research key may contain && or || but not both: {}", keyStr);
                 return null;
             }
+            
+            // Parse all tokens of the string into simple research keys, filtering out failures, then collect them into a compound research key
             List<SimpleResearchKey> keys = Arrays.asList(keyStr.split("&&")).stream()
                                                 .map(k -> SimpleResearchKey.parse(k))
                                                 .filter(Objects::nonNull)
                                                 .collect(Collectors.toList());
             return CompoundResearchKey.from(true, keys.toArray(new SimpleResearchKey[keys.size()]));
         } else if (keyStr.contains("||")) {
+            // Parse all tokens of the string into simple research keys, filtering out failures, then collect them into a compound research key
             List<SimpleResearchKey> keys = Arrays.asList(keyStr.split("||")).stream()
                                                 .map(k -> SimpleResearchKey.parse(k))
                                                 .filter(Objects::nonNull)
@@ -56,6 +65,7 @@ public class CompoundResearchKey {
     
     @Nullable
     public static CompoundResearchKey parse(@Nullable JsonArray jsonArray) throws Exception {
+        // When parsing from a JSON file instead of an ad-hoc string, always require that all SRKs be satisfied
         CompoundResearchKey retVal = new CompoundResearchKey(true);
         for (JsonElement element : jsonArray) {
             SimpleResearchKey simpleKey = SimpleResearchKey.parse(element.getAsString());
@@ -84,6 +94,7 @@ public class CompoundResearchKey {
     
     @Nonnull
     public CompoundResearchKey copy() {
+        // Make a deep copy of the compound research key
         CompoundResearchKey key = new CompoundResearchKey(this.requireAll);
         for (SimpleResearchKey simpleKey : this.keys) {
             key.keys.add(simpleKey.copy());
@@ -102,6 +113,7 @@ public class CompoundResearchKey {
     
     public boolean isKnownBy(@Nullable PlayerEntity player) {
         if (this.requireAll) {
+            // If requireAll is true, the CRK is only known if all contained SRKs are known
             for (SimpleResearchKey simpleKey : this.keys) {
                 if (!simpleKey.isKnownBy(player)) {
                     return false;
@@ -109,6 +121,7 @@ public class CompoundResearchKey {
             }
             return true;
         } else {
+            // Otherwise, the CRK  is known if any of the contained SRKs are known
             for (SimpleResearchKey simpleKey : this.keys) {
                 if (simpleKey.isKnownBy(player)) {
                     return true;
@@ -120,6 +133,7 @@ public class CompoundResearchKey {
     
     public boolean isKnownByStrict(@Nullable PlayerEntity player) {
         if (this.requireAll) {
+            // If requireAll is true, the CRK is only known if all contained SRKs are known
             for (SimpleResearchKey simpleKey : this.keys) {
                 if (!simpleKey.isKnownByStrict(player)) {
                     return false;
@@ -127,6 +141,7 @@ public class CompoundResearchKey {
             }
             return true;
         } else {
+            // Otherwise, the CRK  is known if any of the contained SRKs are known
             for (SimpleResearchKey simpleKey : this.keys) {
                 if (simpleKey.isKnownByStrict(player)) {
                     return true;
@@ -148,6 +163,7 @@ public class CompoundResearchKey {
         if (simpleKey == null) {
             return false;
         } else {
+            // Return true if the given SRK is one of this CRK's keys, regardless of any stage requirements given in either
             return this.keys.stream().map((k) -> k.stripStage()).collect(Collectors.toList()).contains(simpleKey.stripStage());
         }
     }

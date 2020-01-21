@@ -7,6 +7,12 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 
 import net.minecraft.util.math.MathHelper;
 
+/**
+ * Represents a packet of knowledge levels (e.g. 3 levels worth of observations).  Primarily used to
+ * parse knowledge requirements for research and display them in the grimoire.
+ * 
+ * @author Daedalus4096
+ */
 public class Knowledge {
     protected IPlayerKnowledge.KnowledgeType type;
     protected int amount;
@@ -33,6 +39,8 @@ public class Knowledge {
                 }
             }
         }
+        
+        // Return null if the given string does not represent a valid knowledge packet
         return null;
     }
     

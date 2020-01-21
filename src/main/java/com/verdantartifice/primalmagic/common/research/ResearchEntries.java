@@ -7,6 +7,12 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * Convenience class for accessing research entries without having to manually navigate the
+ * discipline hierarchy.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchEntries {
     @Nullable
     public static ResearchEntry getEntry(SimpleResearchKey key) {

@@ -11,6 +11,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+/**
+ * Definition of a research entry, the primary component of the research system.  A research entry
+ * represents a single node in the mod research tree and a single named entry in the grimoire.  A
+ * research entry is made up of one or more stages, which are progressed through in sequence using
+ * the grimoire.  It may have one or more parent research entries, which are required to unlock 
+ * access to the entry.  It may also have zero or more addenda to be unlocked after the entry is
+ * completed.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchEntry {
     protected SimpleResearchKey key;
     protected String disciplineKey;
@@ -37,6 +47,7 @@ public class ResearchEntry {
     
     @Nonnull
     public static ResearchEntry parse(@Nonnull JsonObject obj) throws Exception {
+        // Parse a research entry from a research definition file
         ResearchEntry entry = create(
             SimpleResearchKey.parse(obj.getAsJsonPrimitive("key").getAsString()),
             obj.getAsJsonPrimitive("discipline").getAsString(),

@@ -7,6 +7,12 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
+/**
+ * Subtype of research scan trigger that grants the required research for a primal source.  In addition
+ * to granting the research, it will also display a localized message in the player's chat window.
+ * 
+ * @author Daedalus4096
+ */
 public class ScanSourceUnlockTrigger extends ScanResearchTrigger {
     protected final Source source;
     

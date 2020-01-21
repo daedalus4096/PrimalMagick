@@ -13,17 +13,26 @@ import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 
+/**
+ * Definition of a list of primal sources and their respective amounts.  Used for anything requiring
+ * a specified amount of one or more sources, such as affinities and mana costs.
+ * 
+ * @author Daedalus4096
+ */
 public class SourceList {
     protected Map<Source, Integer> sources = new HashMap<>();
     
     public SourceList() {}
     
     public int getAmount(@Nullable Source source) {
+        // Return zero if the given source is not present in this list
         return this.sources.getOrDefault(source, Integer.valueOf(0)).intValue();
     }
     
     @Nonnull
     public SourceList add(@Nullable Source source, int amount) {
+        // Add the given amount of the given source to this list.  Do not allow non-positive values;
+        // use reduce or remove to subtract.
         if (source != null && amount > 0) {
             this.sources.put(source, amount + this.getAmount(source));
         }
@@ -32,6 +41,7 @@ public class SourceList {
     
     @Nonnull
     public SourceList add(@Nullable SourceList list) {
+        // Add the given source list to this one
         if (list != null) {
             for (Source source : list.getSources()) {
                 this.add(source, list.getAmount(source));
@@ -41,32 +51,41 @@ public class SourceList {
     }
     
     public boolean reduce(@Nullable Source source, int amount) {
+        // Reduce the given source in this list by the given amount, but only if it has at least that much already
         if (source != null) {
             int newAmount = this.getAmount(source) - amount;
             if (newAmount == 0) {
+                // If the new amount of source is exactly zero, remove it from the list entirely
                 this.remove(source);
                 return true;
             } else if (newAmount > 0) {
+                // If it's still positive, save the new value
                 this.sources.put(source, Integer.valueOf(newAmount));
                 return true;
             }
         }
+        
+        // Return failure if the given source is null or if this list doesn't have at least as much as the given amount
         return false;
     }
     
     @Nonnull
     public SourceList remove(@Nullable Source source) {
+        // Remove all of the given source from this list
         this.sources.remove(source);
         return this;
     }
     
     @Nonnull
     public SourceList remove(@Nullable Source source, int amount) {
+        // Reduce the given source in this list by the given amount, even if it doesn't have that much
         if (source != null) {
             int newAmount = this.getAmount(source) - amount;
             if (newAmount <= 0) {
+                // If the new amount is non-positive, just remove all of the given source
                 this.remove(source);
             } else {
+                // Otherwise save the new value
                 this.sources.put(source, Integer.valueOf(newAmount));
             }
         }
@@ -75,6 +94,7 @@ public class SourceList {
     
     @Nonnull
     public SourceList remove(@Nullable SourceList list) {
+        // Reduce the sources in this list by the given amounts, even if it doesn't have that much of them
         if (list != null) {
             for (Source source : list.getSources()) {
                 this.remove(source, list.getAmount(source));
@@ -85,6 +105,7 @@ public class SourceList {
     
     @Nonnull
     public SourceList merge(@Nullable Source source, int amount) {
+        // Set this list to have the given amount of the given source, but only if it's greater than already present
         if (source != null) {
             this.sources.put(source, Integer.valueOf(Math.max(amount, this.getAmount(source))));
         }
@@ -93,6 +114,7 @@ public class SourceList {
     
     @Nonnull
     public SourceList merge(@Nullable SourceList list) {
+        // Merge the given source list with this one, keeping the greater value of each source
         if (list != null) {
             for (Source source : list.getSources()) {
                 this.merge(source, list.getAmount(source));
@@ -103,6 +125,7 @@ public class SourceList {
     
     @Nonnull
     public SourceList set(@Nullable Source source, int amount) {
+        // Set this list to have the given amount of the given source, even if it's less than what's already there or negative
         if (source != null) {
             this.sources.put(source, Integer.valueOf(amount));
         }
@@ -111,6 +134,7 @@ public class SourceList {
     
     @Nonnull
     public SourceList set(@Nullable SourceList list) {
+        // Set the contents of the given list into this one.  Keeps any sources in this list that were not present in the given one
         if (list != null) {
             for (Source source : list.getSources()) {
                 this.set(source, list.getAmount(source));
@@ -121,11 +145,13 @@ public class SourceList {
     
     @Nonnull
     public Set<Source> getSources() {
+        // Get the sources in this list in arbitrary order
         return Collections.unmodifiableSet(this.sources.keySet());
     }
     
     @Nonnull
     public List<Source> getSourcesSorted() {
+        // Get the sources in this list in prescribed order
         return Source.SORTED_SOURCES.stream().filter(s -> (this.getAmount(s) > 0)).collect(Collectors.toList());
     }
     

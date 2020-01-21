@@ -10,6 +10,11 @@ import javax.annotation.Nullable;
 
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Collection of all defined research disciplines and their defining JSON data files.
+ * 
+ * @author Daedalus4096
+ */
 public class ResearchDisciplines {
     protected static final Map<String, ResearchDiscipline> DISCIPLINES = new HashMap<>();
     protected static final Map<String, ResourceLocation> DATA_FILES = new HashMap<>();
@@ -32,6 +37,7 @@ public class ResearchDisciplines {
     @Nullable
     public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon) {
         if (key == null || DISCIPLINES.containsKey(key)) {
+            // Don't allow null or duplicate disciplines in the collection
             return null;
         } else {
             ResearchDiscipline discipline = ResearchDiscipline.create(key, unlockResearchKey, icon);
