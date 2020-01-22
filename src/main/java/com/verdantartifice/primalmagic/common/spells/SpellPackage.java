@@ -18,6 +18,16 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
+/**
+ * Definition of a spell package data structure.  A spell package represents a complete, named, castable
+ * spell.  A valid package has a name, a vehicle component, a payload component, and zero to two mod 
+ * components.  For more information on spell components, see their respective interfaces.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle}
+ * @see {@link com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload}
+ * @see {@link com.verdantartifice.primalmagic.common.spells.mods.ISpellMod}
+ */
 public class SpellPackage implements INBTSerializable<CompoundNBT> {
     protected String name = "";
     protected ISpellVehicle vehicle = null;
@@ -37,6 +47,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     
     @Nonnull
     public ITextComponent getName() {
+        // Color spell names according to their rarity, like with items
         return new StringTextComponent(this.name).applyTextStyle(this.getRarity().color);
     }
     
@@ -83,6 +94,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     }
     
     public boolean isValid() {
+        // A valid package has a name, a vehicle component, and a payload component; mods are optional
         return this.vehicle != null && this.vehicle.isActive() &&
                 this.payload != null && this.payload.isActive() &&
                 this.name != null && !this.name.isEmpty();
@@ -119,6 +131,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     }
 
     public int getCooldownTicks() {
+        // Determine the length of the cooldown triggered by this spell; reduced by the Quicken mod
         int retVal = 60;
         QuickenSpellMod quickenMod = this.getMod(QuickenSpellMod.class, "haste");
         if (quickenMod != null) {
@@ -129,6 +142,8 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     
     @Nonnull
     public SourceList getManaCost() {
+        // Calculate the total mana cost of this spell package.  The spell's base cost is determined by
+        // its payload, then modified by its vehicle and mods, if present.
         if (this.payload == null) {
             return new SourceList();
         }
@@ -138,6 +153,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
         int baseModifier = 0;
         int multiplier = 1;
         
+        // Collect all appropriate modifiers before doing the calculation to prevent mod order dependency
         if (this.vehicle != null) {
             baseModifier += this.vehicle.getBaseManaCostModifier();
         }
@@ -149,6 +165,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
             baseModifier += this.secondaryMod.getBaseManaCostModifier();
             multiplier *= this.secondaryMod.getManaCostMultiplier();
         }
+        
         return new SourceList().add(source, (baseManaCost + baseModifier) * multiplier);
     }
     
@@ -174,6 +191,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     
     @Nonnull
     public Rarity getRarity() {
+        // A spell's rarity is based on how any mods it has
         int mods = this.getActiveModCount();
         switch (mods) {
         case 2:
@@ -187,9 +205,12 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     
     @Nullable
     public <T extends ISpellMod> T getMod(Class<T> clazz, String tiebreakerProperty) {
+        // Determine if either of the attached mod components are of the requested class
         T primary = clazz.isInstance(this.primaryMod) ? clazz.cast(this.primaryMod) : null;
         T secondary = clazz.isInstance(this.secondaryMod) ? clazz.cast(this.secondaryMod) : null;
+        
         if (primary != null && secondary != null) {
+            // If both mods are of the requested type, only return the one with a higher value in the specified property
             return secondary.getPropertyValue(tiebreakerProperty) > primary.getPropertyValue(tiebreakerProperty) ? secondary : primary;
         } else if (primary != null) {
             return primary;

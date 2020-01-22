@@ -14,6 +14,14 @@ import com.verdantartifice.primalmagic.common.util.VectorUtils;
 
 import net.minecraft.util.math.Vec3d;
 
+/**
+ * Definition of the Fork spell mod.  This mod causes the spell package to execute multiple instances
+ * of the spell in a scattered cone of effect.  Its forks property determines how many instances of
+ * the spell are executed.  Its precision property determines how wide the cone of effect is; higher
+ * values result in a more narrow cone.
+ * 
+ * @author Daedalus4096
+ */
 public class ForkSpellMod extends AbstractSpellMod {
     public static final String TYPE = "fork";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_FORK"));
@@ -59,14 +67,16 @@ public class ForkSpellMod extends AbstractSpellMod {
     
     @Nonnull
     public List<Vec3d> getDirectionUnitVectors(@Nonnull Vec3d dir, @Nonnull Random rng) {
+        // Determine the direction vectors on which to execute the spell forks
         List<Vec3d> retVal = new ArrayList<>();
         Vec3d normDir = dir.normalize();
         int forks = this.getPropertyValue("forks");
         int precision = this.getPropertyValue("precision");
-        int degrees = 10 + (15 * (5 - precision));  // 85, 70, 55, 40, 25, 10
-        double offsetMagnitude = Math.tan(Math.toRadians(degrees));
+        int degrees = 10 + (15 * (5 - precision));  // 85, 70, 55, 40, 25, 10 degrees max from the given direction
+        double offsetMagnitude = Math.tan(Math.toRadians(degrees)); // Vector offset length needed to produce a given degree angle
         
         for (int index = 0; index < forks; index++) {
+            // Scale the offest vector to provide a degree displacement *up to* the computed degree value
             Vec3d offset = VectorUtils.getRandomOrthogonalUnitVector(normDir, rng).scale(offsetMagnitude * rng.nextDouble());
             retVal.add(normDir.add(offset));
         }

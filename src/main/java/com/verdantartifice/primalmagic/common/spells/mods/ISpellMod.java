@@ -11,23 +11,77 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.INBTSerializable;
 
+/**
+ * Primary interface for a spell mod component.  Spell mods typically alter the functionality of spells in
+ * ways more complex than can be captured in a simple property, or are independent of vehicle/payload type.
+ * An example is the Burst spell mod, which causes the spell to explode from its impact point and affect
+ * multiple targets.  Spell mods themselves may have properties which determine the extent of their effect.
+ * In addition, spell mods raise the cost of spells, typically multiplicatively.
+ * 
+ * @author Daedalus4096
+ */
 public interface ISpellMod extends INBTSerializable<CompoundNBT> {
+    /**
+     * Determine whether the spell mod has an effect that should be executed.  Should be true for all but
+     * placeholder spell mods.
+     * 
+     * @return true if the spell mod has an effect that should be executed, false otherwise
+     */
     public boolean isActive();
     
+    /**
+     * Get a name-ordered list of properties used by this spell mod.
+     * 
+     * @return a name-ordered list of properties used by this spell mod
+     */
+    @Nonnull
     public List<SpellProperty> getProperties();
     
+    /**
+     * Get a specific property of the spell mod.
+     * 
+     * @param name the name of the property to retrieve
+     * @return the named property, or null if no such property is attached to this spell mod
+     */
     @Nullable
     public SpellProperty getProperty(String name);
     
+    /**
+     * Get the value of a specific property of the spell mod.
+     * 
+     * @param name the name of the property to retrieve
+     * @return the named property, or zero if no such property is attached to this spell mod
+     */
     public int getPropertyValue(String name);
     
+    /**
+     * Get a display text component containing the human-friendly name of this spell mod type.
+     * 
+     * @return the spell mod type name
+     */
     @Nonnull
     public ITextComponent getTypeName();
     
+    /**
+     * Get a display text component containing the human-friendly text to be used to identify the
+     * spell mod in the default of a spell package.
+     * 
+     * @return the spell mod's default name
+     */
     @Nonnull
     public ITextComponent getDefaultNamePiece();
     
+    /**
+     * Get the additive modifier to be applied to the spell mod's package's base cost.
+     * 
+     * @return the additive modifier for the spell package's cost
+     */
     public int getBaseManaCostModifier();
     
+    /**
+     * Get the multiplicative modifier to be applied to the spell mod's package's total cost.
+     * 
+     * @return the multiplicative modifier for the spell package's cost
+     */
     public int getManaCostMultiplier();
 }

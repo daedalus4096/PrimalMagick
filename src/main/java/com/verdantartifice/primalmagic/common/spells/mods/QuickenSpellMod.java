@@ -6,6 +6,12 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
+/**
+ * Definition of the Quicken spell mod.  This mod causes spells to incur a shorter cooldown upon being
+ * cast.  The mod's haste property determines how much the cooldown is reduced.
+ * 
+ * @author Daedalus4096
+ */
 public class QuickenSpellMod extends AbstractSpellMod {
     public static final String TYPE = "quicken";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_QUICKEN"));

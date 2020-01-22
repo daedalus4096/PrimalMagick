@@ -2,6 +2,13 @@ package com.verdantartifice.primalmagic.common.spells.mods;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
+/**
+ * Definition of an empty spell mod.  This mod has no effect and is not valid in spells.  Its only
+ * purpose is to provide a selection entry in the spellcrafting altar GUI for when the player has
+ * not selected either a primary or secondary mod for the spell.
+ * 
+ * @author Daedalus4096
+ */
 public class EmptySpellMod extends AbstractSpellMod {
     public static final String TYPE = "none";
 

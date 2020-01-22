@@ -7,6 +7,12 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
+/**
+ * Definition of the Amplify spell mod.  This mod increases the effective value of power and duration
+ * properties of each other component in the spell package by its own power property value.
+ * 
+ * @author Daedalus4096
+ */
 public class AmplifySpellMod extends AbstractSpellMod {
     public static final String TYPE = "amplify";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_AMPLIFY"));

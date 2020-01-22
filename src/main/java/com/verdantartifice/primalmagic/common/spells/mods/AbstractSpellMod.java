@@ -14,6 +14,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+/**
+ * Base class for a spell mod.  Handles property management and serialization.
+ * 
+ * @author Daedalus4096
+ */
 public abstract class AbstractSpellMod implements ISpellMod {
     protected final Map<String, SpellProperty> properties;
 
@@ -21,6 +26,11 @@ public abstract class AbstractSpellMod implements ISpellMod {
         this.properties = this.initProperties();
     }
     
+    /**
+     * Get the type name for this spell mod.
+     * 
+     * @return the type name for this spell mod
+     */
     protected abstract String getModType();
     
     @Override
@@ -40,6 +50,11 @@ public abstract class AbstractSpellMod implements ISpellMod {
         }
     }
 
+    /**
+     * Initialize the property map for this spell mod.  Should create a maximum of two properties.
+     * 
+     * @return
+     */
     @Nonnull
     protected Map<String, SpellProperty> initProperties() {
         return new HashMap<>();
@@ -52,6 +67,7 @@ public abstract class AbstractSpellMod implements ISpellMod {
     
     @Override
     public List<SpellProperty> getProperties() {
+        // Sort properties by their display names
         return this.properties.values().stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
     }
 
@@ -70,6 +86,8 @@ public abstract class AbstractSpellMod implements ISpellMod {
         if (retVal > 0 && ("power".equals(name) || "duration".equals(name))) {
             AmplifySpellMod ampMod = spell.getMod(AmplifySpellMod.class, "power");
             if (ampMod != null) {
+                // For power or duration properties greater than zero, increase the total result by
+                // the power of any attached Amplify spell mod
                 retVal += ampMod.getPropertyValue("power");
             }
         }

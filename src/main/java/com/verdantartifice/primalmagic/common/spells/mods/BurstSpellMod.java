@@ -25,6 +25,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+/**
+ * Definition of the Burst spell mod.  This mod causes the spell package to explode outward from its
+ * impact point, causing the spell to affect all targets in the area of effect.  Its radius property
+ * determines how wide the explosion is.  Its power property determines the explosion's ability to
+ * penetrate intervening blocks to affect blocks on the other side.
+ * 
+ * @author Daedalus4096
+ */
 public class BurstSpellMod extends AbstractSpellMod {
     public static final String TYPE = "burst";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_BURST"));
@@ -53,7 +61,6 @@ public class BurstSpellMod extends AbstractSpellMod {
     
     @Override
     public int getBaseManaCostModifier() {
-        // TODO Auto-generated method stub
         return this.getPropertyValue("power");
     }
     

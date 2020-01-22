@@ -6,6 +6,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+/**
+ * Definition of a spell property.  Spell components have zero to two properties that determine their
+ * functionality (e.g. power, duration).  Each property is bounded to a min and max value.
+ * 
+ * @author Daedalus4096
+ */
 public class SpellProperty {
     protected int value;
     protected final String name;
@@ -42,6 +48,7 @@ public class SpellProperty {
     }
     
     public void setValue(int newValue) {
+        // Ensure that the given value respects this property's bounds
         this.value = MathHelper.clamp(newValue, this.min, this.max);
     }
 }
