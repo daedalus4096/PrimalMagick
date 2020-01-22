@@ -17,6 +17,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Base class for a damaging spell.  Deals projectile damage to the target entity, scaling with the
+ * payload's power property.  Frequently applies a secondary effect to the target, such as applying
+ * a potion effect.  Has no effect on blocks.
+ * 
+ * @author Daedalus4096
+ */
 public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     public AbstractDamageSpellPayload() {
         super();
@@ -34,6 +41,13 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         return propMap;
     }
     
+    /**
+     * Compute the total amount of damage to be done by this payload.
+     * 
+     * @param target the target entity being damaged
+     * @param spell the spell package containing this payload
+     * @return the total amount of damage to be done
+     */
     protected abstract float getTotalDamage(Entity target, SpellPackage spell);
     
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
@@ -45,9 +59,12 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null) {
+                // Damage the target entity
                 entityTarget.getEntity().attackEntityFrom(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity(), spell));
             }
         }
+        
+        // Apply any secondary effects from the payload
         this.applySecondaryEffects(target, burstPoint, spell, world, caster);
     }
     

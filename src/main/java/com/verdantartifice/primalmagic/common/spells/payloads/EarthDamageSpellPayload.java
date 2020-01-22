@@ -15,6 +15,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition for an earth damage spell.  Does standard damage to the target and knocks it back.  The
+ * magnitude of the knockback scales with the payload's power.
+ * 
+ * @author Daedalus4096
+ */
 public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "earth_damage";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY"));
@@ -53,8 +59,11 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
                 Vec3d knockbackVec;
                 if (entityTarget.getEntity().equals(caster)) {
+                    // If for some reason the caster targets themselves, knock them directly backward
                     knockbackVec = caster.getLookVec().scale(-1.0D).normalize();
                 } else {
+                    // If this was a Burst spell, knock targets away from the impact point; otherwise,
+                    // knock them away from the caster
                     Vec3d knockbackSource = burstPoint == null || burstPoint.equals(target.getHitVec()) ? caster.getEyePosition(1.0F) : burstPoint;
                     knockbackVec = target.getHitVec().subtract(knockbackSource).scale(-1.0D).normalize();
                 }

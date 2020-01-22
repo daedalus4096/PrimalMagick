@@ -19,6 +19,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a healing spell.  Restores health to the target entity based on the power property of
+ * the payload.  If the entity is undead, it instead takes damage based on power.  Has no effect on
+ * blocks.
+ * 
+ * @author Daedalus4096
+ */
 public class HealingSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "healing";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_HEALING"));
@@ -50,8 +57,10 @@ public class HealingSpellPayload extends AbstractSpellPayload {
             if (entityTarget.getEntity() instanceof LivingEntity) {
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 if (entity.isEntityUndead()) {
+                    // Undead entities get dealt damage
                     entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(caster, caster), 1.5F * this.getModdedPropertyValue("power", spell));
                 } else {
+                    // All other entities are healed
                     entity.heal((float)this.getModdedPropertyValue("power", spell));
                 }
             }

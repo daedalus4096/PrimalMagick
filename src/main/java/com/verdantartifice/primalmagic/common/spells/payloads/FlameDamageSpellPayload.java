@@ -19,6 +19,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition for a flame damage spell.  Does standard damage to the target as fire damage and sets
+ * the target on fire.  The length of the fire effect scales with the duration property of the payload.
+ * 
+ * @author Daedalus4096
+ */
 public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "flame_damage";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_FLAME"));
@@ -74,6 +80,7 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY && duration > 0) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
+                // Set the entity on fire
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 entity.setFire(duration);
             }

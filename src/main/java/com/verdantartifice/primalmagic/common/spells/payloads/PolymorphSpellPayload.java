@@ -22,6 +22,15 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a polymorph spell.  Temporarily replaces the target living, non-player, non-boss
+ * entity with a neutral wolf.  The length of the replacement scales with the payload's duration
+ * property.  NBT data of the original entity is preserved for the swap back.  Has no effect on
+ * blocks.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.misc.EntitySwapper}
+ */
 public class PolymorphSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "polymorph";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_POLYMORPH"));
@@ -52,6 +61,7 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (!entityTarget.getEntity().getType().equals(EntityType.WOLF) && entityTarget.getEntity().isNonBoss()) {
+                // Create and enqueue an entity swapper for the target entity
                 UUID entityId = entityTarget.getEntity().getUniqueID();
                 CompoundNBT originalData = entityTarget.getEntity().writeWithoutTypeId(new CompoundNBT());
                 int ticks = this.getModdedPropertyValue("duration", spell) * TICKS_PER_DURATION;

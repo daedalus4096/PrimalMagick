@@ -49,8 +49,8 @@ public interface ISpellMod extends INBTSerializable<CompoundNBT> {
     /**
      * Get the value of a specific property of the spell mod.
      * 
-     * @param name the name of the property to retrieve
-     * @return the named property, or zero if no such property is attached to this spell mod
+     * @param name the name of the property value to retrieve
+     * @return the named property's value, or zero if no such property is attached to this spell mod
      */
     public int getPropertyValue(String name);
     

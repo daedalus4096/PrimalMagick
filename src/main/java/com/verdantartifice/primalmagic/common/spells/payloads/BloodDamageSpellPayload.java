@@ -13,6 +13,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Definition for a blood damage spell.  Does standard damage to the target, and bypasses any armor
+ * that it may have.  No secondary effects.
+ * 
+ * @author Daedalus4096
+ */
 public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "blood_damage";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_BLOOD"));
@@ -41,6 +47,7 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     
     @Override
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
+        // Bypass the target's armor, if any
         return super.getDamageSource(target, source).setDamageBypassesArmor();
     }
 

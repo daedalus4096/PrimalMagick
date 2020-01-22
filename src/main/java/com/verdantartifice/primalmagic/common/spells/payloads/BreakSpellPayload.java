@@ -19,6 +19,14 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition for a block breaking spell.  Breaks the target block over time without further interaction
+ * from the player, with the time required increasing with the block's hardness.  Has no effect on
+ * entities.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.misc.BlockBreaker}
+ */
 public class BreakSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "break";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_BREAK"));
@@ -46,6 +54,7 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     @Override
     public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
         if (target != null && target.getType() == RayTraceResult.Type.BLOCK) {
+            // Create and enqueue a block breaker for the target block
             BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
             BlockPos pos = blockTarget.getPos();
             BlockState state = world.getBlockState(pos);

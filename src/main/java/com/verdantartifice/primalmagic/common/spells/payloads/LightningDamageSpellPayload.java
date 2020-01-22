@@ -11,6 +11,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a lightning damage spell.  Deals lower than standard damage at low power property
+ * values, and higher than standard damage at high power property values.  No secondary effects.
+ * 
+ * @author Daedalus4096
+ */
 public class LightningDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "lightning_damage";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_LIGHTNING"));

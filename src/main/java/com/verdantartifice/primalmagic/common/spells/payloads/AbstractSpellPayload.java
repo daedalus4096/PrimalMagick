@@ -15,6 +15,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+/**
+ * Base class for a spell payload.  Handles property management and serialization.
+ * 
+ * @author Daedalus4096
+ */
 public abstract class AbstractSpellPayload implements ISpellPayload {
     protected final Map<String, SpellProperty> properties;
     
@@ -22,6 +27,11 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
         this.properties = this.initProperties();
     }
     
+    /**
+     * Get the type name for this spell payload.
+     * 
+     * @return the type name for this spell payload
+     */
     protected abstract String getPayloadType();
     
     @Override
@@ -41,6 +51,11 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
         }
     }
     
+    /**
+     * Initialize the property map for this spell payload.  Should create a maximum of two properties.
+     * 
+     * @return a map of property names to spell properties
+     */
     @Nonnull
     protected Map<String, SpellProperty> initProperties() {
         return new HashMap<>();
@@ -48,6 +63,7 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
     
     @Override
     public List<SpellProperty> getProperties() {
+        // Sort properties by their display names
         return this.properties.values().stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
     }
     
@@ -66,6 +82,8 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
         if (retVal > 0 && ("power".equals(name) || "duration".equals(name))) {
             AmplifySpellMod ampMod = spell.getMod(AmplifySpellMod.class, "power");
             if (ampMod != null) {
+                // For power or duration properties greater than zero, increase the total result by
+                // the power of any attached Amplify spell mod
                 retVal += ampMod.getPropertyValue("power");
             }
         }

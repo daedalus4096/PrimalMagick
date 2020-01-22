@@ -20,6 +20,14 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a flight spell.  This payload grants the target a short-lived potion effect which
+ * grants creative flight.  The length of the effect scales with the duration property of the
+ * payload.  Has no effect on blocks.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.effects.FlyingEffect}
+ */
 public class FlightSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "flight";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_FLIGHT"));
@@ -50,6 +58,7 @@ public class FlightSpellPayload extends AbstractSpellPayload {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() instanceof LivingEntity) {
+                // Grant the potion effect
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 int ticks = this.getModdedPropertyValue("duration", spell) * TICKS_PER_DURATION;
                 entity.addPotionEffect(new EffectInstance(EffectsPM.FLYING, ticks));

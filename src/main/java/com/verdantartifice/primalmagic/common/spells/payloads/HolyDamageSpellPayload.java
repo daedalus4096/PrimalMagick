@@ -12,6 +12,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a holy damage spell.  Deals standard damage to the target, or double standard damage
+ * to undead targets.  No secondary effects.
+ * 
+ * @author Daedalus4096
+ */
 public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "holy_damage";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_HOLY"));
@@ -42,6 +48,7 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
     protected float getTotalDamage(Entity target, SpellPackage spell) {
         int damage = 3 + this.getModdedPropertyValue("power", spell);
         if (target instanceof LivingEntity && ((LivingEntity)target).isEntityUndead()) {
+            // Deal double damage to undead entities
             damage *= 2;
         }
         return (float)damage;

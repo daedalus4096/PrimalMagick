@@ -10,6 +10,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition of an empty spell payload.  This payload has no effect and is not valid in spells.  Its 
+ * only purpose is to provide a selection entry in the spellcrafting altar GUI for when the player has
+ * not selected a payload for the spell.
+ * 
+ * @author Daedalus4096
+ */
 public class EmptySpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "none";
 

@@ -20,6 +20,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a void damage spell.  Does standard damage to the target and applies a wither
+ * potion effect.  The strength of the wither effect scales with the payload's power property and
+ * its length scales with the duration property.
+ * 
+ * @author Daedalus4096
+ */
 public class VoidDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "void_damage";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_VOID"));
@@ -70,7 +77,7 @@ public class VoidDamageSpellPayload extends AbstractDamageSpellPayload {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY && duration > 0) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
-                int potency = (int)((1.0F + this.getModdedPropertyValue("power", spell)) / 3.0F);
+                int potency = (int)((1.0F + this.getModdedPropertyValue("power", spell)) / 3.0F);   // 0, 1, 1, 1, 2
                 ((LivingEntity)entityTarget.getEntity()).addPotionEffect(new EffectInstance(Effects.WITHER, 20 * duration, potency));
             }
         }

@@ -21,6 +21,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition for an animal conjuration spell.  Spawns a random passive animal at the target location.
+ * Chooses from separate pools depending on whether the target location is in water or not.  Not
+ * compatible with the Burst spell mod.
+ * 
+ * @author Daedalus4096
+ */
 public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "conjure_animal";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_ANIMAL"));
@@ -74,6 +81,8 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
     protected void placeRandomAnimal(World world, BlockRayTraceResult blockTarget) {
         BlockPos pos = blockTarget.getPos().offset(blockTarget.getFace());
         IFluidState state = world.getFluidState(pos);
+        
+        // Get a random entity type for either land or water, depending on the fluid state of the target location
         EntityType<?> entityType = (state.isTagged(FluidTags.WATER) && state.isSource()) ? WATER_ANIMALS.getRandom() : LAND_ANIMALS.getRandom();
         if (entityType != null) {
             entityType.spawn(world, null, null, pos, SpawnReason.MOB_SUMMONED, false, false);

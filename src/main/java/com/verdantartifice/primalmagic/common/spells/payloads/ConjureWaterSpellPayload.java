@@ -10,6 +10,12 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Definition for a water conjuration spell.  Creates a source block of water at the designated point.
+ * Works similarly to placing water from a bucket.  Most of the work is done in the base class.
+ * 
+ * @author Daedalus4096
+ */
 public class ConjureWaterSpellPayload extends AbstractConjureFluidSpellPayload {
     public static final String TYPE = "conjure_water";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_WATER"));

@@ -53,7 +53,7 @@ public abstract class AbstractSpellMod implements ISpellMod {
     /**
      * Initialize the property map for this spell mod.  Should create a maximum of two properties.
      * 
-     * @return
+     * @return a map of property names to spell properties
      */
     @Nonnull
     protected Map<String, SpellProperty> initProperties() {

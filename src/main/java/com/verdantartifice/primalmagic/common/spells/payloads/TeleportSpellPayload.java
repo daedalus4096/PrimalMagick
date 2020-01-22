@@ -18,6 +18,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a teleport spell.  Teleports the caster to the target location.  Works similarly to
+ * throwing ender pearls.  Not compatible with Burst mods.
+ * 
+ * @author Daedalus4096
+ */
 public class TeleportSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "teleport";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_TELEPORT"));
@@ -39,17 +45,23 @@ public class TeleportSpellPayload extends AbstractSpellPayload {
         if (target.getType() == RayTraceResult.Type.ENTITY) {
             Entity entity = ((EntityRayTraceResult)target).getEntity();
             if (entity.equals(caster)) {
+                // Do nothing if the caster targeted themselves
                 return;
             }
         }
+        
+        // Show a teleport particle effect at the destination
         Vec3d hitVec = target.getHitVec();
         PacketHandler.sendToAllAround(new TeleportArrivalPacket(hitVec.x, hitVec.y, hitVec.z), world.dimension.getType(), new BlockPos(hitVec), 64.0D);
+        
         if (!world.isRemote && caster instanceof ServerPlayerEntity) {
             ServerPlayerEntity spe = (ServerPlayerEntity)caster;
             if (spe.connection.getNetworkManager().isChannelOpen() && spe.world == world && !spe.isSleeping()) {
                 if (caster.isPassenger()) {
                     caster.stopRiding();
                 }
+                
+                // Do the teleportation
                 caster.setPositionAndUpdate(hitVec.x, hitVec.y, hitVec.z);
                 caster.fallDistance = 0.0F;
             }

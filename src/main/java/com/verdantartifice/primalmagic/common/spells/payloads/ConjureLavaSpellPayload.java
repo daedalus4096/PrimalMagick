@@ -10,6 +10,12 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Definition for a lava conjuration spell.  Creates a source block of lava at the designated point.
+ * Works similarly to placing lava from a bucket.  Most of the work is done in the base class.
+ * 
+ * @author Daedalus4096
+ */
 public class ConjureLavaSpellPayload extends AbstractConjureFluidSpellPayload {
     public static final String TYPE = "conjure_lava";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_LAVA"));

@@ -17,6 +17,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition for a consecration spell.  Creates a two-high field of holy energy at the target location
+ * which prevents entry by non-player mobs.  It also heals and restores hunger to players.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock}
+ */
 public class ConsecrateSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "consecrate";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONSECRATE"));
@@ -33,6 +40,8 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
     public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
         if (target != null) {
             if (target.getType() == RayTraceResult.Type.BLOCK) {
+                // If the target is a block, place fields in the two blocks adjacent to the target in
+                // the direction determined by the raytrace result
                 BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
                 if (world.getBlockState(blockTarget.getPos()).isSolid()) {
                     for (int offset = 1; offset <= 2; offset++) {
@@ -40,7 +49,9 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
                         this.placeField(world, targetPos);
                     }
                 }
+                // FIXME also process if the target block isn't solid
             } else if (target.getType() == RayTraceResult.Type.ENTITY) {
+                // If the target is an entity, place fields at the entity's position and the position above that
                 BlockPos hitPos = new BlockPos(target.getHitVec());
                 this.placeField(world, hitPos);
                 this.placeField(world, hitPos.up());
