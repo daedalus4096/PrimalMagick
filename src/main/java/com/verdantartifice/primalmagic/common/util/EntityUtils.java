@@ -9,7 +9,19 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
+/**
+ * Collection of utility methods pertaining to entities.
+ * 
+ * @author Daedalus4096
+ */
 public class EntityUtils {
+    /**
+     * Get the itemstack with which a non-living entity is placed (e.g. boats).  For item entities,
+     * returns whatever itemstack the entity contains.
+     * 
+     * @param entity the entity whose itemstack to find
+     * @return the itemstack with which the entity is placed
+     */
     @Nonnull
     public static ItemStack getEntityItemStack(Entity entity) {
         ItemStack stack = ItemStack.EMPTY;

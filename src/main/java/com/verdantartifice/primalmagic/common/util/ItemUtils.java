@@ -14,11 +14,29 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 
+/**
+ * Collection of utility methods pertaining to items.
+ * 
+ * @author Daedalus4096
+ */
 public class ItemUtils {
+    /**
+     * Calculate a unique hash code for the given itemstack and its NBT data.
+     * 
+     * @param stack the stack to be hashed
+     * @return a unique hash code for the stack
+     */
     public static int getHashCode(@Nullable ItemStack stack) {
         return getHashCode(stack, false);
     }
     
+    /**
+     * Calculate a unique hash code for the given itemstack, optionally stripping its NBT data first.
+     * 
+     * @param stack the stack to be hashed
+     * @param stripNBT whether to strip the stack's NBT data before hashing
+     * @return a unique hash code for the stack
+     */
     public static int getHashCode(@Nullable ItemStack stack, boolean stripNBT) {
         if (stack == null || stack.isEmpty()) {
             return 0;
@@ -26,11 +44,19 @@ public class ItemUtils {
         ItemStack temp = stack.copy();
         temp.setCount(1);
         if (stripNBT) {
+            // Strip the stack's NBT data if requested
             temp.setTag(null);
         }
         return temp.write(new CompoundNBT()).toString().hashCode();
     }
     
+    /**
+     * Parse a string representation into an item stack.  Used for loading item references from
+     * research definition files.
+     * 
+     * @param str the string to be parsed
+     * @return the itemstack represented by the given string, or the empty stack upon parse failure
+     */
     @SuppressWarnings("deprecation")
     @Nonnull
     public static ItemStack parseItemStack(@Nullable String str) {
@@ -38,23 +64,28 @@ public class ItemUtils {
             return ItemStack.EMPTY;
         }
         
+        // Strings are expected to be of the format: "<item resource location>[;<count>[;<NBT data>]]"
         String[] tokens = str.split(";");
         String name = tokens[0];
         int count = -1;
         String nbt = null;
         if (tokens.length >= 2) {
+            // Parse the count, if present
             count = MathHelper.getInt(tokens[1], -1);
         }
         if (tokens.length >= 3 && tokens[2].startsWith("{")) {
+            // Parse the JSON-ified NBT data, if present
             nbt = tokens[2];
             nbt.replaceAll("'", "\"");
         }
         if (count < 1) {
+            // TODO should this return an empty stack?
             count = 1;
         }
         
         ItemStack stack = ItemStack.EMPTY;
         try {
+            // Get the named item definition from the item registry
             Item item = Registry.ITEM.getOrDefault(new ResourceLocation(name));
             if (item != null) {
                 stack = new ItemStack(item, count);
@@ -67,6 +98,12 @@ public class ItemUtils {
         return stack;
     }
     
+    /**
+     * Perform a deep copy of the given itemstack list.
+     * 
+     * @param list the itemstack list to be copied
+     * @return a deep copy of the given itemstack list
+     */
     @Nonnull
     public static List<ItemStack> copyItemStackList(List<ItemStack> list) {
         List<ItemStack> output = new ArrayList<>();
@@ -76,6 +113,15 @@ public class ItemUtils {
         return output;
     }
     
+    /**
+     * Merge the given itemstack into the given itemstack list.  Attempts to grow any existing stacks
+     * to their maximum capacity before adding new stacks to the list.  Returns a modified deep copy of
+     * the given list.
+     * 
+     * @param list the original list to merge into
+     * @param stackToCopy the itemstack to be merged into the list
+     * @return the merge result
+     */
     @Nonnull
     public static List<ItemStack> mergeItemStackIntoList(@Nonnull List<ItemStack> list, @Nonnull ItemStack stackToCopy) {
         List<ItemStack> output = copyItemStackList(list);
@@ -111,9 +157,17 @@ public class ItemUtils {
         return output;
     }
     
+    /**
+     * Merge the two given itemstack lists.  Attempts to combine stacks to their maximum capacity before
+     * adding new stacks to the output list.  Returns a modified deep copy of the first list.
+     * 
+     * @param list1 the first itemstack list
+     * @param list2 the second itemstack list
+     * @return the merge result
+     */
     @Nonnull
     public static List<ItemStack> mergeItemStackLists(@Nonnull List<ItemStack> list1, @Nonnull List<ItemStack> list2) {
-        List<ItemStack> output = list1;
+        List<ItemStack> output = list1; // TODO start with a deep copy in case list2 is empty
         for (ItemStack stack : list2) {
             output = mergeItemStackIntoList(output, stack);
         }
