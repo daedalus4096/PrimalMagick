@@ -16,11 +16,16 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 
+/**
+ * Base class for a tile entity containing an inventory which may be synced to the client.
+ * 
+ * @author Daedalus4096
+ */
 public class TileInventoryPM extends TilePM implements ISidedInventory {
-    protected NonNullList<ItemStack> items;
-    protected NonNullList<ItemStack> syncedItems;
-    protected final Set<Integer> syncedSlotIndices;
-    protected final int[] faceSlots;
+    protected NonNullList<ItemStack> items;         // The tile's inventory
+    protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
+    protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
+    protected final int[] faceSlots;                // The slots of this tile's inventory visible from its sides
     
     public TileInventoryPM(TileEntityType<?> type, int invSize) {
         super(type);
@@ -34,6 +39,7 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
     }
     
     protected Set<Integer> getSyncedSlotIndices() {
+        // Determine which inventory slots should be synced to the client
         return Collections.emptySet();
     }
     
@@ -65,6 +71,7 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
     public ItemStack decrStackSize(int index, int count) {
         ItemStack stack = ItemStackHelper.getAndSplit(this.items, index, count);
         if (!stack.isEmpty() && this.isSyncedSlot(index)) {
+            // Sync the inventory change to nearby clients
             this.syncSlots(null);
         }
         this.markDirty();
@@ -75,6 +82,7 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
     public ItemStack removeStackFromSlot(int index) {
         ItemStack stack = ItemStackHelper.getAndRemove(this.items, index);
         if (!stack.isEmpty() && this.isSyncedSlot(index)) {
+            // Sync the inventory change to nearby clients
             this.syncSlots(null);
         }
         this.markDirty();
@@ -85,10 +93,12 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
     public void setInventorySlotContents(int index, ItemStack stack) {
         this.items.set(index, stack);
         if (stack.getCount() > this.getInventoryStackLimit()) {
+            // If the input stack is too big, pare it down to the allowed size
             stack.setCount(this.getInventoryStackLimit());
         }
         this.markDirty();
         if (this.isSyncedSlot(index)) {
+            // Sync the inventory change to nearby clients
             this.syncSlots(null);
         }
     }
@@ -129,6 +139,11 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
         return this.syncedSlotIndices.contains(Integer.valueOf(index));
     }
     
+    /**
+     * Send the contents of this tile's synced slots to the given player's client.
+     * 
+     * @param player the player of the client to receive the sync data
+     */
     protected void syncSlots(@Nullable ServerPlayerEntity player) {
         if (!this.syncedSlotIndices.isEmpty()) {
             CompoundNBT nbt = new CompoundNBT();
@@ -136,6 +151,7 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
             for (int index = 0; index < this.items.size(); index++) {
                 ItemStack stack = this.items.get(index);
                 if (this.isSyncedSlot(index) && !stack.isEmpty()) {
+                    // Only include populated, sync-tagged slots to lessen packet size
                     CompoundNBT slotTag = new CompoundNBT();
                     slotTag.putByte("Slot", (byte)index);
                     stack.write(slotTag);
@@ -157,12 +173,14 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
     public void onMessageFromClient(CompoundNBT nbt, ServerPlayerEntity player) {
         super.onMessageFromClient(nbt, player);
         if (nbt.contains("RequestSync")) {
+            // If the message was a request for a sync, send one to just that player's client
             this.syncSlots(player);
         }
     }
     
     @Override
     public void onMessageFromServer(CompoundNBT nbt) {
+        // If the message was a data sync, load the data into the sync inventory
         super.onMessageFromServer(nbt);
         if (nbt.contains("ItemsSynced")) {
             this.syncedItems = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
@@ -195,8 +213,10 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
     public void onLoad() {
         super.onLoad();
         if (!this.world.isRemote) {
+            // When first loaded, server-side tiles should immediately sync their contents to all nearby clients
             this.syncSlots(null);
         } else {
+            // When first loaded, client-side tiles should request a sync from the server
             CompoundNBT nbt = new CompoundNBT();
             nbt.putBoolean("RequestSync", true);
             this.sendMessageToServer(nbt);

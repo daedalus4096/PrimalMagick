@@ -18,6 +18,13 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Definition of an ancient mana font tile entity.  Provides the recharge and wand interaction
+ * functionality for the corresponding block.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock}
+ */
 public class AncientManaFontTileEntity extends TilePM implements ITickableTileEntity, IInteractWithWand {
     protected static final int MANA_CAPACITY = 100;
     protected static final int RECHARGE_TICKS = 20;
@@ -52,10 +59,12 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
     public void tick() {
         this.ticksExisted++;
         if (!this.world.isRemote && this.ticksExisted % RECHARGE_TICKS == 0) {
+            // Recharge the font over time
             this.mana++;
             if (this.mana > MANA_CAPACITY) {
                 this.mana = MANA_CAPACITY;
             } else {
+                // Sync the tile if its mana total changed
                 this.markDirty();
                 this.syncTile(false);
             }
@@ -65,6 +74,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
     @Override
     public ActionResultType onWandRightClick(ItemStack wandStack, World world, PlayerEntity player, BlockPos pos, Direction direction) {
         if (wandStack.getItem() instanceof IWand) {
+            // On initial interaction, save this tile into the wand's NBT for use during future ticks
             IWand wand = (IWand)wandStack.getItem();
             wand.setTileInUse(wandStack, this);
             return ActionResultType.SUCCESS;
@@ -80,6 +90,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
             if (this.getBlockState().getBlock() instanceof AncientManaFontBlock) {
                 Source source = ((AncientManaFontBlock)this.getBlockState().getBlock()).getSource();
                 if (source != null) {
+                    // Transfer mana from the font to the wand
                     int tap = 1;
                     int leftover = wand.addMana(wandStack, source, tap);
                     if (leftover < tap) {

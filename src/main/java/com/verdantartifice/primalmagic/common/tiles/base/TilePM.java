@@ -15,6 +15,12 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
+/**
+ * Middleware class for a tile entity for the mod.  Handles things like tile syncing and relevant
+ * messages between the client and server regarding the tile.
+ * 
+ * @author Daedalus4096
+ */
 public class TilePM extends TileEntity {
     public TilePM(TileEntityType<?> type) {
         super(type);
@@ -40,6 +46,11 @@ public class TilePM extends TileEntity {
         return compound;
     }
     
+    /**
+     * Update this tile's block in the world, optionally re-rendering it.
+     * 
+     * @param rerender whether to re-render the tile's block
+     */
     public void syncTile(boolean rerender) {
         BlockState state = this.world.getBlockState(this.pos);
         this.world.notifyBlockUpdate(this.pos, state, state, (rerender ? 0x6 : 0x2));
@@ -60,6 +71,13 @@ public class TilePM extends TileEntity {
         this.readFromTileNBT(pkt.getNbtCompound());
     }
     
+    /**
+     * Sync the given data to the instance of this tile entity on the given player's client, or to
+     * all clients in range if no player is specified.
+     * 
+     * @param nbt the data to be synced
+     * @param player the player whose client is to receive the given data
+     */
     public void sendMessageToClient(CompoundNBT nbt, @Nullable ServerPlayerEntity player) {
         if (player == null) {
             if (this.hasWorld()) {
@@ -70,14 +88,32 @@ public class TilePM extends TileEntity {
         }
     }
     
+    /**
+     * Sync the given data to the server instance of this tile entity.
+     * 
+     * @param nbt the data to be synced
+     */
     public void sendMessageToServer(CompoundNBT nbt) {
         PacketHandler.sendToServer(new TileToServerPacket(this.pos, nbt));
     }
     
+    /**
+     * Process a message sent from a client instance of this tile entity.
+     * 
+     * @param nbt the received data
+     * @param player the player whose client sent the given data
+     * @see {@link #sendMessageToServer(CompoundNBT)}
+     */
     public void onMessageFromClient(CompoundNBT nbt, @Nonnull ServerPlayerEntity player) {
         // Do nothing by default
     }
     
+    /**
+     * Process a message sent from the server instance of this tile entity.
+     * 
+     * @param nbt the received data
+     * @see {@link #sendMessageToClient(CompoundNBT, ServerPlayerEntity)}
+     */
     public void onMessageFromServer(CompoundNBT nbt) {
         // Do nothing by default
     }

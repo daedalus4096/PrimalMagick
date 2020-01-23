@@ -22,10 +22,18 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+/**
+ * Definition of a wand charger tile entity.  Provides the recharge and wand interaction functionality
+ * for the corresponding block.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
+ */
 public class WandChargerTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider {
     protected int chargeTime;
     protected int chargeTimeTotal;
     
+    // Define a container-trackable representation of this tile's relevant data
     protected final IIntArray chargerData = new IIntArray() {
         @Override
         public int get(int index) {
@@ -63,6 +71,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
     
     @Override
     protected Set<Integer> getSyncedSlotIndices() {
+        // Sync the charger's wand input/output stack for client rendering use
         return ImmutableSet.of(Integer.valueOf(1));
     }
     
@@ -98,6 +107,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
             ItemStack wandStack = this.items.get(1);
             if (!inputStack.isEmpty() && !wandStack.isEmpty()) {
                 if (this.canCharge()) {
+                    // If there's an essence in the input slot and the slotted wand isn't full, do the charge
                     this.chargeTime++;
                     if (this.chargeTime >= this.chargeTimeTotal) {
                         this.chargeTime = 0;
@@ -109,6 +119,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
                     this.chargeTime = 0;
                 }
             } else if (this.chargeTime > 0) {
+                // Decay any charging progress if the charger isn't populated
                 this.chargeTime = MathHelper.clamp(this.chargeTime - 2, 0, this.chargeTimeTotal);
             }
         }
@@ -128,6 +139,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
         ItemStack wandStack = this.items.get(1);
         if (inputStack != null && !inputStack.isEmpty() && inputStack.getItem() instanceof EssenceItem &&
             wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
+            // The wand can be charged if it and an essence are slotted, and the wand is not at max mana for the essence's source
             EssenceItem essence = (EssenceItem)inputStack.getItem();
             IWand wand = (IWand)wandStack.getItem();
             return (wand.getMana(wandStack, essence.getSource()) < wand.getMaxMana(wandStack));

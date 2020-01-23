@@ -13,6 +13,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+/**
+ * Base class for a spell vehicle.  Handles property management and serialization.
+ * 
+ * @author Daedalus4096
+ */
 public abstract class AbstractSpellVehicle implements ISpellVehicle {
     protected final Map<String, SpellProperty> properties;
     
@@ -20,6 +25,11 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
         this.properties = this.initProperties();
     }
 
+    /**
+     * Get the type name for this spell vehicle.
+     * 
+     * @return the type name for this spell vehicle
+     */
     protected abstract String getVehicleType();
 
     @Override
@@ -60,6 +70,11 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
         return 0;
     }
 
+    /**
+     * Initialize the property map for this spell vehicle.  Should create a maximum of two properties.
+     * 
+     * @return a map of property names to spell properties
+     */
     @Nonnull
     protected Map<String, SpellProperty> initProperties() {
         return new HashMap<>();
@@ -67,6 +82,7 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
     
     @Override
     public List<SpellProperty> getProperties() {
+        // Sort properties by their display names
         return this.properties.values().stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
     }
 

@@ -7,6 +7,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Collection of custom-defined block tags for the mod.  Used to determine tag contents and for
+ * data file generation.
+ * 
+ * @author Daedalus4096
+ */
 public class BlockTagsPM {
     public static final Tag<Block> BEDS = tag("beds");
     public static final Tag<Block> COLORED_SHULKER_BOXES = tag("colored_shulker_boxes");

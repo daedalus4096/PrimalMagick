@@ -36,6 +36,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.ForgeEventFactory;
 
+/**
+ * Definition of a calcinator tile entity.  Provides the melting functionality for the corresponding
+ * block.
+ * 
+ * @author Daedalus4096
+ * @see {@link com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock}
+ * @see {@link net.minecraft.tileentity.FurnaceTileEntity}
+ */
 public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IOwnedTileEntity {
     protected static final int OUTPUT_CAPACITY = 9;
     
@@ -45,6 +53,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     protected int cookTimeTotal;
     protected UUID ownerUUID;
     
+    // Define a container-trackable representation of this tile's relevant data
     protected final IIntArray calcinatorData = new IIntArray() {
         @Override
         public int get(int index) {
@@ -134,14 +143,17 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
             ItemStack inputStack = this.items.get(0);
             ItemStack fuelStack = this.items.get(1);
             if (this.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
+                // If the calcinator isn't burning, but has meltable input in place, light it up
                 if (!this.isBurning() && this.canCalcinate(inputStack)) {
                     this.burnTime = getBurnTime(fuelStack);
                     this.burnTimeTotal = this.burnTime;
                     if (this.isBurning()) {
                         shouldMarkDirty = true;
                         if (fuelStack.hasContainerItem()) {
+                            // If the fuel has a container item (e.g. a lava bucket), place the empty container in the fuel slot
                             this.items.set(1, fuelStack.getContainerItem());
                         } else if (!fuelStack.isEmpty()) {
+                            // Otherwise, shrink the fuel stack
                             fuelStack.shrink(1);
                             if (fuelStack.isEmpty()) {
                                 this.items.set(1, fuelStack.getContainerItem());
@@ -150,6 +162,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
                     }
                 }
                 
+                // If the calcinator is burning and has meltable input in place, process it
                 if (this.isBurning() && this.canCalcinate(inputStack)) {
                     this.cookTime++;
                     if (this.cookTime == this.cookTimeTotal) {
@@ -162,10 +175,12 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
                     this.cookTime = 0;
                 }
             } else if (!this.isBurning() && this.cookTime > 0) {
+                // Decay any cooking progress if the calcinator isn't lit
                 this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
             }
             
             if (burningAtStart != this.isBurning()) {
+                // Update the tile's block state if the calcinator was lit up or went out this tick
                 shouldMarkDirty = true;
                 this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(CalcinatorBlock.LIT, Boolean.valueOf(this.isBurning())), 0x3);
             }
@@ -179,6 +194,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     protected void doCalcination() {
         ItemStack inputStack = this.items.get(0);
         if (!inputStack.isEmpty() && this.canCalcinate(inputStack)) {
+            // Merge the items already in the output inventory with the new output items from the melting
             List<ItemStack> currentOutputs = this.items.subList(2, this.items.size());
             List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, false);
             List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
@@ -186,6 +202,8 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
                 ItemStack out = mergedOutputs.get(index);
                 this.items.set(index + 2, (out == null ? ItemStack.EMPTY : out));
             }
+            
+            // Shrink the input stack
             inputStack.shrink(1);
         }
     }
@@ -195,12 +213,15 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     }
 
     protected static int getBurnTime(ItemStack fuelStack) {
+        // Determine how many ticks the given stack should burn for
         if (fuelStack.isEmpty()) {
             return 0;
         } else {
             Item item = fuelStack.getItem();
             int ret = fuelStack.getBurnTime();
             int burnTime = ret == -1 ? AbstractFurnaceTileEntity.getBurnTimes().getOrDefault(item, 0) : ret;
+            
+            // If the given stack isn't in the default burn time list, send out an event to query for it
             return ForgeEventFactory.getItemBurnTime(fuelStack, burnTime);
         }
     }
@@ -213,10 +234,12 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         if (inputStack != null && !inputStack.isEmpty()) {
             SourceList sources = AffinityManager.getAffinities(inputStack, this.world);
             if (sources == null || sources.isEmpty()) {
+                // An item without affinities cannot be melted
                 return false;
             } else {
+                // Merge the items already in the output inventory with the new output items from the melting
                 List<ItemStack> currentOutputs = this.items.subList(2, this.items.size());
-                List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, true);
+                List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, true);   // Force dreg generation to prevent random overflow
                 List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
                 return (mergedOutputs.size() <= OUTPUT_CAPACITY);
             }
@@ -233,6 +256,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
             for (Source source : Source.SORTED_SOURCES) {
                 int amount = sources.getAmount(source);
                 if (amount >= EssenceType.DUST.getAffinity()) {
+                    // Generate output for each affinity multiple in the input stack
                     int count = amount / EssenceType.DUST.getAffinity();
                     amount = amount % EssenceType.DUST.getAffinity();
                     ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, count);
@@ -240,6 +264,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
                         output.add(stack);
                     }
                 } else if (amount > 0 && (alwaysGenerateDregs || this.world.rand.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
+                    // If the item's affinity is too low for guaranteed dust, give a random chance of generating one anyway
                     ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, 1);
                     if (!stack.isEmpty()) {
                         output.add(stack);
@@ -255,6 +280,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         if (source.isDiscovered(this.getTileOwner())) {
             return EssenceItem.getEssence(type, source, count);
         } else {
+            // If the calcinator's owner hasn't discovered the given source, only produce alchemical waste
             return new ItemStack(ItemsPM.ALCHEMICAL_WASTE, count);
         }
     }
@@ -290,6 +316,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     public PlayerEntity getTileOwner() {
         PlayerEntity retVal = null;
         if (this.hasWorld() && this.world instanceof ServerWorld) {
+            // TODO use player list and cache the result
             Entity entity = ((ServerWorld)this.world).getEntityByUuid(this.ownerUUID);
             if (entity instanceof PlayerEntity) {
                 retVal = (PlayerEntity)entity;

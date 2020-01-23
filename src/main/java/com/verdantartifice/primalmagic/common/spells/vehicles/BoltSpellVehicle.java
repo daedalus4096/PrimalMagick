@@ -14,6 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a bolt spell vehicle.  Bolts are mid-range, instant spell vehicles that are not
+ * affected by gravity.  Essentially, they're a longer-range touch vehicle with a particle effect.
+ * 
+ * @author Daedalus4096
+ */
 public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     public static final String TYPE = "bolt";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_VEHICLE_BOLT"));
@@ -47,6 +53,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     @Override
     protected void drawFx(World world, SpellPackage spell, Vec3d source, Vec3d target) {
         if (spell.getPayload() != null) {
+            // Show a bolt particle effect to every player in range
             PacketHandler.sendToAllAround(
                     new SpellBoltPacket(source, target, spell.getPayload().getSource().getColor()), 
                     world.dimension.getType(), 

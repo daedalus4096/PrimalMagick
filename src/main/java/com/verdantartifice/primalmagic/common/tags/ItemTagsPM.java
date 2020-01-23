@@ -7,6 +7,12 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Collection of custom-defined item tags for the mod.  Used to determine tag contents and for
+ * data file generation.
+ * 
+ * @author Daedalus4096
+ */
 public class ItemTagsPM {
     public static final Tag<Item> BEDS = tag("beds");
     public static final Tag<Item> COLORED_SHULKER_BOXES = tag("colored_shulker_boxes");

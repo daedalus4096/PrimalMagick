@@ -13,6 +13,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/**
+ * Definition of a projectile spell vehicle.  Projectiles are long range vehicles that have a travel
+ * time and are affected by gravity.  They're like throwing a magic snowball.
+ * 
+ * @author Daedalus4096
+ */
 public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "projectile";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_VEHICLE_PROJECTILE"));
@@ -33,12 +39,15 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
             Vec3d baseLookVector = caster.getLook(1.0F);
             List<Vec3d> lookVectors;
             if (forkMod == null) {
+                // If no Fork mod is in the spell package, use the caster's line of sight for the direction vector
                 lookVectors = Arrays.asList(baseLookVector.normalize());
             } else {
+                // If a Fork mod is in the spell package, calculate a direction vector for each fork, based on the caster's line of sight
                 lookVectors = forkMod.getDirectionUnitVectors(baseLookVector, world.rand);
             }
             
             for (Vec3d lookVector : lookVectors) {
+                // Instantiate the projectile entity and launch it into the world
                 SpellProjectileEntity projectile = new SpellProjectileEntity(world, caster, spell);
                 projectile.shoot(lookVector.x, lookVector.y, lookVector.z, 1.5F, 0.0F);
                 world.addEntity(projectile);
