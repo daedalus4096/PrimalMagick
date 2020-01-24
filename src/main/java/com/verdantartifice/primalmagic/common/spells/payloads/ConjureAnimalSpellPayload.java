@@ -83,7 +83,9 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
         IFluidState state = world.getFluidState(pos);
         
         // Get a random entity type for either land or water, depending on the fluid state of the target location
-        EntityType<?> entityType = (state.isTagged(FluidTags.WATER) && state.isSource()) ? WATER_ANIMALS.getRandom() : LAND_ANIMALS.getRandom();
+        EntityType<?> entityType = (state.isTagged(FluidTags.WATER) && state.isSource()) ? 
+                WATER_ANIMALS.getRandom(world.rand) : 
+                LAND_ANIMALS.getRandom(world.rand);
         if (entityType != null) {
             entityType.spawn(world, null, null, pos, SpawnReason.MOB_SUMMONED, false, false);
         }

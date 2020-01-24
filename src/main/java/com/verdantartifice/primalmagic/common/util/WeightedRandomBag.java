@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -15,7 +16,6 @@ import javax.annotation.Nullable;
 public class WeightedRandomBag<T> {
     protected List<Item> items = new ArrayList<>();
     protected double totalWeight = 0.0D;
-    protected Random rng = new Random();
     
     /**
      * Add the given object to the collection with the given weight.
@@ -25,22 +25,25 @@ public class WeightedRandomBag<T> {
      * @return true if the item was successfully added to the collection, false otherwise
      */
     public boolean add(@Nullable T object, double weight) {
-        this.totalWeight += weight; // FIXME don't add to total weight unless addition was a success
         Item item = new Item();
         item.obj = object;
         item.weight = weight;
-        return this.items.add(item);
+        boolean success = this.items.add(item);
+        if (success) {
+            this.totalWeight += weight;
+        }
+        return success;
     }
     
     /**
      * Get a random element from the collection, based on the weights defined while adding them.
      * 
+     * @param rng the random number generator to use for selection
      * @return a random element from the collection
      */
     @Nullable
-    public T getRandom() {
-        // TODO accept an rng as a parameter instead of having one as a field of the collection
-        double threshold = this.rng.nextDouble() * this.totalWeight;
+    public T getRandom(@Nonnull Random rng) {
+        double threshold = rng.nextDouble() * this.totalWeight;
         double accumulatedWeight = 0.0D;
         for (Item item : this.items) {
             accumulatedWeight += item.weight;
