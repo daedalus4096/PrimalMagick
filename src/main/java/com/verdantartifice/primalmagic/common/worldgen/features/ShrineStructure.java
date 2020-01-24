@@ -13,6 +13,12 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+/**
+ * Definition of a primal shrine structure.
+ * 
+ * @author Daedalus4096
+ * @see {@link net.minecraft.world.gen.feature.structure.DesertPyramidStructure}
+ */
 public class ShrineStructure extends ScatteredStructure<ShrineConfig> {
     public ShrineStructure(Function<Dynamic<?>, ? extends ShrineConfig> p_i51449_1_) {
         super(p_i51449_1_);

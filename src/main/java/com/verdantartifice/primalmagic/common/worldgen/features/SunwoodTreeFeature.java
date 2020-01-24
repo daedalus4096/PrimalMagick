@@ -14,6 +14,11 @@ import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.IPlantable;
 
+/**
+ * Definition of a worldgen feature for a sunwood tree.
+ * 
+ * @author Daedalus4096
+ */
 public class SunwoodTreeFeature extends AbstractPhasingTreeFeature {
     protected static final BlockState LOG = BlocksPM.SUNWOOD_LOG.getDefaultState();
     protected static final BlockState LEAF = BlocksPM.SUNWOOD_LEAVES.getDefaultState();

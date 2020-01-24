@@ -14,6 +14,11 @@ import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.IPlantable;
 
+/**
+ * Definition of a worldgen feature for a moonwood tree.
+ * 
+ * @author Daedalus4096
+ */
 public class MoonwoodTreeFeature extends AbstractPhasingTreeFeature {
     protected static final BlockState LOG = BlocksPM.MOONWOOD_LOG.getDefaultState();
     protected static final BlockState LEAF = BlocksPM.MOONWOOD_LEAVES.getDefaultState();

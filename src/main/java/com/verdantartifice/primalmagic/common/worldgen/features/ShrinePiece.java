@@ -23,6 +23,12 @@ import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+/**
+ * Definition of a piece of a primal shrine structure.
+ * 
+ * @author Daedalus4096
+ * @see {@link net.minecraft.world.gen.feature.structure.DesertPyramidPiece}
+ */
 public class ShrinePiece extends TemplateStructurePiece {
     protected static final ResourceLocation TEMPLATE = new ResourceLocation(PrimalMagic.MODID, "shrine");
     

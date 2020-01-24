@@ -14,21 +14,45 @@ import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.IPlantable;
 
+/**
+ * Definition of a tree worldgen feature that uses blocks whose state can change with the current world state.
+ * 
+ * @author Daedalus4096
+ * @see {@link net.minecraft.world.gen.feature.BirchTreeFeature}
+ */
 public abstract class AbstractPhasingTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
     public AbstractPhasingTreeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> config, boolean doBlockNotify) {
         super(config, doBlockNotify);
     }
     
+    /**
+     * Get the corresponding plantable sapling for this tree type.
+     * 
+     * @return the plantable sapling for this tree type
+     */
     protected abstract IPlantable getSapling();
     
+    /**
+     * Get the blockstate of the log to be placed when spawning this tree type.
+     * 
+     * @param world the world to spawn in
+     * @return the blockstate of the log to be placed
+     */
     protected abstract BlockState getLogState(IWorldGenerationReader world);
 
+    /**
+     * Get the blockstate of the leaves to be placed when spawning this tree type.
+     * 
+     * @param world the world to spawn in
+     * @return the blockstate of the leaves to be placed
+     */
     protected abstract BlockState getLeafState(IWorldGenerationReader world);
 
     @Override
     protected boolean place(Set<BlockPos> changedBlocks, IWorldGenerationReader world, Random rand, BlockPos position, MutableBoundingBox box) {
         int i = rand.nextInt(3) + 5;
         
+        // Get the blockstates of the logs and leaves to be placed, based on the current world state
         BlockState logState = this.getLogState(world);
         BlockState leafState = this.getLeafState(world);
         

@@ -7,6 +7,11 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.world.gen.feature.IFeatureConfig;
 
+/**
+ * Definition for the configuration data of a primal shrine feature.
+ * 
+ * @author Daedalus4096
+ */
 public class ShrineConfig implements IFeatureConfig {
     public final Source source;
     
