@@ -6,11 +6,29 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.util.math.Vec3d;
 
+/**
+ * Collection of utility methods pertaining to 3D vectors.
+ * 
+ * @author Daedalus4096
+ */
 public class VectorUtils {
+    /**
+     * Compute a random unit vector in 3D space.
+     * 
+     * @param rng the random number generator to use
+     * @return a random unit vector in 3D space
+     */
     public static Vec3d getRandomUnitVector(@Nonnull Random rng) {
         return new Vec3d(rng.nextGaussian(), rng.nextGaussian(), rng.nextGaussian()).normalize();
     }
     
+    /**
+     * Generate a random unit vector that is orthogonal to the given 3D vector.
+     * 
+     * @param vec the initial vector
+     * @param rng the random number generator to use
+     * @return a random unit vector that is orthogonal to the given 3D vector
+     */
     public static Vec3d getRandomOrthogonalUnitVector(@Nonnull Vec3d vec, @Nonnull Random rng) {
         // Generate a random other vector
         Vec3d other = getRandomUnitVector(rng);

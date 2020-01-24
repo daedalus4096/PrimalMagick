@@ -14,16 +14,22 @@ import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Definition of a wand gem data structure.  Wand gems determine the maximum amount of mana that can be
+ * contained by a wand.  Also contains a static registry of all types of wand gems in the mod.
+ * 
+ * @author Daedalus4096
+ */
 public class WandGem {
     protected static final Map<String, WandGem> REGISTRY = new HashMap<>();
     
     public static final WandGem APPRENTICE = new WandGem("apprentice", Rarity.COMMON, 75);
-    public static final WandGem CREATIVE = new WandGem("creative", Rarity.EPIC, -1);
+    public static final WandGem CREATIVE = new WandGem("creative", Rarity.EPIC, -1);    // Creative-only wand gem allowing infinite mana
     
-    protected final String tag;
-    protected final int capacity;
-    protected final Rarity rarity;
-    protected final ModelResourceLocation mrl;
+    protected final String tag;                 // Unique identifier for the wand gem
+    protected final int capacity;               // The amount of mana the wand can hold
+    protected final Rarity rarity;              // The gem's rarity, used to color its name and determine completed wand rarity
+    protected final ModelResourceLocation mrl;  // Resource location of the gem's model, stored in a blockstate file
     
     public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity) {
         this(tag, rarity, capacity, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_gem"), ""));
@@ -31,6 +37,7 @@ public class WandGem {
     
     public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity, @Nonnull ModelResourceLocation mrl) {
         if (REGISTRY.containsKey(tag)) {
+            // Don't allow a given gem to be registered more than once
             throw new IllegalArgumentException("Wand gem " + tag + " already registered!");
         }
         this.tag = tag;

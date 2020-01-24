@@ -19,14 +19,32 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
+/**
+ * Collection of utility methods pertaining to VoxelShapes.
+ * 
+ * @author Daedalus4096
+ */
 public class VoxelShapeUtils {
     private static final int HISTORY_LIMIT = 100;
     
+    /**
+     * Calculate a VoxelShape defined by the specified model file.
+     * 
+     * @param location the resource location of the model file
+     * @return a VoxelShape defined by the specified model file, empty if calculation failed
+     */
     @Nonnull
     public static VoxelShape fromModel(@Nullable ResourceLocation location) {
         return fromModel(location, new ArrayList<>());
     }
     
+    /**
+     * Calculate a VoxelShape defined by the specified model file.
+     * 
+     * @param location the resource location of the model file
+     * @param history history of parent model files parsed, to prevent cycles
+     * @return a VoxelShape defined by the specified model file, empty if calculation failed
+     */
     @Nonnull
     protected static VoxelShape fromModel(@Nullable ResourceLocation location, @Nonnull List<ResourceLocation> history) {
         if (location == null) {
@@ -88,6 +106,13 @@ public class VoxelShapeUtils {
         }
     }
     
+    /**
+     * Calculate a VoxelShape defined by the given element in the specified model file.
+     * 
+     * @param location the resource location of the model file
+     * @param obj the model element to parse
+     * @return a VoxelShape defined by the specified model element, empty if calculation failed
+     */
     @Nonnull
     protected static VoxelShape fromModelElement(@Nonnull ResourceLocation location, @Nonnull JsonObject obj) {
         try {
