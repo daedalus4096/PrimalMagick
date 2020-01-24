@@ -4,6 +4,11 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 
 import net.minecraft.data.DataGenerator;
 
+/**
+ * Data provider for all of the mod's block loot tables.
+ * 
+ * @author Daedalus4096
+ */
 public class BlockLootTables extends BlockLootTableProvider {
     public BlockLootTables(DataGenerator dataGeneratorIn) {
         super(dataGeneratorIn);

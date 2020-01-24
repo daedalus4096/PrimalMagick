@@ -15,6 +15,11 @@ import net.minecraft.tags.TagCollection;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 
+/**
+ * Data provider for all of the mod's item tags, both original tags and modifications to vanilla tags.
+ * 
+ * @author Daedalus4096
+ */
 public class ItemTagsProvider extends TagsProvider<Item> {
     @SuppressWarnings("deprecation")
     public ItemTagsProvider(DataGenerator generator) {
@@ -28,6 +33,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
 
     @Override
     protected void registerTags() {
+        // Add entries to vanilla tags
         this.getBuilder(ItemTags.LOGS).add(ItemTagsPM.MOONWOOD_LOGS, ItemTagsPM.SUNWOOD_LOGS);
         this.getBuilder(ItemTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.asItem(), BlocksPM.SUNWOOD_LEAVES.asItem());
         this.getBuilder(ItemTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.asItem(), BlocksPM.SUNWOOD_PLANKS.asItem());
@@ -36,6 +42,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB.asItem(), BlocksPM.SUNWOOD_SLAB.asItem());
         this.getBuilder(ItemTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.asItem(), BlocksPM.SUNWOOD_STAIRS.asItem());
 
+        // Create custom tags
         this.getBuilder(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.BLACK_SHULKER_BOX, Items.BLUE_SHULKER_BOX, Items.BROWN_SHULKER_BOX, Items.CYAN_SHULKER_BOX, Items.GRAY_SHULKER_BOX, Items.GREEN_SHULKER_BOX, Items.LIGHT_BLUE_SHULKER_BOX, Items.LIGHT_GRAY_SHULKER_BOX, Items.LIME_SHULKER_BOX, Items.MAGENTA_SHULKER_BOX, Items.ORANGE_SHULKER_BOX, Items.PINK_SHULKER_BOX, Items.PURPLE_SHULKER_BOX, Items.RED_SHULKER_BOX, Items.WHITE_SHULKER_BOX, Items.YELLOW_SHULKER_BOX);
         this.getBuilder(ItemTagsPM.CONCRETE).add(Items.BLACK_CONCRETE, Items.BLUE_CONCRETE, Items.BROWN_CONCRETE, Items.CYAN_CONCRETE, Items.GRAY_CONCRETE, Items.GREEN_CONCRETE, Items.LIGHT_BLUE_CONCRETE, Items.LIGHT_GRAY_CONCRETE, Items.LIME_CONCRETE, Items.MAGENTA_CONCRETE, Items.ORANGE_CONCRETE, Items.PINK_CONCRETE, Items.PURPLE_CONCRETE, Items.RED_CONCRETE, Items.WHITE_CONCRETE, Items.YELLOW_CONCRETE);
         this.getBuilder(ItemTagsPM.DEAD_CORAL_BLOCKS).add(Items.DEAD_BRAIN_CORAL_BLOCK, Items.DEAD_BUBBLE_CORAL_BLOCK, Items.DEAD_FIRE_CORAL_BLOCK, Items.DEAD_HORN_CORAL_BLOCK, Items.DEAD_TUBE_CORAL_BLOCK);

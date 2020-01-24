@@ -22,6 +22,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
+/**
+ * Base class for a sided-proxy for the mod, handling setup common to both sides.
+ * 
+ * @author Daedalus4096
+ */
 public class CommonProxy implements IProxyPM {
     @Override
     public void commonSetup(FMLCommonSetupEvent event) {

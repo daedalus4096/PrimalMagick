@@ -25,6 +25,11 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
+/**
+ * Client sided proxy.  Handles client setup issues and provides side-dependent utility methods.
+ * 
+ * @author Daedalus4096
+ */
 public class ClientProxy extends CommonProxy {
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
@@ -40,6 +45,7 @@ public class ClientProxy extends CommonProxy {
     }
     
     private void registerScreens() {
+        // Register screen factories for each container
         ScreenManager.registerFactory(ContainersPM.GRIMOIRE, GrimoireScreen::new);
         ScreenManager.registerFactory(ContainersPM.ARCANE_WORKBENCH, ArcaneWorkbenchScreen::new);
         ScreenManager.registerFactory(ContainersPM.WAND_ASSEMBLY_TABLE, WandAssemblyTableScreen::new);
@@ -51,11 +57,13 @@ public class ClientProxy extends CommonProxy {
     }
     
     private void registerTERs() {
+        // Register tile entity renderers for those tile entities that need them
         ClientRegistry.bindTileEntitySpecialRenderer(AncientManaFontTileEntity.class, new AncientManaFontTER());
         ClientRegistry.bindTileEntitySpecialRenderer(WandChargerTileEntity.class, new WandChargerTER());
     }
     
     private void registerEntityRenderers() {
+        // Register renderers for each entity type
         RenderingRegistry.registerEntityRenderingHandler(SpellProjectileEntity.class, SpellProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SpellMineEntity.class, SpellMineRenderer::new);
     }

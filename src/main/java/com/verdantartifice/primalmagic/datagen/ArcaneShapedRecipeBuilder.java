@@ -25,6 +25,12 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * Definition of a recipe data file builder for shaped arcane recipes.
+ * 
+ * @author Daedalus4096
+ * @see {@link net.minecraft.data.ShapedRecipeBuilder}
+ */
 public class ArcaneShapedRecipeBuilder {
     protected final Item result;
     protected final int count;
@@ -39,14 +45,34 @@ public class ArcaneShapedRecipeBuilder {
         this.count = count;
     }
     
+    /**
+     * Creates a new builder for a shaped arcane recipe.
+     * 
+     * @param result the output item type
+     * @param count the output item quantity
+     * @return a new builder for a shaped arcane recipe
+     */
     public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(IItemProvider result, int count) {
         return new ArcaneShapedRecipeBuilder(result, count);
     }
     
+    /**
+     * Creates a new builder for a shaped arcane recipe.
+     * 
+     * @param result the output item type
+     * @return a new builder for a shaped arcane recipe
+     */
     public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(IItemProvider result) {
         return arcaneShapedRecipe(result, 1);
     }
     
+    /**
+     * Adds a key to the recipe pattern.
+     * 
+     * @param symbol the symbol to use in the key
+     * @param ingredient the ingredient to use for the given symbol
+     * @return the modified builder
+     */
     public ArcaneShapedRecipeBuilder key(Character symbol, Ingredient ingredient) {
         if (this.key.containsKey(symbol)) {
             throw new IllegalArgumentException("Symbol '" + symbol + "' is already defined!");
@@ -58,14 +84,34 @@ public class ArcaneShapedRecipeBuilder {
         }
     }
     
+    /**
+     * Adds a key to the recipe pattern.
+     * 
+     * @param symbol the symbol to use in the key
+     * @param item the item to use for the given symbol
+     * @return the modified builder
+     */
     public ArcaneShapedRecipeBuilder key(Character symbol, IItemProvider item) {
         return key(symbol, Ingredient.fromItems(item));
     }
     
+    /**
+     * Adds a key to the recipe pattern.
+     * 
+     * @param symbol the symbol to use in the key
+     * @param tag the item tag to use for the given symbol
+     * @return the modified builder
+     */
     public ArcaneShapedRecipeBuilder key(Character symbol, Tag<Item> tag) {
         return key(symbol, Ingredient.fromTag(tag));
     }
     
+    /**
+     * Adds a new entry to the patterns for this recipe.
+     * 
+     * @param pattern the pattern line to add
+     * @return the modified builder
+     */
     public ArcaneShapedRecipeBuilder patternLine(String pattern) {
         if (!this.pattern.isEmpty() && pattern.length() != this.pattern.get(0).length()) {
             throw new IllegalArgumentException("Pattern must be the same width on every line!");
@@ -75,26 +121,57 @@ public class ArcaneShapedRecipeBuilder {
         }
     }
     
+    /**
+     * Adds a group to this recipe.
+     * 
+     * @param group the group to add
+     * @return the modified builder
+     */
     public ArcaneShapedRecipeBuilder setGroup(String group) {
         this.group = group;
         return this;
     }
     
+    /**
+     * Adds a research requirement to this recipe.
+     * 
+     * @param research the research requirement to add
+     * @return the modified builder
+     */
     public ArcaneShapedRecipeBuilder research(CompoundResearchKey research) {
         this.research = research.copy();
         return this;
     }
     
+    /**
+     * Adds a mana cost to this recipe.
+     * 
+     * @param mana the mana cost to add
+     * @return the modified builder
+     */
     public ArcaneShapedRecipeBuilder manaCost(SourceList mana) {
         this.manaCosts = mana.copy();
         return this;
     }
     
+    /**
+     * Builds this recipe into an {@link IFinishedRecipe}.
+     * 
+     * @param consumer a consumer for the finished recipe
+     * @param id the ID of the finished recipe
+     */
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
         consumer.accept(new ArcaneShapedRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.pattern, this.key, this.research, this.manaCosts));
     }
     
+    /**
+     * Builds this recipe into an {@link IFinishedRecipe}. Use {@link #build(Consumer)} if save is the same as the ID for
+     * the result.
+     * 
+     * @param consumer a consumer for the finished recipe
+     * @param save custom ID for the finished recipe
+     */
     public void build(Consumer<IFinishedRecipe> consumer, String save) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result);
         ResourceLocation saveLoc = new ResourceLocation(save);
@@ -105,10 +182,20 @@ public class ArcaneShapedRecipeBuilder {
         }
     }
     
+    /**
+     * Builds this recipe into an {@link IFinishedRecipe}.
+     * 
+     * @param consumer a consumer for the finished recipe
+     */
     public void build(Consumer<IFinishedRecipe> consumer) {
         this.build(consumer, ForgeRegistries.ITEMS.getKey(this.result));
     }
 
+    /**
+     * Makes sure that this recipe is valid.
+     * 
+     * @param id the ID of the recipe
+     */
     protected void validate(ResourceLocation id) {
         if (this.pattern.isEmpty()) {
             throw new IllegalStateException("No pattern is defined for arcane shaped recipe " + id + "!");
@@ -206,6 +293,7 @@ public class ArcaneShapedRecipeBuilder {
 
         @Override
         public JsonObject getAdvancementJson() {
+            // Arcane recipes don't use the vanilla advancement unlock system, so return null
             return null;
         }
 

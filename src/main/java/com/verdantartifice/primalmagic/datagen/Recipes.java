@@ -30,6 +30,11 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
+/**
+ * Data provider for all of the mod's recipes.
+ * 
+ * @author Daedalus4096
+ */
 public class Recipes extends RecipeProvider {
     public Recipes(DataGenerator generatorIn) {
         super(generatorIn);

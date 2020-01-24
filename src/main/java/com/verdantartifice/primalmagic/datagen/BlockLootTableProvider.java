@@ -38,6 +38,12 @@ import net.minecraft.world.storage.loot.conditions.TableBonus;
 import net.minecraft.world.storage.loot.functions.ExplosionDecay;
 import net.minecraft.world.storage.loot.functions.SetCount;
 
+/**
+ * Base class for the block loot table provider for the mod.  Handles the infrastructure so that the
+ * subclass can just list registrations.
+ * 
+ * @author Daedalus4096
+ */
 public abstract class BlockLootTableProvider extends LootTableProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     
@@ -50,6 +56,9 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
         this.generator = dataGeneratorIn;
     }
 
+    /**
+     * Add the mod's block loot tables to this provider's map for writing.
+     */
     protected abstract void addTables();
     
     protected void registerBasicTable(Block block) {
@@ -84,13 +93,16 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
     
     @Override
     public void act(DirectoryCache cache) {
+        // Register all the loot tables with this provider
         this.addTables();
         
         Map<ResourceLocation, LootTable> tables = new HashMap<>();
         for (Map.Entry<Block, LootTable.Builder> entry : this.lootTables.entrySet()) {
+            // For each entry in the map, build the loot table and associate it with the block's loot table location
             tables.put(entry.getKey().getLootTable(), entry.getValue().setParameterSet(LootParameterSets.BLOCK).build());
         }
         
+        // Write out the loot table files to disk
         this.writeTables(cache, tables);
     }
 
