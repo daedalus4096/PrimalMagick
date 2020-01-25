@@ -48,8 +48,10 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
                         BlockPos targetPos = blockTarget.getPos().offset(blockTarget.getFace(), offset);
                         this.placeField(world, targetPos);
                     }
+                } else {
+                    this.placeField(world, blockTarget.getPos());
+                    this.placeField(world, blockTarget.getPos().offset(blockTarget.getFace()));
                 }
-                // FIXME also process if the target block isn't solid
             } else if (target.getType() == RayTraceResult.Type.ENTITY) {
                 // If the target is an entity, place fields at the entity's position and the position above that
                 BlockPos hitPos = new BlockPos(target.getHitVec());
