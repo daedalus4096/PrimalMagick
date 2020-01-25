@@ -76,16 +76,17 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
     }
     
     @Override
-    protected void readFromTileNBT(CompoundNBT compound) {
+    public void read(CompoundNBT compound) {
+        super.read(compound);
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
     }
     
     @Override
-    protected CompoundNBT writeToTileNBT(CompoundNBT compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
-        return compound;
+        return super.write(compound);
     }
 
     @Override

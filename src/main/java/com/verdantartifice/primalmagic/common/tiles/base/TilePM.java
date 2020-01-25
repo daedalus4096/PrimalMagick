@@ -26,26 +26,6 @@ public class TilePM extends TileEntity {
         super(type);
     }
     
-    @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
-        this.readFromTileNBT(compound);
-    }
-    
-    protected void readFromTileNBT(CompoundNBT compound) {
-        // Do nothing by default
-    }
-    
-    @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        return super.write(this.writeToTileNBT(compound));
-    }
-    
-    protected CompoundNBT writeToTileNBT(CompoundNBT compound) {
-        // Do nothing by default
-        return compound;
-    }
-    
     /**
      * Update this tile's block in the world, optionally re-rendering it.
      * 
@@ -68,7 +48,7 @@ public class TilePM extends TileEntity {
     
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.readFromTileNBT(pkt.getNbtCompound());
+        this.read(pkt.getNbtCompound());
     }
     
     /**

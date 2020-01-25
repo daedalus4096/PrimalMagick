@@ -37,14 +37,15 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
     }
     
     @Override
-    protected void readFromTileNBT(CompoundNBT compound) {
+    public void read(CompoundNBT compound) {
+        super.read(compound);
         this.mana = compound.getShort("mana");
     }
     
     @Override
-    protected CompoundNBT writeToTileNBT(CompoundNBT compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         compound.putShort("mana", (short)this.mana);
-        return compound;
+        return super.write(compound);
     }
     
     public int getMana() {

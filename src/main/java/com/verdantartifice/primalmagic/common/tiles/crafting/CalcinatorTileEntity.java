@@ -105,7 +105,9 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     }
     
     @Override
-    protected void readFromTileNBT(CompoundNBT compound) {
+    public void read(CompoundNBT compound) {
+        super.read(compound);
+        
         this.burnTime = compound.getInt("BurnTime");
         this.burnTimeTotal = compound.getInt("BurnTimeTotal");
         this.cookTime = compound.getInt("CookTime");
@@ -122,7 +124,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     }
     
     @Override
-    protected CompoundNBT writeToTileNBT(CompoundNBT compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         compound.putInt("BurnTime", this.burnTime);
         compound.putInt("BurnTimeTotal", this.burnTimeTotal);
         compound.putInt("CookTime", this.cookTime);
@@ -130,7 +132,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
-        return compound;
+        return super.write(compound);
     }
 
     @Override
