@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -137,7 +138,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
         if (quickenMod != null) {
             retVal -= (10 * quickenMod.getPropertyValue("haste"));
         }
-        return retVal;
+        return MathHelper.clamp(retVal, 0, 60);
     }
     
     @Nonnull
