@@ -469,7 +469,8 @@ public class AffinityManager {
                     knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
                 }
                 
-                // TODO Check to see if any scan triggers need to be run for the item
+                // Check to see if any scan triggers need to be run for the item
+                ResearchManager.checkScanTriggers(player, item);
             }
         }
         
