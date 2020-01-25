@@ -139,5 +139,6 @@ public class InitItems {
         registry.register(new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(PrimalMagic.MODID, "alchemical_waste"));
         registry.register(new BloodyFleshItem());
         registry.register(new HallowedOrbItem());
+        registry.register(new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(PrimalMagic.MODID, "heartwood"));
     }
 }
