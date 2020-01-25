@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraftforge.common.util.INBTSerializable;
 
 /**
  * Definition of a list of primal sources and their respective amounts.  Used for anything requiring
@@ -19,7 +20,7 @@ import net.minecraft.nbt.ListNBT;
  * 
  * @author Daedalus4096
  */
-public class SourceList {
+public class SourceList implements INBTSerializable<CompoundNBT> {
     protected Map<Source, Integer> sources = new HashMap<>();
     
     public SourceList() {}
@@ -180,26 +181,9 @@ public class SourceList {
         return retVal;
     }
     
-    public void readFromNBT(@Nonnull CompoundNBT tag) {
-        this.readFromNBT(tag, "Sources");
-    }
-    
-    public void readFromNBT(@Nonnull CompoundNBT tag, @Nonnull String label) {
-        this.sources.clear();
-        ListNBT tagList = tag.getList(label, 10);
-        for (int index = 0; index < tagList.size(); index++) {
-            CompoundNBT singleTag = tagList.getCompound(index);
-            if (singleTag.contains("key")) {
-                this.add(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
-            }
-        }
-    }
-    
-    public void writeToNBT(@Nonnull CompoundNBT tag) {
-        this.writeToNBT(tag, "Sources");
-    }
-    
-    public void writeToNBT(@Nonnull CompoundNBT tag, @Nonnull String label) {
+    @Override
+    public CompoundNBT serializeNBT() {
+        CompoundNBT tag = new CompoundNBT();
         ListNBT tagList = new ListNBT();
         for (Source source : this.getSources()) {
             if (source != null) {
@@ -209,6 +193,19 @@ public class SourceList {
                 tagList.add(singleTag);
             }
         }
-        tag.put(label, tagList);
+        tag.put("Sources", tagList);
+        return tag;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundNBT nbt) {
+        this.sources.clear();
+        ListNBT tagList = nbt.getList("Sources", 10);
+        for (int index = 0; index < tagList.size(); index++) {
+            CompoundNBT singleTag = tagList.getCompound(index);
+            if (singleTag.contains("key")) {
+                this.add(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
+            }
+        }
     }
 }
