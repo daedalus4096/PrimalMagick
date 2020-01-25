@@ -54,7 +54,7 @@ public class SpellManager {
     protected static final Map<String, Supplier<CompoundResearchKey>> MOD_RESEARCH_SUPPLIERS = new HashMap<>();
     
     @Nonnull
-    protected static List<String> getFilteredTypes(PlayerEntity player, List<String> types, Map<String, Supplier<CompoundResearchKey>> suppliers) {
+    protected static List<String> getFilteredTypes(@Nullable PlayerEntity player, @Nonnull List<String> types, @Nonnull Map<String, Supplier<CompoundResearchKey>> suppliers) {
         // Compute a list of spell component types that the given player is able to use by dint of their accumulated research
         List<String> retVal = new ArrayList<>();
         for (String type : types) {
@@ -70,17 +70,17 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<String> getVehicleTypes(PlayerEntity player) {
+    public static List<String> getVehicleTypes(@Nullable PlayerEntity player) {
         // Compute a list of spell vehicle types that the given player is able to use
         return getFilteredTypes(player, VEHICLE_TYPES, VEHICLE_RESEARCH_SUPPLIERS);
     }
     
     @Nullable
-    public static Supplier<ISpellVehicle> getVehicleSupplier(String type) {
+    public static Supplier<ISpellVehicle> getVehicleSupplier(@Nullable String type) {
         return VEHICLE_INSTANCE_SUPPLIERS.get(type);
     }
     
-    public static void registerVehicleType(String type, Supplier<ISpellVehicle> instanceSupplier, Supplier<CompoundResearchKey> researchSupplier) {
+    public static void registerVehicleType(@Nullable String type, @Nullable Supplier<ISpellVehicle> instanceSupplier, @Nullable Supplier<CompoundResearchKey> researchSupplier) {
         // Register the given vehicle type and associate it with the given instance and research suppliers
         if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
             VEHICLE_TYPES.add(type);
@@ -90,17 +90,17 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<String> getPayloadTypes(PlayerEntity player) {
+    public static List<String> getPayloadTypes(@Nullable PlayerEntity player) {
         // Compute a list of spell payload types that the given player is able to use
         return getFilteredTypes(player, PAYLOAD_TYPES, PAYLOAD_RESEARCH_SUPPLIERS);
     }
     
     @Nullable
-    public static Supplier<ISpellPayload> getPayloadSupplier(String type) {
+    public static Supplier<ISpellPayload> getPayloadSupplier(@Nullable String type) {
         return PAYLOAD_INSTANCE_SUPPLIERS.get(type);
     }
     
-    public static void registerPayloadType(String type, Supplier<ISpellPayload> instanceSupplier, Supplier<CompoundResearchKey> researchSupplier) {
+    public static void registerPayloadType(@Nullable String type, @Nullable Supplier<ISpellPayload> instanceSupplier, @Nullable Supplier<CompoundResearchKey> researchSupplier) {
         // Register the given payload type and associate it with the given instance and research suppliers
         if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
             PAYLOAD_TYPES.add(type);
@@ -110,17 +110,17 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<String> getModTypes(PlayerEntity player) {
+    public static List<String> getModTypes(@Nullable PlayerEntity player) {
         // Compute a list of spell mod types that the given player is able to use
         return getFilteredTypes(player, MOD_TYPES, MOD_RESEARCH_SUPPLIERS);
     }
     
     @Nullable
-    public static Supplier<ISpellMod> getModSupplier(String type) {
+    public static Supplier<ISpellMod> getModSupplier(@Nullable String type) {
         return MOD_INSTANCE_SUPPLIERS.get(type);
     }
     
-    public static void registerModType(String type, Supplier<ISpellMod> instanceSupplier, Supplier<CompoundResearchKey> researchSupplier) {
+    public static void registerModType(@Nullable String type, @Nullable Supplier<ISpellMod> instanceSupplier, @Nullable Supplier<CompoundResearchKey> researchSupplier) {
         // Register the given mod type and associate it with the given instance and research suppliers
         if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
             MOD_TYPES.add(type);
@@ -129,7 +129,11 @@ public class SpellManager {
         }
     }
     
-    public static boolean isOnCooldown(PlayerEntity player) {
+    public static boolean isOnCooldown(@Nullable PlayerEntity player) {
+        if (player == null) {
+            return false;
+        }
+        
         // Determine whether the given player's spell cooldown is currently active, thus making spells unavailable
         IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
         if (cooldowns != null) {
@@ -139,13 +143,15 @@ public class SpellManager {
         }
     }
     
-    public static void setCooldown(PlayerEntity player, int durationTicks) {
-        // Trigger a spell cooldown of the given duration for the given player and sync the data to their client
-        IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
-        if (cooldowns != null) {
-            cooldowns.setCooldown(IPlayerCooldowns.CooldownType.SPELL, durationTicks);
-            if (player instanceof ServerPlayerEntity) {
-                cooldowns.sync((ServerPlayerEntity)player);
+    public static void setCooldown(@Nullable PlayerEntity player, int durationTicks) {
+        if (player != null) {
+            // Trigger a spell cooldown of the given duration for the given player and sync the data to their client
+            IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+            if (cooldowns != null) {
+                cooldowns.setCooldown(IPlayerCooldowns.CooldownType.SPELL, durationTicks);
+                if (player instanceof ServerPlayerEntity) {
+                    cooldowns.sync((ServerPlayerEntity)player);
+                }
             }
         }
     }

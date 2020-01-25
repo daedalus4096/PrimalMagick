@@ -17,16 +17,16 @@ import net.minecraft.nbt.CompoundNBT;
  */
 public class SpellFactory {
     @Nullable
-    public static ISpellVehicle getVehicleFromType(String type) {
+    public static ISpellVehicle getVehicleFromType(@Nullable String type) {
         // Create a default spell vehicle component using the given type's registered supplier
         Supplier<ISpellVehicle> factory = SpellManager.getVehicleSupplier(type);
         return (factory == null) ? null : factory.get();
     }
     
     @Nullable
-    public static ISpellVehicle getVehicleFromNBT(CompoundNBT tag) {
+    public static ISpellVehicle getVehicleFromNBT(@Nullable CompoundNBT tag) {
         // Deserialize a spell vehicle component from the given NBT data
-        ISpellVehicle retVal = getVehicleFromType(tag.getString("VehicleType"));
+        ISpellVehicle retVal = tag == null ? null : getVehicleFromType(tag.getString("VehicleType"));
         if (retVal != null) {
             retVal.deserializeNBT(tag);
         }
@@ -34,16 +34,16 @@ public class SpellFactory {
     }
 
     @Nullable
-    public static ISpellPayload getPayloadFromType(String type) {
+    public static ISpellPayload getPayloadFromType(@Nullable String type) {
         // Create a default spell payload component using the given type's registered supplier
         Supplier<ISpellPayload> factory = SpellManager.getPayloadSupplier(type);
         return (factory == null) ? null : factory.get();
     }
     
     @Nullable
-    public static ISpellPayload getPayloadFromNBT(CompoundNBT tag) {
+    public static ISpellPayload getPayloadFromNBT(@Nullable CompoundNBT tag) {
         // Deserialize a spell payload component from the given NBT data
-        ISpellPayload retVal = getPayloadFromType(tag.getString("PayloadType"));
+        ISpellPayload retVal = tag == null ? null : getPayloadFromType(tag.getString("PayloadType"));
         if (retVal != null) {
             retVal.deserializeNBT(tag);
         }
@@ -51,16 +51,16 @@ public class SpellFactory {
     }
     
     @Nullable
-    public static ISpellMod getModFromType(String type) {
+    public static ISpellMod getModFromType(@Nullable String type) {
         // Create a default spell mod component using the given type's registered supplier
         Supplier<ISpellMod> factory = SpellManager.getModSupplier(type);
         return (factory == null) ? null : factory.get();
     }
     
     @Nullable
-    public static ISpellMod getModFromNBT(CompoundNBT tag) {
+    public static ISpellMod getModFromNBT(@Nullable CompoundNBT tag) {
         // Deserialize a spell mod component from the given NBT data
-        ISpellMod retVal = getModFromType(tag.getString("ModType"));
+        ISpellMod retVal = tag == null ? null : getModFromType(tag.getString("ModType"));
         if (retVal != null) {
             retVal.deserializeNBT(tag);
         }
