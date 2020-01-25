@@ -19,9 +19,9 @@ import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
@@ -51,6 +51,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     protected int burnTimeTotal;
     protected int cookTime;
     protected int cookTimeTotal;
+    protected PlayerEntity owner;
     protected UUID ownerUUID;
     
     // Define a container-trackable representation of this tile's relevant data
@@ -110,6 +111,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
         
+        this.owner = null;
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
             String ownerUUIDStr = compound.getString("OwnerUUID");
@@ -309,19 +311,21 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
 
     @Override
     public void setTileOwner(PlayerEntity owner) {
+        this.owner = owner;
         this.ownerUUID = owner.getUniqueID();
     }
 
     @Override
     public PlayerEntity getTileOwner() {
-        PlayerEntity retVal = null;
-        if (this.hasWorld() && this.world instanceof ServerWorld) {
-            // TODO use player list and cache the result
-            Entity entity = ((ServerWorld)this.world).getEntityByUuid(this.ownerUUID);
-            if (entity instanceof PlayerEntity) {
-                retVal = (PlayerEntity)entity;
+        if (this.owner == null && this.ownerUUID != null && this.hasWorld() && this.world instanceof ServerWorld) {
+            // If the owner cache is empty, find the entity matching the owner's unique ID
+            ServerPlayerEntity player = ((ServerWorld)this.world).getServer().getPlayerList().getPlayerByUUID(this.ownerUUID);
+            if (player != null) {
+                this.owner = player;
+            } else {
+                this.ownerUUID = null;
             }
         }
-        return retVal;
+        return this.owner;
     }
 }
