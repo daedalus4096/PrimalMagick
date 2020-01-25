@@ -167,7 +167,7 @@ public class ItemUtils {
      */
     @Nonnull
     public static List<ItemStack> mergeItemStackLists(@Nonnull List<ItemStack> list1, @Nonnull List<ItemStack> list2) {
-        List<ItemStack> output = list1; // TODO start with a deep copy in case list2 is empty
+        List<ItemStack> output = copyItemStackList(list1);
         for (ItemStack stack : list2) {
             output = mergeItemStackIntoList(output, stack);
         }
