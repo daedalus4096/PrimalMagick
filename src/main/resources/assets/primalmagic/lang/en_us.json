@@ -530,5 +530,7 @@
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
     
+    "stat.primalmagic.grimoire_read": "Times Grimoire consulted",
+    
     "itemGroup.primalmagic": "Primal Magic"
 }
