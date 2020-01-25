@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.MathHelper;
 
 /**
  * Data object identifying a specific research entry, or a specific stage in that research entry.
@@ -31,7 +30,13 @@ public class SimpleResearchKey {
         } else if (keyStr.contains("@")) {
             // Key string indicates a specific stage of a research entry
             String[] tokens = keyStr.split("@");
-            return new SimpleResearchKey(tokens[0], MathHelper.getInt(tokens[1], 0));
+            int stage;
+            try {
+                stage = Integer.parseInt(tokens[1]);
+            } catch (NumberFormatException e) {
+                stage = 0;
+            }
+            return new SimpleResearchKey(tokens[0], stage);
         } else {
             // Key string indicates a research entry without a specific stage
             return new SimpleResearchKey(keyStr, null);

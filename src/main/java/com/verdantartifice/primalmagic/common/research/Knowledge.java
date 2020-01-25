@@ -5,8 +5,6 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 
-import net.minecraft.util.math.MathHelper;
-
 /**
  * Represents a packet of knowledge levels (e.g. 3 levels worth of observations).  Primarily used to
  * parse knowledge requirements for research and display them in the grimoire.
@@ -33,7 +31,12 @@ public class Knowledge {
                 } catch (Exception e) {
                     return null;
                 }
-                int amount = MathHelper.getInt(tokens[1], 0);
+                int amount;
+                try {
+                    amount = Integer.parseInt(tokens[1]);
+                } catch (NumberFormatException e) {
+                    amount = 0;
+                }
                 if (type != null && amount > 0) {
                     return new Knowledge(type, amount);
                 }

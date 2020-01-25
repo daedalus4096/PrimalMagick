@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 
 /**
@@ -71,7 +70,9 @@ public class ItemUtils {
         String nbt = null;
         if (tokens.length >= 2) {
             // Parse the count, if present
-            count = MathHelper.getInt(tokens[1], -1);
+            try {
+                count = Integer.parseInt(tokens[1]);
+            } catch (NumberFormatException e) {}
         }
         if (tokens.length >= 3 && tokens[2].startsWith("{")) {
             // Parse the JSON-ified NBT data, if present
