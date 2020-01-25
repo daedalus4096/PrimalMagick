@@ -135,8 +135,7 @@ public class ResearchManager {
                 for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
                     CompoundResearchKey parentResearch = entry.getParentResearch();
                     if (parentResearch != null && parentResearch.containsStripped(key)) {
-                        // TODO this should be a recursive force revoke
-                        revokeResearch(player, entry.getKey());
+                        forceRevokeWithAllChildren(player, entry.getKey());
                     }
                 }
                 
