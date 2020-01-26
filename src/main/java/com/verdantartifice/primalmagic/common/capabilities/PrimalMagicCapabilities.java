@@ -21,6 +21,9 @@ public class PrimalMagicCapabilities {
     @CapabilityInject(IPlayerCooldowns.class)
     public static final Capability<IPlayerCooldowns> COOLDOWNS = null;
     
+    @CapabilityInject(IPlayerStats.class)
+    public static final Capability<IPlayerStats> STATS = null;
+    
     @CapabilityInject(IWorldEntitySwappers.class)
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = null;
     
@@ -32,6 +35,11 @@ public class PrimalMagicCapabilities {
     @Nullable
     public static IPlayerCooldowns getCooldowns(@Nonnull PlayerEntity player) {
         return player.getCapability(COOLDOWNS, null).orElse(null);
+    }
+    
+    @Nullable
+    public static IPlayerStats getStats(@Nonnull PlayerEntity player) {
+        return player.getCapability(STATS, null).orElse(null);
     }
     
     @Nullable

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncCooldowns
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchFlagsPacket;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
@@ -69,6 +70,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, TileToServerPacket.class, TileToServerPacket::encode, TileToServerPacket::decode, TileToServerPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, TeleportArrivalPacket.class, TeleportArrivalPacket::encode, TeleportArrivalPacket::decode, TeleportArrivalPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SpellBoltPacket.class, SpellBoltPacket::encode, SpellBoltPacket::decode, SpellBoltPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SyncStatsPacket.class, SyncStatsPacket::encode, SyncStatsPacket::decode, SyncStatsPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

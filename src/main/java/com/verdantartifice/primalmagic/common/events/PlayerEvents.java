@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -83,6 +84,10 @@ public class PlayerEvents {
             if (cooldowns != null) {
                 cooldowns.sync(player);
             }
+            IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+            if (stats != null) {
+                stats.sync(player);
+            }
         }
     }
     
@@ -102,6 +107,13 @@ public class PlayerEvents {
                 PrimalMagicCapabilities.getCooldowns(event.getPlayer()).deserializeNBT(nbtCooldowns);
             } catch (Exception e) {
                 PrimalMagic.LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
+            }
+            
+            try {
+                CompoundNBT nbtStats = PrimalMagicCapabilities.getStats(event.getOriginal()).serializeNBT();
+                PrimalMagicCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
+            } catch (Exception e) {
+                PrimalMagic.LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
             }
         }
     }
