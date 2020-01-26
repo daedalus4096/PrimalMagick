@@ -22,14 +22,20 @@ import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.stats.Stat;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.command.arguments.ItemArgument;
 import net.minecraft.command.arguments.ItemInput;
+import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -101,6 +107,14 @@ public class PrimalMagicCommand {
                     .then(Commands.literal("unlock")
                         // /pm sources <target> unlock <source>
                         .then(Commands.argument("source", SourceArgument.source()).executes((context) -> { return unlockSource(context.getSource(), EntityArgument.getPlayer(context, "target"), SourceArgument.getSource(context, "source")); }))
+                    )
+                )
+            )
+            .then(Commands.literal("stats")
+                .then(Commands.argument("target", EntityArgument.player())
+                    .then(Commands.literal("get")
+                        // /pm stats <target> get <name>
+                        .then(Commands.argument("stat", ResourceLocationArgument.resourceLocation()).suggests((ctx, sb) -> ISuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(ResourceLocation::toString), sb)).executes((context) -> { return getStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getResourceLocation(context, "stat")); }))
                     )
                 )
             )
@@ -335,6 +349,19 @@ public class PrimalMagicCommand {
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.sources.unlock.target", source.getName(), tag.toUpperCase()));
         } else {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.sources.unlock.failure", target.getName(), tag.toUpperCase()).applyTextStyle(TextFormatting.RED), true);
+        }
+        return 0;
+    }
+
+    private static int getStatValue(CommandSource source, ServerPlayerEntity target, ResourceLocation statLoc) {
+        // Look up the requested stat value for the given player and display it
+        Stat stat = StatsManager.getStat(statLoc);
+        if (stat == null) {
+            source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.stats.noexist", statLoc));
+        } else {
+            ITextComponent statName = new TranslationTextComponent(stat.getTranslationKey());
+            ITextComponent statValue = StatsManager.getFormattedValue(target, stat);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.stats.get", target.getName(), statName, statValue), true);
         }
         return 0;
     }

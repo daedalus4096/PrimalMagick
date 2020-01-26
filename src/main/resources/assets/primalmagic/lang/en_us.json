@@ -396,10 +396,12 @@
     "commands.primalmagic.sources.unlock.failure": "Failed to unlock source %2$s for %1$s",
     "commands.primalmagic.sources.unlock.target": "%1$s has unlocked source %2$s for you",
     "commands.primalmagic.sources.unlock.already_unlocked": "%1$s has already unlocked source %2$s",
+    "commands.primalmagic.stats.get": "%1$s - %2$s: %3$s",
     "commands.primalmagic.research.noexist": "Research %1$s does not exist",
     "commands.primalmagic.discipline.noexist": "Discipline %1$s does not exist",
     "commands.primalmagic.knowledge_type.noexist": "Knowledge type does not exist",
     "commands.primalmagic.source.noexist": "Source %1$s does not exist",
+    "commands.primalmagic.stats.noexist": "Statistic %1$s does not exist",
     "commands.primalmagic.error": "Error executing command",
     
     "event.primalmagic.add_addendum": "Addendum added to %1$s",

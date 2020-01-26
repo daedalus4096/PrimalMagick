@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.items.misc;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -35,6 +37,7 @@ public class GrimoireItem extends Item implements INamedContainerProvider {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         // Open the grimoire GUI on right click
         if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity) {
+            StatsManager.incrementValue((ServerPlayerEntity)playerIn, StatsPM.GRIMOIRE_READ);
             NetworkHooks.openGui((ServerPlayerEntity)playerIn, this);
         }
         return new ActionResult<ItemStack>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
