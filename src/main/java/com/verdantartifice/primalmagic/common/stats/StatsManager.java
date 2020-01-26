@@ -66,12 +66,29 @@ public class StatsManager {
     }
     
     public static void incrementValue(@Nullable ServerPlayerEntity player, @Nullable Stat stat) {
+        incrementValue(player, stat, 1);
+    }
+    
+    public static void incrementValue(@Nullable ServerPlayerEntity player, @Nullable Stat stat, int delta) {
         if (player != null) {
             IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
             if (stats != null) {
                 int oldVal = stats.getValue(stat);
-                stats.setValue(stat, oldVal + 1);
+                stats.setValue(stat, oldVal + delta);
                 stats.sync(player);
+            }
+        }
+    }
+    
+    public static void setValueIfMax(@Nullable ServerPlayerEntity player, @Nullable Stat stat, int newVal) {
+        if (player != null) {
+            IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+            if (stats != null) {
+                int oldVal = stats.getValue(stat);
+                if (newVal > oldVal) {
+                    stats.setValue(stat, newVal);
+                    stats.sync(player);
+                }
             }
         }
     }
