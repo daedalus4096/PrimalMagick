@@ -9,6 +9,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeAmountArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeArgument;
@@ -17,6 +18,7 @@ import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgumen
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchInput;
 import com.verdantartifice.primalmagic.common.commands.arguments.SourceArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.SourceInput;
+import com.verdantartifice.primalmagic.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -112,9 +114,17 @@ public class PrimalMagicCommand {
             )
             .then(Commands.literal("stats")
                 .then(Commands.argument("target", EntityArgument.player())
+                    // /pm stats <target> reset
+                    .then(Commands.literal("reset").executes((context) -> { return resetStats(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("get")
-                        // /pm stats <target> get <name>
+                        // /pm stats <target> get <stat>
                         .then(Commands.argument("stat", ResourceLocationArgument.resourceLocation()).suggests((ctx, sb) -> ISuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(ResourceLocation::toString), sb)).executes((context) -> { return getStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getResourceLocation(context, "stat")); }))
+                    )
+                    .then(Commands.literal("set")
+                        .then(Commands.argument("stat", ResourceLocationArgument.resourceLocation()).suggests((ctx, sb) -> ISuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(ResourceLocation::toString), sb))
+                            // /pm stats <target> set <stat> <value>
+                            .then(Commands.argument("value", StatValueArgument.value()).executes((context) -> { return setStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getResourceLocation(context, "stat"), IntegerArgumentType.getInteger(context, "value")); }))
+                        )
                     )
                 )
             )
@@ -362,6 +372,35 @@ public class PrimalMagicCommand {
             ITextComponent statName = new TranslationTextComponent(stat.getTranslationKey());
             ITextComponent statValue = StatsManager.getFormattedValue(target, stat);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.stats.get", target.getName(), statName, statValue), true);
+        }
+        return 0;
+    }
+
+    private static int setStatValue(CommandSource source, ServerPlayerEntity target, ResourceLocation statLoc, int value) {
+        // Set the given value for the given stat for the given player
+        Stat stat = StatsManager.getStat(statLoc);
+        if (stat == null) {
+            source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.stats.noexist", statLoc));
+        } else {
+            StatsManager.setValue(target, stat, value);
+            ITextComponent statName = new TranslationTextComponent(stat.getTranslationKey());
+            ITextComponent statValue = StatsManager.getFormattedValue(target, stat);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.stats.set", target.getName(), statName, statValue), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.stats.set.target", source.getName(), statName, statValue));
+        }
+        return 0;
+    }
+
+    private static int resetStats(CommandSource source, ServerPlayerEntity target) {
+        IPlayerStats stats = PrimalMagicCapabilities.getStats(target);
+        if (stats == null) {
+            source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.error"));
+        } else {
+            // Remove all unlocked research entries from the target player
+            stats.clear();
+            stats.sync(target);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.stats.reset", target.getName()), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.stats.reset.target", source.getName()));
         }
         return 0;
     }

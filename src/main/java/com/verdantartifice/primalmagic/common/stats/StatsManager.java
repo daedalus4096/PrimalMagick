@@ -54,6 +54,7 @@ public class StatsManager {
         if (player != null) {
             IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
             if (stats != null) {
+                // Get the value from the player capability
                 return stats.getValue(stat);
             }
         }
@@ -73,8 +74,20 @@ public class StatsManager {
         if (player != null) {
             IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
             if (stats != null) {
+                // Set the new value into the player capability
                 int oldVal = stats.getValue(stat);
                 stats.setValue(stat, oldVal + delta);
+                stats.sync(player);
+            }
+        }
+    }
+    
+    public static void setValue(@Nullable ServerPlayerEntity player, @Nullable Stat stat, int value) {
+        if (player != null) {
+            IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+            if (stats != null) {
+                // Set the new value into the player capability
+                stats.setValue(stat, value);
                 stats.sync(player);
             }
         }
@@ -86,6 +99,7 @@ public class StatsManager {
             if (stats != null) {
                 int oldVal = stats.getValue(stat);
                 if (newVal > oldVal) {
+                    // Set the new value into the player capability
                     stats.setValue(stat, newVal);
                     stats.sync(player);
                 }
