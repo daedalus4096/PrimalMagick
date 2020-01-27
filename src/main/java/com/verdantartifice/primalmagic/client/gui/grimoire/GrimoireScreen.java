@@ -14,12 +14,14 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractRecipePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplinePage;
-import com.verdantartifice.primalmagic.client.gui.grimoire.pages.IndexPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.OtherIndexPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplineIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.PageImage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.PageString;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.RecipePageFactory;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.RequirementsPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.StagePage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.StatisticsPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.BackButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.PageButton;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
@@ -30,6 +32,8 @@ import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
+import com.verdantartifice.primalmagic.common.stats.Stat;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -137,6 +141,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             this.parseDisciplinePages((ResearchDiscipline)this.container.getTopic());
         } else if (this.container.getTopic() instanceof ResearchEntry) {
             this.parseEntryPages((ResearchEntry)this.container.getTopic());
+        } else if (StatisticsPage.TOPIC.equals(this.container.getTopic())) {
+            this.parseStatsPages();
         }
     }
     
@@ -239,9 +245,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             return;
         }
         
-        // Add each unlocked research discipline to the current index page
+        // Add each unlocked research discipline to the current discipline index page
         int heightRemaining = 182;  // Leave enough room for the page header
-        IndexPage tempPage = new IndexPage(true);
+        DisciplineIndexPage tempPage = new DisciplineIndexPage(true);
         for (ResearchDiscipline discipline : disciplines) {
             if (discipline.getUnlockResearchKey() == null || discipline.getUnlockResearchKey().isKnownByStrict(Minecraft.getInstance().player)) {
                 tempPage.addDiscipline(discipline);
@@ -251,15 +257,18 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 if (heightRemaining < 12 && !tempPage.getDisciplines().isEmpty()) {
                     heightRemaining = 210;
                     this.pages.add(tempPage);
-                    tempPage = new IndexPage();
+                    tempPage = new DisciplineIndexPage();
                 }
             }
         }
         
-        // Add the final page to the collection, if it's not empty
+        // Add the final discipline index page to the collection, if it's not empty
         if (!tempPage.getDisciplines().isEmpty()) {
             this.pages.add(tempPage);
         }
+        
+        // Add the other index page after the discipline index pages
+        this.pages.add(new OtherIndexPage());
     }
     
     protected void parseDisciplinePages(ResearchDiscipline discipline) {
@@ -519,6 +528,65 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                     this.pages.add(page);
                 }
             }
+        }
+    }
+    
+    protected void parseStatsPages() {
+        // For each visible statistic, create one or more page strings for that stat's text and value
+        this.currentStageIndex = 0;
+        List<Stat> stats = StatsManager.getSortedStats();
+        if (stats.isEmpty()) {
+            return;
+        }
+        
+        // Add each unlocked research discipline to the current discipline index page
+        int heightRemaining = 182;  // Leave enough room for the page header
+        int dotWidth = this.font.getStringWidth(".");
+        StatisticsPage tempPage = new StatisticsPage(true);
+        for (Stat stat : stats) {
+            int statValue = StatsManager.getValue(this.getMinecraft().player, stat);
+            if (!stat.isHidden() || statValue > 0) {
+                // Join the stat text and formatted value with periods in between for spacing
+                ITextComponent statText = new TranslationTextComponent(stat.getTranslationKey());
+                List<String> statTextSegments = new ArrayList<>(this.font.listFormattedStringToWidth(statText.getFormattedText(), 124));
+                String lastStatTextSegment = statTextSegments.get(statTextSegments.size() - 1);
+                int lastStatTextSegmentWidth = this.font.getStringWidth(lastStatTextSegment);
+                String statFormattedValueStr = stat.getFormatter().format(statValue);
+                int statFormattedValueStrWidth = this.font.getStringWidth(statFormattedValueStr);
+                int remainingWidth = 124 - lastStatTextSegmentWidth - statFormattedValueStrWidth;
+                if (remainingWidth < 10) {
+                    // If there isn't enough room to put them on the same line, put the last text segment and the formatted value on different lines
+                    String joiner1 = String.join("", Collections.nCopies((124 - lastStatTextSegmentWidth) / dotWidth, "."));
+                    String joiner2 = String.join("", Collections.nCopies((124 - statFormattedValueStrWidth) / dotWidth, "."));
+                    statTextSegments.set(statTextSegments.size() - 1, lastStatTextSegment + joiner1);
+                    statTextSegments.add(joiner2 + statFormattedValueStr + "~B");   // Include a section break at the end
+                } else {
+                    // Otherwise, join them as the last line of the block
+                    String joiner = String.join("", Collections.nCopies(remainingWidth / dotWidth, "."));
+                    statTextSegments.set(statTextSegments.size() - 1, lastStatTextSegment + joiner + statFormattedValueStr + "~B"); // Include a section break at the end
+                }
+                
+                // Calculate the total height of the stat block, including spacer, and determine if it will fit on the current page
+                int totalHeight = (int)(this.font.FONT_HEIGHT * (statTextSegments.size() + 0.66D));
+                if (heightRemaining < totalHeight && !tempPage.getElements().isEmpty()) {
+                    // If there isn't enough room for another stat block, start a new page
+                    heightRemaining = 210;
+                    this.pages.add(tempPage);
+                    tempPage = new StatisticsPage();
+                }
+                
+                // Add the stat block and its section break to the page
+                for (String str : statTextSegments) {
+                    tempPage.addElement(new PageString(str));
+                    heightRemaining -= this.font.FONT_HEIGHT;
+                }
+                heightRemaining -= (int)(this.font.FONT_HEIGHT * 0.66D);
+            }
+        }
+        
+        // Add the final page to the collection, if it's not empty
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
         }
     }
     

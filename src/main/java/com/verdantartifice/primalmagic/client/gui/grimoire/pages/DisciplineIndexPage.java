@@ -20,15 +20,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class IndexPage extends AbstractPage {
+public class DisciplineIndexPage extends AbstractPage {
     protected List<ResearchDiscipline> contents = new ArrayList<>();
     protected boolean firstPage;
     
-    public IndexPage() {
+    public DisciplineIndexPage() {
         this(false);
     }
     
-    public IndexPage(boolean first) {
+    public DisciplineIndexPage(boolean first) {
         this.firstPage = first;
     }
     

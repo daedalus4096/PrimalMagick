@@ -503,6 +503,8 @@
     "primalmagic.spell.property.precision": "Precision",
     
     "primalmagic.grimoire.index_header": "Disciplines",
+    "primalmagic.grimoire.other_header": "Other Topics",
+    "primalmagic.grimoire.stats_header": "Statistics",
     "primalmagic.grimoire.addendum_header": "Addendum %1$d",
     "primalmagic.grimoire.requirements_header": "Requirements",
     "primalmagic.grimoire.shapeless_arcane_recipe_header": "Arcane Workbench (Shapeless)",
