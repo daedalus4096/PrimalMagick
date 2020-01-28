@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagic.common.config.Config;
 import com.verdantartifice.primalmagic.common.misc.ItemGroupPM;
-import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.proxy.ClientProxy;
 import com.verdantartifice.primalmagic.proxy.IProxyPM;
 import com.verdantartifice.primalmagic.proxy.ServerProxy;
@@ -36,6 +35,5 @@ public class PrimalMagic {
     
     public PrimalMagic() {
         Config.register();
-        StatsPM.init();
     }
 }

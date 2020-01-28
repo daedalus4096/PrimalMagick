@@ -14,6 +14,22 @@
             "addenda": []
         },
         {
+            "key": "EXPERT_SORCERY",
+            "name": "primalmagic.research.expert_sorcery.title",
+            "discipline": "SORCERY",
+            "parents": [ "BASIC_SORCERY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.expert_sorcery.text.stage.1",
+                    "required_research": [ "t_spells_cast_expert" ]
+                },
+                {
+                    "text": "primalmagic.research.expert_sorcery.text.stage.2"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SPELL_VEHICLE_PROJECTILE",
             "name": "primalmagic.research.spell_vehicle_projectile.title",
             "discipline": "SORCERY",

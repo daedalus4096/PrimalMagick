@@ -280,6 +280,10 @@
     "primalmagic.research.basic_sorcery.title": "Basic Sorcery",
     "primalmagic.research.basic_sorcery.text.stage.1": "Basic sorcery: Lorem ipsum",
     
+    "primalmagic.research.expert_sorcery.title": "Expert Sorcery",
+    "primalmagic.research.expert_sorcery.text.stage.1": "Expert sorcery: Lorem ipsum",
+    "primalmagic.research.expert_sorcery.text.stage.2": "Expert sorcery complete!",
+    
     "primalmagic.research.spell_vehicle_projectile.title": "Spell Type: Projectile",
     "primalmagic.research.spell_vehicle_projectile.text.stage.1": "Projectile spells: Lorem ipsum",
     
@@ -534,6 +538,7 @@
     "primalmagic.research.t_dummy.text": "Research Discovery",
     "primalmagic.research.b_dummy.text": "Item Discovery",
     "primalmagic.research.u_dummy.text": "Unknown Discovery",
+    "primalmagic.research.t_spells_cast_expert.text": "Cast 10 spells",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
