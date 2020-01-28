@@ -284,6 +284,14 @@
     "primalmagic.research.expert_sorcery.text.stage.1": "Expert sorcery: Lorem ipsum",
     "primalmagic.research.expert_sorcery.text.stage.2": "Expert sorcery complete!",
     
+    "primalmagic.research.master_sorcery.title": "Master Sorcery",
+    "primalmagic.research.master_sorcery.text.stage.1": "Master sorcery: Lorem ipsum",
+    "primalmagic.research.master_sorcery.text.stage.2": "Master sorcery complete!",
+    
+    "primalmagic.research.supreme_sorcery.title": "Supreme Sorcery",
+    "primalmagic.research.supreme_sorcery.text.stage.1": "Supreme sorcery: Lorem ipsum",
+    "primalmagic.research.supreme_sorcery.text.stage.2": "Supreme sorcery complete!",
+    
     "primalmagic.research.spell_vehicle_projectile.title": "Spell Type: Projectile",
     "primalmagic.research.spell_vehicle_projectile.text.stage.1": "Projectile spells: Lorem ipsum",
     
@@ -539,12 +547,19 @@
     "primalmagic.research.b_dummy.text": "Item Discovery",
     "primalmagic.research.u_dummy.text": "Unknown Discovery",
     "primalmagic.research.t_spells_cast_expert.text": "Cast 10 spells",
+    "primalmagic.research.t_spells_cast_master.text": "Cast 50 spells",
+    "primalmagic.research.t_spells_cast_supreme.text": "Cast 250 spells",
+    "primalmagic.research.t_spells_crafted_expert.text": "Craft a spell",
+    "primalmagic.research.t_spell_cost_master.text": "Craft a spell with a mana cost of at least 50",
+    "primalmagic.research.t_spell_cost_supreme.text": "Craft a spell with a mana cost of at least 250",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
     
     "stat.primalmagic.grimoire_read": "Times Grimoire consulted",
     "stat.primalmagic.spells_cast": "Spells cast",
+    "stat.primalmagic.spells_crafted": "Spells crafted",
+    "stat.primalmagic.spells_crafted_max_cost": "Cost of most expensive spell crafted",
     
     "itemGroup.primalmagic": "Primal Magic"
 }

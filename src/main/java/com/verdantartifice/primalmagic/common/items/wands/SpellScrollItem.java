@@ -5,8 +5,11 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -88,6 +91,20 @@ public class SpellScrollItem extends Item {
             }
         } else {
             return new ActionResult<>(ActionResultType.SUCCESS, stack);
+        }
+    }
+    
+    @Override
+    public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+        // Increment spell crafting statistics
+        super.onCreated(stack, worldIn, playerIn);
+        if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity) {
+            ServerPlayerEntity spe = (ServerPlayerEntity)playerIn;
+            SpellPackage spell = this.getSpell(stack);
+            StatsManager.incrementValue(spe, StatsPM.SPELLS_CRAFTED, stack.getCount());
+            if (spell != null) {
+                StatsManager.setValueIfMax(spe, StatsPM.SPELLS_CRAFTED_MAX_COST, spell.getManaCost().getManaSize());
+            }
         }
     }
 }

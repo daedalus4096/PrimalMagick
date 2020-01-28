@@ -11,4 +11,6 @@ import net.minecraft.stats.IStatFormatter;
 public class StatsPM {
     public static final Stat GRIMOIRE_READ = Stat.create("grimoire_read", IStatFormatter.DEFAULT, false);
     public static final Stat SPELLS_CAST = Stat.create("spells_cast", IStatFormatter.DEFAULT, false);
+    public static final Stat SPELLS_CRAFTED = Stat.create("spells_crafted", IStatFormatter.DEFAULT, false);
+    public static final Stat SPELLS_CRAFTED_MAX_COST = Stat.create("spells_crafted_max_cost", IStatFormatter.DEFAULT, false);
 }

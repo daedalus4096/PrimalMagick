@@ -16,5 +16,10 @@ public class InitStats {
 
     private static void registerStatTriggers() {
         StatTriggers.register(StatsPM.SPELLS_CAST, 10, SimpleResearchKey.parse("t_spells_cast_expert"));
+        StatTriggers.register(StatsPM.SPELLS_CAST, 50, SimpleResearchKey.parse("t_spells_cast_master"));
+        StatTriggers.register(StatsPM.SPELLS_CAST, 250, SimpleResearchKey.parse("t_spells_cast_supreme"));
+        StatTriggers.register(StatsPM.SPELLS_CRAFTED, 1, SimpleResearchKey.parse("t_spells_crafted_expert"));
+        StatTriggers.register(StatsPM.SPELLS_CRAFTED_MAX_COST, 50, SimpleResearchKey.parse("t_spell_cost_master"));
+        StatTriggers.register(StatsPM.SPELLS_CRAFTED_MAX_COST, 250, SimpleResearchKey.parse("t_spell_cost_supreme"));
     }
 }
