@@ -92,10 +92,7 @@ public class WandInscriptionTableContainer extends Container {
             ItemStack slotStack = slot.getStack();
             stack = slotStack.copy();
             if (index == 0) {
-                // If transferring the output item, trigger its created handler then move it into the player's backpack or hotbar
-                this.worldPosCallable.consume((world, blockPos) -> {
-                    slotStack.getItem().onCreated(slotStack, world, playerIn);
-                });
+                // If transferring the output item, move it into the player's backpack or hotbar
                 if (!this.mergeItemStack(slotStack, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
