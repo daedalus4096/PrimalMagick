@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.stats.Stat;
+
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -35,12 +37,12 @@ public class ResearchDisciplines {
     }
     
     @Nullable
-    public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon) {
+    public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon, @Nullable Stat craftingStat) {
         if (key == null || DISCIPLINES.containsKey(key)) {
             // Don't allow null or duplicate disciplines in the collection
             return null;
         } else {
-            ResearchDiscipline discipline = ResearchDiscipline.create(key, unlockResearchKey, icon);
+            ResearchDiscipline discipline = ResearchDiscipline.create(key, unlockResearchKey, icon, craftingStat);
             if (discipline != null) {
                 DISCIPLINES.put(key, discipline);
             }

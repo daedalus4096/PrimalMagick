@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.stats.Stat;
+
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -18,20 +20,22 @@ import net.minecraft.util.ResourceLocation;
  * @author Daedalus4096
  */
 public class ResearchDiscipline {
-    protected String key;
-    protected CompoundResearchKey unlockResearchKey;
-    protected ResourceLocation iconLocation;
-    protected Map<SimpleResearchKey, ResearchEntry> entries = new HashMap<>();
+    protected final String key;
+    protected final CompoundResearchKey unlockResearchKey;
+    protected final ResourceLocation iconLocation;
+    protected final Stat craftingStat;
+    protected final Map<SimpleResearchKey, ResearchEntry> entries = new HashMap<>();
     
-    protected ResearchDiscipline(@Nonnull String key, @Nullable CompoundResearchKey unlockResearchKey, @Nonnull ResourceLocation icon) {
+    protected ResearchDiscipline(@Nonnull String key, @Nullable CompoundResearchKey unlockResearchKey, @Nonnull ResourceLocation icon, @Nullable Stat craftingStat) {
         this.key = key;
         this.unlockResearchKey = unlockResearchKey;
         this.iconLocation = icon;
+        this.craftingStat = craftingStat;
     }
     
     @Nullable
-    public static ResearchDiscipline create(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon) {
-        return (key == null || icon == null) ? null : new ResearchDiscipline(key, unlockResearchKey, icon);
+    public static ResearchDiscipline create(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon, @Nullable Stat craftingStat) {
+        return (key == null || icon == null) ? null : new ResearchDiscipline(key, unlockResearchKey, icon, craftingStat);
     }
     
     @Nonnull
@@ -52,6 +56,11 @@ public class ResearchDiscipline {
     @Nonnull
     public ResourceLocation getIconLocation() {
         return this.iconLocation;
+    }
+    
+    @Nullable
+    public Stat getCraftingStat() {
+        return this.craftingStat;
     }
     
     @Nullable
