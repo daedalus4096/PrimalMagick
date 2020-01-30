@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
@@ -136,10 +137,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
         }
         if (this.getMaxMana(stack) == -1) {
             // If the wand stack has infinite mana, return success without consuming anything
+            StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
             return true;
         } else if (this.containsMana(stack, player, source, amount)) {
             // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
             this.setMana(stack, source, this.getMana(stack, source) - amount);
+            StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
             return true;
         } else {
             // Otherwise return failure
@@ -154,11 +157,16 @@ public abstract class AbstractWandItem extends Item implements IWand {
         }
         if (this.getMaxMana(stack) == -1) {
             // If the wand stack has infinite mana, return success without consuming anything
+            for (Source source : sources.getSources()) {
+                StatsManager.incrementValue(player, source.getManaSpentStat(), sources.getAmount(source));
+            }
             return true;
         } else if (this.containsMana(stack, player, sources)) {
             // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
             for (Source source : sources.getSources()) {
-                this.setMana(stack, source, this.getMana(stack, source) - sources.getAmount(source));
+                int amount = sources.getAmount(source);
+                this.setMana(stack, source, this.getMana(stack, source) - amount);
+                StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
             }
             return true;
         } else {
