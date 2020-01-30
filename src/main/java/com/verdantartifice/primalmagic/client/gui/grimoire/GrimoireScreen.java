@@ -540,7 +540,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // Add each unlocked research discipline to the current discipline index page
-        int heightRemaining = 182;  // Leave enough room for the page header
+        int heightRemaining = 137;  // Leave enough room for the page header
         int dotWidth = this.font.getStringWidth(".");
         StatisticsPage tempPage = new StatisticsPage(true);
         for (Stat stat : stats) {
@@ -567,10 +567,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 }
                 
                 // Calculate the total height of the stat block, including spacer, and determine if it will fit on the current page
-                int totalHeight = (int)(this.font.FONT_HEIGHT * (statTextSegments.size() + 0.66D));
+                int totalHeight = (int)(this.font.FONT_HEIGHT * statTextSegments.size());
                 if (heightRemaining < totalHeight && !tempPage.getElements().isEmpty()) {
                     // If there isn't enough room for another stat block, start a new page
-                    heightRemaining = 210;
+                    heightRemaining = 165;
                     this.pages.add(tempPage);
                     tempPage = new StatisticsPage();
                 }
