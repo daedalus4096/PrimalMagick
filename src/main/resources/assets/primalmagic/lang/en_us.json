@@ -566,6 +566,15 @@
     "stat.primalmagic.spells_cast": "Spells cast",
     "stat.primalmagic.spells_crafted": "Spells crafted",
     "stat.primalmagic.spells_crafted_max_cost": "Cost of most expensive spell crafted",
+    "stat.primalmagic.mana_spent_earth": "Earth mana spent",
+    "stat.primalmagic.mana_spent_sea": "Sea mana spent",
+    "stat.primalmagic.mana_spent_sky": "Sky mana spent",
+    "stat.primalmagic.mana_spent_sun": "Sun mana spent",
+    "stat.primalmagic.mana_spent_moon": "Moon mana spent",
+    "stat.primalmagic.mana_spent_blood": "Blood mana spent",
+    "stat.primalmagic.mana_spent_infernal": "Infernal mana spent",
+    "stat.primalmagic.mana_spent_void": "Void mana spent",
+    "stat.primalmagic.mana_spent_hallowed": "Hallowed mana spent",
     
     "itemGroup.primalmagic": "Primal Magic"
 }

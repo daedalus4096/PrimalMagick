@@ -19,4 +19,13 @@ public class StatsPM {
     public static final Stat SPELLS_CAST = Stat.create("spells_cast", IStatFormatter.DEFAULT, false);
     public static final Stat SPELLS_CRAFTED = Stat.create("spells_crafted", IStatFormatter.DEFAULT, false);
     public static final Stat SPELLS_CRAFTED_MAX_COST = Stat.create("spells_crafted_max_cost", IStatFormatter.DEFAULT, false);
+    public static final Stat MANA_SPENT_EARTH = Stat.create("mana_spent_earth", IStatFormatter.DEFAULT, false);
+    public static final Stat MANA_SPENT_SEA = Stat.create("mana_spent_sea", IStatFormatter.DEFAULT, false);
+    public static final Stat MANA_SPENT_SKY = Stat.create("mana_spent_sky", IStatFormatter.DEFAULT, false);
+    public static final Stat MANA_SPENT_SUN = Stat.create("mana_spent_sun", IStatFormatter.DEFAULT, false);
+    public static final Stat MANA_SPENT_MOON = Stat.create("mana_spent_moon", IStatFormatter.DEFAULT, false);
+    public static final Stat MANA_SPENT_BLOOD = Stat.create("mana_spent_blood", IStatFormatter.DEFAULT, true);
+    public static final Stat MANA_SPENT_INFERNAL = Stat.create("mana_spent_infernal", IStatFormatter.DEFAULT, true);
+    public static final Stat MANA_SPENT_VOID = Stat.create("mana_spent_void", IStatFormatter.DEFAULT, true);
+    public static final Stat MANA_SPENT_HALLOWED = Stat.create("mana_spent_hallowed", IStatFormatter.DEFAULT, true);
 }
