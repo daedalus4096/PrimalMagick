@@ -66,29 +66,30 @@ public class StatsManager {
         return new StringTextComponent(stat.getFormatter().format(getValue(player, stat)));
     }
     
-    public static void incrementValue(@Nullable ServerPlayerEntity player, @Nullable Stat stat) {
+    public static void incrementValue(@Nullable PlayerEntity player, @Nullable Stat stat) {
         incrementValue(player, stat, 1);
     }
     
-    public static void incrementValue(@Nullable ServerPlayerEntity player, @Nullable Stat stat, int delta) {
+    public static void incrementValue(@Nullable PlayerEntity player, @Nullable Stat stat, int delta) {
         setValue(player, stat, delta + getValue(player, stat));
     }
     
-    public static void setValue(@Nullable ServerPlayerEntity player, @Nullable Stat stat, int value) {
-        if (player != null) {
-            IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+    public static void setValue(@Nullable PlayerEntity player, @Nullable Stat stat, int value) {
+        if (player instanceof ServerPlayerEntity) {
+            ServerPlayerEntity spe = (ServerPlayerEntity)player;
+            IPlayerStats stats = PrimalMagicCapabilities.getStats(spe);
             if (stats != null) {
                 // Set the new value into the player capability
                 stats.setValue(stat, value);
-                stats.sync(player);
+                stats.sync(spe);
                 
                 // Check stat triggers for updates
-                StatTriggers.checkTriggers(player, stat, value);
+                StatTriggers.checkTriggers(spe, stat, value);
             }
         }
     }
     
-    public static void setValueIfMax(@Nullable ServerPlayerEntity player, @Nullable Stat stat, int newVal) {
+    public static void setValueIfMax(@Nullable PlayerEntity player, @Nullable Stat stat, int newVal) {
         if (newVal > getValue(player, stat)) {
             setValue(player, stat, newVal);
         }

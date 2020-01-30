@@ -37,7 +37,7 @@ public class GrimoireItem extends Item implements INamedContainerProvider {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         // Open the grimoire GUI on right click
         if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity) {
-            StatsManager.incrementValue((ServerPlayerEntity)playerIn, StatsPM.GRIMOIRE_READ);
+            StatsManager.incrementValue(playerIn, StatsPM.GRIMOIRE_READ);
             NetworkHooks.openGui((ServerPlayerEntity)playerIn, this);
         }
         return new ActionResult<ItemStack>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));

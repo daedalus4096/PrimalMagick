@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
@@ -178,9 +177,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
             this.payload.playSounds(world, caster.getPosition());
         }
         if (this.vehicle != null) {
-            if (!world.isRemote && caster instanceof ServerPlayerEntity) {
-                StatsManager.incrementValue((ServerPlayerEntity)caster, StatsPM.SPELLS_CAST);
-            }
+            StatsManager.incrementValue(caster, StatsPM.SPELLS_CAST);
             this.vehicle.execute(this, world, caster);
         }
     }
