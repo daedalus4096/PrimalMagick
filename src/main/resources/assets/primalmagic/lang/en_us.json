@@ -575,6 +575,7 @@
     "stat.primalmagic.mana_spent_infernal": "Infernal mana spent",
     "stat.primalmagic.mana_spent_void": "Void mana spent",
     "stat.primalmagic.mana_spent_hallowed": "Hallowed mana spent",
+    "stat.primalmagic.treants_named": "Treants driven to self-immolation",
     
     "itemGroup.primalmagic": "Primal Magic"
 }

@@ -28,4 +28,5 @@ public class StatsPM {
     public static final Stat MANA_SPENT_INFERNAL = Stat.create("mana_spent_infernal", IStatFormatter.DEFAULT, true);
     public static final Stat MANA_SPENT_VOID = Stat.create("mana_spent_void", IStatFormatter.DEFAULT, true);
     public static final Stat MANA_SPENT_HALLOWED = Stat.create("mana_spent_hallowed", IStatFormatter.DEFAULT, true);
+    public static final Stat TREANTS_NAMED = Stat.create("treants_named", IStatFormatter.DEFAULT, false);
 }
