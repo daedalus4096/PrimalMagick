@@ -28,5 +28,10 @@ public class StatsPM {
     public static final Stat MANA_SPENT_INFERNAL = Stat.create("mana_spent_infernal", IStatFormatter.DEFAULT, true);
     public static final Stat MANA_SPENT_VOID = Stat.create("mana_spent_void", IStatFormatter.DEFAULT, true);
     public static final Stat MANA_SPENT_HALLOWED = Stat.create("mana_spent_hallowed", IStatFormatter.DEFAULT, true);
+    public static final Stat SHRINE_FOUND_EARTH = Stat.create("shrine_found_earth", IStatFormatter.DEFAULT, false);
+    public static final Stat SHRINE_FOUND_SEA = Stat.create("shrine_found_sea", IStatFormatter.DEFAULT, false);
+    public static final Stat SHRINE_FOUND_SKY = Stat.create("shrine_found_sky", IStatFormatter.DEFAULT, false);
+    public static final Stat SHRINE_FOUND_SUN = Stat.create("shrine_found_sun", IStatFormatter.DEFAULT, false);
+    public static final Stat SHRINE_FOUND_MOON = Stat.create("shrine_found_moon", IStatFormatter.DEFAULT, false);
     public static final Stat TREANTS_NAMED = Stat.create("treants_named", IStatFormatter.DEFAULT, false);
 }

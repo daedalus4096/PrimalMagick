@@ -74,6 +74,18 @@ public class ResearchManager {
         }
     }
     
+    public static boolean isResearchComplete(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+        if (player == null || key == null) {
+            return false;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        } else {
+            return knowledge.isResearchComplete(key);
+        }
+    }
+    
     public static boolean completeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
         // Complete the given research and sync it to the player's client
         return completeResearch(player, key, true);

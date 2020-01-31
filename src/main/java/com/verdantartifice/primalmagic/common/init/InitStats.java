@@ -21,5 +21,10 @@ public class InitStats {
         StatTriggers.register(StatsPM.SPELLS_CRAFTED, 1, SimpleResearchKey.parse("t_spells_crafted_expert"));
         StatTriggers.register(StatsPM.SPELLS_CRAFTED_MAX_COST, 50, SimpleResearchKey.parse("t_spell_cost_master"));
         StatTriggers.register(StatsPM.SPELLS_CRAFTED_MAX_COST, 250, SimpleResearchKey.parse("t_spell_cost_supreme"));
+        StatTriggers.register(StatsPM.SHRINE_FOUND_EARTH, 1, SimpleResearchKey.parse("m_found_shrine_earth"));
+        StatTriggers.register(StatsPM.SHRINE_FOUND_SEA, 1, SimpleResearchKey.parse("m_found_shrine_sea"));
+        StatTriggers.register(StatsPM.SHRINE_FOUND_SKY, 1, SimpleResearchKey.parse("m_found_shrine_sky"));
+        StatTriggers.register(StatsPM.SHRINE_FOUND_SUN, 1, SimpleResearchKey.parse("m_found_shrine_sun"));
+        StatTriggers.register(StatsPM.SHRINE_FOUND_MOON, 1, SimpleResearchKey.parse("m_found_shrine_moon"));
     }
 }

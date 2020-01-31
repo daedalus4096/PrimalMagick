@@ -425,6 +425,7 @@
     "event.primalmagic.scan.fail": "You are unable to scan that",
     "event.primalmagic.scan.repeat": "You learn nothing new from scanning that",
     "event.primalmagic.scan.toobig": "There are too many items there to scan completely",
+    "event.primalmagic.found_shrine": "A peculiar energy fills the air in this shrine, and you're not sure what to make of it. Perhaps some sleep will grant inspiration.",
     "event.primalmagic.discover_source.blood": "Your blood sings with power as warmth spreads through you. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.infernal": "The fiery aura of this place seethes with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.void": "The emptiness of this place nonetheless teems with magic. You believe this may be a new primal source!",
@@ -552,6 +553,11 @@
     "primalmagic.research.t_spells_crafted_expert.text": "Craft a spell",
     "primalmagic.research.t_spell_cost_master.text": "Craft a spell with a mana cost of at least 50",
     "primalmagic.research.t_spell_cost_supreme.text": "Craft a spell with a mana cost of at least 250",
+    "primalmagic.research.m_found_shrine_earth.text": "Locate an Earth shrine",
+    "primalmagic.research.m_found_shrine_sea.text": "Locate a Sea shrine",
+    "primalmagic.research.m_found_shrine_sky.text": "Locate a Sky shrine",
+    "primalmagic.research.m_found_shrine_sun.text": "Locate a Sun shrine",
+    "primalmagic.research.m_found_shrine_moon.text": "Locate a Moon shrine",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
@@ -575,6 +581,11 @@
     "stat.primalmagic.mana_spent_infernal": "Infernal mana spent",
     "stat.primalmagic.mana_spent_void": "Void mana spent",
     "stat.primalmagic.mana_spent_hallowed": "Hallowed mana spent",
+    "stat.primalmagic.shrine_found_earth": "Earth shrines found",
+    "stat.primalmagic.shrine_found_sea": "Sea shrines found",
+    "stat.primalmagic.shrine_found_sky": "Sky shrines found",
+    "stat.primalmagic.shrine_found_sun": "Sun shrines found",
+    "stat.primalmagic.shrine_found_moon": "Moon shrines found",
     "stat.primalmagic.treants_named": "Treants driven to self-immolation",
     
     "itemGroup.primalmagic": "Primal Magic"

@@ -1,11 +1,17 @@
 package com.verdantartifice.primalmagic.common.tiles.mana;
 
+import java.util.List;
+
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
@@ -16,6 +22,8 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 /**
@@ -59,6 +67,20 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
     @Override
     public void tick() {
         this.ticksExisted++;
+        if (!this.world.isRemote && this.ticksExisted % 10 == 0) {
+            // Have players in range discover this font's shrine
+            SimpleResearchKey research = SimpleResearchKey.parse("m_found_shrine");
+            List<PlayerEntity> players = EntityUtils.getEntitiesInRange(this.world, this.pos, null, PlayerEntity.class, 5.0D);
+            for (PlayerEntity player : players) {
+                if (!ResearchManager.isResearchComplete(player, research)) {
+                    ResearchManager.completeResearch(player, research);
+                    player.sendMessage(new TranslationTextComponent("event.primalmagic.found_shrine").applyTextStyle(TextFormatting.GREEN));
+                }
+                if (this.getBlockState().getBlock() instanceof AncientManaFontBlock) {
+                    StatsManager.discoverShrine(player, ((AncientManaFontBlock)this.getBlockState().getBlock()).getSource(), this.pos);
+                }
+            }
+        }
         if (!this.world.isRemote && this.ticksExisted % RECHARGE_TICKS == 0) {
             // Recharge the font over time
             this.mana++;

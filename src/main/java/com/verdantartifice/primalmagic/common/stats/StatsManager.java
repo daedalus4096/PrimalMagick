@@ -12,10 +12,12 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -92,6 +94,41 @@ public class StatsManager {
     public static void setValueIfMax(@Nullable PlayerEntity player, @Nullable Stat stat, int newVal) {
         if (newVal > getValue(player, stat)) {
             setValue(player, stat, newVal);
+        }
+    }
+    
+    public static void discoverShrine(@Nullable PlayerEntity player, @Nullable Source shrineSource, @Nullable BlockPos shrinePos) {
+        if (player instanceof ServerPlayerEntity && shrineSource != null && shrinePos != null) {
+            Stat stat = getShrineStatForSource(shrineSource);
+            ServerPlayerEntity spe = (ServerPlayerEntity)player;
+            IPlayerStats stats = PrimalMagicCapabilities.getStats(spe);
+            if (stat != null && stats != null && !stats.isLocationDiscovered(shrinePos)) {
+                // If the location has not yet been discovered, mark it as such and increment the appropriate stat
+                int value = 1 + stats.getValue(stat);
+                stats.setLocationDiscovered(shrinePos);
+                stats.setValue(stat, value);
+                stats.sync(spe);
+                
+                // Check stat triggers for updates
+                StatTriggers.checkTriggers(spe, stat, value);
+            }
+        }
+    }
+    
+    @Nullable
+    protected static Stat getShrineStatForSource(@Nonnull Source source) {
+        if (source.equals(Source.EARTH)) {
+            return StatsPM.SHRINE_FOUND_EARTH;
+        } else if (source.equals(Source.SEA)) {
+            return StatsPM.SHRINE_FOUND_SEA;
+        } else if (source.equals(Source.SKY)) {
+            return StatsPM.SHRINE_FOUND_SKY;
+        } else if (source.equals(Source.SUN)) {
+            return StatsPM.SHRINE_FOUND_SUN;
+        } else if (source.equals(Source.MOON)) {
+            return StatsPM.SHRINE_FOUND_MOON;
+        } else {
+            return null;
         }
     }
 }
