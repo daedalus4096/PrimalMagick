@@ -426,12 +426,18 @@
     "event.primalmagic.scan.repeat": "You learn nothing new from scanning that",
     "event.primalmagic.scan.toobig": "There are too many items there to scan completely",
     "event.primalmagic.found_shrine": "A peculiar energy fills the air in this shrine, and you're not sure what to make of it. Perhaps some sleep will grant inspiration.",
+    "event.primalmagic.got_dream": "You awaken with a start from a particularly vivid dream. You manage to write it down before it fades from your memory.",
     "event.primalmagic.discover_source.blood": "Your blood sings with power as warmth spreads through you. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.infernal": "The fiery aura of this place seethes with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.void": "The emptiness of this place nonetheless teems with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.hallowed": "This object seems to radiate a magic of harmony. You believe this may be a new primal source!",
     "event.primalmagic.cycle_spell": "Active spell changed to: %1$s",
     "event.primalmagic.cycle_spell.none": "Active spell changed to: none",
+    
+    "primalmagic.dream_journal.title": "Dream Journal",
+    "primalmagic.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagic.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",
+    "primalmagic.dream_journal.text.2": "\"the shrine and found stone laced with a curious dust. Sensing more magic within it, I took a handful of the dust and rubbed it onto an ordinary stick.\n\nSo imbued, the stick became something more. In the dream, I took it and waved it at a bookcase.\"",
+    "primalmagic.dream_journal.text.3": "\"The dream ended before I could see what resulted, but I feel like it would have been something wondrous.\n\nI feel like this could be a key to something amazing, if I just have the courage to take that first step.\"",
     
     "primalmagic.crafting.mana_tooltip": "%1$d %2$s mana",
     "primalmagic.crafting.no_mana": "No mana cost",

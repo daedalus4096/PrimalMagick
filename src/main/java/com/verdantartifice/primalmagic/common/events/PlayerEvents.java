@@ -10,9 +10,13 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -21,6 +25,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -139,5 +144,41 @@ public class PlayerEvents {
                 }
             }
         }
+    }
+    
+    @SubscribeEvent
+    public static void onWakeUp(PlayerWakeUpEvent event) {
+        PlayerEntity player = event.getPlayer();
+        if (player != null && !player.world.isRemote) {
+            if ( ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_found_shrine")) &&
+                 !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("t_got_dream")) ) {
+                // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
+                grantDreamJournal(player);
+            }
+        }
+    }
+    
+    protected static void grantDreamJournal(PlayerEntity player) {
+        // First grant the appropriate research entry to continue FTUX
+        ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_got_dream"));
+        
+        // Construct the dream journal item
+        ItemStack journal = new ItemStack(Items.WRITTEN_BOOK);
+        CompoundNBT contents = new CompoundNBT();
+        contents.putInt("generation", 3);
+        contents.putString("title", new TranslationTextComponent("primalmagic.dream_journal.title").getFormattedText());
+        contents.putString("author", player.getName().getFormattedText());
+        ListNBT pages = new ListNBT();
+        pages.add(new StringNBT(new TranslationTextComponent("primalmagic.dream_journal.text.1").getFormattedText()));
+        pages.add(new StringNBT(new TranslationTextComponent("primalmagic.dream_journal.text.2").getFormattedText()));
+        pages.add(new StringNBT(new TranslationTextComponent("primalmagic.dream_journal.text.3").getFormattedText()));
+        contents.put("pages", pages);
+        journal.setTag(contents);
+        
+        // Give the dream journal to the player and announce it
+        if (!player.addItemStackToInventory(journal)) {
+            player.dropItem(journal, false);
+        }
+        player.sendMessage(new TranslationTextComponent("event.primalmagic.got_dream").applyTextStyle(TextFormatting.GREEN));
     }
 }
