@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.datagen;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.data.DataGenerator;
 
@@ -21,6 +22,7 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerSmokedMarbleLootTables();
         this.registerSunwoodLootTables();
         this.registerMoonwoodLootTables();
+        this.registerInfusedStoneLootTables();
         
         this.registerBasicTable(BlocksPM.ANALYSIS_TABLE);
         this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH);
@@ -95,6 +97,14 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerSlabTable(BlocksPM.MOONWOOD_SLAB);
         this.registerBasicTable(BlocksPM.MOONWOOD_STAIRS);
         this.registerBasicTable(BlocksPM.MOONWOOD_PILLAR);
+    }
+    
+    private void registerInfusedStoneLootTables() {
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_EARTH, ItemsPM.ESSENCE_DUST_EARTH);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SEA, ItemsPM.ESSENCE_DUST_SEA);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SKY, ItemsPM.ESSENCE_DUST_SKY);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SUN, ItemsPM.ESSENCE_DUST_SUN);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_MOON, ItemsPM.ESSENCE_DUST_MOON);
     }
 
     @Override

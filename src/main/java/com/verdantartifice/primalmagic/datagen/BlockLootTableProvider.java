@@ -13,12 +13,14 @@ import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.state.properties.SlabType;
 import net.minecraft.util.ResourceLocation;
@@ -89,6 +91,15 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
         LootPool.Builder stickPool = LootPool.builder().rolls(ConstantRange.of(1)).acceptCondition(shearsOrSilkTouch.inverted()).addEntry(stickEntryBuilder);
         LootTable.Builder tableBuilder = LootTable.builder().addLootPool(saplingAndLeavesPool).addLootPool(stickPool);
         this.lootTables.put(leavesBlock, tableBuilder);
+    }
+    
+    protected void registerInfusedStoneTable(Block stoneBlock, Item dustItem) {
+        LootPool.Builder stonePoolBuilder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(Blocks.COBBLESTONE))
+                .acceptCondition(SurvivesExplosion.builder());
+        LootPool.Builder dustPoolBuilder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(dustItem))
+                .acceptCondition(SurvivesExplosion.builder());
+        LootTable.Builder tableBuilder = LootTable.builder().addLootPool(stonePoolBuilder).addLootPool(dustPoolBuilder);
+        this.lootTables.put(stoneBlock, tableBuilder);
     }
     
     @Override
