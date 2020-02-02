@@ -66,6 +66,11 @@
     "block.primalmagic.spellcrafting_altar": "Spellcrafting Altar",
     "block.primalmagic.wand_charger": "Wand Charger",
     "block.primalmagic.consecration_field": "Consecration Field",
+    "block.primalmagic.infused_stone_earth": "Earth-Infused Stone",
+    "block.primalmagic.infused_stone_sea": "Sea-Infused Stone",
+    "block.primalmagic.infused_stone_sky": "Sky-Infused Stone",
+    "block.primalmagic.infused_stone_sun": "Sun-Infused Stone",
+    "block.primalmagic.infused_stone_moon": "Moon-Infused Stone",
     
     "item.primalmagic.grimoire": "Grimoire",
     "item.primalmagic.arcanometer": "Arcanometer",

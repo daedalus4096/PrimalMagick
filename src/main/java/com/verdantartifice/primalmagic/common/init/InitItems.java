@@ -96,6 +96,13 @@ public class InitItems {
         registry.register(new BlockItem(BlocksPM.MOONWOOD_STAIRS, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_STAIRS.getRegistryName()));
         registry.register(new BurnableBlockItem(BlocksPM.MOONWOOD_PILLAR, 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.MOONWOOD_PILLAR.getRegistryName()));
 
+        // Register infused stone block items
+        registry.register(new BlockItem(BlocksPM.INFUSED_STONE_EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.INFUSED_STONE_EARTH.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.INFUSED_STONE_SEA, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.INFUSED_STONE_SEA.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.INFUSED_STONE_SKY, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.INFUSED_STONE_SKY.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.INFUSED_STONE_SUN, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.INFUSED_STONE_SUN.getRegistryName()));
+        registry.register(new BlockItem(BlocksPM.INFUSED_STONE_MOON, new Item.Properties().group(PrimalMagic.ITEM_GROUP)).setRegistryName(BlocksPM.INFUSED_STONE_MOON.getRegistryName()));
+        
         // Register mana font block items
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_EARTH.getRegistryName()));
         registry.register(new BlockItem(BlocksPM.ANCIENT_FONT_SEA, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setTEISR(()->()->new AncientManaFontTEISR())).setRegistryName(BlocksPM.ANCIENT_FONT_SEA.getRegistryName()));

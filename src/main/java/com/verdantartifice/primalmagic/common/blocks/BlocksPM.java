@@ -70,6 +70,12 @@ public class BlocksPM {
     public static final Block MOONWOOD_STAIRS = null;
     public static final Block MOONWOOD_PILLAR = null;
     
+    public static final Block INFUSED_STONE_EARTH = null;
+    public static final Block INFUSED_STONE_SEA = null;
+    public static final Block INFUSED_STONE_SKY = null;
+    public static final Block INFUSED_STONE_SUN = null;
+    public static final Block INFUSED_STONE_MOON = null;
+    
     public static final Block ARCANE_WORKBENCH = null;
     public static final Block ANCIENT_FONT_EARTH = null;
     public static final Block ANCIENT_FONT_SEA = null;

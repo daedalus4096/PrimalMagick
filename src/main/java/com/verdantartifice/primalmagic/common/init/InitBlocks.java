@@ -119,6 +119,13 @@ public class InitBlocks {
         registry.register(new MoonwoodSlabBlock(Block.Properties.from(moonwoodPlanks)));
         registry.register(new MoonwoodStairsBlock(moonwoodPlanks.getDefaultState(), Block.Properties.from(moonwoodPlanks)));
         registry.register(new MoonwoodPillarBlock());
+        
+        // Register infused stone
+        registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "infused_stone_earth"));
+        registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "infused_stone_sea"));
+        registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "infused_stone_sky"));
+        registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "infused_stone_sun"));
+        registry.register(new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)).setRegistryName(PrimalMagic.MODID, "infused_stone_moon"));
 
         // Register mana fonts
         registry.register(new AncientManaFontBlock(Source.EARTH));
