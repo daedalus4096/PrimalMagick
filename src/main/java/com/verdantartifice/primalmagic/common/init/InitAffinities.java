@@ -299,6 +299,11 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MOONWOOD_SAPLING), new SourceList().add(Source.EARTH, 10).add(Source.MOON, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MOONWOOD_PLANKS), new SourceList().add(Source.EARTH, 2).add(Source.MOON, 4));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.MOONWOOD_SLAB), new SourceList().add(Source.EARTH, 1).add(Source.MOON, 2));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.INFUSED_STONE_EARTH), new SourceList().add(Source.EARTH, 6));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.INFUSED_STONE_SEA), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 1));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.INFUSED_STONE_SKY), new SourceList().add(Source.EARTH, 5).add(Source.SKY, 1));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.INFUSED_STONE_SUN), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 1));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.INFUSED_STONE_MOON), new SourceList().add(Source.EARTH, 5).add(Source.MOON, 1));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ARCANE_WORKBENCH), AffinityManager.getAffinities(new ItemStack(Blocks.CRAFTING_TABLE), server));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_EARTH), new SourceList().add(Source.EARTH, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_SEA), new SourceList().add(Source.SEA, 20));
