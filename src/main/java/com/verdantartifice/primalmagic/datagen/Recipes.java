@@ -50,6 +50,11 @@ public class Recipes extends RecipeProvider {
         this.registerEssenceUpgradeRecipes(consumer);
         this.registerEssenceDowngradeRecipes(consumer);
         
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND)
+            .addIngredient(Tags.Items.RODS_WOODEN)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .addCriterion("has_terrestrial_dust", this.hasItem(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS))
+            .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.ANALYSIS_TABLE)
             .addIngredient(BlocksPM.WOOD_TABLE)
             .addIngredient(ItemsPM.MAGNIFYING_GLASS)

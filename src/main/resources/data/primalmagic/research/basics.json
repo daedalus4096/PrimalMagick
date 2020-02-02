@@ -8,11 +8,12 @@
             "stages": [
                 {
                     "text": "primalmagic.research.first_steps.text.stage.1",
-                    "required_item": ["minecraft:stick"]
+                    "required_item": ["minecraft:stick"],
+                    "recipes": ["primalmagic:mundane_wand"]
                 },
                 {
                     "text": "primalmagic.research.first_steps.text.stage.2",
-                    "recipes": ["primalmagic:marble_enchanted"]
+                    "recipes": ["primalmagic:mundane_wand", "primalmagic:marble_enchanted"]
                 }
             ],
             "addenda": []
