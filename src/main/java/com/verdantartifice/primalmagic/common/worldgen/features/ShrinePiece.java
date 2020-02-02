@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
@@ -85,10 +86,51 @@ public class ShrinePiece extends TemplateStructurePiece {
         }
     }
     
+    @Nonnull
+    protected Block getInfusedStone() {
+        if (this.source == null) {
+            return Blocks.AIR;
+        } else if (this.source.equals(Source.EARTH)) {
+            return BlocksPM.INFUSED_STONE_EARTH;
+        } else if (this.source.equals(Source.SEA)) {
+            return BlocksPM.INFUSED_STONE_SEA;
+        } else if (this.source.equals(Source.SKY)) {
+            return BlocksPM.INFUSED_STONE_SKY;
+        } else if (this.source.equals(Source.SUN)) {
+            return BlocksPM.INFUSED_STONE_SUN;
+        } else if (this.source.equals(Source.MOON)) {
+            return BlocksPM.INFUSED_STONE_MOON;
+        } else {
+            return Blocks.AIR;
+        }
+    }
+    
     @Override
     public boolean addComponentParts(IWorld worldIn, Random randomIn, MutableBoundingBox structureBoundingBoxIn, ChunkPos p_74875_4_) {
         int i = worldIn.getHeight(Heightmap.Type.WORLD_SURFACE_WG, this.templatePosition.getX(), this.templatePosition.getZ());
         this.templatePosition = new BlockPos(this.templatePosition.getX(), i, this.templatePosition.getZ());
-        return super.addComponentParts(worldIn, randomIn, structureBoundingBoxIn, p_74875_4_);
+        
+        // Generate the shrine; must be done first so that the bounding box is updated with the calculated template position
+        boolean success = super.addComponentParts(worldIn, randomIn, structureBoundingBoxIn, p_74875_4_);
+        
+        // Generate infused stone under the shrine
+        BlockState bs = this.getInfusedStone().getDefaultState();
+        BlockPos.PooledMutableBlockPos pmbp = BlockPos.PooledMutableBlockPos.retain();
+        for (int x = 2; x < 11; x++) {
+            for (int y = -3; y < 0; y++) {
+                for (int z = 2; z < 11; z++) {
+                    // Only replace blocks that aren't air
+                    pmbp.setPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
+                    if (!worldIn.isAirBlock(pmbp)) {
+                        // Only a 30% chance to spawn infused stone at each valid position
+                        if (randomIn.nextInt(10) < 3) {
+                            this.setBlockState(worldIn, bs, x, y, z, structureBoundingBoxIn);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return success;
     }
 }
