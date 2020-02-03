@@ -218,6 +218,6 @@ public class ArcaneWorkbenchContainer extends Container {
             return false;
         }
         IWand wand = (IWand)stack.getItem();
-        return wand.containsMana(stack, player, recipe.getManaCosts());
+        return wand.containsRealMana(stack, player, recipe.getManaCosts());
     }
 }

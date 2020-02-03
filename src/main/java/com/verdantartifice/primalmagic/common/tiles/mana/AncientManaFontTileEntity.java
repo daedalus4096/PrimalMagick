@@ -115,7 +115,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
                 if (source != null) {
                     // Transfer mana from the font to the wand
                     int tap = 1;
-                    int leftover = wand.addMana(wandStack, source, tap);
+                    int leftover = wand.addRealMana(wandStack, source, tap);
                     if (leftover < tap) {
                         this.mana -= (tap - leftover);
                         this.markDirty();

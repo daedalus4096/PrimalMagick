@@ -25,7 +25,7 @@ public class MundaneWandItem extends AbstractWandItem {
     @Override
     public int getMaxMana(ItemStack stack) {
         // With no gem, a mundane wand's mana capacity is low and fixed
-        return 25;
+        return 2500;
     }
 
     @Override

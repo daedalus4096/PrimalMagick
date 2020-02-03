@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.items.wands;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -39,11 +40,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Base item definition for a wand.  Wands store mana for use in crafting and, optionally, casting spells.
- * They are replenished by drawing from mana fonts or being charged in a wand charger.
+ * They are replenished by drawing from mana fonts or being charged in a wand charger.  The wand's mana is
+ * stored internally as centimana (hundredths of mana points), though most mana manipulation methods deal
+ * in "real" mana, not centimana.
  * 
  * @author Daedalus4096
  */
 public abstract class AbstractWandItem extends Item implements IWand {
+    protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
+    
     public AbstractWandItem(Properties properties) {
         super(properties);
     }
@@ -54,7 +59,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinite mana, return that
             return -1;
         } else {
-            // Otherwise get the current mana for that source from the stack's NBT tag
+            // Otherwise get the current centimana for that source from the stack's NBT tag
             int retVal = 0;
             if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getTag())) {
                 retVal = stack.getTag().getInt(source.getTag());
@@ -69,8 +74,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinte mana, show the infinity symbol
             return new StringTextComponent(Character.toString('\u221E'));
         } else {
-            // Otherwise show the current mana for that source from the stack's NBT tag
-            return new StringTextComponent(Integer.toString(mana));
+            // Otherwise show the current real mana for that source from the stack's NBT tag
+            return new StringTextComponent(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
 
@@ -83,6 +88,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
                 retVal.set(source, -1);
             } else if (stack.hasTag() && stack.getTag().contains(source.getTag())) {
+                // Otherwise, merge the current centimana into the returned source list
                 retVal.merge(source, stack.getTag().getInt(source.getTag()));
             } else {
                 retVal.merge(source, 0);
@@ -92,10 +98,10 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     /**
-     * Get the maximum amount of mana that can be held by the given wand stack.
+     * Get the maximum amount of centimana that can be held by the given wand stack.
      * 
      * @param stack the wand stack whose maximum mana to return
-     * @return the maximum amount of mana that can be held by the given wand stack
+     * @return the maximum amount of centimana that can be held by the given wand stack
      */
     public abstract int getMaxMana(ItemStack stack);
     
@@ -105,33 +111,33 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinte mana, show the infinity symbol
             return new StringTextComponent(Character.toString('\u221E'));
         } else {
-            // Otherwise show the max mana for that source from the stack's NBT tag
-            return new StringTextComponent(Integer.toString(mana));
+            // Otherwise show the max centimana for that source from the stack's NBT tag
+            return new StringTextComponent(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
     
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
-        // Save the given amount of mana for the given source into the stack's NBT tag
+        // Save the given amount of centimana for the given source into the stack's NBT tag
         stack.setTagInfo(source.getTag(), new IntNBT(amount));
     }
 
     @Override
-    public int addMana(ItemStack stack, Source source, int amount) {
+    public int addRealMana(ItemStack stack, Source source, int amount) {
         // If the parameters are invalid or the given wand stack has infinite mana, do nothing
         if (stack == null || source == null || this.getMaxMana(stack) == -1) {
             return 0;
         }
         
-        // Otherwise, increment and set the new mana total for the source into the wand's data, returning
-        // any leftover mana that wouldn't fit
-        int toStore = this.getMana(stack, source) + amount;
+        // Otherwise, increment and set the new real mana total for the source into the wand's data, returning
+        // any leftover real mana that wouldn't fit
+        int toStore = this.getMana(stack, source) + (amount * 100);
         int leftover = Math.max(toStore - this.getMaxMana(stack), 0);
         this.setMana(stack, source, Math.min(toStore, this.getMaxMana(stack)));
         return leftover;
     }
 
     @Override
-    public boolean consumeMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+    public boolean consumeRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
         if (stack == null || player == null || source == null) {
             return false;
         }
@@ -139,9 +145,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the wand stack has infinite mana, return success without consuming anything
             StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
             return true;
-        } else if (this.containsMana(stack, player, source, amount)) {
+        } else if (this.containsRealMana(stack, player, source, amount)) {
             // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
-            this.setMana(stack, source, this.getMana(stack, source) - amount);
+            this.setMana(stack, source, this.getMana(stack, source) - (amount * 100));
             StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
             return true;
         } else {
@@ -151,7 +157,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public boolean consumeMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+    public boolean consumeRealMana(ItemStack stack, PlayerEntity player, SourceList sources) {
         if (stack == null || player == null || sources == null) {
             return false;
         }
@@ -161,11 +167,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 StatsManager.incrementValue(player, source.getManaSpentStat(), sources.getAmount(source));
             }
             return true;
-        } else if (this.containsMana(stack, player, sources)) {
+        } else if (this.containsRealMana(stack, player, sources)) {
             // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
             for (Source source : sources.getSources()) {
                 int amount = sources.getAmount(source);
-                this.setMana(stack, source, this.getMana(stack, source) - amount);
+                this.setMana(stack, source, this.getMana(stack, source) - (amount * 100));
                 StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
             }
             return true;
@@ -176,15 +182,15 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public boolean containsMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+    public boolean containsRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
         // A wand stack with infinite mana always contains the requested amount of mana
-        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= amount;
+        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (amount * 100);
     }
     
     @Override
-    public boolean containsMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+    public boolean containsRealMana(ItemStack stack, PlayerEntity player, SourceList sources) {
         for (Source source : sources.getSources()) {
-            if (!this.containsMana(stack, player, source, sources.getAmount(source))) {
+            if (!this.containsRealMana(stack, player, source, sources.getAmount(source))) {
                 return false;
             }
         }
@@ -299,7 +305,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());
             if (worldIn.isRemote) {
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
-            } else if (this.consumeMana(stack, playerIn, activeSpell.getManaCost())) {
+            } else if (this.consumeRealMana(stack, playerIn, activeSpell.getManaCost())) {
                 // If the wand contains enough mana, consume it and cast the spell
                 activeSpell.cast(worldIn, playerIn);
                 playerIn.swingArm(handIn);

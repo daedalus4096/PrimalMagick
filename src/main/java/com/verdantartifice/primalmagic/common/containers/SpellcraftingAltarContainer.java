@@ -423,6 +423,6 @@ public class SpellcraftingAltarContainer extends Container {
             return false;
         }
         IWand wand = (IWand)stack.getItem();
-        return wand.containsMana(stack, player, this.getManaCosts());
+        return wand.containsRealMana(stack, player, this.getManaCosts());
     }
 }

@@ -155,7 +155,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
         if (this.canCharge()) {
             EssenceItem essence = (EssenceItem)inputStack.getItem();
             IWand wand = (IWand)wandStack.getItem();
-            wand.addMana(wandStack, essence.getSource(), this.getManaForEssenceType(essence.getEssenceType()));
+            wand.addRealMana(wandStack, essence.getSource(), this.getManaForEssenceType(essence.getEssenceType()));
             inputStack.shrink(1);
         }
     }
