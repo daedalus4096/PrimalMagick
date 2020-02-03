@@ -205,37 +205,46 @@
     "primalmagic.research.terrestrial_magic.text.stage.1": "For terrestrial magic: Lorem ipsum",
     
     "primalmagic.research.source_earth.title": "Source: The Earth",
-    "primalmagic.research.source_earth.text.stage.1": "For the earth: Lorem ipsum",
+    "primalmagic.research.source_earth.text.stage.1": "Investigate the secrets of earth magic",
+    "primalmagic.research.source_earth.text.stage.2": "Stone, strength, solidity: Lorem ipsum",
     
     "primalmagic.research.source_sea.title": "Source: The Sea",
-    "primalmagic.research.source_sea.text.stage.1": "For the sea: Lorem ipsum",
+    "primalmagic.research.source_sea.text.stage.1": "Investigate the secrets of sea magic",
+    "primalmagic.research.source_sea.text.stage.2": "Water, cold, cycles: Lorem ipsum",
     
     "primalmagic.research.source_sky.title": "Source: The Sky",
-    "primalmagic.research.source_sky.text.stage.1": "For the sky: Lorem ipsum",
+    "primalmagic.research.source_sky.text.stage.1": "Investigate the secrets of sky magic",
+    "primalmagic.research.source_sky.text.stage.2": "Air, energy, motion: Lorem ipsum",
     
     "primalmagic.research.source_sun.title": "Source: The Sun",
-    "primalmagic.research.source_sun.text.stage.1": "For the sun: Lorem ipsum",
+    "primalmagic.research.source_sun.text.stage.1": "Investigate the secrets of sun magic",
+    "primalmagic.research.source_sun.text.stage.2": "Day, warmth, growth: Lorem ipsum",
     
     "primalmagic.research.source_moon.title": "Source: The Moon",
-    "primalmagic.research.source_moon.text.stage.1": "For the moon: Lorem ipsum",
+    "primalmagic.research.source_moon.text.stage.1": "Investigate the secrets of moon magic",
+    "primalmagic.research.source_moon.text.stage.2": "Night, change, fortune: Lorem ipsum",
     
     "primalmagic.research.forbidden_magic.title": "Forbidden Magic",
     "primalmagic.research.forbidden_magic.text.stage.1": "For forbidden magic: Lorem ipsum",
     
     "primalmagic.research.source_blood.title": "Source: The Blood",
-    "primalmagic.research.source_blood.text.stage.1": "For the blood: Lorem ipsum",
+    "primalmagic.research.source_blood.text.stage.1": "Investigate the secrets of blood magic",
+    "primalmagic.research.source_blood.text.stage.2": "Life, death, flesh: Lorem ipsum",
     
     "primalmagic.research.source_infernal.title": "Source: The Infernal",
-    "primalmagic.research.source_infernal.text.stage.1": "For the infernal: Lorem ipsum",
+    "primalmagic.research.source_infernal.text.stage.1": "Investigate the secrets of infernal magic",
+    "primalmagic.research.source_infernal.text.stage.2": "Flame, suffering, rage: Lorem ipsum",
     
     "primalmagic.research.source_void.title": "Source: The Void",
-    "primalmagic.research.source_void.text.stage.1": "For the void: Lorem ipsum",
+    "primalmagic.research.source_void.text.stage.1": "Investigate the secrets of void magic",
+    "primalmagic.research.source_void.text.stage.2": "Emptiness, hunger, the eldritch: Lorem ipsum",
     
     "primalmagic.research.heavenly_magic.title": "Heavenly Magic",
     "primalmagic.research.heavenly_magic.text.stage.1": "For heavenly magic: Lorem ipsum",
     
     "primalmagic.research.source_hallowed.title": "Source: The Hallowed",
-    "primalmagic.research.source_hallowed.text.stage.1": "For the hallowed: Lorem ipsum",
+    "primalmagic.research.source_hallowed.text.stage.1": "Investigate the secrets of hallowed magic",
+    "primalmagic.research.source_hallowed.text.stage.2": "Peace, purity, enlightenment: Lorem ipsum",
     
     "primalmagic.research.basic_alchemy.title": "Basic Alchemy",
     "primalmagic.research.basic_alchemy.text.stage.1": "Basic alchemy: Lorem ipsum",
