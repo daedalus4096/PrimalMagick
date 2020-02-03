@@ -148,7 +148,7 @@
                     "text": "primalmagic.research.source_earth.text.stage.1",
                     "required_item": [ "tag:forge:obsidian", "tag:forge:gems/diamond" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_earth" ]
+                    "required_research": [ "m_found_shrine_earth", "t_mana_spent_earth_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_earth.text.stage.2"
@@ -166,7 +166,7 @@
                     "text": "primalmagic.research.source_sea.text.stage.1",
                     "required_item": [ "tag:primalmagic:coral_blocks", "minecraft:ice" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_sea" ]
+                    "required_research": [ "m_found_shrine_sea", "t_mana_spent_sea_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_sea.text.stage.2"
@@ -184,7 +184,7 @@
                     "text": "primalmagic.research.source_sky.text.stage.1",
                     "required_item": [ "minecraft:bamboo", "tag:minecraft:leaves" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_sky" ]
+                    "required_research": [ "m_found_shrine_sky", "t_mana_spent_sky_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_sky.text.stage.2"
@@ -202,7 +202,7 @@
                     "text": "primalmagic.research.source_sun.text.stage.1",
                     "required_item": [ "tag:primalmagic:sunwood_logs", "tag:forge:sandstone" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_sun" ]
+                    "required_research": [ "m_found_shrine_sun", "t_mana_spent_sun_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_sun.text.stage.2"
@@ -220,7 +220,7 @@
                     "text": "primalmagic.research.source_moon.text.stage.1",
                     "required_item": [ "tag:primalmagic:moonwood_logs", "tag:forge:mushrooms" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_moon" ]
+                    "required_research": [ "m_found_shrine_moon", "t_mana_spent_moon_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_moon.text.stage.2"
@@ -249,7 +249,8 @@
                 {
                     "text": "primalmagic.research.source_blood.text.stage.1",
                     "required_item": [ "tag:forge:bones", "primalmagic:bloody_flesh" ],
-                    "required_knowledge": [ "OBSERVATION;1" ]
+                    "required_knowledge": [ "OBSERVATION;1" ],
+                    "required_research": [ "t_mana_spent_blood_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_blood.text.stage.2"
@@ -266,7 +267,8 @@
                 {
                     "text": "primalmagic.research.source_infernal.text.stage.1",
                     "required_item": [ "tag:forge:rods/blaze", "minecraft:soul_sand" ],
-                    "required_knowledge": [ "OBSERVATION;1" ]
+                    "required_knowledge": [ "OBSERVATION;1" ],
+                    "required_research": [ "t_mana_spent_infernal_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_infernal.text.stage.2"
@@ -283,7 +285,8 @@
                 {
                     "text": "primalmagic.research.source_void.text.stage.1",
                     "required_item": [ "tag:forge:end_stones", "tag:forge:ender_pearls" ],
-                    "required_knowledge": [ "OBSERVATION;1" ]
+                    "required_knowledge": [ "OBSERVATION;1" ],
+                    "required_research": [ "t_mana_spent_void_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_void.text.stage.2"
@@ -312,7 +315,8 @@
                 {
                     "text": "primalmagic.research.source_hallowed.text.stage.1",
                     "required_item": [ "tag:forge:nether_stars" ],
-                    "required_knowledge": [ "OBSERVATION;1" ]
+                    "required_knowledge": [ "OBSERVATION;1" ],
+                    "required_research": [ "t_mana_spent_hallowed_expert" ]
                 },
                 {
                     "text": "primalmagic.research.source_hallowed.text.stage.2"

@@ -26,5 +26,14 @@ public class InitStats {
         StatTriggers.register(StatsPM.SHRINE_FOUND_SKY, 1, SimpleResearchKey.parse("m_found_shrine_sky"));
         StatTriggers.register(StatsPM.SHRINE_FOUND_SUN, 1, SimpleResearchKey.parse("m_found_shrine_sun"));
         StatTriggers.register(StatsPM.SHRINE_FOUND_MOON, 1, SimpleResearchKey.parse("m_found_shrine_moon"));
+        StatTriggers.register(StatsPM.MANA_SPENT_EARTH, 100, SimpleResearchKey.parse("t_mana_spent_earth_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_SEA, 100, SimpleResearchKey.parse("t_mana_spent_sea_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_SKY, 100, SimpleResearchKey.parse("t_mana_spent_sky_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_SUN, 100, SimpleResearchKey.parse("t_mana_spent_sun_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_MOON, 100, SimpleResearchKey.parse("t_mana_spent_moon_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_BLOOD, 100, SimpleResearchKey.parse("t_mana_spent_blood_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_INFERNAL, 100, SimpleResearchKey.parse("t_mana_spent_infernal_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_VOID, 100, SimpleResearchKey.parse("t_mana_spent_void_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_HALLOWED, 100, SimpleResearchKey.parse("t_mana_spent_hallowed_expert"));
     }
 }

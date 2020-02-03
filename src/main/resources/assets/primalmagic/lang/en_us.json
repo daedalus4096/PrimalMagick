@@ -244,7 +244,7 @@
     
     "primalmagic.research.source_hallowed.title": "Source: The Hallowed",
     "primalmagic.research.source_hallowed.text.stage.1": "Investigate the secrets of hallowed magic",
-    "primalmagic.research.source_hallowed.text.stage.2": "Peace, purity, enlightenment: Lorem ipsum",
+    "primalmagic.research.source_hallowed.text.stage.2": "Purity, harmony, enlightenment: Lorem ipsum",
     
     "primalmagic.research.basic_alchemy.title": "Basic Alchemy",
     "primalmagic.research.basic_alchemy.text.stage.1": "Basic alchemy: Lorem ipsum",
@@ -578,6 +578,15 @@
     "primalmagic.research.m_found_shrine_sky.text": "Locate a Sky shrine",
     "primalmagic.research.m_found_shrine_sun.text": "Locate a Sun shrine",
     "primalmagic.research.m_found_shrine_moon.text": "Locate a Moon shrine",
+    "primalmagic.research.t_mana_spent_earth_expert.text": "Spend 100 Earth mana (before discounts)",
+    "primalmagic.research.t_mana_spent_sea_expert.text": "Spend 100 Sea mana (before discounts)",
+    "primalmagic.research.t_mana_spent_sky_expert.text": "Spend 100 Sky mana (before discounts)",
+    "primalmagic.research.t_mana_spent_sun_expert.text": "Spend 100 Sun mana (before discounts)",
+    "primalmagic.research.t_mana_spent_moon_expert.text": "Spend 100 Moon mana (before discounts)",
+    "primalmagic.research.t_mana_spent_blood_expert.text": "Spend 100 Blood mana (before discounts)",
+    "primalmagic.research.t_mana_spent_infernal_expert.text": "Spend 100 Infernal mana (before discounts)",
+    "primalmagic.research.t_mana_spent_void_expert.text": "Spend 100 Void mana (before discounts)",
+    "primalmagic.research.t_mana_spent_hallowed_expert.text": "Spend 100 Hallowed mana (before discounts)",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
