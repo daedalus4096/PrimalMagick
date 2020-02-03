@@ -17,6 +17,7 @@ public class ItemTagsPM {
     public static final Tag<Item> BEDS = tag("beds");
     public static final Tag<Item> COLORED_SHULKER_BOXES = tag("colored_shulker_boxes");
     public static final Tag<Item> CONCRETE = tag("concrete");
+    public static final Tag<Item> CORAL_BLOCKS = tag("coral_blocks");
     public static final Tag<Item> DEAD_CORAL_BLOCKS = tag("dead_coral_blocks");
     public static final Tag<Item> DEAD_CORAL_PLANTS = tag("dead_coral_plants");
     public static final Tag<Item> DEAD_CORALS = tag("dead_corals");

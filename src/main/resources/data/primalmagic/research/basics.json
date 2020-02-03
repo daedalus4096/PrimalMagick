@@ -164,7 +164,7 @@
             "stages": [
                 {
                     "text": "primalmagic.research.source_sea.text.stage.1",
-                    "required_item": [ "tag:primalmagic:dead_coral_blocks", "minecraft:ice" ],
+                    "required_item": [ "tag:primalmagic:coral_blocks", "minecraft:ice" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
                     "required_research": [ "m_found_shrine_sea" ]
                 },
