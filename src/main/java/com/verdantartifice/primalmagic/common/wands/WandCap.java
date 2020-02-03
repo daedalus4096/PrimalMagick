@@ -28,7 +28,7 @@ public class WandCap {
     
     protected final String tag;                 // Unique identifier for the wand cap
     protected final Rarity rarity;              // The cap's rarity, used to color its name and determine completed wand rarity
-    protected final float costModifier;         // The discount or penalty to apply to mana usage
+    protected final float baseCostModifier;     // The base discount or penalty to apply to mana usage, modified by other factors later
     protected final ModelResourceLocation mrl;  // Resource location of the cap's model, stored in a blockstate file
     
     public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, float costModifier) {
@@ -42,7 +42,7 @@ public class WandCap {
         }
         this.tag = tag;
         this.rarity = rarity;
-        this.costModifier = costModifier;
+        this.baseCostModifier = costModifier;
         this.mrl = mrl;
         REGISTRY.put(tag, this);
     }
@@ -57,8 +57,8 @@ public class WandCap {
         return this.rarity;
     }
     
-    public float getCostModifier() {
-        return this.costModifier;
+    public float getBaseCostModifier() {
+        return this.baseCostModifier;
     }
     
     @Nonnull

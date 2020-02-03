@@ -60,7 +60,8 @@ public interface IWand {
     public int addRealMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
-     * Consume the given amount of the given type of mana from the given wand stack for the given player.
+     * Consume the given amount of the given type of mana from the given wand stack for the given player.  Takes
+     * into account any cost modifiers.
      * 
      * @param stack the wand stack to be modified
      * @param player the player doing the consuming
@@ -71,7 +72,8 @@ public interface IWand {
     public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
     
     /**
-     * Consume the given amounts of mana from the given wand stack for the given player.
+     * Consume the given amounts of mana from the given wand stack for the given player.  Takes into account any
+     * cost modifiers.
      * 
      * @param stack the wand stack to be modified
      * @param player the player doing the consuming
@@ -81,7 +83,8 @@ public interface IWand {
     public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
     
     /**
-     * Determine if the given wand stack contains the given amount of the given type of mana for the given player.
+     * Determine if the given wand stack contains the given amount of the given type of mana for the given player.  Takes
+     * into account any cost modifiers.
      * 
      * @param stack the wand stack to be queried
      * @param player the player doing the check
@@ -92,7 +95,8 @@ public interface IWand {
     public boolean containsRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
     
     /**
-     * Determine if the given wand stack contains the given amounts of mana for the given player.
+     * Determine if the given wand stack contains the given amounts of mana for the given player.  Takes into account
+     * any cost modifiers.
      * 
      * @param stack the wand stack to be queried
      * @param player the player doing the check
@@ -100,6 +104,24 @@ public interface IWand {
      * @return true if sufficient mana is present, false otherwise
      */
     public boolean containsRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
+    
+    /**
+     * Get the base mana cost modifier to be applied to mana consumption, as determined by the cap of the wand, if any.
+     * 
+     * @param stack the wand stack to be queried
+     * @return the base mana cost modifier to be applied to mana consumption
+     */
+    public float getBaseCostModifier(@Nullable ItemStack stack);
+    
+    /**
+     * Get the total mana cost modifier to be applied to mana consumption, from all factors (e.g. wand cap, player gear, attunement).
+     * 
+     * @param stack the wand stack to be queried
+     * @param player the player consuming the mana
+     * @param source the type of mana being consumed
+     * @return the total mana cost modifier to be applied to mana consumption
+     */
+    public float getTotalCostModifier(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source);
 
     /**
      * Clear any stored position data for the last interacted-with tile.

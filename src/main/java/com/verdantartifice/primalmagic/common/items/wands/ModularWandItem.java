@@ -41,8 +41,21 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public int getMaxMana(ItemStack stack) {
         // The maximum amount of real mana a wand can hold is determined by its gem
+        if (stack == null) {
+            return 2500;
+        }
         WandGem gem = this.getWandGem(stack);
         return (gem == null) ? 2500 : 100 * gem.getCapacity();
+    }
+    
+    @Override
+    public float getBaseCostModifier(ItemStack stack) {
+        // The base mana cost modifier of a wand is determined by its cap
+        if (stack == null) {
+            return 1.2F;
+        }
+        WandCap cap = this.getWandCap(stack);
+        return (cap == null) ? 1.2F : cap.getBaseCostModifier();
     }
 
     @Nullable

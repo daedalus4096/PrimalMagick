@@ -27,6 +27,12 @@ public class MundaneWandItem extends AbstractWandItem {
         // With no gem, a mundane wand's mana capacity is low and fixed
         return 2500;
     }
+    
+    @Override
+    public float getBaseCostModifier(ItemStack stack) {
+        // With no cap, a mundane wand gets a 20% penalty to all mana expenditures
+        return 1.2F;
+    }
 
     @Override
     public List<SpellPackage> getSpells(ItemStack stack) {

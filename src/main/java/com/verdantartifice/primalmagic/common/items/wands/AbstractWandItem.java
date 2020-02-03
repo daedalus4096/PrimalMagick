@@ -97,14 +97,6 @@ public abstract class AbstractWandItem extends Item implements IWand {
         return retVal;
     }
 
-    /**
-     * Get the maximum amount of centimana that can be held by the given wand stack.
-     * 
-     * @param stack the wand stack whose maximum mana to return
-     * @return the maximum amount of centimana that can be held by the given wand stack
-     */
-    public abstract int getMaxMana(ItemStack stack);
-    
     protected ITextComponent getMaxManaText(ItemStack stack) {
         int mana = this.getMaxMana(stack);
         if (mana == -1) {
@@ -147,7 +139,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             return true;
         } else if (this.containsRealMana(stack, player, source, amount)) {
             // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
-            this.setMana(stack, source, this.getMana(stack, source) - (amount * 100));
+            this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * (amount * 100)));
             StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
             return true;
         } else {
@@ -171,7 +163,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
             for (Source source : sources.getSources()) {
                 int amount = sources.getAmount(source);
-                this.setMana(stack, source, this.getMana(stack, source) - (amount * 100));
+                this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * (amount * 100)));
                 StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
             }
             return true;
@@ -184,7 +176,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public boolean containsRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
         // A wand stack with infinite mana always contains the requested amount of mana
-        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (amount * 100);
+        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (this.getTotalCostModifier(stack, player, source) * (amount * 100));
     }
     
     @Override
@@ -195,6 +187,19 @@ public abstract class AbstractWandItem extends Item implements IWand {
             }
         }
         return true;
+    }
+    
+    @Override
+    public float getTotalCostModifier(ItemStack stack, PlayerEntity player, Source source) {
+        // Start with the base modifier, as determined by wand cap
+        float modifier = this.getBaseCostModifier(stack);
+        
+        // TODO Subtract discounts from equipped player gear
+        // TODO Subtract discounts from attuned sources
+        // TODO Subtract discounts from wand enchantments
+        // TODO Add penalties from temporary conditions
+        
+        return modifier;
     }
     
     @Override
