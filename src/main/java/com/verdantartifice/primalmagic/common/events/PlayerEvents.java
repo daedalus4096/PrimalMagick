@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
@@ -73,6 +74,51 @@ public class PlayerEvents {
             // If the player is in an End-based biome, discover the Void source
             ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
             player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.void").applyTextStyle(TextFormatting.GREEN), false);
+        }
+        
+        // If the player is working on the Earth Source research, check if they're far enough down
+        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@2"))) {
+            SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
+            if (player.posY < 10.0D && !knowledge.isResearchKnown(key)) {
+                ResearchManager.completeResearch(player, key);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_earth").applyTextStyle(TextFormatting.GREEN), false);
+            }
+        }
+        
+        // If the player is working on the Sea Source research, check if they're in the ocean
+        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@2"))) {
+            SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) && !knowledge.isResearchKnown(key)) {
+                ResearchManager.completeResearch(player, key);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sea").applyTextStyle(TextFormatting.GREEN), false);
+            }
+        }
+        
+        // If the player is working on the Sky Source research, check if they're high up enough
+        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@2"))) {
+            SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
+            if (player.posY > 100.0D && !knowledge.isResearchKnown(key)) {
+                ResearchManager.completeResearch(player, key);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sky").applyTextStyle(TextFormatting.GREEN), false);
+            }
+        }
+        
+        // If the player is working on the Sun Source research, check if they're in the desert during the daytime
+        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
+            SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY) && TimePhase.getSunPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                ResearchManager.completeResearch(player, key);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sun").applyTextStyle(TextFormatting.GREEN), false);
+            }
+        }
+        
+        // If the player is working on the Moon Source research, check if they're in the forest during the night-time
+        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
+            SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST) && TimePhase.getMoonPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                ResearchManager.completeResearch(player, key);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_moon").applyTextStyle(TextFormatting.GREEN), false);
+            }
         }
     }
     
