@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.Constants;
@@ -28,7 +30,7 @@ import net.minecraftforge.common.util.LazyOptional;
  */
 public class PlayerAttunements implements IPlayerAttunements {
     // Nested map of sources to attunement types to values
-    private final Map<Source, Map<IPlayerAttunements.AttunementType, Integer>> attunements = new ConcurrentHashMap<>();
+    private final Map<Source, Map<AttunementType, Integer>> attunements = new ConcurrentHashMap<>();
 
     @Override
     public CompoundNBT serializeNBT() {
@@ -36,9 +38,9 @@ public class PlayerAttunements implements IPlayerAttunements {
         
         // Serialize recorded attunement values
         ListNBT attunementList = new ListNBT();
-        for (Map.Entry<Source, Map<IPlayerAttunements.AttunementType, Integer>> sourceEntry : this.attunements.entrySet()) {
+        for (Map.Entry<Source, Map<AttunementType, Integer>> sourceEntry : this.attunements.entrySet()) {
             if (sourceEntry != null) {
-                for (Map.Entry<IPlayerAttunements.AttunementType, Integer> typeEntry : sourceEntry.getValue().entrySet()) {
+                for (Map.Entry<AttunementType, Integer> typeEntry : sourceEntry.getValue().entrySet()) {
                     if (typeEntry != null && sourceEntry.getKey() != null && typeEntry.getKey() != null && typeEntry.getValue() != null) {
                         CompoundNBT tag = new CompoundNBT();
                         tag.putString("Source", sourceEntry.getKey().getTag());
@@ -67,9 +69,9 @@ public class PlayerAttunements implements IPlayerAttunements {
         for (int index = 0; index < attunementList.size(); index++) {
             CompoundNBT tag = attunementList.getCompound(index);
             Source source = Source.getSource(tag.getString("Source"));
-            IPlayerAttunements.AttunementType type = null;
+            AttunementType type = null;
             try {
-                type = IPlayerAttunements.AttunementType.valueOf(tag.getString("Type"));
+                type = AttunementType.valueOf(tag.getString("Type"));
             } catch (Exception e) {}
             int value = tag.getInt("Value");
             this.setValue(source, type, value);
@@ -91,10 +93,10 @@ public class PlayerAttunements implements IPlayerAttunements {
         // Don't allow null keys or values in the data
         if (source != null && type != null) {
             // Get the map of types to values for the source, creating an empty one if it doesn't exist
-            Map<IPlayerAttunements.AttunementType, Integer> typeMap = this.attunements.computeIfAbsent(source, k -> new ConcurrentHashMap<>());
+            Map<AttunementType, Integer> typeMap = this.attunements.computeIfAbsent(source, k -> new ConcurrentHashMap<>());
             
             // Determine if the value to be set must be capped
-            int toSet = type.isCapped() ? Math.min(type.getMaximum(), value) : value;
+            int toSet = type.isCapped() ? MathHelper.clamp(value, 0, type.getMaximum()) : Math.max(0, value);
             
             // Add the given value to the type map
             typeMap.put(type, Integer.valueOf(toSet));
