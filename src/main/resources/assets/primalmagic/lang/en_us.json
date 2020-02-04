@@ -163,6 +163,10 @@
     "primalmagic.knowledge_type.OBSERVATION": "Observation",
     "primalmagic.knowledge_type.THEORY": "Theory",
     
+    "primalmagic.attunement_type.PERMANENT": "Permanent",
+    "primalmagic.attunement_type.INDUCED": "Induced",
+    "primalmagic.attunement_type.TEMPORARY": "Temporary",
+    
     "primalmagic.affinities.label": "Affinities:",
     "primalmagic.affinities.none": "Affinities: None",
     "primalmagic.affinities.unknown": "Affinities: Unknown",

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.capabilities.PlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerStats;
@@ -27,6 +28,7 @@ public class CapabilityEvents {
             event.addCapability(PlayerKnowledge.Provider.NAME, new PlayerKnowledge.Provider());
             event.addCapability(PlayerCooldowns.Provider.NAME, new PlayerCooldowns.Provider());
             event.addCapability(PlayerStats.Provider.NAME, new PlayerStats.Provider());
+            event.addCapability(PlayerAttunements.Provider.NAME, new PlayerAttunements.Provider());
         }
     }
     

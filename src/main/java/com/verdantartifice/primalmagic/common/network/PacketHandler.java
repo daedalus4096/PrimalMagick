@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.network;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncCooldownsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
@@ -71,6 +72,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, TeleportArrivalPacket.class, TeleportArrivalPacket::encode, TeleportArrivalPacket::decode, TeleportArrivalPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SpellBoltPacket.class, SpellBoltPacket::encode, SpellBoltPacket::decode, SpellBoltPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncStatsPacket.class, SyncStatsPacket::encode, SyncStatsPacket::decode, SyncStatsPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SyncAttunementsPacket.class, SyncAttunementsPacket::encode, SyncAttunementsPacket::decode, SyncAttunementsPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

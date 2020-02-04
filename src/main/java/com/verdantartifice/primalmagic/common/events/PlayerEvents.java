@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
@@ -139,6 +140,10 @@ public class PlayerEvents {
             if (stats != null) {
                 stats.sync(player);
             }
+            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
+            if (attunements != null) {
+                attunements.sync(player);
+            }
         }
     }
     
@@ -165,6 +170,13 @@ public class PlayerEvents {
                 PrimalMagicCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
             } catch (Exception e) {
                 PrimalMagic.LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
+            }
+            
+            try {
+                CompoundNBT nbtAttunements = PrimalMagicCapabilities.getAttunements(event.getOriginal()).serializeNBT();
+                PrimalMagicCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
+            } catch (Exception e) {
+                PrimalMagic.LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
             }
         }
     }
