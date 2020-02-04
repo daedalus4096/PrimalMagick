@@ -64,7 +64,7 @@ public class KnowledgeWidget extends Widget {
             // Render completion checkmark if appropriate
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.pushMatrix();
-            GlStateManager.translatef(this.x + 8, this.y, 500.0F);
+            GlStateManager.translatef(this.x + 8, this.y, 100.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
             this.blit(0, 0, 159, 207, 10, 10);
             GlStateManager.popMatrix();
