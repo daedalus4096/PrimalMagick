@@ -70,9 +70,10 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
         if (!this.world.isRemote && this.ticksExisted % 10 == 0) {
             // Have players in range discover this font's shrine
             SimpleResearchKey research = SimpleResearchKey.parse("m_found_shrine");
+            SimpleResearchKey firstSteps = SimpleResearchKey.parse("FIRST_STEPS");
             List<PlayerEntity> players = EntityUtils.getEntitiesInRange(this.world, this.pos, null, PlayerEntity.class, 5.0D);
             for (PlayerEntity player : players) {
-                if (!ResearchManager.isResearchComplete(player, research)) {
+                if (!ResearchManager.isResearchComplete(player, research) && !ResearchManager.isResearchComplete(player, firstSteps)) {
                     ResearchManager.completeResearch(player, research);
                     player.sendMessage(new TranslationTextComponent("event.primalmagic.found_shrine").applyTextStyle(TextFormatting.GREEN));
                 }
