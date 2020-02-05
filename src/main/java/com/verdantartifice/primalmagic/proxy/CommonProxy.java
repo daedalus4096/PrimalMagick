@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.proxy;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.commands.PrimalMagicCommand;
 import com.verdantartifice.primalmagic.common.commands.arguments.AttunementTypeArgument;
+import com.verdantartifice.primalmagic.common.commands.arguments.AttunementValueArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.DisciplineArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeAmountArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeArgument;
@@ -48,6 +49,7 @@ public class CommonProxy implements IProxyPM {
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "source")).toString(), SourceArgument.class, new ArgumentSerializer<>(SourceArgument::source));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "stat_value")).toString(), StatValueArgument.class, new ArgumentSerializer<>(StatValueArgument::value));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "attunement_type")).toString(), AttunementTypeArgument.class, new ArgumentSerializer<>(AttunementTypeArgument::attunementType));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "attunement_value")).toString(), AttunementValueArgument.class, new ArgumentSerializer<>(AttunementValueArgument::value));
     }
     
     @Override

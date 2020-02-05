@@ -8,9 +8,15 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
+import com.verdantartifice.primalmagic.common.attunements.AttunementType;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.commands.arguments.AttunementTypeArgument;
+import com.verdantartifice.primalmagic.common.commands.arguments.AttunementTypeInput;
+import com.verdantartifice.primalmagic.common.commands.arguments.AttunementValueArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeAmountArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeInput;
@@ -124,6 +130,24 @@ public class PrimalMagicCommand {
                         .then(Commands.argument("stat", ResourceLocationArgument.resourceLocation()).suggests((ctx, sb) -> ISuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(ResourceLocation::toString), sb))
                             // /pm stats <target> set <stat> <value>
                             .then(Commands.argument("value", StatValueArgument.value()).executes((context) -> { return setStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getResourceLocation(context, "stat"), IntegerArgumentType.getInteger(context, "value")); }))
+                        )
+                    )
+                )
+            )
+            .then(Commands.literal("attunements")
+                .then(Commands.argument("target", EntityArgument.player())
+                    // /pm attunements <target> reset
+                    .then(Commands.literal("reset").executes((context) -> { return resetAttunements(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
+                    .then(Commands.literal("get")
+                        // /pm attunements <target> get <source>
+                        .then(Commands.argument("source", SourceArgument.source()).executes((context) -> { return getAttunements(context.getSource(), EntityArgument.getPlayer(context, "target"), SourceArgument.getSource(context, "source")); }))
+                    )
+                    .then(Commands.literal("set")
+                        .then(Commands.argument("source", SourceArgument.source())
+                            .then(Commands.argument("type", AttunementTypeArgument.attunementType())
+                                // /pm attunements <target> set <source> <type> <value>
+                                .then(Commands.argument("value", AttunementValueArgument.value()).executes((context) -> { return setAttunement(context.getSource(), EntityArgument.getPlayer(context, "target"), SourceArgument.getSource(context, "source"), AttunementTypeArgument.getAttunementType(context, "type"), IntegerArgumentType.getInteger(context, "value")); }))
+                            )
                         )
                     )
                 )
@@ -392,15 +416,70 @@ public class PrimalMagicCommand {
     }
 
     private static int resetStats(CommandSource source, ServerPlayerEntity target) {
+        // Remove all accrued stats from the player
         IPlayerStats stats = PrimalMagicCapabilities.getStats(target);
         if (stats == null) {
             source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.error"));
         } else {
-            // Remove all unlocked research entries from the target player
             stats.clear();
             stats.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.stats.reset", target.getName()), true);
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.stats.reset.target", source.getName()));
+        }
+        return 0;
+    }
+
+    private static int resetAttunements(CommandSource source, ServerPlayerEntity target) {
+        // Remove all accrued attunements from the player
+        IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(target);
+        if (attunements == null) {
+            source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.error"));
+        } else {
+            attunements.clear();
+            attunements.sync(target);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.attunements.reset", target.getName()), true);
+            target.sendMessage(new TranslationTextComponent("commands.primalmagic.attunements.reset.target", source.getName()));
+        }
+        return 0;
+    }
+
+    private static int getAttunements(CommandSource source, ServerPlayerEntity target, SourceInput input) {
+        // Get the partial and total attunements for the given source for the target player
+        String tag = input.getSourceTag();
+        Source toQuery = Source.getSource(tag.toLowerCase());
+        if (toQuery == null) {
+            source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.source.noexist", tag));
+        } else {
+            ITextComponent sourceText = new TranslationTextComponent(toQuery.getNameTranslationKey());
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.attunements.get.total", sourceText, source.getName(), AttunementManager.getTotalAttunement(target, toQuery)), true);
+            for (AttunementType type : AttunementType.values()) {
+                ITextComponent typeText = new TranslationTextComponent(type.getNameTranslationKey());
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.attunements.get.partial", typeText, AttunementManager.getAttunement(target, toQuery, type)), true);
+            }
+        }
+        return 0;
+    }
+
+    private static int setAttunement(CommandSource source, ServerPlayerEntity target, SourceInput input, AttunementTypeInput attunementType, int value) {
+        // Set the partial attunement for the target player
+        String tag = input.getSourceTag();
+        Source toSet = Source.getSource(tag.toLowerCase());
+        AttunementType type = attunementType.getType();
+        if (toSet == null) {
+            source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.source.noexist", tag));
+        } else if (type == null) {
+            source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.attunement_type.noexist"));
+        } else {
+            AttunementManager.setAttunement(target, toSet, type, value);
+            ITextComponent sourceText = new TranslationTextComponent(toSet.getNameTranslationKey());
+            ITextComponent typeText = new TranslationTextComponent(type.getNameTranslationKey());
+            if (type.isCapped() && value > type.getMaximum()) {
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.attunements.set.success.capped", target.getName(), typeText, sourceText, type.getMaximum(), value), true);
+                target.sendMessage(new TranslationTextComponent("commands.primalmagic.attunements.set.target.capped", target.getName(), typeText, sourceText, type.getMaximum(), value));
+            } else {
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.attunements.set.success", target.getName(), typeText, sourceText, value), true);
+                target.sendMessage(new TranslationTextComponent("commands.primalmagic.attunements.set.target", target.getName(), typeText, sourceText, value));
+            }
         }
         return 0;
     }
