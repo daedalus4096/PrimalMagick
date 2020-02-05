@@ -14,6 +14,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -43,7 +44,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
             return;
         }
         this.swappers.clear();
-        ListNBT swapperList = nbt.getList("Swappers", 10);
+        ListNBT swapperList = nbt.getList("Swappers", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < swapperList.size(); index++) {
             CompoundNBT swapperTag = swapperList.getCompound(index);
             EntitySwapper swapper = new EntitySwapper(swapperTag);

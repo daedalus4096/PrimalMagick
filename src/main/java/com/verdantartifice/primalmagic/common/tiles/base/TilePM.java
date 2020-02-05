@@ -14,6 +14,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Middleware class for a tile entity for the mod.  Handles things like tile syncing and relevant
@@ -33,7 +34,11 @@ public class TilePM extends TileEntity {
      */
     public void syncTile(boolean rerender) {
         BlockState state = this.world.getBlockState(this.pos);
-        this.world.notifyBlockUpdate(this.pos, state, state, (rerender ? 0x6 : 0x2));
+        int flags = Constants.BlockFlags.BLOCK_UPDATE;
+        if (!rerender) {
+            flags |= Constants.BlockFlags.NO_RERENDER;
+        }
+        this.world.notifyBlockUpdate(this.pos, state, state, flags);
     }
     
     @Override

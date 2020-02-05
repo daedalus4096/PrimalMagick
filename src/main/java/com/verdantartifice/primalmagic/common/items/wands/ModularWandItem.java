@@ -25,6 +25,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Item definition for a modular wand.  Modular wands are made up of cores, caps, and gems, and their
@@ -146,7 +147,7 @@ public class ModularWandItem extends AbstractWandItem {
         // Deserialize the list of inscribed spells from the given wand stack's NBT data
         List<SpellPackage> retVal = new ArrayList<>();
         if (stack != null) {
-            ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
+            ListNBT spellTagsList = stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND);
             for (int index = 0; index < spellTagsList.size(); index++) {
                 CompoundNBT spellTag = spellTagsList.getCompound(index);
                 SpellPackage newSpell = new SpellPackage(spellTag);
@@ -161,7 +162,7 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public int getSpellCount(ItemStack stack) {
         if (stack != null) {
-            return stack.getTag().getList("Spells", 10).size();
+            return stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND).size();
         } else {
             return 0;
         }
@@ -178,7 +179,7 @@ public class ModularWandItem extends AbstractWandItem {
         // Deserialize the active inscribed spell from the given wand stack's NBT data
         SpellPackage retVal = null;
         if (stack != null) {
-            ListNBT spellTagsList = stack.getTag().getList("Spells", 10);
+            ListNBT spellTagsList = stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND);
             int index = this.getActiveSpellIndex(stack);
             if (index >= 0 && index < spellTagsList.size()) {
                 CompoundNBT spellTag = spellTagsList.getCompound(index);
@@ -231,7 +232,7 @@ public class ModularWandItem extends AbstractWandItem {
                 stack.setTagInfo("Spells", newList);
                 return true;
             } else {
-                return stack.getTag().getList("Spells", 10).add(spell.serializeNBT());
+                return stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND).add(spell.serializeNBT());
             }
         } else {
             return false;

@@ -19,6 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Base definition for stairs blocks that phase in and out over time.
@@ -72,7 +73,7 @@ public abstract class AbstractPhasingStairsBlock extends StairsBlock {
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
-            worldIn.setBlockState(pos, state.with(PHASE, newPhase), 0x3);
+            worldIn.setBlockState(pos, state.with(PHASE, newPhase), Constants.BlockFlags.DEFAULT);
         }
     }
     

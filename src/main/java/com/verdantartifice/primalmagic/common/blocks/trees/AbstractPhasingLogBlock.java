@@ -27,6 +27,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Base definition for log blocks that phase in and out over time.
@@ -83,7 +84,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
-            worldIn.setBlockState(pos, state.with(PHASE, newPhase), 0x3);
+            worldIn.setBlockState(pos, state.with(PHASE, newPhase), Constants.BlockFlags.DEFAULT);
         }
     }
     
@@ -125,7 +126,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
             // If the player right-clicks on the log with an axe, replace this block with its stripped version
             worldIn.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isRemote) {
-                worldIn.setBlockState(pos, this.strippedVersion.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS)).with(PHASE, state.get(PHASE)), 11);
+                worldIn.setBlockState(pos, this.strippedVersion.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS)).with(PHASE, state.get(PHASE)), Constants.BlockFlags.DEFAULT_AND_RERENDER);
                 player.getHeldItem(handIn).damageItem(1, player, (p) -> {
                     p.sendBreakAnimation(handIn);
                 });

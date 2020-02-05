@@ -15,6 +15,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Base class for a tile entity containing an inventory which may be synced to the client.
@@ -184,7 +185,7 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
         super.onMessageFromServer(nbt);
         if (nbt.contains("ItemsSynced")) {
             this.syncedItems = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-            ListNBT tagList = nbt.getList("ItemsSynced", 10);
+            ListNBT tagList = nbt.getList("ItemsSynced", Constants.NBT.TAG_COMPOUND);
             for (int index = 0; index < tagList.size(); index++) {
                 CompoundNBT slotTag = tagList.getCompound(index);
                 byte slotIndex = slotTag.getByte("Slot");

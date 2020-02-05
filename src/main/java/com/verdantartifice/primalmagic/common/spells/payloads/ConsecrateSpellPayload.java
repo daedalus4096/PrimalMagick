@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition for a consecration spell.  Creates a two-high field of holy energy at the target location
@@ -63,7 +64,7 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
     
     protected void placeField(@Nonnull World world, @Nonnull BlockPos pos) {
         if (world.isAirBlock(pos) && world.getBlockState(pos) != BlocksPM.CONSECRATION_FIELD.getDefaultState()) {
-            world.setBlockState(pos, BlocksPM.CONSECRATION_FIELD.getDefaultState(), 0x3);
+            world.setBlockState(pos, BlocksPM.CONSECRATION_FIELD.getDefaultState(), Constants.BlockFlags.DEFAULT);
         }
     }
 

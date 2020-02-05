@@ -28,6 +28,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -95,7 +96,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.clearKnowledge();
         
         // Deserialize known research, including stage number and attached flags
-        ListNBT researchList = nbt.getList("research", 10);
+        ListNBT researchList = nbt.getList("research", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundNBT tag = researchList.getCompound(index);
             SimpleResearchKey keyObj = SimpleResearchKey.parse(tag.getString("key"));
@@ -119,7 +120,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
 
         // Deserialize knowledge types, including accrued points
-        ListNBT knowledgeList = nbt.getList("knowledge", 10);
+        ListNBT knowledgeList = nbt.getList("knowledge", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < knowledgeList.size(); index++) {
             CompoundNBT tag = knowledgeList.getCompound(index);
             String keyStr = tag.getString("key");

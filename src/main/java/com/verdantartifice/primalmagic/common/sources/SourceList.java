@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -200,7 +201,7 @@ public class SourceList implements INBTSerializable<CompoundNBT> {
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         this.sources.clear();
-        ListNBT tagList = nbt.getList("Sources", 10);
+        ListNBT tagList = nbt.getList("Sources", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < tagList.size(); index++) {
             CompoundNBT singleTag = tagList.getCompound(index);
             if (singleTag.contains("key")) {

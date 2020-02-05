@@ -22,6 +22,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Base class for a fluid conjuration spell.  Creates a source block of fluid at the designated point.
@@ -93,7 +94,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
                 }
                 
                 // Set the fluid block into the world
-                world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(), 0xB);
+                world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(), Constants.BlockFlags.DEFAULT_AND_RERENDER);
             }
         } else if (blockTarget != null) {
             // If we can't place the fluid at the given position, place it instead at the adjacent position defined by the raytrace result

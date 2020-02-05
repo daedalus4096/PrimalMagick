@@ -16,6 +16,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -53,7 +54,7 @@ public class PlayerCooldowns implements IPlayerCooldowns {
         
         this.clearCooldowns();
         
-        ListNBT cooldownList = nbt.getList("Cooldowns", 10);
+        ListNBT cooldownList = nbt.getList("Cooldowns", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < cooldownList.size(); index++) {
             CompoundNBT tag = cooldownList.getCompound(index);
             CooldownType type = null;

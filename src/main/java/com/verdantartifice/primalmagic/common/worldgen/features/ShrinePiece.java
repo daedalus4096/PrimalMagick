@@ -23,6 +23,7 @@ import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a piece of a primal shrine structure.
@@ -63,7 +64,7 @@ public class ShrinePiece extends TemplateStructurePiece {
     @Override
     protected void handleDataMarker(String function, BlockPos pos, IWorld worldIn, Random rand, MutableBoundingBox sbb) {
         if ("font".equals(function)) {
-            worldIn.setBlockState(pos, this.getFont().getDefaultState(), 0x3);
+            worldIn.setBlockState(pos, this.getFont().getDefaultState(), Constants.BlockFlags.DEFAULT);
         }
     }
 

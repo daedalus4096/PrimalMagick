@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a block breaker data structure.  Processed during server ticks to gradually break blocks
@@ -120,7 +121,7 @@ public class BlockBreaker {
             BlockState state = world.getBlockState(this.pos);
             Block block = state.getBlock();
             if ((block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !serverPlayer.canUseCommandBlock()) {
-                world.notifyBlockUpdate(this.pos, state, state, 0x3);
+                world.notifyBlockUpdate(this.pos, state, state, Constants.BlockFlags.DEFAULT);
                 return false;
             } else if (serverPlayer.getHeldItemMainhand().onBlockStartBreak(this.pos, serverPlayer)) {
                 return false;

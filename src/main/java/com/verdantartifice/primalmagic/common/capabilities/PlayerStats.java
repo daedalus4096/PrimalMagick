@@ -20,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -67,7 +68,7 @@ public class PlayerStats implements IPlayerStats {
         this.clear();
         
         // Deserialize recorded stat values
-        ListNBT statList = nbt.getList("Stats", 10);
+        ListNBT statList = nbt.getList("Stats", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < statList.size(); index++) {
             CompoundNBT tag = statList.getCompound(index);
             ResourceLocation loc = new ResourceLocation(tag.getString("Key"));

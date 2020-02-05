@@ -90,7 +90,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
             } else {
                 // Sync the tile if its mana total changed
                 this.markDirty();
-                this.syncTile(false);
+                this.syncTile(true);
             }
         }
     }
@@ -120,7 +120,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
                     if (leftover < tap) {
                         this.mana -= (tap - leftover);
                         this.markDirty();
-                        this.syncTile(false);
+                        this.syncTile(true);
                         
                         // Show fancy sparkles
                         double targetY = player.posY + (player.getEyeHeight() / 2.0D);

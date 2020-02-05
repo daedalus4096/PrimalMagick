@@ -127,7 +127,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
         
         if (shouldMarkDirty) {
             this.markDirty();
-            this.syncTile(false);
+            this.syncTile(true);
         }
     }
     
