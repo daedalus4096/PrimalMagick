@@ -148,7 +148,10 @@
                     "text": "primalmagic.research.source_earth.text.stage.1",
                     "required_item": [ "tag:forge:obsidian", "tag:forge:gems/diamond" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_earth", "m_env_earth", "t_mana_spent_earth_expert" ]
+                    "required_research": [ "m_found_shrine_earth", "m_env_earth", "t_mana_spent_earth_expert" ],
+                    "attunements": {
+                        "earth": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_earth.text.stage.2"
@@ -166,7 +169,10 @@
                     "text": "primalmagic.research.source_sea.text.stage.1",
                     "required_item": [ "tag:primalmagic:coral_blocks", "minecraft:ice" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_sea", "m_env_sea", "t_mana_spent_sea_expert" ]
+                    "required_research": [ "m_found_shrine_sea", "m_env_sea", "t_mana_spent_sea_expert" ],
+                    "attunements": {
+                        "sea": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_sea.text.stage.2"
@@ -184,7 +190,10 @@
                     "text": "primalmagic.research.source_sky.text.stage.1",
                     "required_item": [ "minecraft:bamboo", "tag:minecraft:leaves" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_sky", "m_env_sky", "t_mana_spent_sky_expert" ]
+                    "required_research": [ "m_found_shrine_sky", "m_env_sky", "t_mana_spent_sky_expert" ],
+                    "attunements": {
+                        "sky": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_sky.text.stage.2"
@@ -202,7 +211,10 @@
                     "text": "primalmagic.research.source_sun.text.stage.1",
                     "required_item": [ "tag:primalmagic:sunwood_logs", "tag:forge:sandstone" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_sun", "m_env_sun", "t_mana_spent_sun_expert" ]
+                    "required_research": [ "m_found_shrine_sun", "m_env_sun", "t_mana_spent_sun_expert" ],
+                    "attunements": {
+                        "sun": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_sun.text.stage.2"
@@ -220,7 +232,10 @@
                     "text": "primalmagic.research.source_moon.text.stage.1",
                     "required_item": [ "tag:primalmagic:moonwood_logs", "tag:forge:mushrooms" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "m_found_shrine_moon", "m_env_moon", "t_mana_spent_moon_expert" ]
+                    "required_research": [ "m_found_shrine_moon", "m_env_moon", "t_mana_spent_moon_expert" ],
+                    "attunements": {
+                        "moon": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_moon.text.stage.2"
@@ -250,7 +265,10 @@
                     "text": "primalmagic.research.source_blood.text.stage.1",
                     "required_item": [ "tag:forge:bones", "primalmagic:bloody_flesh" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "t_mana_spent_blood_expert" ]
+                    "required_research": [ "t_mana_spent_blood_expert" ],
+                    "attunements": {
+                        "blood": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_blood.text.stage.2"
@@ -268,7 +286,10 @@
                     "text": "primalmagic.research.source_infernal.text.stage.1",
                     "required_item": [ "tag:forge:rods/blaze", "minecraft:soul_sand" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "t_mana_spent_infernal_expert" ]
+                    "required_research": [ "t_mana_spent_infernal_expert" ],
+                    "attunements": {
+                        "infernal": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_infernal.text.stage.2"
@@ -286,7 +307,10 @@
                     "text": "primalmagic.research.source_void.text.stage.1",
                     "required_item": [ "tag:forge:end_stones", "tag:forge:ender_pearls" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "t_mana_spent_void_expert" ]
+                    "required_research": [ "t_mana_spent_void_expert" ],
+                    "attunements": {
+                        "void": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_void.text.stage.2"
@@ -316,7 +340,10 @@
                     "text": "primalmagic.research.source_hallowed.text.stage.1",
                     "required_item": [ "tag:forge:nether_stars" ],
                     "required_knowledge": [ "OBSERVATION;1" ],
-                    "required_research": [ "t_mana_spent_hallowed_expert" ]
+                    "required_research": [ "t_mana_spent_hallowed_expert" ],
+                    "attunements": {
+                        "hallowed": 5
+                    }
                 },
                 {
                     "text": "primalmagic.research.source_hallowed.text.stage.2"

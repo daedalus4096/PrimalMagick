@@ -138,6 +138,13 @@
             "stages": [
                 {
                     "text": "primalmagic.research.crystal_synthesis.text.stage.1",
+                    "attunements": {
+                        "earth": 2,
+                        "sea": 2,
+                        "sky": 2,
+                        "sun": 2,
+                        "moon": 2
+                    },
                     "recipes": [
                         "primalmagic:essence_crystal_earth_from_shard",
                         "primalmagic:essence_crystal_sea_from_shard",
@@ -151,21 +158,33 @@
                 {
                     "text": "primalmagic.research.crystal_synthesis.text.addenda.1",
                     "required_research": ["t_discover_blood"],
+                    "attunements": {
+                        "blood": 2
+                    },
                     "recipes": [ "primalmagic:essence_crystal_blood_from_shard" ]
                 },
                 {
                     "text": "primalmagic.research.crystal_synthesis.text.addenda.2",
                     "required_research": ["t_discover_infernal"],
+                    "attunements": {
+                        "infernal": 2
+                    },
                     "recipes": [ "primalmagic:essence_crystal_infernal_from_shard" ]
                 },
                 {
                     "text": "primalmagic.research.crystal_synthesis.text.addenda.3",
                     "required_research": ["t_discover_void"],
+                    "attunements": {
+                        "void": 2
+                    },
                     "recipes": [ "primalmagic:essence_crystal_void_from_shard" ]
                 },
                 {
                     "text": "primalmagic.research.crystal_synthesis.text.addenda.4",
                     "required_research": ["t_discover_hallowed"],
+                    "attunements": {
+                        "hallowed": 2
+                    },
                     "recipes": [ "primalmagic:essence_crystal_hallowed_from_shard" ]
                 }
             ]
@@ -178,6 +197,13 @@
             "stages": [
                 {
                     "text": "primalmagic.research.crystal_desynthesis.text.stage.1",
+                    "attunements": {
+                        "earth": 1,
+                        "sea": 1,
+                        "sky": 1,
+                        "sun": 1,
+                        "moon": 1
+                    },
                     "recipes": [
                         "primalmagic:essence_shard_earth_from_crystal",
                         "primalmagic:essence_shard_sea_from_crystal",
@@ -191,21 +217,33 @@
                 {
                     "text": "primalmagic.research.crystal_desynthesis.text.addenda.1",
                     "required_research": ["t_discover_blood"],
+                    "attunements": {
+                        "blood": 1
+                    },
                     "recipes": [ "primalmagic:essence_shard_blood_from_crystal" ]
                 },
                 {
                     "text": "primalmagic.research.crystal_desynthesis.text.addenda.2",
                     "required_research": ["t_discover_infernal"],
+                    "attunements": {
+                        "infernal": 1
+                    },
                     "recipes": [ "primalmagic:essence_shard_infernal_from_crystal" ]
                 },
                 {
                     "text": "primalmagic.research.crystal_desynthesis.text.addenda.3",
                     "required_research": ["t_discover_void"],
+                    "attunements": {
+                        "void": 1
+                    },
                     "recipes": [ "primalmagic:essence_shard_void_from_crystal" ]
                 },
                 {
                     "text": "primalmagic.research.crystal_desynthesis.text.addenda.4",
                     "required_research": ["t_discover_hallowed"],
+                    "attunements": {
+                        "hallowed": 1
+                    },
                     "recipes": [ "primalmagic:essence_shard_hallowed_from_crystal" ]
                 }
             ]
@@ -218,6 +256,13 @@
             "stages": [
                 {
                     "text": "primalmagic.research.cluster_synthesis.text.stage.1",
+                    "attunements": {
+                        "earth": 3,
+                        "sea": 3,
+                        "sky": 3,
+                        "sun": 3,
+                        "moon": 3
+                    },
                     "recipes": [
                         "primalmagic:essence_cluster_earth_from_crystal",
                         "primalmagic:essence_cluster_sea_from_crystal",
@@ -231,21 +276,33 @@
                 {
                     "text": "primalmagic.research.cluster_synthesis.text.addenda.1",
                     "required_research": ["t_discover_blood"],
+                    "attunements": {
+                        "blood": 3
+                    },
                     "recipes": [ "primalmagic:essence_cluster_blood_from_crystal" ]
                 },
                 {
                     "text": "primalmagic.research.cluster_synthesis.text.addenda.2",
                     "required_research": ["t_discover_infernal"],
+                    "attunements": {
+                        "infernal": 3
+                    },
                     "recipes": [ "primalmagic:essence_cluster_infernal_from_crystal" ]
                 },
                 {
                     "text": "primalmagic.research.cluster_synthesis.text.addenda.3",
                     "required_research": ["t_discover_void"],
+                    "attunements": {
+                        "void": 3
+                    },
                     "recipes": [ "primalmagic:essence_cluster_void_from_crystal" ]
                 },
                 {
                     "text": "primalmagic.research.cluster_synthesis.text.addenda.4",
                     "required_research": ["t_discover_hallowed"],
+                    "attunements": {
+                        "hallowed": 3
+                    },
                     "recipes": [ "primalmagic:essence_cluster_hallowed_from_crystal" ]
                 }
             ]
@@ -258,6 +315,13 @@
             "stages": [
                 {
                     "text": "primalmagic.research.cluster_desynthesis.text.stage.1",
+                    "attunements": {
+                        "earth": 1,
+                        "sea": 1,
+                        "sky": 1,
+                        "sun": 1,
+                        "moon": 1
+                    },
                     "recipes": [
                         "primalmagic:essence_crystal_earth_from_cluster",
                         "primalmagic:essence_crystal_sea_from_cluster",
@@ -271,21 +335,33 @@
                 {
                     "text": "primalmagic.research.cluster_desynthesis.text.addenda.1",
                     "required_research": ["t_discover_blood"],
+                    "attunements": {
+                        "blood": 1
+                    },
                     "recipes": [ "primalmagic:essence_crystal_blood_from_cluster" ]
                 },
                 {
                     "text": "primalmagic.research.cluster_desynthesis.text.addenda.2",
                     "required_research": ["t_discover_infernal"],
+                    "attunements": {
+                        "infernal": 1
+                    },
                     "recipes": [ "primalmagic:essence_crystal_infernal_from_cluster" ]
                 },
                 {
                     "text": "primalmagic.research.cluster_desynthesis.text.addenda.3",
                     "required_research": ["t_discover_void"],
+                    "attunements": {
+                        "void": 1
+                    },
                     "recipes": [ "primalmagic:essence_crystal_void_from_cluster" ]
                 },
                 {
                     "text": "primalmagic.research.cluster_desynthesis.text.addenda.4",
                     "required_research": ["t_discover_hallowed"],
+                    "attunements": {
+                        "hallowed": 1
+                    },
                     "recipes": [ "primalmagic:essence_crystal_hallowed_from_cluster" ]
                 }
             ]
