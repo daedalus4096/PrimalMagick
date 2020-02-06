@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 /**
  * Definition of a research addendum.  An addendum is an addon to a research entry that is separately
  * unlocked with additional research if the entry itself is already unlocked.  Addenda have their own
- * text and may grant new recipes to the player.
+ * text and may grant new recipes and attunements to the player.
  * 
  * @author Daedalus4096
  */
@@ -25,7 +26,8 @@ public class ResearchAddendum {
     protected String textTranslationKey;
     protected List<ResourceLocation> recipes = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
-    
+    protected SourceList attunements = new SourceList();
+
     protected ResearchAddendum(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
         this.researchEntry = entry;
         this.textTranslationKey = textTranslationKey;
@@ -49,6 +51,9 @@ public class ResearchAddendum {
         if (obj.has("required_research")) {
             addendum.requiredResearch = CompoundResearchKey.parse(obj.get("required_research").getAsJsonArray());
         }
+        if (obj.has("attunements")) {
+            addendum.attunements = JsonUtils.toSourceList(obj.get("attunements").getAsJsonObject());
+        }
         return addendum;
     }
     
@@ -70,5 +75,10 @@ public class ResearchAddendum {
     @Nullable
     public CompoundResearchKey getRequiredResearch() {
         return this.requiredResearch;
+    }
+    
+    @Nonnull
+    public SourceList getAttunements() {
+        return this.attunements;
     }
 }

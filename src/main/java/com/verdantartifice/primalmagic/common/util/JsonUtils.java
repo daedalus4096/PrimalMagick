@@ -7,8 +7,12 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -84,6 +88,21 @@ public class JsonUtils {
                     }
                 }
             } catch (Exception e) {}
+        }
+        return retVal;
+    }
+    
+    /**
+     * Parse the given JSON object into a source list.
+     * 
+     * @param jsonObject the JSON object to be parsed
+     * @return a source list
+     */
+    @Nonnull
+    public static SourceList toSourceList(@Nonnull JsonObject jsonObject) {
+        SourceList retVal = new SourceList();
+        for (Source source : Source.SORTED_SOURCES) {
+            retVal.add(source, JSONUtils.getInt(jsonObject, source.getTag(), 0));
         }
         return retVal;
     }

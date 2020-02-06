@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -115,7 +116,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         public ShapelessArcaneRecipe read(ResourceLocation recipeId, JsonObject json) {
             String group = JSONUtils.getString(json, "group", "");
             SimpleResearchKey research = SimpleResearchKey.parse(JSONUtils.getString(json, "research", ""));
-            SourceList manaCosts = this.readManaCosts(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
+            SourceList manaCosts = JsonUtils.toSourceList(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
             ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
             NonNullList<Ingredient> ingredients = this.readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
             if (ingredients.isEmpty()) {
@@ -138,14 +139,6 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
             return retVal;
         }
         
-        protected SourceList readManaCosts(JsonObject jsonObject) {
-            SourceList retVal = new SourceList();
-            for (Source source : Source.SORTED_SOURCES) {
-                retVal.add(source, JSONUtils.getInt(jsonObject, source.getTag(), 0));
-            }
-            return retVal;
-        }
-
         @Override
         public ShapelessArcaneRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
             String group = buffer.readString(32767);

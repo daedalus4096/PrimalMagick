@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
@@ -23,10 +24,10 @@ import net.minecraft.util.ResourceLocation;
 
 /**
  * Definition of a research stage, a portion of a research entry.  A research stage contains text to be
- * displayed in the grimoire, an optional list of granted recipes, and an optional set of completion
- * requirements.  A player must satisfy those requirements in order to complete a stage and progress to
- * the next one in the entry.  In the most common case, a research entry contains two stages: one with
- * a set of requirements, and a second that grants recipes.
+ * displayed in the grimoire, an optional list of granted recipes, an optional list of attunement 
+ * sources, and an optional set of completion requirements.  A player must satisfy those requirements in
+ * order to complete a stage and progress to the next one in the entry.  In the most common case, a 
+ * research entry contains two stages: one with a set of requirements, and a second that grants recipes.
  * 
  * @author Daedalus4096
  */
@@ -39,6 +40,7 @@ public class ResearchStage {
     protected List<Integer> craftReference = new ArrayList<>();
     protected List<Knowledge> requiredKnowledge = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
+    protected SourceList attunements = new SourceList();
     
     protected ResearchStage(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
         this.researchEntry = entry;
@@ -86,6 +88,9 @@ public class ResearchStage {
         if (obj.has("required_research")) {
             stage.requiredResearch = CompoundResearchKey.parse(obj.get("required_research").getAsJsonArray());
         }
+        if (obj.has("attunements")) {
+            stage.attunements = JsonUtils.toSourceList(obj.get("attunements").getAsJsonObject());
+        }
         return stage;
     }
     
@@ -127,6 +132,11 @@ public class ResearchStage {
     @Nullable
     public CompoundResearchKey getRequiredResearch() {
         return this.requiredResearch;
+    }
+    
+    @Nonnull
+    public SourceList getAttunements() {
+        return this.attunements;
     }
     
     public boolean hasPrerequisites() {

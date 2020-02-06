@@ -13,6 +13,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -260,7 +261,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         public ShapedArcaneRecipe read(ResourceLocation recipeId, JsonObject json) {
             String group = JSONUtils.getString(json, "group", "");
             SimpleResearchKey research = SimpleResearchKey.parse(JSONUtils.getString(json, "research", ""));
-            SourceList manaCosts = this.readManaCosts(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
+            SourceList manaCosts = JsonUtils.toSourceList(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
             Map<String, Ingredient> map = ShapedArcaneRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));
             String[] patternStrs = ShapedArcaneRecipe.shrink(ShapedArcaneRecipe.patternFromJson(JSONUtils.getJsonArray(json, "pattern")));
             int width = patternStrs[0].length();
@@ -270,14 +271,6 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             return new ShapedArcaneRecipe(recipeId, group, research, manaCosts, width, height, ingredients, result);
         }
         
-        protected SourceList readManaCosts(JsonObject jsonObject) {
-            SourceList retVal = new SourceList();
-            for (Source source : Source.SORTED_SOURCES) {
-                retVal.add(source, JSONUtils.getInt(jsonObject, source.getTag(), 0));
-            }
-            return retVal;
-        }
-
         @Override
         public ShapedArcaneRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
             int width = buffer.readVarInt();
