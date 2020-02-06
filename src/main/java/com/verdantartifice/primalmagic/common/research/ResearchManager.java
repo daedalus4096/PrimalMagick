@@ -17,8 +17,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
+import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -230,7 +234,14 @@ public class ResearchManager {
                 }
                 
                 if (currentStage != null) {
-                    // TODO process attunement grants
+                    // Process attunement grants
+                    SourceList attunements = currentStage.getAttunements();
+                    for (Source source : attunements.getSources()) {
+                        int amount = attunements.getAmount(source);
+                        if (amount > 0) {
+                            AttunementManager.incrementAttunement(player, source, AttunementType.PERMANENT, amount);
+                        }
+                    }
                 }
             }
         }
@@ -250,6 +261,15 @@ public class ResearchManager {
                             ITextComponent nameComp = new TranslationTextComponent(searchEntry.getNameTranslationKey());
                             player.sendMessage(new TranslationTextComponent("event.primalmagic.add_addendum", nameComp));
                             knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                            
+                            // Process attunement grants
+                            SourceList attunements = addendum.getAttunements();
+                            for (Source source : attunements.getSources()) {
+                                int amount = attunements.getAmount(source);
+                                if (amount > 0) {
+                                    AttunementManager.incrementAttunement(player, source, AttunementType.PERMANENT, amount);
+                                }
+                            }
                         }
                     }
                 }
