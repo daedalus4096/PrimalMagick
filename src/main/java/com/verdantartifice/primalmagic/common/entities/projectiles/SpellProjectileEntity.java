@@ -74,7 +74,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
         if (!this.world.isRemote && this.isAlive() && this.ticksExisted % 2 == 0 && this.spell != null && this.spell.getPayload() != null) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
-                    new SpellTrailPacket(this.posX, this.posY, this.posZ, this.spell.getPayload().getSource().getColor()), 
+                    new SpellTrailPacket(this.getPositionVec(), this.spell.getPayload().getSource().getColor()), 
                     this.dimension, 
                     this.getPosition(), 
                     64.0D);

@@ -80,7 +80,7 @@ public class PlayerEvents {
         // If the player is working on the Earth Source research, check if they're far enough down
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
-            if (player.posY < 10.0D && !knowledge.isResearchKnown(key)) {
+            if (player.getPositionVec().y < 10.0D && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
                 player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_earth").applyTextStyle(TextFormatting.GREEN), false);
             }
@@ -98,7 +98,7 @@ public class PlayerEvents {
         // If the player is working on the Sky Source research, check if they're high up enough
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
-            if (player.posY > 100.0D && !knowledge.isResearchKnown(key)) {
+            if (player.getPositionVec().y > 100.0D && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
                 player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sky").applyTextStyle(TextFormatting.GREEN), false);
             }
@@ -227,9 +227,9 @@ public class PlayerEvents {
         contents.putString("title", new TranslationTextComponent("primalmagic.dream_journal.title").getFormattedText());
         contents.putString("author", player.getName().getFormattedText());
         ListNBT pages = new ListNBT();
-        pages.add(new StringNBT(new TranslationTextComponent("primalmagic.dream_journal.text.1").getFormattedText()));
-        pages.add(new StringNBT(new TranslationTextComponent("primalmagic.dream_journal.text.2").getFormattedText()));
-        pages.add(new StringNBT(new TranslationTextComponent("primalmagic.dream_journal.text.3").getFormattedText()));
+        pages.add(StringNBT.func_229705_a_(new TranslationTextComponent("primalmagic.dream_journal.text.1").getFormattedText()));
+        pages.add(StringNBT.func_229705_a_(new TranslationTextComponent("primalmagic.dream_journal.text.2").getFormattedText()));
+        pages.add(StringNBT.func_229705_a_(new TranslationTextComponent("primalmagic.dream_journal.text.3").getFormattedText()));
         contents.put("pages", pages);
         journal.setTag(contents);
         

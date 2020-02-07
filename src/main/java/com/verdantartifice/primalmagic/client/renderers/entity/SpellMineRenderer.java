@@ -71,7 +71,7 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(SpellMineEntity entity) {
+    public ResourceLocation getEntityTexture(SpellMineEntity entity) {
         return TEXTURE;
     }
 }

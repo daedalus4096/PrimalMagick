@@ -14,10 +14,8 @@ import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRe
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
-import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
-import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
-import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
-import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
+import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.Screen;
@@ -58,14 +56,14 @@ public class ClientProxy extends CommonProxy {
     
     private void registerTERs() {
         // Register tile entity renderers for those tile entities that need them
-        ClientRegistry.bindTileEntitySpecialRenderer(AncientManaFontTileEntity.class, new AncientManaFontTER());
-        ClientRegistry.bindTileEntitySpecialRenderer(WandChargerTileEntity.class, new WandChargerTER());
+        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.ANCIENT_MANA_FONT, d -> new AncientManaFontTER());
+        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.WAND_CHARGER, d -> new WandChargerTER());
     }
     
     private void registerEntityRenderers() {
         // Register renderers for each entity type
-        RenderingRegistry.registerEntityRenderingHandler(SpellProjectileEntity.class, SpellProjectileRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(SpellMineEntity.class, SpellMineRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_PROJECTILE, SpellProjectileRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE, SpellMineRenderer::new);
     }
     
     @Override

@@ -110,7 +110,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
         // Save the given amount of centimana for the given source into the stack's NBT tag
-        stack.setTagInfo(source.getTag(), new IntNBT(amount));
+        stack.setTagInfo(source.getTag(), IntNBT.func_229692_a_(amount));
     }
 
     @Override
@@ -286,9 +286,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public <T extends TileEntity & IInteractWithWand> void setTileInUse(ItemStack wandStack, T tile) {
         // Save the position of the wand-interactable tile entity so it can be looked up later
-        wandStack.setTagInfo("UsingX", new IntNBT(tile.getPos().getX()));
-        wandStack.setTagInfo("UsingY", new IntNBT(tile.getPos().getY()));
-        wandStack.setTagInfo("UsingZ", new IntNBT(tile.getPos().getZ()));
+        wandStack.setTagInfo("UsingX", IntNBT.func_229692_a_(tile.getPos().getX()));
+        wandStack.setTagInfo("UsingY", IntNBT.func_229692_a_(tile.getPos().getY()));
+        wandStack.setTagInfo("UsingZ", IntNBT.func_229692_a_(tile.getPos().getZ()));
     }
     
     @Override

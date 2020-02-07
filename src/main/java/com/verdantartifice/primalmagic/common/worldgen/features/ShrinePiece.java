@@ -116,7 +116,7 @@ public class ShrinePiece extends TemplateStructurePiece {
         
         // Generate infused stone under the shrine
         BlockState bs = this.getInfusedStone().getDefaultState();
-        BlockPos.PooledMutableBlockPos pmbp = BlockPos.PooledMutableBlockPos.retain();
+        BlockPos.PooledMutable pmbp = BlockPos.PooledMutable.retain();
         for (int x = 2; x < 11; x++) {
             for (int y = -3; y < 0; y++) {
                 for (int z = 2; z < 11; z++) {

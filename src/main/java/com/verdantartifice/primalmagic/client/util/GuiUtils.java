@@ -13,6 +13,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -85,7 +86,8 @@ public class GuiUtils {
             return;
         }
         Minecraft mc = Minecraft.getInstance();
-        double scaleFactor = mc.mainWindow.getGuiScaleFactor();
+        MainWindow mainWindow = mc.func_228018_at_();
+        double scaleFactor = mainWindow.getGuiScaleFactor();
         
         // Preserve previous value for the lighting GL attribute
         boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
@@ -96,8 +98,8 @@ public class GuiUtils {
         int max = 240;
         double mouseX = mc.mouseHelper.getMouseX();
         boolean flip = false;
-        if (!ignoreMouse && ((max + 24) * scaleFactor + mouseX > mc.mainWindow.getFramebufferWidth())) {
-            max = (int)((mc.mainWindow.getFramebufferWidth() - mouseX) / scaleFactor - 24);
+        if (!ignoreMouse && ((max + 24) * scaleFactor + mouseX > mainWindow.getFramebufferWidth())) {
+            max = (int)((mainWindow.getFramebufferWidth() - mouseX) / scaleFactor - 24);
             if (max < 120) {
                 max = 240;
                 flip = true;
@@ -127,8 +129,8 @@ public class GuiUtils {
         if (parsedList.size() > 1) {
             totalHeight += 2;
         }
-        if (sY + totalHeight > mc.mainWindow.getScaledHeight()) {
-            sY = mc.mainWindow.getScaledHeight() - totalHeight - 5;
+        if (sY + totalHeight > mainWindow.getScaledHeight()) {
+            sY = mainWindow.getScaledHeight() - totalHeight - 5;
         }
         if (flip) {
             sX -= (widestLineWidth + 6);

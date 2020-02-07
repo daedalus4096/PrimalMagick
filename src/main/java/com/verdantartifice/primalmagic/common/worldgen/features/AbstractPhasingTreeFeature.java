@@ -67,7 +67,7 @@ public abstract class AbstractPhasingTreeFeature extends AbstractTreeFeature<NoF
                     k = 2;
                 }
                 
-                BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
+                BlockPos.Mutable mbp = new BlockPos.Mutable();
                 
                 for (int l = position.getX() - k; l <= position.getX() + k && flag; ++l) {
                     for (int i1 = position.getZ() - k; i1 <= position.getZ() + k && flag; ++i1) {

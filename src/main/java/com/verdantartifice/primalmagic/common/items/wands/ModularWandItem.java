@@ -69,7 +69,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandCore(@Nonnull ItemStack stack, @Nonnull WandCore core) {
-        stack.setTagInfo("core", new StringNBT(core.getTag()));
+        stack.setTagInfo("core", StringNBT.func_229705_a_(core.getTag()));
     }
     
     @Nullable 
@@ -82,7 +82,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandCap(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
-        stack.setTagInfo("cap", new StringNBT(cap.getTag()));
+        stack.setTagInfo("cap", StringNBT.func_229705_a_(cap.getTag()));
     }
     
     @Nullable
@@ -95,7 +95,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandGem(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
-        stack.setTagInfo("gem", new StringNBT(gem.getTag()));
+        stack.setTagInfo("gem", StringNBT.func_229705_a_(gem.getTag()));
     }
     
     @Override
@@ -195,7 +195,7 @@ public class ModularWandItem extends AbstractWandItem {
             return false;
         } else if (index >= -1 && index < this.getSpells(stack).size()) {
             // -1 is a valid value and means "no active spell"
-            stack.setTagInfo("ActiveSpell", new IntNBT(index));
+            stack.setTagInfo("ActiveSpell", IntNBT.func_229692_a_(index));
             return true;
         }
         return false;

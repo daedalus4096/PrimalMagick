@@ -99,7 +99,7 @@ public class ArcanometerItem extends Item {
             RayTraceResult result = RayTraceUtils.getMouseOver();
             if (result != null && result.getType() != RayTraceResult.Type.MISS) {
                 // If something is being moused over, play the sound effect for the player and send a scan packet to the server
-                worldIn.playSound(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, SoundsPM.SCAN, SoundCategory.MASTER, 1.0F, 1.0F);
+                worldIn.playSound(playerIn, playerIn.getPosition(), SoundsPM.SCAN, SoundCategory.MASTER, 1.0F, 1.0F);
                 if (result.getType() == RayTraceResult.Type.ENTITY) {
                     ItemStack entityStack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
                     PacketHandler.sendToServer(new ScanItemPacket(entityStack));

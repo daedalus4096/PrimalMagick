@@ -69,7 +69,7 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(SpellProjectileEntity entity) {
+    public ResourceLocation getEntityTexture(SpellProjectileEntity entity) {
         return TEXTURE;
     }
 }
