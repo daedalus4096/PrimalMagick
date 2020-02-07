@@ -363,7 +363,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         
         // Determine current research stage
         boolean complete = false;
-        this.currentStageIndex = this.knowledge.getResearchStage(entry.getKey()) - 1; // remember, it's one-based
+        this.currentStageIndex = this.knowledge.getResearchStage(entry.getKey());
         if (this.currentStageIndex >= entry.getStages().size()) {
             this.currentStageIndex = entry.getStages().size() - 1;
             complete = true;

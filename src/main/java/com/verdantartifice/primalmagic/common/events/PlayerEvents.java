@@ -44,7 +44,7 @@ public class PlayerEvents {
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
             if (player.ticksExisted % 20 == 0) {
                 // Check to see if any players need their research/knowledge synced to their clients
-                if (ResearchManager.popSyncList(player.getName().getString()) != null) {
+                if (ResearchManager.checkSyncSet(player.getUniqueID())) {
                     IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                     if (knowledge != null) {
                         knowledge.sync(player);
