@@ -72,12 +72,9 @@ public class SyncProgressPacket implements IMessageToServer {
                         if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {
                             return;
                         }
-                        if (message.noFlags) {
-                            ResearchManager.noFlags = true;
-                        }
                         // Do the actual progression
                         PrimalMagic.LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
-                        ResearchManager.progressResearch(player, message.key);
+                        ResearchManager.progressResearch(player, message.key, true, !message.noFlags);
                     }
                 }
             });
@@ -98,7 +95,7 @@ public class SyncProgressPacket implements IMessageToServer {
             }
 
             // Get the current stage of the given key's entry
-            int currentStageNum = knowledge.getResearchStage(key) - 1;  // Remember, it's one-based
+            int currentStageNum = knowledge.getResearchStage(key);
             if (currentStageNum < 0) {
                 return false;
             }

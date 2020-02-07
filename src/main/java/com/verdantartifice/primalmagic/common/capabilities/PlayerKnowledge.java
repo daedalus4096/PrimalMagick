@@ -165,7 +165,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         } else {
             // Research is complete if it is known and its current stage exceeds the number of stages defined in its entry
             ResearchEntry entry = ResearchEntries.getEntry(research);
-            if (entry == null || entry.getStages().isEmpty() || this.getResearchStage(research) > entry.getStages().size()) {
+            if (entry == null || entry.getStages().isEmpty() || this.getResearchStage(research) >= entry.getStages().size()) {
                 return ResearchStatus.COMPLETE;
             } else {
                 return ResearchStatus.IN_PROGRESS;
@@ -188,7 +188,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
 
         // If a specific stage is specified in the given key, check if the current stage meets it
-        if (research.hasStage() && this.getResearchStage(research) < research.getStage()) {
+        if (research.hasStage() && (this.getResearchStage(research) + 1) < research.getStage()) {
             return false;
         } else {
             return this.research.contains(research.getRootKey());

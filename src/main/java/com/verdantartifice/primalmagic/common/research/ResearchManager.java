@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
@@ -41,13 +41,10 @@ public class ResearchManager {
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
     
     // Map of names of players that need their research synced to their client
-    private static final Map<String, Boolean> SYNC_LIST = new ConcurrentHashMap<>();
+    private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
     
     // Registry of all defined scan triggers
     private static final List<IScanTrigger> SCAN_TRIGGERS = new ArrayList<>();
-    
-    // Whether the "new" research flag should be suppressed during progressResearch
-    public static boolean noFlags = false;
     
     public static Set<Integer> getAllCraftingReferences() {
         return Collections.unmodifiableSet(CRAFTING_REFERENCES);
@@ -58,8 +55,9 @@ public class ResearchManager {
     }
     
     @Nullable
-    public static Boolean popSyncList(@Nullable String name) {
-        return SYNC_LIST.remove(name);
+    public static boolean checkSyncSet(@Nullable UUID playerId) {
+        // Remove the element from the set if present, and return true if it was there
+        return SYNC_SET.remove(playerId);
     }
     
     public static boolean hasPrerequisites(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
@@ -179,7 +177,7 @@ public class ResearchManager {
 
         knowledge.removeResearch(key);
         if (sync) {
-            SYNC_LIST.put(player.getName().getString(), Boolean.TRUE);
+            SYNC_SET.add(player.getUniqueID());
         }
         return true;
     }
@@ -190,6 +188,11 @@ public class ResearchManager {
     }
     
     public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync) {
+        // Progress the given research to its next stage and sync to the player's client
+        return progressResearch(player, key, sync, true);
+    }
+    
+    public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync, boolean flags) {
         // Progress the given research to its next stage and optionally sync to the player's client
         if (player == null || key == null) {
             return false;
@@ -205,59 +208,70 @@ public class ResearchManager {
         }
         
         // If the research is not started yet, start it
+        boolean added = false;
         if (!knowledge.isResearchKnown(key)) {
             knowledge.addResearch(key);
+            added = true;
         }
         
         ResearchEntry entry = ResearchEntries.getEntry(key);
-        boolean popups = true;
-        if (entry != null) {
+        boolean entryComplete = true;   // Default to true for non-entry research (e.g. stat triggers)
+        if (entry != null && !entry.getStages().isEmpty()) {
+            // Get the current stage number of the research entry
             ResearchStage currentStage = null;
-            if (!entry.getStages().isEmpty()) {
-                // Get the current stage of the research entry
-                int cs = knowledge.getResearchStage(key);
-                if (cs > 0) {
-                    cs = Math.min(cs, entry.getStages().size());
-                    currentStage = entry.getStages().get(cs - 1);   // Remember, it's one-based
-                }
-                if (entry.getStages().size() == 1 && cs == 0 && !entry.getStages().get(0).hasPrerequisites()) {
-                    cs++;
-                } else if (entry.getStages().size() > 1 && cs == (entry.getStages().size() - 1) && !entry.getStages().get(cs).hasPrerequisites()) {
-                    cs++;
-                }
-                knowledge.setResearchStage(key, Math.min(entry.getStages().size() + 1, cs + 1));
-                popups = (cs >= entry.getStages().size());
-                
-                if (popups) {
-                    cs = Math.min(cs, entry.getStages().size());
-                    currentStage = entry.getStages().get(cs - 1);
-                }
-                
-                if (currentStage != null) {
-                    // Process attunement grants
-                    SourceList attunements = currentStage.getAttunements();
-                    for (Source source : attunements.getSources()) {
-                        int amount = attunements.getAmount(source);
-                        if (amount > 0) {
-                            AttunementManager.incrementAttunement(player, source, AttunementType.PERMANENT, amount);
-                        }
+            int currentStageNum = knowledge.getResearchStage(key);
+            
+            // Increment the current stage, unless the research was just added then skip this step (because that already 
+            // incremented the stage from -1 to 0)
+            if (!added) {
+                currentStageNum++;
+            }
+            if (currentStageNum == (entry.getStages().size() - 1) && !entry.getStages().get(currentStageNum).hasPrerequisites()) {
+                // If we've advanced to the final stage of the entry and it has no further prereqs (which it shouldn't), then
+                // advance one more to be considered complete
+                currentStageNum++;
+            }
+            currentStageNum = Math.min(currentStageNum, entry.getStages().size());
+            if (currentStageNum >= 0) {
+                currentStage = entry.getStages().get(Math.min(currentStageNum, entry.getStages().size() - 1));
+            }
+            knowledge.setResearchStage(key, currentStageNum);
+            
+            // Determine whether the entry has been completed
+            entryComplete = (currentStageNum >= entry.getStages().size());
+            
+            if (currentStage != null) {
+                // Process any attunement grants in the newly-reached stage
+                SourceList attunements = currentStage.getAttunements();
+                for (Source source : attunements.getSources()) {
+                    int amount = attunements.getAmount(source);
+                    if (amount > 0) {
+                        AttunementManager.incrementAttunement(player, source, AttunementType.PERMANENT, amount);
                     }
                 }
             }
+
+            // Give the player experience for advancing their research
+            if (!added) {
+                player.giveExperiencePoints(5);
+            }
         }
-        if (popups) {
+        
+        if (entryComplete) {
             if (sync) {
+                // If the entry has been completed and we're syncing, add the appropriate flags
                 knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
-                if (!noFlags) {
+                if (flags) {
                     knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
-                } else {
-                    noFlags = false;
                 }
             }
+            
+            // Reveal any addenda that depended on this research
             for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
                 if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
                     for (ResearchAddendum addendum : searchEntry.getAddenda()) {
-                        if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key)) {
+                        if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key) && addendum.getRequiredResearch().isKnownByStrict(player)) {
+                            // Announce completion of the addendum
                             ITextComponent nameComp = new TranslationTextComponent(searchEntry.getNameTranslationKey());
                             player.sendMessage(new TranslationTextComponent("event.primalmagic.add_addendum", nameComp));
                             knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
@@ -275,13 +289,12 @@ public class ResearchManager {
                 }
             }
         }
-        if (sync) {
-            SYNC_LIST.put(player.getName().getString(), Boolean.TRUE);
-            if (entry != null) {
-                player.giveExperiencePoints(5);
-            }
-        }
         
+        // If syncing, queue it up for next tick
+        if (sync) {
+            SYNC_SET.add(player.getUniqueID());
+        }
+
         return true;
     }
     
@@ -302,7 +315,7 @@ public class ResearchManager {
                 // TODO send knowledge gain packet to player to show client effects for each level gained
             }
         }
-        SYNC_LIST.put(player.getName().getString(), Boolean.TRUE);
+        SYNC_SET.add(player.getUniqueID());
         return true;
     }
     
