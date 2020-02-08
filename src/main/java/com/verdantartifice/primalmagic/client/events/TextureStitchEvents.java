@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -17,10 +18,11 @@ import net.minecraftforge.fml.common.Mod;
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class TextureStitchEvents {
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onPreTextureStitch(TextureStitchEvent.Pre event) {
-        // Add empty-slot background images to the base atlas texture
-        if ("textures".equals(event.getMap().getBasePath())) {
+        // Add empty-slot background images to the block atlas texture
+        if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().func_229223_g_())) {
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_core_slot"));
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_cap_slot"));
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_gem_slot"));

@@ -65,7 +65,7 @@ public class PlayerEvents {
             return;
         }
         
-        Biome biome = player.world.getBiome(player.getPosition());
+        Biome biome = player.world.func_226691_t_(player.getPosition());
         if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER)) {
             // If the player is in a Nether-based biome, discover the Infernal source
             ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());

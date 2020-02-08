@@ -326,7 +326,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
         // Bypass wand functionality if the player is sneaking
-        if (context.getPlayer().isSneaking()) {
+        if (context.getPlayer().func_226563_dT_()) {
             return ActionResultType.PASS;
         }
         

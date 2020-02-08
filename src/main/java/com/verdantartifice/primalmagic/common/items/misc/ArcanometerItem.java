@@ -38,7 +38,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 public class ArcanometerItem extends Item {
     public ArcanometerItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON).setTEISR(() -> ArcanometerTEISR::new));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON).setISTER(() -> ArcanometerTEISR::new));
         this.setRegistryName(PrimalMagic.MODID, "arcanometer");
         this.addPropertyOverride(new ResourceLocation(PrimalMagic.MODID, "scan_state"), new IItemPropertyGetter() {
             @OnlyIn(Dist.CLIENT)

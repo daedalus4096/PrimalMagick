@@ -35,7 +35,7 @@ import net.minecraftforge.common.util.Constants;
  */
 public class ModularWandItem extends AbstractWandItem {
     public ModularWandItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setTEISR(() -> ModularWandTEISR::new));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> ModularWandTEISR::new));
         this.setRegistryName(PrimalMagic.MODID, "modular_wand");
     }
 

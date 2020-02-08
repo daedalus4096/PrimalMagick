@@ -19,6 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -62,9 +63,9 @@ public abstract class AbstractPhasingLeavesBlock extends LeavesBlock {
     }
     
     @Override
-    public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
-        // Periodically check to see if the block's phase needs to be updated
-        super.randomTick(state, worldIn, pos, random);
+    public void func_225542_b_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+        // Formerly randomTick. Periodically check to see if the block's phase needs to be updated
+        super.func_225542_b_(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
             worldIn.setBlockState(pos, state.with(PHASE, newPhase), Constants.BlockFlags.DEFAULT);

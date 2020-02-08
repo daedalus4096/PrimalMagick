@@ -24,18 +24,16 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.event.ForgeEventFactory;
 
 /**
  * Definition of a calcinator tile entity.  Provides the melting functionality for the corresponding
@@ -150,7 +148,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
             if (this.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
                 // If the calcinator isn't burning, but has meltable input in place, light it up
                 if (!this.isBurning() && this.canCalcinate(inputStack)) {
-                    this.burnTime = getBurnTime(fuelStack);
+                    this.burnTime = ForgeHooks.getBurnTime(fuelStack);
                     this.burnTimeTotal = this.burnTime;
                     if (this.isBurning()) {
                         shouldMarkDirty = true;
@@ -217,22 +215,8 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         return 200;
     }
 
-    protected static int getBurnTime(ItemStack fuelStack) {
-        // Determine how many ticks the given stack should burn for
-        if (fuelStack.isEmpty()) {
-            return 0;
-        } else {
-            Item item = fuelStack.getItem();
-            int ret = fuelStack.getBurnTime();
-            int burnTime = ret == -1 ? AbstractFurnaceTileEntity.getBurnTimes().getOrDefault(item, 0) : ret;
-            
-            // If the given stack isn't in the default burn time list, send out an event to query for it
-            return ForgeEventFactory.getItemBurnTime(fuelStack, burnTime);
-        }
-    }
-    
     public static boolean isFuel(ItemStack stack) {
-        return getBurnTime(stack) > 0;
+        return ForgeHooks.getBurnTime(stack) > 0;
     }
 
     protected boolean canCalcinate(ItemStack inputStack) {
