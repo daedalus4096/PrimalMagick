@@ -12,6 +12,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -61,7 +62,7 @@ public class WandChargerBlock extends Block {
     }
     
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
             // Open the GUI for the wand charger
             TileEntity tile = worldIn.getTileEntity(pos);
@@ -69,7 +70,7 @@ public class WandChargerBlock extends Block {
                 player.openContainer((WandChargerTileEntity)tile);
             }
         }
-        return true;
+        return ActionResultType.SUCCESS;
     }
     
     @SuppressWarnings("deprecation")

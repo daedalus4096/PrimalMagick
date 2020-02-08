@@ -17,6 +17,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IWorldPosCallable;
@@ -77,7 +78,7 @@ public class WandInscriptionTableBlock extends Block {
     }
     
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
             // Open the GUI for the wand inscription table
             NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
@@ -92,6 +93,6 @@ public class WandInscriptionTableBlock extends Block {
                 }
             });
         }
-        return true;
+        return ActionResultType.SUCCESS;
     }
 }
