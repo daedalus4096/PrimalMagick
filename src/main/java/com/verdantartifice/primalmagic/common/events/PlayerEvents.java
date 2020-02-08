@@ -65,7 +65,7 @@ public class PlayerEvents {
             return;
         }
         
-        Biome biome = player.world.func_226691_t_(player.getPosition());
+        Biome biome = player.world.getBiome(player.getPosition());
         if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER)) {
             // If the player is in a Nether-based biome, discover the Infernal source
             ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
@@ -227,9 +227,9 @@ public class PlayerEvents {
         contents.putString("title", new TranslationTextComponent("primalmagic.dream_journal.title").getFormattedText());
         contents.putString("author", player.getName().getFormattedText());
         ListNBT pages = new ListNBT();
-        pages.add(StringNBT.func_229705_a_(new TranslationTextComponent("primalmagic.dream_journal.text.1").getFormattedText()));
-        pages.add(StringNBT.func_229705_a_(new TranslationTextComponent("primalmagic.dream_journal.text.2").getFormattedText()));
-        pages.add(StringNBT.func_229705_a_(new TranslationTextComponent("primalmagic.dream_journal.text.3").getFormattedText()));
+        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.1").getFormattedText()));
+        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.2").getFormattedText()));
+        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.3").getFormattedText()));
         contents.put("pages", pages);
         journal.setTag(contents);
         

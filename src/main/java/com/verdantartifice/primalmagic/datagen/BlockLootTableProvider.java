@@ -72,9 +72,9 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
     
     protected void registerSlabTable(Block block) {
         LootPool.Builder poolBuilder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block)
-                .acceptFunction(SetCount.func_215932_a(ConstantRange.of(2))
+                .acceptFunction(SetCount.builder(ConstantRange.of(2))
                     .acceptCondition(BlockStateProperty.builder(block).with(SlabBlock.TYPE, SlabType.DOUBLE))
-                ).acceptFunction(ExplosionDecay.func_215863_b()));
+                ).acceptFunction(ExplosionDecay.builder()));
         LootTable.Builder tableBuilder = LootTable.builder().addLootPool(poolBuilder);
         this.lootTables.put(block, tableBuilder);
     }
@@ -86,8 +86,8 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
                 .alternative(MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1)))));
         LootEntry.Builder<?> saplingEntryBuilder = ItemLootEntry.builder(saplingBlock).acceptCondition(SurvivesExplosion.builder()).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, saplingFortuneChances));
         LootEntry.Builder<?> leavesEntryBuilder = ItemLootEntry.builder(leavesBlock).acceptCondition(shearsOrSilkTouch);
-        LootPool.Builder saplingAndLeavesPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(leavesEntryBuilder.func_216080_a(saplingEntryBuilder));
-        LootEntry.Builder<?> stickEntryBuilder = ItemLootEntry.builder(Items.STICK).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(1.0F, 2.0F))).acceptFunction(ExplosionDecay.func_215863_b()).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, stickFortuneChances));
+        LootPool.Builder saplingAndLeavesPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(leavesEntryBuilder.alternatively(saplingEntryBuilder));
+        LootEntry.Builder<?> stickEntryBuilder = ItemLootEntry.builder(Items.STICK).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F))).acceptFunction(ExplosionDecay.builder()).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, stickFortuneChances));
         LootPool.Builder stickPool = LootPool.builder().rolls(ConstantRange.of(1)).acceptCondition(shearsOrSilkTouch.inverted()).addEntry(stickEntryBuilder);
         LootTable.Builder tableBuilder = LootTable.builder().addLootPool(saplingAndLeavesPool).addLootPool(stickPool);
         this.lootTables.put(leavesBlock, tableBuilder);

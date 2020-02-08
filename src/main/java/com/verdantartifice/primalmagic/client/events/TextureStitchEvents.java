@@ -22,7 +22,7 @@ public class TextureStitchEvents {
     @SubscribeEvent
     public static void onPreTextureStitch(TextureStitchEvent.Pre event) {
         // Add empty-slot background images to the block atlas texture
-        if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().func_229223_g_())) {
+        if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().getBasePath())) {
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_core_slot"));
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_cap_slot"));
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_gem_slot"));

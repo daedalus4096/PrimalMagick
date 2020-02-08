@@ -75,9 +75,9 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     
     @SuppressWarnings("deprecation")
     @Override
-    public void func_225542_b_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        // Formerly randomTick. Periodically check to see if the block's phase needs to be updated
-        super.func_225542_b_(state, worldIn, pos, random);
+    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+        // Periodically check to see if the block's phase needs to be updated
+        super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.get(PHASE)) {
             worldIn.setBlockState(pos, state.with(PHASE, newPhase), Constants.BlockFlags.DEFAULT);

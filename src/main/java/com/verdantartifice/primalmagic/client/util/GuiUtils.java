@@ -86,7 +86,7 @@ public class GuiUtils {
             return;
         }
         Minecraft mc = Minecraft.getInstance();
-        MainWindow mainWindow = mc.func_228018_at_();
+        MainWindow mainWindow = mc.getMainWindow();
         double scaleFactor = mainWindow.getGuiScaleFactor();
         
         // Preserve previous value for the lighting GL attribute
