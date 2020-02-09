@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Collections;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -37,29 +38,29 @@ public abstract class AbstractSourceWidget extends Widget {
         boolean discovered = this.source.isDiscovered(mc.player);
         
         // Draw the colored source icon
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.pushMatrix();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.pushMatrix();
         if (discovered) {
             mc.getTextureManager().bindTexture(this.source.getImage());
         } else {
             mc.getTextureManager().bindTexture(Source.getUnknownImage());
         }
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.translatef(this.x, this.y, 0.0F);
-        GlStateManager.scaled(0.0625D, 0.0625D, 0.0625D);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.translatef(this.x, this.y, 0.0F);
+        RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
         this.blit(0, 0, 0, 0, 255, 255);
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
         
         // Draw the amount string
-        GlStateManager.pushMatrix();
+        RenderSystem.pushMatrix();
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.amount));
         int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
-        GlStateManager.scaled(0.5D, 0.5D, 0.5D);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
+        RenderSystem.scaled(0.5D, 0.5D, 0.5D);
         mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
         
         // Draw the tooltip if applicable
         if (this.isHovered()) {
