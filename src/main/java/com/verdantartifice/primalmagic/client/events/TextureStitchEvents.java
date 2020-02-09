@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.util.ResourceLocation;
@@ -27,6 +28,7 @@ public class TextureStitchEvents {
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_cap_slot"));
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_gem_slot"));
             event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_slot"));
+            event.addSprite(AncientManaFontTER.TEXTURE);
         }
     }
 }

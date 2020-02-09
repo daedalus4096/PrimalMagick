@@ -56,8 +56,8 @@ public class ClientProxy extends CommonProxy {
     
     private void registerTERs() {
         // Register tile entity renderers for those tile entities that need them
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.ANCIENT_MANA_FONT, d -> new AncientManaFontTER());
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.WAND_CHARGER, d -> new WandChargerTER());
+        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.ANCIENT_MANA_FONT, dispatcher -> new AncientManaFontTER(dispatcher));
+        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.WAND_CHARGER, dispatcher -> new WandChargerTER(dispatcher));
     }
     
     private void registerEntityRenderers() {
