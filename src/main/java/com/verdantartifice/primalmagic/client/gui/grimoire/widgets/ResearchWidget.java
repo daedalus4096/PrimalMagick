@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 import java.util.Collections;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -39,7 +40,7 @@ public class ResearchWidget extends Widget {
     
     @Override
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         // Pick the icon to show based on the prefix of the research key
         ResourceLocation loc;
@@ -54,23 +55,23 @@ public class ResearchWidget extends Widget {
         }
         
         // Render the icon
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.pushMatrix();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft.getInstance().getTextureManager().bindTexture(loc);
-        GlStateManager.translatef(this.x, this.y, 0.0F);
-        GlStateManager.scaled(0.0625D, 0.0625D, 0.0625D);
+        RenderSystem.translatef(this.x, this.y, 0.0F);
+        RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
         this.blit(0, 0, 0, 0, 255, 255);
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(this.x + 8, this.y, 100.0F);
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(this.x + 8, this.y, 100.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
             this.blit(0, 0, 159, 207, 10, 10);
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
         
         if (this.isHovered()) {

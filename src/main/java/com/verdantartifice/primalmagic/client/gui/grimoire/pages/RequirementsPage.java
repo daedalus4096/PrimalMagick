@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemStackWidget;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemTagWidget;
@@ -133,9 +134,9 @@ public class RequirementsPage extends AbstractPage {
         this.renderTitle(side, x, y, mouseX, mouseY);
         y += 53;
         
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft mc = Minecraft.getInstance();
         
         // Render obtain requirement section

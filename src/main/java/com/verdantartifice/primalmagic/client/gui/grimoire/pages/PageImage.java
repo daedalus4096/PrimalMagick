@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.pages;
 import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -51,15 +52,15 @@ public class PageImage extends AbstractGui implements IPageElement {
     @Override
     public void render(int side, int x, int y) {
         // Render the image at this element's resource location to the screen
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.pushMatrix();
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.pushMatrix();
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft.getInstance().getTextureManager().bindTexture(this.location);
-        GlStateManager.translatef(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
-        GlStateManager.scalef(this.scale, this.scale, this.scale);
+        RenderSystem.translatef(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
+        RenderSystem.scalef(this.scale, this.scale, this.scale);
         this.blit(0, 0, this.x, this.y, this.width, this.height);
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
     }
 
     @Override

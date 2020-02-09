@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
@@ -50,12 +50,12 @@ public class ItemTagWidget extends Widget {
             GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage(), false);
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
-                GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                GlStateManager.pushMatrix();
-                GlStateManager.translatef(this.x + 8, this.y, 100.0F);
+                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.pushMatrix();
+                RenderSystem.translatef(this.x + 8, this.y, 100.0F);
                 Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
                 this.blit(0, 0, 159, 207, 10, 10);
-                GlStateManager.popMatrix();
+                RenderSystem.popMatrix();
             }
             if (this.isHovered()) {
                 // If hovered, show a tooltip with the display name of the current matching itemstack

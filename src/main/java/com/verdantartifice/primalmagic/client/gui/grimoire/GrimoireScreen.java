@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractRecipePage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplineIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplinePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.OtherIndexPage;
-import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplineIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.PageImage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.PageString;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.RecipePageFactory;
@@ -192,7 +192,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         // Render the grimoire background
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
 
         int unscaledLeft = (this.width - this.xSize) / 2;
@@ -200,11 +200,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         float scaledLeft = (this.width - this.xSize * SCALE) / 2.0F;
         float scaledTop = (this.height - this.ySize * SCALE) / 2.0F;
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translatef(scaledLeft, scaledTop, 0.0F);
-        GlStateManager.scalef(SCALE, SCALE, 1.0F);
+        RenderSystem.pushMatrix();
+        RenderSystem.translatef(scaledLeft, scaledTop, 0.0F);
+        RenderSystem.scalef(SCALE, SCALE, 1.0F);
         this.blit(0, 0, 0, 0, this.xSize, this.ySize);
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
         
         // Render the two visible pages
         int current = 0;
