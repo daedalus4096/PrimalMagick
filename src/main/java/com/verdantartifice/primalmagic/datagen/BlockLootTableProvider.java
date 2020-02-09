@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
@@ -73,7 +74,7 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
     protected void registerSlabTable(Block block) {
         LootPool.Builder poolBuilder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block)
                 .acceptFunction(SetCount.builder(ConstantRange.of(2))
-                    .acceptCondition(BlockStateProperty.builder(block).with(SlabBlock.TYPE, SlabType.DOUBLE))
+                    .acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(SlabBlock.TYPE, SlabType.DOUBLE)))
                 ).acceptFunction(ExplosionDecay.builder()));
         LootTable.Builder tableBuilder = LootTable.builder().addLootPool(poolBuilder);
         this.lootTables.put(block, tableBuilder);
