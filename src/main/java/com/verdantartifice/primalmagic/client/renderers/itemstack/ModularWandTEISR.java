@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
 import java.lang.reflect.Method;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
@@ -9,7 +11,9 @@ import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
@@ -29,7 +33,7 @@ public class ModularWandTEISR extends ItemStackTileEntityRenderer {
     static {
         // The renderModel method of ItemRenderer is private, but we need it; so, expose it via reflection
         try {
-            RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, int.class, ItemStack.class);
+            RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, ItemStack.class, int.class, int.class, MatrixStack.class, IVertexBuilder.class);
             RENDER_MODEL_METHOD.setAccessible(true);
         } catch (Exception e) {
             RENDER_MODEL_METHOD = null;
@@ -38,29 +42,33 @@ public class ModularWandTEISR extends ItemStackTileEntityRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack itemStackIn) {
-        if (itemStackIn.getItem() instanceof ModularWandItem) {
+    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+        if (itemStack.getItem() instanceof ModularWandItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             
             // Get the wand components so we can extract their model resource locations
-            ModularWandItem wand = (ModularWandItem)itemStackIn.getItem();
-            WandCore core = wand.getWandCore(itemStackIn);
-            WandCap cap = wand.getWandCap(itemStackIn);
-            WandGem gem = wand.getWandGem(itemStackIn);
+            ModularWandItem wand = (ModularWandItem)itemStack.getItem();
+            WandCore core = wand.getWandCore(itemStack);
+            WandCap cap = wand.getWandCap(itemStack);
+            WandGem gem = wand.getWandGem(itemStack);
             
+            IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
             try {
                 if (core != null) {
                     // Render the wand core
-                    RENDER_MODEL_METHOD.invoke(itemRenderer, mc.getModelManager().getModel(core.getModelResourceLocation()), Integer.valueOf(-1), itemStackIn);
+                    IBakedModel model = mc.getModelManager().getModel(core.getModelResourceLocation());
+                    RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
                 }
                 if (cap != null) {
                     // Render the wand cap
-                    RENDER_MODEL_METHOD.invoke(itemRenderer, mc.getModelManager().getModel(cap.getModelResourceLocation()), Integer.valueOf(-1), itemStackIn);
+                    IBakedModel model = mc.getModelManager().getModel(cap.getModelResourceLocation());
+                    RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
                 }
                 if (gem != null) {
                     // Render the wand gem
-                    RENDER_MODEL_METHOD.invoke(itemRenderer, mc.getModelManager().getModel(gem.getModelResourceLocation()), Integer.valueOf(-1), itemStackIn);
+                    IBakedModel model = mc.getModelManager().getModel(gem.getModelResourceLocation());
+                    RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
                 }
             } catch (Exception e) {
                 PrimalMagic.LOGGER.catching(e);

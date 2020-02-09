@@ -2,14 +2,18 @@ package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
 import java.lang.reflect.Method;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
@@ -44,7 +48,7 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
     static {
         // The renderModel method of ItemRenderer is private, but we need it; so, expose it via reflection
         try {
-            RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, int.class, ItemStack.class);
+            RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, ItemStack.class, int.class, int.class, MatrixStack.class, IVertexBuilder.class);
             RENDER_MODEL_METHOD.setAccessible(true);
         } catch (Exception e) {
             RENDER_MODEL_METHOD = null;
@@ -53,15 +57,15 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
     }
     
     @Override
-    public void renderByItem(ItemStack itemStackIn) {
-        if (itemStackIn.getItem() instanceof ArcanometerItem) {
+    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+        if (itemStack.getItem() instanceof ArcanometerItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
 
             // Render the base model
-            IBakedModel model = mc.getModelManager().getModel(this.getModelResourceLocation(itemStackIn));
+            IBakedModel model = mc.getModelManager().getModel(this.getModelResourceLocation(itemStack));
             try {
-                RENDER_MODEL_METHOD.invoke(itemRenderer, model, Integer.valueOf(-1), itemStackIn);
+                RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, buffer.getBuffer(RenderType.solid()));
             } catch (Exception e) {
                 PrimalMagic.LOGGER.catching(e);
             }
@@ -82,12 +86,12 @@ public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
                 }
                 
                 // Render the screen display
-                GlStateManager.pushMatrix();
-                GlStateManager.translated(0.5D, 0.4375D, 0.405D);
-                GlStateManager.rotated(180.0D, 0.0D, 1.0D, 0.0D);
-                GlStateManager.scaled(0.2D, 0.2D, 0.0001D);
-                itemRenderer.renderItem(screenStack, ItemCameraTransforms.TransformType.GUI);
-                GlStateManager.popMatrix();
+                matrixStack.push();
+                matrixStack.translate(0.5D, 0.4375D, 0.405D);
+                matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F));
+                matrixStack.scale(0.2F, 0.2F, 0.0001F);
+                itemRenderer.renderItem(screenStack, ItemCameraTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer);
+                matrixStack.pop();
                 
                 isRenderingScreen = false;
             }
