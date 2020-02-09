@@ -10,14 +10,16 @@ import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,7 +39,7 @@ public class GuiUtils {
     public static boolean renderItemStack(ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
         boolean retVal = false;
         if (stack != null && !stack.isEmpty()) {
-            GlStateManager.color3f(1.0F, 1.0F, 1.0F);
+            RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             
@@ -45,12 +47,12 @@ public class GuiUtils {
             boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
             boolean isRescaleNormalEnabled = GL11.glIsEnabled(32826);
             
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.enableLighting();
-            RenderHelper.enableGUIStandardItemLighting();
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.enableRescaleNormal();
+            RenderSystem.enableLighting();
+            // TODO enable GUI standard item lighting? from RenderHelper?
             
             // Render the item stack into the GUI and, if applicable, its stack size and/or damage bar
             itemRenderer.renderItemAndEffectIntoGUI(stack, x, y);
@@ -58,18 +60,18 @@ public class GuiUtils {
                 itemRenderer.renderItemOverlayIntoGUI(mc.fontRenderer, stack, x, y, text);
             }
             
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
             
             // Return the lighting and rescale-normal attributes to their previous values
             if (isRescaleNormalEnabled) {
-                GlStateManager.enableRescaleNormal();
+                RenderSystem.enableRescaleNormal();
             } else {
-                GlStateManager.disableRescaleNormal();
+                RenderSystem.disableRescaleNormal();
             }
             if (isLightingEnabled) {
-                GlStateManager.enableLighting();
+                RenderSystem.enableLighting();
             } else {
-                GlStateManager.disableLighting();
+                RenderSystem.disableLighting();
             }
             
             retVal = true;
@@ -91,8 +93,8 @@ public class GuiUtils {
         
         // Preserve previous value for the lighting GL attribute
         boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.disableLighting();
+        RenderSystem.disableRescaleNormal();
+        RenderSystem.disableLighting();
 
         // Determine whether to flip the tooltip box to the other side of the mouse
         int max = 240;
@@ -155,31 +157,31 @@ public class GuiUtils {
 
         // Render the tooltip text
         for (int i = 0; i < parsedList.size(); i++) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(sX, sY, 0.0F);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(sX, sY, 0.0F);
             
             String str = parsedList.get(i);
             
-            GlStateManager.pushMatrix();
+            RenderSystem.pushMatrix();
             sY += mc.fontRenderer.FONT_HEIGHT;
-            GlStateManager.translatef(0.0F, 0.0F, 301.0F);
+            RenderSystem.translatef(0.0F, 0.0F, 301.0F);
             mc.fontRenderer.drawStringWithShadow(str, 0.0F, 0.0F, -1);
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
             if (i == 0) {
                 sY += 2;
             }
             
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
 
         // Restore changed attribute to their previous values
         mc.getItemRenderer().zLevel = prevZ;
         if (isLightingEnabled) {
-            GlStateManager.enableLighting();
+            RenderSystem.enableLighting();
         } else {
-            GlStateManager.disableLighting();
+            RenderSystem.disableLighting();
         }
-        GlStateManager.enableRescaleNormal();
+        RenderSystem.enableRescaleNormal();
     }
     
     public static void drawGradientRect(int left, int top, int right, int bottom, int color1, int color2) {
@@ -227,7 +229,7 @@ public class GuiUtils {
         if (sources == null || sources.isEmpty()) {
             return;
         }
-        GlStateManager.pushMatrix();
+        RenderSystem.pushMatrix();
         int x = 0;
         int index = 0;
         
@@ -245,7 +247,7 @@ public class GuiUtils {
                 index++;
             }
         }
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
     }
     
     public static void renderSourceIcon(int x, int y, @Nullable Source source, int amount, double z) {
@@ -265,47 +267,46 @@ public class GuiUtils {
         
         Minecraft mc = Minecraft.getInstance();
         
-        GlStateManager.pushMatrix();
-        GlStateManager.disableLighting();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(770, 771);
+        RenderSystem.pushMatrix();
+        RenderSystem.disableLighting();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(770, 771);
         
-        GlStateManager.pushMatrix();
+        RenderSystem.pushMatrix();
         
         mc.getTextureManager().bindTexture(imageLoc);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         // Render the source's icon
-        Tessellator tess = Tessellator.getInstance();
-        BufferBuilder bb = tess.getBuffer();
-        bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        bb.pos(x + 0.0D, y + 16.0D, z).tex(0.0D, 1.0D).endVertex();
-        bb.pos(x + 16.0D, y + 16.0D, z).tex(1.0D, 1.0D).endVertex();
-        bb.pos(x + 16.0D, y + 0.0D, z).tex(1.0D, 0.0D).endVertex();
-        bb.pos(x + 0.0D, y + 0.0D, z).tex(0.0D, 0.0D).endVertex();
-        tess.draw();
+        IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+        IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
+        builder.pos(x + 0.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(0.0F, 1.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(x + 16.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(1.0F, 1.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(x + 16.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(1.0F, 0.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(x + 0.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(0.0F, 0.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        buffer.finish();
 
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
         
         // Render an amount string for the source, if an amount has been given
         if (amount > 0) {
-            GlStateManager.pushMatrix();
-            GlStateManager.scaled(0.5D, 0.5D, 1.0D);
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.pushMatrix();
+            RenderSystem.scaled(0.5D, 0.5D, 1.0D);
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
             mc.fontRenderer.drawString(amountStr, (32 - amountWidth + (x * 2)), (32 - mc.fontRenderer.FONT_HEIGHT + (y * 2)), Color.WHITE.getRGB());
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
         
         // Restore changed GL attributes
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         if (!isBlendOn) {
-            GlStateManager.disableBlend();
+            RenderSystem.disableBlend();
         }
         if (isLightingEnabled) {
-            GlStateManager.enableLighting();
+            RenderSystem.enableLighting();
         }
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
     }
 }
