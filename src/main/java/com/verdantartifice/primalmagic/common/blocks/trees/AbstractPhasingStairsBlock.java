@@ -12,14 +12,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 
@@ -55,12 +53,6 @@ public abstract class AbstractPhasingStairsBlock extends StairsBlock {
         // Set the block's phase upon placement
         TimePhase phase = this.getCurrentPhase(context.getWorld());
         return super.getStateForPlacement(context).with(PHASE, phase);
-    }
-    
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        // Even though not all phases are translucent, this method isn't world-aware
-        return BlockRenderLayer.TRANSLUCENT;
     }
     
     @SuppressWarnings("deprecation")

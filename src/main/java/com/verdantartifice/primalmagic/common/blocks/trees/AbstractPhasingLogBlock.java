@@ -15,7 +15,7 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -67,12 +67,6 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
         return super.getStateForPlacement(context).with(PHASE, phase);
     }
     
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        // Even though not all phases are translucent, this method isn't world-aware
-        return BlockRenderLayer.TRANSLUCENT;
-    }
-    
     @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
@@ -117,7 +111,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     }
     
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.strippedVersion != null && player != null && player.getHeldItem(handIn).getItem() instanceof AxeItem) {
             // If the player right-clicks on the log with an axe, replace this block with its stripped version
             worldIn.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -127,9 +121,9 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
                     p.sendBreakAnimation(handIn);
                 });
             }
-            return true;
+            return ActionResultType.SUCCESS;
         } else {
-            return false;
+            return ActionResultType.PASS;
         }
     }
 }
