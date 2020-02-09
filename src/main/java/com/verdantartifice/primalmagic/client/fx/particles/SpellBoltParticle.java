@@ -7,8 +7,10 @@ import javax.annotation.Nonnull;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.renderers.types.ThickLinesRenderType;
 import com.verdantartifice.primalmagic.common.util.LineSegment;
 import com.verdantartifice.primalmagic.common.util.VectorUtils;
 
@@ -18,9 +20,7 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -88,42 +88,38 @@ public class SpellBoltParticle extends Particle {
     }
     
     @Override
-    public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+    public void renderParticle(IVertexBuilder builder, ActiveRenderInfo entityIn, float partialTicks) {
         Minecraft.getInstance().textureManager.bindTexture(TEXTURE);
 
-        GL11.glDepthMask(false);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-        GL11.glDisable(GL11.GL_CULL_FACE);
+        RenderSystem.depthMask(false);
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        RenderSystem.disableCull();
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translated(this.posX - interpPosX, this.posY - interpPosY, this.posZ - interpPosZ);
+        RenderSystem.pushMatrix();
+        RenderSystem.translated(this.posX - entityIn.getProjectedView().x, this.posY - entityIn.getProjectedView().y, this.posZ - entityIn.getProjectedView().z);
         
-        Tessellator tess = Tessellator.getInstance();
-        BufferBuilder bb = tess.getBuffer();
-        bb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_TEX_COLOR);
+        IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+        IVertexBuilder lineBuilder = buffer.getBuffer(ThickLinesRenderType.THICK_LINES);
         
         // Draw each line segment as an OpenGL line
-        GlStateManager.lineWidth(WIDTH);
         for (int index = 0; index < this.segmentList.size(); index++) {
             LineSegment segment = this.segmentList.get(index);
             
             // Move the endpoints of each segment along their computed motion path before rendering to make the bolt move
             segment.perturb(this.perturbList.get(index), this.perturbList.get(index + 1));
             
-            bb.pos(segment.getStart().x, segment.getStart().y, segment.getStart().z).tex(0.0D, 0.0D).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).endVertex();
-            bb.pos(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).tex(1.0D, 1.0D).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).endVertex();
+            lineBuilder.pos(segment.getStart().x, segment.getStart().y, segment.getStart().z).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).tex(0.0F, 0.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
+            lineBuilder.pos(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).tex(1.0F, 1.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
         }
         
-        tess.draw();
-        
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glDepthMask(true);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableCull();
+        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        RenderSystem.disableBlend();
+        RenderSystem.depthMask(true);
 
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
     }
 
     @Override

@@ -278,13 +278,12 @@ public class GuiUtils {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         // Render the source's icon
-        IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+        IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
         IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
         builder.pos(x + 0.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(0.0F, 1.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
         builder.pos(x + 16.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(1.0F, 1.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
         builder.pos(x + 16.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(1.0F, 0.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
         builder.pos(x + 0.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(0.0F, 0.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        buffer.finish();
 
         RenderSystem.popMatrix();
         
