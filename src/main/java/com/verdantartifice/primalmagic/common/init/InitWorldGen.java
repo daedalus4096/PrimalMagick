@@ -37,7 +37,7 @@ public class InitWorldGen {
     public static void initWorldGen() {
         // Add raw marble seams to all non-Nether, non-End biomes
         ForgeRegistries.BIOMES.getValues().stream().filter(InitWorldGen::shouldSpawnMarble).forEach((biome) -> {
-            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(Feature.ORE, new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.MARBLE_RAW.getDefaultState(), 33), Placement.COUNT_RANGE, new CountRangeConfig(10, 0, 0, 80)));
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.MARBLE_RAW.getDefaultState(), 33)).withPlacement(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(10, 0, 0, 80))));
         });
         
         // Add Earth shrines to plains and savanna type biomes
@@ -95,7 +95,8 @@ public class InitWorldGen {
     
     private static void addShrine(@Nonnull Biome biome, @Nonnull Source source) {
         // Structures must be added as both a structure and a feature of the biome in order to spawn
-        biome.addStructure(FeaturesPM.SHRINE, new ShrineConfig(source));
-        biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(FeaturesPM.SHRINE, new ShrineConfig(source), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
+        ShrineConfig config = new ShrineConfig(source);
+        biome.addStructure(FeaturesPM.SHRINE.withConfiguration(config));
+        biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeaturesPM.SHRINE.withConfiguration(config).withPlacement(Placement.NOPE.func_227446_a_(IPlacementConfig.NO_PLACEMENT_CONFIG)));
     }
 }
