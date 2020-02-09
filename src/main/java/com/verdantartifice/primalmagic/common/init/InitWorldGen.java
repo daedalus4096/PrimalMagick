@@ -5,18 +5,15 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.worldgen.features.FeatureConfigsPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
-import com.verdantartifice.primalmagic.common.worldgen.features.MoonwoodTreeFeature;
 import com.verdantartifice.primalmagic.common.worldgen.features.ShrineConfig;
 import com.verdantartifice.primalmagic.common.worldgen.features.ShrineStructure;
-import com.verdantartifice.primalmagic.common.worldgen.features.SunwoodTreeFeature;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
@@ -34,8 +31,6 @@ import net.minecraftforge.registries.IForgeRegistry;
  */
 public class InitWorldGen {
     public static void initFeatures(IForgeRegistry<Feature<?>> registry) {
-        registry.register(new SunwoodTreeFeature(NoFeatureConfig::deserialize, false).setRegistryName(PrimalMagic.MODID, "sunwood_tree"));
-        registry.register(new MoonwoodTreeFeature(NoFeatureConfig::deserialize, false).setRegistryName(PrimalMagic.MODID, "moonwood_tree"));
         registry.register(new ShrineStructure(ShrineConfig::deserialize).setRegistryName(PrimalMagic.MODID, "shrine"));
     }
 
@@ -82,8 +77,8 @@ public class InitWorldGen {
         
         // Add Moon shrines to forest type biomes.  Also add sunwood and moonwood trees.
         BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).stream().forEach((biome) -> {
-            biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesPM.SUNWOOD_TREE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(0, 0.1F, 1)));
-            biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesPM.MOONWOOD_TREE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, new AtSurfaceWithExtraConfig(0, 0.1F, 1)));
+            biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(FeatureConfigsPM.SUNWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(0, 0.1F, 1))));
+            biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(FeatureConfigsPM.MOONWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(0, 0.1F, 1))));
             addShrine(biome, Source.MOON);
         });
     }
