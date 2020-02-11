@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 
 import net.minecraft.client.Minecraft;
@@ -33,7 +34,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/mana_font_core.png");
     private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
     private static Method RENDER_MODEL_METHOD;
     
@@ -71,7 +71,7 @@ public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
             float ds = 0.1875F;
 
             @SuppressWarnings("deprecation")
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(TEXTURE);
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(AncientManaFontTER.TEXTURE);
             IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
             
             // Draw the font base

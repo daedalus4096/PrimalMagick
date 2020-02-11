@@ -29,7 +29,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/mana_font_core.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/mana_font_core");
     
     public AncientManaFontTER(TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);
