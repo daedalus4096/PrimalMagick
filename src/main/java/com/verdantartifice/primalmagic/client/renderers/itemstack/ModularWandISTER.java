@@ -27,7 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.items.wands.ModularWandItem}
  */
 @OnlyIn(Dist.CLIENT)
-public class ModularWandTEISR extends ItemStackTileEntityRenderer {
+public class ModularWandISTER extends ItemStackTileEntityRenderer {
     private static Method RENDER_MODEL_METHOD;
 
     static {

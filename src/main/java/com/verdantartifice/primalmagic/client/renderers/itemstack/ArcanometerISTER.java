@@ -35,7 +35,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
-public class ArcanometerTEISR extends ItemStackTileEntityRenderer {
+public class ArcanometerISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation MRL0 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_0"), "");
     private static final ModelResourceLocation MRL1 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_1"), "");
     private static final ModelResourceLocation MRL2 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_2"), "");

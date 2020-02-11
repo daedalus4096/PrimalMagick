@@ -33,7 +33,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock}
  */
 @OnlyIn(Dist.CLIENT)
-public class AncientManaFontTEISR extends ItemStackTileEntityRenderer {
+public class AncientManaFontISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
     private static Method RENDER_MODEL_METHOD;
     

@@ -26,7 +26,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem}
  */
 @OnlyIn(Dist.CLIENT)
-public class MundaneWandTEISR extends ItemStackTileEntityRenderer {
+public class MundaneWandISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation CORE_MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), "");
     private static Method RENDER_MODEL_METHOD;
 
