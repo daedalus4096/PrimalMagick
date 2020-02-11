@@ -2,9 +2,12 @@ package com.verdantartifice.primalmagic.client.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
+import com.verdantartifice.primalmagic.common.containers.slots.WandCapSlot;
+import com.verdantartifice.primalmagic.common.containers.slots.WandCoreSlot;
+import com.verdantartifice.primalmagic.common.containers.slots.WandGemSlot;
+import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -24,10 +27,10 @@ public class TextureStitchEvents {
     public static void onPreTextureStitch(TextureStitchEvent.Pre event) {
         // Add empty-slot background images to the block atlas texture
         if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().getBasePath())) {
-            event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_core_slot"));
-            event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_cap_slot"));
-            event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_gem_slot"));
-            event.addSprite(new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_slot"));
+            event.addSprite(WandCoreSlot.TEXTURE);
+            event.addSprite(WandCapSlot.TEXTURE);
+            event.addSprite(WandGemSlot.TEXTURE);
+            event.addSprite(WandSlot.TEXTURE);
             event.addSprite(AncientManaFontTER.TEXTURE);
         }
     }

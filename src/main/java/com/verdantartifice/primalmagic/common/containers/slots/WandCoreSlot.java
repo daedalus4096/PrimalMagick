@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.containers.slots;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -14,12 +15,12 @@ import net.minecraft.util.ResourceLocation;
  * @author Daedalus4096
  */
 public class WandCoreSlot extends Slot {
-    protected static final ResourceLocation ATLAS_TEXTURE = new ResourceLocation("textures/atlas/blocks.png");
-    protected static final ResourceLocation SLOT_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_core_slot");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_core_slot");
     
+    @SuppressWarnings("deprecation")
     public WandCoreSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition);
-        this.setBackground(ATLAS_TEXTURE, SLOT_TEXTURE);
+        this.setBackground(AtlasTexture.LOCATION_BLOCKS_TEXTURE, TEXTURE);
     }
 
     @Override
