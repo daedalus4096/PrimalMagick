@@ -15,7 +15,7 @@ import net.minecraft.world.IWorld;
  */
 public class MoonwoodLogBlock extends AbstractPhasingLogBlock {
     public MoonwoodLogBlock(Block stripped) {
-        super(stripped, MaterialColor.IRON, Block.Properties.create(Material.WOOD, MaterialColor.IRON).hardnessAndResistance(2.0F).tickRandomly().sound(SoundType.WOOD));
+        super(stripped, MaterialColor.IRON, Block.Properties.create(Material.WOOD, MaterialColor.IRON).hardnessAndResistance(2.0F).tickRandomly().notSolid().sound(SoundType.WOOD));
     }
 
     @Override

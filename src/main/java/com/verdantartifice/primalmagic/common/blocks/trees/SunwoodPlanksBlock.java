@@ -16,7 +16,7 @@ import net.minecraft.world.IWorld;
  */
 public class SunwoodPlanksBlock extends AbstractPhasingBlock {
     public SunwoodPlanksBlock() {
-        super(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F, 3.0F).tickRandomly().sound(SoundType.WOOD));
+        super(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F, 3.0F).tickRandomly().notSolid().sound(SoundType.WOOD));
         this.setRegistryName(PrimalMagic.MODID, "sunwood_planks");
     }
 

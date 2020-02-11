@@ -16,7 +16,7 @@ import net.minecraft.world.IWorld;
  */
 public class MoonwoodPillarBlock extends AbstractPhasingPillarBlock {
     public MoonwoodPillarBlock() {
-        super(Block.Properties.create(Material.WOOD, MaterialColor.IRON).hardnessAndResistance(2.0F).tickRandomly().sound(SoundType.WOOD));
+        super(Block.Properties.create(Material.WOOD, MaterialColor.IRON).hardnessAndResistance(2.0F).tickRandomly().notSolid().sound(SoundType.WOOD));
         this.setRegistryName(PrimalMagic.MODID, "moonwood_pillar");
     }
 
