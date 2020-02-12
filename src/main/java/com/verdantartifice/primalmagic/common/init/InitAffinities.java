@@ -317,6 +317,7 @@ public class InitAffinities {
         
         // Register Primal Magic item affinities
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.GRIMOIRE), AffinityManager.getAffinities(new ItemStack(Items.ENCHANTED_BOOK), server));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.MUNDANE_WAND), new SourceList());  // Don't wand mundane wands to have any affinities
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.BLOODY_FLESH), new SourceList().add(Source.BLOOD, 20));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HALLOWED_ORB), new SourceList().add(Source.HALLOWED, 20));
 
