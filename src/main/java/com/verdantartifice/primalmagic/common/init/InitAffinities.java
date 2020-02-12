@@ -216,6 +216,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Blocks.POTTED_BAMBOO), AffinityManager.getAffinities(new ItemStack(Blocks.BAMBOO), server).add(AffinityManager.getAffinities(new ItemStack(Blocks.FLOWER_POT), server)));
         AffinityManager.registerAffinities(new ItemStack(Blocks.BELL), new SourceList().add(Source.EARTH, 10));
         AffinityManager.registerAffinities(new ItemStack(Blocks.SWEET_BERRY_BUSH), new SourceList().add(Source.EARTH, 5).add(Source.SUN, 5));
+        AffinityManager.registerAffinities(new ItemStack(Blocks.BEE_NEST), new SourceList().add(Source.EARTH, 9).add(Source.SEA, 11).add(Source.SUN, 9).add(Source.BLOOD, 4));  // copy the beehive sources
         
         // Register Vanilla item affinities
         AffinityManager.registerAffinities(new ItemStack(Items.SCUTE), new SourceList().add(Source.SEA, 2).add(Source.BLOOD, 2));
@@ -276,6 +277,8 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(Items.HEART_OF_THE_SEA), new SourceList().add(Source.SEA, 20));
         AffinityManager.registerAffinities(new ItemStack(Items.GLOBE_BANNER_PATTERN), AffinityManager.getAffinities(new ItemStack(Items.PAPER), server));
         AffinityManager.registerAffinities(new ItemStack(Items.SWEET_BERRIES), new SourceList().add(Source.EARTH, 2).add(Source.SUN, 2));
+        AffinityManager.registerAffinities(new ItemStack(Items.HONEY_BOTTLE), AffinityManager.getAffinities(new ItemStack(Items.GLASS_BOTTLE), server).add(Source.SEA, 5).add(Source.BLOOD, 1));
+        AffinityManager.registerAffinities(new ItemStack(Items.HONEYCOMB), new SourceList().add(Source.SEA, 5).add(Source.BLOOD, 2));
         
         // Append affinities to Vanilla blocks
         AffinityManager.appendAffinities(new ItemStack(Blocks.FURNACE), new SourceList().add(Source.INFERNAL, 5), server);
