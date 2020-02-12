@@ -72,6 +72,7 @@ public class ClientProxy extends CommonProxy {
     
     private void setRenderLayers() {
         // Set the render layers for any blocks that don't use the default
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_SAPLING, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_LEAVES, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_LOG, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_PILLAR, RenderType.translucent());
@@ -82,6 +83,7 @@ public class ClientProxy extends CommonProxy {
         RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_MOONWOOD_LOG, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_MOONWOOD_WOOD, RenderType.translucent());
 
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_SAPLING, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_LEAVES, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_LOG, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_PILLAR, RenderType.translucent());
