@@ -46,7 +46,13 @@ public class ModularWandItem extends AbstractWandItem {
             return 2500;
         }
         WandGem gem = this.getWandGem(stack);
-        return (gem == null) ? 2500 : 100 * gem.getCapacity();
+        if (gem == null) {
+            return 2500;
+        } else if (gem.getCapacity() == -1) {
+            return -1;
+        } else {
+            return 100 * gem.getCapacity();
+        }
     }
     
     @Override
