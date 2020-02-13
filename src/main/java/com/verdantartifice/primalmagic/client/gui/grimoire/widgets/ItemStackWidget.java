@@ -58,7 +58,7 @@ public class ItemStackWidget extends Widget {
             // Render completion checkmark if appropriate
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x + 8, this.y, 100.0F);
+            RenderSystem.translatef(this.x + 8, this.y, 200.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
             this.blit(0, 0, 159, 207, 10, 10);
             RenderSystem.popMatrix();
