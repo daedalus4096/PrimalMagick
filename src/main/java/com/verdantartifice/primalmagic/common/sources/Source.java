@@ -41,6 +41,7 @@ public class Source {
     public static final List<Source> SORTED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED);
     
     protected static final ResourceLocation UNKNOWN_IMAGE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_unknown.png");
+    protected static final ResourceLocation UNKNOWN_ATLAS_LOC = new ResourceLocation(PrimalMagic.MODID, "research/research_unknown");
 
     protected final String tag; // Unique identifier for the source
     protected final int color;  // Color to use for graphical effects
@@ -49,16 +50,17 @@ public class Source {
     protected final Stat manaSpentStat;             // Statistic to increment when spending this type of mana
     protected final SimpleResearchKey discoverKey;  // Research necessary to unlock this source and make it visible to the player
     protected final ResourceLocation image;         // Location of the source's image
+    protected final ResourceLocation atlasLoc;      // Location of the source's image in the texture atlas
     
     public Source(@Nonnull String tag, int color, double multiplier, @Nonnull TextFormatting chatColor, @Nonnull Stat manaSpentStat) {
         this(tag, color, multiplier, chatColor, manaSpentStat, null);
     }
     
     public Source(@Nonnull String tag, int color, double multiplier, @Nonnull TextFormatting chatColor, @Nonnull Stat manaSpentStat, @Nullable SimpleResearchKey discoverKey) {
-        this(tag, color, multiplier, chatColor, manaSpentStat, discoverKey, new ResourceLocation(PrimalMagic.MODID, "textures/sources/" + tag.toLowerCase() + ".png"));
+        this(tag, color, multiplier, chatColor, manaSpentStat, discoverKey, new ResourceLocation(PrimalMagic.MODID, "textures/sources/" + tag.toLowerCase() + ".png"), new ResourceLocation(PrimalMagic.MODID, "sources/" + tag.toLowerCase()));
     }
     
-    public Source(@Nonnull String tag, int color, double multiplier, @Nonnull TextFormatting chatColor, @Nonnull Stat manaSpentStat, @Nullable SimpleResearchKey discoverKey, @Nonnull ResourceLocation image) {
+    public Source(@Nonnull String tag, int color, double multiplier, @Nonnull TextFormatting chatColor, @Nonnull Stat manaSpentStat, @Nullable SimpleResearchKey discoverKey, @Nonnull ResourceLocation image, @Nonnull ResourceLocation atlasLoc) {
         if (SOURCES.containsKey(tag)) {
             // Don't allow a given source to be registered more than once
             throw new IllegalArgumentException("Source " + tag + " already registered!");
@@ -70,6 +72,7 @@ public class Source {
         this.manaSpentStat = manaSpentStat;
         this.discoverKey = discoverKey;
         this.image = image;
+        this.atlasLoc = atlasLoc;
         SOURCES.put(tag, this);
     }
     
@@ -111,6 +114,11 @@ public class Source {
         return this.image;
     }
     
+    @Nonnull
+    public ResourceLocation getAtlasLocation() {
+        return this.atlasLoc;
+    }
+    
     public boolean isDiscovered(@Nullable PlayerEntity player) {
         if (this.discoverKey == null) {
             // A source with no unlock key is automatically discovered
@@ -128,6 +136,11 @@ public class Source {
     @Nonnull
     public static ResourceLocation getUnknownImage() {
         return UNKNOWN_IMAGE;
+    }
+    
+    @Nonnull
+    public static ResourceLocation getUnknownAtlasLocation() {
+        return UNKNOWN_ATLAS_LOC;
     }
     
     @Nullable

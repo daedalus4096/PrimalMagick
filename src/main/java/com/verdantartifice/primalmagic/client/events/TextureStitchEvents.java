@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.containers.slots.WandCapSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandCoreSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandGemSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,13 +26,19 @@ public class TextureStitchEvents {
     @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onPreTextureStitch(TextureStitchEvent.Pre event) {
-        // Add empty-slot background images to the block atlas texture
         if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().getBasePath())) {
+            // Add empty-slot background images to the block atlas texture
             event.addSprite(WandCoreSlot.TEXTURE);
             event.addSprite(WandCapSlot.TEXTURE);
             event.addSprite(WandGemSlot.TEXTURE);
             event.addSprite(WandSlot.TEXTURE);
+
+            // Add other sprites to the block atlas texture
             event.addSprite(AncientManaFontTER.TEXTURE);
+            event.addSprite(Source.getUnknownAtlasLocation());
+            for (Source source : Source.SORTED_SOURCES) {
+                event.addSprite(source.getAtlasLocation());
+            }
         }
     }
 }

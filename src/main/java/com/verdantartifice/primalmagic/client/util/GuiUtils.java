@@ -21,6 +21,8 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -240,9 +242,9 @@ public class GuiUtils {
                 
                 // If the source hasn't been discovered by the player, render an unknown icon instead
                 if (source.isDiscovered(player)) {
-                    GuiUtils.renderSourceIcon(x, startY, source, sources.getAmount(source), 999);
+                    GuiUtils.renderSourceIcon(x, startY, source, sources.getAmount(source), 998);
                 } else {
-                    GuiUtils.renderUnknownSourceIcon(x, startY, sources.getAmount(source), 999);
+                    GuiUtils.renderUnknownSourceIcon(x, startY, sources.getAmount(source), 998);
                 }
                 index++;
             }
@@ -252,12 +254,12 @@ public class GuiUtils {
     
     public static void renderSourceIcon(int x, int y, @Nullable Source source, int amount, double z) {
         if (source != null) {
-            renderSourceIcon(x, y, source.getImage(), amount, z);
+            renderSourceIcon(x, y, source.getAtlasLocation(), amount, z);
         }
     }
     
     public static void renderUnknownSourceIcon(int x, int y, int amount, double z) {
-        renderSourceIcon(x, y, Source.getUnknownImage(), amount, z);
+        renderSourceIcon(x, y, Source.getUnknownAtlasLocation(), amount, z);
     }
     
     protected static void renderSourceIcon(int x, int y, @Nonnull ResourceLocation imageLoc, int amount, double z) {
@@ -270,26 +272,28 @@ public class GuiUtils {
         RenderSystem.pushMatrix();
         RenderSystem.disableLighting();
         RenderSystem.enableBlend();
-        RenderSystem.blendFunc(770, 771);
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
         RenderSystem.pushMatrix();
-        
-        mc.getTextureManager().bindTexture(imageLoc);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         // Render the source's icon
+        @SuppressWarnings("deprecation")
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(imageLoc);
         IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
-        IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
-        builder.pos(x + 0.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(0.0F, 1.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(x + 16.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(1.0F, 1.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(x + 16.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(1.0F, 0.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(x + 0.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(0.0F, 0.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        IVertexBuilder builder = buffer.getBuffer(RenderType.cutout());
+        builder.pos(x + 0.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(x + 16.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(x + 16.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(x + 0.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        buffer.finish();
 
         RenderSystem.popMatrix();
         
         // Render an amount string for the source, if an amount has been given
         if (amount > 0) {
             RenderSystem.pushMatrix();
+            RenderSystem.translated(0.0D, 0.0D, z + 1.0D);
             RenderSystem.scaled(0.5D, 0.5D, 1.0D);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             String amountStr = Integer.toString(amount);
