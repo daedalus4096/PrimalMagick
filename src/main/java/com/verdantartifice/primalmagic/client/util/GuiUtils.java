@@ -187,7 +187,7 @@ public class GuiUtils {
     }
     
     public static void drawGradientRect(int left, int top, int right, int bottom, int color1, int color2) {
-        boolean blendOn = GL11.glIsEnabled(3042);
+        boolean blendOn = GL11.glIsEnabled(GL11.GL_BLEND);
         
         // Calculate RGBA components for each color
         float a1 = (color1 >> 24 & 0xFF) / 255.0F;
@@ -202,11 +202,11 @@ public class GuiUtils {
         // Bring the rect up in the Z-order
         double z = 300.0D;
         
-        GL11.glDisable(3553);
-        GL11.glEnable(3042);
-        GL11.glDisable(3008);
-        GL11.glBlendFunc(770, 771);
-        GL11.glShadeModel(7425);
+        RenderSystem.disableTexture();
+        RenderSystem.enableBlend();
+        RenderSystem.disableAlphaTest();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.shadeModel(GL11.GL_SMOOTH);
         
         // Draw the rectangle
         Tessellator tess = Tessellator.getInstance();
@@ -218,13 +218,13 @@ public class GuiUtils {
         tess.draw();
         
         // Restore changed GL attributes
-        GL11.glShadeModel(7424);
-        GlStateManager.blendFunc(770, 771);
+        RenderSystem.shadeModel(GL11.GL_FLAT);
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         if (!blendOn) {
-            GL11.glDisable(3042);
+            RenderSystem.disableBlend();
         }
-        GL11.glEnable(3008);
-        GL11.glEnable(3553);
+        RenderSystem.enableAlphaTest();
+        RenderSystem.enableTexture();
     }
     
     public static void renderSourcesForPlayer(@Nullable SourceList sources, @Nullable PlayerEntity player, int startX, int startY) {
@@ -264,8 +264,8 @@ public class GuiUtils {
     
     protected static void renderSourceIcon(int x, int y, @Nonnull ResourceLocation imageLoc, int amount, double z) {
         // Preserve previous values for blend and lighting GL attributes
-        boolean isBlendOn = GL11.glIsEnabled(3042);
-        boolean isLightingEnabled = GL11.glIsEnabled(2896);
+        boolean isBlendOn = GL11.glIsEnabled(GL11.GL_BLEND);
+        boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
         
         Minecraft mc = Minecraft.getInstance();
         
