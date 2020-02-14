@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.types.ThickLinesRenderType;
 import com.verdantartifice.primalmagic.common.util.LineSegment;
 import com.verdantartifice.primalmagic.common.util.VectorUtils;
@@ -21,7 +20,6 @@ import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,7 +32,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class SpellBoltParticle extends Particle {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/particle/spell_bolt.png");
     protected static final float WIDTH = 6F;
     protected static final double MAX_DISPLACEMENT = 0.5D;
     protected static final double PERTURB_DISTANCE = 0.002D;
@@ -89,8 +86,6 @@ public class SpellBoltParticle extends Particle {
     
     @Override
     public void renderParticle(IVertexBuilder builder, ActiveRenderInfo entityIn, float partialTicks) {
-        Minecraft.getInstance().textureManager.bindTexture(TEXTURE);
-
         RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
@@ -98,20 +93,22 @@ public class SpellBoltParticle extends Particle {
 
         RenderSystem.pushMatrix();
         RenderSystem.translated(this.posX - entityIn.getProjectedView().x, this.posY - entityIn.getProjectedView().y, this.posZ - entityIn.getProjectedView().z);
-        
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+
         IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
         IVertexBuilder lineBuilder = buffer.getBuffer(ThickLinesRenderType.THICK_LINES);
         
-        // Draw each line segment as an OpenGL line
+        // Draw each line segment
         for (int index = 0; index < this.segmentList.size(); index++) {
             LineSegment segment = this.segmentList.get(index);
             
             // Move the endpoints of each segment along their computed motion path before rendering to make the bolt move
             segment.perturb(this.perturbList.get(index), this.perturbList.get(index + 1));
             
-            lineBuilder.pos(segment.getStart().x, segment.getStart().y, segment.getStart().z).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).tex(0.0F, 0.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
-            lineBuilder.pos(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).tex(1.0F, 1.0F).lightmap(0, 240).normal(1, 0, 0).endVertex();
+            lineBuilder.pos(segment.getStart().x, segment.getStart().y, segment.getStart().z).color(this.particleRed, this.particleGreen, this.particleBlue, 0.5F).endVertex();
+            lineBuilder.pos(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).color(this.particleRed, this.particleGreen, this.particleBlue, 0.5F).endVertex();
         }
+        buffer.finish(ThickLinesRenderType.THICK_LINES);
         
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableCull();
