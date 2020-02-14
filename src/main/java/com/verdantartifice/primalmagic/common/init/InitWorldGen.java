@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeatureConfigsPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
+import com.verdantartifice.primalmagic.common.worldgen.features.PhasingTreeFeature;
 import com.verdantartifice.primalmagic.common.worldgen.features.ShrineConfig;
 import com.verdantartifice.primalmagic.common.worldgen.features.ShrineStructure;
 
@@ -15,6 +16,7 @@ import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
@@ -31,6 +33,7 @@ import net.minecraftforge.registries.IForgeRegistry;
  */
 public class InitWorldGen {
     public static void initFeatures(IForgeRegistry<Feature<?>> registry) {
+        registry.register(new PhasingTreeFeature(TreeFeatureConfig::func_227338_a_).setRegistryName(PrimalMagic.MODID, "phasing_tree"));
         registry.register(new ShrineStructure(ShrineConfig::deserialize).setRegistryName(PrimalMagic.MODID, "shrine"));
     }
 

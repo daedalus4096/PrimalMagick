@@ -19,7 +19,7 @@ public class MoonwoodLogBlock extends AbstractPhasingLogBlock {
     }
 
     @Override
-    protected TimePhase getCurrentPhase(IWorld world) {
+    public TimePhase getCurrentPhase(IWorld world) {
         return TimePhase.getMoonPhase(world);
     }
 }

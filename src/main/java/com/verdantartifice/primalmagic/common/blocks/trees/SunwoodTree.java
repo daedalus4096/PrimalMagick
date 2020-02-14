@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagic.common.blocks.trees;
 import java.util.Random;
 
 import com.verdantartifice.primalmagic.common.worldgen.features.FeatureConfigsPM;
+import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 
 /**
@@ -18,6 +18,6 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig;
 public class SunwoodTree extends Tree {
     @Override
     protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean hasFlowers) {
-        return Feature.NORMAL_TREE.withConfiguration(FeatureConfigsPM.SUNWOOD_TREE_CONFIG);
+        return FeaturesPM.PHASING_TREE.withConfiguration(FeatureConfigsPM.SUNWOOD_TREE_CONFIG);
     }
 }

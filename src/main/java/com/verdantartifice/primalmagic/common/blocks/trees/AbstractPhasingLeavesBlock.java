@@ -54,7 +54,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IShear
      * @param world the game world
      * @return the block's current phase
      */
-    protected abstract TimePhase getCurrentPhase(IWorld world);
+    public abstract TimePhase getCurrentPhase(IWorld world);
     
     @Override
     protected void fillStateContainer(Builder<Block, BlockState> builder) {

@@ -52,7 +52,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
      * @param world the game world
      * @return the block's current phase
      */
-    protected abstract TimePhase getCurrentPhase(IWorld world);
+    public abstract TimePhase getCurrentPhase(IWorld world);
     
     @Override
     protected void fillStateContainer(Builder<Block, BlockState> builder) {
