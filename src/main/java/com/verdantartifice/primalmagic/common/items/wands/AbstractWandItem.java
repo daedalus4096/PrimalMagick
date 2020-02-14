@@ -326,9 +326,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
         // Bypass wand functionality if the player is sneaking
-        if (context.getPlayer().func_226563_dT_()) {
+        if (context.getPlayer().isShiftKeyDown()) {
             return ActionResultType.PASS;
         }
+        
+        context.getPlayer().setActiveHand(context.getHand());
         
         // If the mouseover target is a wand-sensitive block, trigger that initial interaction
         BlockState bs = context.getWorld().getBlockState(context.getPos());
