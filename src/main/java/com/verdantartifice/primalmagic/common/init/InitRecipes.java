@@ -3,11 +3,6 @@ package com.verdantartifice.primalmagic.common.init;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
-import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
-import com.verdantartifice.primalmagic.common.crafting.ShapelessArcaneRecipe;
-import com.verdantartifice.primalmagic.common.crafting.SpellcraftingRecipe;
-import com.verdantartifice.primalmagic.common.crafting.WandAssemblyRecipe;
-import com.verdantartifice.primalmagic.common.crafting.WandInscriptionRecipe;
 import com.verdantartifice.primalmagic.common.crafting.WandTransformBlock;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
@@ -16,10 +11,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.SpecialRecipeSerializer;
-import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * Point of registration for mod recipe types and serializers, as well as other crafting related things.
@@ -29,14 +21,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class InitRecipes {
     public static void initRecipeTypes() {
         RecipeTypesPM.ARCANE_CRAFTING = IRecipeType.register(PrimalMagic.MODID + ":arcane_crafting");
-    }
-    
-    public static void initRecipeSerializers(IForgeRegistry<IRecipeSerializer<?>> registry) {
-        registry.register(new ShapelessArcaneRecipe.Serializer().setRegistryName(PrimalMagic.MODID, "arcane_crafting_shapeless"));
-        registry.register(new ShapedArcaneRecipe.Serializer().setRegistryName(PrimalMagic.MODID, "arcane_crafting_shaped"));
-        registry.register(new SpecialRecipeSerializer<>(WandAssemblyRecipe::new).setRegistryName(PrimalMagic.MODID, "wand_assembly_special"));
-        registry.register(new SpecialRecipeSerializer<>(WandInscriptionRecipe::new).setRegistryName(PrimalMagic.MODID, "wand_inscription_special"));
-        registry.register(new SpecialRecipeSerializer<>(SpellcraftingRecipe::new).setRegistryName(PrimalMagic.MODID, "spellcrafting_special"));
     }
     
     public static void initWandTransforms() {

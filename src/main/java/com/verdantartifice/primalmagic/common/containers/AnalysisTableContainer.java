@@ -33,7 +33,7 @@ public class AnalysisTableContainer extends Container {
     }
     
     public AnalysisTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
-        super(ContainersPM.ANALYSIS_TABLE, windowId);
+        super(ContainersPM.ANALYSIS_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         

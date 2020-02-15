@@ -4,18 +4,26 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
- * Object holder for mod recipe serializers.  Actual values populated by Forge post-registration.
+ * Deferred registry for mod recipe serializers.
  * 
  * @author Daedalus4096
  */
-@ObjectHolder(PrimalMagic.MODID)
 public class RecipeSerializersPM {
-    public static final IRecipeSerializer<ShapelessArcaneRecipe> ARCANE_CRAFTING_SHAPELESS = null;
-    public static final IRecipeSerializer<ShapedArcaneRecipe> ARCANE_CRAFTING_SHAPED = null;
-    public static final SpecialRecipeSerializer<WandAssemblyRecipe> WAND_ASSEMBLY_SPECIAL = null;
-    public static final SpecialRecipeSerializer<WandInscriptionRecipe> WAND_INSCRIPTION_SPECIAL = null;
-    public static final SpecialRecipeSerializer<SpellcraftingRecipe> SPELLCRAFTING_SPECIAL = null;
+    private static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, PrimalMagic.MODID);
+    
+    public static void init() {
+        RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
+    
+    public static final RegistryObject<IRecipeSerializer<ShapelessArcaneRecipe>> ARCANE_CRAFTING_SHAPELESS = RECIPE_SERIALIZERS.register("arcane_crafting_shapeless", ShapelessArcaneRecipe.Serializer::new);
+    public static final RegistryObject<IRecipeSerializer<ShapedArcaneRecipe>> ARCANE_CRAFTING_SHAPED = RECIPE_SERIALIZERS.register("arcane_crafting_shaped", ShapedArcaneRecipe.Serializer::new);
+    public static final RegistryObject<SpecialRecipeSerializer<WandAssemblyRecipe>> WAND_ASSEMBLY_SPECIAL = RECIPE_SERIALIZERS.register("wand_assembly_special", () -> new SpecialRecipeSerializer<>(WandAssemblyRecipe::new));
+    public static final RegistryObject<SpecialRecipeSerializer<WandInscriptionRecipe>> WAND_INSCRIPTION_SPECIAL = RECIPE_SERIALIZERS.register("wand_inscription_special", () -> new SpecialRecipeSerializer<>(WandInscriptionRecipe::new));
+    public static final RegistryObject<SpecialRecipeSerializer<SpellcraftingRecipe>> SPELLCRAFTING_SPECIAL = RECIPE_SERIALIZERS.register("spellcrafting_special", () -> new SpecialRecipeSerializer<>(SpellcraftingRecipe::new));
 }

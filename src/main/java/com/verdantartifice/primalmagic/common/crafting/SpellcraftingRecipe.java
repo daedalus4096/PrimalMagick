@@ -36,6 +36,6 @@ public class SpellcraftingRecipe extends SpecialRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return RecipeSerializersPM.SPELLCRAFTING_SPECIAL;
+        return RecipeSerializersPM.SPELLCRAFTING_SPECIAL.get();
     }
 }

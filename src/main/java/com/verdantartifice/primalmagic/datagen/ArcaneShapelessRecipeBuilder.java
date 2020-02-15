@@ -256,7 +256,7 @@ public class ArcaneShapelessRecipeBuilder {
 
         @Override
         public IRecipeSerializer<?> getSerializer() {
-            return RecipeSerializersPM.ARCANE_CRAFTING_SHAPELESS;
+            return RecipeSerializersPM.ARCANE_CRAFTING_SHAPELESS.get();
         }
 
         @Override

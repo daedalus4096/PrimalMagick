@@ -31,7 +31,7 @@ public class WandChargerContainer extends Container {
     }
     
     public WandChargerContainer(int id, PlayerInventory playerInv, IInventory chargerInv, IIntArray chargerData) {
-        super(ContainersPM.WAND_CHARGER, id);
+        super(ContainersPM.WAND_CHARGER.get(), id);
         assertInventorySize(chargerInv, 2);
         assertIntArraySize(chargerData, 2);
         this.chargerInv = chargerInv;

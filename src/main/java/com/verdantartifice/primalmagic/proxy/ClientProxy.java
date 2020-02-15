@@ -55,14 +55,14 @@ public class ClientProxy extends CommonProxy {
     
     private void registerScreens() {
         // Register screen factories for each container
-        ScreenManager.registerFactory(ContainersPM.GRIMOIRE, GrimoireScreen::new);
-        ScreenManager.registerFactory(ContainersPM.ARCANE_WORKBENCH, ArcaneWorkbenchScreen::new);
-        ScreenManager.registerFactory(ContainersPM.WAND_ASSEMBLY_TABLE, WandAssemblyTableScreen::new);
-        ScreenManager.registerFactory(ContainersPM.ANALYSIS_TABLE, AnalysisTableScreen::new);
-        ScreenManager.registerFactory(ContainersPM.CALCINATOR, CalcinatorScreen::new);
-        ScreenManager.registerFactory(ContainersPM.WAND_INSCRIPTION_TABLE, WandInscriptionTableScreen::new);
-        ScreenManager.registerFactory(ContainersPM.SPELLCRAFTING_ALTAR, SpellcraftingAltarScreen::new);
-        ScreenManager.registerFactory(ContainersPM.WAND_CHARGER, WandChargerScreen::new);
+        ScreenManager.registerFactory(ContainersPM.GRIMOIRE.get(), GrimoireScreen::new);
+        ScreenManager.registerFactory(ContainersPM.ARCANE_WORKBENCH.get(), ArcaneWorkbenchScreen::new);
+        ScreenManager.registerFactory(ContainersPM.WAND_ASSEMBLY_TABLE.get(), WandAssemblyTableScreen::new);
+        ScreenManager.registerFactory(ContainersPM.ANALYSIS_TABLE.get(), AnalysisTableScreen::new);
+        ScreenManager.registerFactory(ContainersPM.CALCINATOR.get(), CalcinatorScreen::new);
+        ScreenManager.registerFactory(ContainersPM.WAND_INSCRIPTION_TABLE.get(), WandInscriptionTableScreen::new);
+        ScreenManager.registerFactory(ContainersPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarScreen::new);
+        ScreenManager.registerFactory(ContainersPM.WAND_CHARGER.get(), WandChargerScreen::new);
     }
     
     private void registerTERs() {

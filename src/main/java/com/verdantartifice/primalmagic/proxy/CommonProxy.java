@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeAr
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.SourceArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.StatValueArgument;
+import com.verdantartifice.primalmagic.common.containers.ContainersPM;
+import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.init.InitAffinities;
@@ -39,8 +41,10 @@ public class CommonProxy implements IProxyPM {
     @Override
     public void initDeferredRegistries() {
         // TODO Other deferred registries
+        ContainersPM.init();
         EntityTypesPM.init();
         EffectsPM.init();
+        RecipeSerializersPM.init();
         SoundsPM.init();
         FeaturesPM.init();
     }
@@ -49,6 +53,7 @@ public class CommonProxy implements IProxyPM {
     public void commonSetup(FMLCommonSetupEvent event) {
         PacketHandler.registerMessages();
         InitRecipes.initRecipeTypes();
+        InitRecipes.initWandTransforms();
         InitCapabilities.initCapabilities();
         InitResearch.initResearch();
         InitWorldGen.initWorldGen();

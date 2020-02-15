@@ -46,7 +46,7 @@ public class ArcaneWorkbenchContainer extends Container {
     }
     
     public ArcaneWorkbenchContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
-        super(ContainersPM.ARCANE_WORKBENCH, windowId);
+        super(ContainersPM.ARCANE_WORKBENCH.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         

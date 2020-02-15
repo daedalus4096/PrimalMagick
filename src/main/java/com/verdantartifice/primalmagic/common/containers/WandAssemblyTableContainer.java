@@ -46,7 +46,7 @@ public class WandAssemblyTableContainer extends Container {
     }
     
     public WandAssemblyTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
-        super(ContainersPM.WAND_ASSEMBLY_TABLE, windowId);
+        super(ContainersPM.WAND_ASSEMBLY_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         

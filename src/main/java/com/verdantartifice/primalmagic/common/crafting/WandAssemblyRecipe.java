@@ -60,6 +60,6 @@ public class WandAssemblyRecipe extends SpecialRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL;
+        return RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get();
     }
 }

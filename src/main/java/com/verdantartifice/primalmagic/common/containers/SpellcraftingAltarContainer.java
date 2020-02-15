@@ -73,7 +73,7 @@ public class SpellcraftingAltarContainer extends Container {
     }
 
     public SpellcraftingAltarContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
-        super(ContainersPM.SPELLCRAFTING_ALTAR, windowId);
+        super(ContainersPM.SPELLCRAFTING_ALTAR.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         for (SpellComponent comp : SpellComponent.values()) {

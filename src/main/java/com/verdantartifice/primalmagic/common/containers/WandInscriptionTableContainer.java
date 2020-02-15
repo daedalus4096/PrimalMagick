@@ -44,7 +44,7 @@ public class WandInscriptionTableContainer extends Container {
     }
 
     public WandInscriptionTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
-        super(ContainersPM.WAND_INSCRIPTION_TABLE, windowId);
+        super(ContainersPM.WAND_INSCRIPTION_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         

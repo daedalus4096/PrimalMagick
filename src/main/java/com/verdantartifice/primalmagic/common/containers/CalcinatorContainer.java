@@ -32,7 +32,7 @@ public class CalcinatorContainer extends Container {
     }
     
     public CalcinatorContainer(int id, PlayerInventory playerInv, IInventory calcinatorInv, IIntArray calcinatorData) {
-        super(ContainersPM.CALCINATOR, id);
+        super(ContainersPM.CALCINATOR.get(), id);
         assertInventorySize(calcinatorInv, 11);
         assertIntArraySize(calcinatorData, 4);
         this.calcinatorInv = calcinatorInv;

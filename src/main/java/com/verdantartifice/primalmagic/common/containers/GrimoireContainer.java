@@ -18,7 +18,7 @@ public class GrimoireContainer extends Container {
     protected Object topic;
     
     public GrimoireContainer(int windowId) {
-        super(ContainersPM.GRIMOIRE, windowId);
+        super(ContainersPM.GRIMOIRE.get(), windowId);
         this.topic = null;
     }
 

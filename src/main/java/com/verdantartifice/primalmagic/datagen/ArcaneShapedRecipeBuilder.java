@@ -288,7 +288,7 @@ public class ArcaneShapedRecipeBuilder {
 
         @Override
         public IRecipeSerializer<?> getSerializer() {
-            return RecipeSerializersPM.ARCANE_CRAFTING_SHAPED;
+            return RecipeSerializersPM.ARCANE_CRAFTING_SHAPED.get();
         }
 
         @Override

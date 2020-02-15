@@ -62,6 +62,6 @@ public class WandInscriptionRecipe extends SpecialRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return RecipeSerializersPM.WAND_INSCRIPTION_SPECIAL;
+        return RecipeSerializersPM.WAND_INSCRIPTION_SPECIAL.get();
     }
 }

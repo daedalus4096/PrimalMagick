@@ -89,11 +89,11 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY")))
             .build(consumer);
 
-        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL)
+        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
-        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_INSCRIPTION_SPECIAL)
+        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_INSCRIPTION_SPECIAL.get())
             .build(consumer, "primalmagic:wand_inscription");
-        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.SPELLCRAFTING_SPECIAL)
+        CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.SPELLCRAFTING_SPECIAL.get())
             .build(consumer, "primalmagic:spellcrafting");
     }
 
