@@ -103,7 +103,7 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
 
     @Override
     public void playSounds(World world, BlockPos origin) {
-        world.playSound(null, origin, SoundsPM.EGG_CRACK, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+        world.playSound(null, origin, SoundsPM.EGG_CRACK.get(), SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
 
     @Override

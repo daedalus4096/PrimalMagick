@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
 import com.verdantartifice.primalmagic.common.init.InitWorldGen;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
 import net.minecraft.command.arguments.ArgumentSerializer;
@@ -36,6 +37,7 @@ public class CommonProxy implements IProxyPM {
     @Override
     public void initDeferredRegistries() {
         // TODO Other deferred registries
+        SoundsPM.init();
         FeaturesPM.init();
     }
     

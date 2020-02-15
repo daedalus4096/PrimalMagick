@@ -58,7 +58,7 @@ public class VoidDamageSpellPayload extends AbstractDamageSpellPayload {
 
     @Override
     public void playSounds(World world, BlockPos origin) {
-        world.playSound(null, origin, SoundsPM.WHISPERS, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+        world.playSound(null, origin, SoundsPM.WHISPERS.get(), SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
     }
 
     @Override

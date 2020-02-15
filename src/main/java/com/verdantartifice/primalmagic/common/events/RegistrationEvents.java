@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagic.common.init.InitEffects;
 import com.verdantartifice.primalmagic.common.init.InitEntities;
 import com.verdantartifice.primalmagic.common.init.InitItems;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
-import com.verdantartifice.primalmagic.common.init.InitSounds;
 import com.verdantartifice.primalmagic.common.init.InitTileEntities;
 
 import net.minecraft.block.Block;
@@ -17,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -43,11 +41,6 @@ public class RegistrationEvents {
     @SubscribeEvent
     public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
         InitContainers.initContainers(event.getRegistry());
-    }
-    
-    @SubscribeEvent
-    public static void registerSoundEvents(RegistryEvent.Register<SoundEvent> event) {
-        InitSounds.initSoundEvents(event.getRegistry());
     }
     
     @SubscribeEvent

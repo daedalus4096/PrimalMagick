@@ -41,7 +41,7 @@ public class FxDispatcher {
         // Release a cluster of poof clouds when transforming a block with a wand
         Random rng = getWorld().rand;
         if (sound) {
-            getWorld().playSound(x, y, z, SoundsPM.POOF, SoundCategory.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
+            getWorld().playSound(x, y, z, SoundsPM.POOF.get(), SoundCategory.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
         }
         for (int index = 0; index < 8 + rng.nextInt(3); index++) {
             double dx = (rng.nextFloat() * 0.05D) * (rng.nextBoolean() ? 1 : -1);

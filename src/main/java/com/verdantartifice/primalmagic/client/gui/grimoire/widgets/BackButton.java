@@ -56,7 +56,7 @@ public class BackButton extends Button {
 
     @Override
     public void playDownSound(SoundHandler handler) {
-        handler.play(SimpleSound.master(SoundsPM.PAGE, 1.0F, 1.0F));
+        handler.play(SimpleSound.master(SoundsPM.PAGE.get(), 1.0F, 1.0F));
     }
 
     private static class Handler implements IPressable {
