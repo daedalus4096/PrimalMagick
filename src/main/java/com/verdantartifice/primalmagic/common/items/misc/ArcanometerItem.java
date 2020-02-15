@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.common.items.misc;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerTEISR;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerISTER;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
@@ -38,7 +38,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 public class ArcanometerItem extends Item {
     public ArcanometerItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON).setTEISR(() -> ArcanometerTEISR::new));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON).setISTER(() -> ArcanometerISTER::new));
         this.setRegistryName(PrimalMagic.MODID, "arcanometer");
         this.addPropertyOverride(new ResourceLocation(PrimalMagic.MODID, "scan_state"), new IItemPropertyGetter() {
             @OnlyIn(Dist.CLIENT)
@@ -99,7 +99,7 @@ public class ArcanometerItem extends Item {
             RayTraceResult result = RayTraceUtils.getMouseOver();
             if (result != null && result.getType() != RayTraceResult.Type.MISS) {
                 // If something is being moused over, play the sound effect for the player and send a scan packet to the server
-                worldIn.playSound(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, SoundsPM.SCAN, SoundCategory.MASTER, 1.0F, 1.0F);
+                worldIn.playSound(playerIn, playerIn.getPosition(), SoundsPM.SCAN, SoundCategory.MASTER, 1.0F, 1.0F);
                 if (result.getType() == RayTraceResult.Type.ENTITY) {
                     ItemStack entityStack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
                     PacketHandler.sendToServer(new ScanItemPacket(entityStack));

@@ -21,6 +21,7 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
@@ -108,7 +109,7 @@ public class CalcinatorBlock extends Block {
     }
     
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
             // Open the GUI for the calcinator
             TileEntity tile = worldIn.getTileEntity(pos);
@@ -116,7 +117,7 @@ public class CalcinatorBlock extends Block {
                 player.openContainer((CalcinatorTileEntity)tile);
             }
         }
-        return true;
+        return ActionResultType.SUCCESS;
     }
     
     @Override

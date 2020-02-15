@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
@@ -66,7 +66,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.nameField.setDisabledTextColour(-1);
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setMaxStringLength(50);
-        this.nameField.func_212954_a(this::updateName);
+        this.nameField.setResponder(this::updateName);
         this.nameField.setText(this.container.getDefaultSpellName().getString());
     }
     
@@ -92,7 +92,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         }
         
         // Otherwise, process the text entry
-        return !this.nameField.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) && !this.nameField.func_212955_f() ? super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) : true;
+        return !this.nameField.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) && !this.nameField.canWrite() ? super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) : true;
     }
     
     protected void initWidgets() {
@@ -101,7 +101,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.texts.clear();
         
         this.children.add(this.nameField);
-        this.func_212928_a(this.nameField);
+        this.setFocusedDefault(this.nameField);
         
         int startX = this.guiLeft + 7;
         int startY = this.guiTop + 32;
@@ -199,14 +199,14 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
-        GlStateManager.disableLighting();
-        GlStateManager.disableBlend();
+        RenderSystem.disableLighting();
+        RenderSystem.disableBlend();
         this.nameField.render(mouseX, mouseY, partialTicks);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         
         // Render the GUI background

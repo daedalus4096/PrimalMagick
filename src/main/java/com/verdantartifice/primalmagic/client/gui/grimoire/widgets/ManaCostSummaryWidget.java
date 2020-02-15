@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -37,15 +38,15 @@ public class ManaCostSummaryWidget extends Widget {
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Render the base widget
         Minecraft mc = Minecraft.getInstance();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.pushMatrix();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.pushMatrix();
         mc.getTextureManager().bindTexture(TEXTURE);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.translatef(this.x, this.y, 0.0F);
-        GlStateManager.scaled(0.0625D, 0.0625D, 0.0625D);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.translatef(this.x, this.y, 0.0F);
+        RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
         this.blit(0, 0, 0, 0, 255, 255);
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
 
         // Render tooltip if hovered over
         if (this.isHovered()) {

@@ -2,11 +2,12 @@ package com.verdantartifice.primalmagic.common.blocks.trees;
 
 import java.util.Random;
 
-import com.verdantartifice.primalmagic.common.worldgen.features.SunwoodTreeFeature;
+import com.verdantartifice.primalmagic.common.worldgen.features.FeatureConfigsPM;
+import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
 import net.minecraft.block.trees.Tree;
-import net.minecraft.world.gen.feature.AbstractTreeFeature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.TreeFeatureConfig;
 
 /**
  * Definition for a sunwood tree.  Used by sunwood saplings to spawn the sunwood tree worldgen feature.
@@ -16,7 +17,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
  */
 public class SunwoodTree extends Tree {
     @Override
-    protected AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {
-        return new SunwoodTreeFeature(NoFeatureConfig::deserialize, true);
+    protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean hasFlowers) {
+        return FeaturesPM.PHASING_TREE.withConfiguration(FeatureConfigsPM.SUNWOOD_TREE_CONFIG);
     }
 }

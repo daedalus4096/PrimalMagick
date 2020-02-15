@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 import java.awt.Color;
 import java.util.Collections;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
@@ -39,35 +39,35 @@ public class KnowledgeWidget extends Widget {
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.pushMatrix();
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.pushMatrix();
         
         // Draw knowledge type icon
         mc.getTextureManager().bindTexture(this.knowledge.getType().getIconLocation());
-        GlStateManager.translatef(this.x, this.y, 0.0F);
-        GlStateManager.scaled(0.0625D, 0.0625D, 0.0625D);
+        RenderSystem.translatef(this.x, this.y, 0.0F);
+        RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
         this.blit(0, 0, 0, 0, 255, 255);
         
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
         
         // Draw amount str
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.knowledge.getAmount()));
         int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.pushMatrix();
-        GlStateManager.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
-        GlStateManager.scaled(0.5D, 0.5D, 0.5D);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.pushMatrix();
+        RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
+        RenderSystem.scaled(0.5D, 0.5D, 0.5D);
         mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(this.x + 8, this.y, 100.0F);
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(this.x + 8, this.y, 100.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
             this.blit(0, 0, 159, 207, 10, 10);
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
         
         if (this.isHovered()) {

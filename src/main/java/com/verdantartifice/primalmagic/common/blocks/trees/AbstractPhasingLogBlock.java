@@ -15,7 +15,7 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -27,6 +27,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -51,7 +52,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
      * @param world the game world
      * @return the block's current phase
      */
-    protected abstract TimePhase getCurrentPhase(IWorld world);
+    public abstract TimePhase getCurrentPhase(IWorld world);
     
     @Override
     protected void fillStateContainer(Builder<Block, BlockState> builder) {
@@ -66,20 +67,9 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
         return super.getStateForPlacement(context).with(PHASE, phase);
     }
     
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        // Even though not all phases are translucent, this method isn't world-aware
-        return BlockRenderLayer.TRANSLUCENT;
-    }
-    
-    @Override
-    public boolean isSolid(BlockState state) {
-        return state.get(PHASE) == TimePhase.FULL;
-    }
-    
     @SuppressWarnings("deprecation")
     @Override
-    public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         // Periodically check to see if the block's phase needs to be updated
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
@@ -121,7 +111,7 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
     }
     
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.strippedVersion != null && player != null && player.getHeldItem(handIn).getItem() instanceof AxeItem) {
             // If the player right-clicks on the log with an axe, replace this block with its stripped version
             worldIn.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -131,9 +121,9 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
                     p.sendBreakAnimation(handIn);
                 });
             }
-            return true;
+            return ActionResultType.SUCCESS;
         } else {
-            return false;
+            return ActionResultType.PASS;
         }
     }
 }

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.pages;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.IngredientWidget;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.ItemStackWidget;
@@ -60,18 +61,18 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         int overlayWidth = 52;
         int overlayHeight = 52;
         
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
         
         // Render overlay background
-        GlStateManager.pushMatrix();
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.translatef(x - 5 + (side * 140) + (indent / 2), y + 50 + (overlayHeight / 2), 0.0F);
-        GlStateManager.scalef(2.0F, 2.0F, 1.0F);
+        RenderSystem.pushMatrix();
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.translatef(x - 5 + (side * 140) + (indent / 2), y + 50 + (overlayHeight / 2), 0.0F);
+        RenderSystem.scalef(2.0F, 2.0F, 1.0F);
         this.blit(-(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight);
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
     }
 }

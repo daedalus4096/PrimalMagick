@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.pages;
 import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 
@@ -54,8 +55,8 @@ public abstract class AbstractPage extends AbstractGui {
     }
     
     protected void renderTitle(int side, int x, int y, int mouseX, int mouseY) {
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
         if (this.renderTopTitleBar()) {
@@ -70,11 +71,11 @@ public abstract class AbstractPage extends AbstractGui {
         } else {
             // Scale down the title text if necessary to make it fit on one line
             float scale = 124.0F / offset;
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(x - 3 + (side * 140) + (indent / 2) - (offset / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
-            GlStateManager.scalef(scale, scale, scale);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (offset / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
+            RenderSystem.scalef(scale, scale, scale);
             mc.fontRenderer.drawString(headerText, 0, 0, Color.BLACK.getRGB());
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
     }
 }

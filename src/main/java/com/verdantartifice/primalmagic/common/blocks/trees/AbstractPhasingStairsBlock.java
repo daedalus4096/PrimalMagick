@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.blocks.trees;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
@@ -11,14 +12,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -29,7 +29,7 @@ import net.minecraftforge.common.util.Constants;
 public abstract class AbstractPhasingStairsBlock extends StairsBlock {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
 
-    public AbstractPhasingStairsBlock(BlockState state, Block.Properties properties) {
+    public AbstractPhasingStairsBlock(Supplier<BlockState> state, Block.Properties properties) {
         super(state, properties);
         this.setDefaultState(this.getDefaultState().with(PHASE, TimePhase.FULL));
     }
@@ -55,20 +55,9 @@ public abstract class AbstractPhasingStairsBlock extends StairsBlock {
         return super.getStateForPlacement(context).with(PHASE, phase);
     }
     
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        // Even though not all phases are translucent, this method isn't world-aware
-        return BlockRenderLayer.TRANSLUCENT;
-    }
-    
-    @Override
-    public boolean isSolid(BlockState state) {
-        return state.get(PHASE) == TimePhase.FULL;
-    }
-    
     @SuppressWarnings("deprecation")
     @Override
-    public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         // Periodically check to see if the block's phase needs to be updated
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);

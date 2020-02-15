@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandTEISR;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
@@ -35,7 +35,7 @@ import net.minecraftforge.common.util.Constants;
  */
 public class ModularWandItem extends AbstractWandItem {
     public ModularWandItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setTEISR(() -> ModularWandTEISR::new));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> ModularWandISTER::new));
         this.setRegistryName(PrimalMagic.MODID, "modular_wand");
     }
 
@@ -46,7 +46,13 @@ public class ModularWandItem extends AbstractWandItem {
             return 2500;
         }
         WandGem gem = this.getWandGem(stack);
-        return (gem == null) ? 2500 : 100 * gem.getCapacity();
+        if (gem == null) {
+            return 2500;
+        } else if (gem.getCapacity() == -1) {
+            return -1;
+        } else {
+            return 100 * gem.getCapacity();
+        }
     }
     
     @Override
@@ -69,7 +75,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandCore(@Nonnull ItemStack stack, @Nonnull WandCore core) {
-        stack.setTagInfo("core", new StringNBT(core.getTag()));
+        stack.setTagInfo("core", StringNBT.valueOf(core.getTag()));
     }
     
     @Nullable 
@@ -82,7 +88,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandCap(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
-        stack.setTagInfo("cap", new StringNBT(cap.getTag()));
+        stack.setTagInfo("cap", StringNBT.valueOf(cap.getTag()));
     }
     
     @Nullable
@@ -95,7 +101,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandGem(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
-        stack.setTagInfo("gem", new StringNBT(gem.getTag()));
+        stack.setTagInfo("gem", StringNBT.valueOf(gem.getTag()));
     }
     
     @Override
@@ -195,7 +201,7 @@ public class ModularWandItem extends AbstractWandItem {
             return false;
         } else if (index >= -1 && index < this.getSpells(stack).size()) {
             // -1 is a valid value and means "no active spell"
-            stack.setTagInfo("ActiveSpell", new IntNBT(index));
+            stack.setTagInfo("ActiveSpell", IntNBT.valueOf(index));
             return true;
         }
         return false;

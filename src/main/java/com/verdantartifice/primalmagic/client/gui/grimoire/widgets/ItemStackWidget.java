@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
@@ -46,22 +46,22 @@ public class ItemStackWidget extends Widget {
         if (this.stack.getCount() > 1) {
             ITextComponent amountText = new StringTextComponent(Integer.toString(this.stack.getCount()));
             int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
-            GlStateManager.scaled(0.5D, 0.5D, 0.5D);
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
+            RenderSystem.scaled(0.5D, 0.5D, 0.5D);
             mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(this.x + 8, this.y, 100.0F);
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(this.x + 8, this.y, 200.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
             this.blit(0, 0, 159, 207, 10, 10);
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
         if (this.isHovered()) {
             // Render tooltip

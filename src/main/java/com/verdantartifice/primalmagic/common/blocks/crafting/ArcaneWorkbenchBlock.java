@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
@@ -46,7 +47,7 @@ public class ArcaneWorkbenchBlock extends Block {
     }
     
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
             // Open the GUI for the arcane workbench
             NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
@@ -61,6 +62,6 @@ public class ArcaneWorkbenchBlock extends Block {
                 }
             });
         }
-        return true;
+        return ActionResultType.SUCCESS;
     }
 }

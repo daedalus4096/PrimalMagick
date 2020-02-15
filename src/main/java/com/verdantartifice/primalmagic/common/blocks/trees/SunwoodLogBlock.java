@@ -15,11 +15,11 @@ import net.minecraft.world.IWorld;
  */
 public class SunwoodLogBlock extends AbstractPhasingLogBlock {
     public SunwoodLogBlock(Block stripped) {
-        super(stripped, MaterialColor.GOLD, Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).tickRandomly().sound(SoundType.WOOD));
+        super(stripped, MaterialColor.GOLD, Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).tickRandomly().notSolid().sound(SoundType.WOOD));
     }
 
     @Override
-    protected TimePhase getCurrentPhase(IWorld world) {
+    public TimePhase getCurrentPhase(IWorld world) {
         return TimePhase.getSunPhase(world);
     }
 }

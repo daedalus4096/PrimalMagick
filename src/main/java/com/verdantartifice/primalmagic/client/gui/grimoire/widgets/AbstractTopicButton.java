@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
@@ -34,9 +35,9 @@ public abstract class AbstractTopicButton extends Button {
     @Override
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = this.screen.getMinecraft();
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.pushMatrix();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         if (this.isHovered()) {
             // When hovering, highlight with a transparent grey background
             int alpha = 0x22;
@@ -50,13 +51,13 @@ public abstract class AbstractTopicButton extends Button {
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)this.width / (float)strWidth;
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(this.x, this.y + dy + (1.0F * scale), 0.0F);
-            GlStateManager.scalef(scale, scale, scale);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(this.x, this.y + dy + (1.0F * scale), 0.0F);
+            RenderSystem.scalef(scale, scale, scale);
             mc.fontRenderer.drawString(this.getMessage(), 0, 0, Color.BLACK.getRGB());
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
     }
     
     @Override

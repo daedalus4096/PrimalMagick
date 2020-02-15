@@ -15,12 +15,12 @@ import net.minecraft.world.IWorld;
  */
 public class SunwoodLeavesBlock extends AbstractPhasingLeavesBlock {
     public SunwoodLeavesBlock() {
-        super(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT));
+        super(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().notSolid().sound(SoundType.PLANT));
         this.setRegistryName(PrimalMagic.MODID, "sunwood_leaves");
     }
 
     @Override
-    protected TimePhase getCurrentPhase(IWorld world) {
+    public TimePhase getCurrentPhase(IWorld world) {
         return TimePhase.getSunPhase(world);
     }
 }

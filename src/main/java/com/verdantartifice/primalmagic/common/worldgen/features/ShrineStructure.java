@@ -45,8 +45,8 @@ public class ShrineStructure extends ScatteredStructure<ShrineConfig> {
     }
 
     public static class Start extends StructureStart {
-        public Start(Structure<?> p_i51341_1_, int chunkX, int chunkZ, Biome biomeIn, MutableBoundingBox boundsIn, int referenceIn, long seed) {
-            super(p_i51341_1_, chunkX, chunkZ, biomeIn, boundsIn, referenceIn, seed);
+        public Start(Structure<?> p_i51341_1_, int chunkX, int chunkZ, MutableBoundingBox boundsIn, int referenceIn, long seed) {
+            super(p_i51341_1_, chunkX, chunkZ, boundsIn, referenceIn, seed);
         }
 
         @Override

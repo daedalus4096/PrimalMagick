@@ -22,6 +22,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -123,9 +124,10 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
                         this.syncTile(true);
                         
                         // Show fancy sparkles
-                        double targetY = player.posY + (player.getEyeHeight() / 2.0D);
+                        Vec3d playerPos = player.getPositionVec();
+                        double targetY = playerPos.y + (player.getEyeHeight() / 2.0D);
                         PacketHandler.sendToAllAround(
-                                new ManaSparklePacket(this.pos, player.posX, targetY, player.posZ, 20, source.getColor()), 
+                                new ManaSparklePacket(this.pos, playerPos.x, targetY, playerPos.z, 20, source.getColor()), 
                                 this.world.getDimension().getType(), 
                                 this.pos, 
                                 32.0D);

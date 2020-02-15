@@ -1,12 +1,13 @@
 package com.verdantartifice.primalmagic.common.containers.slots;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Custom GUI slot for wand core inputs.
@@ -14,20 +15,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 public class WandCoreSlot extends Slot {
+    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_core_slot");
+    
+    @SuppressWarnings("deprecation")
     public WandCoreSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition);
+        this.setBackground(AtlasTexture.LOCATION_BLOCKS_TEXTURE, TEXTURE);
     }
 
     @Override
     public boolean isItemValid(ItemStack stack) {
         // Only allow wand cores to be dropped into the slot
         return stack.getItem() instanceof WandCoreItem;
-    }
-    
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public String getSlotTexture() {
-        // Show a texture on the background of the slot when empty
-        return "primalmagic:item/empty_wand_core_slot";
     }
 }

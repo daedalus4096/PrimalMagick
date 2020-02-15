@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.MundaneWandTEISR;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.MundaneWandISTER;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.item.Item;
@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
  */
 public class MundaneWandItem extends AbstractWandItem {
     public MundaneWandItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setTEISR(() -> MundaneWandTEISR::new));
+        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> MundaneWandISTER::new));
         this.setRegistryName(PrimalMagic.MODID, "mundane_wand");
     }
 

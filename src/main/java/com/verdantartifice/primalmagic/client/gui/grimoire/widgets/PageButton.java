@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.widgets;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
@@ -44,17 +44,17 @@ public class PageButton extends Button {
     public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(TEXTURE);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         if (this.isHovered()) {
             // When hovered, scale the button up and down to create a pulsing effect
             float scaleMod = MathHelper.sin(mc.player.ticksExisted / 3.0F) * 0.2F + 0.1F;
-            GlStateManager.pushMatrix();
+            RenderSystem.pushMatrix();
             int dx = this.width / 2;
             int dy = this.height / 2;
-            GlStateManager.translatef(this.x + dx, this.y + dy, 0.0F);
-            GlStateManager.scalef(1.0F + scaleMod, 1.0F + scaleMod, 1.0F);
+            RenderSystem.translatef(this.x + dx, this.y + dy, 0.0F);
+            RenderSystem.scalef(1.0F + scaleMod, 1.0F + scaleMod, 1.0F);
             this.blit(-dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         } else {
             this.blit(this.x, this.y, this.isNext ? 12 : 0, 185, this.width, this.height);
         }

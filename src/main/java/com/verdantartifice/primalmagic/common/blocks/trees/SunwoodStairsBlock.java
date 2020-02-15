@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.blocks.trees;
 
+import java.util.function.Supplier;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
@@ -12,7 +14,7 @@ import net.minecraft.world.IWorld;
  * @author Daedalus4096
  */
 public class SunwoodStairsBlock extends AbstractPhasingStairsBlock {
-    public SunwoodStairsBlock(BlockState state, Properties properties) {
+    public SunwoodStairsBlock(Supplier<BlockState> state, Properties properties) {
         super(state, properties);
         this.setRegistryName(PrimalMagic.MODID, "sunwood_stairs");
     }

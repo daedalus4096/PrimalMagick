@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
@@ -30,7 +30,7 @@ public class ResearchToast implements IToast {
     public Visibility draw(ToastGui toastGui, long delta) {
         // Render the toast background
         toastGui.getMinecraft().getTextureManager().bindTexture(TEXTURE);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         toastGui.blit(0, 0, 0, 224, 160, 32);
         
         // Render the toast title text
@@ -44,11 +44,11 @@ public class ResearchToast implements IToast {
         if (width > 148.0F) {
             // Scale down the research description to make it fit, if needed
             float scale = (148.0F / width);
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(6.0F, 18.0F, 0.0F);
-            GlStateManager.scalef(scale, scale, scale);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(6.0F, 18.0F, 0.0F);
+            RenderSystem.scalef(scale, scale, scale);
             toastGui.getMinecraft().fontRenderer.drawString(descStr, 0, 0, Color.BLACK.getRGB());
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         } else {
             toastGui.getMinecraft().fontRenderer.drawString(descStr, 6, 18, Color.BLACK.getRGB());
         }
