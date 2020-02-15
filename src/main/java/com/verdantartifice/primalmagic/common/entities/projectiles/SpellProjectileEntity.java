@@ -38,7 +38,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
     }
     
     public SpellProjectileEntity(World world, LivingEntity thrower, SpellPackage spell) {
-        super(EntityTypesPM.SPELL_PROJECTILE, thrower, world);
+        super(EntityTypesPM.SPELL_PROJECTILE.get(), thrower, world);
         this.spell = spell;
         if (spell != null && spell.getPayload() != null) {
             // Store the spell payload's color for use in rendering
@@ -47,7 +47,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
     }
     
     public SpellProjectileEntity(World world, double x, double y, double z, SpellPackage spell) {
-        super(EntityTypesPM.SPELL_PROJECTILE, x, y, z, world);
+        super(EntityTypesPM.SPELL_PROJECTILE.get(), x, y, z, world);
         this.spell = spell;
         if (spell != null && spell.getPayload() != null) {
             // Store the spell payload's color for use in rendering

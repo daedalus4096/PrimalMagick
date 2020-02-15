@@ -151,7 +151,7 @@ public class EntitySwapper implements INBTSerializable<CompoundNBT> {
                     // If this is a temporary swap, create a new entity swapper to swap back
                     int ticks = this.polymorphDuration.get().intValue();
                     if (newEntity instanceof LivingEntity) {
-                        ((LivingEntity)newEntity).addPotionEffect(new EffectInstance(EffectsPM.POLYMORPH, ticks));
+                        ((LivingEntity)newEntity).addPotionEffect(new EffectInstance(EffectsPM.POLYMORPH.get(), ticks));
                     }
                     return new EntitySwapper(newEntity.getUniqueID(), oldType, this.originalData, Optional.empty(), ticks);
                 } else {

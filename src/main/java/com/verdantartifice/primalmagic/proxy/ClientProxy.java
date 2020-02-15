@@ -73,8 +73,8 @@ public class ClientProxy extends CommonProxy {
     
     private void registerEntityRenderers() {
         // Register renderers for each entity type
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_PROJECTILE, SpellProjectileRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE, SpellMineRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
     }
     
     private void setRenderLayers() {

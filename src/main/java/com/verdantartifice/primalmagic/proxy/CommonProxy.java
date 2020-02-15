@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagic.common.commands.arguments.KnowledgeTypeAr
 import com.verdantartifice.primalmagic.common.commands.arguments.ResearchArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.SourceArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.StatValueArgument;
+import com.verdantartifice.primalmagic.common.effects.EffectsPM;
+import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.init.InitAffinities;
 import com.verdantartifice.primalmagic.common.init.InitCapabilities;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
@@ -37,6 +39,8 @@ public class CommonProxy implements IProxyPM {
     @Override
     public void initDeferredRegistries() {
         // TODO Other deferred registries
+        EntityTypesPM.init();
+        EffectsPM.init();
         SoundsPM.init();
         FeaturesPM.init();
     }

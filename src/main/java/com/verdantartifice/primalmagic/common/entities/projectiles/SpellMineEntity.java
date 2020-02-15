@@ -52,7 +52,7 @@ public class SpellMineEntity extends Entity {
     }
     
     public SpellMineEntity(World world, Vec3d pos, PlayerEntity caster, SpellPackage spell, int duration) {
-        super(EntityTypesPM.SPELL_MINE, world);
+        super(EntityTypesPM.SPELL_MINE.get(), world);
         this.setPosition(pos.x, pos.y, pos.z);
         this.spell = spell;
         this.caster = caster;

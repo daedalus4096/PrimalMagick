@@ -3,18 +3,14 @@ package com.verdantartifice.primalmagic.common.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.init.InitBlocks;
 import com.verdantartifice.primalmagic.common.init.InitContainers;
-import com.verdantartifice.primalmagic.common.init.InitEffects;
-import com.verdantartifice.primalmagic.common.init.InitEntities;
 import com.verdantartifice.primalmagic.common.init.InitItems;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
 import com.verdantartifice.primalmagic.common.init.InitTileEntities;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -52,15 +48,5 @@ public class RegistrationEvents {
     @SubscribeEvent
     public static void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event) {
         InitTileEntities.initTileEntityTypes(event.getRegistry());
-    }
-    
-    @SubscribeEvent
-    public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event) {
-        InitEntities.initEntityTypes(event.getRegistry());
-    }
-    
-    @SubscribeEvent
-    public static void registerEffects(RegistryEvent.Register<Effect> event) {
-        InitEffects.initEffects(event.getRegistry());
     }
 }
