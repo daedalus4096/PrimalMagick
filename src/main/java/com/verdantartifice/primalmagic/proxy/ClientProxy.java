@@ -79,27 +79,27 @@ public class ClientProxy extends CommonProxy {
     
     private void setRenderLayers() {
         // Set the render layers for any blocks that don't use the default
-        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_SAPLING, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_LEAVES, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_LOG, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_PILLAR, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_PLANKS, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_SLAB, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_STAIRS, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_WOOD, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_MOONWOOD_LOG, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_MOONWOOD_WOOD, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_SAPLING.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_LEAVES.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_LOG.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_PILLAR.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_PLANKS.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_SLAB.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_STAIRS.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.MOONWOOD_WOOD.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_MOONWOOD_LOG.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_MOONWOOD_WOOD.get(), RenderType.translucent());
 
-        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_SAPLING, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_LEAVES, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_LOG, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_PILLAR, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_PLANKS, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_SLAB, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_STAIRS, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_WOOD, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_SUNWOOD_LOG, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_SUNWOOD_WOOD, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_SAPLING.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_LEAVES.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_LOG.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_PILLAR.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_PLANKS.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_SLAB.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_STAIRS.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_WOOD.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), RenderType.translucent());
     }
     
     @Override

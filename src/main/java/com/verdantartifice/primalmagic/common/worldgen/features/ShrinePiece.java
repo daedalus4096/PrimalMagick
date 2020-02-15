@@ -74,15 +74,15 @@ public class ShrinePiece extends TemplateStructurePiece {
         if (this.source == null) {
             return Blocks.AIR;
         } else if (this.source.equals(Source.EARTH)) {
-            return BlocksPM.ANCIENT_FONT_EARTH;
+            return BlocksPM.ANCIENT_FONT_EARTH.get();
         } else if (this.source.equals(Source.SEA)) {
-            return BlocksPM.ANCIENT_FONT_SEA;
+            return BlocksPM.ANCIENT_FONT_SEA.get();
         } else if (this.source.equals(Source.SKY)) {
-            return BlocksPM.ANCIENT_FONT_SKY;
+            return BlocksPM.ANCIENT_FONT_SKY.get();
         } else if (this.source.equals(Source.SUN)) {
-            return BlocksPM.ANCIENT_FONT_SUN;
+            return BlocksPM.ANCIENT_FONT_SUN.get();
         } else if (this.source.equals(Source.MOON)) {
-            return BlocksPM.ANCIENT_FONT_MOON;
+            return BlocksPM.ANCIENT_FONT_MOON.get();
         } else {
             return Blocks.AIR;
         }
@@ -93,15 +93,15 @@ public class ShrinePiece extends TemplateStructurePiece {
         if (this.source == null) {
             return Blocks.AIR;
         } else if (this.source.equals(Source.EARTH)) {
-            return BlocksPM.INFUSED_STONE_EARTH;
+            return BlocksPM.INFUSED_STONE_EARTH.get();
         } else if (this.source.equals(Source.SEA)) {
-            return BlocksPM.INFUSED_STONE_SEA;
+            return BlocksPM.INFUSED_STONE_SEA.get();
         } else if (this.source.equals(Source.SKY)) {
-            return BlocksPM.INFUSED_STONE_SKY;
+            return BlocksPM.INFUSED_STONE_SKY.get();
         } else if (this.source.equals(Source.SUN)) {
-            return BlocksPM.INFUSED_STONE_SUN;
+            return BlocksPM.INFUSED_STONE_SUN.get();
         } else if (this.source.equals(Source.MOON)) {
-            return BlocksPM.INFUSED_STONE_MOON;
+            return BlocksPM.INFUSED_STONE_MOON.get();
         } else {
             return Blocks.AIR;
         }

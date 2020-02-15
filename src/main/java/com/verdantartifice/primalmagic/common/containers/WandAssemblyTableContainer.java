@@ -78,7 +78,7 @@ public class WandAssemblyTableContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.WAND_ASSEMBLY_TABLE);
+        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.WAND_ASSEMBLY_TABLE.get());
     }
     
     @Override

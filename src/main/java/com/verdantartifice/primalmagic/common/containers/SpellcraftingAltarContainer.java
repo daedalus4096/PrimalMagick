@@ -104,7 +104,7 @@ public class SpellcraftingAltarContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.SPELLCRAFTING_ALTAR);
+        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.SPELLCRAFTING_ALTAR.get());
     }
 
     public SourceList getManaCosts() {

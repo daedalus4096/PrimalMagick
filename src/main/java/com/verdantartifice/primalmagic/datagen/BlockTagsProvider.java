@@ -34,12 +34,12 @@ public class BlockTagsProvider extends TagsProvider<Block> {
     protected void registerTags() {
         // Add entries to vanilla tags
         this.getBuilder(BlockTags.LOGS).add(BlockTagsPM.MOONWOOD_LOGS, BlockTagsPM.SUNWOOD_LOGS);
-        this.getBuilder(BlockTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES, BlocksPM.SUNWOOD_LEAVES);
-        this.getBuilder(BlockTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS, BlocksPM.SUNWOOD_PLANKS);
-        this.getBuilder(BlockTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING, BlocksPM.SUNWOOD_SAPLING);
-        this.getBuilder(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL, BlocksPM.MARBLE_BRICK_WALL, BlocksPM.MARBLE_ENCHANTED_WALL, BlocksPM.MARBLE_ENCHANTED_BRICK_WALL, BlocksPM.MARBLE_SMOKED_WALL, BlocksPM.MARBLE_SMOKED_BRICK_WALL);
-        this.getBuilder(BlockTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB, BlocksPM.SUNWOOD_SLAB);
-        this.getBuilder(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS, BlocksPM.SUNWOOD_STAIRS);
+        this.getBuilder(BlockTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.SUNWOOD_LEAVES.get());
+        this.getBuilder(BlockTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.get(), BlocksPM.SUNWOOD_PLANKS.get());
+        this.getBuilder(BlockTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING.get(), BlocksPM.SUNWOOD_SAPLING.get());
+        this.getBuilder(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL.get(), BlocksPM.MARBLE_BRICK_WALL.get(), BlocksPM.MARBLE_ENCHANTED_WALL.get(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), BlocksPM.MARBLE_SMOKED_WALL.get(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.get());
+        this.getBuilder(BlockTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.SUNWOOD_SLAB.get());
+        this.getBuilder(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.get(), BlocksPM.SUNWOOD_STAIRS.get());
         
         // Create custom tags
         this.getBuilder(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);
@@ -47,9 +47,9 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.getBuilder(BlockTagsPM.DEAD_CORAL_BLOCKS).add(Blocks.DEAD_BRAIN_CORAL_BLOCK, Blocks.DEAD_BUBBLE_CORAL_BLOCK, Blocks.DEAD_FIRE_CORAL_BLOCK, Blocks.DEAD_HORN_CORAL_BLOCK, Blocks.DEAD_TUBE_CORAL_BLOCK);
         this.getBuilder(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL, Blocks.DEAD_BUBBLE_CORAL, Blocks.DEAD_FIRE_CORAL, Blocks.DEAD_HORN_CORAL, Blocks.DEAD_TUBE_CORAL);
         this.getBuilder(BlockTagsPM.DEAD_CORALS).add(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL_FAN, Blocks.DEAD_BUBBLE_CORAL_FAN, Blocks.DEAD_FIRE_CORAL_FAN, Blocks.DEAD_HORN_CORAL_FAN, Blocks.DEAD_TUBE_CORAL_FAN);
-        this.getBuilder(BlockTagsPM.MOONWOOD_LOGS).add(BlocksPM.MOONWOOD_LOG, BlocksPM.STRIPPED_MOONWOOD_LOG, BlocksPM.MOONWOOD_WOOD, BlocksPM.STRIPPED_MOONWOOD_WOOD);
+        this.getBuilder(BlockTagsPM.MOONWOOD_LOGS).add(BlocksPM.MOONWOOD_LOG.get(), BlocksPM.STRIPPED_MOONWOOD_LOG.get(), BlocksPM.MOONWOOD_WOOD.get(), BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
         this.getBuilder(BlockTagsPM.SHULKER_BOXES).add(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.SHULKER_BOX);
-        this.getBuilder(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG, BlocksPM.STRIPPED_SUNWOOD_LOG, BlocksPM.SUNWOOD_WOOD, BlocksPM.STRIPPED_SUNWOOD_WOOD);
+        this.getBuilder(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.get(), BlocksPM.STRIPPED_SUNWOOD_LOG.get(), BlocksPM.SUNWOOD_WOOD.get(), BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
     }
 
     @Override

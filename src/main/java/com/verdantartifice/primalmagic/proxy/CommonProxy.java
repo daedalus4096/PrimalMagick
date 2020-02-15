@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.proxy;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.commands.PrimalMagicCommand;
 import com.verdantartifice.primalmagic.common.commands.arguments.AttunementTypeArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.AttunementValueArgument;
@@ -42,6 +43,7 @@ public class CommonProxy implements IProxyPM {
     @Override
     public void initDeferredRegistries() {
         // TODO Other deferred registries
+        BlocksPM.init();
         TileEntityTypesPM.init();
         ContainersPM.init();
         EntityTypesPM.init();

@@ -24,87 +24,87 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerMoonwoodLootTables();
         this.registerInfusedStoneLootTables();
         
-        this.registerBasicTable(BlocksPM.ANALYSIS_TABLE);
-        this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH);
-        this.registerBasicTable(BlocksPM.WAND_ASSEMBLY_TABLE);
-        this.registerBasicTable(BlocksPM.WOOD_TABLE);
-        this.registerBasicTable(BlocksPM.CALCINATOR);
+        this.registerBasicTable(BlocksPM.ANALYSIS_TABLE.get());
+        this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH.get());
+        this.registerBasicTable(BlocksPM.WAND_ASSEMBLY_TABLE.get());
+        this.registerBasicTable(BlocksPM.WOOD_TABLE.get());
+        this.registerBasicTable(BlocksPM.CALCINATOR.get());
     }
     
     private void registerMarbleLootTables() {
-        this.registerBasicTable(BlocksPM.MARBLE_RAW);
-        this.registerSlabTable(BlocksPM.MARBLE_BRICK_SLAB);
-        this.registerBasicTable(BlocksPM.MARBLE_BRICK_STAIRS);
-        this.registerBasicTable(BlocksPM.MARBLE_BRICK_WALL);
-        this.registerBasicTable(BlocksPM.MARBLE_BRICKS);
-        this.registerBasicTable(BlocksPM.MARBLE_CHISELED);
-        this.registerBasicTable(BlocksPM.MARBLE_PILLAR);
-        this.registerBasicTable(BlocksPM.MARBLE_RUNED);
-        this.registerSlabTable(BlocksPM.MARBLE_SLAB);
-        this.registerBasicTable(BlocksPM.MARBLE_STAIRS);
-        this.registerBasicTable(BlocksPM.MARBLE_WALL);
+        this.registerBasicTable(BlocksPM.MARBLE_RAW.get());
+        this.registerSlabTable(BlocksPM.MARBLE_BRICK_SLAB.get());
+        this.registerBasicTable(BlocksPM.MARBLE_BRICK_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_BRICK_WALL.get());
+        this.registerBasicTable(BlocksPM.MARBLE_BRICKS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_CHISELED.get());
+        this.registerBasicTable(BlocksPM.MARBLE_PILLAR.get());
+        this.registerBasicTable(BlocksPM.MARBLE_RUNED.get());
+        this.registerSlabTable(BlocksPM.MARBLE_SLAB.get());
+        this.registerBasicTable(BlocksPM.MARBLE_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_WALL.get());
     }
     
     private void registerEnchantedMarbleLootTables() {
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED);
-        this.registerSlabTable(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB);
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS);
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL);
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICKS);
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_CHISELED);
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_PILLAR);
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_RUNED);
-        this.registerSlabTable(BlocksPM.MARBLE_ENCHANTED_SLAB);
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_STAIRS);
-        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_WALL);
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED.get());
+        this.registerSlabTable(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BRICKS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_CHISELED.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_PILLAR.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_RUNED.get());
+        this.registerSlabTable(BlocksPM.MARBLE_ENCHANTED_SLAB.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_WALL.get());
     }
     
     private void registerSmokedMarbleLootTables() {
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED);
-        this.registerSlabTable(BlocksPM.MARBLE_SMOKED_BRICK_SLAB);
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS);
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICK_WALL);
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICKS);
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_CHISELED);
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_PILLAR);
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_RUNED);
-        this.registerSlabTable(BlocksPM.MARBLE_SMOKED_SLAB);
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_STAIRS);
-        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_WALL);
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED.get());
+        this.registerSlabTable(BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICK_WALL.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BRICKS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_CHISELED.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_PILLAR.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_RUNED.get());
+        this.registerSlabTable(BlocksPM.MARBLE_SMOKED_SLAB.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_WALL.get());
     }
     
     private void registerSunwoodLootTables() {
-        this.registerBasicTable(BlocksPM.SUNWOOD_LOG);
-        this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_LOG);
-        this.registerBasicTable(BlocksPM.SUNWOOD_WOOD);
-        this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_WOOD);
-        this.registerLeavesTable(BlocksPM.SUNWOOD_LEAVES, BlocksPM.SUNWOOD_SAPLING);
-        this.registerBasicTable(BlocksPM.SUNWOOD_SAPLING);
-        this.registerBasicTable(BlocksPM.SUNWOOD_PLANKS);
-        this.registerSlabTable(BlocksPM.SUNWOOD_SLAB);
-        this.registerBasicTable(BlocksPM.SUNWOOD_STAIRS);
-        this.registerBasicTable(BlocksPM.SUNWOOD_PILLAR);
+        this.registerBasicTable(BlocksPM.SUNWOOD_LOG.get());
+        this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_LOG.get());
+        this.registerBasicTable(BlocksPM.SUNWOOD_WOOD.get());
+        this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
+        this.registerLeavesTable(BlocksPM.SUNWOOD_LEAVES.get(), BlocksPM.SUNWOOD_SAPLING.get());
+        this.registerBasicTable(BlocksPM.SUNWOOD_SAPLING.get());
+        this.registerBasicTable(BlocksPM.SUNWOOD_PLANKS.get());
+        this.registerSlabTable(BlocksPM.SUNWOOD_SLAB.get());
+        this.registerBasicTable(BlocksPM.SUNWOOD_STAIRS.get());
+        this.registerBasicTable(BlocksPM.SUNWOOD_PILLAR.get());
     }
     
     private void registerMoonwoodLootTables() {
-        this.registerBasicTable(BlocksPM.MOONWOOD_LOG);
-        this.registerBasicTable(BlocksPM.STRIPPED_MOONWOOD_LOG);
-        this.registerBasicTable(BlocksPM.MOONWOOD_WOOD);
-        this.registerBasicTable(BlocksPM.STRIPPED_MOONWOOD_WOOD);
-        this.registerLeavesTable(BlocksPM.MOONWOOD_LEAVES, BlocksPM.MOONWOOD_SAPLING);
-        this.registerBasicTable(BlocksPM.MOONWOOD_SAPLING);
-        this.registerBasicTable(BlocksPM.MOONWOOD_PLANKS);
-        this.registerSlabTable(BlocksPM.MOONWOOD_SLAB);
-        this.registerBasicTable(BlocksPM.MOONWOOD_STAIRS);
-        this.registerBasicTable(BlocksPM.MOONWOOD_PILLAR);
+        this.registerBasicTable(BlocksPM.MOONWOOD_LOG.get());
+        this.registerBasicTable(BlocksPM.STRIPPED_MOONWOOD_LOG.get());
+        this.registerBasicTable(BlocksPM.MOONWOOD_WOOD.get());
+        this.registerBasicTable(BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
+        this.registerLeavesTable(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.MOONWOOD_SAPLING.get());
+        this.registerBasicTable(BlocksPM.MOONWOOD_SAPLING.get());
+        this.registerBasicTable(BlocksPM.MOONWOOD_PLANKS.get());
+        this.registerSlabTable(BlocksPM.MOONWOOD_SLAB.get());
+        this.registerBasicTable(BlocksPM.MOONWOOD_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MOONWOOD_PILLAR.get());
     }
     
     private void registerInfusedStoneLootTables() {
-        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_EARTH, ItemsPM.ESSENCE_DUST_EARTH);
-        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SEA, ItemsPM.ESSENCE_DUST_SEA);
-        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SKY, ItemsPM.ESSENCE_DUST_SKY);
-        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SUN, ItemsPM.ESSENCE_DUST_SUN);
-        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_MOON, ItemsPM.ESSENCE_DUST_MOON);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_EARTH.get(), ItemsPM.ESSENCE_DUST_EARTH);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SEA.get(), ItemsPM.ESSENCE_DUST_SEA);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SKY.get(), ItemsPM.ESSENCE_DUST_SKY);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SUN.get(), ItemsPM.ESSENCE_DUST_SUN);
+        this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_MOON.get(), ItemsPM.ESSENCE_DUST_MOON);
     }
 
     @Override

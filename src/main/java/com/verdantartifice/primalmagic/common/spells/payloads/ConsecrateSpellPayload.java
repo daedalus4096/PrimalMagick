@@ -63,8 +63,8 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
     }
     
     protected void placeField(@Nonnull World world, @Nonnull BlockPos pos) {
-        if (world.isAirBlock(pos) && world.getBlockState(pos) != BlocksPM.CONSECRATION_FIELD.getDefaultState()) {
-            world.setBlockState(pos, BlocksPM.CONSECRATION_FIELD.getDefaultState(), Constants.BlockFlags.DEFAULT);
+        if (world.isAirBlock(pos) && world.getBlockState(pos) != BlocksPM.CONSECRATION_FIELD.get().getDefaultState()) {
+            world.setBlockState(pos, BlocksPM.CONSECRATION_FIELD.get().getDefaultState(), Constants.BlockFlags.DEFAULT);
         }
     }
 

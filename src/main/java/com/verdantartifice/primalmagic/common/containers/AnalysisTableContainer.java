@@ -59,7 +59,7 @@ public class AnalysisTableContainer extends Container {
     
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.ANALYSIS_TABLE);
+        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.ANALYSIS_TABLE.get());
     }
     
     @Override

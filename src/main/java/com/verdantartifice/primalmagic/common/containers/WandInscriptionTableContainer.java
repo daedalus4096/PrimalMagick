@@ -72,7 +72,7 @@ public class WandInscriptionTableContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.WAND_INSCRIPTION_TABLE);
+        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.WAND_INSCRIPTION_TABLE.get());
     }
 
     @Override
