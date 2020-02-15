@@ -18,6 +18,6 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig;
 public class SunwoodTree extends Tree {
     @Override
     protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean hasFlowers) {
-        return FeaturesPM.PHASING_TREE.withConfiguration(FeatureConfigsPM.SUNWOOD_TREE_CONFIG);
+        return FeaturesPM.PHASING_TREE.get().withConfiguration(FeatureConfigsPM.SUNWOOD_TREE_CONFIG);
     }
 }

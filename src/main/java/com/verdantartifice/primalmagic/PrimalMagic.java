@@ -35,5 +35,6 @@ public class PrimalMagic {
     
     public PrimalMagic() {
         Config.register();
+        proxy.initDeferredRegistries();
     }
 }

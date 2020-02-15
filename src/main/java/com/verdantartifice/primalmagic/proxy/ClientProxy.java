@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.proxy;
 
 import com.verdantartifice.primalmagic.client.config.KeyBindings;
+import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagic.client.gui.AnalysisTableScreen;
 import com.verdantartifice.primalmagic.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagic.client.gui.CalcinatorScreen;
@@ -32,6 +33,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
  * @author Daedalus4096
  */
 public class ClientProxy extends CommonProxy {
+    @Override
+    public void initDeferredRegistries() {
+        super.initDeferredRegistries();
+        ParticleTypesPM.init();
+    }
+    
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
         super.clientSetup(event);

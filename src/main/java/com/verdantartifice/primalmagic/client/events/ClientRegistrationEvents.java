@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagic.client.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticleData;
 import com.verdantartifice.primalmagic.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticle;
@@ -13,15 +12,12 @@ import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -34,20 +30,12 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrationEvents {
     @SubscribeEvent
-    public static void registerParticleTypes(RegistryEvent.Register<ParticleType<?>> event) {
-        event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "wand_poof"));
-        event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "mana_sparkle"));
-        event.getRegistry().register(new BasicParticleType(true).setRegistryName(PrimalMagic.MODID, "spell_sparkle"));
-        event.getRegistry().register(new ParticleType<>(false, SpellBoltParticleData.DESERIALIZER).setRegistryName(PrimalMagic.MODID, "spell_bolt"));
-    }
-    
-    @SubscribeEvent
     public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        mc.particles.registerFactory(ParticleTypesPM.WAND_POOF, WandPoofParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.MANA_SPARKLE, ManaSparkleParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.SPELL_SPARKLE, SpellSparkleParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.SPELL_BOLT, SpellBoltParticle.Factory::new);
+        mc.particles.registerFactory(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
+        mc.particles.registerFactory(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Factory::new);
+        mc.particles.registerFactory(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Factory::new);
+        mc.particles.registerFactory(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
     }
     
     /**

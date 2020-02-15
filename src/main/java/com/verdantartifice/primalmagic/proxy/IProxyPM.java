@@ -12,6 +12,11 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
  */
 public interface IProxyPM {
     /**
+     * Initialize deferred object registries so that they can receive registrations.
+     */
+    public void initDeferredRegistries();
+    
+    /**
      * Handle common setup during mod initialization.  See event documentation for more details.
      * 
      * @param event the triggering event

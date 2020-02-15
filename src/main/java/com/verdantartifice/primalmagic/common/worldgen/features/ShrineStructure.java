@@ -51,7 +51,7 @@ public class ShrineStructure extends ScatteredStructure<ShrineConfig> {
 
         @Override
         public void init(ChunkGenerator<?> generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn) {
-            ShrineConfig config = generator.getStructureConfig(biomeIn, FeaturesPM.SHRINE);
+            ShrineConfig config = generator.getStructureConfig(biomeIn, FeaturesPM.SHRINE.get());
             BlockPos pos = new BlockPos(chunkX * 16, 90, chunkZ * 16);
             this.components.add(new ShrinePiece(templateManagerIn, config.source, pos));
             this.recalculateStructureSize();

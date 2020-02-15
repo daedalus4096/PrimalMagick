@@ -47,7 +47,7 @@ public class SpellBoltParticleData implements IParticleData {
 
     @Override
     public ParticleType<?> getType() {
-        return ParticleTypesPM.SPELL_BOLT;
+        return ParticleTypesPM.SPELL_BOLT.get();
     }
 
     @Override

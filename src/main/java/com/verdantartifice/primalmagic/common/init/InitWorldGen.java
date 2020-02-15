@@ -2,28 +2,23 @@ package com.verdantartifice.primalmagic.common.init;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeatureConfigsPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
-import com.verdantartifice.primalmagic.common.worldgen.features.PhasingTreeFeature;
 import com.verdantartifice.primalmagic.common.worldgen.features.ShrineConfig;
-import com.verdantartifice.primalmagic.common.worldgen.features.ShrineStructure;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * Point of registration for mod worldgen features and structures.  Also performs actual worldgen changes
@@ -32,11 +27,6 @@ import net.minecraftforge.registries.IForgeRegistry;
  * @author Daedalus4096
  */
 public class InitWorldGen {
-    public static void initFeatures(IForgeRegistry<Feature<?>> registry) {
-        registry.register(new PhasingTreeFeature(TreeFeatureConfig::func_227338_a_).setRegistryName(PrimalMagic.MODID, "phasing_tree"));
-        registry.register(new ShrineStructure(ShrineConfig::deserialize).setRegistryName(PrimalMagic.MODID, "shrine"));
-    }
-
     public static void initWorldGen() {
         // Add raw marble seams to all non-Nether, non-End biomes
         ForgeRegistries.BIOMES.getValues().stream().filter(InitWorldGen::shouldSpawnMarble).forEach((biome) -> {
@@ -99,7 +89,7 @@ public class InitWorldGen {
     private static void addShrine(@Nonnull Biome biome, @Nonnull Source source) {
         // Structures must be added as both a structure and a feature of the biome in order to spawn
         ShrineConfig config = new ShrineConfig(source);
-        biome.addStructure(FeaturesPM.SHRINE.withConfiguration(config));
-        biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeaturesPM.SHRINE.withConfiguration(config).withPlacement(Placement.NOPE.func_227446_a_(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+        biome.addStructure(FeaturesPM.SHRINE.get().withConfiguration(config));
+        biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeaturesPM.SHRINE.get().withConfiguration(config).withPlacement(Placement.NOPE.func_227446_a_(IPlacementConfig.NO_PLACEMENT_CONFIG)));
     }
 }

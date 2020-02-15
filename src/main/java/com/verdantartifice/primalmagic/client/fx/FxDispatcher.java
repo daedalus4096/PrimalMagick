@@ -52,7 +52,7 @@ public class FxDispatcher {
                 dy += (side.getYOffset() * 0.1D);
                 dz += (side.getZOffset() * 0.1D);
             }
-            Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.WAND_POOF, x + dx * 2.0D, y + dy * 2.0D, z + dz * 2.0D, dx / 2.0D, dy / 2.0D, dz / 2.0D);
+            Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.WAND_POOF.get(), x + dx * 2.0D, y + dy * 2.0D, z + dz * 2.0D, dx / 2.0D, dy / 2.0D, dz / 2.0D);
             if (p != null) {
                 p.setColor(r, g, b);
             }
@@ -72,7 +72,7 @@ public class FxDispatcher {
         double vx = (x2 - x1) / (double)maxAge;
         double vy = (y2 - y1) / (double)maxAge;
         double vz = (z2 - z1) / (double)maxAge;
-        Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.MANA_SPARKLE, x1, y1, z1, vx, vy, vz);
+        Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.MANA_SPARKLE.get(), x1, y1, z1, vx, vy, vz);
         if (p != null) {
             p.setColor(r, g, b);
             p.setMaxAge(maxAge);
@@ -89,7 +89,7 @@ public class FxDispatcher {
     
     public void spellTrail(double x, double y, double z, float r, float g, float b) {
         // Show a particle trailing behind a spell projectile
-        Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.SPELL_SPARKLE, x, y, z, 0.0D, 0.0D, 0.0D);
+        Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
         }
@@ -111,7 +111,7 @@ public class FxDispatcher {
             double dx = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
             double dy = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
             double dz = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
-            Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.SPELL_SPARKLE, x, y, z, dx, dy, dz);
+            Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, dx, dy, dz);
             if (p != null) {
                 p.setColor(r, g, b);
             }
