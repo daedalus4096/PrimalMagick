@@ -96,7 +96,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     };
     
     public CalcinatorTileEntity() {
-        super(TileEntityTypesPM.CALCINATOR, OUTPUT_CAPACITY + 2);
+        super(TileEntityTypesPM.CALCINATOR.get(), OUTPUT_CAPACITY + 2);
     }
     
     protected boolean isBurning() {

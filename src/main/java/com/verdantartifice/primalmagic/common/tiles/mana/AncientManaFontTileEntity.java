@@ -42,7 +42,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
     protected int mana = 0;
     
     public AncientManaFontTileEntity() {
-        super(TileEntityTypesPM.ANCIENT_MANA_FONT);
+        super(TileEntityTypesPM.ANCIENT_MANA_FONT.get());
     }
     
     @Override

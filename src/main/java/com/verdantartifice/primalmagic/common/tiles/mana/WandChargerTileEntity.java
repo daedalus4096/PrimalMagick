@@ -66,7 +66,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
     };
     
     public WandChargerTileEntity() {
-        super(TileEntityTypesPM.WAND_CHARGER, 2);
+        super(TileEntityTypesPM.WAND_CHARGER.get(), 2);
     }
     
     @Override
