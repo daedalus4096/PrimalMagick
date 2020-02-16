@@ -6,14 +6,16 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'com.palantir.gradle.gitversion', name: 'gradle-git-version', version: '0.12.2'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'com.palantir.git-version'
 
-version = '0.0.1'
+version = gitVersion()
 group = 'com.verdantartifice.primalmagic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'primalmagic'
 
