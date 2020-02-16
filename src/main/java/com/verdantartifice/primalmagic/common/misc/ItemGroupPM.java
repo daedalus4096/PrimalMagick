@@ -17,6 +17,6 @@ public class ItemGroupPM extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(ItemsPM.GRIMOIRE);
+        return new ItemStack(ItemsPM.GRIMOIRE.get());
     }
 }

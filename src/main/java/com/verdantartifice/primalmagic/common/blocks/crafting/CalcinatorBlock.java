@@ -51,7 +51,6 @@ public class CalcinatorBlock extends Block {
     
     public CalcinatorBlock() {
         super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).lightValue(13).sound(SoundType.STONE));
-        this.setRegistryName(PrimalMagic.MODID, "calcinator");
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(LIT, Boolean.valueOf(false)));
     }
     

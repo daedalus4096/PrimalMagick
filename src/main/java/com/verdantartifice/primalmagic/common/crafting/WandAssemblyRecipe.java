@@ -42,7 +42,7 @@ public class WandAssemblyRecipe extends SpecialRecipe {
         ItemStack coreStack = inv.getStackInSlot(0);
         ItemStack gemStack = inv.getStackInSlot(1);
         ItemStack capStack = inv.getStackInSlot(2);
-        ItemStack wandStack = new ItemStack(ItemsPM.MODULAR_WAND);
+        ItemStack wandStack = new ItemStack(ItemsPM.MODULAR_WAND.get());
         ModularWandItem wandItem = (ModularWandItem)wandStack.getItem();
         
         // Set the components of the modular wand

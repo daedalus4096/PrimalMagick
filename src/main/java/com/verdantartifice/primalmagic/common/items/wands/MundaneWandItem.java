@@ -19,7 +19,6 @@ import net.minecraft.item.ItemStack;
 public class MundaneWandItem extends AbstractWandItem {
     public MundaneWandItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> MundaneWandISTER::new));
-        this.setRegistryName(PrimalMagic.MODID, "mundane_wand");
     }
 
     @Override

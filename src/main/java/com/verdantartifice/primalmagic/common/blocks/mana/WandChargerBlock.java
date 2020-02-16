@@ -34,7 +34,6 @@ public class WandChargerBlock extends Block {
     
     public WandChargerBlock() {
         super(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE));
-        this.setRegistryName(PrimalMagic.MODID, "wand_charger");
     }
     
     @Override

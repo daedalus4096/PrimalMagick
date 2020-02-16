@@ -31,7 +31,6 @@ import net.minecraft.world.World;
 public class SpellScrollItem extends Item {
     public SpellScrollItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP));
-        this.setRegistryName(PrimalMagic.MODID, "spell_scroll_filled");
     }
     
     @Nullable

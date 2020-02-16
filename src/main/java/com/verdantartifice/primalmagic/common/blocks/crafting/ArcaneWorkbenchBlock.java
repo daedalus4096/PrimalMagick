@@ -38,7 +38,6 @@ public class ArcaneWorkbenchBlock extends Block {
 
     public ArcaneWorkbenchBlock() {
         super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
-        this.setRegistryName(PrimalMagic.MODID, "arcane_workbench");
     }
     
     @Override

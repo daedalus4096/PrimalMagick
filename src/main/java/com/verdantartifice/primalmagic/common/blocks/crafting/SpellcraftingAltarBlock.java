@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.blocks.crafting;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 
 import net.minecraft.block.Block;
@@ -33,7 +32,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class SpellcraftingAltarBlock extends Block {
     public SpellcraftingAltarBlock() {
         super(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE));
-        this.setRegistryName(PrimalMagic.MODID, "spellcrafting_altar");
     }
     
     @Override

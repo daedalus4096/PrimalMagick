@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.datagen;
 
 import java.nio.file.Path;
 
-import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
@@ -35,12 +34,12 @@ public class ItemTagsProvider extends TagsProvider<Item> {
     protected void registerTags() {
         // Add entries to vanilla tags
         this.getBuilder(ItemTags.LOGS).add(ItemTagsPM.MOONWOOD_LOGS, ItemTagsPM.SUNWOOD_LOGS);
-        this.getBuilder(ItemTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.asItem(), BlocksPM.SUNWOOD_LEAVES.asItem());
-        this.getBuilder(ItemTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.asItem(), BlocksPM.SUNWOOD_PLANKS.asItem());
-        this.getBuilder(ItemTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING.asItem(), BlocksPM.SUNWOOD_SAPLING.asItem());
-        this.getBuilder(ItemTags.WALLS).add(BlocksPM.MARBLE_WALL.asItem(), BlocksPM.MARBLE_BRICK_WALL.asItem(), BlocksPM.MARBLE_ENCHANTED_WALL.asItem(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.asItem(), BlocksPM.MARBLE_SMOKED_WALL.asItem(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.asItem());
-        this.getBuilder(ItemTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB.asItem(), BlocksPM.SUNWOOD_SLAB.asItem());
-        this.getBuilder(ItemTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.asItem(), BlocksPM.SUNWOOD_STAIRS.asItem());
+        this.getBuilder(ItemTags.LEAVES).add(ItemsPM.MOONWOOD_LEAVES.get(), ItemsPM.SUNWOOD_LEAVES.get());
+        this.getBuilder(ItemTags.PLANKS).add(ItemsPM.MOONWOOD_PLANKS.get(), ItemsPM.SUNWOOD_PLANKS.get());
+        this.getBuilder(ItemTags.SAPLINGS).add(ItemsPM.MOONWOOD_SAPLING.get(), ItemsPM.SUNWOOD_SAPLING.get());
+        this.getBuilder(ItemTags.WALLS).add(ItemsPM.MARBLE_WALL.get(), ItemsPM.MARBLE_BRICK_WALL.get(), ItemsPM.MARBLE_ENCHANTED_WALL.get(), ItemsPM.MARBLE_ENCHANTED_BRICK_WALL.get(), ItemsPM.MARBLE_SMOKED_WALL.get(), ItemsPM.MARBLE_SMOKED_BRICK_WALL.get());
+        this.getBuilder(ItemTags.WOODEN_SLABS).add(ItemsPM.MOONWOOD_SLAB.get(), ItemsPM.SUNWOOD_SLAB.get());
+        this.getBuilder(ItemTags.WOODEN_STAIRS).add(ItemsPM.MOONWOOD_STAIRS.get(), ItemsPM.SUNWOOD_STAIRS.get());
 
         // Create custom tags
         this.getBuilder(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.BLACK_SHULKER_BOX, Items.BLUE_SHULKER_BOX, Items.BROWN_SHULKER_BOX, Items.CYAN_SHULKER_BOX, Items.GRAY_SHULKER_BOX, Items.GREEN_SHULKER_BOX, Items.LIGHT_BLUE_SHULKER_BOX, Items.LIGHT_GRAY_SHULKER_BOX, Items.LIME_SHULKER_BOX, Items.MAGENTA_SHULKER_BOX, Items.ORANGE_SHULKER_BOX, Items.PINK_SHULKER_BOX, Items.PURPLE_SHULKER_BOX, Items.RED_SHULKER_BOX, Items.WHITE_SHULKER_BOX, Items.YELLOW_SHULKER_BOX);
@@ -50,15 +49,15 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTagsPM.DEAD_CORAL_PLANTS).add(Items.DEAD_BRAIN_CORAL, Items.DEAD_BUBBLE_CORAL, Items.DEAD_FIRE_CORAL, Items.DEAD_HORN_CORAL, Items.DEAD_TUBE_CORAL);
         this.getBuilder(ItemTagsPM.DEAD_CORALS).add(ItemTagsPM.DEAD_CORAL_PLANTS).add(Items.DEAD_BRAIN_CORAL_FAN, Items.DEAD_BUBBLE_CORAL_FAN, Items.DEAD_FIRE_CORAL_FAN, Items.DEAD_HORN_CORAL_FAN, Items.DEAD_TUBE_CORAL_FAN);
         this.getBuilder(ItemTagsPM.ESSENCES).add(ItemTagsPM.ESSENCES_DUSTS, ItemTagsPM.ESSENCES_SHARDS, ItemTagsPM.ESSENCES_CRYSTALS, ItemTagsPM.ESSENCES_CLUSTERS);
-        this.getBuilder(ItemTagsPM.MOONWOOD_LOGS).add(BlocksPM.MOONWOOD_LOG.asItem(), BlocksPM.STRIPPED_MOONWOOD_LOG.asItem(), BlocksPM.MOONWOOD_WOOD.asItem(), BlocksPM.STRIPPED_MOONWOOD_WOOD.asItem());
+        this.getBuilder(ItemTagsPM.MOONWOOD_LOGS).add(ItemsPM.MOONWOOD_LOG.get(), ItemsPM.STRIPPED_MOONWOOD_LOG.get(), ItemsPM.MOONWOOD_WOOD.get(), ItemsPM.STRIPPED_MOONWOOD_WOOD.get());
         this.getBuilder(ItemTagsPM.SHULKER_BOXES).add(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.SHULKER_BOX);
-        this.getBuilder(ItemTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.asItem(), BlocksPM.STRIPPED_SUNWOOD_LOG.asItem(), BlocksPM.SUNWOOD_WOOD.asItem(), BlocksPM.STRIPPED_SUNWOOD_WOOD.asItem());
+        this.getBuilder(ItemTagsPM.SUNWOOD_LOGS).add(ItemsPM.SUNWOOD_LOG.get(), ItemsPM.STRIPPED_SUNWOOD_LOG.get(), ItemsPM.SUNWOOD_WOOD.get(), ItemsPM.STRIPPED_SUNWOOD_WOOD.get());
         
-        this.getBuilder(ItemTagsPM.ESSENCES_DUSTS).add(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).add(ItemsPM.ESSENCE_DUST_BLOOD, ItemsPM.ESSENCE_DUST_INFERNAL, ItemsPM.ESSENCE_DUST_VOID, ItemsPM.ESSENCE_DUST_HALLOWED);
-        this.getBuilder(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).add(ItemsPM.ESSENCE_DUST_EARTH, ItemsPM.ESSENCE_DUST_SEA, ItemsPM.ESSENCE_DUST_SKY, ItemsPM.ESSENCE_DUST_SUN, ItemsPM.ESSENCE_DUST_MOON);
-        this.getBuilder(ItemTagsPM.ESSENCES_SHARDS).add(ItemsPM.ESSENCE_SHARD_EARTH, ItemsPM.ESSENCE_SHARD_SEA, ItemsPM.ESSENCE_SHARD_SKY, ItemsPM.ESSENCE_SHARD_SUN, ItemsPM.ESSENCE_SHARD_MOON, ItemsPM.ESSENCE_SHARD_BLOOD, ItemsPM.ESSENCE_SHARD_INFERNAL, ItemsPM.ESSENCE_SHARD_VOID, ItemsPM.ESSENCE_SHARD_HALLOWED);
-        this.getBuilder(ItemTagsPM.ESSENCES_CRYSTALS).add(ItemsPM.ESSENCE_CRYSTAL_EARTH, ItemsPM.ESSENCE_CRYSTAL_SEA, ItemsPM.ESSENCE_CRYSTAL_SKY, ItemsPM.ESSENCE_CRYSTAL_SUN, ItemsPM.ESSENCE_CRYSTAL_MOON, ItemsPM.ESSENCE_CRYSTAL_BLOOD, ItemsPM.ESSENCE_CRYSTAL_INFERNAL, ItemsPM.ESSENCE_CRYSTAL_VOID, ItemsPM.ESSENCE_CRYSTAL_HALLOWED);
-        this.getBuilder(ItemTagsPM.ESSENCES_CLUSTERS).add(ItemsPM.ESSENCE_CLUSTER_EARTH, ItemsPM.ESSENCE_CLUSTER_SEA, ItemsPM.ESSENCE_CLUSTER_SKY, ItemsPM.ESSENCE_CLUSTER_SUN, ItemsPM.ESSENCE_CLUSTER_MOON, ItemsPM.ESSENCE_CLUSTER_BLOOD, ItemsPM.ESSENCE_CLUSTER_INFERNAL, ItemsPM.ESSENCE_CLUSTER_VOID, ItemsPM.ESSENCE_CLUSTER_HALLOWED);
+        this.getBuilder(ItemTagsPM.ESSENCES_DUSTS).add(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).add(ItemsPM.ESSENCE_DUST_BLOOD.get(), ItemsPM.ESSENCE_DUST_INFERNAL.get(), ItemsPM.ESSENCE_DUST_VOID.get(), ItemsPM.ESSENCE_DUST_HALLOWED.get());
+        this.getBuilder(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).add(ItemsPM.ESSENCE_DUST_EARTH.get(), ItemsPM.ESSENCE_DUST_SEA.get(), ItemsPM.ESSENCE_DUST_SKY.get(), ItemsPM.ESSENCE_DUST_SUN.get(), ItemsPM.ESSENCE_DUST_MOON.get());
+        this.getBuilder(ItemTagsPM.ESSENCES_SHARDS).add(ItemsPM.ESSENCE_SHARD_EARTH.get(), ItemsPM.ESSENCE_SHARD_SEA.get(), ItemsPM.ESSENCE_SHARD_SKY.get(), ItemsPM.ESSENCE_SHARD_SUN.get(), ItemsPM.ESSENCE_SHARD_MOON.get(), ItemsPM.ESSENCE_SHARD_BLOOD.get(), ItemsPM.ESSENCE_SHARD_INFERNAL.get(), ItemsPM.ESSENCE_SHARD_VOID.get(), ItemsPM.ESSENCE_SHARD_HALLOWED.get());
+        this.getBuilder(ItemTagsPM.ESSENCES_CRYSTALS).add(ItemsPM.ESSENCE_CRYSTAL_EARTH.get(), ItemsPM.ESSENCE_CRYSTAL_SEA.get(), ItemsPM.ESSENCE_CRYSTAL_SKY.get(), ItemsPM.ESSENCE_CRYSTAL_SUN.get(), ItemsPM.ESSENCE_CRYSTAL_MOON.get(), ItemsPM.ESSENCE_CRYSTAL_BLOOD.get(), ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get(), ItemsPM.ESSENCE_CRYSTAL_VOID.get(), ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get());
+        this.getBuilder(ItemTagsPM.ESSENCES_CLUSTERS).add(ItemsPM.ESSENCE_CLUSTER_EARTH.get(), ItemsPM.ESSENCE_CLUSTER_SEA.get(), ItemsPM.ESSENCE_CLUSTER_SKY.get(), ItemsPM.ESSENCE_CLUSTER_SUN.get(), ItemsPM.ESSENCE_CLUSTER_MOON.get(), ItemsPM.ESSENCE_CLUSTER_BLOOD.get(), ItemsPM.ESSENCE_CLUSTER_INFERNAL.get(), ItemsPM.ESSENCE_CLUSTER_VOID.get(), ItemsPM.ESSENCE_CLUSTER_HALLOWED.get());
     }
 
     @Override

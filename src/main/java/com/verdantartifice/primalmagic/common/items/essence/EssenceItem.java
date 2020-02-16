@@ -32,7 +32,6 @@ public class EssenceItem extends Item {
 
     public EssenceItem(@Nonnull EssenceType type, @Nonnull Source source) {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(type.getRarity()));
-        this.setRegistryName(PrimalMagic.MODID, "essence_" + type.getName() + "_" + source.getTag());   // e.g. essence_dust_earth
         this.type = type;
         this.source = source;
         register(type, source, this);

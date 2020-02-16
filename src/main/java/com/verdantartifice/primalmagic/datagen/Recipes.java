@@ -50,19 +50,19 @@ public class Recipes extends RecipeProvider {
         this.registerEssenceUpgradeRecipes(consumer);
         this.registerEssenceDowngradeRecipes(consumer);
         
-        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND)
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
             .addCriterion("has_terrestrial_dust", this.hasItem(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS))
             .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.ANALYSIS_TABLE.get())
             .addIngredient(BlocksPM.WOOD_TABLE.get())
-            .addIngredient(ItemsPM.MAGNIFYING_GLASS)
+            .addIngredient(ItemsPM.MAGNIFYING_GLASS.get())
             .addIngredient(Items.PAPER)
             .addCriterion("has_wood_table", this.hasItem(BlocksPM.WOOD_TABLE.get()))
-            .addCriterion("has_magnifying_glass", this.hasItem(ItemsPM.MAGNIFYING_GLASS))
+            .addCriterion("has_magnifying_glass", this.hasItem(ItemsPM.MAGNIFYING_GLASS.get()))
             .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemsPM.MAGNIFYING_GLASS)
+        ShapedRecipeBuilder.shapedRecipe(ItemsPM.MAGNIFYING_GLASS.get())
             .patternLine(" I ")
             .patternLine("IGI")
             .patternLine("SI ")
@@ -80,7 +80,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemTags.PLANKS)
             .addCriterion("has_planks", this.hasItem(ItemTags.PLANKS))
             .build(consumer);
-        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELL_SCROLL_BLANK)
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELL_SCROLL_BLANK.get())
             .patternLine("  S")
             .patternLine("PPP")
             .patternLine("S  ")

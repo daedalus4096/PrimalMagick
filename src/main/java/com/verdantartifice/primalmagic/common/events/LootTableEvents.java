@@ -30,7 +30,7 @@ public class LootTableEvents {
         if (BLOODY_FLESH_SOURCES.contains(event.getName().toString())) {
             // If the fired event is for one of the defined entity types, add a new loot pool to its table.  This pool allows
             // the entity to drop Bloody Flesh, at the same rate that ender pearls drop from Endermen.
-            event.getTable().addPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.BLOODY_FLESH).acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 1.0F))).acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))).build());
+            event.getTable().addPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.BLOODY_FLESH.get()).acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 1.0F))).acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))).build());
         }
     }
 }

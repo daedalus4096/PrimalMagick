@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagic.common.init.InitResearch;
 import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
 import com.verdantartifice.primalmagic.common.init.InitWorldGen;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
@@ -42,8 +43,8 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 public class CommonProxy implements IProxyPM {
     @Override
     public void initDeferredRegistries() {
-        // TODO Other deferred registries
         BlocksPM.init();
+        ItemsPM.init();
         TileEntityTypesPM.init();
         ContainersPM.init();
         EntityTypesPM.init();

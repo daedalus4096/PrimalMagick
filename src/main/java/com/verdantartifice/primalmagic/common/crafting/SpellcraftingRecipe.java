@@ -21,12 +21,12 @@ public class SpellcraftingRecipe extends SpecialRecipe {
 
     @Override
     public boolean matches(CraftingInventory inv, World worldIn) {
-        return inv.getStackInSlot(0).getItem().equals(ItemsPM.SPELL_SCROLL_BLANK);
+        return inv.getStackInSlot(0).getItem().equals(ItemsPM.SPELL_SCROLL_BLANK.get());
     }
 
     @Override
     public ItemStack getCraftingResult(CraftingInventory inv) {
-        return new ItemStack(ItemsPM.SPELL_SCROLL_FILLED);
+        return new ItemStack(ItemsPM.SPELL_SCROLL_FILLED.get());
     }
 
     @Override

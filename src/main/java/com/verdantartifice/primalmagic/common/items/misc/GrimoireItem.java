@@ -30,7 +30,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class GrimoireItem extends Item implements INamedContainerProvider {
     public GrimoireItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON));
-        this.setRegistryName(PrimalMagic.MODID, "grimoire");
     }
     
     @Override

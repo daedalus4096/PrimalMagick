@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.blocks.crafting;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.WandAssemblyTableContainer;
 
 import net.minecraft.block.Block;
@@ -32,7 +31,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class WandAssemblyTableBlock extends Block {
     public WandAssemblyTableBlock() {
         super(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE));
-        this.setRegistryName(PrimalMagic.MODID, "wand_assembly_table");
     }
     
     @Override

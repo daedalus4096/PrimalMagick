@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.blocks.misc;
 
 import java.util.Random;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -40,7 +39,6 @@ public class ConsecrationFieldBlock extends Block {
 
     public ConsecrationFieldBlock() {
         super(Block.Properties.create(MATERIAL).hardnessAndResistance(-1, 3600000).lightValue(15).noDrops());
-        this.setRegistryName(PrimalMagic.MODID, "consecration_field");
     }
 
     @Override

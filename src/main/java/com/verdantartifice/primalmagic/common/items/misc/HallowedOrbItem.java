@@ -24,7 +24,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class HallowedOrbItem extends Item {
     public HallowedOrbItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE));
-        this.setRegistryName(PrimalMagic.MODID, "hallowed_orb");
     }
 
     @OnlyIn(Dist.CLIENT)

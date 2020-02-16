@@ -46,6 +46,6 @@ public class InitResearch {
     }
     
     private static void initScanResearch() {
-        ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB, Source.HALLOWED));
+        ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Source.HALLOWED));
     }
 }

@@ -24,7 +24,6 @@ public class WoodTableBlock extends Block {
 
     public WoodTableBlock() {
         super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
-        this.setRegistryName(PrimalMagic.MODID, "wood_table");
     }
     
     @Override

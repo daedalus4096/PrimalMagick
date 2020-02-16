@@ -48,7 +48,6 @@ public class AnalysisTableBlock extends Block {
 
     public AnalysisTableBlock() {
         super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
-        this.setRegistryName(PrimalMagic.MODID, "analysis_table");
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
     

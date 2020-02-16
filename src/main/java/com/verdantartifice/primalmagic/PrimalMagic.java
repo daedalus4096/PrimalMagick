@@ -19,9 +19,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @see {@link com.verdantartifice.primalmagic.common.events.ModLifecycleEvents}
  * @see {@link com.verdantartifice.primalmagic.common.events.ServerLifecycleEvents}
- * @see {@link com.verdantartifice.primalmagic.common.events.RegistrationEvents}
  * @see {@link com.verdantartifice.primalmagic.client.events.ClientModLifecycleEvents}
- * @see {@link com.verdantartifice.primalmagic.client.events.ClientRegistrationEvents}
  * 
  * @author Daedalus4096
  */

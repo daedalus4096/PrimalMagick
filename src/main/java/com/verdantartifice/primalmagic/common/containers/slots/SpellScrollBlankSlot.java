@@ -19,6 +19,6 @@ public class SpellScrollBlankSlot extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         // Only allow blank spell scrolls to be dropped into the slot
-        return stack.getItem().equals(ItemsPM.SPELL_SCROLL_BLANK);
+        return stack.getItem().equals(ItemsPM.SPELL_SCROLL_BLANK.get());
     }
 }

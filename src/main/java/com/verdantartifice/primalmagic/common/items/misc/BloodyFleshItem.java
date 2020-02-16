@@ -31,7 +31,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BloodyFleshItem extends Item {
     public BloodyFleshItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(3).saturation(0.3F).meat().setAlwaysEdible().build()));
-        this.setRegistryName(PrimalMagic.MODID, "bloody_flesh");
     }
 
     @Override

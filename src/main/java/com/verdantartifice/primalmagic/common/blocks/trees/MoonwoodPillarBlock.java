@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.blocks.trees;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
 import net.minecraft.block.Block;
@@ -17,7 +16,6 @@ import net.minecraft.world.IWorld;
 public class MoonwoodPillarBlock extends AbstractPhasingPillarBlock {
     public MoonwoodPillarBlock() {
         super(Block.Properties.create(Material.WOOD, MaterialColor.IRON).hardnessAndResistance(2.0F).tickRandomly().notSolid().sound(SoundType.WOOD));
-        this.setRegistryName(PrimalMagic.MODID, "moonwood_pillar");
     }
 
     @Override
