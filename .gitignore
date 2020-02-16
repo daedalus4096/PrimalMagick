@@ -61,6 +61,8 @@ local.properties
 #################
 
 /.gradle/
+# keep the gradle jar.
+!gradle-wrapper.jar
 
 #################
 ## MC Generated Data
