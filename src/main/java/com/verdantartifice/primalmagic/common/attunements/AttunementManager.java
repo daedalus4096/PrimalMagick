@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagic.common.attunements;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
@@ -13,6 +15,8 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
@@ -34,6 +38,7 @@ public class AttunementManager {
     public static final int THRESHOLD_GREATER = 90;
     
     protected static final List<Integer> THRESHOLDS = Arrays.asList(THRESHOLD_MINOR, THRESHOLD_LESSER, THRESHOLD_GREATER);
+    protected static final List<AttunementAttributeModifier> MODIFIERS = new ArrayList<>();
     
     // Set of unique IDs of players that need their research synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
@@ -50,6 +55,10 @@ public class AttunementManager {
         if (player != null) {
             SYNC_SET.add(player.getUniqueID());
         }
+    }
+    
+    public static void registerAttributeModifier(@Nonnull Source source, int threshold, @Nonnull IAttribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+        MODIFIERS.add(new AttunementAttributeModifier(source, threshold, attribute, uuidStr, modValue, modOperation));
     }
     
     /**
@@ -121,7 +130,12 @@ public class AttunementManager {
                             player.sendStatusMessage(new TranslationTextComponent("primalmagic.attunement.threshold_gain", sourceText), false);
                         }
                         
-                        // TODO Apply any new attribute modifiers from the threshold gain
+                        // Apply any new attribute modifiers from the threshold gain
+                        for (AttunementAttributeModifier modifier : MODIFIERS) {
+                            if (source.equals(modifier.getSource()) && thresholdValue == modifier.getThreshold()) {
+                                modifier.applyToEntity(player);
+                            }
+                        }
                     }
                     if (oldTotal >= thresholdValue && newTotal < thresholdValue) {
                         // If losing a threshold, send a message to the player
@@ -129,7 +143,12 @@ public class AttunementManager {
                             player.sendStatusMessage(new TranslationTextComponent("primalmagic.attunement.threshold_loss", sourceText), false);
                         }
                         
-                        // TODO Remove any lost attribute modifiers from the threshold loss
+                        // Remove any lost attribute modifiers from the threshold loss
+                        for (AttunementAttributeModifier modifier : MODIFIERS) {
+                            if (source.equals(modifier.getSource()) && thresholdValue == modifier.getThreshold()) {
+                                modifier.removeFromEntity(player);
+                            }
+                        }
                     }
                 }
             }
