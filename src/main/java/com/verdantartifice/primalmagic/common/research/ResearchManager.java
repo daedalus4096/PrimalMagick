@@ -40,7 +40,7 @@ public class ResearchManager {
     // Hash codes of items that must be crafted to complete one or more research stages
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
     
-    // Map of names of players that need their research synced to their client
+    // Set of unique IDs of players that need their research synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
     
     // Registry of all defined scan triggers
@@ -54,10 +54,18 @@ public class ResearchManager {
         return CRAFTING_REFERENCES.add(Integer.valueOf(reference));
     }
     
-    @Nullable
-    public static boolean checkSyncSet(@Nullable UUID playerId) {
-        // Remove the element from the set if present, and return true if it was there
-        return SYNC_SET.remove(playerId);
+    public static boolean isSyncScheduled(@Nullable PlayerEntity player) {
+        if (player == null) {
+            return false;
+        } else {
+            return SYNC_SET.remove(player.getUniqueID());
+        }
+    }
+    
+    public static void scheduleSync(@Nullable PlayerEntity player) {
+        if (player != null) {
+            SYNC_SET.add(player.getUniqueID());
+        }
     }
     
     public static boolean hasPrerequisites(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
@@ -177,7 +185,7 @@ public class ResearchManager {
 
         knowledge.removeResearch(key);
         if (sync) {
-            SYNC_SET.add(player.getUniqueID());
+            scheduleSync(player);
         }
         return true;
     }
@@ -292,7 +300,7 @@ public class ResearchManager {
         
         // If syncing, queue it up for next tick
         if (sync) {
-            SYNC_SET.add(player.getUniqueID());
+            scheduleSync(player);
         }
 
         return true;
@@ -315,7 +323,7 @@ public class ResearchManager {
                 // TODO send knowledge gain packet to player to show client effects for each level gained
             }
         }
-        SYNC_SET.add(player.getUniqueID());
+        scheduleSync(player);
         return true;
     }
     

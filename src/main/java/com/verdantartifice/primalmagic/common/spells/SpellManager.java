@@ -150,7 +150,7 @@ public class SpellManager {
             if (cooldowns != null) {
                 cooldowns.setCooldown(IPlayerCooldowns.CooldownType.SPELL, durationTicks);
                 if (player instanceof ServerPlayerEntity) {
-                    cooldowns.sync((ServerPlayerEntity)player);
+                    cooldowns.sync((ServerPlayerEntity)player); // Sync immediately, since cooldowns are time-sensitive
                 }
             }
         }

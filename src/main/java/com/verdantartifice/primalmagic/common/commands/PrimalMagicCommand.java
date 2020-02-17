@@ -182,7 +182,7 @@ public class PrimalMagicCommand {
         } else {
             // Remove all unlocked research entries from the target player
             knowledge.clearResearch();
-            knowledge.sync(target);
+            ResearchManager.scheduleSync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.reset", target.getName()), true);
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.research.reset.target", source.getName()));
         }
@@ -199,7 +199,6 @@ public class PrimalMagicCommand {
         } else {
             // Grant the specified research to the target player, along with all its parents
             ResearchManager.forceGrantWithAllParents(target, key);
-            knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.grant", target.getName(), key.toString()), true);
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.research.grant.target", source.getName(), key.toString()));
         }
@@ -216,7 +215,6 @@ public class PrimalMagicCommand {
         } else {
             // Revoke the specified research from the target player, along with all its children
             ResearchManager.forceRevokeWithAllChildren(target, key);
-            knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.research.revoke", target.getName(), key.toString()), true);
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.research.revoke.target", source.getName(), key.toString()));
         }
@@ -276,7 +274,6 @@ public class PrimalMagicCommand {
         } else {
             // Remove all observations and theories from the target player
             knowledge.clearKnowledge();
-            knowledge.sync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.reset", target.getName()), true);
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.knowledge.reset.target", source.getName()));
         }
@@ -422,7 +419,7 @@ public class PrimalMagicCommand {
             source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.error"));
         } else {
             stats.clear();
-            stats.sync(target);
+            StatsManager.scheduleSync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.stats.reset", target.getName()), true);
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.stats.reset.target", source.getName()));
         }
@@ -436,7 +433,7 @@ public class PrimalMagicCommand {
             source.sendErrorMessage(new TranslationTextComponent("commands.primalmagic.error"));
         } else {
             attunements.clear();
-            attunements.sync(target);
+            AttunementManager.scheduleSync(target);
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.attunements.reset", target.getName()), true);
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.attunements.reset.target", source.getName()));
         }

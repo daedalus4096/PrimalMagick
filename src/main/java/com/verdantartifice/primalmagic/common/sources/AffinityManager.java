@@ -435,7 +435,7 @@ public class AffinityManager {
             
             // Sync the research/knowledge changes to the player's client if requested
             if (sync) {
-                knowledge.sync(player);
+                knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
             }
             return true;
         } else {
@@ -474,9 +474,9 @@ public class AffinityManager {
             }
         }
         
-        // If any items were successfully scanned, sync the research/knowledge changes to the player's clien
+        // If any items were successfully scanned, sync the research/knowledge changes to the player's client
         if (count > 0) {
-            knowledge.sync(player);
+            knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
         }
         
         // Return the number of items successfully scanned

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
@@ -10,6 +11,7 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,18 +44,41 @@ public class PlayerEvents {
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
         if (!event.getEntity().world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
-            if (player.ticksExisted % 20 == 0) {
-                // Check to see if any players need their research/knowledge synced to their clients
-                if (ResearchManager.checkSyncSet(player.getUniqueID())) {
-                    IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                    if (knowledge != null) {
-                        knowledge.sync(player);
-                    }
-                }
+            if (player.ticksExisted % 10 == 0) {
+                // Check to see if any players need their capabilities synced to their clients
+                doScheduledSyncs(player, false);
             }
             if (player.ticksExisted % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries
                 checkEnvironmentalResearch(player);
+            }
+        }
+    }
+    
+    protected static void doScheduledSyncs(ServerPlayerEntity player, boolean immediate) {
+        if (immediate || ResearchManager.isSyncScheduled(player)) {
+            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+            if (knowledge != null) {
+                knowledge.sync(player);
+            }
+        }
+        if (immediate || StatsManager.isSyncScheduled(player)) {
+            IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+            if (stats != null) {
+                stats.sync(player);
+            }
+        }
+        if (immediate || AttunementManager.isSyncScheduled(player)) {
+            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
+            if (attunements != null) {
+                attunements.sync(player);
+            }
+        }
+        if (immediate) {
+            // Cooldowns don't do scheduled syncs, so only sync if it needs to be done immediately
+            IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+            if (cooldowns != null) {
+                cooldowns.sync(player);
             }
         }
     }
@@ -128,22 +153,7 @@ public class PlayerEvents {
         if (!event.getWorld().isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
             // When a player first joins a world, sync that player's capabilities to their client
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-            if (knowledge != null) {
-                knowledge.sync(player);
-            }
-            IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
-            if (cooldowns != null) {
-                cooldowns.sync(player);
-            }
-            IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
-            if (stats != null) {
-                stats.sync(player);
-            }
-            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
-            if (attunements != null) {
-                attunements.sync(player);
-            }
+            doScheduledSyncs(player, true);
         }
     }
     

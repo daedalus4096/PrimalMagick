@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagic.common.attunements;
 
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
@@ -21,6 +25,23 @@ import net.minecraft.entity.player.ServerPlayerEntity;
  * @see {@link com.verdantartifice.primalmagic.common.attunements.AttunementType}
  */
 public class AttunementManager {
+    // Set of unique IDs of players that need their research synced to their client
+    private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
+    
+    public static boolean isSyncScheduled(@Nullable PlayerEntity player) {
+        if (player == null) {
+            return false;
+        } else {
+            return SYNC_SET.remove(player.getUniqueID());
+        }
+    }
+    
+    public static void scheduleSync(@Nullable PlayerEntity player) {
+        if (player != null) {
+            SYNC_SET.add(player.getUniqueID());
+        }
+    }
+    
     /**
      * Gets a partial attunement value for the given player.
      * 
@@ -75,7 +96,7 @@ public class AttunementManager {
             if (attunements != null) {
                 // Set the new value into the player capability
                 attunements.setValue(source, type, value);
-                attunements.sync((ServerPlayerEntity)player);
+                scheduleSync(player);
                 
                 // TODO Determine if any thresholds were passed, either up or down
             }
@@ -90,18 +111,9 @@ public class AttunementManager {
      * @param values the new partial attunement values
      */
     public static void setAttunement(@Nullable PlayerEntity player, @Nullable AttunementType type, @Nullable SourceList values) {
-        if (player instanceof ServerPlayerEntity && type != null && values != null && !values.isEmpty()) {
-            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
-            if (attunements != null) {
-                for (Source source : values.getSources()) {
-                    // Set the new value into the player capability
-                    attunements.setValue(source, type, values.getAmount(source));
-                    
-                    // TODO Determine if any thresholds were passed, either up or down
-                }
-                
-                // Do a batch sync once all sources have been updated
-                attunements.sync((ServerPlayerEntity)player);
+        if (values != null && !values.isEmpty()) {
+            for (Source source : values.getSources()) {
+                setAttunement(player, source, type, values.getAmount(source));
             }
         }
     }

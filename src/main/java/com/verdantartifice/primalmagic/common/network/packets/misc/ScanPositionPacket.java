@@ -67,6 +67,7 @@ public class ScanPositionPacket implements IMessageToServer {
                     boolean found = false;
                     ItemStack posStack = new ItemStack(world.getBlockState(message.pos).getBlock());
                     if (!AffinityManager.isScanned(posStack, player)) {
+                        // Delay syncing until scan is done
                         found = AffinityManager.setScanned(posStack, player, false);
                     }
                     
@@ -84,6 +85,7 @@ public class ScanPositionPacket implements IMessageToServer {
                                     break;
                                 }
                                 if (AffinityManager.setScanned(chestStack, player, false)) {
+                                    // Delay syncing until scan is done
                                     found = true;
                                 }
                                 scanCount++;
@@ -94,7 +96,7 @@ public class ScanPositionPacket implements IMessageToServer {
                     // If at least one unscanned item was processed, send a success message
                     if (found) {
                         player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").applyTextStyle(TextFormatting.GREEN), true);
-                        knowledge.sync(player);
+                        knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
                     } else {
                         player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").applyTextStyle(TextFormatting.RED), true);
                     }

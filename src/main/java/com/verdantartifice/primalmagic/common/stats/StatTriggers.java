@@ -61,7 +61,7 @@ public class StatTriggers {
                 
                 // If any research was granted, do a sync
                 if (found) {
-                    knowledge.sync(player);
+                    ResearchManager.scheduleSync(player);
                 }
             }
         }

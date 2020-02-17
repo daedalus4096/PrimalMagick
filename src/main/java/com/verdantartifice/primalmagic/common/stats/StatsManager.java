@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,6 +32,23 @@ import net.minecraft.util.text.StringTextComponent;
 public class StatsManager {
     protected static final Map<ResourceLocation, Stat> REGISTRY = new HashMap<>();
     protected static final List<Stat> SORTED_STATS = new ArrayList<>();
+    
+    // Set of unique IDs of players that need their research synced to their client
+    private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
+    
+    public static boolean isSyncScheduled(@Nullable PlayerEntity player) {
+        if (player == null) {
+            return false;
+        } else {
+            return SYNC_SET.remove(player.getUniqueID());
+        }
+    }
+    
+    public static void scheduleSync(@Nullable PlayerEntity player) {
+        if (player != null) {
+            SYNC_SET.add(player.getUniqueID());
+        }
+    }
     
     public static Set<ResourceLocation> getStatLocations() {
         return Collections.unmodifiableSet(REGISTRY.keySet());
@@ -83,7 +102,7 @@ public class StatsManager {
             if (stats != null) {
                 // Set the new value into the player capability
                 stats.setValue(stat, value);
-                stats.sync(spe);
+                scheduleSync(spe);
                 
                 // Check stat triggers for updates
                 StatTriggers.checkTriggers(spe, stat, value);
@@ -107,7 +126,7 @@ public class StatsManager {
                 int value = 1 + stats.getValue(stat);
                 stats.setLocationDiscovered(shrinePos);
                 stats.setValue(stat, value);
-                stats.sync(spe);
+                scheduleSync(spe);
                 
                 // Check stat triggers for updates
                 StatTriggers.checkTriggers(spe, stat, value);
