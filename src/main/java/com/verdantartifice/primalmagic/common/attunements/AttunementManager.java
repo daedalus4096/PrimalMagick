@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -82,6 +83,30 @@ public class AttunementManager {
     }
     
     /**
+     * Sets the partial attunement values for the given player.
+     * 
+     * @param player the player to be modified
+     * @param type the type of attunement to be set
+     * @param values the new partial attunement values
+     */
+    public static void setAttunement(@Nullable PlayerEntity player, @Nullable AttunementType type, @Nullable SourceList values) {
+        if (player instanceof ServerPlayerEntity && type != null && values != null && !values.isEmpty()) {
+            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
+            if (attunements != null) {
+                for (Source source : values.getSources()) {
+                    // Set the new value into the player capability
+                    attunements.setValue(source, type, values.getAmount(source));
+                    
+                    // TODO Determine if any thresholds were passed, either up or down
+                }
+                
+                // Do a batch sync once all sources have been updated
+                attunements.sync((ServerPlayerEntity)player);
+            }
+        }
+    }
+    
+    /**
      * Increments the partial attunement value for the given player by the given amount.
      * 
      * @param player the player to be modified
@@ -103,5 +128,21 @@ public class AttunementManager {
      */
     public static void incrementAttunement(@Nullable PlayerEntity player, @Nullable Source source, @Nullable AttunementType type) {
         incrementAttunement(player, source, type, 1);
+    }
+    
+    /**
+     * Increments the partial attunement values for the given player by the given amounts.
+     * 
+     * @param player the player to be modified
+     * @param type the type of attunement to be changed
+     * @param deltas the amounts of change to apply, may be negative
+     */
+    public static void incrementAttunement(@Nullable PlayerEntity player, @Nullable AttunementType type, @Nullable SourceList deltas) {
+        SourceList newValues = new SourceList();
+        for (Source source : deltas.getSources()) {
+            int oldValue = getAttunement(player, source, type);
+            newValues.add(source, oldValue + deltas.getAmount(source));
+        }
+        setAttunement(player, type, newValues);
     }
 }

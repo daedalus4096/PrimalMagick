@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
+import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -31,6 +33,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -133,14 +136,19 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (stack == null || player == null || source == null) {
             return false;
         }
-        if (this.getMaxMana(stack) == -1) {
-            // If the wand stack has infinite mana, return success without consuming anything
+        if (this.containsRealMana(stack, player, source, amount)) {
+            // If the wand stack contains enough mana, process the consumption and return success
+            if (this.getMaxMana(stack) != -1) {
+                // Only actually consume something if the wand doesn't have infinite mana
+                this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * (amount * 100)));
+            }
+            
+            // Record the spent mana statistic change with pre-discount mana
             StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
-            return true;
-        } else if (this.containsRealMana(stack, player, source, amount)) {
-            // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
-            this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * (amount * 100)));
-            StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
+            
+            // Update temporary attunement value
+            AttunementManager.incrementAttunement(player, source, AttunementType.TEMPORARY, MathHelper.floor(Math.sqrt(amount)));
+            
             return true;
         } else {
             // Otherwise return failure
@@ -153,18 +161,26 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (stack == null || player == null || sources == null) {
             return false;
         }
-        if (this.getMaxMana(stack) == -1) {
-            // If the wand stack has infinite mana, return success without consuming anything
-            for (Source source : sources.getSources()) {
-                StatsManager.incrementValue(player, source.getManaSpentStat(), sources.getAmount(source));
-            }
-            return true;
-        } else if (this.containsRealMana(stack, player, sources)) {
-            // If the wand stack does not have infinite mana but does have enough, consume that amount of mana and return success
+        if (this.containsRealMana(stack, player, sources)) {
+            // If the wand stack contains enough mana, process the consumption and return success
+            boolean isInfinite = (this.getMaxMana(stack) == -1);
+            SourceList attunementDeltas = new SourceList();
             for (Source source : sources.getSources()) {
                 int amount = sources.getAmount(source);
-                this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * (amount * 100)));
+                if (!isInfinite) {
+                    // Only actually consume something if the wand doesn't have infinite mana
+                    this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * (amount * 100)));
+                }
+                
+                // Record the spent mana statistic change with pre-discount mana
                 StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
+                
+                // Compute the amount of temporary attunement to be added to the player
+                attunementDeltas.add(source, MathHelper.floor(Math.sqrt(amount)));
+            }
+            if (!attunementDeltas.isEmpty()) {
+                // Update attunements in a batch
+                AttunementManager.incrementAttunement(player, AttunementType.TEMPORARY, attunementDeltas);
             }
             return true;
         } else {
