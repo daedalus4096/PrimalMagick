@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.attunements;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,6 +15,8 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 /**
  * Primary access point for attunement-related methods.  As players utilize magic, they gain or
@@ -25,6 +29,12 @@ import net.minecraft.entity.player.ServerPlayerEntity;
  * @see {@link com.verdantartifice.primalmagic.common.attunements.AttunementType}
  */
 public class AttunementManager {
+    public static final int THRESHOLD_MINOR = 30;
+    public static final int THRESHOLD_LESSER = 60;
+    public static final int THRESHOLD_GREATER = 90;
+    
+    protected static final List<Integer> THRESHOLDS = Arrays.asList(THRESHOLD_MINOR, THRESHOLD_LESSER, THRESHOLD_GREATER);
+    
     // Set of unique IDs of players that need their research synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
     
@@ -94,11 +104,34 @@ public class AttunementManager {
         if (player instanceof ServerPlayerEntity && source != null && type != null) {
             IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
             if (attunements != null) {
+                int oldTotal = getTotalAttunement(player, source);
+                
                 // Set the new value into the player capability
                 attunements.setValue(source, type, value);
                 scheduleSync(player);
-                
-                // TODO Determine if any thresholds were passed, either up or down
+
+                int newTotal = getTotalAttunement(player, source);
+
+                // Determine if any thresholds were passed, either up or down
+                for (int thresholdValue : THRESHOLDS) {
+                    ITextComponent sourceText = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
+                    if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
+                        // If gaining a threshold, send a message to the player
+                        if (source.isDiscovered(player)) {
+                            player.sendStatusMessage(new TranslationTextComponent("primalmagic.attunement.threshold_gain", sourceText), false);
+                        }
+                        
+                        // TODO Apply any new attribute modifiers from the threshold gain
+                    }
+                    if (oldTotal >= thresholdValue && newTotal < thresholdValue) {
+                        // If losing a threshold, send a message to the player
+                        if (source.isDiscovered(player)) {
+                            player.sendStatusMessage(new TranslationTextComponent("primalmagic.attunement.threshold_loss", sourceText), false);
+                        }
+                        
+                        // TODO Remove any lost attribute modifiers from the threshold loss
+                    }
+                }
             }
         }
     }
