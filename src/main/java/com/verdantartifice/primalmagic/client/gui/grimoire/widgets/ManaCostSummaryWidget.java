@@ -54,6 +54,7 @@ public class ManaCostSummaryWidget extends Widget {
             if (this.manaCosts.isEmpty()) {
                 tooltip.add(new TranslationTextComponent("primalmagic.crafting.no_mana"));
             } else {
+                tooltip.add(new TranslationTextComponent("primalmagic.crafting.mana_cost_header"));
                 for (Source source : this.manaCosts.getSourcesSorted()) {
                     boolean discovered = source.isDiscovered(mc.player);
                     ITextComponent sourceText = discovered ? 

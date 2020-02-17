@@ -472,6 +472,7 @@
     "primalmagic.dream_journal.text.3": "\"The dream ended before I could see what resulted, but I feel like it would have been something wondrous.\n\nI feel like this could be a key to something amazing, if I just have the courage to take that first step.\"",
     
     "primalmagic.crafting.mana_tooltip": "%1$d %2$s mana",
+    "primalmagic.crafting.mana_cost_header": "Mana cost:",
     "primalmagic.crafting.no_mana": "No mana cost",
     
     "primalmagic.analysis.affinity_tooltip": "%1$d %2$s affinity",
