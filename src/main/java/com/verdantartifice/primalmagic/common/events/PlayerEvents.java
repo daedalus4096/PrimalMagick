@@ -52,6 +52,10 @@ public class PlayerEvents {
                 // Periodically check for environmentally-triggered research entries
                 checkEnvironmentalResearch(player);
             }
+            if (player.ticksExisted % 1200 == 0) {
+                // Periodically decay temporary attunements on the player
+                AttunementManager.decayTemporaryAttunements(player);
+            }
         }
     }
     

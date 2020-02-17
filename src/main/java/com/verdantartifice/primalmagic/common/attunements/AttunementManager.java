@@ -157,4 +157,17 @@ public class AttunementManager {
         }
         setAttunement(player, type, newValues);
     }
+    
+    /**
+     * Decrease all temporary attunements for the given player by one.
+     * 
+     * @param player the player to be modified
+     */
+    public static void decayTemporaryAttunements(@Nullable PlayerEntity player) {
+        if (player instanceof ServerPlayerEntity) {
+            for (Source source : Source.SORTED_SOURCES) {
+                incrementAttunement(player, source, AttunementType.TEMPORARY, -1);
+            }
+        }
+    }
 }
