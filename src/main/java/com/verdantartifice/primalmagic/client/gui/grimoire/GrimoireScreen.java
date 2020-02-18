@@ -44,6 +44,7 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -363,36 +364,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
     }
     
-    protected void parseEntryPages(ResearchEntry entry) {
-        if (entry == null || entry.getStages().isEmpty()) {
-            return;
-        }
-        
-        // Determine current research stage
-        boolean complete = false;
-        this.currentStageIndex = this.knowledge.getResearchStage(entry.getKey());
-        if (this.currentStageIndex >= entry.getStages().size()) {
-            this.currentStageIndex = entry.getStages().size() - 1;
-            complete = true;
-        }
-        if (this.currentStageIndex < 0) {
-            this.currentStageIndex = 0;
-        }
-        ResearchStage stage = entry.getStages().get(this.currentStageIndex);
-        List<ResearchAddendum> addenda = complete ? entry.getAddenda() : Collections.emptyList();
-        
-        String rawText = (new TranslationTextComponent(stage.getTextTranslationKey())).getString();
-        
-        // Append unlocked addendum text
-        int addendumCount = 0;
-        for (ResearchAddendum addendum : addenda) {
-            if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
-                ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.addendum_header", ++addendumCount);
-                ITextComponent addendumText = new TranslationTextComponent(addendum.getTextTranslationKey());
-                rawText += ("<PAGE>" + headerText.getFormattedText() + "<BR>" + addendumText.getFormattedText());
-            }
-        }
-        
+    private Tuple<List<String>, List<PageImage>> parseText(String rawText) {
         // Process text
         rawText = rawText.replaceAll("<BR>", "~B\n\n");
         rawText = rawText.replaceAll("<LINE>", "~L");
@@ -438,11 +410,49 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // Format text by font
-        int lineHeight = this.font.FONT_HEIGHT;
         List<String> parsedText = new ArrayList<>();
         for (String str : firstPassText) {
             parsedText.addAll(this.font.listFormattedStringToWidth(str, 124));
         }
+        
+        return new Tuple<>(parsedText, images);
+    }
+    
+    protected void parseEntryPages(ResearchEntry entry) {
+        if (entry == null || entry.getStages().isEmpty()) {
+            return;
+        }
+        
+        // Determine current research stage
+        boolean complete = false;
+        this.currentStageIndex = this.knowledge.getResearchStage(entry.getKey());
+        if (this.currentStageIndex >= entry.getStages().size()) {
+            this.currentStageIndex = entry.getStages().size() - 1;
+            complete = true;
+        }
+        if (this.currentStageIndex < 0) {
+            this.currentStageIndex = 0;
+        }
+        ResearchStage stage = entry.getStages().get(this.currentStageIndex);
+        List<ResearchAddendum> addenda = complete ? entry.getAddenda() : Collections.emptyList();
+        
+        String rawText = (new TranslationTextComponent(stage.getTextTranslationKey())).getString();
+        
+        // Append unlocked addendum text
+        int addendumCount = 0;
+        for (ResearchAddendum addendum : addenda) {
+            if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
+                ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.addendum_header", ++addendumCount);
+                ITextComponent addendumText = new TranslationTextComponent(addendum.getTextTranslationKey());
+                rawText += ("<PAGE>" + headerText.getFormattedText() + "<BR>" + addendumText.getFormattedText());
+            }
+        }
+        
+        // Process text
+        int lineHeight = this.font.FONT_HEIGHT;
+        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        List<String> parsedText = parsedData.getA();
+        List<PageImage> images = parsedData.getB();
         
         // First page has less available space to account for title
         int heightRemaining = 137;
@@ -604,7 +614,79 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     protected void parseAttunementPage(Source source) {
         this.currentStageIndex = 0;
+        
+        // Add the first page with no contents to show the meter
         this.pages.add(new AttunementPage(source, true));
+        
+        String rawText = (new TranslationTextComponent("primalmagic.attunement." + source.getTag() + ".text")).getString();
+        
+        // Process text
+        int lineHeight = this.font.FONT_HEIGHT;
+        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        List<String> parsedText = parsedData.getA();
+        List<PageImage> images = parsedData.getB();
+        
+        // Starting with the second page, so we have more space available
+        int heightRemaining = 165;
+        
+        // Break parsed text into pages
+        AttunementPage tempPage = new AttunementPage(source);
+        List<PageImage> tempImages = new ArrayList<>();
+        for (String line : parsedText) {
+            if (line.contains("~I")) {
+                if (!images.isEmpty()) {
+                    tempImages.add(images.remove(0));
+                }
+                line = "";
+            }
+            if (line.contains("~L")) {
+                tempImages.add(IMAGE_LINE);
+                line = "";
+            }
+            if (line.contains("~P")) {
+                this.pages.add(tempPage);
+                tempPage = new AttunementPage(source);
+                heightRemaining = 165;
+                line = "";
+            }
+            if (!line.isEmpty()) {
+                line = line.trim();
+                tempPage.addElement(new PageString(line));
+                heightRemaining -= lineHeight;
+                if (line.endsWith("~B")) {
+                    heightRemaining -= (int)(lineHeight * 0.66D);
+                }
+            }
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+            if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new AttunementPage(source);
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+        
+        // Deal with any remaining images
+        tempPage = new AttunementPage(source);
+        heightRemaining = 165;
+        while (!tempImages.isEmpty()) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new AttunementPage(source);
+            } else {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
     }
     
     public void nextPage() {
