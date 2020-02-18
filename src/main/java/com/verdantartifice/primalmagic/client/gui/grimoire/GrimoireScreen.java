@@ -13,6 +13,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractRecipePage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AttunementIndexPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AttunementPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplineIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplinePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.OtherIndexPage;
@@ -32,6 +34,7 @@ import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
+import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.Stat;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 
@@ -141,8 +144,12 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             this.parseDisciplinePages((ResearchDiscipline)this.container.getTopic());
         } else if (this.container.getTopic() instanceof ResearchEntry) {
             this.parseEntryPages((ResearchEntry)this.container.getTopic());
+        } else if (this.container.getTopic() instanceof Source) {
+            this.parseAttunementPage((Source)this.container.getTopic());
         } else if (StatisticsPage.TOPIC.equals(this.container.getTopic())) {
             this.parseStatsPages();
+        } else if (AttunementIndexPage.TOPIC.equals(this.container.getTopic())) {
+            this.parseAttunementIndexPages();
         }
     }
     
@@ -588,6 +595,16 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         if (!tempPage.getElements().isEmpty()) {
             this.pages.add(tempPage);
         }
+    }
+    
+    protected void parseAttunementIndexPages() {
+        this.currentStageIndex = 0;
+        this.pages.add(new AttunementIndexPage(true));
+    }
+    
+    protected void parseAttunementPage(Source source) {
+        this.currentStageIndex = 0;
+        this.pages.add(new AttunementPage(source, true));
     }
     
     public void nextPage() {

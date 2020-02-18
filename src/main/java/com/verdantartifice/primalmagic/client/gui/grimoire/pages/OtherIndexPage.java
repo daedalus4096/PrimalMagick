@@ -1,8 +1,12 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire.pages;
 
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.AttunementIndexButton;
 import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.StatisticsButton;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -27,14 +31,22 @@ public class OtherIndexPage extends AbstractPage {
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        String text;
+        
         // Make room for page title
         y += 24;
         
-        // TODO Add attunements button if attunements are unlocked
+        // Add attunements button if attunements are unlocked
+        if (ResearchManager.isResearchComplete(Minecraft.getInstance().player, SimpleResearchKey.parse("ATTUNEMENTS"))) {
+            text = (new TranslationTextComponent("primalmagic.grimoire.attunement_header")).getFormattedText();
+            screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
+            y += 12;
+        }
+        
         // TODO Add scans button if at least one scan is unlocked
         
         // Add statistics button
-        String text = (new TranslationTextComponent("primalmagic.grimoire.stats_header")).getFormattedText();
+        text = (new TranslationTextComponent("primalmagic.grimoire.stats_header")).getFormattedText();
         screen.addWidgetToScreen(new StatisticsButton(x + 12 + (side * 140), y, text, screen));
         y += 12;
     }

@@ -47,6 +47,22 @@
             "addenda": []
         },
         {
+            "key": "ATTUNEMENTS",
+            "name": "primalmagic.research.attunements.title",
+            "discipline": "BASICS",
+            "parents": [ "FIRST_STEPS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.attunements.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.attunements.text.stage.2"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "UNLOCK_MANAWEAVING",
             "name": "primalmagic.research.unlock_manaweaving.title",
             "discipline": "BASICS",

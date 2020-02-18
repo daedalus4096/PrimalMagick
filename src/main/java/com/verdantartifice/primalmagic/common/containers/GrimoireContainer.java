@@ -2,9 +2,11 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AttunementIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.StatisticsPage;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
@@ -33,8 +35,8 @@ public class GrimoireContainer extends Container {
     
     /**
      * New topic can either be null (for the discipline index), a ResearchDiscipline (for a listing
-     * of that discipline's entries), a ResearchEntry (for details of that entry), or specific strings
-     * (for various other topics).
+     * of that discipline's entries), a ResearchEntry (for details of that entry), a Source (for
+     * attunement details for that source), or specific strings (for various other topics).
      * 
      * @param newTopic
      */
@@ -43,6 +45,8 @@ public class GrimoireContainer extends Container {
         if ( newTopic == null || 
              newTopic instanceof ResearchDiscipline || 
              newTopic instanceof ResearchEntry || 
+             newTopic instanceof Source || 
+             AttunementIndexPage.TOPIC.equals(newTopic) || 
              StatisticsPage.TOPIC.equals(newTopic) ) {
             this.topic = newTopic;
         } else {
