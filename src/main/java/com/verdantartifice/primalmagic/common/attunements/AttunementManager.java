@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagic.common.attunements;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -37,7 +36,6 @@ public class AttunementManager {
     public static final int THRESHOLD_LESSER = 60;
     public static final int THRESHOLD_GREATER = 90;
     
-    protected static final List<Integer> THRESHOLDS = Arrays.asList(THRESHOLD_MINOR, THRESHOLD_LESSER, THRESHOLD_GREATER);
     protected static final List<AttunementAttributeModifier> MODIFIERS = new ArrayList<>();
     
     // Set of unique IDs of players that need their research synced to their client
@@ -57,7 +55,7 @@ public class AttunementManager {
         }
     }
     
-    public static void registerAttributeModifier(@Nonnull Source source, int threshold, @Nonnull IAttribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+    public static void registerAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull IAttribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
         MODIFIERS.add(new AttunementAttributeModifier(source, threshold, attribute, uuidStr, modValue, modOperation));
     }
     
@@ -102,6 +100,23 @@ public class AttunementManager {
     }
     
     /**
+     * Determine whether the given player's total attunement for the given source meets or exceeds the
+     * given threshold.
+     * 
+     * @param player the player to be queried
+     * @param source the source of attunement being queried
+     * @param threshold the threshold value to test against
+     * @return true if the player's total attunement meets or exceeds the given threshold, false otherwise
+     */
+    public static boolean meetsThreshold(@Nullable PlayerEntity player, @Nullable Source source, @Nullable AttunementThreshold threshold) {
+        if (player != null && source != null && threshold != null) {
+            return getTotalAttunement(player, source) >= threshold.getValue();
+        } else {
+            return false;
+        }
+    }
+    
+    /**
      * Sets the partial attunement value for the given player.
      * 
      * @param player the player to be modified
@@ -122,7 +137,8 @@ public class AttunementManager {
                 int newTotal = getTotalAttunement(player, source);
 
                 // Determine if any thresholds were passed, either up or down
-                for (int thresholdValue : THRESHOLDS) {
+                for (AttunementThreshold threshold : AttunementThreshold.values()) {
+                    int thresholdValue = threshold.getValue();
                     ITextComponent sourceText = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
                     if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
                         // If gaining a threshold, send a message to the player
@@ -132,7 +148,7 @@ public class AttunementManager {
                         
                         // Apply any new attribute modifiers from the threshold gain
                         for (AttunementAttributeModifier modifier : MODIFIERS) {
-                            if (source.equals(modifier.getSource()) && thresholdValue == modifier.getThreshold()) {
+                            if (source.equals(modifier.getSource()) && threshold == modifier.getThreshold()) {
                                 modifier.applyToEntity(player);
                             }
                         }
@@ -145,7 +161,7 @@ public class AttunementManager {
                         
                         // Remove any lost attribute modifiers from the threshold loss
                         for (AttunementAttributeModifier modifier : MODIFIERS) {
-                            if (source.equals(modifier.getSource()) && thresholdValue == modifier.getThreshold()) {
+                            if (source.equals(modifier.getSource()) && threshold == modifier.getThreshold()) {
                                 modifier.removeFromEntity(player);
                             }
                         }

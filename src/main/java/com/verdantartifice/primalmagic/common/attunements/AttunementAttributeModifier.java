@@ -20,11 +20,11 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
  */
 public class AttunementAttributeModifier {
     protected final Source source;
-    protected final int threshold;
+    protected final AttunementThreshold threshold;
     protected final IAttribute attribute;
     protected final AttributeModifier modifier;
     
-    public AttunementAttributeModifier(@Nonnull Source source, int threshold, @Nonnull IAttribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull IAttribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
         this.source = source;
         this.threshold = threshold;
         this.attribute = attribute;
@@ -33,7 +33,7 @@ public class AttunementAttributeModifier {
     
     @Nonnull
     public String getModifierName() {
-        return this.source.getTag() + Integer.toString(this.threshold);
+        return this.source.getTag() + Integer.toString(this.threshold.getValue());
     }
     
     @Nonnull
@@ -41,7 +41,7 @@ public class AttunementAttributeModifier {
         return this.source;
     }
     
-    public int getThreshold() {
+    public AttunementThreshold getThreshold() {
         return this.threshold;
     }
     
