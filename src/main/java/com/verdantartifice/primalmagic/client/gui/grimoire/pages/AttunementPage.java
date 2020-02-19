@@ -11,7 +11,9 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.grimoire.widgets.AttunementThresholdWidget;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
+import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -115,5 +117,11 @@ public class AttunementPage extends AbstractPage {
     }
 
     @Override
-    public void initWidgets(GrimoireScreen screen, int side, int x, int y) {}
+    public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        if (this.isFirstPage()) {
+            screen.addWidgetToScreen(new AttunementThresholdWidget(this.source, AttunementThreshold.MINOR, x + 83 + (side * 140), y + 80));
+            screen.addWidgetToScreen(new AttunementThresholdWidget(this.source, AttunementThreshold.LESSER, x + 83 + (side * 140), y + 50));
+            screen.addWidgetToScreen(new AttunementThresholdWidget(this.source, AttunementThreshold.GREATER, x + 83 + (side * 140), y + 20));
+        }
+    }
 }

@@ -25,4 +25,8 @@ public enum AttunementThreshold {
     public int getValue() {
         return this.value;
     }
+    
+    public String getTranslationKey() {
+        return "primalmagic.attunement_threshold." + this.name();
+    }
 }
