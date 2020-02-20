@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagic.common.events;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
@@ -43,6 +46,8 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class PlayerEvents {
+    private static final Map<Integer, Float> PREV_STEP_HEIGHTS = new HashMap<>();
+    
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
         if (!event.getEntity().world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
@@ -63,6 +68,10 @@ public class PlayerEvents {
                 // Periodically decay temporary attunements on the player
                 AttunementManager.decayTemporaryAttunements(player);
             }
+        }
+        if (event.getEntity().world.isRemote && (event.getEntity() instanceof PlayerEntity)) {
+            // If this is a client-side player, handle any step-height changes from attunement bonuses
+            handleStepHeightChange((PlayerEntity)event.getEntity());
         }
     }
     
@@ -174,6 +183,21 @@ public class PlayerEvents {
         }
     }
     
+    protected static void handleStepHeightChange(PlayerEntity player) {
+        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
+            // If the player has greater earth attunement and is not sneaking, boost their step height and save the old one
+            if (!PREV_STEP_HEIGHTS.containsKey(Integer.valueOf(player.getEntityId()))) {
+                PREV_STEP_HEIGHTS.put(Integer.valueOf(player.getEntityId()), Float.valueOf(player.stepHeight));
+            }
+            player.stepHeight = 1.0F;
+        } else {
+            // Otherwise, check to see if their step height needs to be reset
+            if (PREV_STEP_HEIGHTS.containsKey(Integer.valueOf(player.getEntityId()))) {
+                player.stepHeight = PREV_STEP_HEIGHTS.remove(Integer.valueOf(player.getEntityId()));
+            }
+        }
+    }
+
     @SubscribeEvent
     public static void playerJoinEvent(EntityJoinWorldEvent event) {
         if (!event.getWorld().isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
