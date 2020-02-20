@@ -45,7 +45,7 @@ public class AttunementThresholdWidget extends Widget {
     }
     
     public AttunementThresholdWidget(@Nonnull Source source, @Nonnull AttunementThreshold threshold, int x, int y) {
-        super(x, y, 16, 16, "");
+        super(x, y, 18, 18, "");
         this.source = source;
         this.threshold = threshold;
         this.texture = new ResourceLocation(PrimalMagic.MODID, "textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
@@ -60,13 +60,13 @@ public class AttunementThresholdWidget extends Widget {
         
         if (this.threshold == AttunementThreshold.MINOR) {
             // Render casting wand into GUI
-            mc.getItemRenderer().renderItemIntoGUI(WAND_STACK, this.x, this.y);
+            mc.getItemRenderer().renderItemIntoGUI(WAND_STACK, this.x + 1, this.y + 1);
         } else {
             // Render the icon appropriate for this widget's source and threshold
             RenderSystem.pushMatrix();
             mc.getTextureManager().bindTexture(this.texture);
             RenderSystem.translatef(this.x, this.y, 0.0F);
-            RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
+            RenderSystem.scaled(0.0703125D, 0.0703125D, 0.0703125D);
             this.blit(0, 0, 0, 0, 255, 255);
             RenderSystem.popMatrix();
         }
