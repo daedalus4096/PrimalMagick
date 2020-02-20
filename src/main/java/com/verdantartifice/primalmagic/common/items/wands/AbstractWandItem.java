@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
+import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
@@ -211,7 +212,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
         float modifier = this.getBaseCostModifier(stack);
         
         // TODO Subtract discounts from equipped player gear
-        // TODO Subtract discounts from attuned sources
+        
+        // Subtract discounts from attuned sources
+        if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
+            modifier -= 0.05F;
+        }
+        
         // TODO Subtract discounts from wand enchantments
         // TODO Add penalties from temporary conditions
         
