@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
+import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
@@ -21,6 +22,8 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -44,6 +47,10 @@ public class PlayerEvents {
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
         if (!event.getEntity().world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
+            if (player.ticksExisted % 5 == 0) {
+                // Apply any earned buffs for attunements
+                applyAttunementBuffs(player); 
+            }
             if (player.ticksExisted % 10 == 0) {
                 // Check to see if any players need their capabilities synced to their clients
                 doScheduledSyncs(player, false);
@@ -59,6 +66,21 @@ public class PlayerEvents {
         }
     }
     
+    protected static void applyAttunementBuffs(ServerPlayerEntity player) {
+        if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.LESSER)) {
+            // Apply Dolphin's Grace for 30.5s if the player has lesser sea attunement
+            player.addPotionEffect(new EffectInstance(Effects.DOLPHINS_GRACE, 610, 0, true, false, true));
+        }
+        if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.GREATER)) {
+            // Apply Water Breathing for 30.5s if the player has greater sea attunement
+            player.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 610, 0, true, false, true));
+        }
+        if (AttunementManager.meetsThreshold(player, Source.MOON, AttunementThreshold.GREATER)) {
+            // Apply Night Vision for 30.5s if the player has greater moon attunement
+            player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 610, 0, true, false, true));
+        }
+    }
+
     protected static void doScheduledSyncs(ServerPlayerEntity player, boolean immediate) {
         if (immediate || ResearchManager.isSyncScheduled(player)) {
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
