@@ -81,8 +81,8 @@ public class ConsecrationFieldBlock extends Block {
         // While a player is in the field, give them regeneration and hunger recovery for a few seconds
         if (entityIn instanceof PlayerEntity && entityIn.ticksExisted % 5 == 0) {
             PlayerEntity player = (PlayerEntity)entityIn;
-            player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 100));
-            player.addPotionEffect(new EffectInstance(Effects.SATURATION, 100));
+            player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 110));
+            player.addPotionEffect(new EffectInstance(Effects.SATURATION, 110));
         }
     }
 }
