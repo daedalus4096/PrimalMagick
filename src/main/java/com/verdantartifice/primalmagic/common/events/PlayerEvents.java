@@ -33,6 +33,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
@@ -70,8 +71,9 @@ public class PlayerEvents {
                 doScheduledSyncs(player, false);
             }
             if (player.ticksExisted % 200 == 0) {
-                // Periodically check for environmentally-triggered research entries
+                // Periodically check for environmentally-triggered research entries and for photosynthesis
                 checkEnvironmentalResearch(player);
+                handlePhotosynthesis(player);
             }
             if (player.ticksExisted % 1200 == 0) {
                 // Periodically decay temporary attunements on the player
@@ -194,6 +196,14 @@ public class PlayerEvents {
         }
     }
     
+    protected static void handlePhotosynthesis(ServerPlayerEntity player) {
+        if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && player.world.isDaytime() &&
+                player.getBrightness() > 0.5F && player.world.canSeeSky(player.getPosition())) {
+            // If an attuned player is outdoors during the daytime, restore some hunger
+            player.getFoodStats().addStats(1, 0.3F);
+        }
+    }
+
     protected static void handleStepHeightChange(PlayerEntity player) {
         if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height and save the old one
