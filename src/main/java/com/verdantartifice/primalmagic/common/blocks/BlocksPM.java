@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.AnalysisTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock;
+import com.verdantartifice.primalmagic.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
@@ -142,4 +143,5 @@ public class BlocksPM {
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
+    public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
 }
