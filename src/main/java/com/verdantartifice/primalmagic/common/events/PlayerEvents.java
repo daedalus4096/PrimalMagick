@@ -12,12 +12,15 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -28,10 +31,15 @@ import net.minecraft.nbt.StringNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -47,6 +55,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class PlayerEvents {
     private static final Map<Integer, Float> PREV_STEP_HEIGHTS = new HashMap<>();
+    private static final Map<Integer, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
@@ -70,8 +79,10 @@ public class PlayerEvents {
             }
         }
         if (event.getEntity().world.isRemote && (event.getEntity() instanceof PlayerEntity)) {
-            // If this is a client-side player, handle any step-height changes from attunement bonuses
-            handleStepHeightChange((PlayerEntity)event.getEntity());
+            // If this is a client-side player, handle any step-height changes and double jumps from attunement bonuses
+            PlayerEntity player = (PlayerEntity)event.getEntity();
+            handleStepHeightChange(player);
+            handleDoubleJump(player);
         }
     }
     
@@ -198,6 +209,47 @@ public class PlayerEvents {
         }
     }
 
+    protected static void handleDoubleJump(PlayerEntity player) {
+        boolean jumpPressed = Minecraft.getInstance().gameSettings.keyBindJump.isPressed();
+        if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getEntityId())) {
+            DOUBLE_JUMP_ALLOWED.put(player.getEntityId(), Boolean.TRUE);
+        }
+        if (jumpPressed && !player.onGround && !player.isInWater() && 
+                DOUBLE_JUMP_ALLOWED.getOrDefault(player.getEntityId(), Boolean.FALSE).booleanValue() && 
+                AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
+            // If the conditions are right, execute the second jump
+            player.world.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 
+                    SoundCategory.PLAYERS, 0.1F, 1.0F + (0.05F * (float)player.world.rand.nextGaussian()), false);
+            DOUBLE_JUMP_ALLOWED.put(player.getEntityId(), Boolean.FALSE);
+            
+            // Update motion
+            Vec3d oldMotion = player.getMotion();
+            double motionX = oldMotion.x;
+            double motionY = 0.75D;
+            double motionZ = oldMotion.z;
+            if (player.isPotionActive(Effects.JUMP_BOOST)) {
+                motionY += (0.1D * (1 + player.getActivePotionEffect(Effects.JUMP_BOOST).getAmplifier()));
+            }
+            if (player.isSprinting()) {
+                float yawRadians = player.rotationYaw * (float)(Math.PI / 180.0D);
+                motionX -= (0.2D * MathHelper.sin(yawRadians));
+                motionZ += (0.2D * MathHelper.cos(yawRadians));
+            }
+            player.setMotion(motionX, motionY, motionZ);
+            
+            // Reset fall distance
+            player.fallDistance = 0.0F;
+            PacketHandler.sendToServer(new ResetFallDistancePacket());
+            
+            // Trigger jump events
+            ForgeHooks.onLivingJump(player);
+        }
+        if (player.onGround && DOUBLE_JUMP_ALLOWED.containsKey(player.getEntityId())) {
+            // Reset double jump permissions upon touching the ground
+            DOUBLE_JUMP_ALLOWED.remove(player.getEntityId());
+        }
+    }
+    
     @SubscribeEvent
     public static void playerJoinEvent(EntityJoinWorldEvent event) {
         if (!event.getWorld().isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
@@ -298,5 +350,18 @@ public class PlayerEvents {
             player.dropItem(journal, false);
         }
         player.sendMessage(new TranslationTextComponent("event.primalmagic.got_dream").applyTextStyle(TextFormatting.GREEN));
+    }
+    
+    @SubscribeEvent
+    public static void onJump(LivingEvent.LivingJumpEvent event) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+            if (AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
+                // Boost the player's vertical motion on jump if they have greater sky attunement
+                Vec3d motion = player.getMotion();
+                motion = motion.add(0.0D, 0.275D, 0.0D);
+                player.setMotion(motion);
+            }
+        }
     }
 }

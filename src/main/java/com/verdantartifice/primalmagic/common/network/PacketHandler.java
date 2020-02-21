@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerP
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.CycleActiveSpellPacket;
+import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
@@ -73,6 +74,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SpellBoltPacket.class, SpellBoltPacket::encode, SpellBoltPacket::decode, SpellBoltPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncStatsPacket.class, SyncStatsPacket::encode, SyncStatsPacket::decode, SyncStatsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncAttunementsPacket.class, SyncAttunementsPacket::encode, SyncAttunementsPacket::decode, SyncAttunementsPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, ResetFallDistancePacket.class, ResetFallDistancePacket::encode, ResetFallDistancePacket::decode, ResetFallDistancePacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
