@@ -96,5 +96,11 @@
         "sounds": [
             "primalmagic:egg_crack"
         ]
+    },
+    "shimmer": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:shimmer"
+        ]
     }
 }
