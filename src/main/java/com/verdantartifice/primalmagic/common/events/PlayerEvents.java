@@ -6,6 +6,7 @@ import java.util.Map;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
@@ -38,9 +39,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.LightType;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -69,6 +73,10 @@ public class PlayerEvents {
             if (player.ticksExisted % 10 == 0) {
                 // Check to see if any players need their capabilities synced to their clients
                 doScheduledSyncs(player, false);
+            }
+            if (player.ticksExisted % 20 == 0) {
+                // Periodically check to see if attuned players should drop a light source
+                handleLightDrop(player);
             }
             if (player.ticksExisted % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries and for photosynthesis
@@ -201,6 +209,20 @@ public class PlayerEvents {
                 player.getBrightness() > 0.5F && player.world.canSeeSky(player.getPosition())) {
             // If an attuned player is outdoors during the daytime, restore some hunger
             player.getFoodStats().addStats(1, 0.3F);
+        }
+    }
+
+    protected static void handleLightDrop(ServerPlayerEntity player) {
+        BlockPos pos = player.getPosition();
+        World world = player.world;
+        if (world.rand.nextDouble() < 0.1D && 
+                AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.GREATER) && 
+                !player.isShiftKeyDown() && 
+                world.isAirBlock(pos) && 
+                world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().getDefaultState() && 
+                world.getLightFor(LightType.BLOCK, pos) < 11) {
+            // If an attuned, non-sneaking player is in a dark area, they have a chance to drop a glow field
+            world.setBlockState(pos, BlocksPM.GLOW_FIELD.get().getDefaultState(), Constants.BlockFlags.DEFAULT);
         }
     }
 
