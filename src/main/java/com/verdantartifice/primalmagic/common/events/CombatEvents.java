@@ -40,10 +40,17 @@ public class CombatEvents {
         // Handle effects caused by damage target
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity target = (PlayerEntity)event.getEntityLiving();
+            
+            // Players with greater infernal attunement are immune to all fire damage
+            if (event.getSource().isFireDamage() && AttunementManager.meetsThreshold(target, Source.INFERNAL, AttunementThreshold.GREATER)) {
+                event.setCanceled(true);
+                return;
+            }
+
+            // Attuned players have a chance to turn invisible upon taking damage, if they aren't already
             if (target.world.rand.nextDouble() < 0.5D &&
                     !target.isPotionActive(Effects.INVISIBILITY) && 
                     AttunementManager.meetsThreshold(target, Source.MOON, AttunementThreshold.LESSER)) {
-                // Attuned players have a chance to turn invisible upon taking damage, if they aren't already
                 target.world.playSound(target, target.getPosition(), SoundsPM.SHIMMER.get(), 
                         SoundCategory.PLAYERS, 1.0F, 1.0F + (0.05F * (float)target.world.rand.nextGaussian()));
                 target.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 200));
