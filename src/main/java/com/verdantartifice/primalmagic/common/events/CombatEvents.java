@@ -112,6 +112,11 @@ public class CombatEvents {
             if (!event.getSource().isDamageAbsolute() && AttunementManager.meetsThreshold(attacker, Source.VOID, AttunementThreshold.GREATER)) {
                 event.setAmount(1.25F * event.getAmount());
             }
+            
+            // Increase damage to undead targets by players with lesser hallowed attunement
+            if (event.getEntityLiving().isEntityUndead() && AttunementManager.meetsThreshold(attacker, Source.HALLOWED, AttunementThreshold.LESSER)) {
+                event.setAmount(2.0F * event.getAmount());
+            }
 
             // If at least one point of damage was done by a player with the lesser blood attunement, cause bleeding
             if (event.getAmount() >= 1.0F && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.LESSER)) {
