@@ -65,9 +65,15 @@ public class CombatEvents {
         // Handle effects triggered by the damage source
         if (event.getSource().getTrueSource() instanceof PlayerEntity) {
             PlayerEntity attacker = (PlayerEntity)event.getSource().getTrueSource();
+
+            // If at least one point of damage was done by a player with the lesser blood attunement, cause bleeding
             if (event.getAmount() >= 1.0F && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.LESSER)) {
-                // If at least one point of damage was done by a player with the lesser blood attunement, cause bleeding
                 event.getEntityLiving().addPotionEffect(new EffectInstance(EffectsPM.BLEEDING.get(), 200));
+            }
+            
+            // Players with greater blood attunement can steal health, with a chance based on damage done
+            if (attacker.world.rand.nextFloat() < (event.getAmount() / 12.0F) && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.GREATER)) {
+                attacker.heal(1.0F);
             }
         }
     }
