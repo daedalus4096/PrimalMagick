@@ -107,6 +107,11 @@ public class CombatEvents {
         // Handle effects triggered by the damage source
         if (event.getSource().getTrueSource() instanceof PlayerEntity) {
             PlayerEntity attacker = (PlayerEntity)event.getSource().getTrueSource();
+            
+            // Increase all non-absolute damage dealt by players with greater void attunement
+            if (!event.getSource().isDamageAbsolute() && AttunementManager.meetsThreshold(attacker, Source.VOID, AttunementThreshold.GREATER)) {
+                event.setAmount(1.25F * event.getAmount());
+            }
 
             // If at least one point of damage was done by a player with the lesser blood attunement, cause bleeding
             if (event.getAmount() >= 1.0F && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.LESSER)) {
