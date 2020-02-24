@@ -133,6 +133,7 @@
     
     "effect.primalmagic.flying": "Flying",
     "effect.primalmagic.polymorph": "Polymorph",
+    "effect.primalmagic.bleeding": "Bleeding",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     
@@ -691,6 +692,9 @@
     "stat.primalmagic.shrine_found_sun": "Sun shrines found",
     "stat.primalmagic.shrine_found_moon": "Moon shrines found",
     "stat.primalmagic.treants_named": "Treants driven to self-immolation",
+    
+    "death.attack.primalmagic.bleeding": "%1$s bled to death",
+    "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",
     
     "itemGroup.primalmagic": "Primal Magic"
 }

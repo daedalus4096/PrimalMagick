@@ -24,4 +24,5 @@ public class EffectsPM {
     
     public static final RegistryObject<Effect> FLYING = EFFECTS.register("flying", () -> new FlyingEffect(EffectType.BENEFICIAL, Source.SKY.getColor()));
     public static final RegistryObject<Effect> POLYMORPH = EFFECTS.register("polymorph", () -> new EffectPM(EffectType.HARMFUL, Source.MOON.getColor()));
+    public static final RegistryObject<Effect> BLEEDING = EFFECTS.register("bleeding", () -> new BleedingEffect(EffectType.HARMFUL, Source.BLOOD.getColor()));
 }
