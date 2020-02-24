@@ -13,6 +13,8 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
+import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
@@ -68,7 +70,8 @@ public class PlayerEvents {
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
             if (player.ticksExisted % 5 == 0) {
                 // Apply any earned buffs for attunements
-                applyAttunementBuffs(player); 
+                applyAttunementBuffs(player);
+                refreshWeakenedSoul(player);
             }
             if (player.ticksExisted % 10 == 0) {
                 // Check to see if any players need their capabilities synced to their clients
@@ -108,6 +111,17 @@ public class PlayerEvents {
         if (AttunementManager.meetsThreshold(player, Source.MOON, AttunementThreshold.GREATER)) {
             // Apply Night Vision for 30.5s if the player has greater moon attunement
             player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 610, 0, true, false, true));
+        }
+    }
+
+    protected static void refreshWeakenedSoul(ServerPlayerEntity player) {
+        IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+        if (cooldowns != null) {
+            long remaining = cooldowns.getRemainingCooldown(CooldownType.DEATH_SAVE);
+            if (remaining > 0 && !player.isPotionActive(EffectsPM.WEAKENED_SOUL.get())) {
+                // If the player's death save is on cooldown but they've cleared their marker debuff, reapply it
+                player.addPotionEffect(new EffectInstance(EffectsPM.WEAKENED_SOUL.get(), MathHelper.ceil(remaining / 50.0F), 0, true, false, true));
+            }
         }
     }
 

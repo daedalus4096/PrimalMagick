@@ -76,6 +76,11 @@ public class PlayerCooldowns implements IPlayerCooldowns {
         // The cooldown is still active if the stored recovery time is greater than the current system time
         return (this.cooldowns.getOrDefault(type, Long.valueOf(0)).longValue() > System.currentTimeMillis());
     }
+    
+    @Override
+    public long getRemainingCooldown(CooldownType type) {
+        return Math.max(0, this.cooldowns.getOrDefault(type, Long.valueOf(0)).longValue() - System.currentTimeMillis());
+    }
 
     @Override
     public void setCooldown(CooldownType type, int durationTicks) {

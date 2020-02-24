@@ -6,6 +6,9 @@ import java.util.List;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.misc.DamageSourcesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
@@ -22,6 +25,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -126,6 +130,28 @@ public class CombatEvents {
             // Players with greater blood attunement can steal health, with a chance based on damage done
             if (attacker.world.rand.nextFloat() < (event.getAmount() / 12.0F) && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.GREATER)) {
                 attacker.heal(1.0F);
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onDeath(LivingDeathEvent event) {
+        // If the player has greater hallowed attunement and it's not on cooldown, cancel death as if using a totem of undying
+        if (event.getEntityLiving() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+            IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+            if (AttunementManager.meetsThreshold(player, Source.HALLOWED, AttunementThreshold.GREATER) &&
+                    cooldowns != null &&
+                    !cooldowns.isOnCooldown(CooldownType.DEATH_SAVE)) {
+                player.setHealth(1.0F);
+                player.clearActivePotions();
+                player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 900, 1));
+                player.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
+                player.addPotionEffect(new EffectInstance(EffectsPM.WEAKENED_SOUL.get(), 6000, 0, true, false, true));
+                cooldowns.setCooldown(CooldownType.DEATH_SAVE, 6000);
+                player.world.playSound(null, player.getPosition(), SoundsPM.ANGELS.get(), 
+                        SoundCategory.PLAYERS, 1.0F, 1.0F + (0.05F * (float)player.world.rand.nextGaussian()));
+                event.setCanceled(true);
             }
         }
     }

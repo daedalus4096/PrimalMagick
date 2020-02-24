@@ -21,6 +21,14 @@ public interface IPlayerCooldowns extends INBTSerializable<CompoundNBT> {
     public boolean isOnCooldown(@Nullable CooldownType type);
     
     /**
+     * Determine how much time remains for the given cooldown type.
+     * 
+     * @param type the type of cooldown
+     * @return the remaining cooldown time in milliseconds, or zero if not on cooldown
+     */
+    public long getRemainingCooldown(@Nullable CooldownType type);
+    
+    /**
      * Set a cooldown of the given type, rendering an ability temporarily unusable.
      * 
      * @param type the type of cooldown
@@ -41,6 +49,7 @@ public interface IPlayerCooldowns extends INBTSerializable<CompoundNBT> {
     public void sync(@Nullable ServerPlayerEntity player);
     
     public enum CooldownType {
-        SPELL
+        SPELL,
+        DEATH_SAVE
     }
 }
