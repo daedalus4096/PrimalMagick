@@ -83,19 +83,24 @@ public class CombatEvents {
         // Handle effects triggered by damage target
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity target = (PlayerEntity)event.getEntityLiving();
+
+            // Reduce fall damage if the recipient has lesser sky attunement
             if (event.getSource() == DamageSource.FALL && AttunementManager.meetsThreshold(target, Source.SKY, AttunementThreshold.LESSER)) {
-                // Reduce fall damage if the recipient has lesser sky attunement
                 float newDamage = Math.max(0.0F, event.getAmount() / 3.0F - 2.0F);
                 if (newDamage < event.getAmount()) {
                     event.setAmount(newDamage);
                 }
-                
-                // If the fall damage was reduced to less than one, cancel it
                 if (event.getAmount() < 1.0F) {
+                    // If the fall damage was reduced to less than one, cancel it
                     event.setAmount(0.0F);
                     event.setCanceled(true);
                     return;
                 }
+            }
+            
+            // Reduce all non-absolute (e.g. starvation) damage taken players with lesser void attunement
+            if (!event.getSource().isDamageAbsolute() && AttunementManager.meetsThreshold(target, Source.VOID, AttunementThreshold.LESSER)) {
+                event.setAmount(0.9F * event.getAmount());
             }
         }
         
