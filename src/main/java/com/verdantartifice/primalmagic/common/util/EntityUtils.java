@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.util;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,52 +64,128 @@ public class EntityUtils {
     
     /**
      * Get a list of all entities of the given type within a given distance of the given center point,
-     * optionally excluding a specific entity.
+     * optionally excluding one or more entities.
      * 
      * @param world the world to be searched
      * @param center the center point of the area to search
-     * @param exclude an entity to exclude from the search results
+     * @param exclude entities to exclude from the search results
      * @param entityClass the type of entity to search for
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, @Nonnull BlockPos center, @Nullable Entity exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRange(world, center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, exclude, entityClass, range);
     }
 
     /**
      * Get a list of all entities of the given type within a given distance of the given center point,
-     * optionally excluding a specific entity.
+     * optionally excluding one or more entities.
      * 
      * @param world the world to be searched
      * @param center the center point of the area to search
-     * @param exclude an entity to exclude from the search results
+     * @param exclude entities to exclude from the search results
      * @param entityClass the type of entity to search for
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, @Nonnull Vec3d center, @Nullable Entity exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, @Nonnull Vec3d center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRange(world, center.getX(), center.getY(), center.getZ(), exclude, entityClass, range);
     }
 
     /**
      * Get a list of all entities of the given type within a given distance of the given center point,
-     * optionally excluding a specific entity.
+     * optionally excluding one or more entities.
      * 
      * @param world the world to be searched
      * @param x the x-coordinate of the center point of the area to search
      * @param y the y-coordinate of the center point of the area to search
      * @param z the z-coordinate of the center point of the area to search
-     * @param exclude an entity to exclude from the search results
+     * @param exclude entities to exclude from the search results
      * @param entityClass the type of entity to search for
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, double x, double y, double z, @Nullable Entity exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         List<T> retVal = world.getEntitiesWithinAABB(entityClass, new AxisAlignedBB(x, y, z, x, y, z).grow(range, range, range));
         if (exclude != null) {
-            retVal = retVal.stream().filter(e -> e.getEntityId() != exclude.getEntityId()).collect(Collectors.toList());
+            List<Integer> excludeIds = exclude.stream().map(e -> Integer.valueOf(e.getEntityId())).collect(Collectors.toList());
+            retVal = retVal.stream().filter(e -> !excludeIds.contains(Integer.valueOf(e.getEntityId()))).collect(Collectors.toList());
         }
         return retVal;
+    }
+    
+    /**
+     * Get a list of all entities of the given type within a given distance of the given center point,
+     * optionally excluding one or more entities.  The returned list is sorted by distance to the given
+     * center point in ascending order.
+     * 
+     * @param world the world to be searched
+     * @param center the center point of the area to search
+     * @param exclude entities to exclude from the search results
+     * @param entityClass the type of entity to search for
+     * @param range the radius in which to search
+     * @return a list of all such entities in range
+     */
+    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+        return getEntitiesInRangeSorted(world, center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, exclude, entityClass, range);
+    }
+    
+    /**
+     * Get a list of all entities of the given type within a given distance of the given center point,
+     * optionally excluding one or more entities.  The returned list is sorted by distance to the given
+     * center point in ascending order.
+     * 
+     * @param world the world to be searched
+     * @param center the center point of the area to search
+     * @param exclude entities to exclude from the search results
+     * @param entityClass the type of entity to search for
+     * @param range the radius in which to search
+     * @return a list of all such entities in range
+     */
+    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, @Nonnull Vec3d center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+        List<T> entities = getEntitiesInRange(world, center, exclude, entityClass, range);
+        return entities.stream().sorted(new EntityDistanceComparator(center)).collect(Collectors.toList());
+    }
+    
+    /**
+     * Get a list of all entities of the given type within a given distance of the given center point,
+     * optionally excluding one or more entities.  The returned list is sorted by distance to the given
+     * center point in ascending order.
+     * 
+     * @param world the world to be searched
+     * @param x the x-coordinate of the center point of the area to search
+     * @param y the y-coordinate of the center point of the area to search
+     * @param z the z-coordinate of the center point of the area to search
+     * @param exclude entities to exclude from the search results
+     * @param entityClass the type of entity to search for
+     * @param range the radius in which to search
+     * @return a list of all such entities in range
+     */
+    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+        return getEntitiesInRangeSorted(world, new Vec3d(x, y, z), exclude, entityClass, range);
+    }
+    
+    /**
+     * A comparator to sort Entity objects by the shortest distance to a source Entity.
+     * 
+     * @author Daedalus4096
+     */
+    protected static class EntityDistanceComparator implements Comparator<Entity> {
+        protected final Vec3d center;
+        
+        public EntityDistanceComparator(@Nonnull Vec3d center) {
+            this.center = center;
+        }
+        
+        @Override
+        public int compare(Entity a, Entity b) {
+            if (a.equals(b)) {
+                return 0;
+            } else {
+                double distA = this.center.squareDistanceTo(a.getPositionVec());
+                double distB = this.center.squareDistanceTo(b.getPositionVec());
+                return distA > distB ? 1 : (distA < distB ? -1 : 0);
+            }
+        }
     }
 }
