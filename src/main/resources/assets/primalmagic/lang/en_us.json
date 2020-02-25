@@ -163,6 +163,14 @@
     "primalmagic.source.unknown": "Unknown",
     "primalmagic.source.mana_tooltip": "%1$s: %2$d / %3$d",
     
+    "primalmagic.attunement_gain.0": "None",
+    "primalmagic.attunement_gain.1": "Trivial",
+    "primalmagic.attunement_gain.2": "Minor",
+    "primalmagic.attunement_gain.3": "Moderate",
+    "primalmagic.attunement_gain.4": "Major",
+    "primalmagic.attunement_gain.5": "Extreme",
+    "primalmagic.attunement_gain.text": "%1$s: %2$s",
+    
     "primalmagic.knowledge_type.OBSERVATION": "Observation",
     "primalmagic.knowledge_type.THEORY": "Theory",
     
@@ -614,6 +622,7 @@
     "primalmagic.grimoire.other_header": "Other Topics",
     "primalmagic.grimoire.stats_header": "Statistics",
     "primalmagic.grimoire.attunement_header": "Attunements",
+    "primalmagic.grimoire.attunement_gain_header": "Attunements Gained",
     "primalmagic.grimoire.addendum_header": "Addendum %1$d",
     "primalmagic.grimoire.requirements_header": "Requirements",
     "primalmagic.grimoire.shapeless_arcane_recipe_header": "Arcane Workbench (Shapeless)",

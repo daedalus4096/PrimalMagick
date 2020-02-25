@@ -13,6 +13,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AbstractRecipePage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AttunementGainPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AttunementIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AttunementPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.pages.DisciplineIndexPage;
@@ -35,6 +36,7 @@ import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.Stat;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 
@@ -514,6 +516,17 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         if (!tempPage.getElements().isEmpty()) {
             this.pages.add(tempPage);
+        }
+        
+        // Add attunement gain page if applicable
+        SourceList attunements = stage.getAttunements();
+        for (ResearchAddendum addendum : addenda) {
+            if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
+                attunements = attunements.merge(addendum.getAttunements());
+            }
+        }
+        if (!attunements.isEmpty()) {
+            this.pages.add(new AttunementGainPage(attunements));
         }
         
         // Add requirements page if applicable
