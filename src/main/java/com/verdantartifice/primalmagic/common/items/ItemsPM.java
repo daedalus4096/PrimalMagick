@@ -127,6 +127,7 @@ public class ItemsPM {
     public static final RegistryObject<BurnableBlockItem> WAND_INSCRIPTION_TABLE = ITEMS.register("wand_inscription_table", () -> new BurnableBlockItem(BlocksPM.WAND_INSCRIPTION_TABLE.get(), 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> SPELLCRAFTING_ALTAR = ITEMS.register("spellcrafting_altar", () -> new BlockItem(BlocksPM.SPELLCRAFTING_ALTAR.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> WAND_CHARGER = ITEMS.register("wand_charger", () -> new BlockItem(BlocksPM.WAND_CHARGER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BurnableBlockItem> RESEARCH_TABLE = ITEMS.register("research_table", () -> new BurnableBlockItem(BlocksPM.RESEARCH_TABLE.get(), 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);

@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.AnalysisTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagic.common.blocks.misc.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLogBlock;
@@ -140,6 +141,7 @@ public class BlocksPM {
     public static final RegistryObject<WandInscriptionTableBlock> WAND_INSCRIPTION_TABLE = BLOCKS.register("wand_inscription_table", WandInscriptionTableBlock::new);
     public static final RegistryObject<SpellcraftingAltarBlock> SPELLCRAFTING_ALTAR = BLOCKS.register("spellcrafting_altar", SpellcraftingAltarBlock::new);
     public static final RegistryObject<WandChargerBlock> WAND_CHARGER = BLOCKS.register("wand_charger", WandChargerBlock::new);
+    public static final RegistryObject<ResearchTableBlock> RESEARCH_TABLE = BLOCKS.register("research_table", ResearchTableBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

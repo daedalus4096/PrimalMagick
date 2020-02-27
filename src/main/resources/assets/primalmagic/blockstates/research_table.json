@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "primalmagic:block/research_table" },
+        "facing=south": { "model": "primalmagic:block/research_table", "y": 180 },
+        "facing=west":  { "model": "primalmagic:block/research_table", "y": 270 },
+        "facing=east":  { "model": "primalmagic:block/research_table", "y": 90 }
+    }
+}

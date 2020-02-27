@@ -29,6 +29,7 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.WAND_ASSEMBLY_TABLE.get());
         this.registerBasicTable(BlocksPM.WOOD_TABLE.get());
         this.registerBasicTable(BlocksPM.CALCINATOR.get());
+        this.registerBasicTable(BlocksPM.RESEARCH_TABLE.get());
     }
     
     private void registerMarbleLootTables() {
