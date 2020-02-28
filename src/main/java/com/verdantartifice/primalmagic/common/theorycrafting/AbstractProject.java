@@ -16,7 +16,7 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
     
     public abstract String getTextTranslationKey();
     
-    public abstract List<ProjectMaterial> getMaterials();
+    public abstract List<AbstractProjectMaterial> getMaterials();
     
     protected double getBaseSuccessChance(PlayerEntity player) {
         // TODO get projects completed from stats and calculate based on that
@@ -31,7 +31,7 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
     public double getSuccessChance(PlayerEntity player) {
         double chance = this.getBaseSuccessChance(player);
         double per = this.getSuccessChancePerMaterial(player);
-        for (ProjectMaterial material : this.getMaterials()) {
+        for (AbstractProjectMaterial material : this.getMaterials()) {
             if (material.isSelected()) {
                 chance += per;
             }
