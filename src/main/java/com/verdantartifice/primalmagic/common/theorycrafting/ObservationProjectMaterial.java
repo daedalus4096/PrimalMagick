@@ -26,6 +26,7 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isSatisfied(PlayerEntity player) {
+        // The material is satisfied if the player has at least one observation known
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
         if (knowledge == null) {
             return false;
@@ -36,6 +37,14 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean consume(PlayerEntity player) {
+        // Deduct one observation level from the player's knowledge pool
         return ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.OBSERVATION, -1 * IPlayerKnowledge.KnowledgeType.OBSERVATION.getProgression());
+    }
+    
+    @Override
+    public AbstractProjectMaterial copy() {
+        ObservationProjectMaterial material = new ObservationProjectMaterial();
+        material.selected = this.selected;
+        return material;
     }
 }

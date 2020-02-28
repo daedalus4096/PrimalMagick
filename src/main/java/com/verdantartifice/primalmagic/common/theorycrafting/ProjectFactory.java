@@ -11,7 +11,7 @@ import net.minecraft.nbt.CompoundNBT;
  */
 public class ProjectFactory {
     @Nullable
-    public AbstractProjectMaterial getMaterialFromNBT(CompoundNBT tag) {
+    public static AbstractProjectMaterial getMaterialFromNBT(CompoundNBT tag) {
         AbstractProjectMaterial retVal = null;
         String materialType = tag.getString("MaterialType");
         if (materialType == ItemProjectMaterial.TYPE) {

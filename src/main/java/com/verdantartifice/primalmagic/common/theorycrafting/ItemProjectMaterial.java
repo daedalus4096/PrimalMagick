@@ -54,11 +54,22 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isSatisfied(PlayerEntity player) {
+        // The material is satisfied if the given player is carrying this material's item
         return InventoryUtils.isPlayerCarrying(player, this.stack);
     }
 
     @Override
     public boolean consume(PlayerEntity player) {
+        // Remove this material's item from the player's inventory
         return InventoryUtils.consumeItem(player, this.stack);
+    }
+    
+    @Override
+    public AbstractProjectMaterial copy() {
+        ItemProjectMaterial material = new ItemProjectMaterial();
+        material.stack = this.stack.copy();
+        material.consumed = this.consumed;
+        material.selected = this.selected;
+        return material;
     }
 }

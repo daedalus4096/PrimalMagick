@@ -63,4 +63,6 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
+    
+    public abstract AbstractProjectMaterial copy();
 }
