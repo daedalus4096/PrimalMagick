@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
@@ -108,13 +110,15 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
     }
     
     protected int getRequiredMaterialCount(PlayerEntity player) {
-        // TODO get projects completed from stats and calculate based on that
-        return 2;
+        // Get projects completed from stats and calculate based on that
+        int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
+        return Math.min(4, 1 + (completed / 5));
     }
     
     protected double getBaseSuccessChance(PlayerEntity player) {
-        // TODO get projects completed from stats and calculate based on that
-        return 50.0D;
+        // Get projects completed from stats and calculate based on that
+        int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
+        return Math.max(0.0D, 50.0D - (10.0D * (completed / 3)));
     }
     
     protected double getSuccessChancePerMaterial(PlayerEntity player) {
