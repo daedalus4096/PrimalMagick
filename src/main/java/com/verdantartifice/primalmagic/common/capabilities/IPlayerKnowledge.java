@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -157,6 +158,20 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundNBT> {
      * @return the number of points for the knowledge type
      */
     public int getKnowledgeRaw(@Nullable KnowledgeType type);
+    
+    /**
+     * Gets the player's currently active theorycrafting research project.
+     * 
+     * @return the player's currently active theorycrafting research project
+     */
+    public AbstractProject getActiveResearchProject();
+    
+    /**
+     * Sets the player's currently active theorycrafting research project.
+     * 
+     * @param project the newly active theorycrafting research project
+     */
+    public void setActiveResearchProject(AbstractProject project);
     
     /**
      * Sync the given player's research and knowledge data to the their client.

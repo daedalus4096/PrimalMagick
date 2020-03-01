@@ -19,6 +19,8 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledge
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.ProjectFactory;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -41,6 +43,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Map<String, Integer> stages = new ConcurrentHashMap<>();          // Map of research keys to current stage numbers
     private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>(); // Map of research keys to attached flag sets
     private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
+    
+    private AbstractProject project = null;     // Currently active research project
 
     @Override
     @Nonnull
@@ -83,6 +87,11 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
         rootTag.put("knowledge", knowledgeList);
         
+        // Serialize active research project, if any
+        if (this.project != null) {
+            rootTag.put("project", this.project.serializeNBT());
+        }
+        
         return rootTag;
     }
 
@@ -94,6 +103,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         this.clearResearch();
         this.clearKnowledge();
+        this.project = null;
         
         // Deserialize known research, including stage number and attached flags
         ListNBT researchList = nbt.getList("research", Constants.NBT.TAG_COMPOUND);
@@ -132,6 +142,11 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             if (key != null) {
                 this.knowledge.put(key, Integer.valueOf(points));
             }
+        }
+        
+        // Deserialize active research project
+        if (nbt.contains("project")) {
+            this.project = ProjectFactory.getProjectFromNBT(nbt.getCompound("project"));
         }
     }
 
@@ -321,6 +336,16 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         } else {
             return this.knowledge.getOrDefault(type, Integer.valueOf(0)).intValue();
         }
+    }
+    
+    @Override
+    public AbstractProject getActiveResearchProject() {
+        return this.project;
+    }
+    
+    @Override
+    public void setActiveResearchProject(AbstractProject project) {
+        this.project = project;
     }
 
     @Override
