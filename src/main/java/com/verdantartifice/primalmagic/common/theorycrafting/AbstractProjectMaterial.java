@@ -52,9 +52,12 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
      */
     public abstract boolean consume(PlayerEntity player);
     
-    public boolean isConsumed() {
-        return true;
-    }
+    /**
+     * Determine whether this material should be consumed upon project completion.
+     * 
+     * @return whether this material should be consumed upon project completion
+     */
+    public abstract boolean isConsumed();
     
     public boolean isSelected() {
         return this.selected;

@@ -60,8 +60,17 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean consume(PlayerEntity player) {
-        // Remove this material's item from the player's inventory
-        return InventoryUtils.consumeItem(player, this.stack);
+        // Remove this material's item from the player's inventory if it's supposed to be consumed
+        if (this.consumed) {
+            return InventoryUtils.consumeItem(player, this.stack);
+        } else {
+            return true;
+        }
+    }
+    
+    @Override
+    public boolean isConsumed() {
+        return this.consumed;
     }
     
     @Override

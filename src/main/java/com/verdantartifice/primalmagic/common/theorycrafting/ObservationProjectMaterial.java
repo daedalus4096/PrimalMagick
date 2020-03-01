@@ -42,6 +42,11 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
     }
     
     @Override
+    public boolean isConsumed() {
+        return true;
+    }
+    
+    @Override
     public AbstractProjectMaterial copy() {
         ObservationProjectMaterial material = new ObservationProjectMaterial();
         material.selected = this.selected;
