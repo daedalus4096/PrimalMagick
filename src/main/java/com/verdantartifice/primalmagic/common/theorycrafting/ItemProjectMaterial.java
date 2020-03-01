@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.theorycrafting;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
+import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -53,9 +54,8 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(PlayerEntity player) {
-        // The material is satisfied if the given player is carrying this material's item
-        return InventoryUtils.isPlayerCarrying(player, this.stack);
+    public void gatherRequirements(AbstractProject.SatisfactionCritera criteria) {
+        criteria.itemStacks = ItemUtils.mergeItemStackIntoList(criteria.itemStacks, this.stack);
     }
 
     @Override
