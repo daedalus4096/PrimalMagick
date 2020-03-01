@@ -9,6 +9,10 @@ import com.verdantartifice.primalmagic.common.research.ScanSourceUnlockTrigger;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
+import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.ExpeditionProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.MundaneTinkeringProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.TradeProject;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -23,6 +27,7 @@ public class InitResearch {
         initResearchFiles();
         ResearchManager.parseAllResearch();
         initScanResearch();
+        initResearchProjects();
     }
     
     private static void initDisciplines() {
@@ -47,5 +52,11 @@ public class InitResearch {
     
     private static void initScanResearch() {
         ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Source.HALLOWED));
+    }
+    
+    private static void initResearchProjects() {
+        TheorycraftManager.registerProjectType(TradeProject.TYPE, TradeProject::new);
+        TheorycraftManager.registerProjectType(MundaneTinkeringProject.TYPE, MundaneTinkeringProject::new);
+        TheorycraftManager.registerProjectType(ExpeditionProject.TYPE, ExpeditionProject::new);
     }
 }

@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.util.ItemUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IItemProvider;
 
 /**
  * Definition of a project material that requires a specific item stack, which may or may not be
@@ -31,6 +32,10 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         super();
         this.stack = stack;
         this.consumed = consumed;
+    }
+    
+    public ItemProjectMaterial(@Nonnull IItemProvider item, boolean consumed) {
+        this(new ItemStack(item), consumed);
     }
     
     @Override

@@ -705,6 +705,14 @@
     "stat.primalmagic.shrine_found_moon": "Moon shrines found",
     "stat.primalmagic.treants_named": "Treants driven to self-immolation",
     
+    "primalmagic.research_project.name.trade": "Trade",
+    "primalmagic.research_project.name.mundane_tinkering": "Mundane Tinkering",
+    "primalmagic.research_project.name.expedition": "Expedition",
+    
+    "primalmagic.research_project.text.trade": "Perhaps some nearby villagers have magical knowledge to trade.  You assemble some goods they'll find valuable.",
+    "primalmagic.research_project.text.mundane_tinkering": "You spend some time working with your tools, creating paraphernalia to help with your magical pursuits.",
+    "primalmagic.research_project.text.expedition": "Who knows what arcane secrets lie hidden in the dungeons of the world?  You prepare an expedition to find some.",
+    
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",
     "death.attack.primalmagic.hellish_chain": "%1$s was killed by %2$s",
