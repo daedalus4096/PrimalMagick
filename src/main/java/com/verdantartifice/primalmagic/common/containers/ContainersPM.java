@@ -45,4 +45,7 @@ public class ContainersPM {
     public static final RegistryObject<ContainerType<WandChargerContainer>> WAND_CHARGER = CONTAINERS.register("wand_charger", () -> IForgeContainerType.create((windowId, inv, data) -> {
         return new WandChargerContainer(windowId, inv);
     }));
+    public static final RegistryObject<ContainerType<ResearchTableContainer>> RESEARCH_TABLE = CONTAINERS.register("research_table", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        return new ResearchTableContainer(windowId, inv);
+    }));
 }
