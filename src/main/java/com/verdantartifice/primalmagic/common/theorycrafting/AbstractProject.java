@@ -68,7 +68,7 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
         // Randomly select materials to use from the bag of options
         WeightedRandomBag<AbstractProjectMaterial> options = this.getMaterialOptions();
         for (int index = 0; index < this.getRequiredMaterialCount(player); index++) {
-            this.activeMaterials.add(options.getRandom(player.world.rand).copy());
+            this.activeMaterials.add(options.getRandom(player.getRNG()).copy());
         }
         
         return true;
