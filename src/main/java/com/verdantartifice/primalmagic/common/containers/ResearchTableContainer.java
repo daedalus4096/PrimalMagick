@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.common.containers;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.containers.slots.PaperSlot;
+import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementSlot;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -35,12 +37,10 @@ public class ResearchTableContainer extends Container implements IInventoryChang
         this.writingInv.addListener(this);
         
         // Slot 0: Pencil
-        // TODO make special slot
-        this.pencilSlot = this.addSlot(new Slot(this.writingInv, 0, 8, 8));
+        this.pencilSlot = this.addSlot(new WritingImplementSlot(this.writingInv, 0, 8, 8));
         
         // Slot 1: Paper
-        // TODO make special slot
-        this.paperSlot = this.addSlot(new Slot(this.writingInv, 1, 206, 8));
+        this.paperSlot = this.addSlot(new PaperSlot(this.writingInv, 1, 206, 8));
         
         // Slots 2-28: Player backpack
         for (int i = 0; i < 3; i++) {
