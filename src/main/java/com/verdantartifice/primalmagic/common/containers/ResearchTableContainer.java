@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.containers;
 
+import javax.annotation.Nonnull;
+
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.PaperSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementSlot;
@@ -79,5 +81,15 @@ public class ResearchTableContainer extends Container implements IInventoryChang
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         // TODO Auto-generated method stub
         return super.transferStackInSlot(playerIn, index);
+    }
+    
+    @Nonnull
+    public ItemStack getWritingImplementStack() {
+        return this.writingInv.getStackInSlot(0);
+    }
+    
+    @Nonnull
+    public ItemStack getPaperStack() {
+        return this.writingInv.getStackInSlot(1);
     }
 }
