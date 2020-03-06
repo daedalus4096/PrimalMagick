@@ -88,6 +88,23 @@ public class Recipes extends RecipeProvider {
             .key('P', Items.PAPER)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY")))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(BlocksPM.RESEARCH_TABLE.get())
+            .addIngredient(BlocksPM.WOOD_TABLE.get())
+            .addIngredient(Items.BOOK)
+            .addIngredient(Items.PAPER)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENCHANTED_INK.get())
+            .addIngredient(Items.GLASS_BOTTLE)
+            .addIngredient(Tags.Items.DYES_BLACK)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get())
+            .addIngredient(ItemsPM.ENCHANTED_INK.get())
+            .addIngredient(Tags.Items.FEATHERS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING")))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");

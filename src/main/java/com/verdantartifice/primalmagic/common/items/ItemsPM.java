@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.BloodyFleshItem;
 import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
+import com.verdantartifice.primalmagic.common.items.misc.EnchantedInkAndQuill;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
@@ -137,6 +138,8 @@ public class ItemsPM {
     public static final RegistryObject<BloodyFleshItem> BLOODY_FLESH = ITEMS.register("bloody_flesh", BloodyFleshItem::new);
     public static final RegistryObject<HallowedOrbItem> HALLOWED_ORB = ITEMS.register("hallowed_orb", HallowedOrbItem::new);
     public static final RegistryObject<Item> HEARTWOOD = ITEMS.register("heartwood", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> ENCHANTED_INK = ITEMS.register("enchanted_ink", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> ENCHANTED_INK_AND_QUILL = ITEMS.register("enchanted_ink_and_quill", EnchantedInkAndQuill::new);
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

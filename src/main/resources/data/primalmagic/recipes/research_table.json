@@ -1,0 +1,18 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "THEORYCRAFTING",
+  "ingredients": [
+    {
+      "item": "primalmagic:wood_table"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:research_table"
+  }
+}

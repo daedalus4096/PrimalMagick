@@ -41,7 +41,12 @@
                     "required_item": ["minecraft:stick"]
                 },
                 {
-                    "text": "primalmagic.research.theorycrafting.text.stage.2"
+                    "text": "primalmagic.research.theorycrafting.text.stage.2",
+                    "recipes": [
+                        "primalmagic:research_table",
+                        "primalmagic:enchanted_ink",
+                        "primalmagic:enchanted_ink_and_quill"
+                    ]
                 }
             ],
             "addenda": []
