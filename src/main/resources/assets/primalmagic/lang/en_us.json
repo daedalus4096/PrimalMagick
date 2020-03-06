@@ -645,6 +645,9 @@
     "primalmagic.grimoire.section_header.available": "Available",
     "primalmagic.grimoire.section_header.unavailable": "Unavailable",
     
+    "primalmagic.research_table.missing_writing_supplies": "Missing writing supplies!",
+    "primalmagic.research_table.ready": "Ready to begin!",
+    
     "primalmagic.toast.title": "Research Complete!",
     
     "primalmagic.research.m_dummy.text": "Location Discovery",

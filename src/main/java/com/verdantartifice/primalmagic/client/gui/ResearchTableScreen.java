@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui;
 
+import java.awt.Color;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
@@ -7,11 +9,13 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -65,8 +69,24 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        // TODO Auto-generated method stub
+        Minecraft mc = Minecraft.getInstance();
+        
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        
+        if (this.isProjectReady()) {
+            // TODO render title text
+            // TODO render description text
+        } else if (this.container.getWritingImplementStack().isEmpty() || this.container.getPaperStack().isEmpty()) {
+            // Render missing writing materials text
+            ITextComponent text = new TranslationTextComponent("primalmagic.research_table.missing_writing_supplies");
+            int width = mc.fontRenderer.getStringWidth(text.getFormattedText());
+            mc.fontRenderer.drawString(text.getFormattedText(), 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
+        } else {
+            // Render ready to start text
+            ITextComponent text = new TranslationTextComponent("primalmagic.research_table.ready");
+            int width = mc.fontRenderer.getStringWidth(text.getFormattedText());
+            mc.fontRenderer.drawString(text.getFormattedText(), 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
+        }
     }
 
     @Override
