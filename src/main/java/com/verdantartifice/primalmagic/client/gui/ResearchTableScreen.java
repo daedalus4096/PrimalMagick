@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
+import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -18,6 +19,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -83,8 +85,21 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
         
         if (this.isProjectReady()) {
-            // TODO render title text
-            // TODO render description text
+            int y = 11;
+            
+            // Render title text
+            ITextComponent titleText = new TranslationTextComponent(this.project.getNameTranslationKey()).applyTextStyle(TextFormatting.BOLD);
+            int titleWidth = mc.fontRenderer.getStringWidth(titleText.getFormattedText());
+            mc.fontRenderer.drawString(titleText.getFormattedText(), 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
+            y += (int)(mc.fontRenderer.FONT_HEIGHT * 1.66D);
+            
+            // Render description text
+            ITextComponent descText = new TranslationTextComponent(this.project.getTextTranslationKey());
+            List<String> descLines = mc.fontRenderer.listFormattedStringToWidth(descText.getFormattedText(), 154);
+            for (String line : descLines) {
+                mc.fontRenderer.drawString(line, 38, y, Color.BLACK.getRGB());
+                y += mc.fontRenderer.FONT_HEIGHT;
+            }
         } else if (this.container.getWritingImplementStack().isEmpty() || this.container.getPaperStack().isEmpty()) {
             // Render missing writing materials text
             ITextComponent text = new TranslationTextComponent("primalmagic.research_table.missing_writing_supplies");
