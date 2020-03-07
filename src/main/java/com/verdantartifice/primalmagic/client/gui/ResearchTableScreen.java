@@ -37,6 +37,8 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     
     protected long lastCheck = 0L;
     protected boolean progressing = false;
+    protected boolean writingReady = false;
+    protected boolean lastWritingReady = false;
     protected IPlayerKnowledge knowledge;
     protected AbstractProject project = null;
     protected AbstractProject lastProject = null;
@@ -56,14 +58,17 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             throw new IllegalStateException("No knowledge provider found for player");
         }
         this.project = this.knowledge.getActiveResearchProject();
+        this.lastWritingReady = this.writingReady = this.container.isWritingReady();
         this.initButtons();
     }
     
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
-        // Determine if we need to update the GUI based on how long it's been since the last refresh
+        // Determine if we need to update the GUI based on how long it's been since the last refresh, or writing tool availability
         long millis = System.currentTimeMillis();
-        if (millis > this.lastCheck) {
+        this.lastWritingReady = this.writingReady;
+        this.writingReady = this.container.isWritingReady();
+        if (millis > this.lastCheck || this.lastWritingReady != this.writingReady) {
             // Update more frequently if waiting for the server to process a progression
             this.lastCheck = this.progressing ? (millis + 250L) : (millis + 2000L);
             this.lastProject = this.project;
@@ -101,7 +106,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 mc.fontRenderer.drawString(line, 38, y, Color.BLACK.getRGB());
                 y += mc.fontRenderer.FONT_HEIGHT;
             }
-        } else if (this.container.getWritingImplementStack().isEmpty() || this.container.getPaperStack().isEmpty()) {
+        } else if (!this.container.isWritingReady()) {
             // Render missing writing materials text
             ITextComponent text = new TranslationTextComponent("primalmagic.research_table.missing_writing_supplies");
             int width = mc.fontRenderer.getStringWidth(text.getFormattedText());
@@ -129,7 +134,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     }
     
     protected boolean isProjectReady() {
-        return this.project != null && !this.container.getWritingImplementStack().isEmpty() && !this.container.getPaperStack().isEmpty();
+        return this.project != null && this.container.isWritingReady();
     }
     
     public void setProgressing() {
@@ -142,7 +147,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
         this.children.clear();
         this.completeProjectButton = null;
         
-        if (this.project == null && !this.container.getWritingImplementStack().isEmpty() && !this.container.getPaperStack().isEmpty()) {
+        if (this.project == null && this.container.isWritingReady()) {
             if (this.progressing) {
                 // Render starting widget
                 ITextComponent text = new TranslationTextComponent("primalmagic.research_table.starting");

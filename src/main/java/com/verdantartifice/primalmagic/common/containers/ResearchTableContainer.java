@@ -15,6 +15,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.IntReferenceHolder;
 
 /**
  * Server data container for the research table GUI.
@@ -27,6 +28,7 @@ public class ResearchTableContainer extends Container implements IInventoryChang
     protected final Inventory writingInv = new Inventory(2);
     protected final Slot paperSlot;
     protected final Slot pencilSlot;
+    protected final IntReferenceHolder writingReady = IntReferenceHolder.single();
 
     public ResearchTableContainer(int windowId, PlayerInventory inv) {
         this(windowId, inv, IWorldPosCallable.DUMMY);
@@ -55,6 +57,8 @@ public class ResearchTableContainer extends Container implements IInventoryChang
         for (int i = 0; i < 9; i++) {
             this.addSlot(new Slot(inv, i, 35 + (i * 18), 198));
         }
+        
+        this.trackInt(this.writingReady).set(0);
     }
 
     @Override
@@ -64,8 +68,9 @@ public class ResearchTableContainer extends Container implements IInventoryChang
 
     @Override
     public void onInventoryChanged(IInventory invBasic) {
-        // TODO Auto-generated method stub
-        
+        // Set whether the container has writing tools ready; 1 for yes, 0 for no
+        boolean ready = (!this.getWritingImplementStack().isEmpty() && !this.getPaperStack().isEmpty());
+        this.writingReady.set(ready ? 1 : 0);
     }
 
     @Override
@@ -138,12 +143,16 @@ public class ResearchTableContainer extends Container implements IInventoryChang
     }
     
     @Nonnull
-    public ItemStack getWritingImplementStack() {
+    protected ItemStack getWritingImplementStack() {
         return this.writingInv.getStackInSlot(0);
     }
     
     @Nonnull
-    public ItemStack getPaperStack() {
+    protected ItemStack getPaperStack() {
         return this.writingInv.getStackInSlot(1);
+    }
+    
+    public boolean isWritingReady() {
+        return this.writingReady.get() != 0;
     }
 }
