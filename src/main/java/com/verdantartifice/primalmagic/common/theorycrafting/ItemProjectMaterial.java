@@ -73,6 +73,11 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         }
     }
     
+    @Nonnull
+    public ItemStack getItemStack() {
+        return this.stack;
+    }
+    
     @Override
     public boolean isConsumed() {
         return this.consumed;

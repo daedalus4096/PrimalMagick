@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.gui.widgets.ProjectMaterialWidget;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
@@ -12,6 +13,7 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.CompleteProjectPacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -165,7 +167,18 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             } else {
                 // Render complete project button
                 ITextComponent text = new TranslationTextComponent("primalmagic.research_table.complete");
-                this.addButton(new CompleteProjectButton(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText(), this));
+                this.completeProjectButton = this.addButton(new CompleteProjectButton(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText(), this));
+                
+                // Render material widgets
+                int materialCount = this.project.getMaterials().size();
+                int x = (152 - (38 * materialCount)) / 2;
+                for (int index = 0; index < materialCount; index++) {
+                    AbstractProjectMaterial material = this.project.getMaterials().get(index);
+
+                    // TODO Render material checkbox
+                    // Render material widget
+                    this.addButton(new ProjectMaterialWidget(material, this.guiLeft + 55 + x, this.guiTop + 93, false));    // TODO determine if complete
+                }
             }
         }
     }
@@ -212,6 +225,11 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
         }
     }
     
+    /**
+     * GUI button to complete a research project in the research table.
+     * 
+     * @author Daedalus4096
+     */
     protected static class CompleteProjectButton extends Button {
         protected ResearchTableScreen screen;
         

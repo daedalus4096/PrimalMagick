@@ -33,9 +33,9 @@ public class ProjectFactory {
     public static AbstractProjectMaterial getMaterialFromNBT(@Nullable CompoundNBT tag) {
         AbstractProjectMaterial retVal = null;
         String materialType = (tag == null) ? null : tag.getString("MaterialType");
-        if (materialType == ItemProjectMaterial.TYPE) {
+        if (ItemProjectMaterial.TYPE.equals(materialType)) {
             retVal = new ItemProjectMaterial();
-        } else if (materialType == ObservationProjectMaterial.TYPE) {
+        } else if (ObservationProjectMaterial.TYPE.equals(materialType)) {
             retVal = new ObservationProjectMaterial();
         }
         if (retVal != null) {
