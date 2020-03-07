@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.CompleteProjectPacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 
@@ -157,7 +158,9 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 ITextComponent text = new TranslationTextComponent("primalmagic.research_table.completing");
                 this.addButton(new WaitingWidget(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText()));
             } else {
-                // TODO render complete project button
+                // Render complete project button
+                ITextComponent text = new TranslationTextComponent("primalmagic.research_table.complete");
+                this.addButton(new CompleteProjectButton(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText(), this));
             }
         }
     }
@@ -199,6 +202,31 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                     StartProjectButton spb = (StartProjectButton)button;
                     PacketHandler.sendToServer(new StartProjectPacket());
                     spb.getScreen().setProgressing();
+                }
+            }
+        }
+    }
+    
+    protected static class CompleteProjectButton extends Button {
+        protected ResearchTableScreen screen;
+        
+        public CompleteProjectButton(int xIn, int yIn, String text, ResearchTableScreen screen) {
+            super(xIn, yIn, 154, 20, text, new Handler());
+            this.screen = screen;
+        }
+        
+        public ResearchTableScreen getScreen() {
+            return this.screen;
+        }
+        
+        private static class Handler implements IPressable {
+            @Override
+            public void onPress(Button button) {
+                if (button instanceof CompleteProjectButton) {
+                    // Send a packet to the server and tell the screen to update more frequently until resolved
+                    CompleteProjectButton cpb = (CompleteProjectButton)button;
+                    PacketHandler.sendToServer(new CompleteProjectPacket());
+                    cpb.getScreen().setProgressing();
                 }
             }
         }
