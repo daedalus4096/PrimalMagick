@@ -647,6 +647,10 @@
     
     "primalmagic.research_table.missing_writing_supplies": "Missing writing supplies!",
     "primalmagic.research_table.ready": "Ready to begin!",
+    "primalmagic.research_table.starting": "Starting...",
+    "primalmagic.research_table.start": "Start Project",
+    "primalmagic.research_table.completing": "Completing...",
+    "primalmagic.research_table.complete": "Complete Project",
     
     "primalmagic.toast.title": "Research Complete!",
     

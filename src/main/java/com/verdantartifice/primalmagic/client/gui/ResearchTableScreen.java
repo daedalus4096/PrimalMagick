@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -33,6 +34,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     protected boolean progressing = false;
     protected IPlayerKnowledge knowledge;
     protected AbstractProject project = null;
+    protected Button completeProjectButton = null;
 
     public ResearchTableScreen(ResearchTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
@@ -107,29 +109,76 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
         return this.project != null && !this.container.getWritingImplementStack().isEmpty() && !this.container.getPaperStack().isEmpty();
     }
     
+    public void setProgressing() {
+        this.progressing = true;
+        this.lastCheck = 0L;
+    }
+    
     protected void initButtons() {
         this.buttons.clear();
         this.children.clear();
+        this.completeProjectButton = null;
         
         if (this.project == null && !this.container.getWritingImplementStack().isEmpty() && !this.container.getPaperStack().isEmpty()) {
             if (this.progressing) {
-                // TODO render starting widget
+                // Render starting widget
+                ITextComponent text = new TranslationTextComponent("primalmagic.research_table.starting");
+                this.addButton(new WaitingWidget(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText()));
             } else {
-                // TODO render start project button
+                // Render start project button
+                ITextComponent text = new TranslationTextComponent("primalmagic.research_table.start");
+                this.addButton(new StartProjectButton(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText(), this));
             }
         } else if (this.isProjectReady()) {
             if (this.progressing) {
-                // TODO render completing widget
+                // Render completing widget
+                ITextComponent text = new TranslationTextComponent("primalmagic.research_table.completing");
+                this.addButton(new WaitingWidget(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText()));
             } else {
                 // TODO render complete project button
             }
         }
     }
     
+    /**
+     * GUI widget for a disabled text button to use while waiting for the server to update.
+     * 
+     * @author Daedalus4096
+     */
     protected static class WaitingWidget extends Widget {
         public WaitingWidget(int xIn, int yIn, String msg) {
-            super(xIn, yIn, 156, 18, msg);
+            super(xIn, yIn, 154, 20, msg);
             this.active = false;
+        }
+    }
+    
+    /**
+     * GUI button to start a new research project in the research table.
+     * 
+     * @author Daedalus4096
+     */
+    protected static class StartProjectButton extends Button {
+        protected ResearchTableScreen screen;
+        
+        public StartProjectButton(int xIn, int yIn, String text, ResearchTableScreen screen) {
+            super(xIn, yIn, 154, 20, text, new Handler());
+            this.screen = screen;
+        }
+        
+        public ResearchTableScreen getScreen() {
+            return this.screen;
+        }
+        
+        private static class Handler implements IPressable {
+            @Override
+            public void onPress(Button button) {
+                if (button instanceof StartProjectButton) {
+                    // Send a packet to the server and tell the screen to update more frequently until resolved
+                    StartProjectButton spb = (StartProjectButton)button;
+                    // TODO send packet
+                    spb.getScreen().setProgressing();
+                }
+            }
         }
     }
 }
