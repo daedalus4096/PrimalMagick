@@ -79,8 +79,62 @@ public class ResearchTableContainer extends Container implements IInventoryChang
     
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-        // TODO Auto-generated method stub
-        return super.transferStackInSlot(playerIn, index);
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+        if (slot != null && slot.getHasStack()) {
+            ItemStack slotStack = slot.getStack();
+            stack = slotStack.copy();
+            if (index >= 2 && index < 29) {
+                // If transferring from the backpack, move paper and writing implements to the appropriate slots, and everything else to the hotbar
+                if (this.pencilSlot.isItemValid(slotStack)) {
+                    if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (this.paperSlot.isItemValid(slotStack)) {
+                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    if (!this.mergeItemStack(slotStack, 29, 38, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+            } else if (index >= 29 && index < 38) {
+                // If transferring from the hotbar, move paper and writing implements to the appropriate slots, and everything else to the backpack
+                if (this.pencilSlot.isItemValid(slotStack)) {
+                    if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (this.paperSlot.isItemValid(slotStack)) {
+                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    if (!this.mergeItemStack(slotStack, 2, 29, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+            } else if (!this.mergeItemStack(slotStack, 2, 38, false)) {
+                // Move all other transfers to the backpack or hotbar
+                return ItemStack.EMPTY;
+            }
+            
+            if (slotStack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+            
+            if (slotStack.getCount() == stack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+            
+            ItemStack taken = slot.onTake(playerIn, slotStack);
+            if (index == 0) {
+                playerIn.dropItem(taken, false);
+            }
+        }
+        return stack;
     }
     
     @Nonnull
