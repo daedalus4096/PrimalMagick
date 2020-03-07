@@ -320,6 +320,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.MUNDANE_WAND.get()), new SourceList());  // Don't want mundane wands to have any affinities
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.BLOODY_FLESH.get()), new SourceList().add(Source.BLOOD, 20));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HALLOWED_ORB.get()), new SourceList().add(Source.HALLOWED, 20));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.ENCHANTED_INK.get()), new SourceList().add(Source.SEA, 3).add(Source.MOON, 3));
 
         // Register Primal Magic essence affinities
         for (Item tagItem : ItemTagsPM.ESSENCES.getAllElements()) {
