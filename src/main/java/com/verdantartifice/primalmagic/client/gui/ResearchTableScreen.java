@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 
 import net.minecraft.client.Minecraft;
@@ -34,6 +36,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     protected boolean progressing = false;
     protected IPlayerKnowledge knowledge;
     protected AbstractProject project = null;
+    protected AbstractProject lastProject = null;
     protected Button completeProjectButton = null;
 
     public ResearchTableScreen(ResearchTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -60,7 +63,11 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
         if (millis > this.lastCheck) {
             // Update more frequently if waiting for the server to process a progression
             this.lastCheck = this.progressing ? (millis + 250L) : (millis + 2000L);
+            this.lastProject = this.project;
             this.project = this.knowledge.getActiveResearchProject();
+            if (this.lastProject != this.project) {
+                this.progressing = false;
+            }
             this.initButtons();
         }
 
@@ -175,7 +182,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 if (button instanceof StartProjectButton) {
                     // Send a packet to the server and tell the screen to update more frequently until resolved
                     StartProjectButton spb = (StartProjectButton)button;
-                    // TODO send packet
+                    PacketHandler.sendToServer(new StartProjectPacket());
                     spb.getScreen().setProgressing();
                 }
             }
