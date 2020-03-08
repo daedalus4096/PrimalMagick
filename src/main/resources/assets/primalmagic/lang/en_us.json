@@ -650,7 +650,7 @@
     "primalmagic.research_table.starting": "Starting...",
     "primalmagic.research_table.start": "Start Project",
     "primalmagic.research_table.completing": "Completing...",
-    "primalmagic.research_table.complete": "Complete Project",
+    "primalmagic.research_table.complete": "Complete Project (%1$s%%)",
     
     "primalmagic.toast.title": "Research Complete!",
     

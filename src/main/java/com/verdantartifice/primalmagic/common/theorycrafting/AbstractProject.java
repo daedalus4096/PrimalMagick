@@ -120,7 +120,7 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
     protected double getBaseSuccessChance(PlayerEntity player) {
         // Get projects completed from stats and calculate based on that
         int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
-        return Math.max(0.0D, 50.0D - (10.0D * (completed / 3)));
+        return Math.max(0.0D, 0.5D - (0.1D * (completed / 3)));
     }
     
     protected double getSuccessChancePerMaterial(PlayerEntity player) {
@@ -129,7 +129,7 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
         if (materialCount <= 0) {
             return 0.0D;
         } else {
-            return (100.0D - this.getBaseSuccessChance(player)) / materialCount;
+            return (1.0D - this.getBaseSuccessChance(player)) / materialCount;
         }
     }
     
@@ -141,7 +141,7 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
                 chance += per;
             }
         }
-        return MathHelper.clamp(chance, 0.0D, 100.0D);
+        return MathHelper.clamp(chance, 0.0D, 1.0D);
     }
     
     public boolean isSatisfied(PlayerEntity player) {

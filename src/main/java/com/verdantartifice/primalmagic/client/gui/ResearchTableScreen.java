@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -21,6 +22,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -38,6 +40,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/research_table.png");
     private static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagic.MODID, "textures/gui/research_table_overlay.png");
+    private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");
     
     protected long lastCheck = 0L;
     protected boolean progressing = false;
@@ -151,6 +154,9 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             // Update selection status on client and server side
             this.project.getMaterials().get(index).setSelected(selected);
             PacketHandler.sendToServer(new SetProjectMaterialSelectionPacket(index, selected));
+            
+            // Trigger a button refresh to recalculate success chance
+            this.lastCheck = 0L;
         }
     }
     
@@ -176,8 +182,11 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 this.addButton(new WaitingWidget(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText()));
             } else {
                 // Render complete project button
-                ITextComponent text = new TranslationTextComponent("primalmagic.research_table.complete");
+                PlayerEntity player = Minecraft.getInstance().player;
+                double chance = 100.0D * this.project.getSuccessChance(player);
+                ITextComponent text = new TranslationTextComponent("primalmagic.research_table.complete", FORMATTER.format(chance));
                 this.completeProjectButton = this.addButton(new CompleteProjectButton(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText(), this));
+                this.completeProjectButton.active = this.project.isSatisfied(player);
                 
                 // Render material widgets
                 int materialCount = this.project.getMaterials().size();
@@ -188,7 +197,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                     // Render material checkbox
                     this.addButton(new ProjectMaterialSelectionCheckbox(this.guiLeft + 42 + x, this.guiTop + 93, this, material.isSelected(), index));
                     // Render material widget
-                    this.addButton(new ProjectMaterialWidget(material, this.guiLeft + 58 + x, this.guiTop + 93, material.isSatisfied(Minecraft.getInstance().player)));
+                    this.addButton(new ProjectMaterialWidget(material, this.guiLeft + 58 + x, this.guiTop + 93, material.isSatisfied(player)));
                     
                     x += 38;
                 }
