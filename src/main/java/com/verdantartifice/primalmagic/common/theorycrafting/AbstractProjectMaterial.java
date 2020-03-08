@@ -67,4 +67,8 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
     }
     
     public abstract AbstractProjectMaterial copy();
+    
+    public abstract int hashCode();
+    
+    public abstract boolean equals(Object obj);
 }

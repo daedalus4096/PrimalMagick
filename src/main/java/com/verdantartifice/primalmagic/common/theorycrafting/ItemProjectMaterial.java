@@ -91,4 +91,42 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         material.selected = this.selected;
         return material;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (this.consumed ? 1231 : 1237);
+        result = prime * result + (this.selected ? 1231 : 1237);
+        result = prime * result + ((this.stack == null) ? 0 : this.stack.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        ItemProjectMaterial other = (ItemProjectMaterial) obj;
+        if (this.consumed != other.consumed) {
+            return false;
+        }
+        if (this.selected != other.selected) {
+            return false;
+        }
+        if (this.stack == null) {
+            if (other.stack != null) {
+                return false;
+            }
+        } else if (!ItemStack.areItemStacksEqual(this.stack, other.stack)) {
+            return false;
+        }
+        return true;
+    }
 }
