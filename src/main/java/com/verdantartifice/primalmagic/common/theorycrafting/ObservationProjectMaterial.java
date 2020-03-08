@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,8 +25,9 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public void gatherRequirements(AbstractProject.SatisfactionCritera criteria) {
-        criteria.observations++;
+    public boolean isSatisfied(PlayerEntity player) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        return (knowledge != null && knowledge.getKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION) >= 1);
     }
 
     @Override

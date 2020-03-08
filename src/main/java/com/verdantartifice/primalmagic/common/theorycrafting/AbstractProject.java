@@ -7,16 +7,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
-import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.math.MathHelper;
@@ -149,25 +145,12 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
     }
     
     public boolean isSatisfied(PlayerEntity player) {
-        // Gather requirements from selected materials
-        SatisfactionCritera criteria = new SatisfactionCritera();
+        // Determine satisfaction from selected materials
         for (AbstractProjectMaterial material : this.getMaterials()) {
-            if (material.isSelected()) {
-                material.gatherRequirements(criteria);
-            }
-        }
-        
-        // Determine if gathered requirements are satisfied
-        for (ItemStack stack : criteria.itemStacks) {
-            if (!InventoryUtils.isPlayerCarrying(player, stack)) {
+            if (material.isSelected() && !material.isSatisfied(player)) {
                 return false;
             }
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-        if (knowledge == null || knowledge.getKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION) < criteria.observations) {
-            return false;
-        }
-        
         return true;
     }
     
@@ -180,10 +163,5 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
             }
         }
         return true;
-    }
-    
-    public static class SatisfactionCritera {
-        public List<ItemStack> itemStacks = new ArrayList<>();
-        public int observations = 0;
     }
 }

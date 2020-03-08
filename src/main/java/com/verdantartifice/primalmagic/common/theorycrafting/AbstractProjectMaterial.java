@@ -37,11 +37,12 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
     protected abstract String getMaterialType();
     
     /**
-     * Collect the requirements of this material into the given satisfaction criteria
+     * Determine if this material's requirements are satisfied by the given player.
      * 
-     * @param criteria the satisfaction criteria to receive this material's requirements
+     * @param player the player doing the research project
+     * @return true if the requirement is satisfied, false otherwise
      */
-    public abstract void gatherRequirements(AbstractProject.SatisfactionCritera criteria);
+    public abstract boolean isSatisfied(PlayerEntity player);
     
     /**
      * Consume this project material's requirements from the given player.

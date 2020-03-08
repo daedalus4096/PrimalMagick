@@ -188,7 +188,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                     // Render material checkbox
                     this.addButton(new ProjectMaterialSelectionCheckbox(this.guiLeft + 42 + x, this.guiTop + 93, this, material.isSelected(), index));
                     // Render material widget
-                    this.addButton(new ProjectMaterialWidget(material, this.guiLeft + 58 + x, this.guiTop + 93, false));    // TODO determine if complete
+                    this.addButton(new ProjectMaterialWidget(material, this.guiLeft + 58 + x, this.guiTop + 93, material.isSatisfied(Minecraft.getInstance().player)));
                     
                     x += 38;
                 }
