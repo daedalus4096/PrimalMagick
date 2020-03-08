@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.gui.widgets.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.ProjectMaterialSelectionCheckbox;
 import com.verdantartifice.primalmagic.client.gui.widgets.ProjectMaterialWidget;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
@@ -203,6 +204,10 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 }
             }
         }
+        
+        // Render knowledge total widgets
+        this.addButton(new KnowledgeTotalWidget(this.guiLeft + 11, this.guiTop + 116, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+        this.addButton(new KnowledgeTotalWidget(this.guiLeft + 203, this.guiTop + 116, IPlayerKnowledge.KnowledgeType.THEORY));
     }
     
     /**
