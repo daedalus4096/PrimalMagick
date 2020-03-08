@@ -62,9 +62,11 @@ public class ProjectMaterialWidget extends Widget {
         } else if (this.material instanceof ObservationProjectMaterial) {
             // Draw observation icon
             mc.getTextureManager().bindTexture(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
+            RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x, this.y, 0.0F);
             RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
             this.blit(0, 0, 0, 0, 255, 255);
+            RenderSystem.popMatrix();
             displayNameText = new TranslationTextComponent(IPlayerKnowledge.KnowledgeType.OBSERVATION.getNameTranslationKey());
         }
         

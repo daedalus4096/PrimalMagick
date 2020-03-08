@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetS
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetSpellNamePacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.CompleteProjectPacket;
+import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
@@ -79,6 +80,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, ResetFallDistancePacket.class, ResetFallDistancePacket::encode, ResetFallDistancePacket::decode, ResetFallDistancePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, StartProjectPacket.class, StartProjectPacket::encode, StartProjectPacket::decode, StartProjectPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, CompleteProjectPacket.class, CompleteProjectPacket::encode, CompleteProjectPacket::decode, CompleteProjectPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket::encode, SetProjectMaterialSelectionPacket::decode, SetProjectMaterialSelectionPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

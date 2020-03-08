@@ -5,12 +5,14 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.gui.widgets.ProjectMaterialSelectionCheckbox;
 import com.verdantartifice.primalmagic.client.gui.widgets.ProjectMaterialWidget;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.CompleteProjectPacket;
+import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
@@ -144,6 +146,14 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
         this.lastCheck = 0L;
     }
     
+    public void setMaterialSelection(int index, boolean selected) {
+        if (this.project != null && index >= 0 && index < this.project.getMaterials().size()) {
+            // Update selection status on client and server side
+            this.project.getMaterials().get(index).setSelected(selected);
+            PacketHandler.sendToServer(new SetProjectMaterialSelectionPacket(index, selected));
+        }
+    }
+    
     protected void initButtons() {
         this.buttons.clear();
         this.children.clear();
@@ -175,9 +185,12 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 for (int index = 0; index < materialCount; index++) {
                     AbstractProjectMaterial material = this.project.getMaterials().get(index);
 
-                    // TODO Render material checkbox
+                    // Render material checkbox
+                    this.addButton(new ProjectMaterialSelectionCheckbox(this.guiLeft + 42 + x, this.guiTop + 93, this, material.isSelected(), index));
                     // Render material widget
-                    this.addButton(new ProjectMaterialWidget(material, this.guiLeft + 55 + x, this.guiTop + 93, false));    // TODO determine if complete
+                    this.addButton(new ProjectMaterialWidget(material, this.guiLeft + 58 + x, this.guiTop + 93, false));    // TODO determine if complete
+                    
+                    x += 38;
                 }
             }
         }
