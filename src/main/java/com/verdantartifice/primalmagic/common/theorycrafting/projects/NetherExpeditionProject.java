@@ -24,10 +24,10 @@ public class NetherExpeditionProject extends AbstractProject {
     protected static final SimpleResearchKey RESEARCH = Source.INFERNAL.getDiscoverKey();
     
     static {
-        OPTIONS.add(new ItemProjectMaterial(Items.DIAMOND_SWORD, true), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.CROSSBOW, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.DIAMOND_SWORD, false), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.CROSSBOW, false), 1);
         OPTIONS.add(new ItemProjectMaterial(new ItemStack(Items.ARROW, 16), true), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.DIAMOND_CHESTPLATE, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.DIAMOND_CHESTPLATE, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.MAP, true), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.CARTOGRAPHY_TABLE, false), 1);
         OPTIONS.add(new ItemProjectMaterial(new ItemStack(Items.TORCH, 16), true), 1);

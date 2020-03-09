@@ -19,10 +19,10 @@ public class ExpeditionProject extends AbstractProject {
     protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
     
     static {
-        OPTIONS.add(new ItemProjectMaterial(Items.IRON_SWORD, true), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.BOW, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.IRON_SWORD, false), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.BOW, false), 1);
         OPTIONS.add(new ItemProjectMaterial(new ItemStack(Items.ARROW, 4), true), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.IRON_CHESTPLATE, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.IRON_CHESTPLATE, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.MAP, true), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.COMPASS, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.CLOCK, false), 1);
