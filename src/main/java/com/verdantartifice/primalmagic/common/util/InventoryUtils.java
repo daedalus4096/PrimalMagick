@@ -37,9 +37,10 @@ public class InventoryUtils {
      * 
      * @param player the player whose inventory to search
      * @param stack the itemstack being searched for
+     * @param matchNBT whether the test should consider the stacks' NBT data
      * @return true if the player is carrying at least that many of the given item, false otherwise
      */
-    public static boolean isPlayerCarrying(@Nullable PlayerEntity player, @Nullable ItemStack stack) {
+    public static boolean isPlayerCarrying(@Nullable PlayerEntity player, @Nullable ItemStack stack, boolean matchNBT) {
         if (player == null) {
             return false;
         }
@@ -48,8 +49,11 @@ public class InventoryUtils {
         }
         int count = stack.getCount();
         for (ItemStack searchStack : player.inventory.mainInventory) {
-            // Only the items need match, not the NBT data
-            if (ItemStack.areItemsEqual(stack, searchStack)) {
+            // Determine if the stack items, and optionally NBT, match
+            boolean areEqual = matchNBT ?
+                    ItemStack.areItemStacksEqual(stack, searchStack) :
+                    ItemStack.areItemsEqual(stack, searchStack);
+            if (areEqual) {
                 count -= searchStack.getCount();
                 if (count <= 0) {
                     // Once a sufficient number of the given item are found, return true
@@ -61,11 +65,27 @@ public class InventoryUtils {
     }
     
     /**
+     * Determine if the given player is carrying the given item in their main inventory.  Does not
+     * consider equipped items or nested inventories (e.g. backpacks).  If the given stack has a count
+     * higher than one, this method will search for any combination of itemstacks in the player's
+     * inventory that total the given count, rather than requiring a single stack of that size.  By
+     * default, does not attempt to match NBT data on itemstacks.
+     * 
+     * @param player the player whose inventory to search
+     * @param stack the itemstack being searched for
+     * @return true if the player is carrying at least that many of the given item, false otherwise
+     */
+    public static boolean isPlayerCarrying(@Nullable PlayerEntity player, @Nullable ItemStack stack) {
+        return isPlayerCarrying(player, stack, false);
+    }
+    
+    /**
      * Determine if the given player is carrying items of the given tag in their main inventory.  Does
      * not consider equipped items or nested inventories (e.g. backpacks).  If the given amount is
      * greater than one, this method will search for any combination of itemstacks in the player's
      * inventory that total the given count, rather than requiring a single stack of that size.  The
-     * found items need not be the same, so long as all of them belong to the tag.
+     * found items need not be the same, so long as all of them belong to the tag.  Does not attempt
+     * to match NBT data, as that cannot be conveyed by a tag.
      * 
      * @param player the player whose inventory to search
      * @param tagName the name of the tag containing the items to be searched for
@@ -101,9 +121,10 @@ public class InventoryUtils {
      * 
      * @param player the player whose inventory to search
      * @param stack the item and quantity to be removed
+     * @param matchNBT whether the test should consider the stacks' NBT data
      * @return true if the given item was removed in the given quantity, false otherwise
      */
-    public static boolean consumeItem(@Nullable PlayerEntity player, @Nullable ItemStack stack) {
+    public static boolean consumeItem(@Nullable PlayerEntity player, @Nullable ItemStack stack, boolean matchNBT) {
         if (player == null) {
             return false;
         }
@@ -117,8 +138,11 @@ public class InventoryUtils {
         int count = stack.getCount();
         for (int index = 0; index < player.inventory.mainInventory.size(); index++) {
             ItemStack searchStack = player.inventory.mainInventory.get(index);
-            // Only the items need match, not the NBT data
-            if (ItemStack.areItemsEqual(stack, searchStack)) {
+            // Determine if the stack items, and optionally NBT, match
+            boolean areEqual = matchNBT ?
+                    ItemStack.areItemStacksEqual(stack, searchStack) :
+                    ItemStack.areItemsEqual(stack, searchStack);
+            if (areEqual) {
                 if (searchStack.getCount() > count) {
                     searchStack.shrink(count);
                     count = 0;
@@ -136,11 +160,27 @@ public class InventoryUtils {
     }
     
     /**
+     * Attempts to remove the given quantity of the given item from the player's main inventory.  Does
+     * not consider equipped items or nested inventories (e.g. backpacks).  If the given stack has a
+     * count higher than one, this method will search for any combination of itemstacks in the player's
+     * inventory that total the given count, rather than requiring a single stack of that size.  By
+     * default, does not attempt to match NBT data on itemstacks.
+     * 
+     * @param player the player whose inventory to search
+     * @param stack the item and quantity to be removed
+     * @return true if the given item was removed in the given quantity, false otherwise
+     */
+    public static boolean consumeItem(@Nullable PlayerEntity player, @Nullable ItemStack stack) {
+        return consumeItem(player, stack, false);
+    }
+    
+    /**
      * Attempts to remove the given quantity of items in the given tag from the player's main inventory.
      * Does not consider equipped items or nested inventories (e.g. backpacks).  If the given amount is
      * greater than one, this method will search for any combination of itemstacks in the player's
      * inventory that total the given count, rather than requiring a single stack of that size.  The found
-     * items need not be the same, so long as all of them belong to the tag.
+     * items need not be the same, so long as all of them belong to the tag.  Does not attempt to match
+     * NBT data, as that cannot be conveyed by a tag.
      * 
      * @param player the player whose inventory to search
      * @param tagName the tag containing the items to be removed

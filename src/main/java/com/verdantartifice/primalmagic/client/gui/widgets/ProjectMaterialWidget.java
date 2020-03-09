@@ -53,7 +53,7 @@ public class ProjectMaterialWidget extends Widget {
                 int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
                 RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.pushMatrix();
-                RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
+                RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 500.0F);
                 RenderSystem.scaled(0.5D, 0.5D, 0.5D);
                 mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
                 RenderSystem.popMatrix();

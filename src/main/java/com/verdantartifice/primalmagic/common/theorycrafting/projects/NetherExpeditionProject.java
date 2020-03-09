@@ -32,7 +32,7 @@ public class NetherExpeditionProject extends AbstractProject {
         OPTIONS.add(new ItemProjectMaterial(Items.CARTOGRAPHY_TABLE, false), 1);
         OPTIONS.add(new ItemProjectMaterial(new ItemStack(Items.TORCH, 16), true), 1);
         OPTIONS.add(new ItemProjectMaterial(new ItemStack(Items.BREAD, 4), true), 1);
-        OPTIONS.add(new ItemProjectMaterial(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true), 4);
+        OPTIONS.add(new ItemProjectMaterial(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true, true), 4);
         OPTIONS.add(new ItemProjectMaterial(Items.MILK_BUCKET, true), 1);
         OPTIONS.add(new ItemProjectMaterial(new ItemStack(Items.OBSIDIAN, 10), false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.FLINT_AND_STEEL, false), 1);

@@ -20,21 +20,32 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
     
     protected ItemStack stack;
     protected boolean consumed;
+    protected boolean matchNBT;
     
     public ItemProjectMaterial() {
         super();
         this.stack = ItemStack.EMPTY;
         this.consumed = false;
+        this.matchNBT = false;
     }
     
-    public ItemProjectMaterial(@Nonnull ItemStack stack, boolean consumed) {
+    public ItemProjectMaterial(@Nonnull ItemStack stack, boolean consumed, boolean matchNBT) {
         super();
         this.stack = stack;
         this.consumed = consumed;
+        this.matchNBT = matchNBT;
+    }
+    
+    public ItemProjectMaterial(@Nonnull ItemStack stack, boolean consumed) {
+        this(stack, consumed, false);
+    }
+    
+    public ItemProjectMaterial(@Nonnull IItemProvider item, boolean consumed, boolean matchNBT) {
+        this(new ItemStack(item), consumed, matchNBT);
     }
     
     public ItemProjectMaterial(@Nonnull IItemProvider item, boolean consumed) {
-        this(new ItemStack(item), consumed);
+        this(item, consumed, false);
     }
     
     @Override
@@ -42,6 +53,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         CompoundNBT tag = super.serializeNBT();
         tag.put("Stack", this.stack.write(new CompoundNBT()));
         tag.putBoolean("Consumed", this.consumed);
+        tag.putBoolean("MatchNBT", this.matchNBT);
         return tag;
     }
     
@@ -50,6 +62,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         super.deserializeNBT(nbt);
         this.stack = ItemStack.read(nbt.getCompound("Stack"));
         this.consumed = nbt.getBoolean("Consumed");
+        this.matchNBT = nbt.getBoolean("MatchNBT");
     }
 
     @Override
@@ -59,14 +72,14 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isSatisfied(PlayerEntity player) {
-        return InventoryUtils.isPlayerCarrying(player, this.stack);
+        return InventoryUtils.isPlayerCarrying(player, this.stack, this.matchNBT);
     }
 
     @Override
     public boolean consume(PlayerEntity player) {
         // Remove this material's item from the player's inventory if it's supposed to be consumed
         if (this.consumed) {
-            return InventoryUtils.consumeItem(player, this.stack);
+            return InventoryUtils.consumeItem(player, this.stack, this.matchNBT);
         } else {
             return true;
         }
@@ -88,6 +101,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         material.stack = this.stack.copy();
         material.consumed = this.consumed;
         material.selected = this.selected;
+        material.matchNBT = this.matchNBT;
         return material;
     }
 
@@ -97,6 +111,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         int result = 1;
         result = prime * result + (this.consumed ? 1231 : 1237);
         result = prime * result + (this.selected ? 1231 : 1237);
+        result = prime * result + (this.matchNBT ? 1231 : 1237);
         result = prime * result + ((this.stack == null) ? 0 : this.stack.hashCode());
         return result;
     }
@@ -117,6 +132,9 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
             return false;
         }
         if (this.selected != other.selected) {
+            return false;
+        }
+        if (this.matchNBT != other.matchNBT) {
             return false;
         }
         if (this.stack == null) {
