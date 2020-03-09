@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
@@ -163,5 +164,10 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
             }
         }
         return true;
+    }
+    
+    public int getTheoryPointReward() {
+        // Default to 25% of a theory for research projects
+        return (IPlayerKnowledge.KnowledgeType.THEORY.getProgression() / 4);
     }
 }

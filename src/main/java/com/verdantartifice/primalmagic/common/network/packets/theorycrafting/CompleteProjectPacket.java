@@ -6,6 +6,8 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -50,7 +52,16 @@ public class CompleteProjectPacket implements IMessageToServer {
                     ((ResearchTableContainer)player.openContainer).consumeWritingImplements();
                 }
 
-                // TODO Determine if current project is a success
+                // Determine if current project is a success
+                AbstractProject project = knowledge.getActiveResearchProject();
+                if (project != null && project.isSatisfied(player) && project.consumeSelectedMaterials(player)) {
+                    if (player.getRNG().nextDouble() < project.getSuccessChance(player)) {
+                        ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());
+                        // TODO play success sound
+                    } else {
+                        // TODO play failure sound
+                    }
+                }
                 
                 // Set new project
                 knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player));

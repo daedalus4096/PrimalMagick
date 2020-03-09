@@ -160,14 +160,14 @@ public class ResearchTableContainer extends Container implements IInventoryChang
     public void consumeWritingImplements() {
         // Don't consume if in creative mode
         if (!this.player.abilities.isCreativeMode) {
-            // Consume paper
-            this.writingInv.decrStackSize(1, 1);
-            
             // Consume ink, if applicable
             ItemStack inkStack = this.getWritingImplementStack();
             if (!inkStack.isEmpty() && inkStack.getItem() instanceof IWritingImplement && ((IWritingImplement)inkStack.getItem()).isDamagedOnUse()) {
                 inkStack.damageItem(1, this.player, (player) -> {});
             }
+
+            // Consume paper
+            this.writingInv.decrStackSize(1, 1);
         }
     }
 }
