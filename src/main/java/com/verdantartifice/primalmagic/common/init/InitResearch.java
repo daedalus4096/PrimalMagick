@@ -12,6 +12,9 @@ import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.ExpeditionProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.MundaneTinkeringProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.NetherExpeditionProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.RecuperationProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.RedstoneTinkeringProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.TradeProject;
 
 import net.minecraft.util.ResourceLocation;
@@ -57,6 +60,9 @@ public class InitResearch {
     private static void initResearchProjects() {
         TheorycraftManager.registerProjectType(TradeProject.TYPE, TradeProject::new);
         TheorycraftManager.registerProjectType(MundaneTinkeringProject.TYPE, MundaneTinkeringProject::new);
+        TheorycraftManager.registerProjectType(RedstoneTinkeringProject.TYPE, RedstoneTinkeringProject::new);
         TheorycraftManager.registerProjectType(ExpeditionProject.TYPE, ExpeditionProject::new);
+        TheorycraftManager.registerProjectType(NetherExpeditionProject.TYPE, NetherExpeditionProject::new);
+        TheorycraftManager.registerProjectType(RecuperationProject.TYPE, RecuperationProject::new);
     }
 }
