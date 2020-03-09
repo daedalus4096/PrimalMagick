@@ -18,11 +18,18 @@ public class TradeProject extends AbstractProject {
     protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
     
     static {
-        OPTIONS.add(new ItemProjectMaterial(Items.EMERALD, true), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.DIAMOND, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.EMERALD, true), 10);
+        OPTIONS.add(new ItemProjectMaterial(Items.DIAMOND, true), 2);
+        OPTIONS.add(new ItemProjectMaterial(Items.COAL, true), 2);
+        OPTIONS.add(new ItemProjectMaterial(Items.COMPASS, true), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.GOLD_INGOT, true), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.IRON_BLOCK, true), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.PUMPKIN, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.STRING, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.LEATHER, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.BOOK, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.QUARTZ, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.WHITE_WOOL, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.IRON_INGOT, true), 1);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class MundaneTinkeringProject extends AbstractProject {
         OPTIONS.add(new ItemProjectMaterial(Items.SMITHING_TABLE, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.STONECUTTER, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.GRINDSTONE, false), 1);
-        OPTIONS.add(new ObservationProjectMaterial(), 1);
+        OPTIONS.add(new ObservationProjectMaterial(), 5);
     }
     
     @Override
