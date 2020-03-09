@@ -275,7 +275,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 if (button instanceof CompleteProjectButton) {
                     // Send a packet to the server and tell the screen to update more frequently until resolved
                     CompleteProjectButton cpb = (CompleteProjectButton)button;
-                    PacketHandler.sendToServer(new CompleteProjectPacket());
+                    PacketHandler.sendToServer(new CompleteProjectPacket(cpb.getScreen().container.windowId));
                     cpb.getScreen().setProgressing();
                 }
             }

@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.PaperSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementSlot;
+import com.verdantartifice.primalmagic.common.theorycrafting.IWritingImplement;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -154,5 +155,19 @@ public class ResearchTableContainer extends Container implements IInventoryChang
     
     public boolean isWritingReady() {
         return this.writingReady.get() != 0;
+    }
+    
+    public void consumeWritingImplements() {
+        // Don't consume if in creative mode
+        if (!this.player.abilities.isCreativeMode) {
+            // Consume paper
+            this.writingInv.decrStackSize(1, 1);
+            
+            // Consume ink, if applicable
+            ItemStack inkStack = this.getWritingImplementStack();
+            if (!inkStack.isEmpty() && inkStack.getItem() instanceof IWritingImplement && ((IWritingImplement)inkStack.getItem()).isDamagedOnUse()) {
+                inkStack.damageItem(1, this.player, (player) -> {});
+            }
+        }
     }
 }
