@@ -102,5 +102,11 @@
         "sounds": [
             "primalmagic:shimmer"
         ]
+    },
+    "writing": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:writing"
+        ]
     }
 }

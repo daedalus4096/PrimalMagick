@@ -1,17 +1,22 @@
 package com.verdantartifice.primalmagic.common.network.packets.theorycrafting;
 
+import java.util.Random;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -54,12 +59,13 @@ public class CompleteProjectPacket implements IMessageToServer {
 
                 // Determine if current project is a success
                 AbstractProject project = knowledge.getActiveResearchProject();
+                Random rand = player.getRNG();
                 if (project != null && project.isSatisfied(player) && project.consumeSelectedMaterials(player)) {
-                    if (player.getRNG().nextDouble() < project.getSuccessChance(player)) {
+                    if (rand.nextDouble() < project.getSuccessChance(player)) {
                         ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());
-                        // TODO play success sound
+                        PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
                     } else {
-                        // TODO play failure sound
+                        PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundEvents.BLOCK_GLASS_BREAK, 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
                     }
                 }
                 

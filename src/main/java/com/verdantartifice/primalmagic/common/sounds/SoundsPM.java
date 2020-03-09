@@ -37,4 +37,5 @@ public class SoundsPM {
     public static final RegistryObject<SoundEvent> COINS = SOUNDS.register("coins", () -> new SoundEvent(new ResourceLocation(PrimalMagic.MODID, "coins")));
     public static final RegistryObject<SoundEvent> EGG_CRACK = SOUNDS.register("egg_crack", () -> new SoundEvent(new ResourceLocation(PrimalMagic.MODID, "egg_crack")));
     public static final RegistryObject<SoundEvent> SHIMMER = SOUNDS.register("shimmer", () -> new SoundEvent(new ResourceLocation(PrimalMagic.MODID, "shimmer")));
+    public static final RegistryObject<SoundEvent> WRITING = SOUNDS.register("writing", () -> new SoundEvent(new ResourceLocation(PrimalMagic.MODID, "writing")));
 }

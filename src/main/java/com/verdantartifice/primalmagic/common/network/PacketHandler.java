@@ -11,6 +11,12 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchF
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSoundPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.CycleActiveSpellPacket;
@@ -23,11 +29,6 @@ import com.verdantartifice.primalmagic.common.network.packets.spellcrafting.SetS
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.CompleteProjectPacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
-import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
-import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
-import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
-import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
-import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -81,6 +82,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, StartProjectPacket.class, StartProjectPacket::encode, StartProjectPacket::decode, StartProjectPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, CompleteProjectPacket.class, CompleteProjectPacket::encode, CompleteProjectPacket::decode, CompleteProjectPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket::encode, SetProjectMaterialSelectionPacket::decode, SetProjectMaterialSelectionPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, PlayClientSoundPacket.class, PlayClientSoundPacket::encode, PlayClientSoundPacket::decode, PlayClientSoundPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
