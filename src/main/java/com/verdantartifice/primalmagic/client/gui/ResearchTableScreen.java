@@ -8,7 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.ProjectMaterialSelectionCheckbox;
-import com.verdantartifice.primalmagic.client.gui.widgets.research_table.ProjectMaterialWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.research_table.ProjectMaterialWidgetFactory;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
@@ -198,7 +198,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                     // Render material checkbox
                     this.addButton(new ProjectMaterialSelectionCheckbox(this.guiLeft + 42 + x, this.guiTop + 93, this, material.isSelected(), index));
                     // Render material widget
-                    this.addButton(new ProjectMaterialWidget(material, this.guiLeft + 58 + x, this.guiTop + 93, material.isSatisfied(player)));
+                    this.addButton(ProjectMaterialWidgetFactory.create(material, this.guiLeft + 58 + x, this.guiTop + 93));
                     
                     x += 38;
                 }
