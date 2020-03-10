@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.client.gui.grimoire.pages.AttunementIndexPage;
-import com.verdantartifice.primalmagic.client.gui.grimoire.pages.StatisticsPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.AttunementIndexPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.StatisticsPage;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.sources.Source;

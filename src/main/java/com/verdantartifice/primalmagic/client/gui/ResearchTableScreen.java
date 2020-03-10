@@ -6,9 +6,9 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.gui.widgets.KnowledgeTotalWidget;
-import com.verdantartifice.primalmagic.client.gui.widgets.ProjectMaterialSelectionCheckbox;
-import com.verdantartifice.primalmagic.client.gui.widgets.ProjectMaterialWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.research_table.ProjectMaterialSelectionCheckbox;
+import com.verdantartifice.primalmagic.client.gui.widgets.research_table.ProjectMaterialWidget;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
