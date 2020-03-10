@@ -35,6 +35,8 @@ public class ProjectFactory {
         String materialType = (tag == null) ? null : tag.getString("MaterialType");
         if (ItemProjectMaterial.TYPE.equals(materialType)) {
             retVal = new ItemProjectMaterial();
+        } else if (ItemTagProjectMaterial.TYPE.equals(materialType)) {
+            retVal = new ItemTagProjectMaterial();
         } else if (ObservationProjectMaterial.TYPE.equals(materialType)) {
             retVal = new ObservationProjectMaterial();
         }

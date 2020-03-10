@@ -3,9 +3,11 @@ package com.verdantartifice.primalmagic.common.theorycrafting.projects;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
+import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Definition of a research project option.
@@ -18,7 +20,7 @@ public class RecuperationProject extends AbstractProject {
     protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
     
     static {
-        OPTIONS.add(new ItemProjectMaterial(Items.RED_BED, false), 2);
+        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation("beds"), false), 2);
         OPTIONS.add(new ItemProjectMaterial(Items.JUKEBOX, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.BOOK, false), 2);
         OPTIONS.add(new ItemProjectMaterial(Items.COOKED_BEEF, true), 1);

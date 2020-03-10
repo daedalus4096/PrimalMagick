@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
+import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -20,6 +21,8 @@ public class ProjectMaterialWidgetFactory {
     public static AbstractProjectMaterialWidget create(AbstractProjectMaterial material, int x, int y) {
         if (material instanceof ItemProjectMaterial) {
             return new ItemProjectMaterialWidget((ItemProjectMaterial)material, x, y);
+        } else if (material instanceof ItemTagProjectMaterial) {
+            return new ItemTagProjectMaterialWidget((ItemTagProjectMaterial)material, x, y);
         } else if (material instanceof ObservationProjectMaterial) {
             return new ObservationProjectMaterialWidget((ObservationProjectMaterial)material, x, y);
         } else {
