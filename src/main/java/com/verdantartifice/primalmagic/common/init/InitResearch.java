@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.AdvancedEssenceAnalysisProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.BrewingExperimentsProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.EssenceAnalysisProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.ExpeditionProject;
@@ -17,7 +18,9 @@ import com.verdantartifice.primalmagic.common.theorycrafting.projects.MundaneTin
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.NetherExpeditionProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.RecuperationProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.RedstoneTinkeringProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.SpellworkProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.TradeProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.WandTinkeringProject;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -68,5 +71,8 @@ public class InitResearch {
         TheorycraftManager.registerProjectType(RecuperationProject.TYPE, RecuperationProject::new);
         TheorycraftManager.registerProjectType(EssenceAnalysisProject.TYPE, EssenceAnalysisProject::new);
         TheorycraftManager.registerProjectType(BrewingExperimentsProject.TYPE, BrewingExperimentsProject::new);
+        TheorycraftManager.registerProjectType(WandTinkeringProject.TYPE, WandTinkeringProject::new);
+        TheorycraftManager.registerProjectType(SpellworkProject.TYPE, SpellworkProject::new);
+        TheorycraftManager.registerProjectType(AdvancedEssenceAnalysisProject.TYPE, AdvancedEssenceAnalysisProject::new);
     }
 }

@@ -722,6 +722,9 @@
     "primalmagic.research_project.name.recuperation": "Rest and Recuperation",
     "primalmagic.research_project.name.essence_analysis": "Essence Analysis",
     "primalmagic.research_project.name.brewing_experiments": "Brewing Experiments",
+    "primalmagic.research_project.name.wand_tinkering": "Wand Tinkering",
+    "primalmagic.research_project.name.spellwork": "Spellwork",
+    "primalmagic.research_project.name.advanced_essence_analysis": "Adv. Essence Analysis",
     
     "primalmagic.research_project.text.trade": "Perhaps some nearby villagers have magical knowledge to trade.  You assemble some goods they'll find valuable.",
     "primalmagic.research_project.text.mundane_tinkering": "You spend some time working with your tools, creating paraphernalia to help with your magical pursuits.",
@@ -731,6 +734,9 @@
     "primalmagic.research_project.text.recuperation": "Too much work dulls the mind.  Perhaps an idea will strike you if you take some time to stop and smell the roses.",
     "primalmagic.research_project.text.essence_analysis": "Magical essence has many amazing properties.  You study some to see how it reacts with other substances.",
     "primalmagic.research_project.text.brewing_experiments": "There are many similarities between brewing and wizardly alchemy.  Perhaps studying the former will give you insight into the latter.",
+    "primalmagic.research_project.text.wand_tinkering": "You experiment with different methods and materials for constructing wands, hoping to refine your understanding of the process.",
+    "primalmagic.research_project.text.spellwork": "You devise and cast some simple spells, hoping to refine your technique.  Practice makes perfect, after all.",
+    "primalmagic.research_project.text.advanced_essence_analysis": "Analysis of basic magical essence was rewarding.  It stands to reason that more advanced essence structures will teach you even more.",
     
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",
