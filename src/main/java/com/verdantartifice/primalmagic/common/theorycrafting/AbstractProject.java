@@ -65,7 +65,7 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
         // Randomly select materials to use from the bag of options, disallowing duplicates
         int attempts = 0;
         int maxMaterials = this.getRequiredMaterialCount(player);
-        WeightedRandomBag<AbstractProjectMaterial> options = this.getMaterialOptions();
+        WeightedRandomBag<AbstractProjectMaterial> options = this.getMaterialOptions(player);
         while (this.activeMaterials.size() < maxMaterials && attempts < 1000) {
             attempts++;
             AbstractProjectMaterial material = options.getRandom(player.getRNG()).copy();
@@ -101,11 +101,12 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
     
     /**
      * Get the weighted material options for this project.
+     * @param player TODO
      * 
      * @return the weighted material options for this project
      */
     @Nonnull
-    protected abstract WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions();
+    protected abstract WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions(PlayerEntity player);
     
     @Nonnull
     public List<AbstractProjectMaterial> getMaterials() {

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial
 import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 
 /**
@@ -37,7 +38,7 @@ public class MundaneTinkeringProject extends AbstractProject {
     }
 
     @Override
-    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions() {
+    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions(PlayerEntity player) {
         return OPTIONS;
     }
 }

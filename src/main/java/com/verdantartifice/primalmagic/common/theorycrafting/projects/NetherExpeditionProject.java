@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMate
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
@@ -44,7 +45,7 @@ public class NetherExpeditionProject extends AbstractProject {
     }
 
     @Override
-    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions() {
+    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions(PlayerEntity player) {
         return OPTIONS;
     }
     
