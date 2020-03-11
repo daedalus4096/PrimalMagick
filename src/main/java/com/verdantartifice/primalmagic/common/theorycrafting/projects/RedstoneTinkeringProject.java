@@ -21,16 +21,17 @@ public class RedstoneTinkeringProject extends AbstractProject {
     protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.parse("BASIC_MAGITECH");
     
     static {
+        OPTIONS.add(new ItemProjectMaterial(Items.DETECTOR_RAIL, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.ACTIVATOR_RAIL, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.DISPENSER, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.DROPPER, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.DAYLIGHT_DETECTOR, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.PISTON, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.HOPPER, false), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.TNT, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.REDSTONE_LAMP, true), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.STICKY_PISTON, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.COMPARATOR, false), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.CLOCK, false), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.OBSERVER, false), 1);
         OPTIONS.add(new ObservationProjectMaterial(), 5);
     }
     
