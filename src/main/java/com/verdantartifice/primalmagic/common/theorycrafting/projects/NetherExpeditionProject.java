@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
+import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Definition of a research project option.
@@ -35,7 +37,7 @@ public class NetherExpeditionProject extends AbstractProject {
         OPTIONS.add(new ItemProjectMaterial(new ItemStack(Items.BREAD, 4), true), 1);
         OPTIONS.add(new ItemProjectMaterial(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true, true), 4);
         OPTIONS.add(new ItemProjectMaterial(Items.MILK_BUCKET, true), 1);
-        OPTIONS.add(new ItemProjectMaterial(new ItemStack(Items.OBSIDIAN, 10), false), 1);
+        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "obsidian"), 10, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.FLINT_AND_STEEL, false), 1);
     }
     

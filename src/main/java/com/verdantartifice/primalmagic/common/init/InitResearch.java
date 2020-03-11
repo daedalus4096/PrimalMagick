@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.BrewingExperimentsProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.EssenceAnalysisProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.ExpeditionProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.MundaneTinkeringProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.NetherExpeditionProject;
@@ -64,5 +66,7 @@ public class InitResearch {
         TheorycraftManager.registerProjectType(ExpeditionProject.TYPE, ExpeditionProject::new);
         TheorycraftManager.registerProjectType(NetherExpeditionProject.TYPE, NetherExpeditionProject::new);
         TheorycraftManager.registerProjectType(RecuperationProject.TYPE, RecuperationProject::new);
+        TheorycraftManager.registerProjectType(EssenceAnalysisProject.TYPE, EssenceAnalysisProject::new);
+        TheorycraftManager.registerProjectType(BrewingExperimentsProject.TYPE, BrewingExperimentsProject::new);
     }
 }
