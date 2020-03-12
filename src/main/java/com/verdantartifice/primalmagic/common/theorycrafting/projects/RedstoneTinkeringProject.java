@@ -29,7 +29,7 @@ public class RedstoneTinkeringProject extends AbstractProject {
         OPTIONS.add(new ItemProjectMaterial(Items.DAYLIGHT_DETECTOR, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.PISTON, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.HOPPER, false), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.REDSTONE_LAMP, true), 1);
+        OPTIONS.add(new ItemProjectMaterial(Items.REDSTONE_LAMP, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.STICKY_PISTON, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.COMPARATOR, false), 1);
         OPTIONS.add(new ItemProjectMaterial(Items.OBSERVER, false), 1);

@@ -39,6 +39,8 @@ public class ProjectFactory {
             retVal = new ItemTagProjectMaterial();
         } else if (ObservationProjectMaterial.TYPE.equals(materialType)) {
             retVal = new ObservationProjectMaterial();
+        } else if (ExperienceProjectMaterial.TYPE.equals(materialType)) {
+            retVal = new ExperienceProjectMaterial();
         }
         if (retVal != null) {
             retVal.deserializeNBT(tag);

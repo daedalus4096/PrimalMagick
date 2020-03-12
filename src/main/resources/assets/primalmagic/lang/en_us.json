@@ -725,6 +725,7 @@
     "primalmagic.research_project.name.wand_tinkering": "Wand Tinkering",
     "primalmagic.research_project.name.spellwork": "Spellwork",
     "primalmagic.research_project.name.advanced_essence_analysis": "Adv. Essence Analysis",
+    "primalmagic.research_project.name.enchanting_studies": "Enchanting Studies",
     
     "primalmagic.research_project.text.trade": "Perhaps some nearby villagers have magical knowledge to trade.  You assemble some goods they'll find valuable.",
     "primalmagic.research_project.text.mundane_tinkering": "You spend some time working with your tools, creating paraphernalia to help with your magical pursuits.",
@@ -737,6 +738,7 @@
     "primalmagic.research_project.text.wand_tinkering": "You experiment with different methods and materials for constructing wands, hoping to refine your understanding of the process.",
     "primalmagic.research_project.text.spellwork": "You devise and cast some simple spells, hoping to refine your technique.  Practice makes perfect, after all.",
     "primalmagic.research_project.text.advanced_essence_analysis": "Analysis of basic magical essence was rewarding.  It stands to reason that more advanced essence structures will teach you even more.",
+    "primalmagic.research_project.text.enchanting_studies": "Enchanting and manaweaving are close siblings.  Studying their similarities and differences could be enlightening.",
     
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",

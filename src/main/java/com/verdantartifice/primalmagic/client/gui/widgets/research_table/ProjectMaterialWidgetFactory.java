@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
+import com.verdantartifice.primalmagic.common.theorycrafting.ExperienceProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
@@ -25,6 +26,8 @@ public class ProjectMaterialWidgetFactory {
             return new ItemTagProjectMaterialWidget((ItemTagProjectMaterial)material, x, y);
         } else if (material instanceof ObservationProjectMaterial) {
             return new ObservationProjectMaterialWidget((ObservationProjectMaterial)material, x, y);
+        } else if (material instanceof ExperienceProjectMaterial) {
+            return new ExperienceProjectMaterialWidget((ExperienceProjectMaterial)material, x, y);
         } else {
             return null;
         }

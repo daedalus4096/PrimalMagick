@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.AdvancedEssenceAnalysisProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.BrewingExperimentsProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.EnchantingStudiesProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.EssenceAnalysisProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.ExpeditionProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.MundaneTinkeringProject;
@@ -74,5 +75,6 @@ public class InitResearch {
         TheorycraftManager.registerProjectType(WandTinkeringProject.TYPE, WandTinkeringProject::new);
         TheorycraftManager.registerProjectType(SpellworkProject.TYPE, SpellworkProject::new);
         TheorycraftManager.registerProjectType(AdvancedEssenceAnalysisProject.TYPE, AdvancedEssenceAnalysisProject::new);
+        TheorycraftManager.registerProjectType(EnchantingStudiesProject.TYPE, EnchantingStudiesProject::new);
     }
 }
