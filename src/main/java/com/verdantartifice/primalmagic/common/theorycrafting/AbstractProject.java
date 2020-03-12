@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -170,5 +171,10 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
     public int getTheoryPointReward() {
         // Default to 25% of a theory for research projects
         return (IPlayerKnowledge.KnowledgeType.THEORY.getProgression() / 4);
+    }
+    
+    @Nullable
+    public Block getAidBlock() {
+        return null;
     }
 }

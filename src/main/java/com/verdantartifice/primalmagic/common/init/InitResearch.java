@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagic.common.theorycrafting.projects.EssenceAna
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.ExpeditionProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.MundaneTinkeringProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.NetherExpeditionProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.projects.ObservationAnalysisProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.RecuperationProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.RedstoneTinkeringProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.projects.SpellworkProject;
@@ -76,5 +77,6 @@ public class InitResearch {
         TheorycraftManager.registerProjectType(SpellworkProject.TYPE, SpellworkProject::new);
         TheorycraftManager.registerProjectType(AdvancedEssenceAnalysisProject.TYPE, AdvancedEssenceAnalysisProject::new);
         TheorycraftManager.registerProjectType(EnchantingStudiesProject.TYPE, EnchantingStudiesProject::new);
+        TheorycraftManager.registerProjectType(ObservationAnalysisProject.TYPE, ObservationAnalysisProject::new);
     }
 }

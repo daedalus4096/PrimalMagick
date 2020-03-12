@@ -73,8 +73,12 @@ public class CompleteProjectPacket implements IMessageToServer {
                 }
                 
                 // Set new project
-                knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player));
-                knowledge.sync(player);
+                if (player.openContainer != null && player.openContainer.windowId == message.windowId && player.openContainer instanceof ResearchTableContainer) {
+                    ((ResearchTableContainer)player.openContainer).getWorldPosCallable().consume((world, blockPos) -> {
+                        knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
+                    });
+                    knowledge.sync(player);
+                }
             });
             
             // Mark the packet as handled so we don't get warning log spam

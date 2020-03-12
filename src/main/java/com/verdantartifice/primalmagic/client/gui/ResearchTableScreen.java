@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.gui.widgets.research_table.AidUnlockWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.ProjectMaterialSelectionCheckbox;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.ProjectMaterialWidgetFactory;
@@ -189,6 +190,11 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 this.completeProjectButton = this.addButton(new CompleteProjectButton(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText(), this));
                 this.completeProjectButton.active = this.project.isSatisfied(player);
                 
+                // Render unlock widget, if applicable
+                if (this.project.getAidBlock() != null) {
+                    this.addButton(new AidUnlockWidget(this.guiLeft + 186, this.guiTop + 9, this.project.getAidBlock()));
+                }
+                
                 // Render material widgets
                 int materialCount = this.project.getMaterials().size();
                 int x = (152 - (38 * materialCount)) / 2;
@@ -245,7 +251,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
                 if (button instanceof StartProjectButton) {
                     // Send a packet to the server and tell the screen to update more frequently until resolved
                     StartProjectButton spb = (StartProjectButton)button;
-                    PacketHandler.sendToServer(new StartProjectPacket());
+                    PacketHandler.sendToServer(new StartProjectPacket(spb.getScreen().container.windowId));
                     spb.getScreen().setProgressing();
                 }
             }

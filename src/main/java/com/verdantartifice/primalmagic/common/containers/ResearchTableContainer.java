@@ -170,4 +170,9 @@ public class ResearchTableContainer extends Container implements IInventoryChang
             this.writingInv.decrStackSize(1, 1);
         }
     }
+    
+    @Nonnull
+    public IWorldPosCallable getWorldPosCallable() {
+        return this.worldPosCallable;
+    }
 }

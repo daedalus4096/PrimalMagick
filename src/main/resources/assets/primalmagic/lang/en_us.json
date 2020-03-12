@@ -651,6 +651,7 @@
     "primalmagic.research_table.start": "Start Project",
     "primalmagic.research_table.completing": "Completing...",
     "primalmagic.research_table.complete": "Complete Project (%1$s%%)",
+    "primalmagic.research_table.unlock": "Unlocked by: %1$s",
     
     "primalmagic.toast.title": "Research Complete!",
     
@@ -726,6 +727,7 @@
     "primalmagic.research_project.name.spellwork": "Spellwork",
     "primalmagic.research_project.name.advanced_essence_analysis": "Adv. Essence Analysis",
     "primalmagic.research_project.name.enchanting_studies": "Enchanting Studies",
+    "primalmagic.research_project.name.observation_analysis": "Observation Analysis",
     
     "primalmagic.research_project.text.trade": "Perhaps some nearby villagers have magical knowledge to trade.  You assemble some goods they'll find valuable.",
     "primalmagic.research_project.text.mundane_tinkering": "You spend some time working with your tools, creating paraphernalia to help with your magical pursuits.",
@@ -739,6 +741,7 @@
     "primalmagic.research_project.text.spellwork": "You devise and cast some simple spells, hoping to refine your technique.  Practice makes perfect, after all.",
     "primalmagic.research_project.text.advanced_essence_analysis": "Analysis of basic magical essence was rewarding.  It stands to reason that more advanced essence structures will teach you even more.",
     "primalmagic.research_project.text.enchanting_studies": "Enchanting and manaweaving are close siblings.  Studying their similarities and differences could be enlightening.",
+    "primalmagic.research_project.text.observation_analysis": "A more thorough analysis of your observations may yield surprising discoveries.",
     
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",
