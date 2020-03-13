@@ -40,8 +40,8 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
         ItemStack toDisplay = this.getStackToDisplay();
         if (!toDisplay.isEmpty()) {
             GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage(), false);
-            if (toDisplay.getCount() > 1) {
-                ITextComponent amountText = new StringTextComponent(Integer.toString(toDisplay.getCount()));
+            if (this.material.getQuantity() > 1) {
+                ITextComponent amountText = new StringTextComponent(Integer.toString(this.material.getQuantity()));
                 int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
                 RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.pushMatrix();

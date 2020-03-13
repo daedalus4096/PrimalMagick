@@ -46,6 +46,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
         if (this.tagName != null) {
             tag.putString("TagName", this.tagName.toString());
         }
+        tag.putInt("Quantity", this.quantity);
         tag.putBoolean("Consumed", this.consumed);
         return tag;
     }
@@ -58,6 +59,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
         } else {
             this.tagName = null;
         }
+        this.quantity = nbt.getInt("Quantity");
         this.consumed = nbt.getBoolean("Consumed");
     }
 
