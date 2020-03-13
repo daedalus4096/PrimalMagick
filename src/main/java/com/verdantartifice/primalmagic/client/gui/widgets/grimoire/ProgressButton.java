@@ -20,7 +20,7 @@ public class ProgressButton extends Button {
     protected GrimoireScreen screen;
     
     public ProgressButton(ResearchStage stage, int widthIn, int heightIn, String text, GrimoireScreen screen) {
-        super(widthIn, heightIn, 119, 18, text, new Handler());
+        super(widthIn, heightIn, 119, 20, text, new Handler());
         this.stage = stage;
         this.screen = screen;
     }
