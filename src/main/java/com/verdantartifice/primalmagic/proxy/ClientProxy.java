@@ -102,6 +102,8 @@ public class ClientProxy extends CommonProxy {
         RenderTypeLookup.setRenderLayer(BlocksPM.SUNWOOD_WOOD.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), RenderType.translucent());
+        
+        RenderTypeLookup.setRenderLayer(BlocksPM.SALT_TRAIL.get(), RenderType.cutout());
     }
     
     @Override

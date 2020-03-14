@@ -73,6 +73,7 @@
     "block.primalmagic.infused_stone_moon": "Moon-Infused Stone",
     "block.primalmagic.glow_field": "Glow Field",
     "block.primalmagic.research_table": "Research Table",
+    "block.primalmagic.salt_trail": "Salt Trail",
     
     "item.primalmagic.grimoire": "Grimoire",
     "item.primalmagic.arcanometer": "Arcanometer",
@@ -119,6 +120,7 @@
     "item.primalmagic.heartwood": "Heartwood",
     "item.primalmagic.enchanted_ink": "Enchanted Ink",
     "item.primalmagic.enchanted_ink_and_quill": "Enchanted Ink and Quill",
+    "item.primalmagic.refined_salt": "Refined Salt",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",

@@ -6,6 +6,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -19,16 +20,23 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -84,8 +92,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         return SHAPES[this.getAABBIndex(state)];
     }
 
-    @Override
-    public boolean canConnectSalt(BlockState state, IBlockReader world, BlockPos pos, Direction side) {
+    protected boolean canConnectTo(BlockState state, IBlockReader world, BlockPos pos, Direction side) {
         Block block = state.getBlock();
         if (block == BlocksPM.SALT_TRAIL.get()) {
             return true;
@@ -104,7 +111,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         BlockState upState = world.getBlockState(upPos);
         if (!upState.isNormalCube(world, upPos)) {
             boolean isSolid = faceState.isSolidSide(world, facePos, Direction.UP);
-            boolean canConnectFaceUp = this.canConnectSalt(world.getBlockState(facePos.up()), world, facePos.up(), null);
+            boolean canConnectFaceUp = this.canConnectTo(world.getBlockState(facePos.up()), world, facePos.up(), null);
             if (isSolid && canConnectFaceUp) {
                 if (faceState.isCollisionShapeOpaque(world, facePos)) {
                     return SaltSide.UP;
@@ -114,9 +121,9 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
             }
         }
         
-        boolean canConnectToFace = this.canConnectSalt(faceState, world, facePos, face);
+        boolean canConnectToFace = this.canConnectTo(faceState, world, facePos, face);
         boolean isFaceNormal = faceState.isNormalCube(world, facePos);
-        boolean canConnectFaceDown = this.canConnectSalt(world.getBlockState(facePos.down()), world, facePos.down(), null);
+        boolean canConnectFaceDown = this.canConnectTo(world.getBlockState(facePos.down()), world, facePos.down(), null);
         if (!canConnectToFace && (isFaceNormal || !canConnectFaceDown)) {
             return SaltSide.NONE;
         } else {
@@ -350,8 +357,19 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     }
     
     protected boolean isPowerSourceAt(IBlockReader world, BlockPos pos, Direction side) {
-        // TODO
-        return false;
+        BlockPos offsetPos = pos.offset(side);
+        BlockState offsetState = world.getBlockState(offsetPos);
+        boolean isOffsetNormal = offsetState.isNormalCube(world, offsetPos);
+        BlockPos upPos = pos.up();
+        boolean isUpNormal = world.getBlockState(upPos).isNormalCube(world, upPos);
+        
+        if (!isUpNormal && isOffsetNormal && this.canConnectTo(world.getBlockState(offsetPos.up()), world, offsetPos.up(), null)) {
+            return true;
+        } else if (this.canConnectTo(offsetState, world, offsetPos, side)) {
+            return true;
+        } else {
+            return !isOffsetNormal && this.canConnectTo(world.getBlockState(offsetPos.down()), world, offsetPos.down(), null);
+        }
     }
     
     @Override
@@ -382,5 +400,60 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         }
     }
     
+    @Override
+    public boolean canProvideSaltPower(BlockState state) {
+        return this.canProvidePower;
+    }
     
+    public static int colorMultiplier(int power) {
+        float powerRatio = (float)power / 15.0F;
+        float colorRatio = (power == 0) ? 0.4F : (powerRatio * 0.5F) + 0.5F;
+        int color = MathHelper.clamp((int)(colorRatio * 255.0F), 0, 255);
+        return -16777216 | color << 16 | color << 8 | color;
+    }
+    
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+        int power = state.get(POWER);
+        if (power > 0) {
+            double x = (double)pos.getX() + 0.5D + ((double)rand.nextFloat() - 0.5D) * 0.2D;
+            double y = (double)((float)pos.getY() + 0.0625F);
+            double z = (double)pos.getZ() + 0.5D + ((double)rand.nextFloat() - 0.5D) * 0.2D;
+            float powerRatio = (float)power / 15.0F;
+            float colorRatio = (power == 0) ? 0.4F : (powerRatio * 0.5F) + 0.5F;
+            world.addParticle(new RedstoneParticleData(colorRatio, colorRatio, colorRatio, 1.0F), x, y, z, 0.0D, 0.0D, 0.0D);
+        }
+    }
+    
+    @Override
+    public BlockState rotate(BlockState state, Rotation rot) {
+        switch(rot) {
+        case CLOCKWISE_180:
+            return state.with(NORTH, state.get(SOUTH)).with(EAST, state.get(WEST)).with(SOUTH, state.get(NORTH)).with(WEST, state.get(EAST));
+        case COUNTERCLOCKWISE_90:
+            return state.with(NORTH, state.get(EAST)).with(EAST, state.get(SOUTH)).with(SOUTH, state.get(WEST)).with(WEST, state.get(NORTH));
+        case CLOCKWISE_90:
+            return state.with(NORTH, state.get(WEST)).with(EAST, state.get(NORTH)).with(SOUTH, state.get(EAST)).with(WEST, state.get(SOUTH));
+        default:
+            return state;
+        }
+    }
+    
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+        switch(mirrorIn) {
+        case LEFT_RIGHT:
+            return state.with(NORTH, state.get(SOUTH)).with(SOUTH, state.get(NORTH));
+        case FRONT_BACK:
+            return state.with(EAST, state.get(WEST)).with(WEST, state.get(EAST));
+        default:
+            return state;
+        }
+    }
+    
+    @Override
+    protected void fillStateContainer(Builder<Block, BlockState> builder) {
+        builder.add(NORTH, EAST, SOUTH, WEST, POWER);
+    }
 }

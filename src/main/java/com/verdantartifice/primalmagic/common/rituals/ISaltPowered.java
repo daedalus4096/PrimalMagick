@@ -25,7 +25,13 @@ public interface ISaltPowered {
      * @param side The side that is trying to make the connection, CAN BE NULL
      * @return True to make the connection
      */
-    public boolean canConnectSalt(@Nonnull BlockState state, @Nonnull IBlockReader world, @Nonnull BlockPos pos, @Nullable Direction side);
+    public default boolean canConnectSalt(@Nonnull BlockState state, @Nonnull IBlockReader world, @Nonnull BlockPos pos, @Nullable Direction side) {
+        return this.canProvideSaltPower(state) && side != null;
+    }
+    
+    public default boolean canProvideSaltPower(@Nonnull BlockState state) {
+        return false;
+    }
     
     /**
      * Called to determine whether to allow the a block to handle its own indirect salt power rather than using the default rules.
