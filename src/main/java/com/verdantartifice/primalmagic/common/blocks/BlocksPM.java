@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLogBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodPillarBlock;
@@ -146,4 +147,5 @@ public class BlocksPM {
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
+    public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
 }
