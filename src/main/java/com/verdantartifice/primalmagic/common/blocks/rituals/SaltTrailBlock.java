@@ -407,7 +407,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     
     public static int colorMultiplier(int power) {
         float powerRatio = (float)power / 15.0F;
-        float colorRatio = (power == 0) ? 0.4F : (powerRatio * 0.5F) + 0.5F;
+        float colorRatio = (power == 0) ? 0.6F : (powerRatio * 0.3F) + 0.7F;
         int color = MathHelper.clamp((int)(colorRatio * 255.0F), 0, 255);
         return -16777216 | color << 16 | color << 8 | color;
     }
@@ -421,7 +421,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
             double y = (double)((float)pos.getY() + 0.0625F);
             double z = (double)pos.getZ() + 0.5D + ((double)rand.nextFloat() - 0.5D) * 0.2D;
             float powerRatio = (float)power / 15.0F;
-            float colorRatio = (power == 0) ? 0.4F : (powerRatio * 0.5F) + 0.5F;
+            float colorRatio = (power == 0) ? 0.6F : (powerRatio * 0.3F) + 0.7F;
             world.addParticle(new RedstoneParticleData(colorRatio, colorRatio, colorRatio, 1.0F), x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
