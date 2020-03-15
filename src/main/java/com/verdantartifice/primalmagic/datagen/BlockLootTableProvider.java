@@ -38,6 +38,7 @@ import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraft.world.storage.loot.conditions.MatchTool;
 import net.minecraft.world.storage.loot.conditions.SurvivesExplosion;
 import net.minecraft.world.storage.loot.conditions.TableBonus;
+import net.minecraft.world.storage.loot.functions.ApplyBonus;
 import net.minecraft.world.storage.loot.functions.ExplosionDecay;
 import net.minecraft.world.storage.loot.functions.SetCount;
 
@@ -101,6 +102,13 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
                 .acceptCondition(SurvivesExplosion.builder());
         LootTable.Builder tableBuilder = LootTable.builder().addLootPool(stonePoolBuilder).addLootPool(dustPoolBuilder);
         this.lootTables.put(stoneBlock, tableBuilder);
+    }
+    
+    protected void registerGemOreTable(Block oreBlock, Item gemItem, float minGems, float maxGems) {
+        ILootCondition.IBuilder silkTouch = MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))));
+        LootEntry.Builder<?> gemEntryBuilder = ItemLootEntry.builder(gemItem).acceptFunction(SetCount.builder(RandomValueRange.of(minGems, maxGems))).acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE)).acceptFunction(ExplosionDecay.builder());
+        LootTable.Builder tableBuilder = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(oreBlock).acceptCondition(silkTouch).alternatively(gemEntryBuilder)));
+        this.lootTables.put(oreBlock, tableBuilder);
     }
     
     @Override

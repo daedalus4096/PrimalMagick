@@ -131,6 +131,10 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> WAND_CHARGER = ITEMS.register("wand_charger", () -> new BlockItem(BlocksPM.WAND_CHARGER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BurnableBlockItem> RESEARCH_TABLE = ITEMS.register("research_table", () -> new BurnableBlockItem(BlocksPM.RESEARCH_TABLE.get(), 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> RITUAL_ALTAR = ITEMS.register("ritual_altar", () -> new BlockItem(BlocksPM.RITUAL_ALTAR.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+
+    // Register miscellaneous block items
+    public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> ROCK_SALT_ORE = ITEMS.register("rock_salt_ore", () -> new BlockItem(BlocksPM.ROCK_SALT_ORE.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);
@@ -142,7 +146,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> HEARTWOOD = ITEMS.register("heartwood", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> ENCHANTED_INK = ITEMS.register("enchanted_ink", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> ENCHANTED_INK_AND_QUILL = ITEMS.register("enchanted_ink_and_quill", EnchantedInkAndQuill::new);
-    public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> ROCK_SALT = ITEMS.register("rock_salt", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

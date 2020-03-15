@@ -75,6 +75,7 @@
     "block.primalmagic.research_table": "Research Table",
     "block.primalmagic.salt_trail": "Salt Trail",
     "block.primalmagic.ritual_altar": "Ritual Altar",
+    "block.primalmagic.rock_salt_ore": "Rock Salt Ore",
     
     "item.primalmagic.grimoire": "Grimoire",
     "item.primalmagic.arcanometer": "Arcanometer",
@@ -121,6 +122,7 @@
     "item.primalmagic.heartwood": "Heartwood",
     "item.primalmagic.enchanted_ink": "Enchanted Ink",
     "item.primalmagic.enchanted_ink_and_quill": "Enchanted Ink and Quill",
+    "item.primalmagic.rock_salt": "Rock Salt",
     "item.primalmagic.refined_salt": "Refined Salt",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",

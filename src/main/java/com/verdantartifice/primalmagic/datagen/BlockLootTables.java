@@ -32,6 +32,8 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.RESEARCH_TABLE.get());
         this.registerBasicTable(BlocksPM.RITUAL_ALTAR.get());
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());
+        
+        this.registerGemOreTable(BlocksPM.ROCK_SALT_ORE.get(), ItemsPM.ROCK_SALT.get(), 3.0F, 4.0F);
     }
     
     private void registerMarbleLootTables() {

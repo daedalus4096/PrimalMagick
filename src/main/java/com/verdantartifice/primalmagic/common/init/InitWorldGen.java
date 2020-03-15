@@ -28,9 +28,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class InitWorldGen {
     public static void initWorldGen() {
-        // Add raw marble seams to all non-Nether, non-End biomes
-        ForgeRegistries.BIOMES.getValues().stream().filter(InitWorldGen::shouldSpawnMarble).forEach((biome) -> {
+        // Add raw marble and rock salt seams to all non-Nether, non-End biomes
+        ForgeRegistries.BIOMES.getValues().stream().filter(InitWorldGen::isOverworldBiome).forEach((biome) -> {
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.MARBLE_RAW.get().getDefaultState(), 33)).withPlacement(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(10, 0, 0, 80))));
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.ROCK_SALT_ORE.get().getDefaultState(), 9)).withPlacement(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(20, 0, 0, 128))));
         });
         
         // Add Earth shrines to plains and savanna type biomes
@@ -76,9 +77,9 @@ public class InitWorldGen {
         });
     }
 
-    private static boolean shouldSpawnMarble(@Nonnull Biome biome) {
+    private static boolean isOverworldBiome(@Nonnull Biome biome) {
         if (biome.equals(Biomes.STONE_SHORE)) {
-            // Stone Shore has a category of None, but it still has default stone types
+            // Stone Shore has a category of None, but it still exists in the Overworld
             return true;
         } else {
             Biome.Category cat = biome.getCategory();

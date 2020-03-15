@@ -49,6 +49,7 @@ public class Recipes extends RecipeProvider {
         this.registerMoonwoodRecipes(consumer);
         this.registerEssenceUpgradeRecipes(consumer);
         this.registerEssenceDowngradeRecipes(consumer);
+        this.registerSaltRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -615,5 +616,14 @@ public class Recipes extends RecipeProvider {
                 }
             }
         }
+    }
+
+    protected void registerSaltRecipes(Consumer<IFinishedRecipe> consumer) {
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlocksPM.ROCK_SALT_ORE.get()), ItemsPM.ROCK_SALT.get(), 0.7F, 200)
+            .addCriterion("has_rock_salt_ore", this.hasItem(BlocksPM.ROCK_SALT_ORE.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "rock_salt_from_smelting"));
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsPM.ROCK_SALT.get()), ItemsPM.REFINED_SALT.get(), 0.15F, 200)
+            .addCriterion("has_rock_salt", this.hasItem(ItemsPM.ROCK_SALT.get()))
+            .build(consumer);
     }
 }
