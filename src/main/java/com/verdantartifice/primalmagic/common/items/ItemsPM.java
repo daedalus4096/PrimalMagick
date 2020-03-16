@@ -24,8 +24,10 @@ import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockNamedItem;
+import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
+import net.minecraft.item.SoupItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -135,6 +137,19 @@ public class ItemsPM {
     // Register miscellaneous block items
     public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> ROCK_SALT_ORE = ITEMS.register("rock_salt_ore", () -> new BlockItem(BlocksPM.ROCK_SALT_ORE.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    
+    // Register salted food items
+    public static final RegistryObject<Item> SALTED_BAKED_POTATO = ITEMS.register("salted_baked_potato", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(6).saturation(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_BEEF = ITEMS.register("salted_cooked_beef", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(10).saturation(0.96F).meat().build())));
+    public static final RegistryObject<Item> SALTED_COOKED_CHICKEN = ITEMS.register("salted_cooked_chicken", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(7).saturation(0.72F).meat().build())));
+    public static final RegistryObject<Item> SALTED_COOKED_COD = ITEMS.register("salted_cooked_cod", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(6).saturation(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_MUTTON = ITEMS.register("salted_cooked_mutton", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(7).saturation(0.96F).meat().build())));
+    public static final RegistryObject<Item> SALTED_COOKED_PORKCHOP = ITEMS.register("salted_cooked_porkchop", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(10).saturation(0.96F).meat().build())));
+    public static final RegistryObject<Item> SALTED_COOKED_RABBIT = ITEMS.register("salted_cooked_rabbit", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(6).saturation(0.72F).meat().build())));
+    public static final RegistryObject<Item> SALTED_COOKED_SALMON = ITEMS.register("salted_cooked_salmon", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(7).saturation(0.96F).build())));
+    public static final RegistryObject<SoupItem> SALTED_BEETROOT_SOUP = ITEMS.register("salted_beetroot_soup", () -> new SoupItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).food(new Food.Builder().hunger(7).saturation(0.72F).build())));
+    public static final RegistryObject<SoupItem> SALTED_MUSHROOM_STEW = ITEMS.register("salted_mushroom_stew", () -> new SoupItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).food(new Food.Builder().hunger(7).saturation(0.72F).build())));
+    public static final RegistryObject<SoupItem> SALTED_RABBIT_STEW = ITEMS.register("salted_rabbit_stew", () -> new SoupItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).food(new Food.Builder().hunger(12).saturation(0.72F).build())));
     
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);

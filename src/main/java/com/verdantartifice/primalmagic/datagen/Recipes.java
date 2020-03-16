@@ -625,5 +625,71 @@ public class Recipes extends RecipeProvider {
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsPM.ROCK_SALT.get()), ItemsPM.REFINED_SALT.get(), 0.15F, 200)
             .addCriterion("has_rock_salt", this.hasItem(ItemsPM.ROCK_SALT.get()))
             .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_BAKED_POTATO.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.BAKED_POTATO)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_baked_potato", this.hasItem(Items.BAKED_POTATO))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_COOKED_BEEF.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.COOKED_BEEF)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_cooked_beef", this.hasItem(Items.COOKED_BEEF))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_COOKED_CHICKEN.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.COOKED_CHICKEN)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_cooked_chicken", this.hasItem(Items.COOKED_CHICKEN))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_COOKED_COD.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.COOKED_COD)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_cooked_cod", this.hasItem(Items.COOKED_COD))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_COOKED_MUTTON.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.COOKED_MUTTON)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_cooked_mutton", this.hasItem(Items.COOKED_MUTTON))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.COOKED_PORKCHOP)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_cooked_porkchop", this.hasItem(Items.COOKED_PORKCHOP))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_COOKED_RABBIT.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.COOKED_RABBIT)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_cooked_rabbit", this.hasItem(Items.COOKED_RABBIT))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_COOKED_SALMON.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.COOKED_SALMON)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_cooked_salmon", this.hasItem(Items.COOKED_SALMON))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_BEETROOT_SOUP.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.BEETROOT_SOUP)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_beetroot_soup", this.hasItem(Items.BEETROOT_SOUP))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_MUSHROOM_STEW.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.MUSHROOM_STEW)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_mushroom_stew", this.hasItem(Items.MUSHROOM_STEW))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_RABBIT_STEW.get())
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(Items.RABBIT_STEW)
+            .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
+            .addCriterion("has_rabbit_stew", this.hasItem(Items.RABBIT_STEW))
+            .build(consumer);
     }
 }
