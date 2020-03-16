@@ -314,6 +314,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_SUN.get()), new SourceList().add(Source.SUN, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.ANCIENT_FONT_MOON.get()), new SourceList().add(Source.MOON, 20));
         AffinityManager.registerAffinities(new ItemStack(BlocksPM.CALCINATOR.get()), AffinityManager.getAffinities(new ItemStack(Blocks.FURNACE), server));
+        AffinityManager.registerAffinities(new ItemStack(BlocksPM.ROCK_SALT_ORE.get()), new SourceList().add(Source.EARTH, 10));
         
         // Register Primal Magic item affinities
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.GRIMOIRE.get()), AffinityManager.getAffinities(new ItemStack(Items.ENCHANTED_BOOK), server));
@@ -321,6 +322,8 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.BLOODY_FLESH.get()), new SourceList().add(Source.BLOOD, 20));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HALLOWED_ORB.get()), new SourceList().add(Source.HALLOWED, 20));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.ENCHANTED_INK.get()), new SourceList().add(Source.SEA, 3).add(Source.MOON, 3));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.ROCK_SALT.get()), new SourceList().add(Source.EARTH, 5));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.REFINED_SALT.get()), new SourceList().add(Source.EARTH, 5));
 
         // Register Primal Magic essence affinities
         for (Item tagItem : ItemTagsPM.ESSENCES.getAllElements()) {
