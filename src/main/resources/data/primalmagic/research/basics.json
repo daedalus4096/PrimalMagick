@@ -8,7 +8,7 @@
             "stages": [
                 {
                     "text": "primalmagic.research.first_steps.text.stage.1",
-                    "required_item": ["minecraft:stick"],
+                    "required_craft": ["primalmagic:arcane_workbench"],
                     "recipes": ["primalmagic:mundane_wand"]
                 },
                 {

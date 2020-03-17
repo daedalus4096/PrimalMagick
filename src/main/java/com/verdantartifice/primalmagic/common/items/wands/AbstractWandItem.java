@@ -347,6 +347,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+        // Only process on server side
+        if (context.getWorld().isRemote) {
+            return ActionResultType.PASS;
+        }
+        
         // Bypass wand functionality if the player is sneaking
         if (context.getPlayer().isShiftKeyDown()) {
             return ActionResultType.PASS;
