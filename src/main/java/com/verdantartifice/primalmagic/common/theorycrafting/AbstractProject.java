@@ -102,8 +102,8 @@ public abstract class AbstractProject implements INBTSerializable<CompoundNBT> {
     
     /**
      * Get the weighted material options for this project.
-     * @param player TODO
      * 
+     * @param player the player doing the research project
      * @return the weighted material options for this project
      */
     @Nonnull

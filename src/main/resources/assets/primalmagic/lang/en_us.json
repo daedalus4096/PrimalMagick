@@ -156,11 +156,14 @@
     "effect.primalmagic.weakened_soul": "Weakened Soul",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
+    "primalmagic.wand_core.unknown.name": "Unknown",
     
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
+    "primalmagic.wand_cap.unknown.name": "Unknown",
     
     "primalmagic.wand_gem.apprentice.name": "Apprentice's",
     "primalmagic.wand_gem.creative.name": "Creative",
+    "primalmagic.wand_gem.unknown.name": "Unknown",
     
     "primalmagic.research_discipline.BASICS": "Fundamentals",
     "primalmagic.research_discipline.ALCHEMY": "Alchemy",

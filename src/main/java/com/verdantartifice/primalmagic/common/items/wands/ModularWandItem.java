@@ -23,7 +23,6 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
 
@@ -106,13 +105,12 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
         // A modular wand's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Wand")
-        // TODO Use translation text components for unknown components
         WandCore core = this.getWandCore(stack);
-        ITextComponent coreName = (core == null) ? new StringTextComponent("Unknown") : new TranslationTextComponent(core.getNameTranslationKey());
+        ITextComponent coreName = (core == null) ? new TranslationTextComponent("primalmagic.wand_core.unknown.name") : new TranslationTextComponent(core.getNameTranslationKey());
         WandCap cap = this.getWandCap(stack);
-        ITextComponent capName = (cap == null) ? new StringTextComponent("Unknown") : new TranslationTextComponent(cap.getNameTranslationKey());
+        ITextComponent capName = (cap == null) ? new TranslationTextComponent("primalmagic.wand_cap.unknown.name") : new TranslationTextComponent(cap.getNameTranslationKey());
         WandGem gem = this.getWandGem(stack);
-        ITextComponent gemName = (gem == null) ? new StringTextComponent("Unknown's") : new TranslationTextComponent(gem.getNameTranslationKey());
+        ITextComponent gemName = (gem == null) ? new TranslationTextComponent("primalmagic.wand_gem.unknown.name") : new TranslationTextComponent(gem.getNameTranslationKey());
         return new TranslationTextComponent("item.primalmagic.modular_wand", gemName, capName, coreName);
     }
     
