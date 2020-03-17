@@ -9,7 +9,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Particle data, specifically target point, for spell bolts
@@ -57,10 +57,9 @@ public class SpellBoltParticleData implements IParticleData {
         buffer.writeDouble(this.target.z);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public String getParameters() {
-        return String.format(Locale.ROOT, "%s %d %d %d", Registry.PARTICLE_TYPE.getKey(this.getType()), this.target.x, this.target.y, this.target.z);
+        return String.format(Locale.ROOT, "%s %d %d %d", ForgeRegistries.PARTICLE_TYPES.getKey(this.getType()), this.target.x, this.target.y, this.target.z);
     }
 
     public Vec3d getTargetVec() {

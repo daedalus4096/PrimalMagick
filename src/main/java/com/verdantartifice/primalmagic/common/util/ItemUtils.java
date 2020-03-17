@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Collection of utility methods pertaining to items.
@@ -56,7 +56,6 @@ public class ItemUtils {
      * @param str the string to be parsed
      * @return the itemstack represented by the given string, or the empty stack upon parse failure
      */
-    @SuppressWarnings("deprecation")
     @Nonnull
     public static ItemStack parseItemStack(@Nullable String str) {
         if (str == null) {
@@ -87,7 +86,7 @@ public class ItemUtils {
         ItemStack stack = ItemStack.EMPTY;
         try {
             // Get the named item definition from the item registry
-            Item item = Registry.ITEM.getOrDefault(new ResourceLocation(name));
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
             if (item != null) {
                 stack = new ItemStack(item, count);
                 if (nbt != null) {
