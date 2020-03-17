@@ -17,7 +17,7 @@ public abstract class AbstractRecipePage extends AbstractPage {
     
     @Override
     public void render(int side, int x, int y, int mouseX, int mouseY) {
-        this.renderTitle(side, x, y, mouseX, mouseY);
+        this.renderTitle(side, x, y, mouseX, mouseY, null);
     }
 
     @Override

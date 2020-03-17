@@ -54,7 +54,7 @@ public class DisciplineIndexPage extends AbstractPage {
     public void render(int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(side, x, y, mouseX, mouseY);
+            this.renderTitle(side, x, y, mouseX, mouseY, null);
         }
     }
     

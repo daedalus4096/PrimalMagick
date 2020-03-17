@@ -24,7 +24,7 @@ public class OtherIndexPage extends AbstractPage {
     @Override
     public void render(int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
-        this.renderTitle(side, x, y, mouseX, mouseY);
+        this.renderTitle(side, x, y, mouseX, mouseY, null);
     }
 
     @Override

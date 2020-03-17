@@ -131,7 +131,7 @@ public class RequirementsPage extends AbstractPage {
     @Override
     public void render(int side, int x, int y, int mouseX, int mouseY) {
         // Render page title
-        this.renderTitle(side, x, y, mouseX, mouseY);
+        this.renderTitle(side, x, y, mouseX, mouseY, null);
         y += 53;
         
         RenderSystem.enableBlend();

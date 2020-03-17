@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.awt.Color;
 
+import javax.annotation.Nullable;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -54,7 +56,7 @@ public abstract class AbstractPage extends AbstractGui {
         return true;
     }
     
-    protected void renderTitle(int side, int x, int y, int mouseX, int mouseY) {
+    protected void renderTitle(int side, int x, int y, int mouseX, int mouseY, @Nullable ResourceLocation icon) {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();
@@ -64,17 +66,33 @@ public abstract class AbstractPage extends AbstractGui {
         }
         this.blit(x + 10 + (side * 140), y + 35, 24, 184, 96, 5);   // Render the separator bar below the title text
         String headerText = new TranslationTextComponent(this.getTitleTranslationKey()).getFormattedText();
-        int offset = mc.fontRenderer.getStringWidth(headerText);
+        int width = mc.fontRenderer.getStringWidth(headerText);
         int indent = 124;
-        if (offset <= 124) {
-            mc.fontRenderer.drawString(headerText, x - 3 + (side * 140) + (indent / 2) - (offset / 2), y + 25, Color.BLACK.getRGB());
+        if (width <= 124) {
+            mc.fontRenderer.drawString(headerText, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB());
+            if (icon != null) {
+                RenderSystem.pushMatrix();
+                RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21, 0.0F);
+                RenderSystem.scalef(0.06F, 0.06F, 0.06F);
+                mc.getTextureManager().bindTexture(icon);
+                this.blit(0, 0, 0, 0, 255, 255);
+                RenderSystem.popMatrix();
+            }
         } else {
             // Scale down the title text if necessary to make it fit on one line
-            float scale = 124.0F / offset;
+            float scale = 124.0F / width;
             RenderSystem.pushMatrix();
-            RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (offset / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
+            RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
             RenderSystem.scalef(scale, scale, scale);
             mc.fontRenderer.drawString(headerText, 0, 0, Color.BLACK.getRGB());
+            if (icon != null) {
+                RenderSystem.pushMatrix();
+                RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21, 0.0F);
+                RenderSystem.scalef(0.06F, 0.06F, 0.06F);
+                mc.getTextureManager().bindTexture(icon);
+                this.blit(0, 0, 0, 0, 255, 255);
+                RenderSystem.popMatrix();
+            }
             RenderSystem.popMatrix();
         }
     }
