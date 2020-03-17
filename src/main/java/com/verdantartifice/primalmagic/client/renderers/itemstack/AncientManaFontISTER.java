@@ -82,8 +82,6 @@ public class AncientManaFontISTER extends ItemStackTileEntityRenderer {
                 PrimalMagic.LOGGER.catching(e);
             }
             
-            // TODO Disable lighting here?
-            
             // Draw the font core
             matrixStack.push();
             matrixStack.translate(0.5D, 0.5D, 0.5D);

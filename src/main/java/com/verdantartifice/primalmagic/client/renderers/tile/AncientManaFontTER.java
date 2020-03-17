@@ -61,8 +61,6 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
             TextureAtlasSprite sprite = Minecraft.getInstance().getTextureGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(TEXTURE);
             IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
             
-            // TODO Disable lighting here?
-
             matrixStack.push();
             matrixStack.translate(0.5D, 0.5D, 0.5D);
             matrixStack.rotate(Vector3f.YP.rotationDegrees(rot));   // Spin the core around its Y-axis

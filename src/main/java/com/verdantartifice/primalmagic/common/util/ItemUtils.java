@@ -79,7 +79,6 @@ public class ItemUtils {
             nbt.replaceAll("'", "\"");
         }
         if (count < 1) {
-            // TODO should this return an empty stack?
             count = 1;
         }
         

@@ -54,7 +54,6 @@ public class GuiUtils {
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.enableRescaleNormal();
             RenderSystem.enableLighting();
-            // TODO enable GUI standard item lighting? from RenderHelper?
             
             // Render the item stack into the GUI and, if applicable, its stack size and/or damage bar
             itemRenderer.renderItemAndEffectIntoGUI(stack, x, y);
