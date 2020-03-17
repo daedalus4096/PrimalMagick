@@ -172,6 +172,7 @@
     "primalmagic.research_discipline.RUNEWORKING": "Runeworking",
     "primalmagic.research_discipline.RITUAL": "Ritual Magic",
     "primalmagic.research_discipline.MAGITECH": "Magitech",
+    "primalmagic.research_discipline.SCANS": "Scans",
     
     "primalmagic.source.earth": "Earth",
     "primalmagic.source.sea": "Sea",
@@ -434,6 +435,9 @@
     
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
+    
+    "primalmagic.research.raw_marble.title": "Marble",
+    "primalmagic.research.raw_marble.text.stage.1": "Marble: lorem ipsum",
     
     "commands.primalmagic.research.list": "All research for %1$s: %2$s",
     "commands.primalmagic.research.reset": "Resetting all research for %1$s",

@@ -9,6 +9,8 @@ import net.minecraft.util.IItemProvider;
  * @author Daedalus4096
  */
 public class ScanResearchTrigger implements IScanTrigger {
+    protected static final SimpleResearchKey SCANS_KEY = SimpleResearchKey.parse("UNLOCK_SCANS");
+    
     protected final IItemProvider target;
     protected final SimpleResearchKey toUnlock;
     
@@ -25,5 +27,12 @@ public class ScanResearchTrigger implements IScanTrigger {
     @Override
     public void onMatch(ServerPlayerEntity player, IItemProvider itemProvider) {
         ResearchManager.progressResearch(player, this.toUnlock);
+        if (this.shouldUnlockScansPage()) {
+            ResearchManager.completeResearch(player, SCANS_KEY);
+        }
+    }
+    
+    protected boolean shouldUnlockScansPage() {
+        return true;
     }
 }

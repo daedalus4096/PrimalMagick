@@ -2,7 +2,10 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.AttunementIndexButton;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.DisciplineButton;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.StatisticsButton;
+import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
@@ -43,7 +46,13 @@ public class OtherIndexPage extends AbstractPage {
             y += 12;
         }
         
-        // TODO Add scans button if at least one scan is unlocked
+        // Add scans button if at least one scan is unlocked
+        ResearchDiscipline scans = ResearchDisciplines.getDiscipline("SCANS");
+        if (scans != null && scans.getUnlockResearchKey().isKnownBy(Minecraft.getInstance().player)) {
+            text = (new TranslationTextComponent(scans.getNameTranslationKey())).getFormattedText();
+            screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, scans));
+            y += 12;
+        }
         
         // Add statistics button
         text = (new TranslationTextComponent("primalmagic.grimoire.stats_header")).getFormattedText();

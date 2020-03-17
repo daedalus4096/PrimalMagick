@@ -259,7 +259,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int heightRemaining = 182;  // Leave enough room for the page header
         DisciplineIndexPage tempPage = new DisciplineIndexPage(true);
         for (ResearchDiscipline discipline : disciplines) {
-            if (discipline.getUnlockResearchKey() == null || discipline.getUnlockResearchKey().isKnownByStrict(Minecraft.getInstance().player)) {
+            if (!discipline.getKey().equals("SCANS") && (discipline.getUnlockResearchKey() == null || discipline.getUnlockResearchKey().isKnownByStrict(Minecraft.getInstance().player))) {
                 tempPage.addDiscipline(discipline);
                 heightRemaining -= 12;
                 
