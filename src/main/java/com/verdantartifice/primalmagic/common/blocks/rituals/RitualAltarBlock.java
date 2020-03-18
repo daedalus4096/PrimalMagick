@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.blocks.rituals;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
+import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
@@ -9,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -67,5 +69,24 @@ public class RitualAltarBlock extends Block implements ISaltPowered {
         return (side == Direction.DOWN && blockState.getBlock() instanceof ISaltPowered) ?
                 ((ISaltPowered)blockState.getBlock()).getWeakSaltPower(blockState, blockAccess, pos, side) :
                 0;
+    }
+    
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+    
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new RitualAltarTileEntity();
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
+        super.eventReceived(state, worldIn, pos, id, param);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        return (tile == null) ? false : tile.receiveClientEvent(id, param);
     }
 }
