@@ -106,8 +106,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
 
     @Override
     public void tick() {
-        if (!this.world.isRemote && this.active) {
+        if (this.active) {
             this.activeCount++;
+        }
+        if (!this.world.isRemote && this.active) {
             if (this.activeCount >= 100) {
                 if (this.getActivePlayer() != null) {
                     this.getActivePlayer().sendStatusMessage(new StringTextComponent("Ritual complete!"), false);
