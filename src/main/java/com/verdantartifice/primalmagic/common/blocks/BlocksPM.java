@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock
 import com.verdantartifice.primalmagic.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ResearchTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.misc.SkyglassBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.ores.RockSaltOreBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
@@ -152,4 +153,5 @@ public class BlocksPM {
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
     public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
     public static final RegistryObject<RockSaltOreBlock> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", RockSaltOreBlock::new);
+    public static final RegistryObject<SkyglassBlock> SKYGLASS = BLOCKS.register("skyglass", () -> new SkyglassBlock(Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
 }
