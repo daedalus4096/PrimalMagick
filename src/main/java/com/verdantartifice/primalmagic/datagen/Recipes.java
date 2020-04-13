@@ -106,6 +106,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.FEATHERS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.STONE, 8)
+            .patternLine("SSS")
+            .patternLine("SDS")
+            .patternLine("SSS")
+            .key('S', Items.COBBLESTONE)
+            .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stone_from_stonemelding"));
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");

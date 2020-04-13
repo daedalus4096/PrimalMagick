@@ -13,6 +13,21 @@
             "addenda": []
         },
         {
+            "key": "STONEMELDING",
+            "name": "primalmagic.research.stonemelding.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "BASIC_ALCHEMY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.stonemelding.text.stage.1",
+                    "recipes": [
+                        "primalmagic:stone_from_stonemelding"
+                    ]
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SHARD_SYNTHESIS",
             "name": "primalmagic.research.shard_synthesis.title",
             "discipline": "ALCHEMY",
