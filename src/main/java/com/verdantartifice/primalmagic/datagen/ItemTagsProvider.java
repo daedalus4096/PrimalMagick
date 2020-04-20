@@ -44,6 +44,8 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         
         // Add entries to Forge tags
         this.getBuilder(Tags.Items.GLASS_COLORLESS).add(ItemsPM.SKYGLASS.get());
+        this.getBuilder(Tags.Items.GLASS_RED).add(ItemsPM.STAINED_SKYGLASS_RED.get());
+        this.getBuilder(Tags.Items.STAINED_GLASS).add(ItemsPM.STAINED_SKYGLASS_RED.get());
 
         // Create custom tags
         this.getBuilder(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.BLACK_SHULKER_BOX, Items.BLUE_SHULKER_BOX, Items.BROWN_SHULKER_BOX, Items.CYAN_SHULKER_BOX, Items.GRAY_SHULKER_BOX, Items.GREEN_SHULKER_BOX, Items.LIGHT_BLUE_SHULKER_BOX, Items.LIGHT_GRAY_SHULKER_BOX, Items.LIME_SHULKER_BOX, Items.MAGENTA_SHULKER_BOX, Items.ORANGE_SHULKER_BOX, Items.PINK_SHULKER_BOX, Items.PURPLE_SHULKER_BOX, Items.RED_SHULKER_BOX, Items.WHITE_SHULKER_BOX, Items.YELLOW_SHULKER_BOX);
@@ -55,6 +57,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTagsPM.ESSENCES).add(ItemTagsPM.ESSENCES_DUSTS, ItemTagsPM.ESSENCES_SHARDS, ItemTagsPM.ESSENCES_CRYSTALS, ItemTagsPM.ESSENCES_CLUSTERS);
         this.getBuilder(ItemTagsPM.MOONWOOD_LOGS).add(ItemsPM.MOONWOOD_LOG.get(), ItemsPM.STRIPPED_MOONWOOD_LOG.get(), ItemsPM.MOONWOOD_WOOD.get(), ItemsPM.STRIPPED_MOONWOOD_WOOD.get());
         this.getBuilder(ItemTagsPM.SHULKER_BOXES).add(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.SHULKER_BOX);
+        this.getBuilder(ItemTagsPM.SKYGLASS).add(ItemsPM.SKYGLASS.get(), ItemsPM.STAINED_SKYGLASS_RED.get());
         this.getBuilder(ItemTagsPM.SUNWOOD_LOGS).add(ItemsPM.SUNWOOD_LOG.get(), ItemsPM.STRIPPED_SUNWOOD_LOG.get(), ItemsPM.SUNWOOD_WOOD.get(), ItemsPM.STRIPPED_SUNWOOD_WOOD.get());
         
         this.getBuilder(ItemTagsPM.ESSENCES_DUSTS).add(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).add(ItemsPM.ESSENCE_DUST_BLOOD.get(), ItemsPM.ESSENCE_DUST_INFERNAL.get(), ItemsPM.ESSENCE_DUST_VOID.get(), ItemsPM.ESSENCE_DUST_HALLOWED.get());

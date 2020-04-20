@@ -711,5 +711,13 @@ public class Recipes extends RecipeProvider {
             .key('D', ItemsPM.ESSENCE_DUST_SKY.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_RED.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS)
+            .key('D', Tags.Items.DYES_RED)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer);
     }
 }

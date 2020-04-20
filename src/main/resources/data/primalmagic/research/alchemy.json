@@ -42,7 +42,8 @@
                         "sky": 1
                     },
                     "recipes": [
-                        "primalmagic:skyglass"
+                        "primalmagic:skyglass",
+                        "primalmagic:stained_skyglass_red"
                     ]
                 }
             ],
