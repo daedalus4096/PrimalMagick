@@ -24,6 +24,7 @@ public class ItemTagsPM {
     public static final Tag<Item> ESSENCES = tag("essences");
     public static final Tag<Item> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final Tag<Item> SHULKER_BOXES = tag("shulker_boxes");
+    public static final Tag<Item> SKYGLASS = tag("skyglass");
     public static final Tag<Item> SUNWOOD_LOGS = tag("sunwood_logs");
     
     public static final Tag<Item> ESSENCES_DUSTS = tag("essences/dusts");

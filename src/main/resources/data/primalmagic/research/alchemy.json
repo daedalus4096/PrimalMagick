@@ -20,8 +20,29 @@
             "stages": [
                 {
                     "text": "primalmagic.research.stonemelding.text.stage.1",
+                    "attunements": {
+                        "earth": 1
+                    },
                     "recipes": [
                         "primalmagic:stone_from_stonemelding"
+                    ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SKYGLASS",
+            "name": "primalmagic.research.skyglass.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "BASIC_ALCHEMY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.skyglass.text.stage.1",
+                    "attunements": {
+                        "sky": 1
+                    },
+                    "recipes": [
+                        "primalmagic:skyglass"
                     ]
                 }
             ],

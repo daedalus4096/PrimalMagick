@@ -50,6 +50,7 @@ public class Recipes extends RecipeProvider {
         this.registerEssenceUpgradeRecipes(consumer);
         this.registerEssenceDowngradeRecipes(consumer);
         this.registerSaltRecipes(consumer);
+        this.registerSkyglassRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -698,6 +699,17 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_STEW)
             .addCriterion("has_salt", this.hasItem(ItemsPM.REFINED_SALT.get()))
             .addCriterion("has_rabbit_stew", this.hasItem(Items.RABBIT_STEW))
+            .build(consumer);
+    }
+    
+    protected void registerSkyglassRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SKYGLASS.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', Items.GLASS)
+            .key('D', ItemsPM.ESSENCE_DUST_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
             .build(consumer);
     }
 }

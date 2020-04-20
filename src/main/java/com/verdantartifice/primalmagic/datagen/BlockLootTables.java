@@ -23,6 +23,7 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerSunwoodLootTables();
         this.registerMoonwoodLootTables();
         this.registerInfusedStoneLootTables();
+        this.registerSkyglassLootTables();
         
         this.registerBasicTable(BlocksPM.ANALYSIS_TABLE.get());
         this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH.get());
@@ -32,10 +33,10 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.RESEARCH_TABLE.get());
         this.registerBasicTable(BlocksPM.RITUAL_ALTAR.get());
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());
-        
+
         this.registerGemOreTable(BlocksPM.ROCK_SALT_ORE.get(), ItemsPM.ROCK_SALT.get(), 3.0F, 4.0F);
     }
-    
+
     private void registerMarbleLootTables() {
         this.registerBasicTable(BlocksPM.MARBLE_RAW.get());
         this.registerSlabTable(BlocksPM.MARBLE_BRICK_SLAB.get());
@@ -110,6 +111,10 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SKY.get(), ItemsPM.ESSENCE_DUST_SKY.get());
         this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_SUN.get(), ItemsPM.ESSENCE_DUST_SUN.get());
         this.registerInfusedStoneTable(BlocksPM.INFUSED_STONE_MOON.get(), ItemsPM.ESSENCE_DUST_MOON.get());
+    }
+    
+    private void registerSkyglassLootTables() {
+        this.registerBasicTable(BlocksPM.SKYGLASS.get());
     }
 
     @Override
