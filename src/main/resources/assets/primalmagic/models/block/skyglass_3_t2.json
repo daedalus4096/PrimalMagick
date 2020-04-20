@@ -1,0 +1,12 @@
+{
+    "parent": "primalmagic:block/skyglass_base",
+    "textures": {
+        "particle": "primalmagic:block/skyglass_unconnected",
+        "down": "primalmagic:block/skyglass_lr",
+        "up": "primalmagic:block/skyglass_udlr",
+        "north": "primalmagic:block/skyglass_ulr",
+        "south": "primalmagic:block/skyglass_ulr",
+        "west": "primalmagic:block/skyglass_udlr",
+        "east": "primalmagic:block/skyglass_udlr"
+    }
+}

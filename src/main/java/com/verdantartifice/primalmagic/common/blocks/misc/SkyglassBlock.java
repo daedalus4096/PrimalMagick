@@ -37,9 +37,7 @@ public class SkyglassBlock extends AbstractGlassBlock {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         // Determine the block's connections when it is placed into the world
-        IWorld world = context.getWorld();
-        BlockPos pos = context.getPos();
-        return this.getCurrentState(world.getBlockState(pos), world, pos);
+        return this.getCurrentState(this.getDefaultState(), context.getWorld(), context.getPos());
     }
     
     @Override
