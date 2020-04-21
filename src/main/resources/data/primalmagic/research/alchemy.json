@@ -43,7 +43,22 @@
                     },
                     "recipes": [
                         "primalmagic:skyglass",
-                        "primalmagic:stained_skyglass_red"
+                        "primalmagic:stained_skyglass_black",
+                        "primalmagic:stained_skyglass_blue",
+                        "primalmagic:stained_skyglass_brown",
+                        "primalmagic:stained_skyglass_cyan",
+                        "primalmagic:stained_skyglass_gray",
+                        "primalmagic:stained_skyglass_green",
+                        "primalmagic:stained_skyglass_light_blue",
+                        "primalmagic:stained_skyglass_light_gray",
+                        "primalmagic:stained_skyglass_lime",
+                        "primalmagic:stained_skyglass_magenta",
+                        "primalmagic:stained_skyglass_orange",
+                        "primalmagic:stained_skyglass_pink",
+                        "primalmagic:stained_skyglass_purple",
+                        "primalmagic:stained_skyglass_red",
+                        "primalmagic:stained_skyglass_white",
+                        "primalmagic:stained_skyglass_yellow"
                     ]
                 }
             ],

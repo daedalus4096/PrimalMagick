@@ -1,0 +1,21 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "SKYGLASS",
+  "pattern": [
+    "GGG",
+    "GDG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "tag": "primalmagic:skyglass"
+    },
+    "D": {
+      "tag": "forge:dyes/gray"
+    }
+  },
+  "result": {
+    "item": "primalmagic:stained_skyglass_gray",
+    "count": 8
+  }
+}

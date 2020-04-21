@@ -115,7 +115,22 @@ public class BlockLootTables extends BlockLootTableProvider {
     
     private void registerSkyglassLootTables() {
         this.registerBasicTable(BlocksPM.SKYGLASS.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_BLACK.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_BLUE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_BROWN.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_CYAN.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_GRAY.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_GREEN.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_LIME.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_MAGENTA.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_ORANGE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PINK.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PURPLE.get());
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_RED.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_WHITE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_YELLOW.get());
     }
 
     @Override
