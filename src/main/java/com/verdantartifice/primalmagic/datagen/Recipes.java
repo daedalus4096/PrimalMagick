@@ -51,6 +51,8 @@ public class Recipes extends RecipeProvider {
         this.registerEssenceDowngradeRecipes(consumer);
         this.registerSaltRecipes(consumer);
         this.registerSkyglassRecipes(consumer);
+        this.registerEarthshatterHammerRecipes(consumer);
+        this.registerMineralRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -839,5 +841,43 @@ public class Recipes extends RecipeProvider {
             .key('D', Tags.Items.DYES_YELLOW)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
             .build(consumer);
+    }
+
+    protected void registerEarthshatterHammerRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .patternLine("III")
+            .patternLine("IEI")
+            .patternLine(" S ")
+            .key('I', Tags.Items.INGOTS_IRON)
+            .key('E', ItemsPM.ESSENCE_SHARD_EARTH.get())
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EARTHSHATTER_HAMMER")))
+            .manaCost(new SourceList().add(Source.EARTH, 20))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.IRON_GRIT.get(), 2)
+            .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .addIngredient(Tags.Items.ORES_IRON)
+            .addCriterion("has_hammer", this.hasItem(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_earthshatter_hammer"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.GOLD_GRIT.get(), 2)
+            .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .addIngredient(Tags.Items.ORES_GOLD)
+            .addCriterion("has_hammer", this.hasItem(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_earthshatter_hammer"));
+    }
+
+    protected void registerMineralRecipes(Consumer<IFinishedRecipe> consumer) {
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsPM.IRON_GRIT.get()), Items.IRON_INGOT, 0.7F, 200)
+            .addCriterion("has_grit", this.hasItem(ItemsPM.IRON_GRIT.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "iron_ingot_from_grit_smelting"));
+        CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(ItemsPM.IRON_GRIT.get()), Items.IRON_INGOT, 0.7F, 100)
+            .addCriterion("has_grit", this.hasItem(ItemsPM.IRON_GRIT.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "iron_ingot_from_grit_blasting"));
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsPM.GOLD_GRIT.get()), Items.GOLD_INGOT, 0.7F, 200)
+            .addCriterion("has_grit", this.hasItem(ItemsPM.GOLD_GRIT.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_ingot_from_grit_smelting"));
+        CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(ItemsPM.GOLD_GRIT.get()), Items.GOLD_INGOT, 0.7F, 100)
+            .addCriterion("has_grit", this.hasItem(ItemsPM.GOLD_GRIT.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_ingot_from_grit_blasting"));
     }
 }

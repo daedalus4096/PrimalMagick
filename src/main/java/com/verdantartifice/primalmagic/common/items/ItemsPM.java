@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.BloodyFleshItem;
 import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
+import com.verdantartifice.primalmagic.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagic.common.items.misc.EnchantedInkAndQuill;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
@@ -170,6 +171,10 @@ public class ItemsPM {
     public static final RegistryObject<SoupItem> SALTED_MUSHROOM_STEW = ITEMS.register("salted_mushroom_stew", () -> new SoupItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).food(new Food.Builder().hunger(7).saturation(0.72F).build())));
     public static final RegistryObject<SoupItem> SALTED_RABBIT_STEW = ITEMS.register("salted_rabbit_stew", () -> new SoupItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).food(new Food.Builder().hunger(12).saturation(0.72F).build())));
     
+    // Register mineral items
+    public static final RegistryObject<Item> IRON_GRIT = ITEMS.register("iron_grit", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> GOLD_GRIT = ITEMS.register("gold_grit", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);
     public static final RegistryObject<ArcanometerItem> ARCANOMETER = ITEMS.register("arcanometer", ArcanometerItem::new);
@@ -181,6 +186,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> ENCHANTED_INK = ITEMS.register("enchanted_ink", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> ENCHANTED_INK_AND_QUILL = ITEMS.register("enchanted_ink_and_quill", EnchantedInkAndQuill::new);
     public static final RegistryObject<Item> ROCK_SALT = ITEMS.register("rock_salt", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<EarthshatterHammerItem> EARTHSHATTER_HAMMER = ITEMS.register("earthshatter_hammer", EarthshatterHammerItem::new);
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));
