@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.datagen;
 import java.nio.file.Path;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.data.DataGenerator;
@@ -43,6 +44,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTags.WOODEN_STAIRS).add(ItemsPM.MOONWOOD_STAIRS.get(), ItemsPM.SUNWOOD_STAIRS.get());
         
         // Add entries to Forge tags
+        this.getBuilder(Tags.Items.DUSTS).add(ItemTagsForgeExt.DUSTS_IRON, ItemTagsForgeExt.DUSTS_GOLD);
         this.getBuilder(Tags.Items.GLASS_COLORLESS).add(ItemsPM.SKYGLASS.get());
         this.getBuilder(Tags.Items.GLASS_BLACK).add(ItemsPM.STAINED_SKYGLASS_BLACK.get());
         this.getBuilder(Tags.Items.GLASS_BLUE).add(ItemsPM.STAINED_SKYGLASS_BLUE.get());
@@ -61,6 +63,10 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(Tags.Items.GLASS_WHITE).add(ItemsPM.STAINED_SKYGLASS_WHITE.get());
         this.getBuilder(Tags.Items.GLASS_YELLOW).add(ItemsPM.STAINED_SKYGLASS_YELLOW.get());
         this.getBuilder(Tags.Items.STAINED_GLASS).add(ItemTagsPM.STAINED_SKYGLASS);
+        
+        // Add entries to Forge extension tags
+        this.getBuilder(ItemTagsForgeExt.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
+        this.getBuilder(ItemTagsForgeExt.DUSTS_IRON).add(ItemsPM.IRON_GRIT.get());
 
         // Create custom tags
         this.getBuilder(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.BLACK_SHULKER_BOX, Items.BLUE_SHULKER_BOX, Items.BROWN_SHULKER_BOX, Items.CYAN_SHULKER_BOX, Items.GRAY_SHULKER_BOX, Items.GREEN_SHULKER_BOX, Items.LIGHT_BLUE_SHULKER_BOX, Items.LIGHT_GRAY_SHULKER_BOX, Items.LIME_SHULKER_BOX, Items.MAGENTA_SHULKER_BOX, Items.ORANGE_SHULKER_BOX, Items.PINK_SHULKER_BOX, Items.PURPLE_SHULKER_BOX, Items.RED_SHULKER_BOX, Items.WHITE_SHULKER_BOX, Items.YELLOW_SHULKER_BOX);
