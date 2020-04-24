@@ -17,7 +17,6 @@ import com.verdantartifice.primalmagic.common.blocks.misc.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.SkyglassBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
-import com.verdantartifice.primalmagic.common.blocks.ores.RockSaltOreBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
@@ -44,6 +43,7 @@ import net.minecraft.block.WallBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.DyeColor;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -173,5 +173,5 @@ public class BlocksPM {
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
     public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
-    public static final RegistryObject<RockSaltOreBlock> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", RockSaltOreBlock::new);
+    public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
 }

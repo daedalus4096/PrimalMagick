@@ -630,10 +630,10 @@ public class Recipes extends RecipeProvider {
     }
 
     protected void registerSaltRecipes(Consumer<IFinishedRecipe> consumer) {
-        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlocksPM.ROCK_SALT_ORE.get()), ItemsPM.ROCK_SALT.get(), 0.7F, 200)
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlocksPM.ROCK_SALT_ORE.get()), ItemsPM.ROCK_SALT.get(), 0, 200)
             .addCriterion("has_rock_salt_ore", this.hasItem(BlocksPM.ROCK_SALT_ORE.get()))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "rock_salt_from_smelting"));
-        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsPM.ROCK_SALT.get()), ItemsPM.REFINED_SALT.get(), 0.15F, 200)
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsPM.ROCK_SALT.get()), ItemsPM.REFINED_SALT.get(), 0.2F, 200)
             .addCriterion("has_rock_salt", this.hasItem(ItemsPM.ROCK_SALT.get()))
             .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SALTED_BAKED_POTATO.get())
