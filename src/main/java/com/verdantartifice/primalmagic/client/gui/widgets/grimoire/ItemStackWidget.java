@@ -65,7 +65,7 @@ public class ItemStackWidget extends Widget {
         }
         if (this.isHovered()) {
             // Render tooltip
-            List<ITextComponent> textList = Collections.singletonList(this.stack.getDisplayName());
+            List<ITextComponent> textList = Collections.singletonList(this.stack.getDisplayName().applyTextStyle(this.stack.getItem().getRarity(this.stack).color));
             GuiUtils.renderCustomTooltip(textList, this.x, this.y);
         }
     }
