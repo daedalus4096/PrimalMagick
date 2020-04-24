@@ -134,8 +134,10 @@ public class RequirementsPage extends AbstractPage {
         this.renderTitle(side, x, y, mouseX, mouseY, null);
         y += 53;
         
+        RenderSystem.pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.translatef(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft mc = Minecraft.getInstance();
         
@@ -170,5 +172,7 @@ public class RequirementsPage extends AbstractPage {
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for research widgets
         }
+        
+        RenderSystem.popMatrix();
     }
 }
