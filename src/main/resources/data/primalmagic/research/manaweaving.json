@@ -11,6 +11,27 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "EARTHSHATTER_HAMMER",
+            "name": "primalmagic.research.earthshatter_hammer.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "BASIC_MANAWEAVING", "SHARD_SYNTHESIS" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.earthshatter_hammer.text.stage.1",
+                    "required_item": [ "minecraft:iron_ore", "minecraft:gold_ore" ],
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.earthshatter_hammer.text.stage.2",
+                    "attunements": {
+                        "earth": 2
+                    },
+                    "recipes": ["primalmagic:earthshatter_hammer"]
+                }
+            ],
+            "addenda": []
         }
     ]
 }
