@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagic:block/skyglass_pane_side_alt_base",
+    "textures": {
+        "pane": "primalmagic:block/skyglass_unconnected"
+    }
+}

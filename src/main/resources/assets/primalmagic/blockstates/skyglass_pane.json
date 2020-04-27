@@ -3,6 +3,7 @@
         {
             "apply": { "model": "primalmagic:block/skyglass_pane_post" }
         },
+        
         {
             "when": { "north": "other", "up": "none|other", "down": "none|other" },
             "apply": { "model": "primalmagic:block/skyglass_pane_side_unconnected" }
@@ -51,6 +52,7 @@
             "when": { "north": "none", "up": "glass", "down": "glass" },
             "apply": { "model": "primalmagic:block/skyglass_pane_noside_ud" }
         },
+        
         {
             "when": { "east": "other", "up": "none|other", "down": "none|other" },
             "apply": { "model": "primalmagic:block/skyglass_pane_side_unconnected", "y": 90 }
@@ -99,6 +101,7 @@
             "when": { "east": "none", "up": "glass", "down": "glass" },
             "apply": { "model": "primalmagic:block/skyglass_pane_noside_ud", "y": 90 }
         },
+        
         {
             "when": { "south": "other", "up": "none|other", "down": "none|other" },
             "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_unconnected" }
@@ -117,19 +120,19 @@
         },
         {
             "when": { "south": "glass", "up": "none|other", "down": "none|other" },
-            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_l" }
+            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_lr" }
         },
         {
             "when": { "south": "glass", "up": "none|other", "down": "glass" },
-            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_dl" }
+            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_ulr", "x": 180 }
         },
         {
             "when": { "south": "glass", "up": "glass", "down": "none|other" },
-            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_ul" }
+            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_ulr" }
         },
         {
             "when": { "south": "glass", "up": "glass", "down": "glass" },
-            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_udl" }
+            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_udlr" }
         },
         {
             "when": { "south": "none", "up": "none|other", "down": "none|other" },
@@ -147,6 +150,7 @@
             "when": { "south": "none", "up": "glass", "down": "glass" },
             "apply": { "model": "primalmagic:block/skyglass_pane_noside_alt_ud" }
         },
+        
         {
             "when": { "west": "other", "up": "none|other", "down": "none|other" },
             "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_unconnected", "y": 90 }
@@ -165,19 +169,19 @@
         },
         {
             "when": { "west": "glass", "up": "none|other", "down": "none|other" },
-            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_l", "y": 90 }
+            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_lr", "y": 90 }
         },
         {
             "when": { "west": "glass", "up": "none|other", "down": "glass" },
-            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_dl", "y": 90 }
+            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_ulr", "x": 180, "y": 90 }
         },
         {
             "when": { "west": "glass", "up": "glass", "down": "none|other" },
-            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_ul", "y": 90 }
+            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_ulr", "y": 90 }
         },
         {
             "when": { "west": "glass", "up": "glass", "down": "glass" },
-            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_udl", "y": 90 }
+            "apply": { "model": "primalmagic:block/skyglass_pane_side_alt_udlr", "y": 90 }
         },
         {
             "when": { "west": "none", "up": "none|other", "down": "none|other" },
