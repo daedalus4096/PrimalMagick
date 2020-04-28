@@ -851,6 +851,20 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemsPM.SKYGLASS.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_RED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_red_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_RED)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_red_from_panes"));
     }
 
     protected void registerEarthshatterHammerRecipes(Consumer<IFinishedRecipe> consumer) {

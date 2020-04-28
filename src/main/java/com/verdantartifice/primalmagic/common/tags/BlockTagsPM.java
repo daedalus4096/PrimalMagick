@@ -25,6 +25,7 @@ public class BlockTagsPM {
     public static final Tag<Block> SKYGLASS = tag("skyglass");
     public static final Tag<Block> SKYGLASS_PANES = tag("skyglass_panes");
     public static final Tag<Block> STAINED_SKYGLASS = tag("stained_skyglass");
+    public static final Tag<Block> STAINED_SKYGLASS_PANES = tag("stained_skyglass_panes");
     public static final Tag<Block> SUNWOOD_LOGS = tag("sunwood_logs");
     
     private static Tag<Block> tag(String name) {

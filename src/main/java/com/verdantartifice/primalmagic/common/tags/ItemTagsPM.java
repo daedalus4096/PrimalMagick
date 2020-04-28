@@ -27,6 +27,7 @@ public class ItemTagsPM {
     public static final Tag<Item> SKYGLASS = tag("skyglass");
     public static final Tag<Item> SKYGLASS_PANES = tag("skyglass_panes");
     public static final Tag<Item> STAINED_SKYGLASS = tag("stained_skyglass");
+    public static final Tag<Item> STAINED_SKYGLASS_PANES = tag("stained_skyglass_panes");
     public static final Tag<Item> SUNWOOD_LOGS = tag("sunwood_logs");
     
     public static final Tag<Item> ESSENCES_DUSTS = tag("essences/dusts");

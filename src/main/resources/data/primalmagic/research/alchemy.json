@@ -59,7 +59,9 @@
                         "primalmagic:stained_skyglass_purple",
                         "primalmagic:stained_skyglass_red",
                         "primalmagic:stained_skyglass_white",
-                        "primalmagic:stained_skyglass_yellow"
+                        "primalmagic:stained_skyglass_yellow",
+                        "primalmagic:stained_skyglass_pane_red_from_blocks",
+                        "primalmagic:stained_skyglass_pane_red_from_panes"
                     ]
                 }
             ],

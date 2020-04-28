@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.SkyglassBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.SkyglassPaneBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassBlock;
+import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
@@ -153,6 +154,7 @@ public class BlocksPM {
     
     // Register skyglass panes
     public static final RegistryObject<SkyglassPaneBlock> SKYGLASS_PANE = BLOCKS.register("skyglass_pane", () -> new SkyglassPaneBlock(Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_RED = BLOCKS.register("stained_skyglass_pane_red", () -> new StainedSkyglassPaneBlock(DyeColor.RED, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
 
     // Register mana fonts
     public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_EARTH = BLOCKS.register("ancient_font_earth", () -> new AncientManaFontBlock(Source.EARTH));

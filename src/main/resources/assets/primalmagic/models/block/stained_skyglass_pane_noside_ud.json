@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagic:block/stained_skyglass_pane_noside_base",
+    "textures": {
+        "pane": "primalmagic:block/stained_skyglass_ud"
+    }
+}

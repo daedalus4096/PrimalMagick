@@ -137,6 +137,7 @@ public class ItemsPM {
 
     // Register skyglass pane block items
     public static final RegistryObject<BlockItem> SKYGLASS_PANE = ITEMS.register("skyglass_pane", () -> new BlockItem(BlocksPM.SKYGLASS_PANE.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> STAINED_SKYGLASS_PANE_RED = ITEMS.register("stained_skyglass_pane_red", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 
     // Register mana font block items
     public static final RegistryObject<BlockItem> ANCIENT_FONT_EARTH = ITEMS.register("ancient_font_earth", () -> new BlockItem(BlocksPM.ANCIENT_FONT_EARTH.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setISTER(() -> AncientManaFontISTER::new)));

@@ -126,6 +126,7 @@ public class ClientProxy extends CommonProxy {
         RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_YELLOW.get(), RenderType.translucent());
         
         RenderTypeLookup.setRenderLayer(BlocksPM.SKYGLASS_PANE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), RenderType.translucent());
     }
     
     @Override
