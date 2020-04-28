@@ -43,6 +43,7 @@
                     },
                     "recipes": [
                         "primalmagic:skyglass",
+                        "primalmagic:skyglass_pane",
                         "primalmagic:stained_skyglass_black",
                         "primalmagic:stained_skyglass_blue",
                         "primalmagic:stained_skyglass_brown",

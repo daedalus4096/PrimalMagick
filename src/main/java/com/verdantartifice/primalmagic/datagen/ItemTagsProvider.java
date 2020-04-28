@@ -63,6 +63,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(Tags.Items.GLASS_WHITE).add(ItemsPM.STAINED_SKYGLASS_WHITE.get());
         this.getBuilder(Tags.Items.GLASS_YELLOW).add(ItemsPM.STAINED_SKYGLASS_YELLOW.get());
         this.getBuilder(Tags.Items.STAINED_GLASS).add(ItemTagsPM.STAINED_SKYGLASS);
+        this.getBuilder(Tags.Items.GLASS_PANES_COLORLESS).add(ItemsPM.SKYGLASS_PANE.get());
         
         // Add entries to Forge extension tags
         this.getBuilder(ItemTagsForgeExt.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
@@ -79,6 +80,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTagsPM.MOONWOOD_LOGS).add(ItemsPM.MOONWOOD_LOG.get(), ItemsPM.STRIPPED_MOONWOOD_LOG.get(), ItemsPM.MOONWOOD_WOOD.get(), ItemsPM.STRIPPED_MOONWOOD_WOOD.get());
         this.getBuilder(ItemTagsPM.SHULKER_BOXES).add(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.SHULKER_BOX);
         this.getBuilder(ItemTagsPM.SKYGLASS).add(ItemsPM.SKYGLASS.get()).add(ItemTagsPM.STAINED_SKYGLASS);
+        this.getBuilder(ItemTagsPM.SKYGLASS_PANES).add(ItemsPM.SKYGLASS_PANE.get());
         this.getBuilder(ItemTagsPM.STAINED_SKYGLASS).add(ItemsPM.STAINED_SKYGLASS_BLACK.get(), ItemsPM.STAINED_SKYGLASS_BLUE.get(), ItemsPM.STAINED_SKYGLASS_BROWN.get(), ItemsPM.STAINED_SKYGLASS_CYAN.get(), ItemsPM.STAINED_SKYGLASS_GRAY.get(), ItemsPM.STAINED_SKYGLASS_GREEN.get(), ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), ItemsPM.STAINED_SKYGLASS_LIME.get(), ItemsPM.STAINED_SKYGLASS_MAGENTA.get(), ItemsPM.STAINED_SKYGLASS_ORANGE.get(), ItemsPM.STAINED_SKYGLASS_PINK.get(), ItemsPM.STAINED_SKYGLASS_PURPLE.get(), ItemsPM.STAINED_SKYGLASS_RED.get(), ItemsPM.STAINED_SKYGLASS_WHITE.get(), ItemsPM.STAINED_SKYGLASS_YELLOW.get());
         this.getBuilder(ItemTagsPM.SUNWOOD_LOGS).add(ItemsPM.SUNWOOD_LOG.get(), ItemsPM.STRIPPED_SUNWOOD_LOG.get(), ItemsPM.SUNWOOD_WOOD.get(), ItemsPM.STRIPPED_SUNWOOD_WOOD.get());
         

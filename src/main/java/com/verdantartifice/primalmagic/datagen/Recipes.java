@@ -51,6 +51,7 @@ public class Recipes extends RecipeProvider {
         this.registerEssenceDowngradeRecipes(consumer);
         this.registerSaltRecipes(consumer);
         this.registerSkyglassRecipes(consumer);
+        this.registerSkyglassPaneRecipes(consumer);
         this.registerEarthshatterHammerRecipes(consumer);
         this.registerMineralRecipes(consumer);
         
@@ -839,6 +840,15 @@ public class Recipes extends RecipeProvider {
             .patternLine("GGG")
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_YELLOW)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer);
+    }
+    
+    protected void registerSkyglassPaneRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SKYGLASS_PANE.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.SKYGLASS.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
             .build(consumer);
     }

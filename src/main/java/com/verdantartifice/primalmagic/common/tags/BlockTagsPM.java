@@ -23,6 +23,7 @@ public class BlockTagsPM {
     public static final Tag<Block> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final Tag<Block> SHULKER_BOXES = tag("shulker_boxes");
     public static final Tag<Block> SKYGLASS = tag("skyglass");
+    public static final Tag<Block> SKYGLASS_PANES = tag("skyglass_panes");
     public static final Tag<Block> STAINED_SKYGLASS = tag("stained_skyglass");
     public static final Tag<Block> SUNWOOD_LOGS = tag("sunwood_logs");
     

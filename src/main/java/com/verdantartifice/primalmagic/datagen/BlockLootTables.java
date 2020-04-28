@@ -131,6 +131,8 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_RED.get());
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_WHITE.get());
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_YELLOW.get());
+        
+        this.registerBasicTable(BlocksPM.SKYGLASS_PANE.get());
     }
 
     @Override
