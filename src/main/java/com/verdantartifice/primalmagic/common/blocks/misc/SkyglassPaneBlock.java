@@ -134,6 +134,10 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
     
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        if (stateIn.get(WATERLOGGED)) {
+            worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+        }
+        
         // Determine the block's connections when one of its neighbors is updated
         return this.getCurrentState(stateIn, worldIn, currentPos);
     }
@@ -146,17 +150,19 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
                 .with(SOUTH, this.getSideConnection(state, world, pos, Direction.SOUTH))
                 .with(WEST, this.getSideConnection(state, world, pos, Direction.WEST))
                 .with(EAST, this.getSideConnection(state, world, pos, Direction.EAST))
-                .with(WATERLOGGED, world.getFluidState(pos) == Fluids.WATER);
+                .with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER);
     }
     
     protected SkyglassPaneSide getSideConnection(BlockState state, IWorld world, BlockPos pos, Direction dir) {
         BlockState adjacent = world.getBlockState(pos.offset(dir));
-        if (adjacent == null || adjacent.isAir(world, pos)) {
+        if (adjacent == null || cannotAttach(adjacent.getBlock())) {
             return SkyglassPaneSide.NONE;
         } else if (state.getBlock() == adjacent.getBlock()) {
             return SkyglassPaneSide.GLASS;
-        } else {
+        } else if (adjacent.isSolidSide(world, pos.offset(dir), dir.getOpposite())) {
             return SkyglassPaneSide.OTHER;
+        } else {
+            return SkyglassPaneSide.NONE;
         }
     }
     
@@ -185,6 +191,11 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
     @Override
     public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
         return false;
+    }
+    
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+        return !state.get(WATERLOGGED);
     }
     
     @Override
