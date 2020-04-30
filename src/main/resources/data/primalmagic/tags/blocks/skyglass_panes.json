@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "primalmagic:skyglass_pane",
+    "#primalmagic:stained_skyglass_panes"
+  ]
+}

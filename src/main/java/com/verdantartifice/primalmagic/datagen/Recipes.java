@@ -51,6 +51,7 @@ public class Recipes extends RecipeProvider {
         this.registerEssenceDowngradeRecipes(consumer);
         this.registerSaltRecipes(consumer);
         this.registerSkyglassRecipes(consumer);
+        this.registerSkyglassPaneRecipes(consumer);
         this.registerEarthshatterHammerRecipes(consumer);
         this.registerMineralRecipes(consumer);
         
@@ -841,6 +842,239 @@ public class Recipes extends RecipeProvider {
             .key('D', Tags.Items.DYES_YELLOW)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
             .build(consumer);
+    }
+    
+    protected void registerSkyglassPaneRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SKYGLASS_PANE.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.SKYGLASS.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_BLACK.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_black_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_BLACK)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_black_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_BLUE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_blue_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_BLUE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_blue_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_BROWN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_brown_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_BROWN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_brown_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_CYAN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_cyan_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_CYAN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_cyan_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_GRAY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_gray_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_GRAY)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_gray_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_GREEN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_green_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_GREEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_green_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_light_blue_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_LIGHT_BLUE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_light_blue_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_light_gray_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_LIGHT_GRAY)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_light_gray_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_LIME.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_lime_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_LIME)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_lime_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_MAGENTA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_magenta_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_MAGENTA)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_magenta_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_ORANGE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_orange_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_ORANGE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_orange_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_PINK.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_pink_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_PINK)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_pink_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_PURPLE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_purple_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_PURPLE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_purple_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_RED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_red_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_RED)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_red_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_WHITE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_white_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_WHITE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_white_from_panes"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get(), 16)
+            .patternLine("GGG")
+            .patternLine("GGG")
+            .key('G', ItemsPM.STAINED_SKYGLASS_YELLOW.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_yellow_from_blocks"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get(), 8)
+            .patternLine("GGG")
+            .patternLine("GDG")
+            .patternLine("GGG")
+            .key('G', ItemTagsPM.SKYGLASS_PANES)
+            .key('D', Tags.Items.DYES_YELLOW)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stained_skyglass_pane_yellow_from_panes"));
     }
 
     protected void registerEarthshatterHammerRecipes(Consumer<IFinishedRecipe> consumer) {
