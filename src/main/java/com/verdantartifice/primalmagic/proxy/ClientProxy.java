@@ -126,7 +126,22 @@ public class ClientProxy extends CommonProxy {
         RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_YELLOW.get(), RenderType.translucent());
         
         RenderTypeLookup.setRenderLayer(BlocksPM.SKYGLASS_PANE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get(), RenderType.translucent());
     }
     
     @Override

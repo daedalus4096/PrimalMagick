@@ -133,7 +133,22 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_YELLOW.get());
         
         this.registerBasicTable(BlocksPM.SKYGLASS_PANE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_LIME.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_PINK.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get());
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_RED.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get());
+        this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
     }
 
     @Override
