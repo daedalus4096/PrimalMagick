@@ -56,6 +56,9 @@ public class PrimalMagicCommand {
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralCommandNode<CommandSource> node = dispatcher.register(Commands.literal("primalmagic")
             .requires((source) -> { return source.hasPermissionLevel(2); })
+            .then(Commands.literal("reset")
+                .then(Commands.argument("target", EntityArgument.player()).executes((context) -> { return resetAll(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
+            )
             .then(Commands.literal("research")
                 .then(Commands.argument("target", EntityArgument.player())
                     // /pm research <target> list
@@ -156,6 +159,14 @@ public class PrimalMagicCommand {
         dispatcher.register(Commands.literal("pm").requires((source) -> {
             return source.hasPermissionLevel(2);
         }).redirect(node));
+    }
+
+    private static int resetAll(CommandSource source, ServerPlayerEntity player) {
+        resetResearch(source, player);
+        resetKnowledge(source, player);
+        resetAttunements(source, player);
+        resetStats(source, player);
+        return 0;
     }
 
     private static int listResearch(CommandSource source, ServerPlayerEntity target) {
