@@ -159,7 +159,7 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
             return SkyglassPaneSide.NONE;
         } else if (state.getBlock() == adjacent.getBlock()) {
             return SkyglassPaneSide.GLASS;
-        } else if (adjacent.isSolidSide(world, pos.offset(dir), dir.getOpposite())) {
+        } else if (adjacent.isSolidSide(world, pos.offset(dir), dir.getOpposite()) || adjacent.getBlock() instanceof SkyglassPaneBlock) {
             return SkyglassPaneSide.OTHER;
         } else {
             return SkyglassPaneSide.NONE;
