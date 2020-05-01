@@ -176,6 +176,7 @@ public class ItemsPM {
     // Register miscellaneous block items
     public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> ROCK_SALT_ORE = ITEMS.register("rock_salt_ore", () -> new BlockItem(BlocksPM.ROCK_SALT_ORE.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> PYRAMID = ITEMS.register("pyramid", () -> new BlockItem(BlocksPM.PYRAMID.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register salted food items
     public static final RegistryObject<Item> SALTED_BAKED_POTATO = ITEMS.register("salted_baked_potato", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(6).saturation(0.72F).build())));

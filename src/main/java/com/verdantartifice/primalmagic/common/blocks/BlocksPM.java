@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.AnalysisTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagic.common.blocks.misc.PyramidBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.SkyglassBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.SkyglassPaneBlock;
@@ -195,4 +196,5 @@ public class BlocksPM {
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
     public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
     public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
+    public static final RegistryObject<PyramidBlock> PYRAMID = BLOCKS.register("pyramid", PyramidBlock::new);
 }
