@@ -15,6 +15,7 @@ import com.google.gson.JsonParser;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.block.Block;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -134,26 +135,42 @@ public class VoxelShapeUtils {
     }
     
     /**
-     * Rotate a VoxelShape around the y-axis.
+     * Rotate a VoxelShape around a given axis.
      * 
-     * @param shape the VoxelShape to be rotated 
+     * @param shape the VoxelShape to be rotated
+     * @param axis the axis around which the VoxelShape is to be rotated 
      * @param rot the degree of rotation to be applied
      * @return the rotated VoxelShape
      */
     @Nonnull
-    public static VoxelShape rotateHorizontal(@Nullable VoxelShape shape, @Nullable Rotation rot) {
+    public static VoxelShape rotate(@Nullable VoxelShape shape, @Nullable Direction.Axis axis, @Nullable Rotation rot) {
         if (shape == null) {
             return VoxelShapes.empty();
-        } else if (rot == null) {
+        } else if (axis == null || rot == null) {
             return shape;
         }
         
         VoxelShape[] buffer = new VoxelShape[] { shape, VoxelShapes.empty() };
         
-        // TODO specify an axis instead of assuming the y-axis
         int ccwRotations = (4 - rot.ordinal()) % 4;
         for (int index = 0; index < ccwRotations; index++) {
-            buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(1-maxZ, minY, minX, 1-minZ, maxY, maxX)));
+            buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> {
+                VoxelShape newBox;
+                switch (axis) {
+                case X:
+                    newBox = VoxelShapes.create(minX, minZ, 1-maxY, maxX, maxZ, 1-minY);
+                    break;
+                case Y:
+                    newBox = VoxelShapes.create(1-maxZ, minY, minX, 1-minZ, maxY, maxX);
+                    break;
+                case Z:
+                    newBox = VoxelShapes.create(1-maxY, minX, minZ, 1-minY, maxX, maxZ);
+                    break;
+                default:
+                    throw new Error("Invalid axis in voxel shape rotation!");
+                }
+                buffer[1] = VoxelShapes.or(buffer[1], newBox);
+            });
             buffer[0] = buffer[1];
             buffer[1] = VoxelShapes.empty();
         }
