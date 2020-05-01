@@ -15,8 +15,8 @@ import com.google.gson.JsonParser;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.block.Block;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
@@ -134,25 +134,25 @@ public class VoxelShapeUtils {
     }
     
     /**
-     * Rotate a VoxelShape around the y-axis from the given direction to the given direction.
+     * Rotate a VoxelShape around the y-axis.
      * 
      * @param shape the VoxelShape to be rotated 
-     * @param from the starting direction of the shape
-     * @param to the ending direction of the shape
-     * @return the rotated VoxelShape, or an empty VoxelShape if any of the inputs were null
+     * @param rot the degree of rotation to be applied
+     * @return the rotated VoxelShape
      */
     @Nonnull
-    public static VoxelShape rotateHorizontal(@Nullable VoxelShape shape, @Nullable Direction from, @Nullable Direction to) {
-        if (shape == null || from == null || to == null) {
+    public static VoxelShape rotateHorizontal(@Nullable VoxelShape shape, @Nullable Rotation rot) {
+        if (shape == null) {
             return VoxelShapes.empty();
+        } else if (rot == null) {
+            return shape;
         }
         
         VoxelShape[] buffer = new VoxelShape[] { shape, VoxelShapes.empty() };
         
-        // TODO use a rotation enum instead of directions
         // TODO specify an axis instead of assuming the y-axis
-        int times = (to.getHorizontalIndex() - from.getHorizontalIndex() + 4) % 4;
-        for (int index = 0; index < times; index++) {
+        int ccwRotations = (4 - rot.ordinal()) % 4;
+        for (int index = 0; index < ccwRotations; index++) {
             buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(1-maxZ, minY, minX, 1-minZ, maxY, maxX)));
             buffer[0] = buffer[1];
             buffer[1] = VoxelShapes.empty();
