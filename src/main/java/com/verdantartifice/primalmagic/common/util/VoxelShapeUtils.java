@@ -164,7 +164,7 @@ public class VoxelShapeUtils {
                     newBox = VoxelShapes.create(1-maxZ, minY, minX, 1-minZ, maxY, maxX);
                     break;
                 case Z:
-                    newBox = VoxelShapes.create(1-maxY, minX, minZ, 1-minY, maxX, maxZ);
+                    newBox = VoxelShapes.create(minY, 1-maxX, minZ, maxY, 1-minX, maxZ);
                     break;
                 default:
                     throw new Error("Invalid axis in voxel shape rotation!");
