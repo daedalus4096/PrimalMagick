@@ -26,6 +26,9 @@ public class BlockTagsPM {
     public static final Tag<Block> SKYGLASS_PANES = tag("skyglass_panes");
     public static final Tag<Block> STAINED_SKYGLASS = tag("stained_skyglass");
     public static final Tag<Block> STAINED_SKYGLASS_PANES = tag("stained_skyglass_panes");
+    public static final Tag<Block> STORAGE_BLOCKS_PRIMALITE = tag("storage_blocks/primalite");
+    public static final Tag<Block> STORAGE_BLOCKS_HEXIUM = tag("storage_blocks/hexium");
+    public static final Tag<Block> STORAGE_BLOCKS_HALLOWSTEEL = tag("storage_blocks/hallowsteel");
     public static final Tag<Block> SUNWOOD_LOGS = tag("sunwood_logs");
     
     private static Tag<Block> tag(String name) {

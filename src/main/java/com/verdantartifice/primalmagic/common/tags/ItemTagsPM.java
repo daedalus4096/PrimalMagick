@@ -36,6 +36,16 @@ public class ItemTagsPM {
     public static final Tag<Item> ESSENCES_CRYSTALS = tag("essences/crystals");
     public static final Tag<Item> ESSENCES_CLUSTERS = tag("essences/clusters");
     
+    public static final Tag<Item> INGOTS_PRIMALITE = tag("ingots/primalite");
+    public static final Tag<Item> INGOTS_HEXIUM = tag("ingots/hexium");
+    public static final Tag<Item> INGOTS_HALLOWSTEEL = tag("ingots/hallowsteel");
+    public static final Tag<Item> NUGGETS_PRIMALITE = tag("nuggets/primalite");
+    public static final Tag<Item> NUGGETS_HEXIUM = tag("nuggets/hexium");
+    public static final Tag<Item> NUGGETS_HALLOWSTEEL = tag("nuggets/hallowsteel");
+    public static final Tag<Item> STORAGE_BLOCKS_PRIMALITE = tag("storage_blocks/primalite");
+    public static final Tag<Item> STORAGE_BLOCKS_HEXIUM = tag("storage_blocks/hexium");
+    public static final Tag<Item> STORAGE_BLOCKS_HALLOWSTEEL = tag("storage_blocks/hallowsteel");
+
     private static Tag<Item> tag(String name) {
         return new ItemTags.Wrapper(new ResourceLocation(PrimalMagic.MODID, name));
     }

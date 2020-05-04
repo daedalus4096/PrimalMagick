@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
-import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.data.CookingRecipeBuilder;
@@ -1130,26 +1129,26 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
             .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.PRIMALITE_NUGGET.get(), 9)
-            .addIngredient(ItemTagsForgeExt.INGOTS_PRIMALITE)
-            .addCriterion("has_ingot", this.hasItem(ItemTagsForgeExt.INGOTS_PRIMALITE))
+            .addIngredient(ItemTagsPM.INGOTS_PRIMALITE)
+            .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_PRIMALITE))
             .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemsPM.PRIMALITE_INGOT.get())
             .patternLine("NNN")
             .patternLine("NNN")
             .patternLine("NNN")
-            .key('N', ItemTagsForgeExt.NUGGETS_PRIMALITE)
-            .addCriterion("has_nugget", this.hasItem(ItemTagsForgeExt.NUGGETS_PRIMALITE))
+            .key('N', ItemTagsPM.NUGGETS_PRIMALITE)
+            .addCriterion("has_nugget", this.hasItem(ItemTagsPM.NUGGETS_PRIMALITE))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "primalite_ingot_from_nuggets"));
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.PRIMALITE_INGOT.get(), 9)
-            .addIngredient(ItemTagsForgeExt.STORAGE_BLOCKS_PRIMALITE)
-            .addCriterion("has_block", this.hasItem(ItemTagsForgeExt.STORAGE_BLOCKS_PRIMALITE))
+            .addIngredient(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE)
+            .addCriterion("has_block", this.hasItem(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "primalite_ingots_from_block"));
         ShapedRecipeBuilder.shapedRecipe(ItemsPM.PRIMALITE_BLOCK.get())
             .patternLine("III")
             .patternLine("III")
             .patternLine("III")
-            .key('I', ItemTagsForgeExt.INGOTS_PRIMALITE)
-            .addCriterion("has_ingot", this.hasItem(ItemTagsForgeExt.INGOTS_PRIMALITE))
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_PRIMALITE))
             .build(consumer);
     }
     
@@ -1164,26 +1163,26 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
             .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.HEXIUM_NUGGET.get(), 9)
-            .addIngredient(ItemTagsForgeExt.INGOTS_HEXIUM)
-            .addCriterion("has_ingot", this.hasItem(ItemTagsForgeExt.INGOTS_HEXIUM))
+            .addIngredient(ItemTagsPM.INGOTS_HEXIUM)
+            .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_HEXIUM))
             .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemsPM.HEXIUM_INGOT.get())
             .patternLine("NNN")
             .patternLine("NNN")
             .patternLine("NNN")
-            .key('N', ItemTagsForgeExt.NUGGETS_HEXIUM)
-            .addCriterion("has_nugget", this.hasItem(ItemTagsForgeExt.NUGGETS_HEXIUM))
+            .key('N', ItemTagsPM.NUGGETS_HEXIUM)
+            .addCriterion("has_nugget", this.hasItem(ItemTagsPM.NUGGETS_HEXIUM))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "hexium_ingot_from_nuggets"));
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.HEXIUM_INGOT.get(), 9)
-            .addIngredient(ItemTagsForgeExt.STORAGE_BLOCKS_HEXIUM)
-            .addCriterion("has_block", this.hasItem(ItemTagsForgeExt.STORAGE_BLOCKS_HEXIUM))
+            .addIngredient(ItemTagsPM.STORAGE_BLOCKS_HEXIUM)
+            .addCriterion("has_block", this.hasItem(ItemTagsPM.STORAGE_BLOCKS_HEXIUM))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "hexium_ingots_from_block"));
         ShapedRecipeBuilder.shapedRecipe(ItemsPM.HEXIUM_BLOCK.get())
             .patternLine("III")
             .patternLine("III")
             .patternLine("III")
-            .key('I', ItemTagsForgeExt.INGOTS_HEXIUM)
-            .addCriterion("has_ingot", this.hasItem(ItemTagsForgeExt.INGOTS_HEXIUM))
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_HEXIUM))
             .build(consumer);
     }
     
@@ -1198,26 +1197,26 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
             .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.HALLOWSTEEL_NUGGET.get(), 9)
-            .addIngredient(ItemTagsForgeExt.INGOTS_HALLOWSTEEL)
-            .addCriterion("has_ingot", this.hasItem(ItemTagsForgeExt.INGOTS_HALLOWSTEEL))
+            .addIngredient(ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_HALLOWSTEEL))
             .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemsPM.HALLOWSTEEL_INGOT.get())
             .patternLine("NNN")
             .patternLine("NNN")
             .patternLine("NNN")
-            .key('N', ItemTagsForgeExt.NUGGETS_HALLOWSTEEL)
-            .addCriterion("has_nugget", this.hasItem(ItemTagsForgeExt.NUGGETS_HALLOWSTEEL))
+            .key('N', ItemTagsPM.NUGGETS_HALLOWSTEEL)
+            .addCriterion("has_nugget", this.hasItem(ItemTagsPM.NUGGETS_HALLOWSTEEL))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "hallowsteel_ingot_from_nuggets"));
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.HALLOWSTEEL_INGOT.get(), 9)
-            .addIngredient(ItemTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL)
-            .addCriterion("has_block", this.hasItem(ItemTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL))
+            .addIngredient(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL)
+            .addCriterion("has_block", this.hasItem(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "hallowsteel_ingots_from_block"));
         ShapedRecipeBuilder.shapedRecipe(ItemsPM.HALLOWSTEEL_BLOCK.get())
             .patternLine("III")
             .patternLine("III")
             .patternLine("III")
-            .key('I', ItemTagsForgeExt.INGOTS_HALLOWSTEEL)
-            .addCriterion("has_ingot", this.hasItem(ItemTagsForgeExt.INGOTS_HALLOWSTEEL))
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_HALLOWSTEEL))
             .build(consumer);
     }
 }

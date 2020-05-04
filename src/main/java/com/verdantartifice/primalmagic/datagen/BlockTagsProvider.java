@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.datagen;
 import java.nio.file.Path;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagic.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 
 import net.minecraft.block.Block;
@@ -44,8 +43,8 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.getBuilder(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.get(), BlocksPM.SUNWOOD_STAIRS.get());
         
         // Add entries to Forge tags
-        this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(BlockTagsForgeExt.STORAGE_BLOCKS_PRIMALITE, BlockTagsForgeExt.STORAGE_BLOCKS_HEXIUM, BlockTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL);
-        this.getBuilder(Tags.Blocks.SUPPORTS_BEACON).add(BlockTagsForgeExt.STORAGE_BLOCKS_PRIMALITE, BlockTagsForgeExt.STORAGE_BLOCKS_HEXIUM, BlockTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE, BlockTagsPM.STORAGE_BLOCKS_HEXIUM, BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.getBuilder(Tags.Blocks.SUPPORTS_BEACON).add(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE, BlockTagsPM.STORAGE_BLOCKS_HEXIUM, BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         
         this.getBuilder(Tags.Blocks.GLASS_COLORLESS).add(BlocksPM.SKYGLASS.get());
         this.getBuilder(Tags.Blocks.GLASS_BLACK).add(BlocksPM.STAINED_SKYGLASS_BLACK.get());
@@ -85,11 +84,6 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.getBuilder(Tags.Blocks.GLASS_PANES_YELLOW).add(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
         this.getBuilder(Tags.Blocks.STAINED_GLASS_PANES).add(BlockTagsPM.STAINED_SKYGLASS_PANES);
         
-        // Add entries to Forge extension tags
-        this.getBuilder(BlockTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL).add(BlocksPM.HALLOWSTEEL_BLOCK.get());
-        this.getBuilder(BlockTagsForgeExt.STORAGE_BLOCKS_HEXIUM).add(BlocksPM.HEXIUM_BLOCK.get());
-        this.getBuilder(BlockTagsForgeExt.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
-        
         // Create custom tags
         this.getBuilder(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);
         this.getBuilder(BlockTagsPM.CONCRETE).add(Blocks.BLACK_CONCRETE, Blocks.BLUE_CONCRETE, Blocks.BROWN_CONCRETE, Blocks.CYAN_CONCRETE, Blocks.GRAY_CONCRETE, Blocks.GREEN_CONCRETE, Blocks.LIGHT_BLUE_CONCRETE, Blocks.LIGHT_GRAY_CONCRETE, Blocks.LIME_CONCRETE, Blocks.MAGENTA_CONCRETE, Blocks.ORANGE_CONCRETE, Blocks.PINK_CONCRETE, Blocks.PURPLE_CONCRETE, Blocks.RED_CONCRETE, Blocks.WHITE_CONCRETE, Blocks.YELLOW_CONCRETE);
@@ -102,6 +96,9 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.getBuilder(BlockTagsPM.SKYGLASS_PANES).add(BlocksPM.SKYGLASS_PANE.get()).add(BlockTagsPM.STAINED_SKYGLASS_PANES);
         this.getBuilder(BlockTagsPM.STAINED_SKYGLASS).add(BlocksPM.STAINED_SKYGLASS_BLACK.get(), BlocksPM.STAINED_SKYGLASS_BLUE.get(), BlocksPM.STAINED_SKYGLASS_BROWN.get(), BlocksPM.STAINED_SKYGLASS_CYAN.get(), BlocksPM.STAINED_SKYGLASS_GRAY.get(), BlocksPM.STAINED_SKYGLASS_GREEN.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_LIME.get(), BlocksPM.STAINED_SKYGLASS_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PINK.get(), BlocksPM.STAINED_SKYGLASS_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_RED.get(), BlocksPM.STAINED_SKYGLASS_WHITE.get(), BlocksPM.STAINED_SKYGLASS_YELLOW.get());
         this.getBuilder(BlockTagsPM.STAINED_SKYGLASS_PANES).add(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
+        this.getBuilder(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL).add(BlocksPM.HALLOWSTEEL_BLOCK.get());
+        this.getBuilder(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).add(BlocksPM.HEXIUM_BLOCK.get());
+        this.getBuilder(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
         this.getBuilder(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.get(), BlocksPM.STRIPPED_SUNWOOD_LOG.get(), BlocksPM.SUNWOOD_WOOD.get(), BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
     }
 

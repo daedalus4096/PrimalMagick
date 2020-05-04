@@ -44,12 +44,12 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTags.WOODEN_STAIRS).add(ItemsPM.MOONWOOD_STAIRS.get(), ItemsPM.SUNWOOD_STAIRS.get());
         
         // Add entries to Forge tags
-        this.getBuilder(Tags.Items.BEACON_PAYMENT).add(ItemTagsForgeExt.INGOTS_PRIMALITE, ItemTagsForgeExt.INGOTS_HEXIUM, ItemTagsForgeExt.INGOTS_HALLOWSTEEL);
+        this.getBuilder(Tags.Items.BEACON_PAYMENT).add(ItemTagsPM.INGOTS_PRIMALITE, ItemTagsPM.INGOTS_HEXIUM, ItemTagsPM.INGOTS_HALLOWSTEEL);
         this.getBuilder(Tags.Items.DUSTS).add(ItemTagsForgeExt.DUSTS_IRON, ItemTagsForgeExt.DUSTS_GOLD);
-        this.getBuilder(Tags.Items.INGOTS).add(ItemTagsForgeExt.INGOTS_PRIMALITE, ItemTagsForgeExt.INGOTS_HEXIUM, ItemTagsForgeExt.INGOTS_HALLOWSTEEL);
-        this.getBuilder(Tags.Items.NUGGETS).add(ItemTagsForgeExt.NUGGETS_PRIMALITE, ItemTagsForgeExt.NUGGETS_HEXIUM, ItemTagsForgeExt.NUGGETS_HALLOWSTEEL);
-        this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(ItemTagsForgeExt.STORAGE_BLOCKS_PRIMALITE, ItemTagsForgeExt.STORAGE_BLOCKS_HEXIUM, ItemTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL);
-        this.getBuilder(Tags.Items.SUPPORTS_BEACON).add(ItemTagsForgeExt.STORAGE_BLOCKS_PRIMALITE, ItemTagsForgeExt.STORAGE_BLOCKS_HEXIUM, ItemTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.getBuilder(Tags.Items.INGOTS).add(ItemTagsPM.INGOTS_PRIMALITE, ItemTagsPM.INGOTS_HEXIUM, ItemTagsPM.INGOTS_HALLOWSTEEL);
+        this.getBuilder(Tags.Items.NUGGETS).add(ItemTagsPM.NUGGETS_PRIMALITE, ItemTagsPM.NUGGETS_HEXIUM, ItemTagsPM.NUGGETS_HALLOWSTEEL);
+        this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, ItemTagsPM.STORAGE_BLOCKS_HEXIUM, ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.getBuilder(Tags.Items.SUPPORTS_BEACON).add(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, ItemTagsPM.STORAGE_BLOCKS_HEXIUM, ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         
         this.getBuilder(Tags.Items.GLASS_COLORLESS).add(ItemsPM.SKYGLASS.get());
         this.getBuilder(Tags.Items.GLASS_BLACK).add(ItemsPM.STAINED_SKYGLASS_BLACK.get());
@@ -92,15 +92,6 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         // Add entries to Forge extension tags
         this.getBuilder(ItemTagsForgeExt.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
         this.getBuilder(ItemTagsForgeExt.DUSTS_IRON).add(ItemsPM.IRON_GRIT.get());
-        this.getBuilder(ItemTagsForgeExt.INGOTS_HALLOWSTEEL).add(ItemsPM.HALLOWSTEEL_INGOT.get());
-        this.getBuilder(ItemTagsForgeExt.INGOTS_HEXIUM).add(ItemsPM.HEXIUM_INGOT.get());
-        this.getBuilder(ItemTagsForgeExt.INGOTS_PRIMALITE).add(ItemsPM.PRIMALITE_INGOT.get());
-        this.getBuilder(ItemTagsForgeExt.NUGGETS_HALLOWSTEEL).add(ItemsPM.HALLOWSTEEL_NUGGET.get());
-        this.getBuilder(ItemTagsForgeExt.NUGGETS_HEXIUM).add(ItemsPM.HEXIUM_NUGGET.get());
-        this.getBuilder(ItemTagsForgeExt.NUGGETS_PRIMALITE).add(ItemsPM.PRIMALITE_NUGGET.get());
-        this.getBuilder(ItemTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL).add(ItemsPM.HALLOWSTEEL_BLOCK.get());
-        this.getBuilder(ItemTagsForgeExt.STORAGE_BLOCKS_HEXIUM).add(ItemsPM.HEXIUM_BLOCK.get());
-        this.getBuilder(ItemTagsForgeExt.STORAGE_BLOCKS_PRIMALITE).add(ItemsPM.PRIMALITE_BLOCK.get());
 
         // Create custom tags
         this.getBuilder(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.BLACK_SHULKER_BOX, Items.BLUE_SHULKER_BOX, Items.BROWN_SHULKER_BOX, Items.CYAN_SHULKER_BOX, Items.GRAY_SHULKER_BOX, Items.GREEN_SHULKER_BOX, Items.LIGHT_BLUE_SHULKER_BOX, Items.LIGHT_GRAY_SHULKER_BOX, Items.LIME_SHULKER_BOX, Items.MAGENTA_SHULKER_BOX, Items.ORANGE_SHULKER_BOX, Items.PINK_SHULKER_BOX, Items.PURPLE_SHULKER_BOX, Items.RED_SHULKER_BOX, Items.WHITE_SHULKER_BOX, Items.YELLOW_SHULKER_BOX);
@@ -123,6 +114,16 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTagsPM.ESSENCES_SHARDS).add(ItemsPM.ESSENCE_SHARD_EARTH.get(), ItemsPM.ESSENCE_SHARD_SEA.get(), ItemsPM.ESSENCE_SHARD_SKY.get(), ItemsPM.ESSENCE_SHARD_SUN.get(), ItemsPM.ESSENCE_SHARD_MOON.get(), ItemsPM.ESSENCE_SHARD_BLOOD.get(), ItemsPM.ESSENCE_SHARD_INFERNAL.get(), ItemsPM.ESSENCE_SHARD_VOID.get(), ItemsPM.ESSENCE_SHARD_HALLOWED.get());
         this.getBuilder(ItemTagsPM.ESSENCES_CRYSTALS).add(ItemsPM.ESSENCE_CRYSTAL_EARTH.get(), ItemsPM.ESSENCE_CRYSTAL_SEA.get(), ItemsPM.ESSENCE_CRYSTAL_SKY.get(), ItemsPM.ESSENCE_CRYSTAL_SUN.get(), ItemsPM.ESSENCE_CRYSTAL_MOON.get(), ItemsPM.ESSENCE_CRYSTAL_BLOOD.get(), ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get(), ItemsPM.ESSENCE_CRYSTAL_VOID.get(), ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get());
         this.getBuilder(ItemTagsPM.ESSENCES_CLUSTERS).add(ItemsPM.ESSENCE_CLUSTER_EARTH.get(), ItemsPM.ESSENCE_CLUSTER_SEA.get(), ItemsPM.ESSENCE_CLUSTER_SKY.get(), ItemsPM.ESSENCE_CLUSTER_SUN.get(), ItemsPM.ESSENCE_CLUSTER_MOON.get(), ItemsPM.ESSENCE_CLUSTER_BLOOD.get(), ItemsPM.ESSENCE_CLUSTER_INFERNAL.get(), ItemsPM.ESSENCE_CLUSTER_VOID.get(), ItemsPM.ESSENCE_CLUSTER_HALLOWED.get());
+
+        this.getBuilder(ItemTagsPM.INGOTS_HALLOWSTEEL).add(ItemsPM.HALLOWSTEEL_INGOT.get());
+        this.getBuilder(ItemTagsPM.INGOTS_HEXIUM).add(ItemsPM.HEXIUM_INGOT.get());
+        this.getBuilder(ItemTagsPM.INGOTS_PRIMALITE).add(ItemsPM.PRIMALITE_INGOT.get());
+        this.getBuilder(ItemTagsPM.NUGGETS_HALLOWSTEEL).add(ItemsPM.HALLOWSTEEL_NUGGET.get());
+        this.getBuilder(ItemTagsPM.NUGGETS_HEXIUM).add(ItemsPM.HEXIUM_NUGGET.get());
+        this.getBuilder(ItemTagsPM.NUGGETS_PRIMALITE).add(ItemsPM.PRIMALITE_NUGGET.get());
+        this.getBuilder(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL).add(ItemsPM.HALLOWSTEEL_BLOCK.get());
+        this.getBuilder(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).add(ItemsPM.HEXIUM_BLOCK.get());
+        this.getBuilder(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).add(ItemsPM.PRIMALITE_BLOCK.get());
     }
 
     @Override
