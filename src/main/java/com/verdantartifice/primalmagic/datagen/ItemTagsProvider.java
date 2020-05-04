@@ -44,10 +44,12 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(ItemTags.WOODEN_STAIRS).add(ItemsPM.MOONWOOD_STAIRS.get(), ItemsPM.SUNWOOD_STAIRS.get());
         
         // Add entries to Forge tags
+        this.getBuilder(Tags.Items.BEACON_PAYMENT).add(ItemTagsForgeExt.INGOTS_PRIMALITE, ItemTagsForgeExt.INGOTS_HEXIUM, ItemTagsForgeExt.INGOTS_HALLOWSTEEL);
         this.getBuilder(Tags.Items.DUSTS).add(ItemTagsForgeExt.DUSTS_IRON, ItemTagsForgeExt.DUSTS_GOLD);
         this.getBuilder(Tags.Items.INGOTS).add(ItemTagsForgeExt.INGOTS_PRIMALITE, ItemTagsForgeExt.INGOTS_HEXIUM, ItemTagsForgeExt.INGOTS_HALLOWSTEEL);
         this.getBuilder(Tags.Items.NUGGETS).add(ItemTagsForgeExt.NUGGETS_PRIMALITE, ItemTagsForgeExt.NUGGETS_HEXIUM, ItemTagsForgeExt.NUGGETS_HALLOWSTEEL);
         this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(ItemTagsForgeExt.STORAGE_BLOCKS_PRIMALITE, ItemTagsForgeExt.STORAGE_BLOCKS_HEXIUM, ItemTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.getBuilder(Tags.Items.SUPPORTS_BEACON).add(ItemTagsForgeExt.STORAGE_BLOCKS_PRIMALITE, ItemTagsForgeExt.STORAGE_BLOCKS_HEXIUM, ItemTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL);
         
         this.getBuilder(Tags.Items.GLASS_COLORLESS).add(ItemsPM.SKYGLASS.get());
         this.getBuilder(Tags.Items.GLASS_BLACK).add(ItemsPM.STAINED_SKYGLASS_BLACK.get());
