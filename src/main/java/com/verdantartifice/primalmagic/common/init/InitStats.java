@@ -35,5 +35,8 @@ public class InitStats {
         StatTriggers.register(StatsPM.MANA_SPENT_INFERNAL, 100, SimpleResearchKey.parse("t_mana_spent_infernal_expert"));
         StatTriggers.register(StatsPM.MANA_SPENT_VOID, 100, SimpleResearchKey.parse("t_mana_spent_void_expert"));
         StatTriggers.register(StatsPM.MANA_SPENT_HALLOWED, 100, SimpleResearchKey.parse("t_mana_spent_hallowed_expert"));
+        StatTriggers.register(StatsPM.CRAFTED_ALCHEMY, 50, SimpleResearchKey.parse("b_crafted_alchemy_expert"));
+        StatTriggers.register(StatsPM.CRAFTED_ALCHEMY, 250, SimpleResearchKey.parse("b_crafted_alchemy_master"));
+        StatTriggers.register(StatsPM.CRAFTED_ALCHEMY, 1000, SimpleResearchKey.parse("b_crafted_alchemy_supreme"));
     }
 }

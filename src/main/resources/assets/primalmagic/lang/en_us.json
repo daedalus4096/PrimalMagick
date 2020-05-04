@@ -342,6 +342,18 @@
     "primalmagic.research.basic_alchemy.title": "Basic Alchemy",
     "primalmagic.research.basic_alchemy.text.stage.1": "Basic alchemy: Lorem ipsum",
     
+    "primalmagic.research.expert_alchemy.title": "Expert Alchemy",
+    "primalmagic.research.expert_alchemy.text.stage.1": "Expert alchemy: Lorem ipsum",
+    "primalmagic.research.expert_alchemy.text.stage.2": "Expert alchemy research complete!",
+    
+    "primalmagic.research.master_alchemy.title": "Master Alchemy",
+    "primalmagic.research.master_alchemy.text.stage.1": "Master alchemy: Lorem ipsum",
+    "primalmagic.research.master_alchemy.text.stage.2": "Master alchemy research complete!",
+    
+    "primalmagic.research.supreme_alchemy.title": "Supreme Alchemy",
+    "primalmagic.research.supreme_alchemy.text.stage.1": "Supreme alchemy: Lorem ipsum",
+    "primalmagic.research.supreme_alchemy.text.stage.2": "Supreme alchemy research complete!",
+    
     "primalmagic.research.stonemelding.title": "Stonemelding",
     "primalmagic.research.stonemelding.text.stage.1": "Stonemelding: Lorem ipsum",
     
@@ -776,6 +788,9 @@
     "primalmagic.research.m_env_sky.text": "Travel to the peak of the world",
     "primalmagic.research.m_env_sun.text": "Feel the scorching rays of the desert sun",
     "primalmagic.research.m_env_moon.text": "Witness the moonlight filtered through the forest trees",
+    "primalmagic.research.b_crafted_alchemy_expert.text": "Craft 50 alchemy items",
+    "primalmagic.research.b_crafted_alchemy_master.text": "Craft 250 alchemy items",
+    "primalmagic.research.b_crafted_alchemy_supreme.text": "Craft 1000 alchemy items",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
