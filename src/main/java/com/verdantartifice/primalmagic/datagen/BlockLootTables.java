@@ -33,6 +33,9 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.RESEARCH_TABLE.get());
         this.registerBasicTable(BlocksPM.RITUAL_ALTAR.get());
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());
+        this.registerBasicTable(BlocksPM.PRIMALITE_BLOCK.get());
+        this.registerBasicTable(BlocksPM.HEXIUM_BLOCK.get());
+        this.registerBasicTable(BlocksPM.HALLOWSTEEL_BLOCK.get());
 
         this.registerGemOreTable(BlocksPM.ROCK_SALT_ORE.get(), ItemsPM.ROCK_SALT.get(), 3.0F, 4.0F);
     }

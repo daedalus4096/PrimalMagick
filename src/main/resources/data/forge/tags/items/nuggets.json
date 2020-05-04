@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:nuggets/primalite",
+    "#forge:nuggets/hexium",
+    "#forge:nuggets/hallowsteel"
+  ]
+}

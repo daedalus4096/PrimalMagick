@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/hexium"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:hexium_ingot",
+    "count": 9
+  }
+}

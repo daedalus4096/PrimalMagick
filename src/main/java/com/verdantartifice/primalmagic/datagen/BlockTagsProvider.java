@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.datagen;
 import java.nio.file.Path;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 
 import net.minecraft.block.Block;
@@ -43,6 +44,8 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.getBuilder(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.get(), BlocksPM.SUNWOOD_STAIRS.get());
         
         // Add entries to Forge tags
+        this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(BlockTagsForgeExt.STORAGE_BLOCKS_PRIMALITE, BlockTagsForgeExt.STORAGE_BLOCKS_HEXIUM, BlockTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL);
+        
         this.getBuilder(Tags.Blocks.GLASS_COLORLESS).add(BlocksPM.SKYGLASS.get());
         this.getBuilder(Tags.Blocks.GLASS_BLACK).add(BlocksPM.STAINED_SKYGLASS_BLACK.get());
         this.getBuilder(Tags.Blocks.GLASS_BLUE).add(BlocksPM.STAINED_SKYGLASS_BLUE.get());
@@ -80,6 +83,11 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.getBuilder(Tags.Blocks.GLASS_PANES_WHITE).add(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get());
         this.getBuilder(Tags.Blocks.GLASS_PANES_YELLOW).add(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
         this.getBuilder(Tags.Blocks.STAINED_GLASS_PANES).add(BlockTagsPM.STAINED_SKYGLASS_PANES);
+        
+        // Add entries to Forge extension tags
+        this.getBuilder(BlockTagsForgeExt.STORAGE_BLOCKS_HALLOWSTEEL).add(BlocksPM.HALLOWSTEEL_BLOCK.get());
+        this.getBuilder(BlockTagsForgeExt.STORAGE_BLOCKS_HEXIUM).add(BlocksPM.HEXIUM_BLOCK.get());
+        this.getBuilder(BlockTagsForgeExt.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
         
         // Create custom tags
         this.getBuilder(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);

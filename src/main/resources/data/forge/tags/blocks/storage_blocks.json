@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:storage_blocks/primalite",
+    "#forge:storage_blocks/hexium",
+    "#forge:storage_blocks/hallowsteel"
+  ]
+}

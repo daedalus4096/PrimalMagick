@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagic:hallowsteel_block"
+    ]
+  },
+  "criteria": {
+    "has_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/hallowsteel"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagic:hallowsteel_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}
