@@ -1154,12 +1154,10 @@ public class Recipes extends RecipeProvider {
     
     protected void registerHexiumRecipes(Consumer<IFinishedRecipe> consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HEXIUM_INGOT.get())
-            .addIngredient(Tags.Items.INGOTS_IRON)
-            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .addIngredient(ItemTagsPM.INGOTS_PRIMALITE)
+            .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
             .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.HEXIUM_NUGGET.get(), 9)
@@ -1188,12 +1186,8 @@ public class Recipes extends RecipeProvider {
     
     protected void registerHallowsteelRecipes(Consumer<IFinishedRecipe> consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HALLOWSTEEL_INGOT.get())
-            .addIngredient(Tags.Items.INGOTS_IRON)
-            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .addIngredient(ItemTagsPM.INGOTS_HEXIUM)
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
             .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.HALLOWSTEEL_NUGGET.get(), 9)

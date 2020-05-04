@@ -362,6 +362,10 @@
     "primalmagic.research.shard_desynthesis.text.addenda.3": "It works for void too",
     "primalmagic.research.shard_desynthesis.text.addenda.4": "It works for hallowed too",
     
+    "primalmagic.research.primalite.title": "Primalite",
+    "primalmagic.research.primalite.text.stage.1": "Primalite: lorem ipsum",
+    "primalmagic.research.primalite.text.stage.2": "Primalite research complete!",
+    
     "primalmagic.research.crystal_synthesis.title": "Crystal Synthesis",
     "primalmagic.research.crystal_synthesis.text.stage.1": "How to make crystals from shards!",
     "primalmagic.research.crystal_synthesis.text.addenda.1": "It works for blood too",
@@ -376,6 +380,10 @@
     "primalmagic.research.crystal_desynthesis.text.addenda.3": "It works for void too",
     "primalmagic.research.crystal_desynthesis.text.addenda.4": "It works for hallowed too",
     
+    "primalmagic.research.hexium.title": "Hexium",
+    "primalmagic.research.hexium.text.stage.1": "Hexium: lorem ipsum",
+    "primalmagic.research.hexium.text.stage.2": "Hexium research complete!",
+    
     "primalmagic.research.cluster_synthesis.title": "Cluster Synthesis",
     "primalmagic.research.cluster_synthesis.text.stage.1": "How to make clusters from crystals!",
     "primalmagic.research.cluster_synthesis.text.addenda.1": "It works for blood too",
@@ -389,6 +397,10 @@
     "primalmagic.research.cluster_desynthesis.text.addenda.2": "It works for infernal too",
     "primalmagic.research.cluster_desynthesis.text.addenda.3": "It works for void too",
     "primalmagic.research.cluster_desynthesis.text.addenda.4": "It works for hallowed too",
+    
+    "primalmagic.research.hallowsteel.title": "Hallowsteel",
+    "primalmagic.research.hallowsteel.text.stage.1": "Hallowsteel: lorem ipsum",
+    "primalmagic.research.hallowsteel.text.stage.2": "Hallowsteel research complete!",
     
     "primalmagic.research.basic_sorcery.title": "Basic Sorcery",
     "primalmagic.research.basic_sorcery.text.stage.1": "Basic sorcery: Lorem ipsum",

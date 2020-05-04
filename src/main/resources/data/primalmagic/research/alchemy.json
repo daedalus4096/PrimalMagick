@@ -216,6 +216,37 @@
             ]
         },
         {
+            "key": "PRIMALITE",
+            "name": "primalmagic.research.primalite.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "BASIC_ALCHEMY" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.primalite.text.stage.1",
+                    "required_item": [
+                        "primalmagic:essence_dust_earth",
+                        "primalmagic:essence_dust_sea",
+                        "primalmagic:essence_dust_sky",
+                        "primalmagic:essence_dust_sun",
+                        "primalmagic:essence_dust_moon"
+                    ],
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.primalite.text.stage.2",
+                    "attunements": {
+                        "earth": 1,
+                        "sea": 1,
+                        "sky": 1,
+                        "sun": 1,
+                        "moon": 1
+                    },
+                    "recipes": ["primalmagic:primalite_ingot"]
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "CRYSTAL_SYNTHESIS",
             "name": "primalmagic.research.crystal_synthesis.title",
             "discipline": "ALCHEMY",
@@ -334,6 +365,34 @@
             ]
         },
         {
+            "key": "HEXIUM",
+            "name": "primalmagic.research.hexium.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "PRIMALITE", "SHARD_SYNTHESIS", "t_discover_blood", "t_discover_infernal", "t_discover_void" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.hexium.text.stage.1",
+                    "required_item": [
+                        "primalmagic:essence_shard_blood",
+                        "primalmagic:essence_shard_infernal",
+                        "primalmagic:essence_shard_void"
+                    ],
+                    "required_craft": ["primalmagic:primalite_ingot"],
+                    "required_knowledge": ["THEORY;2"]
+                },
+                {
+                    "text": "primalmagic.research.hexium.text.stage.2",
+                    "attunements": {
+                        "blood": 2,
+                        "infernal": 2,
+                        "void": 2
+                    },
+                    "recipes": ["primalmagic:hexium_ingot"]
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "CLUSTER_SYNTHESIS",
             "name": "primalmagic.research.cluster_synthesis.title",
             "discipline": "ALCHEMY",
@@ -450,6 +509,30 @@
                     "recipes": [ "primalmagic:essence_crystal_hallowed_from_cluster" ]
                 }
             ]
+        },
+        {
+            "key": "HALLOWSTEEL",
+            "name": "primalmagic.research.hallowsteel.title",
+            "discipline": "ALCHEMY",
+            "parents": [ "HEXIUM", "CRYSTAL_SYNTHESIS", "t_discover_hallowed" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.hallowsteel.text.stage.1",
+                    "required_item": [
+                        "primalmagic:essence_crystal_hallowed"
+                    ],
+                    "required_craft": ["primalmagic:hexium_ingot"],
+                    "required_knowledge": ["THEORY;3"]
+                },
+                {
+                    "text": "primalmagic.research.hallowsteel.text.stage.2",
+                    "attunements": {
+                        "hallowed": 3
+                    },
+                    "recipes": ["primalmagic:hallowsteel_ingot"]
+                }
+            ],
+            "addenda": []
         }
     ]
 }

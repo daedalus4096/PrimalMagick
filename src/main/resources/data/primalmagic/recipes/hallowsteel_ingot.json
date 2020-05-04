@@ -3,22 +3,10 @@
   "research": "HALLOWSTEEL",
   "ingredients": [
     {
-      "tag": "forge:ingots/iron"
+      "tag": "primalmagic:ingots/hexium"
     },
     {
-      "item": "primalmagic:essence_dust_earth"
-    },
-    {
-      "item": "primalmagic:essence_dust_sea"
-    },
-    {
-      "item": "primalmagic:essence_dust_sky"
-    },
-    {
-      "item": "primalmagic:essence_dust_sun"
-    },
-    {
-      "item": "primalmagic:essence_dust_moon"
+      "item": "primalmagic:essence_crystal_hallowed"
     }
   ],
   "result": {
