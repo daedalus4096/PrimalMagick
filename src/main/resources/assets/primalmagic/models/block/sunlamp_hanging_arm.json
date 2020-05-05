@@ -1,0 +1,46 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"particle": "primalmagic:block/sunlamp",
+		"all": "primalmagic:block/sunlamp"
+	},
+	"elements": [
+		{
+			"name": "plate",
+			"from": [6, 1, 4],
+			"to": [10, 8, 5],
+			"faces": {
+				"north": {"uv": [1, 8, 5, 15], "texture": "#all"},
+				"east": {"uv": [0, 8, 1, 15], "texture": "#all"},
+				"west": {"uv": [0, 8, 1, 15], "texture": "#all"},
+				"up": {"uv": [1, 9, 5, 10], "texture": "#all"},
+				"down": {"uv": [1, 14, 5, 15], "texture": "#all"}
+			}
+		},
+		{
+			"name": "armTop",
+			"from": [7.5, 6.5, 0],
+			"to": [8.5, 7.5, 4],
+			"faces": {
+				"north": {"uv": [0, 9, 1, 10], "texture": "#all"},
+				"east": {"uv": [0, 9, 4, 10], "texture": "#all"},
+				"west": {"uv": [0, 9, 4, 10], "texture": "#all"},
+				"up": {"uv": [0, 9, 1, 13], "texture": "#all"},
+				"down": {"uv": [0, 11, 1, 15], "texture": "#all"}
+			}
+		},
+		{
+			"name": "armBottom",
+			"from": [7.5, 1.5, 0],
+			"to": [8.5, 2.5, 4],
+			"faces": {
+				"north": {"uv": [0, 9, 1, 10], "texture": "#all"},
+				"east": {"uv": [0, 9, 4, 10], "texture": "#all"},
+				"west": {"uv": [0, 9, 4, 10], "texture": "#all"},
+				"up": {"uv": [0, 9, 1, 13], "texture": "#all"},
+				"down": {"uv": [0, 11, 1, 15], "texture": "#all"}
+			}
+		}
+	]
+}

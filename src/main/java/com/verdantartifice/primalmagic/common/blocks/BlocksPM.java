@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandAssemblyTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandInscriptionTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.AnalysisTableBlock;
@@ -189,6 +190,7 @@ public class BlocksPM {
     public static final RegistryObject<SpellcraftingAltarBlock> SPELLCRAFTING_ALTAR = BLOCKS.register("spellcrafting_altar", SpellcraftingAltarBlock::new);
     public static final RegistryObject<WandChargerBlock> WAND_CHARGER = BLOCKS.register("wand_charger", WandChargerBlock::new);
     public static final RegistryObject<ResearchTableBlock> RESEARCH_TABLE = BLOCKS.register("research_table", ResearchTableBlock::new);
+    public static final RegistryObject<SunlampBlock> SUNLAMP = BLOCKS.register("sunlamp", SunlampBlock::new);
     public static final RegistryObject<RitualAltarBlock> RITUAL_ALTAR = BLOCKS.register("ritual_altar", RitualAltarBlock::new);
     
     // Register misc blocks
