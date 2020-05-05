@@ -121,6 +121,15 @@ public class Recipes extends RecipeProvider {
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "stone_from_stonemelding"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUNLAMP.get())
+            .patternLine("NNN")
+            .patternLine("NTN")
+            .patternLine("NNN")
+            .key('N', ItemTagsPM.NUGGETS_PRIMALITE)
+            .key('T', Items.TORCH)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUNLAMP")))
+            .manaCost(new SourceList().add(Source.SUN, 10))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
