@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.blocks.devices;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
@@ -15,6 +16,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +25,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 
 /**
  * Block definition for a sunlamp.  Sunlamps are like normal lanterns, but they spawn glow fields
@@ -82,5 +85,24 @@ public class SunlampBlock extends Block {
     @Override
     public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
         return false;
+    }
+    
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+    
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new SunlampTileEntity();
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
+        super.eventReceived(state, worldIn, pos, id, param);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        return (tile == null) ? false : tile.receiveClientEvent(id, param);
     }
 }

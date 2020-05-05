@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.tiles;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity;
@@ -29,4 +30,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<TileEntityType<CalcinatorTileEntity>> CALCINATOR = TILE_ENTITIES.register("calcinator", () -> TileEntityType.Builder.create(CalcinatorTileEntity::new, BlocksPM.CALCINATOR.get()).build(null));
     public static final RegistryObject<TileEntityType<WandChargerTileEntity>> WAND_CHARGER = TILE_ENTITIES.register("wand_charger", () -> TileEntityType.Builder.create(WandChargerTileEntity::new, BlocksPM.WAND_CHARGER.get()).build(null));
     public static final RegistryObject<TileEntityType<RitualAltarTileEntity>> RITUAL_ALTAR = TILE_ENTITIES.register("ritual_altar", () -> TileEntityType.Builder.create(RitualAltarTileEntity::new, BlocksPM.RITUAL_ALTAR.get()).build(null));
+    public static final RegistryObject<TileEntityType<SunlampTileEntity>> SUNLAMP = TILE_ENTITIES.register("sunlamp", () -> TileEntityType.Builder.create(SunlampTileEntity::new, BlocksPM.SUNLAMP.get()).build(null));
 }
