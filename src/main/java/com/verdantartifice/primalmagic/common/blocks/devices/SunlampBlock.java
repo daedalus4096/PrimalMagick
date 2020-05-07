@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.blocks.devices;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
@@ -104,5 +105,21 @@ public class SunlampBlock extends Block {
         super.eventReceived(state, worldIn, pos, id, param);
         TileEntity tile = worldIn.getTileEntity(pos);
         return (tile == null) ? false : tile.receiveClientEvent(id, param);
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        for (int x = -15; x <= 15; x++) {
+            for (int y = -15; y <= 15; y++) {
+                for (int z = -15; z <= 15; z++) {
+                    BlockPos bp = pos.add(x, y, z);
+                    if (worldIn.getBlockState(bp) == BlocksPM.GLOW_FIELD.get().getDefaultState()) {
+                        worldIn.removeBlock(bp, false);
+                    }
+                }
+            }
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 }
