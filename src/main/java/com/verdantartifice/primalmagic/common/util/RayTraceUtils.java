@@ -156,7 +156,7 @@ public class RayTraceUtils {
         EntitylessRayTraceContext context = new EntitylessRayTraceContext(world, startVec, endVec, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.ANY);
         BlockRayTraceResult result = RayTraceUtils.rayTraceBlocksIgnoringSource(context);
 
-        if (result == null) {
+        if (result == null || result.getType() == RayTraceResult.Type.MISS) {
             PrimalMagic.LOGGER.debug("LOS check from {} to {} got null result!", source, target);
             return true;
         } else if (result.getType() == RayTraceResult.Type.BLOCK) {
@@ -230,47 +230,43 @@ public class RayTraceUtils {
             int adjStartYFloor = MathHelper.floor(adjStartY);
             int adjStartZFloor = MathHelper.floor(adjStartZ);
             BlockPos.Mutable mbp = new BlockPos.Mutable(adjStartXFloor, adjStartYFloor, adjStartZFloor);
-            BlockRayTraceResult result = checkFunc.apply(context, mbp);
-            if (result != null) {
-                return result;
-            } else {
-                double deltaX = adjEndX - adjStartX;
-                double deltaY = adjEndY - adjStartY;
-                double deltaZ = adjEndZ - adjStartZ;
-                int signDeltaX = MathHelper.signum(deltaX);
-                int signDeltaY = MathHelper.signum(deltaY);
-                int signDeltaZ = MathHelper.signum(deltaZ);
-                double d9 = signDeltaX == 0 ? Double.MAX_VALUE : (double)signDeltaX / deltaX;
-                double d10 = signDeltaY == 0 ? Double.MAX_VALUE : (double)signDeltaY / deltaY;
-                double d11 = signDeltaZ == 0 ? Double.MAX_VALUE : (double)signDeltaZ / deltaZ;
-                double d12 = d9 * (signDeltaX > 0 ? 1.0D - MathHelper.frac(adjStartX) : MathHelper.frac(adjStartX));
-                double d13 = d10 * (signDeltaY > 0 ? 1.0D - MathHelper.frac(adjStartY) : MathHelper.frac(adjStartY));
-                double d14 = d11 * (signDeltaZ > 0 ? 1.0D - MathHelper.frac(adjStartZ) : MathHelper.frac(adjStartZ));
-                
-                while (d12 <= 1.0D || d13 <= 1.0D || d14 <= 1.0D) {
-                    if (d12 < d13) {
-                        if (d12 < d14) {
-                            adjStartXFloor += signDeltaX;
-                            d12 += d9;
-                        } else {
-                            adjStartZFloor += signDeltaZ;
-                            d14 += d11;
-                        }
-                    } else if (d13 < d14) {
-                        adjStartYFloor += signDeltaY;
-                        d13 += d10;
+
+            double deltaX = adjEndX - adjStartX;
+            double deltaY = adjEndY - adjStartY;
+            double deltaZ = adjEndZ - adjStartZ;
+            int signDeltaX = MathHelper.signum(deltaX);
+            int signDeltaY = MathHelper.signum(deltaY);
+            int signDeltaZ = MathHelper.signum(deltaZ);
+            double d9 = signDeltaX == 0 ? Double.MAX_VALUE : (double)signDeltaX / deltaX;
+            double d10 = signDeltaY == 0 ? Double.MAX_VALUE : (double)signDeltaY / deltaY;
+            double d11 = signDeltaZ == 0 ? Double.MAX_VALUE : (double)signDeltaZ / deltaZ;
+            double d12 = d9 * (signDeltaX > 0 ? 1.0D - MathHelper.frac(adjStartX) : MathHelper.frac(adjStartX));
+            double d13 = d10 * (signDeltaY > 0 ? 1.0D - MathHelper.frac(adjStartY) : MathHelper.frac(adjStartY));
+            double d14 = d11 * (signDeltaZ > 0 ? 1.0D - MathHelper.frac(adjStartZ) : MathHelper.frac(adjStartZ));
+            
+            while (d12 <= 1.0D || d13 <= 1.0D || d14 <= 1.0D) {
+                if (d12 < d13) {
+                    if (d12 < d14) {
+                        adjStartXFloor += signDeltaX;
+                        d12 += d9;
                     } else {
                         adjStartZFloor += signDeltaZ;
                         d14 += d11;
                     }
-                    
-                    result = checkFunc.apply(context, mbp.setPos(adjStartXFloor, adjStartYFloor, adjStartZFloor));
-                    if (result != null) {
-                        return result;
-                    }
+                } else if (d13 < d14) {
+                    adjStartYFloor += signDeltaY;
+                    d13 += d10;
+                } else {
+                    adjStartZFloor += signDeltaZ;
+                    d14 += d11;
                 }
-                return missFunc.apply(context);
+                
+                BlockRayTraceResult result = checkFunc.apply(context, mbp.setPos(adjStartXFloor, adjStartYFloor, adjStartZFloor));
+                if (result != null) {
+                    return result;
+                }
             }
+            return missFunc.apply(context);
         }
     }
     

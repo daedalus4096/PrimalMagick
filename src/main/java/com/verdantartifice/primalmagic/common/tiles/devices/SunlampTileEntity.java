@@ -50,6 +50,7 @@ public class SunlampTileEntity extends TilePM implements ITickableTileEntity {
                  this.world.getBlockState(bp) != BlocksPM.GLOW_FIELD.get().getDefaultState() &&
                  this.world.getLightFor(LightType.BLOCK, bp) < 11 &&
                  RayTraceUtils.hasLineOfSight(this.world, this.pos, bp) ) {
+                PrimalMagic.LOGGER.debug("Glow field spawn successful!");
                 this.world.setBlockState(bp, BlocksPM.GLOW_FIELD.get().getDefaultState(), Constants.BlockFlags.DEFAULT);
             }
         }
