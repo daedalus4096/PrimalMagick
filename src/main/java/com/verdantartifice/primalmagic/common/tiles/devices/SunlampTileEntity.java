@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.tiles.devices;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
@@ -45,12 +44,10 @@ public class SunlampTileEntity extends TilePM implements ITickableTileEntity {
             }
 
             // If location is ordinary air and dark enough and in line-of-sight, spawn a glow field there
-            PrimalMagic.LOGGER.debug("Trying to spawn glow field");
             if ( this.world.isAirBlock(bp) &&
                  this.world.getBlockState(bp) != BlocksPM.GLOW_FIELD.get().getDefaultState() &&
                  this.world.getLightFor(LightType.BLOCK, bp) < 11 &&
                  RayTraceUtils.hasLineOfSight(this.world, this.pos, bp) ) {
-                PrimalMagic.LOGGER.debug("Glow field spawn successful!");
                 this.world.setBlockState(bp, BlocksPM.GLOW_FIELD.get().getDefaultState(), Constants.BlockFlags.DEFAULT);
             }
         }

@@ -8,8 +8,6 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -157,13 +155,10 @@ public class RayTraceUtils {
         BlockRayTraceResult result = RayTraceUtils.rayTraceBlocksIgnoringSource(context);
 
         if (result == null || result.getType() == RayTraceResult.Type.MISS) {
-            PrimalMagic.LOGGER.debug("LOS check from {} to {} got null result!", source, target);
             return true;
         } else if (result.getType() == RayTraceResult.Type.BLOCK) {
-            PrimalMagic.LOGGER.debug("LOS check from {} to {} found hit at {}", source, target, result.getPos());
             return target.equals(result.getPos());
         } else {
-            PrimalMagic.LOGGER.debug("LOS check from {} to {} got non-block result!", source, target);
             return false;
         }
     }
