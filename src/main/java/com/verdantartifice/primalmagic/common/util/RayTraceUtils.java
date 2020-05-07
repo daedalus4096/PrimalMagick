@@ -1,20 +1,30 @@
 package com.verdantartifice.primalmagic.common.util;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -124,5 +134,180 @@ public class RayTraceUtils {
         Direction dir = Direction.getFacingFromVector(dirVec.x, dirVec.y, dirVec.z);
         
         return new BlockRayTraceResult(entityResult.getHitVec(), dir, entityPos, false);
+    }
+    
+    /**
+     * Determine whether the source block has an unobstructed line of sight to the target block.
+     * 
+     * @param world the world in which to test
+     * @param source the position of the source block
+     * @param target the position of the target block
+     * @return true if the source block has an unobstructed line of sight to the target block, false otherwise
+     */
+    public static boolean hasLineOfSight(@Nullable World world, @Nullable BlockPos source, @Nullable BlockPos target) {
+        if (world == null || source == null || target == null) {
+            return false;
+        }
+        
+        Vec3d startVec = new Vec3d(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D);
+        Vec3d endVec = new Vec3d(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D);
+        EntitylessRayTraceContext context = new EntitylessRayTraceContext(world, startVec, endVec, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.ANY);
+        BlockRayTraceResult result = RayTraceUtils.rayTraceBlocksIgnoringSource(context);
+
+        if (result == null) {
+            return true;
+        } else if (result.getType() == RayTraceResult.Type.BLOCK) {
+            return target.equals(result.getPos());
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * @see {@link net.minecraft.world.IBlockReader#rayTraceBlocks(RayTraceContext)}
+     */
+    protected static BlockRayTraceResult rayTraceBlocksIgnoringSource(EntitylessRayTraceContext context) {
+        return iterateRayTrace(context, RayTraceUtils::doRayTraceCheck, RayTraceUtils::createMiss);
+    }
+    
+    protected static BlockRayTraceResult doRayTraceCheck(EntitylessRayTraceContext context, BlockPos pos) {
+        IBlockReader world = context.getWorld();
+        BlockState blockState = world.getBlockState(pos);
+        IFluidState fluidState = world.getFluidState(pos);
+        Vec3d startVec = context.getStartVec();
+        Vec3d endVec = context.getEndVec();
+        VoxelShape blockShape = context.getBlockShape(blockState, world, pos);
+        BlockRayTraceResult blockResult = RayTraceUtils.doCollisionCheck(world, startVec, endVec, pos, blockShape, blockState);
+        VoxelShape fluidShape = context.getFluidShape(fluidState, world, pos);
+        BlockRayTraceResult fluidResult = fluidShape.rayTrace(startVec, endVec, pos);
+        double blockDistanceSq = blockResult == null ? Double.MAX_VALUE : startVec.squareDistanceTo(blockResult.getHitVec());
+        double fluidDistanceSq = fluidResult == null ? Double.MAX_VALUE : startVec.squareDistanceTo(fluidResult.getHitVec());
+        return blockDistanceSq <= fluidDistanceSq ? blockResult : fluidResult;
+    }
+    
+    protected static BlockRayTraceResult createMiss(EntitylessRayTraceContext context) {
+        Vec3d endVec = context.getEndVec();
+        Vec3d delta = context.getStartVec().subtract(endVec);
+        return BlockRayTraceResult.createMiss(endVec, Direction.getFacingFromVector(delta.x, delta.y, delta.z), new BlockPos(endVec));
+    }
+    
+    /**
+     * @see {@link net.minecraft.world.IBlockReader#rayTraceBlocks(Vec3d, Vec3d, BlockPos, VoxelShape, BlockState)}
+     */
+    @Nullable
+    protected static BlockRayTraceResult doCollisionCheck(IBlockReader world, Vec3d startVec, Vec3d endVec, BlockPos iteratedPos, VoxelShape iteratedShape, BlockState iteratedState) {
+        BlockRayTraceResult result = iteratedShape.rayTrace(startVec, endVec, iteratedPos);
+        if (result != null) {
+            BlockRayTraceResult faceResult = iteratedState.getRaytraceShape(world, iteratedPos).rayTrace(startVec, endVec, iteratedPos);
+            if (faceResult != null && (faceResult.getHitVec().subtract(startVec).lengthSquared() < result.getHitVec().subtract(startVec).lengthSquared())) {
+                return result.withFace(faceResult.getFace());
+            }
+        }
+        return result;
+    }
+    
+    /**
+     * @see {@link net.minecraft.world.IBlockReader#func_217300_a(RayTraceContext, BiFunction, Function)}
+     */
+    protected static BlockRayTraceResult iterateRayTrace(EntitylessRayTraceContext context, BiFunction<EntitylessRayTraceContext, BlockPos, BlockRayTraceResult> checkFunc, Function<EntitylessRayTraceContext, BlockRayTraceResult> missFunc) {
+        Vec3d startVec = context.getStartVec();
+        Vec3d endVec = context.getEndVec();
+        if (startVec.equals(endVec)) {
+            return missFunc.apply(context);
+        } else {
+            double adjEndX = MathHelper.lerp(-1.0E-7D, endVec.x, startVec.x);
+            double adjEndY = MathHelper.lerp(-1.0E-7D, endVec.y, startVec.y);
+            double adjEndZ = MathHelper.lerp(-1.0E-7D, endVec.z, startVec.z);
+            double adjStartX = MathHelper.lerp(-1.0E-7D, startVec.x, endVec.x);
+            double adjStartY = MathHelper.lerp(-1.0E-7D, startVec.y, endVec.y);
+            double adjStartZ = MathHelper.lerp(-1.0E-7D, startVec.z, endVec.z);
+            int adjStartXFloor = MathHelper.floor(adjStartX);
+            int adjStartYFloor = MathHelper.floor(adjStartY);
+            int adjStartZFloor = MathHelper.floor(adjStartZ);
+            BlockPos.Mutable mbp = new BlockPos.Mutable(adjStartXFloor, adjStartYFloor, adjStartZFloor);
+            BlockRayTraceResult result = checkFunc.apply(context, mbp);
+            if (result != null) {
+                return result;
+            } else {
+                double deltaX = adjEndX - adjStartX;
+                double deltaY = adjEndY - adjStartY;
+                double deltaZ = adjEndZ - adjStartZ;
+                int signDeltaX = MathHelper.signum(deltaX);
+                int signDeltaY = MathHelper.signum(deltaY);
+                int signDeltaZ = MathHelper.signum(deltaZ);
+                double d9 = signDeltaX == 0 ? Double.MAX_VALUE : (double)signDeltaX / deltaX;
+                double d10 = signDeltaY == 0 ? Double.MAX_VALUE : (double)signDeltaY / deltaY;
+                double d11 = signDeltaZ == 0 ? Double.MAX_VALUE : (double)signDeltaZ / deltaZ;
+                double d12 = d9 * (signDeltaX > 0 ? 1.0D - MathHelper.frac(adjStartX) : MathHelper.frac(adjStartX));
+                double d13 = d10 * (signDeltaY > 0 ? 1.0D - MathHelper.frac(adjStartY) : MathHelper.frac(adjStartY));
+                double d14 = d11 * (signDeltaZ > 0 ? 1.0D - MathHelper.frac(adjStartZ) : MathHelper.frac(adjStartZ));
+                
+                while (d12 <= 1.0D || d13 <= 1.0D || d14 <= 1.0D) {
+                    if (d12 < d13) {
+                        if (d12 < d14) {
+                            adjStartXFloor += signDeltaX;
+                            d12 += d9;
+                        } else {
+                            adjStartZFloor += signDeltaZ;
+                            d14 += d11;
+                        }
+                    } else if (d13 < d14) {
+                        adjStartYFloor += signDeltaY;
+                        d13 += d10;
+                    } else {
+                        adjStartZFloor += signDeltaZ;
+                        d14 += d11;
+                    }
+                    
+                    result = checkFunc.apply(context, mbp.setPos(adjStartXFloor, adjStartYFloor, adjStartZFloor));
+                    if (result != null) {
+                        return result;
+                    }
+                }
+                return missFunc.apply(context);
+            }
+        }
+    }
+    
+    /**
+     * Like a normal RayTraceContext, but uses a dummy selection context and doesn't require an Entity.
+     * 
+     * @author Daedalus4096
+     * @see {@link net.minecraft.util.math.RayTraceContext}
+     */
+    protected static class EntitylessRayTraceContext {
+        private final IBlockReader world;
+        private final Vec3d startVec;
+        private final Vec3d endVec;
+        private final RayTraceContext.BlockMode blockMode;
+        private final RayTraceContext.FluidMode fluidMode;
+
+        public EntitylessRayTraceContext(IBlockReader world, Vec3d startVec, Vec3d endVec, RayTraceContext.BlockMode blockMode, RayTraceContext.FluidMode fluidMode) {
+            this.world = world;
+            this.startVec = startVec;
+            this.endVec = endVec;
+            this.blockMode = blockMode;
+            this.fluidMode = fluidMode;
+        }
+        
+        public IBlockReader getWorld() {
+            return this.world;
+        }
+        
+        public Vec3d getStartVec() {
+            return this.startVec;
+        }
+        
+        public Vec3d getEndVec() {
+            return this.endVec;
+        }
+        
+        public VoxelShape getBlockShape(BlockState state, IBlockReader world, BlockPos pos) {
+            return this.blockMode.get(state, world, pos, ISelectionContext.dummy());
+        }
+        
+        public VoxelShape getFluidShape(IFluidState state, IBlockReader world, BlockPos pos) {
+            return this.fluidMode.test(state) ? state.getShape(world, pos) : VoxelShapes.empty();
+        }
     }
 }
