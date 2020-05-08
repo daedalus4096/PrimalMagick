@@ -505,6 +505,18 @@
     "primalmagic.research.basic_manaweaving.title": "Basic Manaweaving",
     "primalmagic.research.basic_manaweaving.text.stage.1": "Basic manaweaving: Lorem ipsum",
     
+    "primalmagic.research.expert_manaweaving.title": "Expert Manaweaving",
+    "primalmagic.research.expert_manaweaving.text.stage.1": "Expert manaweaving: Lorem ipsum",
+    "primalmagic.research.expert_manaweaving.text.stage.2": "Expert manaweaving research complete!",
+    
+    "primalmagic.research.master_manaweaving.title": "Master Manaweaving",
+    "primalmagic.research.master_manaweaving.text.stage.1": "Master manaweaving: Lorem ipsum",
+    "primalmagic.research.master_manaweaving.text.stage.2": "Master manaweaving research complete!",
+    
+    "primalmagic.research.supreme_manaweaving.title": "Supreme Manaweaving",
+    "primalmagic.research.supreme_manaweaving.text.stage.1": "Supreme manaweaving: Lorem ipsum",
+    "primalmagic.research.supreme_manaweaving.text.stage.2": "Supreme manaweaving research complete!",
+    
     "primalmagic.research.earthshatter_hammer.title": "Earthshatter Hammer",
     "primalmagic.research.earthshatter_hammer.text.stage.1": "Earthshatter hammer: Lorem ipsum",
     "primalmagic.research.earthshatter_hammer.text.stage.2": "Earthshatter hammer complete!",
@@ -796,6 +808,9 @@
     "primalmagic.research.b_crafted_alchemy_expert.text": "Craft 50 alchemy items",
     "primalmagic.research.b_crafted_alchemy_master.text": "Craft 250 alchemy items",
     "primalmagic.research.b_crafted_alchemy_supreme.text": "Craft 1000 alchemy items",
+    "primalmagic.research.b_crafted_manaweaving_expert.text": "Craft 10 manaweaving items",
+    "primalmagic.research.b_crafted_manaweaving_master.text": "Craft 50 manaweaving items",
+    "primalmagic.research.b_crafted_manaweaving_supreme.text": "Craft 250 manaweaving items",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
