@@ -41,5 +41,8 @@ public class InitStats {
         StatTriggers.register(StatsPM.CRAFTED_MANAWEAVING, 10, SimpleResearchKey.parse("b_crafted_manaweaving_expert"));
         StatTriggers.register(StatsPM.CRAFTED_MANAWEAVING, 50, SimpleResearchKey.parse("b_crafted_manaweaving_master"));
         StatTriggers.register(StatsPM.CRAFTED_MANAWEAVING, 250, SimpleResearchKey.parse("b_crafted_manaweaving_supreme"));
+        StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 10, SimpleResearchKey.parse("b_crafted_runeworking_expert"));
+        StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 50, SimpleResearchKey.parse("b_crafted_runeworking_master"));
+        StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 250, SimpleResearchKey.parse("b_crafted_runeworking_supreme"));
     }
 }
