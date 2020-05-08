@@ -11,6 +11,54 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "EXPERT_RITUAL",
+            "name": "primalmagic.research.expert_ritual.title",
+            "discipline": "RITUAL",
+            "parents": [ "BASIC_RITUAL" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.expert_ritual.text.stage.1",
+                    "required_research": [ "t_rituals_completed_expert" ]
+                },
+                {
+                    "text": "primalmagic.research.expert_ritual.text.stage.2"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "MASTER_RITUAL",
+            "name": "primalmagic.research.master_ritual.title",
+            "discipline": "RITUAL",
+            "parents": [ "EXPERT_RITUAL" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.master_ritual.text.stage.1",
+                    "required_research": [ "t_rituals_completed_master" ]
+                },
+                {
+                    "text": "primalmagic.research.master_ritual.text.stage.2"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SUPREME_RITUAL",
+            "name": "primalmagic.research.supreme_ritual.title",
+            "discipline": "RITUAL",
+            "parents": [ "MASTER_RITUAL" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.supreme_ritual.text.stage.1",
+                    "required_research": [ "t_rituals_completed_supreme" ]
+                },
+                {
+                    "text": "primalmagic.research.supreme_ritual.text.stage.2"
+                }
+            ],
+            "addenda": []
         }
     ]
 }

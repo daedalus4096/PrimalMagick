@@ -44,5 +44,8 @@ public class InitStats {
         StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 10, SimpleResearchKey.parse("b_crafted_runeworking_expert"));
         StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 50, SimpleResearchKey.parse("b_crafted_runeworking_master"));
         StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 250, SimpleResearchKey.parse("b_crafted_runeworking_supreme"));
+        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 5, SimpleResearchKey.parse("t_rituals_completed_expert"));
+        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 25, SimpleResearchKey.parse("t_rituals_completed_master"));
+        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 100, SimpleResearchKey.parse("t_rituals_completed_supreme"));
     }
 }

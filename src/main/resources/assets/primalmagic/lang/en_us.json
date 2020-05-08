@@ -543,6 +543,18 @@
     "primalmagic.research.basic_ritual.title": "Basic Ritual Magic",
     "primalmagic.research.basic_ritual.text.stage.1": "Basic ritual magic: Lorem ipsum",
     
+    "primalmagic.research.expert_ritual.title": "Expert Ritual Magic",
+    "primalmagic.research.expert_ritual.text.stage.1": "Expert ritual magic: Lorem ipsum",
+    "primalmagic.research.expert_ritual.text.stage.2": "Expert ritual magic research complete!",
+    
+    "primalmagic.research.master_ritual.title": "Master Ritual Magic",
+    "primalmagic.research.master_ritual.text.stage.1": "Master ritual magic: Lorem ipsum",
+    "primalmagic.research.master_ritual.text.stage.2": "Master ritual magic research complete!",
+    
+    "primalmagic.research.supreme_ritual.title": "Supreme Ritual Magic",
+    "primalmagic.research.supreme_ritual.text.stage.1": "Supreme ritual magic: Lorem ipsum",
+    "primalmagic.research.supreme_ritual.text.stage.2": "Supreme ritual magic research complete!",
+    
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
     
@@ -826,6 +838,9 @@
     "primalmagic.research.b_crafted_runeworking_expert.text": "Craft 10 runeworking items",
     "primalmagic.research.b_crafted_runeworking_master.text": "Craft 50 runeworking items",
     "primalmagic.research.b_crafted_runeworking_supreme.text": "Craft 250 runeworking items",
+    "primalmagic.research.t_rituals_completed_expert.text": "Conduct 5 rituals",
+    "primalmagic.research.t_rituals_completed_master.text": "Conduct 25 rituals",
+    "primalmagic.research.t_rituals_completed_supreme.text": "Conduct 100 rituals",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
@@ -841,6 +856,7 @@
     "stat.primalmagic.spells_crafted": "Spells crafted",
     "stat.primalmagic.spells_crafted_max_cost": "Cost of most expensive spell crafted",
     "stat.primalmagic.research_projects_completed": "Research projects completed",
+    "stat.primalmagic.rituals_completed": "Rituals conducted",
     "stat.primalmagic.mana_spent_earth": "Earth mana spent",
     "stat.primalmagic.mana_spent_sea": "Sea mana spent",
     "stat.primalmagic.mana_spent_sky": "Sky mana spent",
