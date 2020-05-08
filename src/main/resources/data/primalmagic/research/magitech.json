@@ -11,6 +11,54 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "EXPERT_MAGITECH",
+            "name": "primalmagic.research.expert_magitech.title",
+            "discipline": "MAGITECH",
+            "parents": [ "BASIC_MAGITECH" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.expert_magitech.text.stage.1",
+                    "required_research": [ "b_crafted_magitech_expert" ]
+                },
+                {
+                    "text": "primalmagic.research.expert_magitech.text.stage.2"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "MASTER_MAGITECH",
+            "name": "primalmagic.research.master_magitech.title",
+            "discipline": "MAGITECH",
+            "parents": [ "EXPERT_MAGITECH" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.master_magitech.text.stage.1",
+                    "required_research": [ "b_crafted_magitech_master" ]
+                },
+                {
+                    "text": "primalmagic.research.master_magitech.text.stage.2"
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "SUPREME_MAGITECH",
+            "name": "primalmagic.research.supreme_magitech.title",
+            "discipline": "MAGITECH",
+            "parents": [ "MASTER_MAGITECH" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.supreme_magitech.text.stage.1",
+                    "required_research": [ "b_crafted_magitech_supreme" ]
+                },
+                {
+                    "text": "primalmagic.research.supreme_magitech.text.stage.2"
+                }
+            ],
+            "addenda": []
         }
     ]
 }

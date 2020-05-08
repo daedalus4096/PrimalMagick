@@ -558,6 +558,18 @@
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
     
+    "primalmagic.research.expert_magitech.title": "Expert Magitech",
+    "primalmagic.research.expert_magitech.text.stage.1": "Expert magitech: Lorem ipsum",
+    "primalmagic.research.expert_magitech.text.stage.2": "Expert magitech research complete!",
+    
+    "primalmagic.research.master_magitech.title": "Master Magitech",
+    "primalmagic.research.master_magitech.text.stage.1": "Master magitech: Lorem ipsum",
+    "primalmagic.research.master_magitech.text.stage.2": "Master magitech research complete!",
+    
+    "primalmagic.research.supreme_magitech.title": "Supreme Magitech",
+    "primalmagic.research.supreme_magitech.text.stage.1": "Supreme magitech: Lorem ipsum",
+    "primalmagic.research.supreme_magitech.text.stage.2": "Supreme magitech research complete!",
+    
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble: lorem ipsum",
     
@@ -841,6 +853,9 @@
     "primalmagic.research.t_rituals_completed_expert.text": "Conduct 5 rituals",
     "primalmagic.research.t_rituals_completed_master.text": "Conduct 25 rituals",
     "primalmagic.research.t_rituals_completed_supreme.text": "Conduct 100 rituals",
+    "primalmagic.research.b_crafted_magitech_expert.text": "Craft 10 magitech items",
+    "primalmagic.research.b_crafted_magitech_master.text": "Craft 50 magitech items",
+    "primalmagic.research.b_crafted_magitech_supreme.text": "Craft 250 magitech items",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
