@@ -28,10 +28,11 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class InitWorldGen {
     public static void initWorldGen() {
-        // Add raw marble and rock salt seams to all non-Nether, non-End biomes
+        // Add raw marble, rock salt, and quartz seams to all non-Nether, non-End biomes
         ForgeRegistries.BIOMES.getValues().stream().filter(InitWorldGen::isOverworldBiome).forEach((biome) -> {
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.MARBLE_RAW.get().getDefaultState(), 33)).withPlacement(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(10, 0, 0, 80))));
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.ROCK_SALT_ORE.get().getDefaultState(), 9)).withPlacement(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(20, 0, 0, 128))));
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlocksPM.QUARTZ_ORE.get().getDefaultState(), 4)).withPlacement(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(20, 0, 0, 128))));
         });
         
         // Add Earth shrines to plains and savanna type biomes

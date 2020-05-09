@@ -48,6 +48,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(Tags.Items.DUSTS).add(ItemTagsForgeExt.DUSTS_IRON, ItemTagsForgeExt.DUSTS_GOLD);
         this.getBuilder(Tags.Items.INGOTS).add(ItemTagsPM.INGOTS_PRIMALITE, ItemTagsPM.INGOTS_HEXIUM, ItemTagsPM.INGOTS_HALLOWSTEEL);
         this.getBuilder(Tags.Items.NUGGETS).add(ItemTagsPM.NUGGETS_PRIMALITE, ItemTagsPM.NUGGETS_HEXIUM, ItemTagsPM.NUGGETS_HALLOWSTEEL, ItemTagsForgeExt.NUGGETS_QUARTZ);
+        this.getBuilder(Tags.Items.ORES_QUARTZ).add(ItemsPM.QUARTZ_ORE.get());
         this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, ItemTagsPM.STORAGE_BLOCKS_HEXIUM, ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         this.getBuilder(Tags.Items.SUPPORTS_BEACON).add(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, ItemTagsPM.STORAGE_BLOCKS_HEXIUM, ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         

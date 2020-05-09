@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.SkyglassPaneBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.ores.QuartzOreBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
@@ -198,6 +199,7 @@ public class BlocksPM {
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
     public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
     public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
+    public static final RegistryObject<QuartzOreBlock> QUARTZ_ORE = BLOCKS.register("quartz_ore", () -> new QuartzOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
     public static final RegistryObject<Block> PRIMALITE_BLOCK = BLOCKS.register("primalite_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
     public static final RegistryObject<Block> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(2)));
     public static final RegistryObject<Block> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(3)));

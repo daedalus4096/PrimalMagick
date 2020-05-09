@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.item.Items;
 
 /**
  * Data provider for all of the mod's block loot tables.
@@ -38,7 +39,8 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.HEXIUM_BLOCK.get());
         this.registerBasicTable(BlocksPM.HALLOWSTEEL_BLOCK.get());
 
-        this.registerGemOreTable(BlocksPM.ROCK_SALT_ORE.get(), ItemsPM.ROCK_SALT.get(), 3.0F, 4.0F);
+        this.registerMultiGemOreTable(BlocksPM.ROCK_SALT_ORE.get(), ItemsPM.ROCK_SALT.get(), 3.0F, 4.0F);
+        this.registerGemOreTable(BlocksPM.QUARTZ_ORE.get(), Items.QUARTZ);
     }
 
     private void registerMarbleLootTables() {

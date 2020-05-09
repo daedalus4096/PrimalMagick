@@ -104,7 +104,14 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
         this.lootTables.put(stoneBlock, tableBuilder);
     }
     
-    protected void registerGemOreTable(Block oreBlock, Item gemItem, float minGems, float maxGems) {
+    protected void registerGemOreTable(Block oreBlock, Item gemItem) {
+        ILootCondition.IBuilder silkTouch = MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))));
+        LootEntry.Builder<?> gemEntryBuilder = ItemLootEntry.builder(gemItem).acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE)).acceptFunction(ExplosionDecay.builder());
+        LootTable.Builder tableBuilder = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(oreBlock).acceptCondition(silkTouch).alternatively(gemEntryBuilder)));
+        this.lootTables.put(oreBlock, tableBuilder);
+    }
+    
+    protected void registerMultiGemOreTable(Block oreBlock, Item gemItem, float minGems, float maxGems) {
         ILootCondition.IBuilder silkTouch = MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))));
         LootEntry.Builder<?> gemEntryBuilder = ItemLootEntry.builder(gemItem).acceptFunction(SetCount.builder(RandomValueRange.of(minGems, maxGems))).acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE)).acceptFunction(ExplosionDecay.builder());
         LootTable.Builder tableBuilder = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(oreBlock).acceptCondition(silkTouch).alternatively(gemEntryBuilder)));

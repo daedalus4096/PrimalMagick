@@ -1126,6 +1126,12 @@ public class Recipes extends RecipeProvider {
         CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(ItemsPM.GOLD_GRIT.get()), Items.GOLD_INGOT, 0.7F, 100)
             .addCriterion("has_grit", this.hasItem(ItemsPM.GOLD_GRIT.get()))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_ingot_from_grit_blasting"));
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BlocksPM.QUARTZ_ORE.get()), Items.QUARTZ, 0.2F, 200)
+            .addCriterion("has_quartz_ore", this.hasItem(BlocksPM.QUARTZ_ORE.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "quartz_from_smelting"));
+        CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(BlocksPM.QUARTZ_ORE.get()), Items.QUARTZ, 0.2F, 200)
+            .addCriterion("has_quartz_ore", this.hasItem(BlocksPM.QUARTZ_ORE.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "quartz_from_blasting"));
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.QUARTZ_NUGGET.get(), 9)
             .addIngredient(Items.QUARTZ)
             .addCriterion("has_quartz", this.hasItem(Items.QUARTZ))
