@@ -1,9 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
   "research": "SHARD_SYNTHESIS\u0026\u0026t_discover_infernal",
-  "mana": {
-    "infernal": 20
-  },
   "pattern": [
     "###",
     "#Q#",
@@ -14,7 +11,7 @@
       "item": "primalmagic:essence_dust_infernal"
     },
     "Q": {
-      "item": "minecraft:quartz"
+      "item": "primalmagic:quartz_nugget"
     }
   },
   "result": {

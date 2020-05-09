@@ -23,6 +23,7 @@ import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.data.SingleItemRecipeBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -592,7 +593,8 @@ public class Recipes extends RecipeProvider {
                 if (upgradeType != null) {
                     ItemStack baseStack = EssenceItem.getEssence(baseType, source);
                     ItemStack upgradeStack = EssenceItem.getEssence(upgradeType, source);
-                    if (!baseStack.isEmpty() && !upgradeStack.isEmpty()) {
+                    Item quartzItem = upgradeType.getUpgradeMedium();
+                    if (!baseStack.isEmpty() && !upgradeStack.isEmpty() && quartzItem != null) {
                         CompoundResearchKey research;
                         SimpleResearchKey baseResearch = SimpleResearchKey.parse(upgradeType.getName().toUpperCase() + "_SYNTHESIS");
                         if (source.getDiscoverKey() == null) {
@@ -606,9 +608,8 @@ public class Recipes extends RecipeProvider {
                             .patternLine("#Q#")
                             .patternLine("###")
                             .key('#', baseStack.getItem())
-                            .key('Q', Items.QUARTZ)
+                            .key('Q', quartzItem)
                             .research(research)
-                            .manaCost(new SourceList().add(source, upgradeType.getAffinity()))
                             .build(consumer, new ResourceLocation(PrimalMagic.MODID, name));
                     }
                 }
@@ -635,7 +636,6 @@ public class Recipes extends RecipeProvider {
                         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(downgradeStack.getItem(), 4)
                             .addIngredient(baseStack.getItem())
                             .research(research)
-                            .manaCost(new SourceList().add(source, baseType.getAffinity()))
                             .build(consumer, new ResourceLocation(PrimalMagic.MODID, name));
                     }
                 }

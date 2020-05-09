@@ -1,9 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
   "research": "CLUSTER_SYNTHESIS",
-  "mana": {
-    "sky": 100
-  },
   "pattern": [
     "###",
     "#Q#",
@@ -14,7 +11,7 @@
       "item": "primalmagic:essence_crystal_sky"
     },
     "Q": {
-      "item": "minecraft:quartz"
+      "item": "minecraft:quartz_block"
     }
   },
   "result": {

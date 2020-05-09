@@ -1,9 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
   "research": "CRYSTAL_SYNTHESIS\u0026\u0026t_discover_infernal",
-  "mana": {
-    "infernal": 50
-  },
   "pattern": [
     "###",
     "#Q#",

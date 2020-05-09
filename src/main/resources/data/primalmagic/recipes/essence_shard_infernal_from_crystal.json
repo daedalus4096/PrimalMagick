@@ -1,9 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
   "research": "CRYSTAL_DESYNTHESIS\u0026\u0026t_discover_infernal",
-  "mana": {
-    "infernal": 50
-  },
   "ingredients": [
     {
       "item": "primalmagic:essence_crystal_infernal"

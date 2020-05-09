@@ -1,9 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
   "research": "CRYSTAL_DESYNTHESIS",
-  "mana": {
-    "moon": 50
-  },
   "ingredients": [
     {
       "item": "primalmagic:essence_crystal_moon"

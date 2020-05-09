@@ -1,9 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
   "research": "CRYSTAL_SYNTHESIS",
-  "mana": {
-    "moon": 50
-  },
   "pattern": [
     "###",
     "#Q#",

@@ -3,6 +3,10 @@ package com.verdantartifice.primalmagic.common.items.essence;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;
 
@@ -68,6 +72,22 @@ public enum EssenceType implements IStringSerializable {
             return SHARD;
         case SHARD:
             return DUST;
+        case DUST:
+        default:
+            return null;
+        }
+    }
+    
+    @Nullable
+    public Item getUpgradeMedium() {
+        // Get the type of quartz that must be used to upgrade to this essence type
+        switch (this) {
+        case CLUSTER:
+            return Items.QUARTZ_BLOCK;
+        case CRYSTAL:
+            return Items.QUARTZ;
+        case SHARD:
+            return ItemsPM.QUARTZ_NUGGET.get();
         case DUST:
         default:
             return null;

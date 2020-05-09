@@ -1,9 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
   "research": "SHARD_DESYNTHESIS",
-  "mana": {
-    "moon": 20
-  },
   "ingredients": [
     {
       "item": "primalmagic:essence_shard_moon"
