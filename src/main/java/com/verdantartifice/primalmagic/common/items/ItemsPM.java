@@ -204,6 +204,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> PRIMALITE_NUGGET = ITEMS.register("primalite_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> HEXIUM_NUGGET = ITEMS.register("hexium_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> HALLOWSTEEL_NUGGET = ITEMS.register("hallowsteel_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> QUARTZ_NUGGET = ITEMS.register("quartz_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);

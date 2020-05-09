@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 public class ItemTagsForgeExt {
     public static final Tag<Item> DUSTS_IRON = tag("dusts/iron");
     public static final Tag<Item> DUSTS_GOLD = tag("dusts/gold");
+    public static final Tag<Item> NUGGETS_QUARTZ = tag("nuggets/quartz");
 
     private static Tag<Item> tag(String name) {
         return new ItemTags.Wrapper(new ResourceLocation("forge", name));

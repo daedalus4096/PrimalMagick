@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.data.CookingRecipeBuilder;
@@ -1125,6 +1126,17 @@ public class Recipes extends RecipeProvider {
         CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(ItemsPM.GOLD_GRIT.get()), Items.GOLD_INGOT, 0.7F, 100)
             .addCriterion("has_grit", this.hasItem(ItemsPM.GOLD_GRIT.get()))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_ingot_from_grit_blasting"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.QUARTZ_NUGGET.get(), 9)
+            .addIngredient(Items.QUARTZ)
+            .addCriterion("has_quartz", this.hasItem(Items.QUARTZ))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(Items.QUARTZ)
+            .patternLine("NNN")
+            .patternLine("NNN")
+            .patternLine("NNN")
+            .key('N', ItemTagsForgeExt.NUGGETS_QUARTZ)
+            .addCriterion("has_nugget", this.hasItem(ItemTagsForgeExt.NUGGETS_QUARTZ))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "quartz_from_nuggets"));
     }
     
     protected void registerPrimaliteRecipes(Consumer<IFinishedRecipe> consumer) {

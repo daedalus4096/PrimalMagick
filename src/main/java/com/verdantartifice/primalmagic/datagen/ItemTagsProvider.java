@@ -47,7 +47,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.getBuilder(Tags.Items.BEACON_PAYMENT).add(ItemTagsPM.INGOTS_PRIMALITE, ItemTagsPM.INGOTS_HEXIUM, ItemTagsPM.INGOTS_HALLOWSTEEL);
         this.getBuilder(Tags.Items.DUSTS).add(ItemTagsForgeExt.DUSTS_IRON, ItemTagsForgeExt.DUSTS_GOLD);
         this.getBuilder(Tags.Items.INGOTS).add(ItemTagsPM.INGOTS_PRIMALITE, ItemTagsPM.INGOTS_HEXIUM, ItemTagsPM.INGOTS_HALLOWSTEEL);
-        this.getBuilder(Tags.Items.NUGGETS).add(ItemTagsPM.NUGGETS_PRIMALITE, ItemTagsPM.NUGGETS_HEXIUM, ItemTagsPM.NUGGETS_HALLOWSTEEL);
+        this.getBuilder(Tags.Items.NUGGETS).add(ItemTagsPM.NUGGETS_PRIMALITE, ItemTagsPM.NUGGETS_HEXIUM, ItemTagsPM.NUGGETS_HALLOWSTEEL, ItemTagsForgeExt.NUGGETS_QUARTZ);
         this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, ItemTagsPM.STORAGE_BLOCKS_HEXIUM, ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         this.getBuilder(Tags.Items.SUPPORTS_BEACON).add(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, ItemTagsPM.STORAGE_BLOCKS_HEXIUM, ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         
@@ -92,6 +92,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         // Add entries to Forge extension tags
         this.getBuilder(ItemTagsForgeExt.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
         this.getBuilder(ItemTagsForgeExt.DUSTS_IRON).add(ItemsPM.IRON_GRIT.get());
+        this.getBuilder(ItemTagsForgeExt.NUGGETS_QUARTZ).add(ItemsPM.QUARTZ_NUGGET.get());
 
         // Create custom tags
         this.getBuilder(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.BLACK_SHULKER_BOX, Items.BLUE_SHULKER_BOX, Items.BROWN_SHULKER_BOX, Items.CYAN_SHULKER_BOX, Items.GRAY_SHULKER_BOX, Items.GREEN_SHULKER_BOX, Items.LIGHT_BLUE_SHULKER_BOX, Items.LIGHT_GRAY_SHULKER_BOX, Items.LIME_SHULKER_BOX, Items.MAGENTA_SHULKER_BOX, Items.ORANGE_SHULKER_BOX, Items.PINK_SHULKER_BOX, Items.PURPLE_SHULKER_BOX, Items.RED_SHULKER_BOX, Items.WHITE_SHULKER_BOX, Items.YELLOW_SHULKER_BOX);
