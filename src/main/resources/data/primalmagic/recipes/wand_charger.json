@@ -1,0 +1,23 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "BASIC_MANAWEAVING",
+  "pattern": [
+    "GMG",
+    "MPM",
+    "GMG"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "M": {
+      "item": "primalmagic:marble_raw"
+    },
+    "P": {
+      "item": "primalmagic:mana_prism"
+    }
+  },
+  "result": {
+    "item": "primalmagic:wand_charger"
+  }
+}

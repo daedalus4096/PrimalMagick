@@ -141,6 +141,15 @@ public class Recipes extends RecipeProvider {
             .key('D', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_MANAWEAVING")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.WAND_CHARGER.get())
+            .patternLine("GMG")
+            .patternLine("MPM")
+            .patternLine("GMG")
+            .key('G', Tags.Items.INGOTS_GOLD)
+            .key('M', ItemsPM.MARBLE_RAW.get())
+            .key('P', ItemsPM.MANA_PRISM.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_MANAWEAVING")))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
