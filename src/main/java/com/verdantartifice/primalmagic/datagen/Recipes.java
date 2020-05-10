@@ -148,7 +148,7 @@ public class Recipes extends RecipeProvider {
             .key('G', Tags.Items.INGOTS_GOLD)
             .key('M', ItemsPM.MARBLE_RAW.get())
             .key('P', ItemsPM.MANA_PRISM.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CHARGER")))
             .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())

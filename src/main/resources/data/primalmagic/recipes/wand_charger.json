@@ -1,6 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
-  "research": "BASIC_MANAWEAVING",
+  "research": "WAND_CHARGER",
   "pattern": [
     "GMG",
     "MPM",
