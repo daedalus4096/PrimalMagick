@@ -7,7 +7,8 @@
             "parents": [ "UNLOCK_MANAWEAVING" ],
             "stages": [
                 {
-                    "text": "primalmagic.research.basic_manaweaving.text.stage.1"
+                    "text": "primalmagic.research.basic_manaweaving.text.stage.1",
+                    "recipes": ["primalmagic:mana_prism"]
                 }
             ],
             "addenda": []

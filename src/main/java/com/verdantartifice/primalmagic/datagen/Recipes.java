@@ -132,6 +132,16 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUNLAMP")))
             .manaCost(new SourceList().add(Source.SUN, 10))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_PRISM.get())
+            .patternLine(" N ")
+            .patternLine("QDQ")
+            .patternLine(" N ")
+            .key('N', Tags.Items.NUGGETS_IRON)
+            .key('Q', ItemTagsForgeExt.NUGGETS_QUARTZ)
+            .key('D', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_MANAWEAVING")))
+            .manaCost(new SourceList().add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");

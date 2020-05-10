@@ -324,6 +324,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.ENCHANTED_INK.get()), new SourceList().add(Source.SEA, 3).add(Source.MOON, 3));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.ROCK_SALT.get()), new SourceList().add(Source.EARTH, 5));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.REFINED_SALT.get()), new SourceList().add(Source.EARTH, 5));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.MANA_PRISM.get()), new SourceList().add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1));
 
         // Register Primal Magic essence affinities
         for (Item tagItem : ItemTagsPM.ESSENCES.getAllElements()) {

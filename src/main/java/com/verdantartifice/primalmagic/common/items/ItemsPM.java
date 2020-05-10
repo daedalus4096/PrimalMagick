@@ -219,6 +219,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> ENCHANTED_INK_AND_QUILL = ITEMS.register("enchanted_ink_and_quill", EnchantedInkAndQuill::new);
     public static final RegistryObject<Item> ROCK_SALT = ITEMS.register("rock_salt", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<EarthshatterHammerItem> EARTHSHATTER_HAMMER = ITEMS.register("earthshatter_hammer", EarthshatterHammerItem::new);
+    public static final RegistryObject<Item> MANA_PRISM = ITEMS.register("mana_prism", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));
