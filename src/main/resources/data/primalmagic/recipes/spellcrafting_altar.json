@@ -1,0 +1,27 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "BASIC_SORCERY",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5
+  },
+  "pattern": [
+    "MMM",
+    "MSM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_raw"
+    },
+    "S": {
+      "item": "primalmagic:spell_scroll_blank"
+    }
+  },
+  "result": {
+    "item": "primalmagic:spellcrafting_altar"
+  }
+}

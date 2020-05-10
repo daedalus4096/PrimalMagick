@@ -11,7 +11,10 @@
                     "attunements": {
                         "earth": 1
                     },
-                    "recipes": ["primalmagic:spell_scroll_blank"]
+                    "recipes": [
+                        "primalmagic:spell_scroll_blank",
+                        "primalmagic:spellcrafting_altar"
+                    ]
                 }
             ],
             "addenda": []
