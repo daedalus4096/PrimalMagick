@@ -328,6 +328,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.PRIMALITE_INGOT.get()), new SourceList().add(Source.EARTH, 11).add(Source.SEA, 3).add(Source.SKY, 3).add(Source.SUN, 3).add(Source.MOON, 3));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HEXIUM_INGOT.get()), new SourceList().add(Source.EARTH, 8).add(Source.SEA, 2).add(Source.SKY, 2).add(Source.SUN, 2).add(Source.MOON, 2).add(Source.BLOOD, 15).add(Source.INFERNAL, 15).add(Source.VOID, 15));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HALLOWSTEEL_INGOT.get()), new SourceList().add(Source.EARTH, 6).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1).add(Source.BLOOD, 11).add(Source.INFERNAL, 11).add(Source.VOID, 11).add(Source.HALLOWED, 37));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.HEARTWOOD.get()), new SourceList().add(Source.EARTH, 15).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 15).add(Source.MOON, 5));
 
         // Register Primal Magic essence affinities
         for (Item tagItem : ItemTagsPM.ESSENCES.getAllElements()) {
