@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/marble_enchanted",
+		"0": "primalmagic:block/marble_raw",
 		"1": "primalmagic:block/ritual_altar_top",
 		"2": "primalmagic:block/ritual_altar_side",
 		"particle": "primalmagic:block/ritual_altar_top"
