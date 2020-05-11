@@ -166,6 +166,12 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("ADVANCED_WANDMAKING")))
             .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.WAND_INSCRIPTION_TABLE.get())
+            .addIngredient(ItemsPM.WOOD_TABLE.get())
+            .addIngredient(ItemsPM.SPELL_SCROLL_BLANK.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_INSCRIPTION")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");

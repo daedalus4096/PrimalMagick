@@ -1,0 +1,22 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "WAND_INSCRIPTION",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5
+  },
+  "ingredients": [
+    {
+      "item": "primalmagic:wood_table"
+    },
+    {
+      "item": "primalmagic:spell_scroll_blank"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:wand_inscription_table"
+  }
+}

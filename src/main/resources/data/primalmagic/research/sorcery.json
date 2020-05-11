@@ -68,6 +68,24 @@
             "addenda": []
         },
         {
+            "key": "WAND_INSCRIPTION",
+            "name": "primalmagic.research.wand_inscription.title",
+            "discipline": "SORCERY",
+            "parents": [ "BASIC_SORCERY", "ADVANCED_WANDMAKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_inscription.text.stage.1",
+                    "required_research": [ "t_spells_crafted_expert" ],
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_inscription.text.stage.2",
+                    "recipes": ["primalmagic:wand_inscription_table"]
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "SPELL_VEHICLE_PROJECTILE",
             "name": "primalmagic.research.spell_vehicle_projectile.title",
             "discipline": "SORCERY",
