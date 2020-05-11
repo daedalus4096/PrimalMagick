@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
@@ -79,8 +80,9 @@ public class SpellScrollItem extends Item {
         playerIn.setActiveHand(handIn);
         if (!worldIn.isRemote) {
             SpellPackage spell = this.getSpell(stack);
-            // TODO Check to see if the player's spells are on cooldown
-            if (spell != null) {
+            // Check to see if the player's spells are on cooldown
+            if (spell != null && !SpellManager.isOnCooldown(playerIn)) {
+                SpellManager.setCooldown(playerIn, spell.getCooldownTicks());
                 spell.cast(worldIn, playerIn);
                 stack.shrink(1);
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
