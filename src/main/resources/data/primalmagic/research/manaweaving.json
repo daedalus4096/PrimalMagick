@@ -97,6 +97,60 @@
             "addenda": []
         },
         {
+            "key": "WAND_CORE_HEARTWOOD",
+            "name": "primalmagic.research.wand_core_heartwood.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "ADVANCED_WANDMAKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_core_heartwood.text.stage.1",
+                    "required_item": [ "primalmagic:heartwood" ],
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_core_heartwood.text.stage.2",
+                    "recipes": ["primalmagic:heartwood_wand_core_item"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "WAND_CAP_IRON",
+            "name": "primalmagic.research.wand_cap_iron.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "ADVANCED_WANDMAKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_cap_iron.text.stage.1",
+                    "required_item": [ "minecraft:iron_ingot" ],
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_cap_iron.text.stage.2",
+                    "recipes": ["primalmagic:iron_wand_cap_item"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "WAND_GEM_APPRENTICE",
+            "name": "primalmagic.research.wand_gem_apprentice.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "ADVANCED_WANDMAKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_gem_apprentice.text.stage.1",
+                    "required_item": [ "minecraft:diamond" ],
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_gem_apprentice.text.stage.2",
+                    "recipes": ["primalmagic:apprentice_wand_gem_item"]
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "EARTHSHATTER_HAMMER",
             "name": "primalmagic.research.earthshatter_hammer.title",
             "discipline": "MANAWEAVING",

@@ -59,6 +59,7 @@ public class Recipes extends RecipeProvider {
         this.registerPrimaliteRecipes(consumer);
         this.registerHexiumRecipes(consumer);
         this.registerHallowsteelRecipes(consumer);
+        this.registerWandComponentRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -1287,6 +1288,29 @@ public class Recipes extends RecipeProvider {
             .patternLine("III")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_HALLOWSTEEL))
+            .build(consumer);
+    }
+    
+    protected void registerWandComponentRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get())
+            .patternLine(" H")
+            .patternLine("H ")
+            .key('H', ItemsPM.HEARTWOOD.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_HEARTWOOD")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IRON_WAND_CAP_ITEM.get())
+            .patternLine("NNN")
+            .patternLine("N N")
+            .key('N', Tags.Items.NUGGETS_IRON)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CAP_IRON")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get())
+            .addIngredient(Tags.Items.GEMS_DIAMOND)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_APPRENTICE")))
+            .manaCost(new SourceList().add(Source.EARTH, 10).add(Source.SEA, 10).add(Source.SKY, 10).add(Source.SUN, 10).add(Source.MOON, 10))
             .build(consumer);
     }
 }
