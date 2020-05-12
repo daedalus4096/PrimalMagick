@@ -154,6 +154,9 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> STAINED_SKYGLASS_PANE_WHITE = ITEMS.register("stained_skyglass_pane_white", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> STAINED_SKYGLASS_PANE_YELLOW = ITEMS.register("stained_skyglass_pane_yellow", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 
+    // Register ritual candle block items
+    public static final RegistryObject<BlockItem> RITUAL_CANDLE_WHITE = ITEMS.register("ritual_candle_white", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_WHITE.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+
     // Register mana font block items
     public static final RegistryObject<BlockItem> ANCIENT_FONT_EARTH = ITEMS.register("ancient_font_earth", () -> new BlockItem(BlocksPM.ANCIENT_FONT_EARTH.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setISTER(() -> AncientManaFontISTER::new)));
     public static final RegistryObject<BlockItem> ANCIENT_FONT_SEA = ITEMS.register("ancient_font_sea", () -> new BlockItem(BlocksPM.ANCIENT_FONT_SEA.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.RARE).setISTER(() -> AncientManaFontISTER::new)));
