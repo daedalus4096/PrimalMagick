@@ -178,31 +178,6 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         return downState.isSolidSide(world, downPos, Direction.UP);
     }
     
-    protected int getSaltPower(World world, BlockPos pos, Direction facing) {
-        BlockState state = world.getBlockState(pos);
-        if (state.getBlock() instanceof ISaltPowered) {
-            ISaltPowered saltBlock = ((ISaltPowered)state.getBlock());
-            if (saltBlock.shouldCheckWeakSaltPower(state, world, pos, facing)) {
-                int power = 0;
-                for (Direction dir : Direction.values()) {
-                    BlockPos offsetPos = pos.offset(dir);
-                    BlockState offsetState = world.getBlockState(offsetPos);
-                    if (offsetState.getBlock() instanceof ISaltPowered) {
-                        power = Math.max(power, ((ISaltPowered)offsetState.getBlock()).getStrongSaltPower(offsetState, world, offsetPos, dir));
-                        if (power >= 15) {
-                            return power;
-                        }
-                    }
-                }
-                return power;
-            } else {
-                return saltBlock.getWeakSaltPower(state, world, pos, facing);
-            }
-        } else {
-            return 0;
-        }
-    }
-    
     protected int getSaltPowerFromNeighbors(World world, BlockPos pos) {
         int maxPower = 0;
         for (Direction dir : Direction.values()) {

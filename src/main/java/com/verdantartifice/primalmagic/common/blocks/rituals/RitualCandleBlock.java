@@ -8,16 +8,19 @@ import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DyeColor;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -68,6 +71,24 @@ public class RitualCandleBlock extends Block implements ISaltPowered {
             double z = pos.getZ() + 0.5D;
             worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.0D, 0.0D);
             worldIn.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
+        }
+    }
+    
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getCurrentState(this.getDefaultState(), context.getWorld(), context.getPos());
+    }
+    
+    @Override
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        return this.getCurrentState(stateIn, worldIn, currentPos);
+    }
+    
+    protected BlockState getCurrentState(BlockState state, IWorld world, BlockPos pos) {
+        if (this.isBlockSaltPowered(world, pos) || this.isBlockSaltPowered(world, pos.up())) {
+            return state.with(LIT, Boolean.TRUE);
+        } else {
+            return state.with(LIT, Boolean.FALSE);
         }
     }
 }

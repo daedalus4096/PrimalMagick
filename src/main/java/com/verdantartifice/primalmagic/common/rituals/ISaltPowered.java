@@ -52,4 +52,38 @@ public interface ISaltPowered {
     public default int getStrongSaltPower(@Nonnull BlockState blockState, @Nonnull IBlockReader blockAccess, @Nonnull BlockPos pos, @Nonnull Direction side) {
         return 0;
     }
+    
+    public default boolean isBlockSaltPowered(@Nonnull IWorldReader world, @Nonnull BlockPos pos) {
+        for (Direction dir : Direction.values()) {
+            if (this.getSaltPower(world, pos.offset(dir), dir) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public default int getSaltPower(@Nonnull IWorldReader world, @Nonnull BlockPos pos, @Nonnull Direction facing) {
+        BlockState state = world.getBlockState(pos);
+        if (state.getBlock() instanceof ISaltPowered) {
+            ISaltPowered saltBlock = ((ISaltPowered)state.getBlock());
+            if (saltBlock.shouldCheckWeakSaltPower(state, world, pos, facing)) {
+                int power = 0;
+                for (Direction dir : Direction.values()) {
+                    BlockPos offsetPos = pos.offset(dir);
+                    BlockState offsetState = world.getBlockState(offsetPos);
+                    if (offsetState.getBlock() instanceof ISaltPowered) {
+                        power = Math.max(power, ((ISaltPowered)offsetState.getBlock()).getStrongSaltPower(offsetState, world, offsetPos, dir));
+                        if (power >= 15) {
+                            return power;
+                        }
+                    }
+                }
+                return power;
+            } else {
+                return saltBlock.getWeakSaltPower(state, world, pos, facing);
+            }
+        } else {
+            return 0;
+        }
+    }
 }
