@@ -1,26 +1,26 @@
 package com.verdantartifice.primalmagic.common.blocks.rituals;
 
+import java.awt.Color;
 import java.util.Random;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.item.DyeColor;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -65,6 +65,7 @@ public class RitualCandleBlock extends Block implements ISaltPowered {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        // Show flame particles if lit
         if (stateIn.get(LIT)) {
             double x = pos.getX() + 0.5D;
             double y = pos.getY() + 0.7D;
@@ -72,23 +73,15 @@ public class RitualCandleBlock extends Block implements ISaltPowered {
             worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.0D, 0.0D);
             worldIn.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
         }
-    }
-    
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getCurrentState(this.getDefaultState(), context.getWorld(), context.getPos());
-    }
-    
-    @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return this.getCurrentState(stateIn, worldIn, currentPos);
-    }
-    
-    protected BlockState getCurrentState(BlockState state, IWorld world, BlockPos pos) {
-        if (this.isBlockSaltPowered(world, pos) || this.isBlockSaltPowered(world, pos.up())) {
-            return state.with(LIT, Boolean.TRUE);
-        } else {
-            return state.with(LIT, Boolean.FALSE);
+        
+        // Show spell sparkles if receiving salt power
+        if (this.isBlockSaltPowered(worldIn, pos) || this.isBlockSaltPowered(worldIn, pos.up())) {
+            FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
         }
+    }
+    
+    @Override
+    public PushReaction getPushReaction(BlockState state) {
+        return PushReaction.DESTROY;
     }
 }
