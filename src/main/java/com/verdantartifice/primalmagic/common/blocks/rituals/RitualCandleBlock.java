@@ -11,19 +11,27 @@ import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for a ritual candle.  Ritual candles serve as props in magical rituals; lighting
@@ -83,5 +91,29 @@ public class RitualCandleBlock extends Block implements ISaltPowered {
     @Override
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.DESTROY;
+    }
+    
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (player != null && player.getHeldItem(handIn).getItem() instanceof FlintAndSteelItem && !state.get(LIT)) {
+            // If using a flint-and-steel on an unlit candle, light it
+            worldIn.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            if (!worldIn.isRemote) {
+                worldIn.setBlockState(pos, state.with(LIT, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                player.getHeldItem(handIn).damageItem(1, player, (p) -> {
+                    p.sendBreakAnimation(handIn);
+                });
+            }
+            return ActionResultType.SUCCESS;
+        } else if (player != null && player.getHeldItem(handIn).isEmpty() && state.get(LIT)) {
+            // If using an empty hand on a lit candle, snuff it
+            worldIn.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            if (!worldIn.isRemote) {
+                worldIn.setBlockState(pos, state.with(LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+            }
+            return ActionResultType.SUCCESS;
+        } else {
+            return ActionResultType.PASS;
+        }
     }
 }
