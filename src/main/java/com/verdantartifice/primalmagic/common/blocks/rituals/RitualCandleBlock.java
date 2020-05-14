@@ -52,6 +52,10 @@ public class RitualCandleBlock extends Block implements ISaltPowered {
         this.setDefaultState(this.getDefaultState().with(LIT, Boolean.FALSE));
     }
     
+    public DyeColor getColor() {
+        return this.color;
+    }
+    
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE;
