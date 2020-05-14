@@ -176,7 +176,7 @@ public class BlocksPM {
     public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_YELLOW = BLOCKS.register("stained_skyglass_pane_yellow", () -> new StainedSkyglassPaneBlock(DyeColor.YELLOW, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
 
     // Register ritual candles
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_WHITE = BLOCKS.register("ritual_candle_white", () -> new RitualCandleBlock(DyeColor.WHITE, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).lightValue(1).sound(SoundType.CLOTH).notSolid()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_WHITE = BLOCKS.register("ritual_candle_white", () -> new RitualCandleBlock(DyeColor.WHITE, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).lightValue(7).sound(SoundType.CLOTH).notSolid()));
 
     // Register mana fonts
     public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_EARTH = BLOCKS.register("ancient_font_earth", () -> new AncientManaFontBlock(Source.EARTH));
