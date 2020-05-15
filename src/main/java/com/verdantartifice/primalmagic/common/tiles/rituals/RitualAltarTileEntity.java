@@ -1,21 +1,32 @@
 package com.verdantartifice.primalmagic.common.tiles.rituals;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableSet;
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
+import com.verdantartifice.primalmagic.common.blockstates.properties.SaltSide;
+import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -146,5 +157,50 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     @Override
     public void onWandUseTick(ItemStack wandStack, PlayerEntity player, int count) {
         // Do nothing; ritual altars don't support wand channeling
+    }
+    
+    protected void scanSurroundings() {
+        Set<BlockPos> scanHistory = new HashSet<BlockPos>();
+        scanHistory.add(this.pos);
+        
+        Queue<BlockPos> toScan = new LinkedList<BlockPos>();
+        toScan.offer(this.pos.north());
+        toScan.offer(this.pos.east());
+        toScan.offer(this.pos.south());
+        toScan.offer(this.pos.west());
+        
+        while (!toScan.isEmpty()) {
+            BlockPos pos = toScan.poll();
+            this.scanPosition(pos, toScan, scanHistory);
+        }
+    }
+    
+    protected void scanPosition(BlockPos pos, Queue<BlockPos> toScan, Set<BlockPos> history) {
+        if (history.contains(pos)) {
+            return;
+        } else {
+            history.add(pos);
+        }
+        
+        BlockState state = this.world.getBlockState(pos);
+        Block block = state.getBlock();
+        if (block == BlocksPM.SALT_TRAIL.get()) {
+            // Keep scanning along the salt lines
+            for (Map.Entry<Direction, EnumProperty<SaltSide>> entry : SaltTrailBlock.FACING_PROPERTY_MAP.entrySet()) {
+                BlockPos nextPos = pos.offset(entry.getKey());
+                SaltSide saltSide = state.get(entry.getValue());
+                if (saltSide == SaltSide.UP) {
+                    toScan.add(nextPos.up());
+                } else if (saltSide == SaltSide.SIDE) {
+                    // The adjacent salt trail could be at the same height or one below, so check both
+                    toScan.add(nextPos);
+                    toScan.add(nextPos.down());
+                }
+            }
+        } else if (block == BlocksPM.OFFERING_PEDESTAL.get()) {
+            // TODO Add this position to the offering pedestal collection
+        } else if (block instanceof IRitualProp) {
+            // TODO Add this position to the prop collection
+        }
     }
 }

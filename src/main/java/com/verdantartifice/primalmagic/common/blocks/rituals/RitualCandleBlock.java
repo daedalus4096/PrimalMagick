@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
+import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
@@ -40,7 +40,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class RitualCandleBlock extends Block implements ISaltPowered {
+public class RitualCandleBlock extends Block implements IRitualProp {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/ritual_candle"));
 
