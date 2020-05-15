@@ -25,6 +25,7 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerMoonwoodLootTables();
         this.registerInfusedStoneLootTables();
         this.registerSkyglassLootTables();
+        this.registerRitualCandleLootTables();
         
         this.registerBasicTable(BlocksPM.ANALYSIS_TABLE.get());
         this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH.get());
@@ -155,6 +156,25 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_RED.get());
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get());
         this.registerBasicTable(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
+    }
+    
+    private void registerRitualCandleLootTables() {
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_BLACK.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_BLUE.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_BROWN.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_CYAN.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_GRAY.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_GREEN.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_LIGHT_BLUE.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_LIGHT_GRAY.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_LIME.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_MAGENTA.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_ORANGE.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_PINK.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_PURPLE.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_RED.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_WHITE.get());
+        this.registerBasicTable(BlocksPM.RITUAL_CANDLE_YELLOW.get());
     }
 
     @Override

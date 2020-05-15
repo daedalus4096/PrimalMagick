@@ -60,6 +60,7 @@ public class Recipes extends RecipeProvider {
         this.registerHexiumRecipes(consumer);
         this.registerHallowsteelRecipes(consumer);
         this.registerWandComponentRecipes(consumer);
+        this.registerRitualCandleRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -1311,6 +1312,110 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_APPRENTICE")))
             .manaCost(new SourceList().add(Source.EARTH, 10).add(Source.SEA, 10).add(Source.SKY, 10).add(Source.SUN, 10).add(Source.MOON, 10))
+            .build(consumer);
+    }
+    
+    protected void registerRitualCandleRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.TALLOW.get())
+            .addIngredient(Items.ROTTEN_FLESH)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_CANDLES")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_CANDLE_WHITE.get())
+            .patternLine("S")
+            .patternLine("T")
+            .patternLine("T")
+            .key('S', Tags.Items.STRING)
+            .key('T', ItemsPM.TALLOW.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_CANDLES")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "ritual_candle_white_from_tallow"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_CANDLE_WHITE.get())
+            .patternLine("S")
+            .patternLine("W")
+            .patternLine("W")
+            .key('S', Tags.Items.STRING)
+            .key('W', ItemsPM.BEESWAX.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_CANDLES")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "ritual_candle_white_from_beeswax"));
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_BLACK.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_BLACK)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_BLUE.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_BLUE)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_BROWN.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_BROWN)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_CYAN.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_CYAN)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_GRAY.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_GRAY)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_GREEN.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_GREEN)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_LIGHT_BLUE)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_LIGHT_GRAY)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_LIME.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_LIME)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_MAGENTA.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_MAGENTA)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_ORANGE.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_ORANGE)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_PINK.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_PINK)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_PURPLE.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_PURPLE)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_RED.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_RED)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_WHITE.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_WHITE)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.RITUAL_CANDLE_YELLOW.get())
+            .addIngredient(ItemTagsPM.RITUAL_CANDLES)
+            .addIngredient(Tags.Items.DYES_YELLOW)
+            .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
             .build(consumer);
     }
 }

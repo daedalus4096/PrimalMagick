@@ -1,0 +1,20 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "RITUAL_CANDLES",
+  "pattern": [
+    "S",
+    "T",
+    "T"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:string"
+    },
+    "T": {
+      "item": "primalmagic:tallow"
+    }
+  },
+  "result": {
+    "item": "primalmagic:ritual_candle_white"
+  }
+}
