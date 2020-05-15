@@ -557,6 +557,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 if (page != null) {
                     this.pages.add(page);
                 }
+            } else {
+                PrimalMagic.LOGGER.warn("Unable to find recipe definition for {}", recipeLoc.toString());
             }
         }
     }
