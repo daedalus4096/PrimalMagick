@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntit
 import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity;
 
 import net.minecraft.tileentity.TileEntityType;
@@ -31,4 +32,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<TileEntityType<WandChargerTileEntity>> WAND_CHARGER = TILE_ENTITIES.register("wand_charger", () -> TileEntityType.Builder.create(WandChargerTileEntity::new, BlocksPM.WAND_CHARGER.get()).build(null));
     public static final RegistryObject<TileEntityType<RitualAltarTileEntity>> RITUAL_ALTAR = TILE_ENTITIES.register("ritual_altar", () -> TileEntityType.Builder.create(RitualAltarTileEntity::new, BlocksPM.RITUAL_ALTAR.get()).build(null));
     public static final RegistryObject<TileEntityType<SunlampTileEntity>> SUNLAMP = TILE_ENTITIES.register("sunlamp", () -> TileEntityType.Builder.create(SunlampTileEntity::new, BlocksPM.SUNLAMP.get()).build(null));
+    public static final RegistryObject<TileEntityType<OfferingPedestalTileEntity>> OFFERING_PEDESTAL = TILE_ENTITIES.register("offering_pedestal", () -> TileEntityType.Builder.create(OfferingPedestalTileEntity::new, BlocksPM.OFFERING_PEDESTAL.get()).build(null));
 }
