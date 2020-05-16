@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.blocks.rituals;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.blockstates.properties.SaltSide;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 
@@ -93,14 +91,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     }
 
     protected boolean canConnectTo(BlockState state, IBlockReader world, BlockPos pos, Direction side) {
-        Block block = state.getBlock();
-        if (block == BlocksPM.SALT_TRAIL.get()) {
-            return true;
-        } else if (block instanceof ISaltPowered) {
-            return ((ISaltPowered)block).canConnectSalt(state, world, pos, side) && side != null;
-        } else {
-            return false;
-        }
+        return state.getBlock() instanceof ISaltPowered;
     }
     
     @Nonnull
@@ -328,7 +319,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
 
     @Override
     public int getStrongSaltPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-        return !this.canProvidePower ? 0 : this.getWeakSaltPower(blockState, blockAccess, pos, side);
+        return this.canProvidePower ? blockState.get(POWER) : 0;
     }
     
     protected boolean isPowerSourceAt(IBlockReader world, BlockPos pos, Direction side) {
@@ -345,39 +336,6 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         } else {
             return !isOffsetNormal && this.canConnectTo(world.getBlockState(offsetPos.down()), world, offsetPos.down(), null);
         }
-    }
-    
-    @Override
-    public int getWeakSaltPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-        if (!this.canProvidePower) {
-            return 0;
-        } else {
-            int power = blockState.get(POWER);
-            if (power == 0) {
-                return 0;
-            } else if (side == Direction.UP) {
-                return power;
-            } else {
-                EnumSet<Direction> dirSet = EnumSet.noneOf(Direction.class);
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                    if (this.isPowerSourceAt(blockAccess, pos, dir)) {
-                        dirSet.add(dir);
-                    }
-                }
-                if (side.getAxis().isHorizontal() && dirSet.isEmpty()) {
-                    return power;
-                } else if (dirSet.contains(side) && !dirSet.contains(side.rotateYCCW()) && !dirSet.contains(side.rotateY())) {
-                    return power;
-                } else {
-                    return 0;
-                }
-            }
-        }
-    }
-    
-    @Override
-    public boolean canProvideSaltPower(BlockState state) {
-        return this.canProvidePower;
     }
     
     public static int colorMultiplier(int power) {

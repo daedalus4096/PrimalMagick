@@ -87,7 +87,7 @@ public class RitualCandleBlock extends Block implements IRitualProp {
         }
         
         // Show spell sparkles if receiving salt power
-        if (this.isBlockSaltPowered(worldIn, pos) || this.isBlockSaltPowered(worldIn, pos.up())) {
+        if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
         }
     }

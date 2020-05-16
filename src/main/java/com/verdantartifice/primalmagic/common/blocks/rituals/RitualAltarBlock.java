@@ -54,21 +54,13 @@ public class RitualAltarBlock extends Block implements ISaltPowered {
         }
     }
     
-    @Override
-    public boolean canProvideSaltPower(BlockState state) {
-        return true;
-    }
-    
-    @Override
-    public int getWeakSaltPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-        return (side != Direction.UP) ? 15 : 0;
+    public int getMaxSaltPower() {
+        return 15;
     }
     
     @Override
     public int getStrongSaltPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-        return (side == Direction.DOWN && blockState.getBlock() instanceof ISaltPowered) ?
-                ((ISaltPowered)blockState.getBlock()).getWeakSaltPower(blockState, blockAccess, pos, side) :
-                0;
+        return (side != Direction.UP) ? this.getMaxSaltPower() : 0;
     }
     
     @Override
