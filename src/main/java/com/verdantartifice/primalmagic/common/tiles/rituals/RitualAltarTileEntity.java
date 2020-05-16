@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagic.common.tiles.rituals;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -11,6 +13,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.blocks.rituals.OfferingPedestalBlock;
+import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagic.common.blockstates.properties.SaltSide;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
@@ -48,6 +52,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected int activeCount = 0;
     protected UUID activePlayerId = null;
     protected PlayerEntity activePlayerCache = null;
+    
+    protected boolean scanDirty = false;
+    protected Set<BlockPos> saltPositions = new HashSet<>();
+    protected List<BlockPos> pedestalPositions = new ArrayList<>();
+    protected List<BlockPos> propPositions = new ArrayList<>();
     
     public RitualAltarTileEntity() {
         super(TileEntityTypesPM.RITUAL_ALTAR.get(), 1);
@@ -120,10 +129,15 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (this.active) {
             this.activeCount++;
         }
+        if (this.scanDirty && !this.world.isRemote) {
+            this.scanSurroundings();
+            this.scanDirty = false;
+        }
         if (!this.world.isRemote && this.active) {
             if (this.activeCount >= 100) {
                 if (this.getActivePlayer() != null) {
-                    this.getActivePlayer().sendStatusMessage(new StringTextComponent("Ritual complete!"), false);
+                    String msg = String.format("Ritual complete!  %1$d pedestals, %2$d props, %3$d salt", this.pedestalPositions.size(), this.propPositions.size(), this.saltPositions.size());
+                    this.getActivePlayer().sendStatusMessage(new StringTextComponent(msg), false);
                 }
                 this.active = false;
                 this.activeCount = 0;
@@ -142,6 +156,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 player.sendStatusMessage(new StringTextComponent("Ritual canceled"), false);
             } else {
                 this.active = true;
+                this.scanDirty = true;
                 player.sendStatusMessage(new StringTextComponent("Ritual started!"), false);
             }
             this.activeCount = 0;
@@ -160,6 +175,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     protected void scanSurroundings() {
+        this.saltPositions.clear();
+        this.pedestalPositions.clear();
+        this.propPositions.clear();
+        
         Set<BlockPos> scanHistory = new HashSet<BlockPos>();
         scanHistory.add(this.pos);
         
@@ -184,8 +203,16 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         
         BlockState state = this.world.getBlockState(pos);
         Block block = state.getBlock();
+        
+        // Determine if the scan position is within the theoretical range of this altar
+        int dist = Math.abs(this.pos.getX() - pos.getX()) + Math.abs(this.pos.getZ() - pos.getZ());
+        if (dist > ((RitualAltarBlock)this.getBlockState().getBlock()).getMaxSaltPower()) {
+            return;
+        }
+        
         if (block == BlocksPM.SALT_TRAIL.get()) {
             // Keep scanning along the salt lines
+            this.saltPositions.add(pos);
             for (Map.Entry<Direction, EnumProperty<SaltSide>> entry : SaltTrailBlock.FACING_PROPERTY_MAP.entrySet()) {
                 BlockPos nextPos = pos.offset(entry.getKey());
                 SaltSide saltSide = state.get(entry.getValue());
@@ -198,9 +225,17 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 }
             }
         } else if (block == BlocksPM.OFFERING_PEDESTAL.get()) {
-            // TODO Add this position to the offering pedestal collection
+            // Add this position to the offering pedestal collection
+            OfferingPedestalBlock pedestalBlock = (OfferingPedestalBlock)block;
+            if (pedestalBlock.isBlockSaltPowered(this.world, pos)) {
+                this.pedestalPositions.add(pos);
+            }
         } else if (block instanceof IRitualProp) {
-            // TODO Add this position to the prop collection
+            // Add this position to the prop collection
+            IRitualProp propBlock = (IRitualProp)block;
+            if (propBlock.isBlockSaltPowered(this.world, pos)) {
+                this.propPositions.add(pos);
+            }
         }
     }
 }
