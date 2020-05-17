@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagic.common.crafting;
 
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 
@@ -35,5 +37,9 @@ public interface IArcaneRecipe extends ICraftingRecipe {
     default boolean isDynamic() {
         // Return true to keep arcane recipes from showing up in the vanilla recipe book
         return true;
+    }
+    
+    default ItemStack getIcon() {
+        return new ItemStack(BlocksPM.ARCANE_WORKBENCH.get());
     }
 }
