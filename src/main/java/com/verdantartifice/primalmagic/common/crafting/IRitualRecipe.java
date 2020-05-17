@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.util.NonNullList;
 
 /**
  * Crafting recipe interface for a ritual recipe.  Ritual recipes are performed across multiple
@@ -29,6 +30,13 @@ public interface IRitualRecipe extends ICraftingRecipe {
      * @return the mana cost for the recipe
      */
     public SourceList getManaCosts();
+    
+    /**
+     * Get the list of props for the recipe.
+     * 
+     * @return the prop list fort he recipe
+     */
+    public NonNullList<BlockIngredient> getProps();
     
     default IRecipeType<?> getType() {
         return RecipeTypesPM.RITUAL;
