@@ -14,13 +14,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 
 /**
- * Point of registration for mod recipe types and serializers, as well as other crafting related things.
+ * Point of registration for mod recipe types, as well as other crafting related things.
  * 
  * @author Daedalus4096
  */
 public class InitRecipes {
     public static void initRecipeTypes() {
         RecipeTypesPM.ARCANE_CRAFTING = IRecipeType.register(PrimalMagic.MODID + ":arcane_crafting");
+        RecipeTypesPM.RITUAL = IRecipeType.register(PrimalMagic.MODID + ":ritual");
     }
     
     public static void initWandTransforms() {
