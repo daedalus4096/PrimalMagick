@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
@@ -189,6 +190,14 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_RAW.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RITUAL")))
             .manaCost(new SourceList().add(Source.EARTH, 10).add(Source.SEA, 10).add(Source.SKY, 10).add(Source.SUN, 10).add(Source.MOON, 10))
+            .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.MANAFRUIT.get())
+            .addIngredient(Items.APPLE)
+            .addIngredient(Items.HONEY_BOTTLE)
+            .addIngredient(ItemsPM.MANA_SALTS.get(), 7)
+            .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANAFRUIT")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
