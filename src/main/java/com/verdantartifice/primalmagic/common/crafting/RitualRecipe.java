@@ -127,7 +127,7 @@ public class RitualRecipe implements IRitualRecipe {
             SourceList manaCosts = JsonUtils.toSourceList(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
             ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
             NonNullList<Ingredient> ingredients = this.readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
-            NonNullList<BlockIngredient> props = this.readProps(JSONUtils.getJsonArray(json, "props"));
+            NonNullList<BlockIngredient> props = this.readProps(JSONUtils.getJsonArray(json, "props", new JsonArray()));
             if (ingredients.isEmpty()) {
                 throw new JsonParseException("No ingredients for ritual recipe");
             } else {
