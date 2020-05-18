@@ -34,7 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class BlockIngredient implements Predicate<Block> {
     protected static final Predicate<? super BlockIngredient.IBlockList> IS_EMPTY = (list) -> {
-        return list.getBlocks().stream().filter(Objects::nonNull).collect(Collectors.toList()).isEmpty();
+        return !list.getBlocks().stream().filter(Objects::nonNull).collect(Collectors.toList()).isEmpty();
     };
     public static final BlockIngredient EMPTY = new BlockIngredient(Stream.empty());
     
