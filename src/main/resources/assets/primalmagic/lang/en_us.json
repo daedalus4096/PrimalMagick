@@ -206,6 +206,7 @@
     "item.primalmagic.tallow": "Alchemical Tallow",
     "item.primalmagic.beeswax": "Beeswax",
     "item.primalmagic.mana_salts": "Mana Salts",
+    "item.primalmagic.manafruit": "Manafruit",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",
@@ -597,6 +598,10 @@
     "primalmagic.research.ritual_candles.title": "Ritual Candles",
     "primalmagic.research.ritual_candles.text.stage.1": "Ritual candles: Lorem ipsum",
     "primalmagic.research.ritual_candles.text.stage.2": "Ritual candles research complete!",
+    
+    "primalmagic.research.manafruit.title": "Manafruit",
+    "primalmagic.research.manafruit.text.stage.1": "Manafruit: Lorem ipsum",
+    "primalmagic.research.manafruit.text.stage.2": "Manafruit research complete!",
     
     "primalmagic.research.expert_ritual.title": "Expert Ritual Magic",
     "primalmagic.research.expert_ritual.text.stage.1": "Expert ritual magic: Lorem ipsum",
