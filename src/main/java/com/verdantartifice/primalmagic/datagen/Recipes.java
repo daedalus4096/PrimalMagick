@@ -143,6 +143,13 @@ public class Recipes extends RecipeProvider {
             .key('D', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_MANAWEAVING")))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_SALTS.get())
+            .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .addIngredient(ItemsPM.REFINED_SALT.get())
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_SALTS")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.WAND_CHARGER.get())
             .patternLine("GMG")
             .patternLine("MPM")

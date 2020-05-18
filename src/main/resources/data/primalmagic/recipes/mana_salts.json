@@ -1,0 +1,25 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "MANA_SALTS",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5
+  },
+  "ingredients": [
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "item": "primalmagic:refined_salt"
+    },
+    {
+      "tag": "primalmagic:essences/terrestrial_dusts"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:mana_salts"
+  }
+}

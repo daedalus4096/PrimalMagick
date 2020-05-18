@@ -205,6 +205,7 @@
     "item.primalmagic.mana_prism": "Mana Prism",
     "item.primalmagic.tallow": "Alchemical Tallow",
     "item.primalmagic.beeswax": "Beeswax",
+    "item.primalmagic.mana_salts": "Mana Salts",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",
@@ -546,6 +547,10 @@
     "primalmagic.research.wand_charger.title": "Wand Charger",
     "primalmagic.research.wand_charger.text.stage.1": "Wand charger: Lorem ipsum",
     "primalmagic.research.wand_charger.text.stage.2": "Wand charger complete!",
+    
+    "primalmagic.research.mana_salts.title": "Mana Salts",
+    "primalmagic.research.mana_salts.text.stage.1": "Mana salts: Lorem ipsum",
+    "primalmagic.research.mana_salts.text.stage.2": "Mana salts complete!",
     
     "primalmagic.research.advanced_wandmaking.title": "Advanced Wandmaking",
     "primalmagic.research.advanced_wandmaking.text.stage.1": "Advanced wandmaking: Lorem ipsum",
