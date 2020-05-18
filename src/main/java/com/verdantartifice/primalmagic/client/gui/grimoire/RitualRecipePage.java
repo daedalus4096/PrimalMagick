@@ -70,6 +70,8 @@ public class RitualRecipePage extends AbstractRecipePage {
                     y += 18;
                 }
             }
+            deltaX = 0;
+            y += 18;
         }
         
         // Init prop widgets
@@ -83,6 +85,8 @@ public class RitualRecipePage extends AbstractRecipePage {
                     y += 18;
                 }
             }
+            deltaX = 0;
+            y += 18;
         }
     }
 
