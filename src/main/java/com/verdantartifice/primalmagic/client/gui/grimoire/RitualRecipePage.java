@@ -50,6 +50,15 @@ public class RitualRecipePage extends AbstractRecipePage {
 
         y += 27;    // Make room for page title
         
+        // Render output stack
+        ItemStack output = this.recipe.getRecipeOutput();
+        screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y, false));
+        
+        // Add mana cost summary widget
+        screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
+        
+        y += 30;
+        
         // Init ingredient widgets
         if (!this.recipe.getIngredients().isEmpty()) {
             y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
@@ -75,19 +84,12 @@ public class RitualRecipePage extends AbstractRecipePage {
                 }
             }
         }
-        
-        // Render output stack
-        ItemStack output = this.recipe.getRecipeOutput();
-        screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
-        
-        // Add mana cost summary widget
-        screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
     }
 
     @Override
     public void render(int side, int x, int y, int mouseX, int mouseY) {
         super.render(side, x, y, mouseX, mouseY);
-        y += 53;
+        y += 83;
         
         RenderSystem.pushMatrix();
         RenderSystem.enableBlend();
