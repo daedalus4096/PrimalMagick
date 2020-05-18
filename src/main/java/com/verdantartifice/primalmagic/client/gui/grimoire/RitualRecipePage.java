@@ -72,6 +72,7 @@ public class RitualRecipePage extends AbstractRecipePage {
             }
             deltaX = 0;
             y += 18;
+            y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66F);
         }
         
         // Init prop widgets
@@ -108,6 +109,7 @@ public class RitualRecipePage extends AbstractRecipePage {
             mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += (1 + (this.recipe.getIngredients().size() / ITEMS_PER_ROW)) * 18;  // Make room for ingredient widgets
+            y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66F);
         }
         
         // Render props section header
