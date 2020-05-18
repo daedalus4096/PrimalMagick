@@ -3,9 +3,7 @@ package com.verdantartifice.primalmagic.common.crafting;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -33,16 +31,13 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @see {@link net.minecraft.item.crafting.Ingredient}
  */
 public class BlockIngredient implements Predicate<Block> {
-    protected static final Predicate<? super BlockIngredient.IBlockList> IS_EMPTY = (list) -> {
-        return !list.getBlocks().stream().filter(Objects::nonNull).collect(Collectors.toList()).isEmpty();
-    };
     public static final BlockIngredient EMPTY = new BlockIngredient(Stream.empty());
     
     protected final BlockIngredient.IBlockList[] acceptedBlocks;
     protected Block[] matchingBlocks = null;
     
     protected BlockIngredient(Stream<? extends BlockIngredient.IBlockList> blockLists) {
-        this.acceptedBlocks = blockLists.filter(IS_EMPTY).toArray(count -> {
+        this.acceptedBlocks = blockLists.toArray(count -> {
             return new BlockIngredient.IBlockList[count];
         });
     }
