@@ -1,7 +1,7 @@
-package com.verdantartifice.primalmagic.common.blocks.misc;
+package com.verdantartifice.primalmagic.common.blocks.devices;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
+import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
@@ -35,18 +35,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 /**
- * Block definition for the analysis table.  The analysis table allows a player to analyze blocks and items,
- * determining their primal affinities and generating observation-type knowledge.  It is primarily used early
- * in mod progression until it is replaced by the arcanometer.
+ * Block definition for the research table.  The research table allows players to play a minigame
+ * which lets them create theories for use in research.
  * 
  * @author Daedalus4096
  */
-public class AnalysisTableBlock extends Block {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/analysis_table"));
+public class ResearchTableBlock extends Block {
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/research_table"));
 
     protected static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-    public AnalysisTableBlock() {
+    public ResearchTableBlock() {
         super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
@@ -80,16 +79,16 @@ public class AnalysisTableBlock extends Block {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
-            // Open the GUI for the analysis table
+            // Open the GUI for the research table
             NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
                 @Override
                 public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-                    return new AnalysisTableContainer(windowId, inv, IWorldPosCallable.of(worldIn, pos));
+                    return new ResearchTableContainer(windowId, inv, IWorldPosCallable.of(worldIn, pos));
                 }
 
                 @Override
                 public ITextComponent getDisplayName() {
-                    return new TranslationTextComponent(AnalysisTableBlock.this.getTranslationKey());
+                    return new TranslationTextComponent(ResearchTableBlock.this.getTranslationKey());
                 }
             });
         }
