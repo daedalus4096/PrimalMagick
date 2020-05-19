@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagic.common.items.misc.EnchantedInkAndQuill;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
+import com.verdantartifice.primalmagic.common.items.misc.ManafruitItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
@@ -242,7 +243,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> TALLOW = ITEMS.register("tallow", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> BEESWAX = ITEMS.register("beeswax", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> MANA_SALTS = ITEMS.register("mana_salts", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<Item> MANAFRUIT = ITEMS.register("manafruit", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(8).saturation(0.8F).build())));
+    public static final RegistryObject<ManafruitItem> MANAFRUIT = ITEMS.register("manafruit", () -> new ManafruitItem(0, new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(8).saturation(0.8F).build())));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
+import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
@@ -219,6 +220,13 @@ public abstract class AbstractWandItem extends Item implements IWand {
         }
         
         // TODO Subtract discounts from wand enchantments
+        
+        // Substract discounts from temporary conditions
+        if (player.isPotionActive(EffectsPM.MANAFRUIT.get())) {
+            // 1% at amp 0, 3% at amp 1, 5% at amp 3, etc
+            modifier -= (0.01F * ((2 * player.getActivePotionEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
+        }
+        
         // TODO Add penalties from temporary conditions
         
         return modifier;

@@ -26,4 +26,5 @@ public class EffectsPM {
     public static final RegistryObject<Effect> POLYMORPH = EFFECTS.register("polymorph", () -> new EffectPM(EffectType.HARMFUL, Source.MOON.getColor()));
     public static final RegistryObject<Effect> BLEEDING = EFFECTS.register("bleeding", () -> new BleedingEffect(EffectType.HARMFUL, Source.BLOOD.getColor()));
     public static final RegistryObject<Effect> WEAKENED_SOUL = EFFECTS.register("weakened_soul", () -> new EffectPM(EffectType.HARMFUL, Source.HALLOWED.getColor()));
+    public static final RegistryObject<Effect> MANAFRUIT = EFFECTS.register("manafruit", () -> new EffectPM(EffectType.BENEFICIAL, 0x27E1C7));
 }
