@@ -292,6 +292,7 @@ public class InitAffinities {
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "dead_coral_blocks"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 10));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "dead_corals"), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "moonwood_logs"), new SourceList().add(Source.EARTH, 10).add(Source.MOON, 20));
+        AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "ritual_candles"), new SourceList().add(Source.SEA, 3).add(Source.SKY, 3).add(Source.SUN, 1).add(Source.BLOOD, 4));
         AffinityManager.registerItemTagAffinities(new ResourceLocation(PrimalMagic.MODID, "sunwood_logs"), new SourceList().add(Source.EARTH, 10).add(Source.SUN, 20));
         
         // Register Primal Magic block affinities
@@ -326,6 +327,7 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.REFINED_SALT.get()), new SourceList().add(Source.EARTH, 5));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.MANA_PRISM.get()), new SourceList().add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.MANA_SALTS.get()), new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.BEESWAX.get()), new SourceList().add(Source.SEA, 2).add(Source.BLOOD, 2));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.PRIMALITE_INGOT.get()), new SourceList().add(Source.EARTH, 11).add(Source.SEA, 3).add(Source.SKY, 3).add(Source.SUN, 3).add(Source.MOON, 3));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HEXIUM_INGOT.get()), new SourceList().add(Source.EARTH, 8).add(Source.SEA, 2).add(Source.SKY, 2).add(Source.SUN, 2).add(Source.MOON, 2).add(Source.BLOOD, 15).add(Source.INFERNAL, 15).add(Source.VOID, 15));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HALLOWSTEEL_INGOT.get()), new SourceList().add(Source.EARTH, 6).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1).add(Source.BLOOD, 11).add(Source.INFERNAL, 11).add(Source.VOID, 11).add(Source.HALLOWED, 37));
