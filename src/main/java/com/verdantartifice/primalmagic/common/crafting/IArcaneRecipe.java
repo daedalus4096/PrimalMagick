@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.crafting;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
@@ -14,21 +13,14 @@ import net.minecraft.item.crafting.IRecipeType;
  *  
  * @author Daedalus4096
  */
-public interface IArcaneRecipe extends ICraftingRecipe {
+public interface IArcaneRecipe extends ICraftingRecipe, IHasManaCost {
     /**
      * Get the required research for the recipe.
      * 
      * @return the required research for the recipe
      */
     public SimpleResearchKey getRequiredResearch();
-    
-    /**
-     * Get the mana cost for the recipe.
-     * 
-     * @return the mana cost for the recipe
-     */
-    public SourceList getManaCosts();
-    
+
     default IRecipeType<?> getType() {
         return RecipeTypesPM.ARCANE_CRAFTING;
     }

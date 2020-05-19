@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.FakeContainer;
-import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagic.common.crafting.IHasManaCost;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
@@ -224,10 +224,10 @@ public class AffinityManager {
         for (IRecipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(stack)).collect(Collectors.toList())) {
             // Compute the affinities from the recipe's ingredients
             SourceList ingSources = generateAffinitiesFromIngredients(recipe, recipeManager, history);
-            if (recipe instanceof IArcaneRecipe) {
+            if (recipe instanceof IHasManaCost) {
                 // Add affinities from mana costs
-                IArcaneRecipe arcaneRecipe = (IArcaneRecipe)recipe;
-                SourceList manaCosts = arcaneRecipe.getManaCosts();
+                IHasManaCost manaRecipe = (IHasManaCost)recipe;
+                SourceList manaCosts = manaRecipe.getManaCosts();
                 for (Source source : manaCosts.getSources()) {
                     if (manaCosts.getAmount(source) > 0) {
                         int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipe.getRecipeOutput().getCount());
