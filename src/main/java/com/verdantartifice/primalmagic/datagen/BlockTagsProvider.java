@@ -45,7 +45,6 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         // Add entries to Forge tags
         this.getBuilder(Tags.Blocks.ORES_QUARTZ).add(BlocksPM.QUARTZ_ORE.get());
         this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE, BlockTagsPM.STORAGE_BLOCKS_HEXIUM, BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
-        this.getBuilder(Tags.Blocks.SUPPORTS_BEACON).add(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE, BlockTagsPM.STORAGE_BLOCKS_HEXIUM, BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         
         this.getBuilder(Tags.Blocks.GLASS_COLORLESS).add(BlocksPM.SKYGLASS.get());
         this.getBuilder(Tags.Blocks.GLASS_BLACK).add(BlocksPM.STAINED_SKYGLASS_BLACK.get());
