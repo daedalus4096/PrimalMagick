@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.blocks.ores;
+package com.verdantartifice.primalmagic.common.blocks.minerals;
 
 import java.util.Random;
 
