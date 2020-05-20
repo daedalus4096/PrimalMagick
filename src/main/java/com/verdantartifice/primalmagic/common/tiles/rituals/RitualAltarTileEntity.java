@@ -28,6 +28,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.state.EnumProperty;
@@ -136,6 +137,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (!this.world.isRemote && this.active) {
             if (this.activeCount >= 100) {
                 if (this.getActivePlayer() != null) {
+                    this.setInventorySlotContents(0, new ItemStack(Items.DIAMOND));
                     String msg = String.format("Ritual complete!  %1$d pedestals, %2$d props, %3$d salt", this.pedestalPositions.size(), this.propPositions.size(), this.saltPositions.size());
                     this.getActivePlayer().sendStatusMessage(new StringTextComponent(msg), false);
                 }
