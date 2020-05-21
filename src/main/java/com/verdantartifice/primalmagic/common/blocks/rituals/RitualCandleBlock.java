@@ -112,7 +112,7 @@ public class RitualCandleBlock extends Block implements IRitualProp {
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
-                    
+                    this.onPropActivated(state, worldIn, pos);
                 }
             }
             return ActionResultType.SUCCESS;
