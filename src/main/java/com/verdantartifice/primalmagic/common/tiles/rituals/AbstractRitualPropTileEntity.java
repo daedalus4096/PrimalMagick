@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
@@ -43,5 +44,14 @@ public abstract class AbstractRitualPropTileEntity extends TilePM {
             compound.putLong("AltarPos", this.altarPos.toLong());
         }
         return super.write(compound);
+    }
+    
+    public void notifyAltarOfPropActivation() {
+        if (this.altarPos != null) {
+            TileEntity tile = this.world.getTileEntity(this.altarPos);
+            if (tile instanceof RitualAltarTileEntity) {
+                ((RitualAltarTileEntity)tile).onPropActivation(this.pos);
+            }
+        }
     }
 }

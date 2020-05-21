@@ -109,6 +109,11 @@ public class RitualCandleBlock extends Block implements IRitualProp {
                 player.getHeldItem(handIn).damageItem(1, player, (p) -> {
                     p.sendBreakAnimation(handIn);
                 });
+                
+                // If this block is awaiting activation for an altar, notify it
+                if (this.isPropOpen(state, worldIn, pos)) {
+                    
+                }
             }
             return ActionResultType.SUCCESS;
         } else if (player != null && player.getHeldItem(handIn).isEmpty() && state.get(LIT)) {
@@ -140,5 +145,14 @@ public class RitualCandleBlock extends Block implements IRitualProp {
         super.eventReceived(state, worldIn, pos, id, param);
         TileEntity tile = worldIn.getTileEntity(pos);
         return (tile == null) ? false : tile.receiveClientEvent(id, param);
+    }
+    
+    @Override
+    public boolean isPropActivated(BlockState state, World world, BlockPos pos) {
+        if (state != null && state.getBlock() instanceof RitualCandleBlock) {
+            return state.get(LIT);
+        } else {
+            return false;
+        }
     }
 }
