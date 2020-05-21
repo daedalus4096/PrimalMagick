@@ -251,7 +251,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             if (this.currentStep == null || this.currentStepComplete) {
                 if (this.remainingSteps.isEmpty()) {
                     // If there are no steps remaining in the ritual, finish it up
-                    this.finishCraft();
+                    if (this.activeCount >= this.nextCheckCount) {
+                        this.finishCraft();
+                    }
                     return;
                 } else {
                     // Pull the next step from the queue and start it
