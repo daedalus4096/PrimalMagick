@@ -26,6 +26,8 @@ import com.verdantartifice.primalmagic.common.containers.FakeContainer;
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagic.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
 import com.verdantartifice.primalmagic.common.rituals.RitualStep;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
@@ -45,7 +47,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -557,17 +558,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     protected void spawnOfferingParticles(BlockPos startPos, ItemStack stack) {
-        if (this.world instanceof ServerWorld) {
-            ((ServerWorld)this.world).spawnParticle(
-                    new ItemParticleData(ParticleTypes.ITEM, stack), 
-                    startPos.getX() + 0.5D, 
-                    startPos.getY() + 1.5D, 
-                    startPos.getZ() + 0.5D, 
-                    0, 
-                    this.pos.getX() - startPos.getX(), 
-                    this.pos.getY() - startPos.getY() + 0.25D, 
-                    this.pos.getZ() - startPos.getZ(), 
-                    0.18D);
+        if (!this.world.isRemote) {
+            double sx = startPos.getX() + 0.4D + (this.world.rand.nextDouble() * 0.2D);
+            double sy = startPos.getY() + 1.4D + (this.world.rand.nextDouble() * 0.2D);
+            double sz = startPos.getZ() + 0.4D + (this.world.rand.nextDouble() * 0.2D);
+            PacketHandler.sendToAllAround(new OfferingChannelPacket(sx, sy, sz, this.pos.up(2), stack), this.world.dimension.getType(), startPos, 32.0D);
         }
     }
     

@@ -9,6 +9,8 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
@@ -140,5 +142,9 @@ public class FxDispatcher {
         if (p != null) {
             p.setColor(r, g, b);
         }
+    }
+    
+    public void offeringChannel(double sx, double sy, double sz, double tx, double ty, double tz, ItemStack stack) {
+        Minecraft.getInstance().particles.addParticle(new ItemParticleData(ParticleTypesPM.OFFERING.get(), stack), sx, sy, sz, tx, ty, tz);
     }
 }

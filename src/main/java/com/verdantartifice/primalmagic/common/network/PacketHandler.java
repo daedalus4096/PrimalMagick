@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncStatsPack
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
@@ -83,6 +84,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, CompleteProjectPacket.class, CompleteProjectPacket::encode, CompleteProjectPacket::decode, CompleteProjectPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket::encode, SetProjectMaterialSelectionPacket::decode, SetProjectMaterialSelectionPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, PlayClientSoundPacket.class, PlayClientSoundPacket::encode, PlayClientSoundPacket::decode, PlayClientSoundPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, OfferingChannelPacket.class, OfferingChannelPacket::encode, OfferingChannelPacket::decode, OfferingChannelPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
