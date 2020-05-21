@@ -375,6 +375,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (this.getActivePlayer() != null) {
             this.getActivePlayer().sendStatusMessage(new StringTextComponent("Ritual complete!"), false);
         }
+        this.spawnSuccessParticles();
         this.reset();
     }
     
@@ -567,6 +568,21 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.pos.getY() - startPos.getY() + 0.25D, 
                     this.pos.getZ() - startPos.getZ(), 
                     0.18D);
+        }
+    }
+    
+    protected void spawnSuccessParticles() {
+        if (this.world instanceof ServerWorld) {
+            ((ServerWorld)this.world).spawnParticle(
+                    ParticleTypes.HAPPY_VILLAGER, 
+                    this.pos.getX() + 0.5D, 
+                    this.pos.getY() + 1.2D, 
+                    this.pos.getZ() + 0.5D, 
+                    15, 
+                    0, 
+                    0, 
+                    0, 
+                    0.1D);
         }
     }
 }
