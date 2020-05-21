@@ -209,6 +209,15 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     protected void reset() {
+        // If there's a prop being waited on, close it out
+        if (this.awaitedPropPos != null) {
+            BlockState state = this.world.getBlockState(this.awaitedPropPos);
+            Block block = state.getBlock();
+            if (block instanceof IRitualProp) {
+                ((IRitualProp)block).closeProp(state, this.world, this.awaitedPropPos);
+            }
+        }
+        
         // Reset the altar's tile entity back to its default state
         this.active = false;
         this.currentStepComplete = false;
