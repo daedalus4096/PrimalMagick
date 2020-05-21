@@ -45,6 +45,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.particles.ItemParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -75,6 +77,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected RitualStep currentStep = null;
     protected Queue<RitualStep> remainingSteps = new LinkedList<>();
     protected BlockPos awaitedPropPos = null;
+    protected BlockPos channeledOfferingPos = null;
     
     protected boolean scanDirty = false;
     protected Set<BlockPos> saltPositions = new HashSet<>();
@@ -178,6 +181,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         this.awaitedPropPos = compound.contains("AwaitedPropPos", Constants.NBT.TAG_LONG) ?
                 BlockPos.fromLong(compound.getLong("AwaitedPropPos")) :
                 null;
+                
+        this.channeledOfferingPos = compound.contains("ChanneledOfferingPos", Constants.NBT.TAG_LONG) ?
+                BlockPos.fromLong(compound.getLong("ChanneledOfferingPos")) :
+                null;
     }
     
     @Override
@@ -205,6 +212,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (this.awaitedPropPos != null) {
             compound.putLong("AwaitedPropPos", this.awaitedPropPos.toLong());
         }
+        if (this.channeledOfferingPos != null) {
+            compound.putLong("ChanneledOfferingPos", this.channeledOfferingPos.toLong());
+        }
         return super.write(compound);
     }
     
@@ -228,6 +238,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         this.currentStep = null;
         this.remainingSteps.clear();
         this.awaitedPropPos = null;
+        this.channeledOfferingPos = null;
 
         this.scanDirty = false;
         this.pedestalPositions.clear();
@@ -261,7 +272,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.currentStepComplete = false;
                 }
             }
-            if (this.currentStep != null && this.activeCount >= this.nextCheckCount) {
+            if (this.currentStep != null) {
                 this.doStep(this.currentStep);
             }
         }
@@ -463,50 +474,68 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     protected void doOfferingStep(IRitualRecipe recipe, int offeringIndex) {
-        Ingredient requiredOffering = recipe.getIngredients().get(offeringIndex);
-        for (BlockPos pedestalPos : this.pedestalPositions) {
-            TileEntity tile = this.world.getTileEntity(pedestalPos);
-            if (tile instanceof OfferingPedestalTileEntity) {
-                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                if (requiredOffering.test(pedestalTile.getStackInSlot(0))) {
-                    ItemStack found = pedestalTile.removeStackFromSlot(0);
-                    PrimalMagic.LOGGER.debug("Found match {} for ingredient {} at {}", found.getItem().getRegistryName().toString(), offeringIndex, pedestalPos.toString());
-                    this.currentStepComplete = true;
-                    this.nextCheckCount = this.activeCount + 60;
-                    this.markDirty();
-                    return;
-                }
-            }
-        }
-        PrimalMagic.LOGGER.debug("No match found for current ingredient {}", offeringIndex);
-        this.nextCheckCount = this.activeCount + 20;
-        this.markDirty();
-    }
-    
-    protected void doPropStep(IRitualRecipe recipe, int propIndex) {
-        if (this.awaitedPropPos == null) {
-            BlockIngredient requiredProp = recipe.getProps().get(propIndex);
-            for (BlockPos propPos : this.propPositions) {
-                BlockState propState = this.world.getBlockState(propPos);
-                Block block = propState.getBlock();
-                if (block instanceof IRitualProp && requiredProp.test(block)) {
-                    IRitualProp propBlock = (IRitualProp)block;
-                    if (!propBlock.isPropActivated(propState, this.world, propPos)) {
-                        PrimalMagic.LOGGER.debug("Found match {} for prop {} at {}", block.getRegistryName().toString(), propIndex, propPos.toString());
-                        propBlock.openProp(propState, this.world, propPos, this.pos);
-                        this.awaitedPropPos = propPos;
-                        this.nextCheckCount = this.activeCount + 20;
+        if (this.activeCount >= this.nextCheckCount && this.channeledOfferingPos == null) {
+            Ingredient requiredOffering = recipe.getIngredients().get(offeringIndex);
+            for (BlockPos pedestalPos : this.pedestalPositions) {
+                TileEntity tile = this.world.getTileEntity(pedestalPos);
+                if (tile instanceof OfferingPedestalTileEntity) {
+                    OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
+                    if (requiredOffering.test(pedestalTile.getStackInSlot(0))) {
+                        this.channeledOfferingPos = pedestalPos;
+                        ItemStack found = pedestalTile.getStackInSlot(0);
+                        PrimalMagic.LOGGER.debug("Found match {} for ingredient {} at {}", found.getItem().getRegistryName().toString(), offeringIndex, pedestalPos.toString());
+                        this.nextCheckCount = this.activeCount + 60;
                         this.markDirty();
                         return;
                     }
                 }
             }
-            PrimalMagic.LOGGER.debug("No match found for current prop {}", propIndex);
-        } else {
-            PrimalMagic.LOGGER.debug("Awaiting prop activation");
+            PrimalMagic.LOGGER.debug("No match found for current ingredient {}", offeringIndex);
+            this.nextCheckCount = this.activeCount + 20;
+            this.markDirty();
         }
-        this.nextCheckCount = this.activeCount + 20;
-        this.markDirty();
+        if (this.channeledOfferingPos != null) {
+            TileEntity tile = this.world.getTileEntity(this.channeledOfferingPos);
+            if (tile instanceof OfferingPedestalTileEntity) {
+                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
+                if (this.activeCount >= this.nextCheckCount) {
+                    pedestalTile.removeStackFromSlot(0);
+                    this.currentStepComplete = true;
+                    this.channeledOfferingPos = null;
+                    this.markDirty();
+                } else {
+                    this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getStackInSlot(0));
+                }
+            }
+        }
+    }
+    
+    protected void doPropStep(IRitualRecipe recipe, int propIndex) {
+        if (this.activeCount >= this.nextCheckCount) {
+            if (this.awaitedPropPos == null) {
+                BlockIngredient requiredProp = recipe.getProps().get(propIndex);
+                for (BlockPos propPos : this.propPositions) {
+                    BlockState propState = this.world.getBlockState(propPos);
+                    Block block = propState.getBlock();
+                    if (block instanceof IRitualProp && requiredProp.test(block)) {
+                        IRitualProp propBlock = (IRitualProp)block;
+                        if (!propBlock.isPropActivated(propState, this.world, propPos)) {
+                            PrimalMagic.LOGGER.debug("Found match {} for prop {} at {}", block.getRegistryName().toString(), propIndex, propPos.toString());
+                            propBlock.openProp(propState, this.world, propPos, this.pos);
+                            this.awaitedPropPos = propPos;
+                            this.nextCheckCount = this.activeCount + 20;
+                            this.markDirty();
+                            return;
+                        }
+                    }
+                }
+                PrimalMagic.LOGGER.debug("No match found for current prop {}", propIndex);
+            } else {
+                PrimalMagic.LOGGER.debug("Awaiting prop activation");
+            }
+            this.nextCheckCount = this.activeCount + 20;
+            this.markDirty();
+        }
     }
     
     public void onPropActivation(BlockPos propPos) {
@@ -523,6 +552,21 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             this.markDirty();
         } else {
             PrimalMagic.LOGGER.debug("Received unexpected prop activation at {}", propPos);
+        }
+    }
+    
+    protected void spawnOfferingParticles(BlockPos startPos, ItemStack stack) {
+        if (this.world instanceof ServerWorld) {
+            ((ServerWorld)this.world).spawnParticle(
+                    new ItemParticleData(ParticleTypes.ITEM, stack), 
+                    startPos.getX() + 0.5D, 
+                    startPos.getY() + 1.5D, 
+                    startPos.getZ() + 0.5D, 
+                    0, 
+                    this.pos.getX() - startPos.getX(), 
+                    this.pos.getY() - startPos.getY() + 0.25D, 
+                    this.pos.getZ() - startPos.getZ(), 
+                    0.18D);
         }
     }
 }
