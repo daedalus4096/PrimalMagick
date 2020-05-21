@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.common.tiles.rituals;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableSet;
@@ -23,6 +26,8 @@ import com.verdantartifice.primalmagic.common.containers.FakeContainer;
 import com.verdantartifice.primalmagic.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
+import com.verdantartifice.primalmagic.common.rituals.RitualStep;
+import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
@@ -35,7 +40,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -58,10 +65,14 @@ import net.minecraftforge.common.util.Constants;
  */
 public class RitualAltarTileEntity extends TileInventoryPM implements ITickableTileEntity, IInteractWithWand {
     protected boolean active = false;
+    protected boolean currentStepComplete = false;
     protected int activeCount = 0;
+    protected int nextCheckCount = 0;
     protected UUID activePlayerId = null;
     protected PlayerEntity activePlayerCache = null;
     protected ResourceLocation activeRecipeId = null;
+    protected RitualStep currentStep = null;
+    protected Queue<RitualStep> remainingSteps = new LinkedList<>();
     
     protected boolean scanDirty = false;
     protected Set<BlockPos> saltPositions = new HashSet<>();
@@ -104,17 +115,36 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         }
     }
     
+    @Nullable
+    protected IRitualRecipe getActiveRecipe() {
+        if (this.activeRecipeId != null) {
+            Optional<? extends IRecipe<?>> recipeOpt = this.world.getServer().getRecipeManager().getRecipe(this.activeRecipeId);
+            if (recipeOpt.isPresent() && recipeOpt.get() instanceof IRitualRecipe) {
+                return (IRitualRecipe)recipeOpt.get();
+            }
+        }
+        return null;
+    }
+    
     @Override
     protected Set<Integer> getSyncedSlotIndices() {
         // Sync the altar's stack for client rendering use
         return ImmutableSet.of(Integer.valueOf(0));
     }
     
+    public Color getOrbColor() {
+        float hue = 120.0F / 360.0F;    // Green
+        float saturation = Math.min(1.0F, this.getActiveCount() / 100.0F);  // TODO Replace with real saturation calc
+        return Color.getHSBColor(hue, saturation, 1.0F);
+    }
+    
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
         this.active = compound.getBoolean("Active");
+        this.currentStepComplete = compound.getBoolean("CurrentStepComplete");
         this.activeCount = compound.getInt("ActiveCount");
+        this.nextCheckCount = compound.getInt("NextCheckCount");
         
         this.activePlayerCache = null;
         if (compound.contains("ActivePlayer", Constants.NBT.TAG_COMPOUND)) {
@@ -126,19 +156,67 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         this.activeRecipeId = compound.contains("ActiveRecipeId", Constants.NBT.TAG_STRING) ? 
                 new ResourceLocation(compound.getString("ActiveRecipeId")) : 
                 null;
+        
+        this.currentStep = null;
+        if (compound.contains("CurrentStep", Constants.NBT.TAG_COMPOUND)) {
+            this.currentStep = new RitualStep();
+            this.currentStep.deserializeNBT(compound.getCompound("CurrentStep"));
+        }
+                
+        this.remainingSteps.clear();
+        if (compound.contains("RemainingSteps", Constants.NBT.TAG_LIST)) {
+            ListNBT stepList = compound.getList("RemainingSteps", Constants.NBT.TAG_COMPOUND);
+            for (int index = 0; index < stepList.size(); index++) {
+                RitualStep step = new RitualStep();
+                step.deserializeNBT(stepList.getCompound(index));
+                this.remainingSteps.offer(step);
+            }
+        }
     }
     
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.putBoolean("Active", this.active);
+        compound.putBoolean("CurrentStepComplete", this.currentStepComplete);
         compound.putInt("ActiveCount", this.activeCount);
+        compound.putInt("NextCheckCount", this.nextCheckCount);
         if (this.activePlayerId != null) {
             compound.put("ActivePlayer", NBTUtil.writeUniqueId(this.activePlayerId));
         }
         if (this.activeRecipeId != null) {
             compound.putString("ActiveRecipeId", this.activeRecipeId.toString());
         }
+        if (this.currentStep != null) {
+            compound.put("CurrentStep", this.currentStep.serializeNBT());
+        }
+        if (this.remainingSteps != null && !this.remainingSteps.isEmpty()) {
+            ListNBT stepList = new ListNBT();
+            for (RitualStep step : this.remainingSteps) {
+                stepList.add(step.serializeNBT());
+            }
+            compound.put("RemainingSteps", stepList);
+        }
         return super.write(compound);
+    }
+    
+    protected void reset() {
+        // Reset the altar's tile entity back to its default state
+        this.active = false;
+        this.currentStepComplete = false;
+        this.activeCount = 0;
+        this.nextCheckCount = 0;
+        this.setActivePlayer(null);
+        this.activeRecipeId = null;
+        this.currentStep = null;
+        this.remainingSteps.clear();
+
+        this.scanDirty = false;
+        this.pedestalPositions.clear();
+        this.propPositions.clear();
+        this.saltPositions.clear();
+
+        this.markDirty();
+        this.syncTile(false);
     }
 
     @Override
@@ -151,22 +229,19 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             this.scanDirty = false;
         }
         if (!this.world.isRemote && this.active) {
-            if (this.activeCount >= 100) {
-                if (this.activeRecipeId != null) {
-                    Optional<? extends IRecipe<?>> recipeOpt = this.world.getServer().getRecipeManager().getRecipe(this.activeRecipeId);
-                    if (recipeOpt.isPresent()) {
-                        this.setInventorySlotContents(0, recipeOpt.get().getRecipeOutput().copy());
-                    }
-                    this.activeRecipeId = null;
+            if (this.currentStep == null || this.currentStepComplete) {
+                if (this.remainingSteps.isEmpty()) {
+                    // If there are no steps remaining in the ritual, finish it up
+                    this.finishCraft();
+                    return;
+                } else {
+                    // Pull the next step from the queue and start it
+                    this.currentStep = this.remainingSteps.poll();
+                    this.currentStepComplete = false;
                 }
-                if (this.getActivePlayer() != null) {
-                    this.getActivePlayer().sendStatusMessage(new StringTextComponent("Ritual complete!"), false);
-                }
-                this.active = false;
-                this.activeCount = 0;
-                this.setActivePlayer(null);
-                this.markDirty();
-                this.syncTile(false);
+            }
+            if (currentStep != null && this.activeCount >= this.nextCheckCount) {
+                this.doStep(this.currentStep);
             }
         }
     }
@@ -175,21 +250,19 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     public ActionResultType onWandRightClick(ItemStack wandStack, World world, PlayerEntity player, BlockPos pos, Direction direction) {
         if (!this.world.isRemote && wandStack.getItem() instanceof IWand) {
             if (this.active) {
-                this.active = false;
-                this.activeCount = 0;
                 player.sendStatusMessage(new StringTextComponent("Ritual canceled"), false);
-                this.setActivePlayer(null);
-                this.activeRecipeId = null;
+                this.reset();
             } else if (this.startCraft(wandStack, player)) {
                 this.active = true;
                 this.activeCount = 0;
                 player.sendStatusMessage(new StringTextComponent("Ritual started!"), false);
                 this.setActivePlayer(player);
+                this.markDirty();
+                this.syncTile(false);
             } else {
                 player.sendStatusMessage(new StringTextComponent("No valid ritual recipe found"), false);
+                this.reset();
             }
-            this.markDirty();
-            this.syncTile(false);
             return ActionResultType.SUCCESS;
         } else {
             return ActionResultType.FAIL;
@@ -229,8 +302,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (recipeOpt.isPresent()) {
             // Determine if the player has the research and mana to start this recipe
             IRitualRecipe recipe = recipeOpt.get();
-            if (this.canUseRitualRecipe(wandStack, player, recipe)) {
+            if (this.canUseRitualRecipe(wandStack, player, recipe) && this.generateRitualSteps(recipe)) {
                 this.activeRecipeId = recipe.getId();
+                this.currentStep = null;
+                this.currentStepComplete = false;
                 PrimalMagic.LOGGER.debug("Found recipe {}", this.activeRecipeId.toString());
                 return true;
             } else {
@@ -241,6 +316,34 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             PrimalMagic.LOGGER.debug("No matching ritual recipe found");
             return false;
         }
+    }
+    
+    protected boolean generateRitualSteps(@Nonnull IRitualRecipe recipe) {
+        // Add steps for the recipe offerings and props
+        LinkedList<RitualStep> newSteps = new LinkedList<>();
+        for (int index = 0; index < recipe.getIngredients().size(); index++) {
+            newSteps.add(new RitualStep(RitualStepType.OFFERING, index));
+        }
+        for (int index = 0; index < recipe.getProps().size(); index++) {
+            newSteps.add(new RitualStep(RitualStepType.PROP, index));
+        }
+        
+        // Randomize and save the generated steps
+        Collections.shuffle(newSteps, this.world.rand);
+        this.remainingSteps = newSteps;
+        
+        return true;
+    }
+    
+    protected void finishCraft() {
+        IRitualRecipe recipe = this.getActiveRecipe();
+        if (recipe != null) {
+            this.setInventorySlotContents(0, recipe.getRecipeOutput().copy());
+        }
+        if (this.getActivePlayer() != null) {
+            this.getActivePlayer().sendStatusMessage(new StringTextComponent("Ritual complete!"), false);
+        }
+        this.reset();
     }
     
     protected boolean canUseRitualRecipe(ItemStack wandStack, PlayerEntity player, IRitualRecipe recipe) {
@@ -319,6 +422,37 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             if (propBlock.isBlockSaltPowered(this.world, pos)) {
                 this.propPositions.add(pos);
             }
+        }
+    }
+    
+    protected void doStep(@Nonnull RitualStep step) {
+        IRitualRecipe recipe = this.getActiveRecipe();
+        if (recipe == null) {
+            PrimalMagic.LOGGER.debug("No recipe found when trying to do ritual step");
+            return;
+        }
+        
+        if (step.getType() == RitualStepType.OFFERING) {
+            Ingredient requiredOffering = recipe.getIngredients().get(step.getIndex());
+            for (BlockPos pedestalPos : this.pedestalPositions) {
+                TileEntity tile = this.world.getTileEntity(pedestalPos);
+                if (tile instanceof OfferingPedestalTileEntity) {
+                    OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
+                    if (requiredOffering.test(pedestalTile.getStackInSlot(0))) {
+                        ItemStack found = pedestalTile.removeStackFromSlot(0);
+                        PrimalMagic.LOGGER.debug("Found match {} for ingredient {} at {}", found.getItem().getRegistryName().toString(), step.getIndex(), pedestalPos.toString());
+                        this.currentStepComplete = true;
+                        this.nextCheckCount = this.activeCount + 60;
+                        return;
+                    }
+                }
+            }
+            PrimalMagic.LOGGER.debug("No match found for current ingredient {}", step.getIndex());
+            this.nextCheckCount = this.activeCount + 20;
+        } else if (step.getType() == RitualStepType.PROP) {
+            // TODO Handle props
+        } else {
+            PrimalMagic.LOGGER.debug("Invalid ritual step type {}", step.getType());
         }
     }
 }

@@ -100,9 +100,7 @@ public class RitualAltarTER extends TileEntityRenderer<RitualAltarTileEntity> {
 
         // Render the ritual orb above the altar if active
         if (tileEntityIn.isActive()) {
-            float hue = 120.0F / 360.0F;    // Green
-            float saturation = tileEntityIn.getActiveCount() / 100.0F;   // TODO Replace with real saturation calc from tile entity
-            Color color = Color.getHSBColor(hue, saturation, 1.0F);
+            Color color = tileEntityIn.getOrbColor();
             float r = color.getRed() / 255.0F;
             float g = color.getGreen() / 255.0F;
             float b = color.getBlue() / 255.0F;
