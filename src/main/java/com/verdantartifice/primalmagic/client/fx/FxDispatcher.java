@@ -145,6 +145,12 @@ public class FxDispatcher {
     }
     
     public void offeringChannel(double sx, double sy, double sz, double tx, double ty, double tz, ItemStack stack) {
+        // Show a trail of particles between the ritual offering and the altar
         Minecraft.getInstance().particles.addParticle(new ItemParticleData(ParticleTypesPM.OFFERING.get(), stack), sx, sy, sz, tx, ty, tz);
+    }
+    
+    public Particle propMarker(double x, double y, double z) {
+        // Show a marker above a ritual prop's position
+        return Minecraft.getInstance().particles.addParticle(ParticleTypesPM.PROP_MARKER.get(), x, y, z, 0.0D, 0.0D, 0.0D);
     }
 }

@@ -30,4 +30,5 @@ public class ParticleTypesPM {
     public static final RegistryObject<BasicParticleType> SPELL_SPARKLE = PARTICLE_TYPES.register("spell_sparkle", () -> new BasicParticleType(true));
     public static final RegistryObject<ParticleType<SpellBoltParticleData>> SPELL_BOLT = PARTICLE_TYPES.register("spell_bolt", () -> new ParticleType<>(false, SpellBoltParticleData.DESERIALIZER));
     public static final RegistryObject<ParticleType<ItemParticleData>> OFFERING = PARTICLE_TYPES.register("offering", () -> new ParticleType<>(false, ItemParticleData.DESERIALIZER));
+    public static final RegistryObject<BasicParticleType> PROP_MARKER = PARTICLE_TYPES.register("prop_marker", () -> new BasicParticleType(true));
 }
