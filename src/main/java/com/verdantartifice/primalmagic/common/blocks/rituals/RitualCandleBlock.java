@@ -128,6 +128,16 @@ public class RitualCandleBlock extends Block implements IRitualProp {
         }
     }
     
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Close out any pending ritual activity if replaced
+        if (!worldIn.isRemote && state.getBlock() != newState.getBlock()) {
+            this.closeProp(state, worldIn, pos);
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
+    }
+    
     @Override
     public boolean hasTileEntity(BlockState state) {
         return true;

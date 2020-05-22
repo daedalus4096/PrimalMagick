@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.rituals;
 
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.PropMarkerPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.RemovePropMarkerPacket;
 import com.verdantartifice.primalmagic.common.tiles.rituals.AbstractRitualPropTileEntity;
 
 import net.minecraft.block.BlockState;
@@ -41,6 +42,7 @@ public interface IRitualProp extends ISaltPowered {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof AbstractRitualPropTileEntity) {
             ((AbstractRitualPropTileEntity)tile).setAltarPos(null);
+            PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), world.dimension.getType(), pos, 32.0D);
         }
     }
 }

@@ -24,7 +24,7 @@ public class PropMarkerParticle extends SpriteTexturedParticle {
         super(world, x, y, z);
         this.initY = y;
         this.particleScale = 0.33F;
-        this.maxAge = 100;
+        this.maxAge = 6000;
         this.spriteSet = spriteSet;
         this.selectSpriteWithAge(this.spriteSet);
     }

@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.client.fx;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
@@ -14,6 +16,7 @@ import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -26,6 +29,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class FxDispatcher {
     public static final FxDispatcher INSTANCE = new FxDispatcher();
+    
+    protected static final Map<BlockPos, Particle> PROP_MARKER_PARTICLES = new HashMap<>();
     
     protected World getWorld() {
         return Minecraft.getInstance().world;
@@ -149,8 +154,18 @@ public class FxDispatcher {
         Minecraft.getInstance().particles.addParticle(new ItemParticleData(ParticleTypesPM.OFFERING.get(), stack), sx, sy, sz, tx, ty, tz);
     }
     
-    public Particle propMarker(double x, double y, double z) {
-        // Show a marker above a ritual prop's position
-        return Minecraft.getInstance().particles.addParticle(ParticleTypesPM.PROP_MARKER.get(), x, y, z, 0.0D, 0.0D, 0.0D);
+    public void propMarker(BlockPos pos) {
+        // Show a marker above a ritual prop's position and save it for later manual canceling
+        Particle p = Minecraft.getInstance().particles.addParticle(ParticleTypesPM.PROP_MARKER.get(), pos.getX() + 0.5D, pos.getY() + 1.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+        this.removePropMarker(pos);
+        PROP_MARKER_PARTICLES.put(pos, p);
+    }
+    
+    public void removePropMarker(BlockPos pos) {
+        // Expire and remove the marker particle for the given position
+        if (PROP_MARKER_PARTICLES.containsKey(pos)) {
+            Particle oldParticle = PROP_MARKER_PARTICLES.remove(pos);
+            oldParticle.setExpired();
+        }
     }
 }
