@@ -165,4 +165,9 @@ public class RitualCandleBlock extends Block implements IRitualProp {
             return false;
         }
     }
+    
+    @Override
+    public String getPropTranslationKey() {
+        return "primalmagic.prop.ritual_candle";
+    }
 }

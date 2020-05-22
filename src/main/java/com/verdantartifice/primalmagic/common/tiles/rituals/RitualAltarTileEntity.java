@@ -523,7 +523,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                         IRitualProp propBlock = (IRitualProp)block;
                         if (!propBlock.isPropActivated(propState, this.world, propPos)) {
                             PrimalMagic.LOGGER.debug("Found match {} for prop {} at {}", block.getRegistryName().toString(), propIndex, propPos.toString());
-                            propBlock.openProp(propState, this.world, propPos, this.pos);
+                            propBlock.openProp(propState, this.world, propPos, this.getActivePlayer(), this.pos);
                             this.awaitedPropPos = propPos;
                             this.nextCheckCount = this.activeCount + 20;
                             this.markDirty();

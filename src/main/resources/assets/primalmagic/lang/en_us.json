@@ -989,6 +989,8 @@
     "primalmagic.research_project.text.portal_detritus": "Strange things sometimes come back through Nether portals.  You could learn much by studying them.",
     "primalmagic.research_project.text.draconic_energies": "This egg seems to harmonize with ender pearls, releasing intriguing energies.  Is this really such a good idea, though?",
     
+    "primalmagic.prop.ritual_candle": "The ritual requires you to light a candle now!",
+    
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",
     "death.attack.primalmagic.hellish_chain": "%1$s was killed by %2$s",
