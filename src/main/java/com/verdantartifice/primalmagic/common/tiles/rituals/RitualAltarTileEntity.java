@@ -57,6 +57,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
@@ -82,6 +83,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected BlockPos channeledOfferingPos = null;
     
     protected boolean scanDirty = false;
+    protected boolean skipWarningMessage = false;
     protected Set<BlockPos> saltPositions = new HashSet<>();
     protected List<BlockPos> pedestalPositions = new ArrayList<>();
     protected List<BlockPos> propPositions = new ArrayList<>();
@@ -243,6 +245,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         this.channeledOfferingPos = null;
 
         this.scanDirty = false;
+        this.skipWarningMessage = false;
         this.pedestalPositions.clear();
         this.propPositions.clear();
         this.saltPositions.clear();
@@ -275,6 +278,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     // Pull the next step from the queue and start it
                     this.currentStep = this.remainingSteps.poll();
                     this.currentStepComplete = false;
+                    this.skipWarningMessage = false;
                 }
             }
             if (this.currentStep != null) {
@@ -499,6 +503,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 }
             }
             PrimalMagic.LOGGER.debug("No match found for current ingredient {}", offeringIndex);
+            if (!this.skipWarningMessage && this.getActivePlayer() != null) {
+                this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.missing_offering"), false);
+                this.skipWarningMessage = true;
+            }
             this.nextCheckCount = this.activeCount + 20;
             this.markDirty();
         }
@@ -521,6 +529,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             } else {
                 this.channeledOfferingPos = null;
                 PrimalMagic.LOGGER.debug("Lost ingredient {} during channel!", offeringIndex);
+                if (this.getActivePlayer() != null) {
+                    this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.channel_interrupt"), false);
+                    this.skipWarningMessage = true;
+                }
                 this.markDirty();
             }
         }
@@ -546,6 +558,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     }
                 }
                 PrimalMagic.LOGGER.debug("No match found for current prop {}", propIndex);
+                if (!this.skipWarningMessage && this.getActivePlayer() != null) {
+                    this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.missing_prop"), false);
+                    this.skipWarningMessage = true;
+                }
             } else {
                 BlockState propState = this.world.getBlockState(this.awaitedPropPos);
                 Block block = propState.getBlock();
@@ -555,6 +571,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     PrimalMagic.LOGGER.debug("Awaiting prop activation");
                 } else {
                     PrimalMagic.LOGGER.debug("Lost prop {} while awaiting activation!", propIndex);
+                    if (this.getActivePlayer() != null) {
+                        this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.prop_interrupt"), false);
+                        this.skipWarningMessage = true;
+                    }
                     if (block instanceof IRitualProp) {
                         ((IRitualProp)block).closeProp(propState, this.world, this.awaitedPropPos);
                     }

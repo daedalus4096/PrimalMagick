@@ -989,7 +989,11 @@
     "primalmagic.research_project.text.portal_detritus": "Strange things sometimes come back through Nether portals.  You could learn much by studying them.",
     "primalmagic.research_project.text.draconic_energies": "This egg seems to harmonize with ender pearls, releasing intriguing energies.  Is this really such a good idea, though?",
     
-    "primalmagic.prop.ritual_candle": "The ritual requires you to light a candle now!",
+    "primalmagic.ritual.prop.ritual_candle": "The ritual requires you to light a candle now!",
+    "primalmagic.ritual.warning.missing_offering": "The ritual cannot find a required offering!",
+    "primalmagic.ritual.warning.missing_prop": "The ritual cannot find a required prop!",
+    "primalmagic.ritual.warning.channel_interrupt": "The channeling of a required offering has been interrupted!",
+    "primalmagic.ritual.warning.prop_interrupt": "The activation of a required prop has been interrupted!",
     
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",
