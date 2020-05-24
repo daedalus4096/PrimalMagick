@@ -29,6 +29,7 @@ import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
+import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.rituals.RitualStep;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
@@ -255,6 +256,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (this.active) {
             this.activeCount++;
         }
+        if (this.active && this.activeCount % 10 == 0 && !this.world.isRemote) {
+            this.scanDirty = true;
+        }
         if (this.scanDirty && !this.world.isRemote) {
             this.scanSurroundings();
             this.scanDirty = false;
@@ -476,13 +480,15 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     protected void doOfferingStep(IRitualRecipe recipe, int offeringIndex) {
+        Ingredient requiredOffering = recipe.getIngredients().get(offeringIndex);
         if (this.activeCount >= this.nextCheckCount && this.channeledOfferingPos == null) {
-            Ingredient requiredOffering = recipe.getIngredients().get(offeringIndex);
             for (BlockPos pedestalPos : this.pedestalPositions) {
                 TileEntity tile = this.world.getTileEntity(pedestalPos);
-                if (tile instanceof OfferingPedestalTileEntity) {
+                Block block = this.world.getBlockState(pedestalPos).getBlock();
+                if (tile instanceof OfferingPedestalTileEntity && block instanceof ISaltPowered) {
                     OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                    if (requiredOffering.test(pedestalTile.getStackInSlot(0))) {
+                    ISaltPowered saltBlock = (ISaltPowered)block;
+                    if (requiredOffering.test(pedestalTile.getStackInSlot(0)) && saltBlock.isBlockSaltPowered(this.world, pedestalPos)) {
                         this.channeledOfferingPos = pedestalPos;
                         ItemStack found = pedestalTile.getStackInSlot(0);
                         PrimalMagic.LOGGER.debug("Found match {} for ingredient {} at {}", found.getItem().getRegistryName().toString(), offeringIndex, pedestalPos.toString());
@@ -498,7 +504,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         }
         if (this.channeledOfferingPos != null) {
             TileEntity tile = this.world.getTileEntity(this.channeledOfferingPos);
-            if (tile instanceof OfferingPedestalTileEntity) {
+            Block block = this.world.getBlockState(this.channeledOfferingPos).getBlock();
+            if ( tile instanceof OfferingPedestalTileEntity &&
+                 block instanceof ISaltPowered &&
+                 requiredOffering.test(((OfferingPedestalTileEntity)tile).getStackInSlot(0)) &&
+                 ((ISaltPowered)block).isBlockSaltPowered(this.world, this.channeledOfferingPos) ) {
                 OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
                 if (this.activeCount >= this.nextCheckCount) {
                     pedestalTile.removeStackFromSlot(0);
@@ -508,6 +518,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 } else {
                     this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getStackInSlot(0));
                 }
+            } else {
+                this.channeledOfferingPos = null;
+                PrimalMagic.LOGGER.debug("Lost ingredient {} during channel!", offeringIndex);
+                this.markDirty();
             }
         }
     }
