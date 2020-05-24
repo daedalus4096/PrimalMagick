@@ -527,15 +527,15 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     protected void doPropStep(IRitualRecipe recipe, int propIndex) {
+        BlockIngredient requiredProp = recipe.getProps().get(propIndex);
         if (this.activeCount >= this.nextCheckCount) {
             if (this.awaitedPropPos == null) {
-                BlockIngredient requiredProp = recipe.getProps().get(propIndex);
                 for (BlockPos propPos : this.propPositions) {
                     BlockState propState = this.world.getBlockState(propPos);
                     Block block = propState.getBlock();
                     if (block instanceof IRitualProp && requiredProp.test(block)) {
                         IRitualProp propBlock = (IRitualProp)block;
-                        if (!propBlock.isPropActivated(propState, this.world, propPos)) {
+                        if (!propBlock.isPropActivated(propState, this.world, propPos) && propBlock.isBlockSaltPowered(this.world, propPos)) {
                             PrimalMagic.LOGGER.debug("Found match {} for prop {} at {}", block.getRegistryName().toString(), propIndex, propPos.toString());
                             propBlock.openProp(propState, this.world, propPos, this.getActivePlayer(), this.pos);
                             this.awaitedPropPos = propPos;
@@ -547,7 +547,19 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 }
                 PrimalMagic.LOGGER.debug("No match found for current prop {}", propIndex);
             } else {
-                PrimalMagic.LOGGER.debug("Awaiting prop activation");
+                BlockState propState = this.world.getBlockState(this.awaitedPropPos);
+                Block block = propState.getBlock();
+                if ( block instanceof IRitualProp && 
+                     requiredProp.test(block) &&
+                     ((IRitualProp)block).isBlockSaltPowered(this.world, this.awaitedPropPos) ) {
+                    PrimalMagic.LOGGER.debug("Awaiting prop activation");
+                } else {
+                    PrimalMagic.LOGGER.debug("Lost prop {} while awaiting activation!", propIndex);
+                    if (block instanceof IRitualProp) {
+                        ((IRitualProp)block).closeProp(propState, this.world, this.awaitedPropPos);
+                    }
+                    this.awaitedPropPos = null;
+                }
             }
             this.nextCheckCount = this.activeCount + 20;
             this.markDirty();
