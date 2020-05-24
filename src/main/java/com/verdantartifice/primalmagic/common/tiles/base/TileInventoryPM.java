@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -222,5 +223,11 @@ public class TileInventoryPM extends TilePM implements ISidedInventory {
             nbt.putBoolean("RequestSync", true);
             this.sendMessageToServer(nbt);
         }
+    }
+    
+    @Override
+    public void remove() {
+        InventoryHelper.dropInventoryItems(this.world, this.pos, this);
+        super.remove();
     }
 }
