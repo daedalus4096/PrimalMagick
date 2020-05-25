@@ -297,10 +297,13 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.skipWarningMessage = false;
                 }
             }
+            float delta = this.calculateStabilityDelta();
+            this.stability += delta;
             if (this.currentStep != null) {
-                this.doStep(this.currentStep);
+                if (!this.doStep(this.currentStep)) {
+                    this.stability += (3.0F * delta);
+                }
             }
-            this.stability += this.calculateStabilityDelta();
             if (this.activeCount % 10 == 0) {
                 PrimalMagic.LOGGER.debug("Current stability: {}", this.stability);
             }
@@ -489,23 +492,24 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         }
     }
     
-    protected void doStep(@Nonnull RitualStep step) {
+    protected boolean doStep(@Nonnull RitualStep step) {
         IRitualRecipe recipe = this.getActiveRecipe();
         if (recipe == null) {
             PrimalMagic.LOGGER.debug("No recipe found when trying to do ritual step");
-            return;
+            return false;
         }
         
         if (step.getType() == RitualStepType.OFFERING) {
-            this.doOfferingStep(recipe, step.getIndex());
+            return this.doOfferingStep(recipe, step.getIndex());
         } else if (step.getType() == RitualStepType.PROP) {
-            this.doPropStep(recipe, step.getIndex());
+            return this.doPropStep(recipe, step.getIndex());
         } else {
             PrimalMagic.LOGGER.debug("Invalid ritual step type {}", step.getType());
+            return false;
         }
     }
     
-    protected void doOfferingStep(IRitualRecipe recipe, int offeringIndex) {
+    protected boolean doOfferingStep(IRitualRecipe recipe, int offeringIndex) {
         Ingredient requiredOffering = recipe.getIngredients().get(offeringIndex);
         if (this.activeCount >= this.nextCheckCount && this.channeledOfferingPos == null) {
             for (BlockPos pedestalPos : this.pedestalPositions) {
@@ -519,7 +523,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                         ItemStack found = pedestalTile.getStackInSlot(0);
                         PrimalMagic.LOGGER.debug("Found match {} for ingredient {} at {}", found.getItem().getRegistryName().toString(), offeringIndex, pedestalPos.toString());
                         this.nextCheckCount = this.activeCount + 60;
-                        return;
+                        return true;
                     }
                 }
             }
@@ -545,6 +549,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 } else {
                     this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getStackInSlot(0));
                 }
+                return true;
             } else {
                 this.channeledOfferingPos = null;
                 PrimalMagic.LOGGER.debug("Lost ingredient {} during channel!", offeringIndex);
@@ -554,9 +559,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 }
             }
         }
+        return false;
     }
     
-    protected void doPropStep(IRitualRecipe recipe, int propIndex) {
+    protected boolean doPropStep(IRitualRecipe recipe, int propIndex) {
         BlockIngredient requiredProp = recipe.getProps().get(propIndex);
         if (this.activeCount >= this.nextCheckCount) {
             if (this.awaitedPropPos == null) {
@@ -570,7 +576,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                             propBlock.openProp(propState, this.world, propPos, this.getActivePlayer(), this.pos);
                             this.awaitedPropPos = propPos;
                             this.nextCheckCount = this.activeCount + 20;
-                            return;
+                            return true;
                         }
                     }
                 }
@@ -600,6 +606,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             }
             this.nextCheckCount = this.activeCount + 20;
         }
+        return false;
     }
     
     public void onPropActivation(BlockPos propPos) {
