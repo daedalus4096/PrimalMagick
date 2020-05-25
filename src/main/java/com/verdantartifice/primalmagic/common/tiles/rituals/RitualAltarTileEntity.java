@@ -557,6 +557,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.channel_interrupt"), false);
                     this.skipWarningMessage = true;
                 }
+                this.stability += MathHelper.clamp(100 * this.calculateStabilityDelta(), -25.0F, -1.0F);
             }
         }
         return false;
@@ -602,6 +603,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                         ((IRitualProp)block).closeProp(propState, this.world, this.awaitedPropPos);
                     }
                     this.awaitedPropPos = null;
+                    this.stability += MathHelper.clamp(100 * this.calculateStabilityDelta(), -25.0F, -1.0F);
                 }
             }
             this.nextCheckCount = this.activeCount + 20;
