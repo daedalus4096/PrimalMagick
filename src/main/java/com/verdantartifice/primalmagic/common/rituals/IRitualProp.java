@@ -59,4 +59,6 @@ public interface IRitualProp extends ISaltPowered {
     }
     
     public String getPropTranslationKey();
+    
+    public float getUsageStabilityBonus();
 }

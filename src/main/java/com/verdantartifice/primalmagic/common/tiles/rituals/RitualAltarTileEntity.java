@@ -165,7 +165,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         this.currentStepComplete = compound.getBoolean("CurrentStepComplete");
         this.activeCount = compound.getInt("ActiveCount");
         this.nextCheckCount = compound.getInt("NextCheckCount");
-        this.stability = compound.getFloat("Stability");
+        this.stability = MathHelper.clamp(compound.getFloat("Stability"), MIN_STABILITY, MAX_STABILITY);
         
         this.activePlayerCache = null;
         if (compound.contains("ActivePlayer", Constants.NBT.TAG_COMPOUND)) {
@@ -298,10 +298,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 }
             }
             float delta = this.calculateStabilityDelta();
-            this.stability += delta;
+            this.addStability(delta);
             if (this.currentStep != null) {
                 if (!this.doStep(this.currentStep)) {
-                    this.stability += (3.0F * delta);
+                    this.addStability(3.0F * delta);
                 }
             }
             if (this.activeCount % 10 == 0) {
@@ -557,7 +557,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.channel_interrupt"), false);
                     this.skipWarningMessage = true;
                 }
-                this.stability += MathHelper.clamp(100 * this.calculateStabilityDelta(), -25.0F, -1.0F);
+                this.addStability(MathHelper.clamp(100 * this.calculateStabilityDelta(), -25.0F, -1.0F));
             }
         }
         return false;
@@ -603,7 +603,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                         ((IRitualProp)block).closeProp(propState, this.world, this.awaitedPropPos);
                     }
                     this.awaitedPropPos = null;
-                    this.stability += MathHelper.clamp(100 * this.calculateStabilityDelta(), -25.0F, -1.0F);
+                    this.addStability(MathHelper.clamp(100 * this.calculateStabilityDelta(), -25.0F, -1.0F));
                 }
             }
             this.nextCheckCount = this.activeCount + 20;
@@ -617,7 +617,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             BlockState propState = this.world.getBlockState(propPos);
             Block block = propState.getBlock();
             if (block instanceof IRitualProp) {
-                ((IRitualProp)block).closeProp(propState, this.world, propPos);
+                IRitualProp propBlock = (IRitualProp)block;
+                propBlock.closeProp(propState, this.world, propPos);
+                this.addStability(propBlock.getUsageStabilityBonus());
             }
             this.currentStepComplete = true;
             this.nextCheckCount = this.activeCount;
@@ -627,6 +629,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         } else {
             PrimalMagic.LOGGER.debug("Received unexpected prop activation at {}", propPos);
         }
+    }
+    
+    protected void addStability(float delta) {
+        this.stability = MathHelper.clamp(this.stability + delta, MIN_STABILITY, MAX_STABILITY);
     }
 
     protected float calculateStabilityDelta() {
