@@ -8,6 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagic.common.crafting.RitualRecipe;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -35,6 +36,7 @@ public class RitualRecipeBuilder {
     protected String group;
     protected CompoundResearchKey research;
     protected SourceList manaCosts;
+    protected int instability = 0;
 
     protected RitualRecipeBuilder(IItemProvider result, int count) {
         this.result = result.asItem();
@@ -228,6 +230,17 @@ public class RitualRecipeBuilder {
     }
     
     /**
+     * Adds an instability rating to this recipe.
+     * 
+     * @param instability the instability rating to add
+     * @return the modified builder
+     */
+    public RitualRecipeBuilder instability(int instability) {
+        this.instability = instability;
+        return this;
+    }
+    
+    /**
      * Builds this recipe into an {@link IFinishedRecipe}.
      * 
      * @param consumer a consumer for the finished recipe
@@ -235,7 +248,7 @@ public class RitualRecipeBuilder {
      */
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new RitualRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.ingredients, this.props, this.research, this.manaCosts));
+        consumer.accept(new RitualRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.ingredients, this.props, this.research, this.manaCosts, this.instability));
     }
     
     /**
@@ -276,6 +289,9 @@ public class RitualRecipeBuilder {
         if (this.research == null) {
             throw new IllegalStateException("No research is defined for ritual recipe " + id + "!");
         }
+        if (this.instability < RitualRecipe.MIN_INSTABILITY || this.instability > RitualRecipe.MAX_INSTABILITY) {
+            throw new IllegalStateException("Instability out of bounds for ritual recipe " + id + "!");
+        }
     }
     
     public static class Result implements IFinishedRecipe {
@@ -287,8 +303,9 @@ public class RitualRecipeBuilder {
         protected final List<BlockIngredient> props;
         protected final CompoundResearchKey research;
         protected final SourceList manaCosts;
+        protected final int instability;
 
-        public Result(ResourceLocation id, Item result, int count, String group, List<Ingredient> ingredients, List<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts) {
+        public Result(ResourceLocation id, Item result, int count, String group, List<Ingredient> ingredients, List<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts, int instability) {
             this.id = id;
             this.result = result;
             this.count = count;
@@ -297,6 +314,7 @@ public class RitualRecipeBuilder {
             this.props = props;
             this.research = research;
             this.manaCosts = manaCosts;
+            this.instability = instability;
         }
 
         @Override
@@ -319,6 +337,9 @@ public class RitualRecipeBuilder {
                 }
                 json.add("mana", manaJson);
             }
+            
+            // Serialize the instability rating
+            json.addProperty("instability", this.instability);
             
             // Serialize the recipe ingredient list
             JsonArray ingredientsJson = new JsonArray();

@@ -198,6 +198,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANAFRUIT")))
             .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .instability(1)
             .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())

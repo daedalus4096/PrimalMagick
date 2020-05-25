@@ -30,6 +30,13 @@ public interface IRitualRecipe extends ICraftingRecipe, IHasManaCost {
      */
     public NonNullList<BlockIngredient> getProps();
     
+    /**
+     * Get the instability rating of the recipe.
+     * 
+     * @return the instability rating of the recipe
+     */
+    public int getInstability();
+    
     default IRecipeType<?> getType() {
         return RecipeTypesPM.RITUAL;
     }

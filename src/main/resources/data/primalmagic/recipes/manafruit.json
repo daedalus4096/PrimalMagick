@@ -8,6 +8,7 @@
     "sun": 5,
     "moon": 5
   },
+  "instability": 1,
   "ingredients": [
     {
       "item": "minecraft:apple"

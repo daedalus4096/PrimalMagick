@@ -31,20 +31,25 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
  * @author Daedalus4096
  */
 public class RitualRecipe implements IRitualRecipe {
+    public static final int MIN_INSTABILITY = 0;
+    public static final int MAX_INSTABILITY = 10;
+    
     protected final ResourceLocation id;
     protected final String group;
     protected final SimpleResearchKey research;
     protected final SourceList manaCosts;
+    protected final int instability;
     protected final ItemStack recipeOutput;
     protected final NonNullList<Ingredient> recipeItems;
     protected final NonNullList<BlockIngredient> recipeProps;
     protected final boolean isSimple;
 
-    public RitualRecipe(ResourceLocation id, String group, SimpleResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props) {
+    public RitualRecipe(ResourceLocation id, String group, SimpleResearchKey research, SourceList manaCosts, int instability, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props) {
         this.id = id;
         this.group = group;
         this.research = research;
         this.manaCosts = manaCosts;
+        this.instability = instability;
         this.recipeOutput = output;
         this.recipeItems = items;
         this.recipeProps = props;
@@ -119,19 +124,25 @@ public class RitualRecipe implements IRitualRecipe {
         return this.recipeProps;
     }
     
+    @Override
+    public int getInstability() {
+        return this.instability;
+    }
+    
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RitualRecipe> {
         @Override
         public RitualRecipe read(ResourceLocation recipeId, JsonObject json) {
             String group = JSONUtils.getString(json, "group", "");
             SimpleResearchKey research = SimpleResearchKey.parse(JSONUtils.getString(json, "research", ""));
             SourceList manaCosts = JsonUtils.toSourceList(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
+            int instability = JSONUtils.getInt(json, "instability", 0);
             ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
             NonNullList<Ingredient> ingredients = this.readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
             NonNullList<BlockIngredient> props = this.readProps(JSONUtils.getJsonArray(json, "props", new JsonArray()));
             if (ingredients.isEmpty()) {
                 throw new JsonParseException("No ingredients for ritual recipe");
             } else {
-                return new RitualRecipe(recipeId, group, research, manaCosts, result, ingredients, props);
+                return new RitualRecipe(recipeId, group, research, manaCosts, instability, result, ingredients, props);
             }
         }
         
@@ -161,6 +172,7 @@ public class RitualRecipe implements IRitualRecipe {
         public RitualRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
             String group = buffer.readString(32767);
             SimpleResearchKey research = SimpleResearchKey.parse(buffer.readString(32767));
+            int instability = buffer.readVarInt();
             
             SourceList manaCosts = new SourceList();
             for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
@@ -180,13 +192,14 @@ public class RitualRecipe implements IRitualRecipe {
             }
             
             ItemStack result = buffer.readItemStack();
-            return new RitualRecipe(recipeId, group, research, manaCosts, result, ingredients, props);
+            return new RitualRecipe(recipeId, group, research, manaCosts, instability, result, ingredients, props);
         }
 
         @Override
         public void write(PacketBuffer buffer, RitualRecipe recipe) {
             buffer.writeString(recipe.group);
             buffer.writeString(recipe.research.toString());
+            buffer.writeVarInt(recipe.instability);
             for (Source source : Source.SORTED_SOURCES) {
                 buffer.writeVarInt(recipe.manaCosts.getAmount(source));
             }
