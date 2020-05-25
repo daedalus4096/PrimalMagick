@@ -307,7 +307,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             this.addStability(delta);
             if (this.currentStep != null) {
                 if (!this.doStep(this.currentStep)) {
-                    this.addStability(3.0F * Math.min(0.0F, delta));
+                    // Add extra instability if the ritual step was not productive (e.g. waiting for prop activation)
+                    this.addStability(Math.min(0.0F, delta));
                 }
             }
             if (this.activeCount % 10 == 0) {
@@ -604,7 +605,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.channel_interrupt"), false);
                     this.skipWarningMessage = true;
                 }
-                this.addStability(MathHelper.clamp(100 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
+                this.addStability(MathHelper.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
             }
         }
         return false;
@@ -650,7 +651,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                         ((IRitualProp)block).closeProp(propState, this.world, this.awaitedPropPos);
                     }
                     this.awaitedPropPos = null;
-                    this.addStability(MathHelper.clamp(100 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
+                    this.addStability(MathHelper.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
                 }
             }
             this.nextCheckCount = this.activeCount + 20;
