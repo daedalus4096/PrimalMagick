@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagic.common.crafting.RitualRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -48,7 +49,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         int deltaX = 0;
         Minecraft mc = Minecraft.getInstance();
 
-        y += 27;    // Make room for page title
+        y += 25;    // Make room for page title
         
         // Render output stack
         ItemStack output = this.recipe.getRecipeOutput();
@@ -57,7 +58,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         // Add mana cost summary widget
         screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
         
-        y += 30;
+        y += 28;
         
         // Init ingredient widgets
         if (!this.recipe.getIngredients().isEmpty()) {
@@ -88,13 +89,14 @@ public class RitualRecipePage extends AbstractRecipePage {
             }
             deltaX = 0;
             y += 18;
+            y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66F);
         }
     }
 
     @Override
     public void render(int side, int x, int y, int mouseX, int mouseY) {
         super.render(side, x, y, mouseX, mouseY);
-        y += 83;
+        y += 79;
         
         RenderSystem.pushMatrix();
         RenderSystem.enableBlend();
@@ -118,8 +120,17 @@ public class RitualRecipePage extends AbstractRecipePage {
             mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += (1 + (this.recipe.getProps().size() / ITEMS_PER_ROW)) * 18;    // Make room for prop widgets
+            y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66F);
         }
         
+        // Render instability rating line
+        ITextComponent headerComponent = new TranslationTextComponent("primalmagic.ritual.instability.header").applyTextStyle(TextFormatting.UNDERLINE);
+        int rating = MathHelper.clamp(this.recipe.getInstability() / 2, 0, 5);
+        ITextComponent valueComponent = new TranslationTextComponent("primalmagic.ritual.instability.rating." + rating);
+        ITextComponent lineComponent = new TranslationTextComponent("primalmagic.ritual.instability", headerComponent, valueComponent);
+        mc.fontRenderer.drawString(lineComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+        y += mc.fontRenderer.FONT_HEIGHT;
+
         RenderSystem.popMatrix();
     }
 }
