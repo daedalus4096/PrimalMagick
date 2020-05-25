@@ -65,6 +65,10 @@ public class RitualAltarBlock extends Block implements ISaltPowered {
         return 15;
     }
     
+    public int getMaxSafeSalt() {
+        return 16;
+    }
+    
     @Override
     public int getStrongSaltPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
         return (side != Direction.UP) ? this.getMaxSaltPower() : 0;

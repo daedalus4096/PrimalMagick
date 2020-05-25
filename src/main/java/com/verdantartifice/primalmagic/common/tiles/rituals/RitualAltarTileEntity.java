@@ -56,6 +56,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -70,10 +71,14 @@ import net.minecraftforge.common.util.Constants;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock}
  */
 public class RitualAltarTileEntity extends TileInventoryPM implements ITickableTileEntity, IInteractWithWand {
+    protected static final float MIN_STABILITY = -100.0F;
+    protected static final float MAX_STABILITY = 25.0F;
+    
     protected boolean active = false;
     protected boolean currentStepComplete = false;
     protected int activeCount = 0;
     protected int nextCheckCount = 0;
+    protected float stability = 0.0F;
     protected UUID activePlayerId = null;
     protected PlayerEntity activePlayerCache = null;
     protected ResourceLocation activeRecipeId = null;
@@ -142,8 +147,14 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     public Color getOrbColor() {
-        float hue = 120.0F / 360.0F;    // Green
-        float saturation = Math.min(1.0F, this.getActiveCount() / 100.0F);  // TODO Replace with real saturation calc
+        float hue, saturation;
+        if (stability >= 0.0F) {
+            hue = 120.0F / 360.0F;  // Green
+            saturation = MathHelper.clamp(this.stability / MAX_STABILITY, 0.0F, 1.0F);
+        } else {
+            hue = 0.0F / 360.0F;    // Red
+            saturation = MathHelper.clamp(this.stability / MIN_STABILITY, 0.0F, 1.0F);
+        }
         return Color.getHSBColor(hue, saturation, 1.0F);
     }
     
@@ -154,6 +165,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         this.currentStepComplete = compound.getBoolean("CurrentStepComplete");
         this.activeCount = compound.getInt("ActiveCount");
         this.nextCheckCount = compound.getInt("NextCheckCount");
+        this.stability = compound.getFloat("Stability");
         
         this.activePlayerCache = null;
         if (compound.contains("ActivePlayer", Constants.NBT.TAG_COMPOUND)) {
@@ -197,6 +209,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         compound.putBoolean("CurrentStepComplete", this.currentStepComplete);
         compound.putInt("ActiveCount", this.activeCount);
         compound.putInt("NextCheckCount", this.nextCheckCount);
+        compound.putFloat("Stability", this.stability);
         if (this.activePlayerId != null) {
             compound.put("ActivePlayer", NBTUtil.writeUniqueId(this.activePlayerId));
         }
@@ -237,6 +250,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         this.currentStepComplete = false;
         this.activeCount = 0;
         this.nextCheckCount = 0;
+        this.stability = 0.0F;
         this.setActivePlayer(null);
         this.activeRecipeId = null;
         this.currentStep = null;
@@ -272,6 +286,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     // If there are no steps remaining in the ritual, finish it up
                     if (this.activeCount >= this.nextCheckCount) {
                         this.finishCraft();
+                        this.markDirty();
+                        this.syncTile(false);
                     }
                     return;
                 } else {
@@ -284,6 +300,12 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             if (this.currentStep != null) {
                 this.doStep(this.currentStep);
             }
+            this.stability += this.calculateStabilityDelta();
+            if (this.activeCount % 10 == 0) {
+                PrimalMagic.LOGGER.debug("Current stability: {}", this.stability);
+            }
+            this.markDirty();
+            this.syncTile(false);
         }
     }
 
@@ -497,7 +519,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                         ItemStack found = pedestalTile.getStackInSlot(0);
                         PrimalMagic.LOGGER.debug("Found match {} for ingredient {} at {}", found.getItem().getRegistryName().toString(), offeringIndex, pedestalPos.toString());
                         this.nextCheckCount = this.activeCount + 60;
-                        this.markDirty();
                         return;
                     }
                 }
@@ -508,7 +529,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 this.skipWarningMessage = true;
             }
             this.nextCheckCount = this.activeCount + 20;
-            this.markDirty();
         }
         if (this.channeledOfferingPos != null) {
             TileEntity tile = this.world.getTileEntity(this.channeledOfferingPos);
@@ -522,7 +542,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     pedestalTile.removeStackFromSlot(0);
                     this.currentStepComplete = true;
                     this.channeledOfferingPos = null;
-                    this.markDirty();
                 } else {
                     this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getStackInSlot(0));
                 }
@@ -533,7 +552,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.channel_interrupt"), false);
                     this.skipWarningMessage = true;
                 }
-                this.markDirty();
             }
         }
     }
@@ -552,7 +570,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                             propBlock.openProp(propState, this.world, propPos, this.getActivePlayer(), this.pos);
                             this.awaitedPropPos = propPos;
                             this.nextCheckCount = this.activeCount + 20;
-                            this.markDirty();
                             return;
                         }
                     }
@@ -582,7 +599,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 }
             }
             this.nextCheckCount = this.activeCount + 20;
-            this.markDirty();
         }
     }
     
@@ -598,9 +614,31 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             this.nextCheckCount = this.activeCount;
             this.awaitedPropPos = null;
             this.markDirty();
+            this.syncTile(false);
         } else {
             PrimalMagic.LOGGER.debug("Received unexpected prop activation at {}", propPos);
         }
+    }
+
+    protected float calculateStabilityDelta() {
+        float delta = 0.0F;
+        
+        // Deduct stability based on the active recipe
+        IRitualRecipe recipe = this.getActiveRecipe();
+        if (recipe != null) {
+            delta -= (0.01F * recipe.getInstability());
+        }
+        
+        // Deduct stability for each salt trail in excess of the safe amount
+        Block block = this.getBlockState().getBlock();
+        if (block instanceof RitualAltarBlock) {
+            int safeSaltCount = ((RitualAltarBlock)block).getMaxSafeSalt();
+            if (this.saltPositions.size() > safeSaltCount) {
+                delta -= (0.001F * (this.saltPositions.size() - safeSaltCount));
+            }
+        }
+        
+        return delta;
     }
     
     protected void spawnOfferingParticles(BlockPos startPos, ItemStack stack) {
