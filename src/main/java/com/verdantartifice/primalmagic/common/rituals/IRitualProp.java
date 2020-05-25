@@ -20,7 +20,7 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public interface IRitualProp extends ISaltPowered {
+public interface IRitualProp extends ISaltPowered, IRitualStabilizer {
     public boolean isPropActivated(BlockState state, World world, BlockPos pos);
     
     public default void onPropActivated(BlockState state, World world, BlockPos pos) {

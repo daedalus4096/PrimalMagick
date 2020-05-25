@@ -175,4 +175,14 @@ public class RitualCandleBlock extends Block implements IRitualProp {
     public float getUsageStabilityBonus() {
         return 5.0F;
     }
+    
+    @Override
+    public float getStabilityBonus(World world, BlockPos pos) {
+        return 0.01F;
+    }
+    
+    @Override
+    public float getSymmetryPenalty(World world, BlockPos pos) {
+        return 0.01F;
+    }
 }

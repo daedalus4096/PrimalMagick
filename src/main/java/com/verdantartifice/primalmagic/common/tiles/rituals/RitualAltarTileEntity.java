@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +30,7 @@ import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
+import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.rituals.RitualStep;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
@@ -89,9 +91,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     
     protected boolean scanDirty = false;
     protected boolean skipWarningMessage = false;
+    protected float symmetryDelta = 0.0F;
     protected Set<BlockPos> saltPositions = new HashSet<>();
     protected List<BlockPos> pedestalPositions = new ArrayList<>();
     protected List<BlockPos> propPositions = new ArrayList<>();
+    protected Map<Block, Integer> blockCounts = new HashMap<>();
     
     public RitualAltarTileEntity() {
         super(TileEntityTypesPM.RITUAL_ALTAR.get(), 1);
@@ -260,9 +264,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
 
         this.scanDirty = false;
         this.skipWarningMessage = false;
+        this.symmetryDelta = 0.0F;
         this.pedestalPositions.clear();
         this.propPositions.clear();
         this.saltPositions.clear();
+        this.blockCounts.clear();
 
         this.markDirty();
         this.syncTile(false);
@@ -301,7 +307,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             this.addStability(delta);
             if (this.currentStep != null) {
                 if (!this.doStep(this.currentStep)) {
-                    this.addStability(3.0F * delta);
+                    this.addStability(3.0F * Math.min(0.0F, delta));
                 }
             }
             if (this.activeCount % 10 == 0) {
@@ -431,6 +437,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         this.saltPositions.clear();
         this.pedestalPositions.clear();
         this.propPositions.clear();
+        this.blockCounts.clear();
         
         Set<BlockPos> scanHistory = new HashSet<BlockPos>();
         scanHistory.add(this.pos);
@@ -445,6 +452,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             BlockPos pos = toScan.poll();
             this.scanPosition(pos, toScan, scanHistory);
         }
+        this.symmetryDelta = this.calculateSymmetryDelta();
     }
     
     protected void scanPosition(BlockPos pos, Queue<BlockPos> toScan, Set<BlockPos> history) {
@@ -492,6 +500,45 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         }
     }
     
+    protected float calculateSymmetryDelta() {
+        float delta = 0.0F;
+        
+        Set<BlockPos> toScan = new HashSet<>();
+        toScan.addAll(this.pedestalPositions);
+        toScan.addAll(this.propPositions);
+        
+        for (BlockPos scanPos : toScan) {
+            int dx = this.pos.getX() - scanPos.getX();
+            int dz = this.pos.getZ() - scanPos.getZ();
+            BlockPos symPos = new BlockPos(this.pos.getX() + dx, scanPos.getY(), this.pos.getZ() + dz);
+            Block block = this.world.getBlockState(scanPos).getBlock();
+            
+            if (block instanceof IRitualStabilizer) {
+                IRitualStabilizer stabilizer = (IRitualStabilizer)block;
+                if (stabilizer.hasSymmetryPenalty(this.world, scanPos, symPos)) {
+                    delta -= stabilizer.getSymmetryPenalty(this.world, scanPos);
+                } else {
+                    delta += this.calculateDiminishingStabilityBonus(block, stabilizer.getStabilityBonus(this.world, scanPos));
+                }
+            }
+        }
+        
+        return delta;
+    }
+    
+    protected float calculateDiminishingStabilityBonus(Block block, float baseValue) {
+        // Calculate the block counts as we go, rather than doing it during scan, so that the first
+        // instance of any blocks gets its full value and diminishes, rather than having every block
+        // of that type have a fully diminished value.
+        float retVal = baseValue;
+        int count = this.blockCounts.getOrDefault(block, Integer.valueOf(0)).intValue();
+        if (count > 0) {
+            retVal = baseValue * (float)Math.pow(0.75D, count);
+        }
+        this.blockCounts.put(block, Integer.valueOf(count + 1));
+        return retVal;
+    }
+
     protected boolean doStep(@Nonnull RitualStep step) {
         IRitualRecipe recipe = this.getActiveRecipe();
         if (recipe == null) {
@@ -557,7 +604,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.channel_interrupt"), false);
                     this.skipWarningMessage = true;
                 }
-                this.addStability(MathHelper.clamp(100 * this.calculateStabilityDelta(), -25.0F, -1.0F));
+                this.addStability(MathHelper.clamp(100 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
             }
         }
         return false;
@@ -603,7 +650,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                         ((IRitualProp)block).closeProp(propState, this.world, this.awaitedPropPos);
                     }
                     this.awaitedPropPos = null;
-                    this.addStability(MathHelper.clamp(100 * this.calculateStabilityDelta(), -25.0F, -1.0F));
+                    this.addStability(MathHelper.clamp(100 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
                 }
             }
             this.nextCheckCount = this.activeCount + 20;
@@ -652,6 +699,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 delta -= (0.001F * (this.saltPositions.size() - safeSaltCount));
             }
         }
+        
+        // Add or subtract stability based on pedestal/prop symmetry
+        delta += this.symmetryDelta;
         
         return delta;
     }

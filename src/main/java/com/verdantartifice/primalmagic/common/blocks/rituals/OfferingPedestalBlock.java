@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
@@ -35,7 +36,7 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public class OfferingPedestalBlock extends Block implements ISaltPowered {
+public class OfferingPedestalBlock extends Block implements ISaltPowered, IRitualStabilizer {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/offering_pedestal"));
     
     public OfferingPedestalBlock() {
@@ -105,5 +106,31 @@ public class OfferingPedestalBlock extends Block implements ISaltPowered {
             }
         }
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+    }
+    
+    @Override
+    public boolean hasSymmetryPenalty(World world, BlockPos pos, BlockPos otherPos) {
+        // If one pedestal is full and the other is empty, invoke a symmetry penalty
+        TileEntity tile = world.getTileEntity(pos);
+        TileEntity otherTile = world.getTileEntity(otherPos);
+        if (world.isRemote) {
+            return ( (tile instanceof OfferingPedestalTileEntity) &&
+                     (otherTile instanceof OfferingPedestalTileEntity) &&
+                     ((OfferingPedestalTileEntity)tile).getSyncedStackInSlot(0).isEmpty() != ((OfferingPedestalTileEntity)otherTile).getSyncedStackInSlot(0).isEmpty() );
+        } else {
+            return ( (tile instanceof OfferingPedestalTileEntity) &&
+                     (otherTile instanceof OfferingPedestalTileEntity) &&
+                     ((OfferingPedestalTileEntity)tile).getStackInSlot(0).isEmpty() != ((OfferingPedestalTileEntity)otherTile).getStackInSlot(0).isEmpty() );
+        }
+    }
+    
+    @Override
+    public float getStabilityBonus(World world, BlockPos pos) {
+        return 0.0F;
+    }
+    
+    @Override
+    public float getSymmetryPenalty(World world, BlockPos pos) {
+        return 0.01F;
     }
 }
