@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.SkyglassPaneBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.rituals.IncenseBrazierBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.OfferingPedestalBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualCandleBlock;
@@ -215,6 +216,7 @@ public class BlocksPM {
     public static final RegistryObject<SunlampBlock> SUNLAMP = BLOCKS.register("sunlamp", SunlampBlock::new);
     public static final RegistryObject<RitualAltarBlock> RITUAL_ALTAR = BLOCKS.register("ritual_altar", RitualAltarBlock::new);
     public static final RegistryObject<OfferingPedestalBlock> OFFERING_PEDESTAL = BLOCKS.register("offering_pedestal", OfferingPedestalBlock::new);
+    public static final RegistryObject<IncenseBrazierBlock> INCENSE_BRAZIER = BLOCKS.register("incense_brazier", IncenseBrazierBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

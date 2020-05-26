@@ -193,6 +193,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> SUNLAMP = ITEMS.register("sunlamp", () -> new BlockItem(BlocksPM.SUNLAMP.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> RITUAL_ALTAR = ITEMS.register("ritual_altar", () -> new BlockItem(BlocksPM.RITUAL_ALTAR.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<BlockItem> OFFERING_PEDESTAL = ITEMS.register("offering_pedestal", () -> new BlockItem(BlocksPM.OFFERING_PEDESTAL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> INCENSE_BRAZIER = ITEMS.register("incense_brazier", () -> new BlockItem(BlocksPM.INCENSE_BRAZIER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 
     // Register miscellaneous block items
     public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
@@ -244,6 +245,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> BEESWAX = ITEMS.register("beeswax", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> MANA_SALTS = ITEMS.register("mana_salts", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<ManafruitItem> MANAFRUIT = ITEMS.register("manafruit", () -> new ManafruitItem(0, new Item.Properties().group(PrimalMagic.ITEM_GROUP).food(new Food.Builder().hunger(8).saturation(0.8F).build())));
+    public static final RegistryObject<Item> INCENSE_STICK = ITEMS.register("incense_stick", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

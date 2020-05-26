@@ -132,6 +132,7 @@
     "block.primalmagic.ritual_candle_white": "White Ritual Candle",
     "block.primalmagic.ritual_candle_yellow": "Yellow Ritual Candle",
     "block.primalmagic.offering_pedestal": "Offering Pedestal",
+    "block.primalmagic.incense_brazier": "Incense Brazier",
     "block.primalmagic.pyramid": "Debug Pyramid",
     
     "item.primalmagic.grimoire": "Grimoire",
@@ -207,6 +208,7 @@
     "item.primalmagic.beeswax": "Beeswax",
     "item.primalmagic.mana_salts": "Mana Salts",
     "item.primalmagic.manafruit": "Manafruit",
+    "item.primalmagic.incense_stick": "Incense Stick",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",
@@ -998,6 +1000,7 @@
     "primalmagic.ritual.instability.rating.4": "Very High",
     "primalmagic.ritual.instability.rating.5": "Extreme",
     "primalmagic.ritual.prop.ritual_candle": "The ritual requires you to light a candle now!",
+    "primalmagic.ritual.prop.incense_brazier": "The ritual requires you to burn some incense now!",
     "primalmagic.ritual.warning.missing_offering": "The ritual cannot find a required offering!",
     "primalmagic.ritual.warning.missing_prop": "The ritual cannot find a required prop!",
     "primalmagic.ritual.warning.channel_interrupt": "The channeling of a required offering has been interrupted!",
