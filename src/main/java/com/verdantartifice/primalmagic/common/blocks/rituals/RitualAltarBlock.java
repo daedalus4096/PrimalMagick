@@ -52,6 +52,7 @@ public class RitualAltarBlock extends Block implements ISaltPowered {
         }
     }
     
+    @SuppressWarnings("deprecation")
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving) {
@@ -59,6 +60,7 @@ public class RitualAltarBlock extends Block implements ISaltPowered {
                 worldIn.notifyNeighborsOfStateChange(pos.offset(dir), this);
             }
         }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
     
     public int getMaxSaltPower() {
