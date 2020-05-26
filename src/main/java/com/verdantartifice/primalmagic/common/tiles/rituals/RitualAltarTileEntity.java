@@ -338,9 +338,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             if (this.activeCount % 10 == 0 && this.stability < 0.0F && this.world.rand.nextInt(1500) < Math.abs(this.stability)) {
                 this.doMishap();
             }
-            if (this.activeCount % 10 == 0) {
-                PrimalMagic.LOGGER.debug("Current stability: {}", this.stability);
-            }
             this.markDirty();
             this.syncTile(false);
         }
@@ -395,7 +392,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         CraftingInventory inv = new CraftingInventory(new FakeContainer(), offerings.size(), 1);
         int offeringIndex = 0;
         for (ItemStack offering : offerings) {
-            PrimalMagic.LOGGER.debug("Found ritual offering: {}", offering.getItem().getRegistryName().toString());
             inv.setInventorySlotContents(offeringIndex++, offering);
         }
         Optional<IRitualRecipe> recipeOpt = this.world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.RITUAL, inv, this.world);
@@ -406,14 +402,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 this.activeRecipeId = recipe.getId();
                 this.currentStep = null;
                 this.currentStepComplete = false;
-                PrimalMagic.LOGGER.debug("Found recipe {}", this.activeRecipeId.toString());
                 return true;
             } else {
-                PrimalMagic.LOGGER.debug("Cannot use found recipe {}", recipe.getId().toString());
                 return false;
             }
         } else {
-            PrimalMagic.LOGGER.debug("No matching ritual recipe found");
             return false;
         }
     }
@@ -570,7 +563,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected boolean doStep(@Nonnull RitualStep step) {
         IRitualRecipe recipe = this.getActiveRecipe();
         if (recipe == null) {
-            PrimalMagic.LOGGER.debug("No recipe found when trying to do ritual step");
+            PrimalMagic.LOGGER.warn("No recipe found when trying to do ritual step");
             return false;
         }
         
@@ -579,7 +572,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         } else if (step.getType() == RitualStepType.PROP) {
             return this.doPropStep(recipe, step.getIndex());
         } else {
-            PrimalMagic.LOGGER.debug("Invalid ritual step type {}", step.getType());
+            PrimalMagic.LOGGER.warn("Invalid ritual step type {}", step.getType());
             return false;
         }
     }
@@ -587,6 +580,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected boolean doOfferingStep(IRitualRecipe recipe, int offeringIndex) {
         Ingredient requiredOffering = recipe.getIngredients().get(offeringIndex);
         if (this.activeCount >= this.nextCheckCount && this.channeledOfferingPos == null) {
+            // Search for a match for the required ingredient
             for (BlockPos pedestalPos : this.pedestalPositions) {
                 TileEntity tile = this.world.getTileEntity(pedestalPos);
                 Block block = this.world.getBlockState(pedestalPos).getBlock();
@@ -594,40 +588,45 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
                     ISaltPowered saltBlock = (ISaltPowered)block;
                     if (requiredOffering.test(pedestalTile.getStackInSlot(0)) && saltBlock.isBlockSaltPowered(this.world, pedestalPos)) {
+                        // Upon finding an ingredient match, start channeling it
                         this.channeledOfferingPos = pedestalPos;
-                        ItemStack found = pedestalTile.getStackInSlot(0);
-                        PrimalMagic.LOGGER.debug("Found match {} for ingredient {} at {}", found.getItem().getRegistryName().toString(), offeringIndex, pedestalPos.toString());
                         this.nextCheckCount = this.activeCount + 60;
                         return true;
                     }
                 }
             }
-            PrimalMagic.LOGGER.debug("No match found for current ingredient {}", offeringIndex);
+            
+            // If no match was found, warn the player the first time then check again in a second
             if (!this.skipWarningMessage && this.getActivePlayer() != null) {
                 this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.missing_offering"), false);
                 this.skipWarningMessage = true;
             }
             this.nextCheckCount = this.activeCount + 20;
         }
+        
         if (this.channeledOfferingPos != null) {
             TileEntity tile = this.world.getTileEntity(this.channeledOfferingPos);
             Block block = this.world.getBlockState(this.channeledOfferingPos).getBlock();
+            
+            // Confirm that the channeled offering is still valid
             if ( tile instanceof OfferingPedestalTileEntity &&
                  block instanceof ISaltPowered &&
                  requiredOffering.test(((OfferingPedestalTileEntity)tile).getStackInSlot(0)) &&
                  ((ISaltPowered)block).isBlockSaltPowered(this.world, this.channeledOfferingPos) ) {
                 OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
                 if (this.activeCount >= this.nextCheckCount) {
+                    // Once the channel is complete, consume it and mark the step as complete
                     pedestalTile.removeStackFromSlot(0);
                     this.currentStepComplete = true;
                     this.channeledOfferingPos = null;
                 } else {
+                    // If the channel is still in progress, spawn particles
                     this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getStackInSlot(0));
                 }
                 return true;
             } else {
+                // If the channel was interrupted, add an instability spike and start looking again
                 this.channeledOfferingPos = null;
-                PrimalMagic.LOGGER.debug("Lost ingredient {} during channel!", offeringIndex);
                 if (this.getActivePlayer() != null) {
                     this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.channel_interrupt"), false);
                     this.skipWarningMessage = true;
@@ -642,13 +641,14 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         BlockIngredient requiredProp = recipe.getProps().get(propIndex);
         if (this.activeCount >= this.nextCheckCount) {
             if (this.awaitedPropPos == null) {
+                // Search for the required prop block
                 for (BlockPos propPos : this.propPositions) {
                     BlockState propState = this.world.getBlockState(propPos);
                     Block block = propState.getBlock();
                     if (block instanceof IRitualProp && requiredProp.test(block)) {
                         IRitualProp propBlock = (IRitualProp)block;
                         if (!propBlock.isPropActivated(propState, this.world, propPos) && propBlock.isBlockSaltPowered(this.world, propPos)) {
-                            PrimalMagic.LOGGER.debug("Found match {} for prop {} at {}", block.getRegistryName().toString(), propIndex, propPos.toString());
+                            // Upon finding a match, open the found prop for activation
                             propBlock.openProp(propState, this.world, propPos, this.getActivePlayer(), this.pos);
                             this.awaitedPropPos = propPos;
                             this.nextCheckCount = this.activeCount + 20;
@@ -656,7 +656,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                         }
                     }
                 }
-                PrimalMagic.LOGGER.debug("No match found for current prop {}", propIndex);
+                
+                // If no match was found, warn the player the first time
                 if (!this.skipWarningMessage && this.getActivePlayer() != null) {
                     this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.missing_prop"), false);
                     this.skipWarningMessage = true;
@@ -664,17 +665,16 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             } else {
                 BlockState propState = this.world.getBlockState(this.awaitedPropPos);
                 Block block = propState.getBlock();
-                if ( block instanceof IRitualProp && 
-                     requiredProp.test(block) &&
-                     ((IRitualProp)block).isBlockSaltPowered(this.world, this.awaitedPropPos) ) {
-                    PrimalMagic.LOGGER.debug("Awaiting prop activation");
-                } else {
-                    PrimalMagic.LOGGER.debug("Lost prop {} while awaiting activation!", propIndex);
+                if ( !(block instanceof IRitualProp) || 
+                     !requiredProp.test(block) ||
+                     !((IRitualProp)block).isBlockSaltPowered(this.world, this.awaitedPropPos) ) {
+                    // If contact with the prop was lost, add an instability spike and start looking again
                     if (this.getActivePlayer() != null) {
                         this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.prop_interrupt"), false);
                         this.skipWarningMessage = true;
                     }
                     if (block instanceof IRitualProp) {
+                        // If the block still exists (i.e. salt was broken), then close it to activation
                         ((IRitualProp)block).closeProp(propState, this.world, this.awaitedPropPos);
                     }
                     this.awaitedPropPos = null;
@@ -688,7 +688,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     
     public void onPropActivation(BlockPos propPos) {
         if (this.awaitedPropPos != null && this.awaitedPropPos.equals(propPos)) {
-            PrimalMagic.LOGGER.debug("Received awaited prop activation at {}", propPos);
+            // If the activated prop is the one we're waiting for, close it and mark the step as complete
             BlockState propState = this.world.getBlockState(propPos);
             Block block = propState.getBlock();
             if (block instanceof IRitualProp) {
@@ -701,8 +701,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             this.awaitedPropPos = null;
             this.markDirty();
             this.syncTile(false);
-        } else {
-            PrimalMagic.LOGGER.debug("Received unexpected prop activation at {}", propPos);
         }
     }
     
@@ -782,16 +780,15 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected void mishapOffering(boolean destroy) {
         int attempts = 0;
         while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
+            // Search for a populated offering pedestal
             BlockPos pedestalPos = this.pedestalPositions.get(this.world.rand.nextInt(this.pedestalPositions.size()));
             TileEntity tile = this.world.getTileEntity(pedestalPos);
             if (tile instanceof OfferingPedestalTileEntity) {
                 OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
                 if (!pedestalTile.getStackInSlot(0).isEmpty()) {
                     if (destroy) {
-                        PrimalMagic.LOGGER.debug("Destroying offering at {}", pedestalPos);
                         pedestalTile.setInventorySlotContents(0, ItemStack.EMPTY);
                     } else {
-                        PrimalMagic.LOGGER.debug("Dislodging offering at {}", pedestalPos);
                         InventoryHelper.dropInventoryItems(this.world, pedestalPos, pedestalTile);
                     }
                     pedestalTile.markDirty();
@@ -808,10 +805,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         for (int breakIndex = 0; breakIndex < breakCount; breakIndex++) {
             int attempts = 0;
             while (attempts++ < 25 && !this.saltPositions.isEmpty()) {
+                // Search for one or more salt trails in range
                 BlockPos saltPos = this.saltPositions.get(this.world.rand.nextInt(this.saltPositions.size()));
                 Block block = this.world.getBlockState(saltPos).getBlock();
                 if (block == BlocksPM.SALT_TRAIL.get()) {
-                    PrimalMagic.LOGGER.debug("Breaking salt trail at {}", saltPos);
                     InventoryHelper.spawnItemStack(this.world, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemsPM.REFINED_SALT.get()));
                     this.world.removeBlock(saltPos, false);
                     this.doMishapEffects(saltPos, breakIndex == 0); // Only play sounds once
@@ -823,11 +820,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     protected void mishapDamage(boolean allTargets) {
+        // Damage one or all living entities in range
         List<LivingEntity> targets = EntityUtils.getEntitiesInRange(this.world, this.pos, null, LivingEntity.class, 10.0D);
         if (targets != null && !targets.isEmpty()) {
             for (int index = 0; index < targets.size(); index++) {
                 LivingEntity target = targets.get(index);
-                PrimalMagic.LOGGER.debug("Damaging target {}", target.getDisplayName().getString());
                 int damage = 5 + MathHelper.floor(Math.sqrt(Math.abs(Math.min(0.0F, this.stability))) / 2.0D);
                 target.attackEntityFrom(DamageSource.MAGIC, damage);
                 this.doMishapEffects(target.getPosition(), index == 0); // Only play sounds once
@@ -843,6 +840,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (central) {
             target = this.pos;
         } else {
+            // If not targeting the central altar, try to find a populated pedestal
             int attempts = 0;
             while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
                 BlockPos pedestalPos = this.pedestalPositions.get(this.world.rand.nextInt(this.pedestalPositions.size()));
@@ -861,7 +859,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             }
         }
         if (target != null) {
-            PrimalMagic.LOGGER.debug("Detonating {} at {}", central ? "altar" : "pedestal", target);
             if (central && this.awaitedPropPos != null) {
                 // If destroying the central altar, close out any waiting props
                 BlockState state = this.world.getBlockState(this.awaitedPropPos);
