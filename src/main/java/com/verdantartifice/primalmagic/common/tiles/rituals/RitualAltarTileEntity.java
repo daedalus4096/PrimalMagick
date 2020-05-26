@@ -30,12 +30,14 @@ import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
 import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.rituals.Mishap;
 import com.verdantartifice.primalmagic.common.rituals.RitualStep;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
@@ -64,6 +66,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -766,6 +769,16 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         }
     }
     
+    protected void doMishapEffects(BlockPos target, boolean playSound) {
+        if (!this.world.isRemote) {
+            BlockPos source = this.pos.up(2);
+            PacketHandler.sendToAllAround(new SpellBoltPacket(source, target, this.getOrbColor().getRGB()), this.world.dimension.getType(), source, 32.0D);
+            if (playSound) {
+                this.world.playSound(null, source, SoundsPM.ELECTRIC.get(), SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+            }
+        }
+    }
+    
     protected void mishapOffering(boolean destroy) {
         int attempts = 0;
         while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
@@ -783,7 +796,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     }
                     pedestalTile.markDirty();
                     pedestalTile.syncTile(false);
-                    // TODO Do special effects
+                    this.doMishapEffects(pedestalPos, true);
                     break;
                 }
             }
@@ -801,7 +814,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     PrimalMagic.LOGGER.debug("Breaking salt trail at {}", saltPos);
                     InventoryHelper.spawnItemStack(this.world, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemsPM.REFINED_SALT.get()));
                     this.world.removeBlock(saltPos, false);
-                    // TODO Do special effects
+                    this.doMishapEffects(saltPos, breakIndex == 0); // Only play sounds once
                     break;
                 }
             }
@@ -812,11 +825,12 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected void mishapDamage(boolean allTargets) {
         List<LivingEntity> targets = EntityUtils.getEntitiesInRange(this.world, this.pos, null, LivingEntity.class, 10.0D);
         if (targets != null && !targets.isEmpty()) {
-            for (LivingEntity target : targets) {
+            for (int index = 0; index < targets.size(); index++) {
+                LivingEntity target = targets.get(index);
                 PrimalMagic.LOGGER.debug("Damaging target {}", target.getDisplayName().getString());
                 int damage = 5 + MathHelper.floor(Math.sqrt(Math.abs(Math.min(0.0F, this.stability))) / 2.0D);
                 target.attackEntityFrom(DamageSource.MAGIC, damage);
-                // TODO Do special effects
+                this.doMishapEffects(target.getPosition(), index == 0); // Only play sounds once
                 if (!allTargets) {
                     break;
                 }
@@ -857,7 +871,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 }
             }
             if (!central) {
-                // TODO Do special effects
+                this.doMishapEffects(target, true);
                 this.scanDirty = true;
             }
             float force = central ? 2.0F + this.world.rand.nextFloat() : 1.0F;
