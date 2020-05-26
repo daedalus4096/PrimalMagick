@@ -335,7 +335,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     this.addStability(Math.min(0.0F, delta));
                 }
             }
-            if (this.stability < 0.0F && this.world.rand.nextInt(1500) < Math.abs(this.stability)) {
+            if (this.activeCount % 10 == 0 && this.stability < 0.0F && this.world.rand.nextInt(1500) < Math.abs(this.stability)) {
                 this.doMishap();
             }
             if (this.activeCount % 10 == 0) {
