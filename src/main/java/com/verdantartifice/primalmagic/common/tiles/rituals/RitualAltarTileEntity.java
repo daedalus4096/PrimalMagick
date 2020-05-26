@@ -874,7 +874,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 this.doMishapEffects(target, true);
                 this.scanDirty = true;
             }
-            float force = central ? 2.0F + this.world.rand.nextFloat() : 1.0F;
+            float force = central ? 3.0F + this.world.rand.nextFloat() : 2.0F;
             this.world.createExplosion(null, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, force, Explosion.Mode.BREAK);
         }
     }
