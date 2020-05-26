@@ -27,23 +27,29 @@ import com.verdantartifice.primalmagic.common.containers.FakeContainer;
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagic.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
 import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
+import com.verdantartifice.primalmagic.common.rituals.Mishap;
 import com.verdantartifice.primalmagic.common.rituals.RitualStep;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
+import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -55,12 +61,15 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
@@ -75,6 +84,8 @@ import net.minecraftforge.common.util.Constants;
 public class RitualAltarTileEntity extends TileInventoryPM implements ITickableTileEntity, IInteractWithWand {
     protected static final float MIN_STABILITY = -100.0F;
     protected static final float MAX_STABILITY = 25.0F;
+    
+    protected final WeightedRandomBag<Mishap> mishaps;
     
     protected boolean active = false;
     protected boolean currentStepComplete = false;
@@ -92,13 +103,23 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected boolean scanDirty = false;
     protected boolean skipWarningMessage = false;
     protected float symmetryDelta = 0.0F;
-    protected Set<BlockPos> saltPositions = new HashSet<>();
+    protected List<BlockPos> saltPositions = new ArrayList<>();
     protected List<BlockPos> pedestalPositions = new ArrayList<>();
     protected List<BlockPos> propPositions = new ArrayList<>();
     protected Map<Block, Integer> blockCounts = new HashMap<>();
     
     public RitualAltarTileEntity() {
         super(TileEntityTypesPM.RITUAL_ALTAR.get(), 1);
+        this.mishaps = Util.make(new WeightedRandomBag<>(), bag -> {
+            bag.add(new Mishap(this::mishapOffering, false, 0.0F), 6.0D);
+            bag.add(new Mishap(this::mishapSalt, false, 10.0F), 3.0D);
+            bag.add(new Mishap(this::mishapDamage, false, 25.0F), 3.0D);
+            bag.add(new Mishap(this::mishapSalt, true, 35.0F), 2.0D);
+            bag.add(new Mishap(this::mishapDamage, true, 45.0F), 2.0D);
+            bag.add(new Mishap(this::mishapOffering, true, 50.0F), 1.0D);
+            bag.add(new Mishap(this::mishapDetonate, false, 75.0F), 2.0D);
+            bag.add(new Mishap(this::mishapDetonate, true, 90.0F), 1.0D);
+        });
     }
     
     public boolean isActive() {
@@ -310,6 +331,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     // Add extra instability if the ritual step was not productive (e.g. waiting for prop activation)
                     this.addStability(Math.min(0.0F, delta));
                 }
+            }
+            if (this.stability < 0.0F && this.world.rand.nextInt(1500) < Math.abs(this.stability)) {
+                this.doMishap();
             }
             if (this.activeCount % 10 == 0) {
                 PrimalMagic.LOGGER.debug("Current stability: {}", this.stability);
@@ -728,6 +752,116 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                     0, 
                     0, 
                     0.1D);
+        }
+    }
+    
+    protected void doMishap() {
+        int attempts = 0;
+        while (attempts++ < 25) {
+            Mishap mishap = this.mishaps.getRandom(this.world.rand);
+            if (mishap != null && mishap.execute(this.stability)) {
+                this.addStability(5.0F + (5.0F * this.world.rand.nextFloat()));
+                break;
+            }
+        }
+    }
+    
+    protected void mishapOffering(boolean destroy) {
+        int attempts = 0;
+        while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
+            BlockPos pedestalPos = this.pedestalPositions.get(this.world.rand.nextInt(this.pedestalPositions.size()));
+            TileEntity tile = this.world.getTileEntity(pedestalPos);
+            if (tile instanceof OfferingPedestalTileEntity) {
+                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
+                if (!pedestalTile.getStackInSlot(0).isEmpty()) {
+                    if (destroy) {
+                        PrimalMagic.LOGGER.debug("Destroying offering at {}", pedestalPos);
+                        pedestalTile.setInventorySlotContents(0, ItemStack.EMPTY);
+                    } else {
+                        PrimalMagic.LOGGER.debug("Dislodging offering at {}", pedestalPos);
+                        InventoryHelper.dropInventoryItems(this.world, pedestalPos, pedestalTile);
+                    }
+                    pedestalTile.markDirty();
+                    pedestalTile.syncTile(false);
+                    // TODO Do special effects
+                    break;
+                }
+            }
+        }
+    }
+    
+    protected void mishapSalt(boolean multiple) {
+        int breakCount = multiple ? 2 + this.world.rand.nextInt(4) : 1;
+        for (int breakIndex = 0; breakIndex < breakCount; breakIndex++) {
+            int attempts = 0;
+            while (attempts++ < 25 && !this.saltPositions.isEmpty()) {
+                BlockPos saltPos = this.saltPositions.get(this.world.rand.nextInt(this.saltPositions.size()));
+                Block block = this.world.getBlockState(saltPos).getBlock();
+                if (block == BlocksPM.SALT_TRAIL.get()) {
+                    PrimalMagic.LOGGER.debug("Breaking salt trail at {}", saltPos);
+                    InventoryHelper.spawnItemStack(this.world, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemsPM.REFINED_SALT.get()));
+                    this.world.removeBlock(saltPos, false);
+                    // TODO Do special effects
+                    break;
+                }
+            }
+        }
+        this.scanDirty = true;
+    }
+    
+    protected void mishapDamage(boolean allTargets) {
+        List<LivingEntity> targets = EntityUtils.getEntitiesInRange(this.world, this.pos, null, LivingEntity.class, 10.0D);
+        if (targets != null && !targets.isEmpty()) {
+            for (LivingEntity target : targets) {
+                PrimalMagic.LOGGER.debug("Damaging target {}", target.getDisplayName().getString());
+                int damage = 5 + MathHelper.floor(Math.sqrt(Math.abs(Math.min(0.0F, this.stability))) / 2.0D);
+                target.attackEntityFrom(DamageSource.MAGIC, damage);
+                // TODO Do special effects
+                if (!allTargets) {
+                    break;
+                }
+            }
+        }
+    }
+    
+    protected void mishapDetonate(boolean central) {
+        BlockPos target = null;
+        if (central) {
+            target = this.pos;
+        } else {
+            int attempts = 0;
+            while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
+                BlockPos pedestalPos = this.pedestalPositions.get(this.world.rand.nextInt(this.pedestalPositions.size()));
+                TileEntity tile = this.world.getTileEntity(pedestalPos);
+                if (tile instanceof OfferingPedestalTileEntity) {
+                    OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
+                    if (!pedestalTile.getStackInSlot(0).isEmpty()) {
+                        target = pedestalPos;
+                        break;
+                    }
+                }
+            }
+            if (target == null && !this.pedestalPositions.isEmpty()) {
+                // If we can't find a populated pedestal, just pick one at random
+                target = this.pedestalPositions.get(this.world.rand.nextInt(this.pedestalPositions.size()));
+            }
+        }
+        if (target != null) {
+            PrimalMagic.LOGGER.debug("Detonating {} at {}", central ? "altar" : "pedestal", target);
+            if (central && this.awaitedPropPos != null) {
+                // If destroying the central altar, close out any waiting props
+                BlockState state = this.world.getBlockState(this.awaitedPropPos);
+                Block block = state.getBlock();
+                if (block instanceof IRitualProp) {
+                    ((IRitualProp)block).closeProp(state, this.world, this.awaitedPropPos);
+                }
+            }
+            if (!central) {
+                // TODO Do special effects
+                this.scanDirty = true;
+            }
+            float force = central ? 2.0F + this.world.rand.nextFloat() : 1.0F;
+            this.world.createExplosion(null, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, force, Explosion.Mode.BREAK);
         }
     }
 }
