@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
+import com.verdantartifice.primalmagic.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
@@ -130,14 +131,12 @@ public class IncenseBrazierBlock extends Block implements IRitualProp {
     
     @Override
     public boolean hasTileEntity(BlockState state) {
-        // TODO return true
-        return false;
+        return true;
     }
     
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        // TODO create tile entity
-        return null;
+        return new IncenseBrazierTileEntity();
     }
     
     @SuppressWarnings("deprecation")
