@@ -43,6 +43,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for a ritual lectern.  Ritual lecterns serve as props in magical rituals; placing
@@ -127,6 +128,7 @@ public class RitualLecternBlock extends Block implements IRitualProp {
                     }
                     player.inventory.markDirty();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_BOOK_PUT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    worldIn.setBlockState(pos, state.with(HAS_BOOK, Boolean.TRUE), Constants.BlockFlags.DEFAULT);
                     return ActionResultType.SUCCESS;
                 } else if (!lecternTile.getStackInSlot(0).isEmpty() && player.getHeldItem(handIn).isEmpty()) {
                     // When activating a full lectern with an empty hand, pick up the book
@@ -135,6 +137,7 @@ public class RitualLecternBlock extends Block implements IRitualProp {
                     player.setHeldItem(handIn, stack);
                     player.inventory.markDirty();
                     worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.4F, 1.0F);
+                    worldIn.setBlockState(pos, state.with(HAS_BOOK, Boolean.FALSE), Constants.BlockFlags.DEFAULT);
                     return ActionResultType.SUCCESS;
                 }
             }

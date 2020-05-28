@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRe
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.OfferingPedestalTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualAltarTER;
+import com.verdantartifice.primalmagic.client.renderers.tile.RitualLecternTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
@@ -75,6 +76,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.WAND_CHARGER.get(), dispatcher -> new WandChargerTER(dispatcher));
         ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RITUAL_ALTAR.get(), dispatcher -> new RitualAltarTER(dispatcher));
         ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.OFFERING_PEDESTAL.get(), dispatcher -> new OfferingPedestalTER(dispatcher));
+        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RITUAL_LECTERN.get(), dispatcher -> new RitualLecternTER(dispatcher));
     }
     
     private void registerEntityRenderers() {
