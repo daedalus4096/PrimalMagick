@@ -200,6 +200,23 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .instability(1)
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.INCENSE_BRAZIER.get())
+            .patternLine("GCG")
+            .patternLine("GGG")
+            .patternLine(" P ")
+            .key('G', Tags.Items.INGOTS_GOLD)
+            .key('C', ItemTags.COALS)
+            .key('P', ItemTags.PLANKS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("INCENSE_BRAZIER")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.INCENSE_STICK.get())
+            .patternLine(" F")
+            .patternLine("S ")
+            .key('F', ItemTags.SMALL_FLOWERS)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("INCENSE_BRAZIER")))
+            .manaCost(new SourceList().add(Source.SKY, 1))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
