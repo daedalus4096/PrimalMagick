@@ -17,7 +17,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.EnchantedBookItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
@@ -29,6 +30,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -108,24 +111,35 @@ public class RitualLecternBlock extends Block implements IRitualProp {
     
     @SuppressWarnings("deprecation")
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock() && state.get(HAS_BOOK)) {
-            // TODO Drop book
-        }
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
-    }
-    
-    @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player != null && player.getHeldItem(handIn).getItem() instanceof EnchantedBookItem && !state.get(HAS_BOOK)) {
-            // TODO If using an enchanted book on an empty lectern, place it
-            return ActionResultType.SUCCESS;
-        } else if (player != null && player.getHeldItem(handIn).isEmpty() && state.get(HAS_BOOK)) {
-            // TODO If using an empty hand on a full lectern, retrieve the book
-            return ActionResultType.SUCCESS;
-        } else {
-            return ActionResultType.PASS;
+        if (!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if (tile instanceof RitualLecternTileEntity) {
+                RitualLecternTileEntity lecternTile = (RitualLecternTileEntity)tile;
+                if (lecternTile.getStackInSlot(0).isEmpty() && player.getHeldItem(handIn).getItem() == Items.ENCHANTED_BOOK) {
+                    // When activating an empty lectern with an enchanted book in hand, place it on the lectern
+                    ItemStack stack = player.getHeldItem(handIn).copy();
+                    stack.setCount(1);
+                    lecternTile.setInventorySlotContents(0, stack);
+                    player.getHeldItem(handIn).shrink(1);
+                    if (player.getHeldItem(handIn).getCount() <= 0) {
+                        player.setHeldItem(handIn, ItemStack.EMPTY);
+                    }
+                    player.inventory.markDirty();
+                    worldIn.playSound(null, pos, SoundEvents.ITEM_BOOK_PUT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    return ActionResultType.SUCCESS;
+                } else if (!lecternTile.getStackInSlot(0).isEmpty() && player.getHeldItem(handIn).isEmpty()) {
+                    // When activating a full lectern with an empty hand, pick up the book
+                    ItemStack stack = lecternTile.getStackInSlot(0).copy();
+                    lecternTile.setInventorySlotContents(0, ItemStack.EMPTY);
+                    player.setHeldItem(handIn, stack);
+                    player.inventory.markDirty();
+                    worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.4F, 1.0F);
+                    return ActionResultType.SUCCESS;
+                }
+            }
         }
+        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
     
     @Override
