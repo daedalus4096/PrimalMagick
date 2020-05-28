@@ -7,6 +7,7 @@ import java.util.Random;
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
+import com.verdantartifice.primalmagic.common.tiles.rituals.RitualLecternTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
@@ -22,6 +23,7 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -167,5 +169,24 @@ public class RitualLecternBlock extends Block implements IRitualProp {
     @Override
     public float getUsageStabilityBonus() {
         return 10.0F;
+    }
+    
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+    
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new RitualLecternTileEntity();
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
+        super.eventReceived(state, worldIn, pos, id, param);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        return (tile == null) ? false : tile.receiveClientEvent(id, param);
     }
 }
