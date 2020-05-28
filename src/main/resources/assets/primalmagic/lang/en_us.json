@@ -1006,6 +1006,7 @@
     "primalmagic.ritual.instability.rating.5": "Extreme",
     "primalmagic.ritual.prop.ritual_candle": "The ritual requires you to light a candle now!",
     "primalmagic.ritual.prop.incense_brazier": "The ritual requires you to burn some incense now!",
+    "primalmagic.ritual.prop.ritual_lectern": "The ritual requires you to place an enchanted book now!",
     "primalmagic.ritual.warning.missing_offering": "The ritual cannot find a required offering!",
     "primalmagic.ritual.warning.missing_prop": "The ritual cannot find a required prop!",
     "primalmagic.ritual.warning.channel_interrupt": "The channeling of a required offering has been interrupted!",

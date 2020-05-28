@@ -1,8 +1,12 @@
 package com.verdantartifice.primalmagic.common.blocks.rituals;
 
+import java.awt.Color;
 import java.util.Map;
+import java.util.Random;
 
 import com.google.common.collect.Maps;
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
@@ -32,6 +36,8 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Block definition for a ritual lectern.  Ritual lecterns serve as props in magical rituals; placing
@@ -39,7 +45,7 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public class RitualLecternBlock extends Block {
+public class RitualLecternBlock extends Block implements IRitualProp {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty HAS_BOOK = BlockStateProperties.HAS_BOOK;
 
@@ -123,5 +129,43 @@ public class RitualLecternBlock extends Block {
     @Override
     public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
         return false;
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        // Show spell sparkles if receiving salt power
+        if (this.isBlockSaltPowered(worldIn, pos)) {
+            FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
+        }
+    }
+
+    @Override
+    public float getStabilityBonus(World world, BlockPos pos) {
+        return 0.02F;
+    }
+
+    @Override
+    public float getSymmetryPenalty(World world, BlockPos pos) {
+        return 0.02F;
+    }
+
+    @Override
+    public boolean isPropActivated(BlockState state, World world, BlockPos pos) {
+        if (state != null && state.getBlock() instanceof RitualLecternBlock) {
+            return state.get(HAS_BOOK);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String getPropTranslationKey() {
+        return "primalmagic.ritual.prop.ritual_lectern";
+    }
+
+    @Override
+    public float getUsageStabilityBonus() {
+        return 10.0F;
     }
 }
