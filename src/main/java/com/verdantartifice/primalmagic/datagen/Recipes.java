@@ -191,6 +191,14 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RITUAL")))
             .manaCost(new SourceList().add(Source.EARTH, 10).add(Source.SEA, 10).add(Source.SKY, 10).add(Source.SUN, 10).add(Source.MOON, 10))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.OFFERING_PEDESTAL.get())
+            .patternLine("S")
+            .patternLine("P")
+            .patternLine("S")
+            .key('S', ItemsPM.MARBLE_SLAB.get())
+            .key('P', ItemsPM.MARBLE_PILLAR.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RITUAL")))
+            .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MANAFRUIT.get())
             .addIngredient(Items.APPLE)
             .addIngredient(Items.HONEY_BOTTLE)
