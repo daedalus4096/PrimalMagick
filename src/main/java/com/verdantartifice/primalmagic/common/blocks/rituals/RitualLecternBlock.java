@@ -43,6 +43,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -66,7 +67,7 @@ public class RitualLecternBlock extends Block implements IRitualPropBlock {
     });
     
     public RitualLecternBlock() {
-        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD));
+        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD).harvestTool(ToolType.AXE));
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(HAS_BOOK, Boolean.FALSE));
     }
     
