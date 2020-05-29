@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -15,18 +16,20 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractRitualPropTileEntity extends TilePM {
+public abstract class AbstractRitualPropTileEntity extends TilePM implements IRitualPropTileEntity {
     protected BlockPos altarPos = null;
     
     public AbstractRitualPropTileEntity(TileEntityType<?> type) {
         super(type);
     }
     
+    @Override
     @Nullable
     public BlockPos getAltarPos() {
         return this.altarPos;
     }
     
+    @Override
     public void setAltarPos(@Nullable BlockPos pos) {
         this.altarPos = pos;
         this.markDirty();
@@ -46,6 +49,7 @@ public abstract class AbstractRitualPropTileEntity extends TilePM {
         return super.write(compound);
     }
     
+    @Override
     public void notifyAltarOfPropActivation() {
         if (this.altarPos != null) {
             TileEntity tile = this.world.getTileEntity(this.altarPos);

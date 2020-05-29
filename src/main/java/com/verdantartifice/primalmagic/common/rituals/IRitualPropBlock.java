@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.PropMarkerPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.RemovePropMarkerPacket;
-import com.verdantartifice.primalmagic.common.tiles.rituals.AbstractRitualPropTileEntity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,25 +19,25 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public interface IRitualProp extends ISaltPowered, IRitualStabilizer {
+public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
     public boolean isPropActivated(BlockState state, World world, BlockPos pos);
     
     public default void onPropActivated(BlockState state, World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof AbstractRitualPropTileEntity) {
-            ((AbstractRitualPropTileEntity)tile).notifyAltarOfPropActivation();
+        if (tile instanceof IRitualPropTileEntity) {
+            ((IRitualPropTileEntity)tile).notifyAltarOfPropActivation();
         }
     }
     
     public default boolean isPropOpen(BlockState state, World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        return (tile instanceof AbstractRitualPropTileEntity) && ((AbstractRitualPropTileEntity)tile).getAltarPos() != null;
+        return (tile instanceof IRitualPropTileEntity) && ((IRitualPropTileEntity)tile).getAltarPos() != null;
     }
     
     public default void openProp(BlockState state, World world, BlockPos pos, @Nullable PlayerEntity player, BlockPos altarPos) {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof AbstractRitualPropTileEntity) {
-            ((AbstractRitualPropTileEntity)tile).setAltarPos(altarPos);
+        if (tile instanceof IRitualPropTileEntity) {
+            ((IRitualPropTileEntity)tile).setAltarPos(altarPos);
             PacketHandler.sendToAllAround(new PropMarkerPacket(pos), world.dimension.getType(), pos, 32.0D);
             if (player != null) {
                 this.sendPropStatusMessage(player);
@@ -48,8 +47,8 @@ public interface IRitualProp extends ISaltPowered, IRitualStabilizer {
     
     public default void closeProp(BlockState state, World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof AbstractRitualPropTileEntity) {
-            ((AbstractRitualPropTileEntity)tile).setAltarPos(null);
+        if (tile instanceof IRitualPropTileEntity) {
+            ((IRitualPropTileEntity)tile).setAltarPos(null);
             PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), world.dimension.getType(), pos, 32.0D);
         }
     }

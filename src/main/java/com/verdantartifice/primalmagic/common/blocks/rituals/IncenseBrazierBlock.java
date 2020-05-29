@@ -6,7 +6,7 @@ import java.util.Random;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
-import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
+import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
@@ -42,7 +42,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class IncenseBrazierBlock extends Block implements IRitualProp {
+public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/incense_brazier"));
 

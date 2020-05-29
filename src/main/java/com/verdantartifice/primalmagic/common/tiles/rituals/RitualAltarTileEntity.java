@@ -31,7 +31,7 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
-import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
+import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.rituals.Mishap;
@@ -268,8 +268,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (this.awaitedPropPos != null) {
             BlockState state = this.world.getBlockState(this.awaitedPropPos);
             Block block = state.getBlock();
-            if (block instanceof IRitualProp) {
-                ((IRitualProp)block).closeProp(state, this.world, this.awaitedPropPos);
+            if (block instanceof IRitualPropBlock) {
+                ((IRitualPropBlock)block).closeProp(state, this.world, this.awaitedPropPos);
             }
         }
         
@@ -512,9 +512,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             if (pedestalBlock.isBlockSaltPowered(this.world, pos)) {
                 this.pedestalPositions.add(pos);
             }
-        } else if (block instanceof IRitualProp) {
+        } else if (block instanceof IRitualPropBlock) {
             // Add this position to the prop collection
-            IRitualProp propBlock = (IRitualProp)block;
+            IRitualPropBlock propBlock = (IRitualPropBlock)block;
             if (propBlock.isBlockSaltPowered(this.world, pos)) {
                 this.propPositions.add(pos);
             }
@@ -645,8 +645,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 for (BlockPos propPos : this.propPositions) {
                     BlockState propState = this.world.getBlockState(propPos);
                     Block block = propState.getBlock();
-                    if (block instanceof IRitualProp && requiredProp.test(block)) {
-                        IRitualProp propBlock = (IRitualProp)block;
+                    if (block instanceof IRitualPropBlock && requiredProp.test(block)) {
+                        IRitualPropBlock propBlock = (IRitualPropBlock)block;
                         if (!propBlock.isPropActivated(propState, this.world, propPos) && propBlock.isBlockSaltPowered(this.world, propPos)) {
                             // Upon finding a match, open the found prop for activation
                             propBlock.openProp(propState, this.world, propPos, this.getActivePlayer(), this.pos);
@@ -665,17 +665,17 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             } else {
                 BlockState propState = this.world.getBlockState(this.awaitedPropPos);
                 Block block = propState.getBlock();
-                if ( !(block instanceof IRitualProp) || 
+                if ( !(block instanceof IRitualPropBlock) || 
                      !requiredProp.test(block) ||
-                     !((IRitualProp)block).isBlockSaltPowered(this.world, this.awaitedPropPos) ) {
+                     !((IRitualPropBlock)block).isBlockSaltPowered(this.world, this.awaitedPropPos) ) {
                     // If contact with the prop was lost, add an instability spike and start looking again
                     if (this.getActivePlayer() != null) {
                         this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.warning.prop_interrupt"), false);
                         this.skipWarningMessage = true;
                     }
-                    if (block instanceof IRitualProp) {
+                    if (block instanceof IRitualPropBlock) {
                         // If the block still exists (i.e. salt was broken), then close it to activation
-                        ((IRitualProp)block).closeProp(propState, this.world, this.awaitedPropPos);
+                        ((IRitualPropBlock)block).closeProp(propState, this.world, this.awaitedPropPos);
                     }
                     this.awaitedPropPos = null;
                     this.addStability(MathHelper.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
@@ -691,8 +691,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             // If the activated prop is the one we're waiting for, close it and mark the step as complete
             BlockState propState = this.world.getBlockState(propPos);
             Block block = propState.getBlock();
-            if (block instanceof IRitualProp) {
-                IRitualProp propBlock = (IRitualProp)block;
+            if (block instanceof IRitualPropBlock) {
+                IRitualPropBlock propBlock = (IRitualPropBlock)block;
                 propBlock.closeProp(propState, this.world, propPos);
                 this.addStability(propBlock.getUsageStabilityBonus());
             }
@@ -863,8 +863,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
                 // If destroying the central altar, close out any waiting props
                 BlockState state = this.world.getBlockState(this.awaitedPropPos);
                 Block block = state.getBlock();
-                if (block instanceof IRitualProp) {
-                    ((IRitualProp)block).closeProp(state, this.world, this.awaitedPropPos);
+                if (block instanceof IRitualPropBlock) {
+                    ((IRitualPropBlock)block).closeProp(state, this.world, this.awaitedPropPos);
                 }
             }
             if (!central) {

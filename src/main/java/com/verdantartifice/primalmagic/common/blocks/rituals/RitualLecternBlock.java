@@ -6,7 +6,7 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagic.common.rituals.IRitualProp;
+import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualLecternTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
@@ -51,7 +51,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class RitualLecternBlock extends Block implements IRitualProp {
+public class RitualLecternBlock extends Block implements IRitualPropBlock {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty HAS_BOOK = BlockStateProperties.HAS_BOOK;
 
@@ -129,6 +129,12 @@ public class RitualLecternBlock extends Block implements IRitualProp {
                     player.inventory.markDirty();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_BOOK_PUT, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     worldIn.setBlockState(pos, state.with(HAS_BOOK, Boolean.TRUE), Constants.BlockFlags.DEFAULT);
+                    
+                    // If this block is awaiting activation for an altar, notify it
+                    if (this.isPropOpen(state, worldIn, pos)) {
+                        this.onPropActivated(state, worldIn, pos);
+                    }
+
                     return ActionResultType.SUCCESS;
                 } else if (!lecternTile.getStackInSlot(0).isEmpty() && player.getHeldItem(handIn).isEmpty()) {
                     // When activating a full lectern with an empty hand, pick up the book
