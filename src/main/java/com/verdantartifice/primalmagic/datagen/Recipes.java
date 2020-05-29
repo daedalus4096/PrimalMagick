@@ -217,6 +217,15 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("INCENSE_BRAZIER")))
             .manaCost(new SourceList().add(Source.SKY, 1))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_LECTERN.get())
+            .patternLine("SSS")
+            .patternLine(" B ")
+            .patternLine(" S ")
+            .key('S', ItemsPM.MOONWOOD_SLAB.get())
+            .key('B', Tags.Items.BOOKSHELVES)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_LECTERN")))
+            .manaCost(new SourceList().add(Source.MOON, 10))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");

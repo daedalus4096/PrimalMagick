@@ -599,6 +599,18 @@
     "primalmagic.research.basic_ritual.title": "Basic Ritual Magic",
     "primalmagic.research.basic_ritual.text.stage.1": "Basic ritual magic: Lorem ipsum",
     
+    "primalmagic.research.expert_ritual.title": "Expert Ritual Magic",
+    "primalmagic.research.expert_ritual.text.stage.1": "Expert ritual magic: Lorem ipsum",
+    "primalmagic.research.expert_ritual.text.stage.2": "Expert ritual magic research complete!",
+    
+    "primalmagic.research.master_ritual.title": "Master Ritual Magic",
+    "primalmagic.research.master_ritual.text.stage.1": "Master ritual magic: Lorem ipsum",
+    "primalmagic.research.master_ritual.text.stage.2": "Master ritual magic research complete!",
+    
+    "primalmagic.research.supreme_ritual.title": "Supreme Ritual Magic",
+    "primalmagic.research.supreme_ritual.text.stage.1": "Supreme ritual magic: Lorem ipsum",
+    "primalmagic.research.supreme_ritual.text.stage.2": "Supreme ritual magic research complete!",
+    
     "primalmagic.research.ritual_candles.title": "Ritual Candles",
     "primalmagic.research.ritual_candles.text.stage.1": "Ritual candles: Lorem ipsum",
     "primalmagic.research.ritual_candles.text.stage.2": "Ritual candles research complete!",
@@ -611,17 +623,9 @@
     "primalmagic.research.manafruit.text.stage.1": "Manafruit: Lorem ipsum",
     "primalmagic.research.manafruit.text.stage.2": "Manafruit research complete!",
     
-    "primalmagic.research.expert_ritual.title": "Expert Ritual Magic",
-    "primalmagic.research.expert_ritual.text.stage.1": "Expert ritual magic: Lorem ipsum",
-    "primalmagic.research.expert_ritual.text.stage.2": "Expert ritual magic research complete!",
-    
-    "primalmagic.research.master_ritual.title": "Master Ritual Magic",
-    "primalmagic.research.master_ritual.text.stage.1": "Master ritual magic: Lorem ipsum",
-    "primalmagic.research.master_ritual.text.stage.2": "Master ritual magic research complete!",
-    
-    "primalmagic.research.supreme_ritual.title": "Supreme Ritual Magic",
-    "primalmagic.research.supreme_ritual.text.stage.1": "Supreme ritual magic: Lorem ipsum",
-    "primalmagic.research.supreme_ritual.text.stage.2": "Supreme ritual magic research complete!",
+    "primalmagic.research.ritual_lectern.title": "Ritual Lectern",
+    "primalmagic.research.ritual_lectern.text.stage.1": "Ritual lectern: Lorem ipsum",
+    "primalmagic.research.ritual_lectern.text.stage.2": "Ritual lectern research complete!",
     
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
