@@ -3,9 +3,12 @@ package com.verdantartifice.primalmagic.common.blocks.rituals;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
+import com.verdantartifice.primalmagic.common.tiles.rituals.RitualBellTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
@@ -17,6 +20,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.DirectionProperty;
@@ -24,11 +30,17 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BellAttachment;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -172,6 +184,81 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
         return false;
     }
     
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+    
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new RitualBellTileEntity();
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
+        super.eventReceived(state, worldIn, pos, id, param);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        return (tile == null) ? false : tile.receiveClientEvent(id, param);
+    }
+    
+    @Override
+    public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit, Entity projectile) {
+        if (projectile instanceof AbstractArrowEntity) {
+            Entity entity = ((AbstractArrowEntity)projectile).getShooter();
+            PlayerEntity playerentity = entity instanceof PlayerEntity ? (PlayerEntity)entity : null;
+            this.tryRing(worldIn, state, hit, playerentity);
+        }
+    }
+    
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        return this.tryRing(worldIn, state, hit, player) ? ActionResultType.SUCCESS : ActionResultType.PASS;
+    }
+    
+    protected boolean tryRing(World world, BlockState state, BlockRayTraceResult hit, @Nullable PlayerEntity player) {
+        Direction dir = hit.getFace();
+        BlockPos pos = hit.getPos();
+        if (this.canRingFrom(state, dir, hit.getHitVec().y - (double)pos.getY())) {
+            this.doRing(world, pos, dir);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    protected void doRing(World world, BlockPos pos, @Nullable Direction dir) {
+        TileEntity tile = world.getTileEntity(pos);
+        if (!world.isRemote && tile instanceof RitualBellTileEntity) {
+            if (dir == null) {
+                dir = world.getBlockState(pos).get(FACING);
+            }
+            ((RitualBellTileEntity)tile).ring(dir);
+            world.playSound(null, pos, SoundEvents.BLOCK_BELL_USE, SoundCategory.BLOCKS, 2.0F, 1.0F);
+        }
+    }
+
+    protected boolean canRingFrom(BlockState state, Direction dir, double yPos) {
+        if (dir.getAxis() != Direction.Axis.Y && yPos <= 0.8124D) {
+            Direction facing = state.get(FACING);
+            BellAttachment attachment = state.get(ATTACHMENT);
+            switch (attachment) {
+            case FLOOR:
+                return facing.getAxis() == dir.getAxis();
+            case SINGLE_WALL:   // Fall through
+            case DOUBLE_WALL:
+                return facing.getAxis() != dir.getAxis();
+            case CEILING:
+                return true;
+            default:
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public float getStabilityBonus(World world, BlockPos pos) {
         // TODO Auto-generated method stub
