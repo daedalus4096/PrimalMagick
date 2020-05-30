@@ -67,16 +67,16 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
             innerMap.put(Direction.EAST, VoxelShapeUtils.rotate(CEILING_SHAPE, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90));
         }));
         map.put(BellAttachment.SINGLE_WALL, Util.make(Maps.newEnumMap(Direction.class), innerMap -> {
-            innerMap.put(Direction.NORTH, ONE_WALL_SHAPE);
-            innerMap.put(Direction.SOUTH, VoxelShapeUtils.rotate(ONE_WALL_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_180));
-            innerMap.put(Direction.WEST, VoxelShapeUtils.rotate(ONE_WALL_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_90));
-            innerMap.put(Direction.EAST, VoxelShapeUtils.rotate(ONE_WALL_SHAPE, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90));
+            innerMap.put(Direction.NORTH, VoxelShapeUtils.rotate(ONE_WALL_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_90));
+            innerMap.put(Direction.SOUTH, VoxelShapeUtils.rotate(ONE_WALL_SHAPE, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90));
+            innerMap.put(Direction.WEST, VoxelShapeUtils.rotate(ONE_WALL_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_180));
+            innerMap.put(Direction.EAST, ONE_WALL_SHAPE);
         }));
         map.put(BellAttachment.DOUBLE_WALL, Util.make(Maps.newEnumMap(Direction.class), innerMap -> {
-            innerMap.put(Direction.NORTH, TWO_WALLS_SHAPE);
-            innerMap.put(Direction.SOUTH, VoxelShapeUtils.rotate(TWO_WALLS_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_180));
-            innerMap.put(Direction.WEST, VoxelShapeUtils.rotate(TWO_WALLS_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_90));
-            innerMap.put(Direction.EAST, VoxelShapeUtils.rotate(TWO_WALLS_SHAPE, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90));
+            innerMap.put(Direction.NORTH, VoxelShapeUtils.rotate(TWO_WALLS_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_90));
+            innerMap.put(Direction.SOUTH, VoxelShapeUtils.rotate(TWO_WALLS_SHAPE, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90));
+            innerMap.put(Direction.WEST, VoxelShapeUtils.rotate(TWO_WALLS_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_180));
+            innerMap.put(Direction.EAST, TWO_WALLS_SHAPE);
         }));
     });
     
