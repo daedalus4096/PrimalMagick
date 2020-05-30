@@ -628,6 +628,10 @@
     "primalmagic.research.ritual_lectern.text.stage.1": "Ritual lectern: Lorem ipsum",
     "primalmagic.research.ritual_lectern.text.stage.2": "Ritual lectern research complete!",
     
+    "primalmagic.research.ritual_bell.title": "Ritual Bell",
+    "primalmagic.research.ritual_bell.text.stage.1": "Ritual bell: Lorem ipsum",
+    "primalmagic.research.ritual_bell.text.stage.2": "Ritual bell research complete!",
+    
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
     
