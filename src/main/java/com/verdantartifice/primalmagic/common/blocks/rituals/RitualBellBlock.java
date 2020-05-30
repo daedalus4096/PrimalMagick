@@ -1,12 +1,15 @@
 package com.verdantartifice.primalmagic.common.blocks.rituals;
 
+import java.awt.Color;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualBellTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
@@ -48,6 +51,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 
 /**
@@ -221,14 +226,14 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
         Direction dir = hit.getFace();
         BlockPos pos = hit.getPos();
         if (this.canRingFrom(state, dir, hit.getHitVec().y - (double)pos.getY())) {
-            this.doRing(world, pos, dir);
+            this.doRing(state, world, pos, dir);
             return true;
         } else {
             return false;
         }
     }
 
-    protected void doRing(World world, BlockPos pos, @Nullable Direction dir) {
+    protected void doRing(BlockState state, World world, BlockPos pos, @Nullable Direction dir) {
         TileEntity tile = world.getTileEntity(pos);
         if (!world.isRemote && tile instanceof RitualBellTileEntity) {
             if (dir == null) {
@@ -236,6 +241,11 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
             }
             ((RitualBellTileEntity)tile).ring(dir);
             world.playSound(null, pos, SoundEvents.BLOCK_BELL_USE, SoundCategory.BLOCKS, 2.0F, 1.0F);
+            
+            // If this block is awaiting activation for an altar, notify it
+            if (this.isPropOpen(state, world, pos)) {
+                this.onPropActivated(state, world, pos);
+            }
         }
     }
 
@@ -258,34 +268,39 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
             return false;
         }
     }
+    
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        // Show spell sparkles if receiving salt power
+        if (this.isBlockSaltPowered(worldIn, pos)) {
+            FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
+        }
+    }
 
     @Override
     public float getStabilityBonus(World world, BlockPos pos) {
-        // TODO Auto-generated method stub
-        return 0;
+        return 0.02F;
     }
 
     @Override
     public float getSymmetryPenalty(World world, BlockPos pos) {
-        // TODO Auto-generated method stub
-        return 0;
+        return 0.02F;
     }
 
     @Override
     public boolean isPropActivated(BlockState state, World world, BlockPos pos) {
-        // TODO Auto-generated method stub
-        return false;
+        TileEntity tile = world.getTileEntity(pos);
+        return (tile instanceof RitualBellTileEntity && ((RitualBellTileEntity)tile).isRinging());
     }
 
     @Override
     public String getPropTranslationKey() {
-        // TODO Auto-generated method stub
-        return null;
+        return "primalmagic.ritual.prop.ritual_bell";
     }
 
     @Override
     public float getUsageStabilityBonus() {
-        // TODO Auto-generated method stub
-        return 0;
+        return 10.0F;
     }
 }
