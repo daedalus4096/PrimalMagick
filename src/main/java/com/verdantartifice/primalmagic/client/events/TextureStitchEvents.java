@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
+import com.verdantartifice.primalmagic.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagic.common.containers.slots.PaperSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandCapSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandCoreSlot;
@@ -39,6 +40,7 @@ public class TextureStitchEvents {
 
             // Add other sprites to the block atlas texture
             event.addSprite(AncientManaFontTER.TEXTURE);
+            event.addSprite(RitualBellTER.TEXTURE);
             event.addSprite(Source.getUnknownAtlasLocation());
             for (Source source : Source.SORTED_SOURCES) {
                 event.addSprite(source.getAtlasLocation());
