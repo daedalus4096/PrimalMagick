@@ -18,6 +18,7 @@ public class BlockLootTables extends BlockLootTableProvider {
 
     @Override
     protected void addTables() {
+        // Register groups of tables
         this.registerMarbleLootTables();
         this.registerEnchantedMarbleLootTables();
         this.registerSmokedMarbleLootTables();
@@ -27,21 +28,30 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerSkyglassLootTables();
         this.registerRitualCandleLootTables();
         
-        this.registerBasicTable(BlocksPM.ANALYSIS_TABLE.get());
+        // Register device loot tables
         this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH.get());
         this.registerBasicTable(BlocksPM.WAND_ASSEMBLY_TABLE.get());
         this.registerBasicTable(BlocksPM.WOOD_TABLE.get());
+        this.registerBasicTable(BlocksPM.ANALYSIS_TABLE.get());
         this.registerBasicTable(BlocksPM.CALCINATOR.get());
+        this.registerBasicTable(BlocksPM.WAND_INSCRIPTION_TABLE.get());
+        this.registerBasicTable(BlocksPM.SPELLCRAFTING_ALTAR.get());
+        this.registerBasicTable(BlocksPM.WAND_CHARGER.get());
         this.registerBasicTable(BlocksPM.RESEARCH_TABLE.get());
         this.registerBasicTable(BlocksPM.SUNLAMP.get());
         this.registerBasicTable(BlocksPM.RITUAL_ALTAR.get());
+        this.registerBasicTable(BlocksPM.OFFERING_PEDESTAL.get());
+        this.registerBasicTable(BlocksPM.INCENSE_BRAZIER.get());
+        this.registerBasicTable(BlocksPM.RITUAL_LECTERN.get());
+        this.registerBasicTable(BlocksPM.RITUAL_BELL.get());
+
+        // Register misc loot tables
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());
+        this.registerMultiGemOreTable(BlocksPM.ROCK_SALT_ORE.get(), ItemsPM.ROCK_SALT.get(), 3.0F, 4.0F);
+        this.registerGemOreTable(BlocksPM.QUARTZ_ORE.get(), Items.QUARTZ);
         this.registerBasicTable(BlocksPM.PRIMALITE_BLOCK.get());
         this.registerBasicTable(BlocksPM.HEXIUM_BLOCK.get());
         this.registerBasicTable(BlocksPM.HALLOWSTEEL_BLOCK.get());
-
-        this.registerMultiGemOreTable(BlocksPM.ROCK_SALT_ORE.get(), ItemsPM.ROCK_SALT.get(), 3.0F, 4.0F);
-        this.registerGemOreTable(BlocksPM.QUARTZ_ORE.get(), Items.QUARTZ);
     }
 
     private void registerMarbleLootTables() {
