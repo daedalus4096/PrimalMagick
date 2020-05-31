@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualBellTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
@@ -98,7 +99,7 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
     });
     
     public RitualBellBlock() {
-        super(Block.Properties.create(Material.IRON, MaterialColor.CYAN).hardnessAndResistance(5.0F).sound(SoundType.ANVIL).harvestTool(ToolType.PICKAXE));
+        super(Block.Properties.create(Material.IRON, MaterialColor.CYAN).hardnessAndResistance(5.0F).sound(SoundType.ANVIL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(ATTACHMENT, BellAttachment.FLOOR));
     }
     

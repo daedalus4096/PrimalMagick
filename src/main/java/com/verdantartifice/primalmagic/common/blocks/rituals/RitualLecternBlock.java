@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualLecternTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
@@ -67,7 +68,7 @@ public class RitualLecternBlock extends Block implements IRitualPropBlock {
     });
     
     public RitualLecternBlock() {
-        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD).harvestTool(ToolType.AXE));
+        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(HarvestLevel.NONE.getLevel()));
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(HAS_BOOK, Boolean.FALSE));
     }
     

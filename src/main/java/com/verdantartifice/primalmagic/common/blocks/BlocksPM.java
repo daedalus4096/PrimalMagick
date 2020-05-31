@@ -44,6 +44,7 @@ import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodPlanksBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodSlabBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodStairsBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodTree;
+import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.block.Block;
@@ -226,10 +227,10 @@ public class BlocksPM {
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
     public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
-    public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
-    public static final RegistryObject<QuartzOreBlock> QUARTZ_ORE = BLOCKS.register("quartz_ore", () -> new QuartzOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
-    public static final RegistryObject<MagicalMetalBlock> PRIMALITE_BLOCK = BLOCKS.register("primalite_block", () -> new MagicalMetalBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
-    public static final RegistryObject<MagicalMetalBlock> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new MagicalMetalBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(2)));
-    public static final RegistryObject<MagicalMetalBlock> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new MagicalMetalBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(3)));
+    public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
+    public static final RegistryObject<QuartzOreBlock> QUARTZ_ORE = BLOCKS.register("quartz_ore", () -> new QuartzOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
+    public static final RegistryObject<MagicalMetalBlock> PRIMALITE_BLOCK = BLOCKS.register("primalite_block", () -> new MagicalMetalBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
+    public static final RegistryObject<MagicalMetalBlock> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new MagicalMetalBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.IRON.getLevel())));
+    public static final RegistryObject<MagicalMetalBlock> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new MagicalMetalBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.DIAMOND.getLevel())));
     public static final RegistryObject<PyramidBlock> PYRAMID = BLOCKS.register("pyramid", PyramidBlock::new);
 }
