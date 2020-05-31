@@ -18,6 +18,9 @@ public class BlockLootTables extends BlockLootTableProvider {
 
     @Override
     protected void addTables() {
+        // Mark blocks as not having a loot table
+        this.registerEmptyLootTables();
+        
         // Register groups of tables
         this.registerMarbleLootTables();
         this.registerEnchantedMarbleLootTables();
@@ -52,6 +55,17 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.PRIMALITE_BLOCK.get());
         this.registerBasicTable(BlocksPM.HEXIUM_BLOCK.get());
         this.registerBasicTable(BlocksPM.HALLOWSTEEL_BLOCK.get());
+    }
+
+    private void registerEmptyLootTables() {
+        this.registerEmptyTable(BlocksPM.ANCIENT_FONT_EARTH.get());
+        this.registerEmptyTable(BlocksPM.ANCIENT_FONT_SEA.get());
+        this.registerEmptyTable(BlocksPM.ANCIENT_FONT_SKY.get());
+        this.registerEmptyTable(BlocksPM.ANCIENT_FONT_SUN.get());
+        this.registerEmptyTable(BlocksPM.ANCIENT_FONT_MOON.get());
+        this.registerEmptyTable(BlocksPM.GLOW_FIELD.get());
+        this.registerEmptyTable(BlocksPM.CONSECRATION_FIELD.get());
+        this.registerEmptyTable(BlocksPM.PYRAMID.get());
     }
 
     private void registerMarbleLootTables() {
