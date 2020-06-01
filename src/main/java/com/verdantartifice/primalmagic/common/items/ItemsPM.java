@@ -196,6 +196,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> INCENSE_BRAZIER = ITEMS.register("incense_brazier", () -> new BlockItem(BlocksPM.INCENSE_BRAZIER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BurnableBlockItem> RITUAL_LECTERN = ITEMS.register("ritual_lectern", () -> new BurnableBlockItem(BlocksPM.RITUAL_LECTERN.get(), 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> RITUAL_BELL = ITEMS.register("ritual_bell", () -> new BlockItem(BlocksPM.RITUAL_BELL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> BLOODLETTER = ITEMS.register("bloodletter", () -> new BlockItem(BlocksPM.BLOODLETTER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 
     // Register miscellaneous block items
     public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
