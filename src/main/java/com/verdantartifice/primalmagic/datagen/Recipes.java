@@ -244,6 +244,16 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_BELL")))
             .manaCost(new SourceList().add(Source.SEA, 10))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BLOODLETTER.get())
+            .patternLine("MSM")
+            .patternLine("MMM")
+            .patternLine(" P ")
+            .key('M', ItemsPM.MARBLE_SMOKED.get())
+            .key('S', Items.DIAMOND_SWORD)
+            .key('P', ItemsPM.MARBLE_SMOKED_PILLAR.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BLOODLETTER")))
+            .manaCost(new SourceList().add(Source.BLOOD, 50))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
