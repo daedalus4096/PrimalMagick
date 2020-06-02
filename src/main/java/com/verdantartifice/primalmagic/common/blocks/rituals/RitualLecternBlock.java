@@ -153,6 +153,16 @@ public class RitualLecternBlock extends Block implements IRitualPropBlock {
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
     
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Close out any pending ritual activity if replaced
+        if (!worldIn.isRemote && state.getBlock() != newState.getBlock()) {
+            this.closeProp(state, worldIn, pos);
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
+    }
+    
     @Override
     public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
         return false;

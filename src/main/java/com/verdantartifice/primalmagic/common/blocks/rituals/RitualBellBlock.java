@@ -270,6 +270,16 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
         }
     }
     
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Close out any pending ritual activity if replaced
+        if (!worldIn.isRemote && state.getBlock() != newState.getBlock()) {
+            this.closeProp(state, worldIn, pos);
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
+    }
+    
     @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
