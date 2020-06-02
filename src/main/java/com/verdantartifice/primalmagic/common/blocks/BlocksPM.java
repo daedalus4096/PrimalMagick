@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagic.common.blocks.rituals.RitualBellBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualLecternBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
+import com.verdantartifice.primalmagic.common.blocks.rituals.SoulAnvilBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLogBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodPillarBlock;
@@ -224,6 +225,7 @@ public class BlocksPM {
     public static final RegistryObject<RitualLecternBlock> RITUAL_LECTERN = BLOCKS.register("ritual_lectern", RitualLecternBlock::new);
     public static final RegistryObject<RitualBellBlock> RITUAL_BELL = BLOCKS.register("ritual_bell", RitualBellBlock::new);
     public static final RegistryObject<BloodletterBlock> BLOODLETTER = BLOCKS.register("bloodletter", BloodletterBlock::new);
+    public static final RegistryObject<SoulAnvilBlock> SOUL_ANVIL = BLOCKS.register("soul_anvil", SoulAnvilBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
