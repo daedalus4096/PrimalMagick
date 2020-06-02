@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntit
 import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.rituals.BloodletterTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity;
@@ -41,4 +42,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<TileEntityType<IncenseBrazierTileEntity>> INCENSE_BRAZIER = TILE_ENTITIES.register("incense_brazier", () -> TileEntityType.Builder.create(IncenseBrazierTileEntity::new, BlocksPM.INCENSE_BRAZIER.get()).build(null));
     public static final RegistryObject<TileEntityType<RitualLecternTileEntity>> RITUAL_LECTERN = TILE_ENTITIES.register("ritual_lectern", () -> TileEntityType.Builder.create(RitualLecternTileEntity::new, BlocksPM.RITUAL_LECTERN.get()).build(null));
     public static final RegistryObject<TileEntityType<RitualBellTileEntity>> RITUAL_BELL = TILE_ENTITIES.register("ritual_bell", () -> TileEntityType.Builder.create(RitualBellTileEntity::new, BlocksPM.RITUAL_BELL.get()).build(null));
+    public static final RegistryObject<TileEntityType<BloodletterTileEntity>> BLOODLETTER = TILE_ENTITIES.register("bloodletter", () -> TileEntityType.Builder.create(BloodletterTileEntity::new, BlocksPM.BLOODLETTER.get()).build(null));
 }
