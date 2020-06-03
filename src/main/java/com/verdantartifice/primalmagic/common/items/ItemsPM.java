@@ -252,6 +252,9 @@ public class ItemsPM {
     public static final RegistryObject<Item> INCENSE_STICK = ITEMS.register("incense_stick", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> SOUL_GEM = ITEMS.register("soul_gem", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> SOUL_GEM_SLIVER = ITEMS.register("soul_gem_sliver", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> SPELLCLOTH = ITEMS.register("spellcloth", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> HEXWEAVE = ITEMS.register("hexweave", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> SAINTSWOOL = ITEMS.register("saintswool", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

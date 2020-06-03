@@ -22,6 +22,7 @@ public class ItemTagsPM {
     public static final Tag<Item> DEAD_CORAL_PLANTS = tag("dead_coral_plants");
     public static final Tag<Item> DEAD_CORALS = tag("dead_corals");
     public static final Tag<Item> ESSENCES = tag("essences");
+    public static final Tag<Item> MAGICAL_CLOTH = tag("magical_cloth");
     public static final Tag<Item> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final Tag<Item> RITUAL_CANDLES = tag("ritual_candles");
     public static final Tag<Item> SHULKER_BOXES = tag("shulker_boxes");
