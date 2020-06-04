@@ -1,16 +1,13 @@
 package com.verdantartifice.primalmagic.common.blocks.mana;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
-import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -24,7 +21,7 @@ import net.minecraft.world.World;
  * @author Daedalus4096
  */
 public class AncientManaFontBlock extends Block {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/mana_font_ancient"));
+    protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
     protected Source source;
     
