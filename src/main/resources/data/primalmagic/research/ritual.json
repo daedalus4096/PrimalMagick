@@ -197,6 +197,26 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "SOUL_ANVIL",
+            "name": "primalmagic.research.soul_anvil.title",
+            "discipline": "RITUAL",
+            "parents": [ "MASTER_RITUAL", "HEXIUM" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.soul_anvil.text.stage.1",
+                    "required_knowledge": ["THEORY;2"]
+                },
+                {
+                    "text": "primalmagic.research.soul_anvil.text.stage.2",
+                    "attunements": {
+                        "infernal": 1
+                    },
+                    "recipes": [ "primalmagic:soul_anvil" ]
+                }
+            ],
+            "addenda": []
         }
     ]
 }

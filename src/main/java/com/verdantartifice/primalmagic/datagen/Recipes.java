@@ -254,6 +254,15 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BLOODLETTER")))
             .manaCost(new SourceList().add(Source.BLOOD, 50))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SOUL_ANVIL.get())
+            .patternLine("BBB")
+            .patternLine(" I ")
+            .patternLine("III")
+            .key('B', ItemTagsPM.STORAGE_BLOCKS_HEXIUM)
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SOUL_ANVIL")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 50))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
