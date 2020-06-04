@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntit
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualBellTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualCandleTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualLecternTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.rituals.SoulAnvilTileEntity;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
@@ -43,4 +44,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<TileEntityType<RitualLecternTileEntity>> RITUAL_LECTERN = TILE_ENTITIES.register("ritual_lectern", () -> TileEntityType.Builder.create(RitualLecternTileEntity::new, BlocksPM.RITUAL_LECTERN.get()).build(null));
     public static final RegistryObject<TileEntityType<RitualBellTileEntity>> RITUAL_BELL = TILE_ENTITIES.register("ritual_bell", () -> TileEntityType.Builder.create(RitualBellTileEntity::new, BlocksPM.RITUAL_BELL.get()).build(null));
     public static final RegistryObject<TileEntityType<BloodletterTileEntity>> BLOODLETTER = TILE_ENTITIES.register("bloodletter", () -> TileEntityType.Builder.create(BloodletterTileEntity::new, BlocksPM.BLOODLETTER.get()).build(null));
+    public static final RegistryObject<TileEntityType<SoulAnvilTileEntity>> SOUL_ANVIL = TILE_ENTITIES.register("soul_anvil", () -> TileEntityType.Builder.create(SoulAnvilTileEntity::new, BlocksPM.SOUL_ANVIL.get()).build(null));
 }

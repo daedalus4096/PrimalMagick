@@ -1029,6 +1029,7 @@
     "primalmagic.ritual.prop.ritual_lectern": "The ritual requires you to place an enchanted book now!",
     "primalmagic.ritual.prop.ritual_bell": "The ritual requires you to ring a bell now!",
     "primalmagic.ritual.prop.bloodletter": "The ritual requires you to shed your blood now!",
+    "primalmagic.ritual.prop.soul_anvil": "The ritual requires you to smash a soul gem now!",
     "primalmagic.ritual.warning.missing_offering": "The ritual cannot find a required offering!",
     "primalmagic.ritual.warning.missing_prop": "The ritual cannot find a required prop!",
     "primalmagic.ritual.warning.channel_interrupt": "The channeling of a required offering has been interrupted!",
