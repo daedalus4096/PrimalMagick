@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagic.common.containers.FakeContainer;
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagic.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
@@ -59,6 +60,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -820,13 +822,15 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     protected void mishapDamage(boolean allTargets) {
-        // Damage one or all living entities in range
+        // Damage one or all living entities in range and afflict them with mana impedance
         List<LivingEntity> targets = EntityUtils.getEntitiesInRange(this.world, this.pos, null, LivingEntity.class, 10.0D);
         if (targets != null && !targets.isEmpty()) {
             for (int index = 0; index < targets.size(); index++) {
                 LivingEntity target = targets.get(index);
                 int damage = 5 + MathHelper.floor(Math.sqrt(Math.abs(Math.min(0.0F, this.stability))) / 2.0D);
+                int amp = Math.max(0, damage - 6);
                 target.attackEntityFrom(DamageSource.MAGIC, damage);
+                target.addPotionEffect(new EffectInstance(EffectsPM.MANA_IMPEDANCE.get(), 12000, amp));
                 this.doMishapEffects(target.getPosition(), index == 0); // Only play sounds once
                 if (!allTargets) {
                     break;

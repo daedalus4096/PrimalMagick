@@ -223,11 +223,15 @@ public abstract class AbstractWandItem extends Item implements IWand {
         
         // Substract discounts from temporary conditions
         if (player.isPotionActive(EffectsPM.MANAFRUIT.get())) {
-            // 1% at amp 0, 3% at amp 1, 5% at amp 3, etc
+            // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
             modifier -= (0.01F * ((2 * player.getActivePotionEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
         }
         
-        // TODO Add penalties from temporary conditions
+        // Add penalties from temporary conditions
+        if (player.isPotionActive(EffectsPM.MANA_IMPEDANCE.get())) {
+            // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
+            modifier += (0.05F * (player.getActivePotionEffect(EffectsPM.MANA_IMPEDANCE.get()).getAmplifier() + 1));
+        }
         
         return modifier;
     }

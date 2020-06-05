@@ -28,4 +28,5 @@ public class EffectsPM {
     public static final RegistryObject<Effect> WEAKENED_SOUL = EFFECTS.register("weakened_soul", () -> new EffectPM(EffectType.HARMFUL, Source.HALLOWED.getColor()));
     public static final RegistryObject<Effect> MANAFRUIT = EFFECTS.register("manafruit", () -> new EffectPM(EffectType.BENEFICIAL, 0x27E1C7));
     public static final RegistryObject<Effect> DRAIN_SOUL = EFFECTS.register("drain_soul", () -> new EffectPM(EffectType.HARMFUL, Source.INFERNAL.getColor()));
+    public static final RegistryObject<Effect> MANA_IMPEDANCE = EFFECTS.register("mana_impedance", () -> new EffectPM(EffectType.HARMFUL, 0x808080));
 }
