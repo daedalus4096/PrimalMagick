@@ -263,6 +263,10 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SOUL_ANVIL")))
             .manaCost(new SourceList().add(Source.INFERNAL, 50))
             .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SOUL_GEM.get())
+            .addIngredient(ItemsPM.SOUL_GEM_SLIVER.get(), 9)
+            .addCriterion("has_sliver", this.hasItem(ItemsPM.SOUL_GEM_SLIVER.get()))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");

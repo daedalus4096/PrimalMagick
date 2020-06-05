@@ -238,6 +238,7 @@
     "effect.primalmagic.bleeding": "Bleeding",
     "effect.primalmagic.weakened_soul": "Weakened Soul",
     "effect.primalmagic.manafruit": "Manafruit",
+    "effect.primalmagic.drain_soul": "Drain Soul",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     "primalmagic.wand_core.unknown.name": "Unknown",
@@ -520,6 +521,9 @@
     
     "primalmagic.research.spell_payload_conjure_lava.title": "Spell Payload: Conjure Lava",
     "primalmagic.research.spell_payload_conjure_lava.text.stage.1": "Lava conjuration spells: Lorem ipsum",
+    
+    "primalmagic.research.spell_payload_drain_soul.title": "Spell Payload: Drain Soul",
+    "primalmagic.research.spell_payload_drain_soul.text.stage.1": "Soul drain spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_teleport.title": "Spell Payload: Teleport",
     "primalmagic.research.spell_payload_teleport.text.stage.1": "Teleport spells: Lorem ipsum",
@@ -825,6 +829,7 @@
     "primalmagic.spell.payload.type.polymorph": "Polymorph",
     "primalmagic.spell.payload.type.conjure_animal": "Conjure Animal",
     "primalmagic.spell.payload.type.conjure_lava": "Conjure Lava",
+    "primalmagic.spell.payload.type.drain_soul": "Drain Soul",
     "primalmagic.spell.payload.type.teleport": "Teleport",
     "primalmagic.spell.payload.type.consecrate": "Consecrate",
     "primalmagic.spell.payload.default_name.none": "",
@@ -844,6 +849,7 @@
     "primalmagic.spell.payload.default_name.polymorph": "Morphing",
     "primalmagic.spell.payload.default_name.conjure_animal": "Beast",
     "primalmagic.spell.payload.default_name.conjure_lava": "Lava",
+    "primalmagic.spell.payload.default_name.drain_soul": "Soul-Draining",
     "primalmagic.spell.payload.default_name.teleport": "Teleport",
     "primalmagic.spell.payload.default_name.consecrate": "Consecration",
         

@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.misc.DamageSourcesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
@@ -19,11 +20,14 @@ import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -136,8 +140,10 @@ public class CombatEvents {
     
     @SubscribeEvent
     public static void onDeath(LivingDeathEvent event) {
+        LivingEntity entity = event.getEntityLiving();
+        
         // If the player has greater hallowed attunement and it's not on cooldown, cancel death as if using a totem of undying
-        if (event.getEntityLiving() instanceof PlayerEntity) {
+        if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)event.getEntityLiving();
             IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
             if (AttunementManager.meetsThreshold(player, Source.HALLOWED, AttunementThreshold.GREATER) &&
@@ -153,6 +159,17 @@ public class CombatEvents {
                         SoundCategory.PLAYERS, 1.0F, 1.0F + (0.05F * (float)player.world.rand.nextGaussian()));
                 event.setCanceled(true);
             }
+        }
+        
+        // If the entity is afflicted with Drain Soul, drop some soul gems
+        if (entity.isNonBoss() && entity.isPotionActive(EffectsPM.DRAIN_SOUL.get()) && !event.isCanceled()) {
+            float gems = entity.getType().getClassification().getPeacefulCreature() ? 
+                    MathHelper.sqrt(entity.getMaxHealth()) / 20.0F : 
+                    entity.getMaxHealth() / 20.0F;
+            int wholeGems = MathHelper.floor(gems);
+            int slivers = MathHelper.floor(MathHelper.frac(gems) * 10.0F);
+            InventoryHelper.spawnItemStack(entity.getEntityWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), new ItemStack(ItemsPM.SOUL_GEM.get(), wholeGems));
+            InventoryHelper.spawnItemStack(entity.getEntityWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), slivers));
         }
     }
     

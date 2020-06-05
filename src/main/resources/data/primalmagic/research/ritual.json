@@ -202,7 +202,7 @@
             "key": "SOUL_ANVIL",
             "name": "primalmagic.research.soul_anvil.title",
             "discipline": "RITUAL",
-            "parents": [ "MASTER_RITUAL", "HEXIUM" ],
+            "parents": [ "MASTER_RITUAL", "HEXIUM", "SPELL_PAYLOAD_DRAIN_SOUL" ],
             "stages": [
                 {
                     "text": "primalmagic.research.soul_anvil.text.stage.1",
