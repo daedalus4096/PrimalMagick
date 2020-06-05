@@ -151,8 +151,12 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
             return new SourceList();
         }
         
-        Source source = this.payload.getSource();
         int baseManaCost = this.payload.getBaseManaCost();
+        if (baseManaCost == 0) {
+            return new SourceList();
+        }
+        
+        Source source = this.payload.getSource();
         int baseModifier = 0;
         int multiplier = 1;
         
