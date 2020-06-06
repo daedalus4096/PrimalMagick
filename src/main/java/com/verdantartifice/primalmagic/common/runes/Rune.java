@@ -20,6 +20,14 @@ public abstract class Rune {
     protected static final Map<String, Rune> REGISTRY = new HashMap<>();
     
     public static final SourceRune EARTH = new SourceRune("earth");
+    public static final SourceRune SEA = new SourceRune("sea");
+    public static final SourceRune SKY = new SourceRune("sky");
+    public static final SourceRune SUN = new SourceRune("sun");
+    public static final SourceRune MOON = new SourceRune("moon");
+    public static final SourceRune BLOOD = new SourceRune("blood");
+    public static final SourceRune INFERNAL = new SourceRune("infernal");
+    public static final SourceRune VOID = new SourceRune("void");
+    public static final SourceRune HALLOWED = new SourceRune("hallowed");
     
     protected final String tag;
     protected final Rarity rarity;

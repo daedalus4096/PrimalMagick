@@ -305,6 +305,14 @@ public class ItemsPM {
     // Register rune items
     public static final RegistryObject<Item> RUNE_UNATTUNED = ITEMS.register("rune_unattuned", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<RuneItem> RUNE_EARTH = ITEMS.register("rune_earth", () -> new RuneItem(Rune.EARTH));
+    public static final RegistryObject<RuneItem> RUNE_SEA = ITEMS.register("rune_sea", () -> new RuneItem(Rune.SEA));
+    public static final RegistryObject<RuneItem> RUNE_SKY = ITEMS.register("rune_sky", () -> new RuneItem(Rune.SKY));
+    public static final RegistryObject<RuneItem> RUNE_SUN = ITEMS.register("rune_sun", () -> new RuneItem(Rune.SUN));
+    public static final RegistryObject<RuneItem> RUNE_MOON = ITEMS.register("rune_moon", () -> new RuneItem(Rune.MOON));
+    public static final RegistryObject<RuneItem> RUNE_BLOOD = ITEMS.register("rune_blood", () -> new RuneItem(Rune.BLOOD));
+    public static final RegistryObject<RuneItem> RUNE_INFERNAL = ITEMS.register("rune_infernal", () -> new RuneItem(Rune.INFERNAL));
+    public static final RegistryObject<RuneItem> RUNE_VOID = ITEMS.register("rune_void", () -> new RuneItem(Rune.VOID));
+    public static final RegistryObject<RuneItem> RUNE_HALLOWED = ITEMS.register("rune_hallowed", () -> new RuneItem(Rune.HALLOWED));
 
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
