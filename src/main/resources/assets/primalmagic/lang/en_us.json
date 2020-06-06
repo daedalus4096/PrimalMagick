@@ -237,6 +237,7 @@
     "item.primalmagic.rune_creature": "Creature Rune",
     "item.primalmagic.rune_item": "Item Rune",
     "item.primalmagic.rune_self": "Self Rune",
+    "item.primalmagic.rune_power": "Power Rune",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",
@@ -268,6 +269,7 @@
     "tooltip.primalmagic.rune.creature": "\"Tak\"",
     "tooltip.primalmagic.rune.item": "\"Mag\"",
     "tooltip.primalmagic.rune.self": "\"San\"",
+    "tooltip.primalmagic.rune.power": "\"Par\"",
     "tooltip.primalmagic.none": "none",
     
     "effect.primalmagic.flying": "Flying",

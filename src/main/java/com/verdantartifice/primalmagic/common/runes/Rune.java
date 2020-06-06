@@ -37,6 +37,7 @@ public abstract class Rune {
     public static final NounRune CREATURE = new NounRune("creature");
     public static final NounRune ITEM = new NounRune("item");
     public static final NounRune SELF = new NounRune("self");
+    public static final PowerRune POWER = new PowerRune("power");
     
     protected final String tag;
     protected final Rarity rarity;
