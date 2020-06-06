@@ -13,12 +13,14 @@ import com.verdantartifice.primalmagic.common.items.misc.EnchantedInkAndQuill;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
 import com.verdantartifice.primalmagic.common.items.misc.ManafruitItem;
+import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagic.common.runes.Rune;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
@@ -299,6 +301,10 @@ public class ItemsPM {
     public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_INFERNAL = ITEMS.register("essence_cluster_infernal", () -> new EssenceItem(EssenceType.CLUSTER, Source.INFERNAL));
     public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_VOID = ITEMS.register("essence_cluster_void", () -> new EssenceItem(EssenceType.CLUSTER, Source.VOID));
     public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_HALLOWED = ITEMS.register("essence_cluster_hallowed", () -> new EssenceItem(EssenceType.CLUSTER, Source.HALLOWED));
+    
+    // Register rune items
+    public static final RegistryObject<Item> RUNE_UNATTUNED = ITEMS.register("rune_unattuned", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<RuneItem> RUNE_EARTH = ITEMS.register("rune_earth", () -> new RuneItem(Rune.EARTH));
 
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

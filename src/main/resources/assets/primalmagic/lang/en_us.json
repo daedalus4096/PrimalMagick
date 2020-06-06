@@ -218,6 +218,8 @@
     "item.primalmagic.spellcloth": "Spellcloth",
     "item.primalmagic.hexweave": "Hexweave",
     "item.primalmagic.saintswool": "Saintswool",
+    "item.primalmagic.rune_unattuned": "Unattuned Source Rune",
+    "item.primalmagic.rune_earth": "Earth Rune",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",
@@ -231,6 +233,7 @@
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",
     "tooltip.primalmagic.hallowed_orb.1": "A sense of peace washes over",
     "tooltip.primalmagic.hallowed_orb.2": "you as you hold this",
+    "tooltip.primalmagic.rune.earth": "\"Teq\"",
     "tooltip.primalmagic.none": "none",
     
     "effect.primalmagic.flying": "Flying",
