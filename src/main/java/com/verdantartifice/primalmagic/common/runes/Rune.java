@@ -28,6 +28,11 @@ public abstract class Rune {
     public static final SourceRune INFERNAL = new SourceRune("infernal");
     public static final SourceRune VOID = new SourceRune("void");
     public static final SourceRune HALLOWED = new SourceRune("hallowed");
+    public static final VerbRune ABSORB = new VerbRune("absorb");
+    public static final VerbRune DISPEL = new VerbRune("dispel");
+    public static final VerbRune PROJECT = new VerbRune("project");
+    public static final VerbRune PROTECT = new VerbRune("protect");
+    public static final VerbRune SUMMON = new VerbRune("summon");
     
     protected final String tag;
     protected final Rarity rarity;

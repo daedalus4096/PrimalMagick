@@ -313,6 +313,11 @@ public class ItemsPM {
     public static final RegistryObject<RuneItem> RUNE_INFERNAL = ITEMS.register("rune_infernal", () -> new RuneItem(Rune.INFERNAL));
     public static final RegistryObject<RuneItem> RUNE_VOID = ITEMS.register("rune_void", () -> new RuneItem(Rune.VOID));
     public static final RegistryObject<RuneItem> RUNE_HALLOWED = ITEMS.register("rune_hallowed", () -> new RuneItem(Rune.HALLOWED));
+    public static final RegistryObject<RuneItem> RUNE_ABSORB = ITEMS.register("rune_absorb", () -> new RuneItem(Rune.ABSORB));
+    public static final RegistryObject<RuneItem> RUNE_DISPEL = ITEMS.register("rune_dispel", () -> new RuneItem(Rune.DISPEL));
+    public static final RegistryObject<RuneItem> RUNE_PROJECT = ITEMS.register("rune_project", () -> new RuneItem(Rune.PROJECT));
+    public static final RegistryObject<RuneItem> RUNE_PROTECT = ITEMS.register("rune_protect", () -> new RuneItem(Rune.PROTECT));
+    public static final RegistryObject<RuneItem> RUNE_SUMMON = ITEMS.register("rune_summon", () -> new RuneItem(Rune.SUMMON));
 
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
