@@ -33,6 +33,10 @@ public abstract class Rune {
     public static final VerbRune PROJECT = new VerbRune("project");
     public static final VerbRune PROTECT = new VerbRune("protect");
     public static final VerbRune SUMMON = new VerbRune("summon");
+    public static final NounRune AREA = new NounRune("area");
+    public static final NounRune CREATURE = new NounRune("creature");
+    public static final NounRune ITEM = new NounRune("item");
+    public static final NounRune SELF = new NounRune("self");
     
     protected final String tag;
     protected final Rarity rarity;
