@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.runes;
 import javax.annotation.Nonnull;
 
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Definition of a noun rune data structure.  One of three rune types needed to imbue an enchantment.
@@ -12,6 +13,10 @@ import net.minecraft.item.Rarity;
 public class NounRune extends Rune {
     public NounRune(@Nonnull String tag) {
         super(tag, Rarity.COMMON, false);
+    }
+    
+    public NounRune(@Nonnull ResourceLocation id) {
+        super(id, Rarity.COMMON, false);
     }
     
     @Override

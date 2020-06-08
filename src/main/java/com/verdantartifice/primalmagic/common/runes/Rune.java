@@ -8,7 +8,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
+
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Base definition of a rune data structure.  Runes come in different types and can be combined on items
@@ -17,7 +20,7 @@ import net.minecraft.item.Rarity;
  * @author Daedalus4096
  */
 public abstract class Rune {
-    protected static final Map<String, Rune> REGISTRY = new HashMap<>();
+    protected static final Map<ResourceLocation, Rune> REGISTRY = new HashMap<>();
     
     public static final SourceRune EARTH = new SourceRune("earth");
     public static final SourceRune SEA = new SourceRune("sea");
@@ -39,24 +42,28 @@ public abstract class Rune {
     public static final NounRune SELF = new NounRune("self");
     public static final PowerRune POWER = new PowerRune("power");
     
-    protected final String tag;
+    protected final ResourceLocation id;
     protected final Rarity rarity;
     protected final boolean glint;
     
     public Rune(@Nonnull String tag, @Nonnull Rarity rarity, boolean glint) {
-        if (REGISTRY.containsKey(tag)) {
+        this(new ResourceLocation(PrimalMagic.MODID, tag), rarity, glint);
+    }
+    
+    public Rune(@Nonnull ResourceLocation id, @Nonnull Rarity rarity, boolean glint) {
+        if (REGISTRY.containsKey(id)) {
             // Don't allow a given rune to be registered more than once
-            throw new IllegalArgumentException("Rune " + tag + " already registered!");
+            throw new IllegalArgumentException("Rune " + id.toString() + " already registered!");
         }
-        this.tag = tag;
+        this.id = id;
         this.rarity = rarity;
         this.glint = glint;
-        REGISTRY.put(tag, this);
+        REGISTRY.put(id, this);
     }
     
     @Nonnull
-    public String getTag() {
-        return this.tag;
+    public ResourceLocation getId() {
+        return this.id;
     }
     
     @Nonnull
@@ -70,7 +77,7 @@ public abstract class Rune {
     
     @Nonnull
     public String getTooltipTranslationKey() {
-        return "tooltip.primalmagic.rune." + this.tag;
+        return "tooltip." + this.id.getNamespace() + ".rune." + this.id.getPath();
     }
     
     @Nonnull
@@ -82,7 +89,7 @@ public abstract class Rune {
     }
     
     @Nullable
-    public static Rune getRune(@Nonnull String tag) {
+    public static Rune getRune(@Nonnull ResourceLocation tag) {
         return REGISTRY.get(tag);
     }
 }
