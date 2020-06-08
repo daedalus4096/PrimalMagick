@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagic.common.init.InitAttunements;
 import com.verdantartifice.primalmagic.common.init.InitCapabilities;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
 import com.verdantartifice.primalmagic.common.init.InitResearch;
+import com.verdantartifice.primalmagic.common.init.InitRunes;
 import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
 import com.verdantartifice.primalmagic.common.init.InitWorldGen;
@@ -66,6 +67,7 @@ public class CommonProxy implements IProxyPM {
         InitWorldGen.initWorldGen();
         InitSpells.initSpells();
         InitStats.initStats();
+        InitRunes.initRuneEnchantments();
 
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "research")).toString(), ResearchArgument.class, new ArgumentSerializer<>(ResearchArgument::research));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "discipline")).toString(), DisciplineArgument.class, new ArgumentSerializer<>(DisciplineArgument::discipline));
