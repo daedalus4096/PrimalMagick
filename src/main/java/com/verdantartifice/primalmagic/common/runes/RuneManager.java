@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.runes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,10 +13,16 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Primary access point for rune-related methods.  Also stores registered rune combinations in a
@@ -108,5 +115,48 @@ public class RuneManager {
             retVal.put(ench, Math.max(map1.getOrDefault(ench, 0), map2.getOrDefault(ench, 0)));
         }
         return retVal;
+    }
+    
+    /**
+     * Get the list of runes that have been applied to this item stack.
+     * 
+     * @param stack the item stack to query
+     * @return the list of runes applied to the item; empty if none
+     */
+    @Nonnull
+    public static List<Rune> getRunes(@Nullable ItemStack stack) {
+        if (stack == null || stack.isEmpty() || !stack.hasTag()) {
+            return Collections.emptyList();
+        }
+        
+        List<Rune> retVal = new ArrayList<>();
+        ListNBT tagList = stack.getTag().getList(PrimalMagic.MODID + ":runes", Constants.NBT.TAG_STRING);
+        for (int index = 0; index < tagList.size(); index++) {
+            String tagStr = tagList.getString(index);
+            Rune rune = Rune.getRune(new ResourceLocation(tagStr));
+            if (rune != null) {
+                retVal.add(rune);
+            }
+        }
+        
+        return retVal;
+    }
+    
+    /**
+     * Sets the list of runes applied to this item stack.
+     * 
+     * @param stack the item stack to modify
+     * @param runes the list of runes to apply to the item
+     */
+    public static void setRunes(@Nullable ItemStack stack, @Nullable List<Rune> runes) {
+        if (stack != null && !stack.isEmpty() && runes != null && !runes.isEmpty()) {
+            ListNBT tagList = new ListNBT();
+            for (Rune rune : runes) {
+                if (rune != null) {
+                    tagList.add(StringNBT.valueOf(rune.getId().toString()));
+                }
+            }
+            stack.setTagInfo(PrimalMagic.MODID + ":runes", tagList);
+        }
     }
 }
