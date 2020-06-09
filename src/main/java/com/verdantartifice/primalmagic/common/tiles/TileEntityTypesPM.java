@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.tiles;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
@@ -45,4 +46,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<TileEntityType<RitualBellTileEntity>> RITUAL_BELL = TILE_ENTITIES.register("ritual_bell", () -> TileEntityType.Builder.create(RitualBellTileEntity::new, BlocksPM.RITUAL_BELL.get()).build(null));
     public static final RegistryObject<TileEntityType<BloodletterTileEntity>> BLOODLETTER = TILE_ENTITIES.register("bloodletter", () -> TileEntityType.Builder.create(BloodletterTileEntity::new, BlocksPM.BLOODLETTER.get()).build(null));
     public static final RegistryObject<TileEntityType<SoulAnvilTileEntity>> SOUL_ANVIL = TILE_ENTITIES.register("soul_anvil", () -> TileEntityType.Builder.create(SoulAnvilTileEntity::new, BlocksPM.SOUL_ANVIL.get()).build(null));
+    public static final RegistryObject<TileEntityType<RunescribingAltarTileEntity>> RUNESCRIBING_ALTAR = TILE_ENTITIES.register("runescribing_altar", () -> TileEntityType.Builder.create(RunescribingAltarTileEntity::new, BlocksPM.RUNESCRIBING_ALTAR_BASIC.get()).build(null));
 }
