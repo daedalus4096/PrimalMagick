@@ -5,7 +5,7 @@
 		"particle": "primalmagic:block/marble_raw",
 		"bottom": "primalmagic:block/marble_raw",
 		"top": "block/enchanting_table_top",
-		"side": "primalmagic:block/runescribing_altar_side"
+		"side": "primalmagic:block/runescribing_altar_basic_side"
 	},
 	"elements": [
 		{

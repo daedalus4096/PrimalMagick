@@ -23,10 +23,17 @@ import net.minecraftforge.common.ToolType;
  * @author Daedalus4096
  */
 public class RunescribingAltarBlock extends Block {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/runescribing_altar"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/runescribing_altar_basic"));
+    
+    protected final int runesAllowed;
 
-    public RunescribingAltarBlock() {
+    public RunescribingAltarBlock(int runesAllowed) {
         super(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
+        this.runesAllowed = runesAllowed;
+    }
+    
+    public int getRunesAllowed() {
+        return this.runesAllowed;
     }
     
     @Override
