@@ -48,4 +48,7 @@ public class ContainersPM {
     public static final RegistryObject<ContainerType<ResearchTableContainer>> RESEARCH_TABLE = CONTAINERS.register("research_table", () -> IForgeContainerType.create((windowId, inv, data) -> {
         return new ResearchTableContainer(windowId, inv);
     }));
+    public static final RegistryObject<ContainerType<RunescribingAltarContainer>> RUNESCRIBING_ALTAR = CONTAINERS.register("runescribing_altar", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        return new RunescribingAltarContainer(windowId, inv);
+    }));
 }

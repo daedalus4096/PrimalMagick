@@ -10,9 +10,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -61,5 +65,17 @@ public class RunescribingAltarBlock extends Block {
         super.eventReceived(state, worldIn, pos, id, param);
         TileEntity tile = worldIn.getTileEntity(pos);
         return (tile == null) ? false : tile.receiveClientEvent(id, param);
+    }
+    
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (!worldIn.isRemote) {
+            // Open the GUI for the altar
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if (tile instanceof RunescribingAltarTileEntity) {
+                player.openContainer((RunescribingAltarTileEntity)tile);
+            }
+        }
+        return ActionResultType.SUCCESS;
     }
 }
