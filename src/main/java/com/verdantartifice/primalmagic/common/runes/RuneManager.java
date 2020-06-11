@@ -20,7 +20,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 
@@ -57,7 +56,7 @@ public class RuneManager {
      * @return the map of rune enchantments and the levels at which they should be applied
      */
     @Nonnull
-    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable NonNullList<Rune> runes, @Nullable ItemStack stack) {
+    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack) {
         if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty()) {
             return Collections.emptyMap();
         }
@@ -65,10 +64,10 @@ public class RuneManager {
         Map<Enchantment, Integer> retVal = new HashMap<>();
         
         // Separate out the given runes by type
-        List<VerbRune> verbRunes = runes.stream().filter(r -> r.getType() == RuneType.VERB).map(r -> (VerbRune)r).collect(Collectors.toList());
-        List<NounRune> nounRunes = runes.stream().filter(r -> r.getType() == RuneType.NOUN).map(r -> (NounRune)r).collect(Collectors.toList());
-        List<SourceRune> sourceRunes = runes.stream().filter(r -> r.getType() == RuneType.SOURCE).map(r -> (SourceRune)r).collect(Collectors.toList());
-        int powerLevel = 1 + (int)runes.stream().filter(r -> r.getType() == RuneType.POWER).count();
+        List<VerbRune> verbRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.VERB).map(r -> (VerbRune)r).collect(Collectors.toList());
+        List<NounRune> nounRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.NOUN).map(r -> (NounRune)r).collect(Collectors.toList());
+        List<SourceRune> sourceRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.SOURCE).map(r -> (SourceRune)r).collect(Collectors.toList());
+        int powerLevel = 1 + (int)runes.stream().filter(r -> r != null && r.getType() == RuneType.POWER).count();
         
         // Iterate through each combination of verb, noun, and source to find enchantments
         for (VerbRune verb : verbRunes) {
@@ -96,25 +95,43 @@ public class RuneManager {
     }
     
     /**
-     * Merge the two enchantment maps, taking the stronger one in case of a collision.
+     * Merge the two enchantment maps, taking the stronger one in case of a collision.  Enchantments in
+     * the addition map will not be added if they are incompatible with those in the original map.
      * 
-     * @param map1 the first enchantment map
-     * @param map2 the second enchantment map
+     * @param original the first enchantment map
+     * @param addition the second enchantment map
      * @return the merged enchantment map
      */
-    public static Map<Enchantment, Integer> mergeEnchantments(@Nonnull Map<Enchantment, Integer> map1, @Nonnull Map<Enchantment, Integer> map2) {
-        Map<Enchantment, Integer> retVal = new HashMap<>();
+    public static Map<Enchantment, Integer> mergeEnchantments(@Nonnull Map<Enchantment, Integer> original, @Nonnull Map<Enchantment, Integer> addition) {
+        // Start with the original map as a base
+        Map<Enchantment, Integer> retVal = new HashMap<>(original);
         
-        // Union the two enchantment sets
-        Set<Enchantment> keySet = new HashSet<Enchantment>();
-        keySet.addAll(map1.keySet());
-        keySet.addAll(map2.keySet());
-        
-        // Add the more powerful one to the output map
-        for (Enchantment ench : keySet) {
-            retVal.put(ench, Math.max(map1.getOrDefault(ench, 0), map2.getOrDefault(ench, 0)));
+        for (Map.Entry<Enchantment, Integer> entry : addition.entrySet()) {
+            if (retVal.containsKey(entry.getKey())) {
+                // If the original already contains the enchantment to be added, set its value to the higher of the two levels
+                retVal.put(entry.getKey(), Math.max(original.getOrDefault(entry.getKey(), 0), entry.getValue()));
+            } else if (EnchantmentHelper.areAllCompatibleWith(original.keySet(), entry.getKey())) {
+                // Only add the addition enchantment if it's compatible with all those in the current output set
+                retVal.put(entry.getKey(), entry.getValue());
+                
+            }
         }
+        
         return retVal;
+    }
+    
+    /**
+     * Determine whether the given item stack has had runes applied to it.
+     * 
+     * @param stack the item stack to query
+     * @return true if the item stack has one or more runes applied, false otherwise
+     */
+    public static boolean hasRunes(@Nullable ItemStack stack) {
+        if (stack == null || stack.isEmpty() || !stack.hasTag()) {
+            return false;
+        } else {
+            return !stack.getTag().getList(PrimalMagic.MODID + ":runes", Constants.NBT.TAG_STRING).isEmpty();
+        }
     }
     
     /**

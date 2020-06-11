@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagic.common.containers.RunescribingAltarBasicC
 import com.verdantartifice.primalmagic.common.containers.RunescribingAltarEnchantedContainer;
 import com.verdantartifice.primalmagic.common.misc.DeviceTier;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,11 +19,9 @@ import net.minecraft.util.text.TranslationTextComponent;
  * 
  * @author Daedalus4096
  */
-public class RunescribingAltarTileEntity extends TileInventoryPM implements INamedContainerProvider {
-    protected static final int MAX_RUNES = 9;
-    
+public class RunescribingAltarTileEntity extends TilePM implements INamedContainerProvider {
     public RunescribingAltarTileEntity() {
-        super(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), MAX_RUNES + 2);
+        super(TileEntityTypesPM.RUNESCRIBING_ALTAR.get());
     }
 
     @Override
@@ -32,9 +30,9 @@ public class RunescribingAltarTileEntity extends TileInventoryPM implements INam
             DeviceTier tier = ((RunescribingAltarBlock)this.getBlockState().getBlock()).getDeviceTier();
             switch (tier) {
             case BASIC:
-                return new RunescribingAltarBasicContainer(windowId, playerInv, this);
+                return new RunescribingAltarBasicContainer(windowId, playerInv);
             case ENCHANTED:
-                return new RunescribingAltarEnchantedContainer(windowId, playerInv, this);
+                return new RunescribingAltarEnchantedContainer(windowId, playerInv);
             default:
                 return null;
             }

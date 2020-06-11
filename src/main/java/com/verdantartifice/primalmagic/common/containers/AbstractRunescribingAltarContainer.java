@@ -1,14 +1,29 @@
 package com.verdantartifice.primalmagic.common.containers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.common.containers.slots.RunescribingResultSlot;
+import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagic.common.runes.Rune;
+import com.verdantartifice.primalmagic.common.runes.RuneManager;
+
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.world.World;
 
 /**
@@ -17,18 +32,21 @@ import net.minecraft.world.World;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarContainer extends Container {
-    protected final IInventory altarInv;
+    protected final CraftingInventory altarInv = new CraftingInventory(this, 4, 3);
+    protected final IInventory resultInv = new Inventory(1);
+    protected final PlayerEntity player;
     protected final World world;
 
-    public AbstractRunescribingAltarContainer(@Nonnull ContainerType<?> type, int id, @Nonnull PlayerInventory playerInv, @Nonnull IInventory altarInv) {
+    public AbstractRunescribingAltarContainer(@Nonnull ContainerType<?> type, int id, @Nonnull PlayerInventory playerInv) {
         super(type, id);
-        this.altarInv = altarInv;
-        this.world = playerInv.player.world;
+        this.player = playerInv.player;
+        this.world = this.player.world;
         
-        // Slot 0: runescribing input
+        // Slot 0: runescribing output
+        this.addSlot(new RunescribingResultSlot(this.player, this.altarInv, this.resultInv, 0, 138, 35));
+        
+        // Slot 1: runescribing input
         this.addSlot(new Slot(this.altarInv, 0, 19, 35));
-        
-        // TODO Slot 1: runescribing output
         
         // Slots 2-(R+1), where R = rune capacity: runes
         this.addRuneSlots();
@@ -62,10 +80,60 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
     public boolean canInteractWith(PlayerEntity playerIn) {
         return this.altarInv.isUsableByPlayer(playerIn);
     }
+    
+    @Override
+    public void onContainerClosed(PlayerEntity playerIn) {
+        super.onContainerClosed(playerIn);
+        this.clearContainer(playerIn, this.world, this.altarInv);
+    }
 
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         // TODO Auto-generated method stub
         return super.transferStackInSlot(playerIn, index);
+    }
+    
+    @Override
+    public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
+        return slotIn.inventory != this.resultInv && super.canMergeSlot(stack, slotIn);
+    }
+    
+    @Override
+    public void onCraftMatrixChanged(IInventory inventoryIn) {
+        super.onCraftMatrixChanged(inventoryIn);
+        this.slotChangedCraftingGrid();
+    }
+    
+    protected void slotChangedCraftingGrid() {
+        if (!this.world.isRemote && this.player instanceof ServerPlayerEntity) {
+            ServerPlayerEntity spe = (ServerPlayerEntity)this.player;
+            ItemStack stack = ItemStack.EMPTY;
+            ItemStack baseStack = this.altarInv.getStackInSlot(0);
+            
+            // Don't allow application to items that already have runes
+            if (!RuneManager.hasRunes(baseStack)) {
+                // Get the list of runes in the input
+                List<Rune> runes = new ArrayList<>();
+                for (int index = 1; index < this.altarInv.getSizeInventory(); index++) {
+                    ItemStack inputStack = this.altarInv.getStackInSlot(index);
+                    if (inputStack != null && inputStack.getItem() instanceof RuneItem) {
+                        runes.add(((RuneItem)inputStack.getItem()).getRune());
+                    }
+                }
+
+                // Determine what enchantments can be applied with the slotted rune combination
+                Map<Enchantment, Integer> inputEnch = RuneManager.getRuneEnchantments(runes, baseStack);
+                if (!inputEnch.isEmpty()) {
+                    Map<Enchantment, Integer> finalEnch = RuneManager.mergeEnchantments(EnchantmentHelper.getEnchantments(baseStack), inputEnch);
+                    stack = baseStack.copy();
+                    EnchantmentHelper.setEnchantments(finalEnch, stack);
+                    RuneManager.setRunes(stack, runes);
+                }
+            }
+            
+            // Send a packet to the client to update its GUI with the shown output
+            this.resultInv.setInventorySlotContents(0, stack);
+            spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
+        }
     }
 }
