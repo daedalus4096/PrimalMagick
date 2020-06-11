@@ -47,6 +47,7 @@ import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodPlanksBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodSlabBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodStairsBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodTree;
+import com.verdantartifice.primalmagic.common.misc.DeviceTier;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -227,7 +228,7 @@ public class BlocksPM {
     public static final RegistryObject<RitualBellBlock> RITUAL_BELL = BLOCKS.register("ritual_bell", RitualBellBlock::new);
     public static final RegistryObject<BloodletterBlock> BLOODLETTER = BLOCKS.register("bloodletter", BloodletterBlock::new);
     public static final RegistryObject<SoulAnvilBlock> SOUL_ANVIL = BLOCKS.register("soul_anvil", SoulAnvilBlock::new);
-    public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_BASIC = BLOCKS.register("runescribing_altar_basic", () -> new RunescribingAltarBlock(3));
+    public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_BASIC = BLOCKS.register("runescribing_altar_basic", () -> new RunescribingAltarBlock(DeviceTier.BASIC));
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

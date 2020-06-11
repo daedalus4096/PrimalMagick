@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagic.common.blocks.crafting;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.misc.DeviceTier;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
+import com.verdantartifice.primalmagic.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
@@ -29,18 +31,19 @@ import net.minecraftforge.common.ToolType;
  * 
  * @author Daedalus4096
  */
-public class RunescribingAltarBlock extends Block {
+public class RunescribingAltarBlock extends Block implements ITieredDevice {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/runescribing_altar_basic"));
     
-    protected final int runesAllowed;
+    protected final DeviceTier tier;
 
-    public RunescribingAltarBlock(int runesAllowed) {
+    public RunescribingAltarBlock(DeviceTier tier) {
         super(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
-        this.runesAllowed = runesAllowed;
+        this.tier = tier;
     }
     
-    public int getRunesAllowed() {
-        return this.runesAllowed;
+    @Override
+    public DeviceTier getDeviceTier() {
+        return this.tier;
     }
     
     @Override

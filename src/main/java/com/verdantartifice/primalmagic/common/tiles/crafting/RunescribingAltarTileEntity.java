@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagic.common.tiles.crafting;
 
 import com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarBlock;
-import com.verdantartifice.primalmagic.common.containers.RunescribingAltarContainer;
+import com.verdantartifice.primalmagic.common.containers.RunescribingAltarBasicContainer;
+import com.verdantartifice.primalmagic.common.misc.DeviceTier;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
@@ -27,8 +28,13 @@ public class RunescribingAltarTileEntity extends TileInventoryPM implements INam
     @Override
     public Container createMenu(int windowId, PlayerInventory playerInv, PlayerEntity player) {
         if (this.getBlockState().getBlock() instanceof RunescribingAltarBlock) {
-            int maxRunes = ((RunescribingAltarBlock)this.getBlockState().getBlock()).getRunesAllowed();
-            return new RunescribingAltarContainer(windowId, playerInv, this, maxRunes);
+            DeviceTier tier = ((RunescribingAltarBlock)this.getBlockState().getBlock()).getDeviceTier();
+            switch (tier) {
+            case BASIC:
+                return new RunescribingAltarBasicContainer(windowId, playerInv, this);
+            default:
+                return null;
+            }
         } else {
             return null;
         }
