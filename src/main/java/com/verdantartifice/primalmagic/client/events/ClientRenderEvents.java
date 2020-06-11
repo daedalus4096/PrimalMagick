@@ -5,6 +5,7 @@ import java.util.Collections;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.config.Config;
+import com.verdantartifice.primalmagic.common.runes.RuneManager;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -14,6 +15,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,6 +36,11 @@ public class ClientRenderEvents {
     public static void renderTooltip(ItemTooltipEvent event) {
         Minecraft mc = Minecraft.getInstance();
         Screen gui = mc.currentScreen;
+        
+        // Show a tooltip entry if the item stack is runescribed
+        if (RuneManager.hasRunes(event.getItemStack())) {
+            event.getToolTip().add(new TranslationTextComponent("tooltip.primalmagic.runescribed").applyTextStyle(TextFormatting.DARK_AQUA));
+        }
         
         // Make the tooltip changes for showing primal affinities on an itemstack
         if (gui instanceof ContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHelper.isMouseGrabbed() && event.getItemStack() != null) {
