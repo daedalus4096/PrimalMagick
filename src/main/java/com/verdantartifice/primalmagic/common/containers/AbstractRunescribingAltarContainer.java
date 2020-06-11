@@ -36,6 +36,7 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
     protected final IInventory resultInv = new Inventory(1);
     protected final PlayerEntity player;
     protected final World world;
+    protected final Slot runeSlot;
 
     public AbstractRunescribingAltarContainer(@Nonnull ContainerType<?> type, int id, @Nonnull PlayerInventory playerInv) {
         super(type, id);
@@ -49,7 +50,7 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
         this.addSlot(new Slot(this.altarInv, 0, 19, 35));
         
         // Slots 2-(R+1), where R = rune capacity: runes
-        this.addRuneSlots();
+        this.runeSlot = this.addRuneSlots();
         
         // Slots (R+2)-(R+28), where R = rune capacity: Player backpack
         for (int i = 0; i < 3; i++) {
@@ -74,7 +75,8 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
     /**
      * Add slots for runes to this container.
      */
-    protected abstract void addRuneSlots();
+    @Nonnull
+    protected abstract Slot addRuneSlots();
     
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
@@ -89,8 +91,49 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
 
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-        // TODO Auto-generated method stub
-        return super.transferStackInSlot(playerIn, index);
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+        if (slot != null && slot.getHasStack()) {
+            ItemStack slotStack = slot.getStack();
+            stack = slotStack.copy();
+            if (index == 0) {
+                // If transferring the output item, move it into the player's backpack or hotbar
+                if (!this.mergeItemStack(slotStack, this.getRuneCapacity() + 2, this.getRuneCapacity() + 38, true)) {
+                    return ItemStack.EMPTY;
+                }
+                slot.onSlotChange(slotStack, stack);
+            } else if (index >= (this.getRuneCapacity() + 2) && index < (this.getRuneCapacity() + 38)) {
+                // If transferring from the player's backpack or hotbar, put runes in the rune section and everything else into the input slot
+                if (this.runeSlot.isItemValid(slotStack)) {
+                    if (!this.mergeItemStack(slotStack, 2, this.getRuneCapacity() + 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+            } else if (!this.mergeItemStack(slotStack, this.getRuneCapacity() + 2, this.getRuneCapacity() + 38, false)) {
+                // Move all other transfers into the backpack or hotbar
+                return ItemStack.EMPTY;
+            }
+            
+            if (slotStack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+            
+            if (slotStack.getCount() == stack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+            
+            ItemStack taken = slot.onTake(playerIn, slotStack);
+            if (index == 0) {
+                playerIn.dropItem(taken, false);
+            }
+        }
+        return stack;
     }
     
     @Override

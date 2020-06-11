@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.common.containers.slots.RuneSlot;
 
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 
 /**
  * Server data container for this basic runescribing altar GUI.
@@ -24,9 +25,9 @@ public class RunescribingAltarBasicContainer extends AbstractRunescribingAltarCo
     }
     
     @Override
-    protected void addRuneSlots() {
+    protected Slot addRuneSlots() {
         this.addSlot(new RuneSlot(this.altarInv, 1, 44, 35));
         this.addSlot(new RuneSlot(this.altarInv, 2, 62, 35));
-        this.addSlot(new RuneSlot(this.altarInv, 3, 80, 35));
+        return this.addSlot(new RuneSlot(this.altarInv, 3, 80, 35));
     }
 }
