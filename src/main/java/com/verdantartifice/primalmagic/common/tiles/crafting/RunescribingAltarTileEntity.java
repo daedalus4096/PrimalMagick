@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarB
 import com.verdantartifice.primalmagic.common.containers.RunescribingAltarBasicContainer;
 import com.verdantartifice.primalmagic.common.containers.RunescribingAltarEnchantedContainer;
 import com.verdantartifice.primalmagic.common.containers.RunescribingAltarForbiddenContainer;
+import com.verdantartifice.primalmagic.common.containers.RunescribingAltarHeavenlyContainer;
 import com.verdantartifice.primalmagic.common.misc.DeviceTier;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
@@ -36,6 +37,8 @@ public class RunescribingAltarTileEntity extends TilePM implements INamedContain
                 return new RunescribingAltarEnchantedContainer(windowId, playerInv);
             case FORBIDDEN:
                 return new RunescribingAltarForbiddenContainer(windowId, playerInv);
+            case HEAVENLY:
+                return new RunescribingAltarHeavenlyContainer(windowId, playerInv);
             default:
                 return null;
             }

@@ -57,4 +57,7 @@ public class ContainersPM {
     public static final RegistryObject<ContainerType<RunescribingAltarForbiddenContainer>> RUNESCRIBING_ALTAR_FORBIDDEN = CONTAINERS.register("runescribing_altar_forbidden", () -> IForgeContainerType.create((windowId, inv, data) -> {
         return new RunescribingAltarForbiddenContainer(windowId, inv);
     }));
+    public static final RegistryObject<ContainerType<RunescribingAltarHeavenlyContainer>> RUNESCRIBING_ALTAR_HEAVENLY = CONTAINERS.register("runescribing_altar_heavenly", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        return new RunescribingAltarHeavenlyContainer(windowId, inv);
+    }));
 }
