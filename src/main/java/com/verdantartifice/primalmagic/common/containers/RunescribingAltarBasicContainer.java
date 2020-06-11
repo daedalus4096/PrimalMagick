@@ -19,6 +19,6 @@ public class RunescribingAltarBasicContainer extends AbstractRunescribingAltarCo
     }
     
     public RunescribingAltarBasicContainer(int id, @Nonnull PlayerInventory playerInv, @Nonnull IInventory altarInv) {
-        super(id, playerInv, altarInv, DeviceTier.BASIC);
+        super(ContainersPM.RUNESCRIBING_ALTAR_BASIC.get(), id, playerInv, altarInv, DeviceTier.BASIC);
     }
 }

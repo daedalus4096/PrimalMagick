@@ -229,6 +229,7 @@ public class BlocksPM {
     public static final RegistryObject<BloodletterBlock> BLOODLETTER = BLOCKS.register("bloodletter", BloodletterBlock::new);
     public static final RegistryObject<SoulAnvilBlock> SOUL_ANVIL = BLOCKS.register("soul_anvil", SoulAnvilBlock::new);
     public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_BASIC = BLOCKS.register("runescribing_altar_basic", () -> new RunescribingAltarBlock(DeviceTier.BASIC));
+    public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_ENCHANTED = BLOCKS.register("runescribing_altar_enchanted", () -> new RunescribingAltarBlock(DeviceTier.ENCHANTED));
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

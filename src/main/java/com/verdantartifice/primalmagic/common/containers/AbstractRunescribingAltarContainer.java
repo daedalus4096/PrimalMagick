@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -23,8 +24,8 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
     protected final World world;
     protected final DeviceTier tier;
 
-    public AbstractRunescribingAltarContainer(int id, @Nonnull PlayerInventory playerInv, @Nonnull IInventory altarInv, @Nonnull DeviceTier tier) {
-        super(ContainersPM.RUNESCRIBING_ALTAR_BASIC.get(), id);
+    public AbstractRunescribingAltarContainer(@Nonnull ContainerType<?> type, int id, @Nonnull PlayerInventory playerInv, @Nonnull IInventory altarInv, @Nonnull DeviceTier tier) {
+        super(type, id);
         this.altarInv = altarInv;
         this.world = playerInv.player.world;
         this.tier = tier;

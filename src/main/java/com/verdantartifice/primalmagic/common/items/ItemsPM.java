@@ -200,7 +200,8 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> RITUAL_BELL = ITEMS.register("ritual_bell", () -> new BlockItem(BlocksPM.RITUAL_BELL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> BLOODLETTER = ITEMS.register("bloodletter", () -> new BlockItem(BlocksPM.BLOODLETTER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> SOUL_ANVIL = ITEMS.register("soul_anvil", () -> new BlockItem(BlocksPM.SOUL_ANVIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<BlockItem> RUNESCRIBING_ALTAR = ITEMS.register("runescribing_altar_basic", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> RUNESCRIBING_ALTAR_BASIC = ITEMS.register("runescribing_altar_basic", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
+    public static final RegistryObject<BlockItem> RUNESCRIBING_ALTAR_ENCHANTED = ITEMS.register("runescribing_altar_enchanted", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
 
     // Register miscellaneous block items
     public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

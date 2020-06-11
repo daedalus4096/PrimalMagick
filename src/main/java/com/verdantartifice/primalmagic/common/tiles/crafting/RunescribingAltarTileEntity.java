@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.tiles.crafting;
 
 import com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarBlock;
 import com.verdantartifice.primalmagic.common.containers.RunescribingAltarBasicContainer;
+import com.verdantartifice.primalmagic.common.containers.RunescribingAltarEnchantedContainer;
 import com.verdantartifice.primalmagic.common.misc.DeviceTier;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
@@ -32,6 +33,8 @@ public class RunescribingAltarTileEntity extends TileInventoryPM implements INam
             switch (tier) {
             case BASIC:
                 return new RunescribingAltarBasicContainer(windowId, playerInv, this);
+            case ENCHANTED:
+                return new RunescribingAltarEnchantedContainer(windowId, playerInv, this);
             default:
                 return null;
             }
