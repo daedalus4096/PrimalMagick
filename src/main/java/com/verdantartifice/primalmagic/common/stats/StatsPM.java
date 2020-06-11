@@ -20,6 +20,7 @@ public class StatsPM {
     public static final Stat SPELLS_CRAFTED = Stat.create("spells_crafted", IStatFormatter.DEFAULT, false);
     public static final Stat SPELLS_CRAFTED_MAX_COST = Stat.create("spells_crafted_max_cost", IStatFormatter.DEFAULT, false);
     public static final Stat RESEARCH_PROJECTS_COMPLETED = Stat.create("research_projects_completed", IStatFormatter.DEFAULT, false);
+    public static final Stat ITEMS_RUNESCRIBED = Stat.create("items_runescribed", IStatFormatter.DEFAULT, false);
     public static final Stat RITUALS_COMPLETED = Stat.create("rituals_completed", IStatFormatter.DEFAULT, false);
     public static final Stat MANA_SPENT_EARTH = Stat.create("mana_spent_earth", IStatFormatter.DEFAULT, false);
     public static final Stat MANA_SPENT_SEA = Stat.create("mana_spent_sea", IStatFormatter.DEFAULT, false);

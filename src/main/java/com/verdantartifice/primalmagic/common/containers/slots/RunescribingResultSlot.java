@@ -1,6 +1,10 @@
 package com.verdantartifice.primalmagic.common.containers.slots;
 
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
+
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -27,8 +31,12 @@ public class RunescribingResultSlot extends Slot {
     
     @Override
     protected void onCrafting(ItemStack stack) {
-        // TODO Increment the player's runescribing stat
         super.onCrafting(stack);
+        
+        // Increment the player's runescribing stat
+        if (this.player instanceof ServerPlayerEntity) {
+            StatsManager.incrementValue((ServerPlayerEntity)this.player, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
+        }
     }
     
     @Override
