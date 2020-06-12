@@ -27,4 +27,5 @@ public class RecipeSerializersPM {
     public static final RegistryObject<SpecialRecipeSerializer<WandAssemblyRecipe>> WAND_ASSEMBLY_SPECIAL = RECIPE_SERIALIZERS.register("wand_assembly_special", () -> new SpecialRecipeSerializer<>(WandAssemblyRecipe::new));
     public static final RegistryObject<SpecialRecipeSerializer<WandInscriptionRecipe>> WAND_INSCRIPTION_SPECIAL = RECIPE_SERIALIZERS.register("wand_inscription_special", () -> new SpecialRecipeSerializer<>(WandInscriptionRecipe::new));
     public static final RegistryObject<SpecialRecipeSerializer<SpellcraftingRecipe>> SPELLCRAFTING_SPECIAL = RECIPE_SERIALIZERS.register("spellcrafting_special", () -> new SpecialRecipeSerializer<>(SpellcraftingRecipe::new));
+    public static final RegistryObject<IRecipeSerializer<RunecarvingRecipe>> RUNECARVING = RECIPE_SERIALIZERS.register("runecarving", RunecarvingRecipe.Serializer::new);
 }

@@ -22,6 +22,7 @@ public class InitRecipes {
     public static void initRecipeTypes() {
         RecipeTypesPM.ARCANE_CRAFTING = IRecipeType.register(PrimalMagic.MODID + ":arcane_crafting");
         RecipeTypesPM.RITUAL = IRecipeType.register(PrimalMagic.MODID + ":ritual");
+        RecipeTypesPM.RUNECARVING = IRecipeType.register(PrimalMagic.MODID + ":runecarving");
     }
     
     public static void initWandTransforms() {
