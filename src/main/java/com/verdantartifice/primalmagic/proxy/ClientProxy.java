@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagic.client.gui.CalcinatorScreen;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.ResearchTableScreen;
+import com.verdantartifice.primalmagic.client.gui.RunecarvingTableScreen;
 import com.verdantartifice.primalmagic.client.gui.RunescribingAltarBasicScreen;
 import com.verdantartifice.primalmagic.client.gui.RunescribingAltarEnchantedScreen;
 import com.verdantartifice.primalmagic.client.gui.RunescribingAltarForbiddenScreen;
@@ -78,6 +79,7 @@ public class ClientProxy extends CommonProxy {
         ScreenManager.registerFactory(ContainersPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), RunescribingAltarEnchantedScreen::new);
         ScreenManager.registerFactory(ContainersPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), RunescribingAltarForbiddenScreen::new);
         ScreenManager.registerFactory(ContainersPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), RunescribingAltarHeavenlyScreen::new);
+        ScreenManager.registerFactory(ContainersPM.RUNECARVING_TABLE.get(), RunecarvingTableScreen::new);
     }
     
     private void registerTERs() {
