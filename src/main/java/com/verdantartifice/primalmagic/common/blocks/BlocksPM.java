@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.base.SaplingBlockPM;
 import com.verdantartifice.primalmagic.common.blocks.crafting.ArcaneWorkbenchBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
+import com.verdantartifice.primalmagic.common.blocks.crafting.RunecarvingTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandAssemblyTableBlock;
@@ -232,6 +233,7 @@ public class BlocksPM {
     public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_ENCHANTED = BLOCKS.register("runescribing_altar_enchanted", () -> new RunescribingAltarBlock(DeviceTier.ENCHANTED));
     public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_FORBIDDEN = BLOCKS.register("runescribing_altar_forbidden", () -> new RunescribingAltarBlock(DeviceTier.FORBIDDEN));
     public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_HEAVENLY = BLOCKS.register("runescribing_altar_heavenly", () -> new RunescribingAltarBlock(DeviceTier.HEAVENLY));
+    public static final RegistryObject<RunecarvingTableBlock> RUNECARVING_TABLE = BLOCKS.register("runecarving_table", RunecarvingTableBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
