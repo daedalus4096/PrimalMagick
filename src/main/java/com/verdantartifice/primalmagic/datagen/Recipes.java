@@ -62,6 +62,7 @@ public class Recipes extends RecipeProvider {
         this.registerHallowsteelRecipes(consumer);
         this.registerWandComponentRecipes(consumer);
         this.registerRitualCandleRecipes(consumer);
+        this.registerRuneRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -1500,6 +1501,19 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemTagsPM.RITUAL_CANDLES)
             .addIngredient(Tags.Items.DYES_YELLOW)
             .addCriterion("has_candle", this.hasItem(ItemTagsPM.RITUAL_CANDLES))
+            .build(consumer);
+    }
+    
+    protected void registerRuneRecipes(Consumer<IFinishedRecipe> consumer) {
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_UNATTUNED.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RUNEWORKING")))
+            .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_PROJECT.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_PROJECT")))
             .build(consumer);
     }
 }
