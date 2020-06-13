@@ -1,8 +1,11 @@
 package com.verdantartifice.primalmagic.client.gui;
 
+import java.util.List;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.RunecarvingTableContainer;
+import com.verdantartifice.primalmagic.common.crafting.IRunecarvingRecipe;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
@@ -64,30 +67,30 @@ public class RunecarvingTableScreen extends ContainerScreen<RunecarvingTableCont
     }
     
     protected void drawRecipesBackground(int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
-//        for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.container.getRecipeListSize(); ++i) {
-//            int j = i - this.recipeIndexOffset;
-//            int k = left + j % 4 * 16;
-//            int l = j / 4;
-//            int i1 = top + l * 18 + 2;
-//            int j1 = this.ySize;
-//            if (i == this.container.getSelectedRecipe()) {
-//                j1 += 18;
-//            } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
-//                j1 += 36;
-//            }
-//            this.blit(k, i1 - 1, 0, j1, 16, 18);
-//        }
+        for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.container.getRecipeListSize(); ++i) {
+            int j = i - this.recipeIndexOffset;
+            int k = left + j % 4 * 16;
+            int l = j / 4;
+            int i1 = top + l * 18 + 2;
+            int j1 = this.ySize;
+            if (i == this.container.getSelectedRecipe()) {
+                j1 += 18;
+            } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
+                j1 += 36;
+            }
+            this.blit(k, i1 - 1, 0, j1, 16, 18);
+        }
     }
     
     protected void drawRecipesItems(int left, int top, int recipeIndexOffsetMax) {
-//        List<StonecuttingRecipe> list = this.container.getRecipeList();
-//        for(int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.container.getRecipeListSize(); ++i) {
-//            int j = i - this.recipeIndexOffset;
-//            int k = left + j % 4 * 16;
-//            int l = j / 4;
-//            int i1 = top + l * 18 + 2;
-//            this.minecraft.getItemRenderer().renderItemAndEffectIntoGUI(list.get(i).getRecipeOutput(), k, i1);
-//        }
+        List<IRunecarvingRecipe> list = this.container.getRecipeList();
+        for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.container.getRecipeListSize(); ++i) {
+            int j = i - this.recipeIndexOffset;
+            int k = left + j % 4 * 16;
+            int l = j / 4;
+            int i1 = top + l * 18 + 2;
+            this.minecraft.getItemRenderer().renderItemAndEffectIntoGUI(list.get(i).getRecipeOutput(), k, i1);
+        }
     }
     
     @Override
@@ -155,7 +158,7 @@ public class RunecarvingTableScreen extends ContainerScreen<RunecarvingTableCont
      * Called every time this screen's container is changed (is marked as dirty).
      */
     protected void onInventoryUpdate() {
-        this.hasItemsInInputSlot = this.container.hasItemsinInputSlot();
+        this.hasItemsInInputSlot = this.container.hasItemsInInputSlot();
         if (!this.hasItemsInInputSlot) {
             this.sliderProgress = 0.0F;
             this.recipeIndexOffset = 0;

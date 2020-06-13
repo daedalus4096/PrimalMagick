@@ -1,8 +1,14 @@
 package com.verdantartifice.primalmagic.common.containers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.LapisLazuliSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.StoneSlabSlot;
+import com.verdantartifice.primalmagic.common.crafting.IRunecarvingRecipe;
+import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,6 +34,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class RunecarvingTableContainer extends Container {
     protected final IWorldPosCallable worldPosCallable;
     protected final IntReferenceHolder selectedRecipe = IntReferenceHolder.single();
+    protected final PlayerEntity player;
     protected final World world;
     
     protected final Slot inputSlabSlot;
@@ -43,7 +50,7 @@ public class RunecarvingTableContainer extends Container {
     };
     protected final CraftResultInventory outputInventory = new CraftResultInventory();
 
-    // TODO Recipe list
+    protected List<IRunecarvingRecipe> recipes = new ArrayList<>();
     
     protected ItemStack slabInput = ItemStack.EMPTY;
     protected ItemStack lapisInput = ItemStack.EMPTY;
@@ -62,6 +69,7 @@ public class RunecarvingTableContainer extends Container {
     public RunecarvingTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable worldPosCallable) {
         super(ContainersPM.RUNECARVING_TABLE.get(), windowId);
         this.worldPosCallable = worldPosCallable;
+        this.player = inv.player;
         this.world = inv.player.world;
         
         // Slot 0: input slabs
@@ -112,23 +120,22 @@ public class RunecarvingTableContainer extends Container {
 
     @OnlyIn(Dist.CLIENT)
     public int getSelectedRecipe() {
-       return this.selectedRecipe.get();
+        return this.selectedRecipe.get();
     }
 
-//    @OnlyIn(Dist.CLIENT)
-//    public List<StonecuttingRecipe> getRecipeList() {
-//       return this.recipes;
-//    }
+    @OnlyIn(Dist.CLIENT)
+    public List<IRunecarvingRecipe> getRecipeList() {
+        return this.recipes;
+    }
 
     @OnlyIn(Dist.CLIENT)
     public int getRecipeListSize() {
-        return 0;
-//       return this.recipes.size();
+        return this.recipes.size();
     }
 
     @OnlyIn(Dist.CLIENT)
-    public boolean hasItemsinInputSlot() {
-        return this.inputSlabSlot.getHasStack() && this.inputLapisSlot.getHasStack() /* && !this.recipes.isEmpty() */;
+    public boolean hasItemsInInputSlot() {
+        return this.inputSlabSlot.getHasStack() && this.inputLapisSlot.getHasStack() && !this.recipes.isEmpty();
     }
     
     @Override
@@ -138,10 +145,10 @@ public class RunecarvingTableContainer extends Container {
 
     @Override
     public boolean enchantItem(PlayerEntity playerIn, int id) {
-//        if (id >= 0 && id < this.recipes.size()) {
-//            this.selectedRecipe.set(id);
-//            this.updateRecipeResultSlot();
-//        }
+        if (id >= 0 && id < this.recipes.size()) {
+            this.selectedRecipe.set(id);
+            this.updateRecipeResultSlot();
+        }
         return true;
     }
     
@@ -156,21 +163,23 @@ public class RunecarvingTableContainer extends Container {
     };
     
     protected void updateAvailableRecipes(IInventory inventoryIn, ItemStack slabStack, ItemStack lapisStack) {
-//        this.recipes.clear();
+        this.recipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.putStack(ItemStack.EMPTY);
         if (!slabStack.isEmpty() && !lapisStack.isEmpty()) {
-//            this.recipes = this.world.getRecipeManager().getRecipes(IRecipeType.STONECUTTING, inventoryIn, this.world);
+            this.recipes = this.world.getRecipeManager().getRecipes(RecipeTypesPM.RUNECARVING, inventoryIn, this.world).stream()
+                    .filter(r -> r != null && (r.getRequiredResearch() == null || r.getRequiredResearch().isKnownByStrict(this.player)))
+                    .collect(Collectors.toList());
         }
     }
     
     protected void updateRecipeResultSlot() {
-//        if (!this.recipes.isEmpty()) {
-//            StonecuttingRecipe stonecuttingrecipe = this.recipes.get(this.selectedRecipe.get());
-//            this.outputInventorySlot.putStack(stonecuttingrecipe.getCraftingResult(this.inputInventory));
-//        } else {
-//            this.outputInventorySlot.putStack(ItemStack.EMPTY);
-//        }
+        if (!this.recipes.isEmpty()) {
+            IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
+            this.outputSlot.putStack(recipe.getCraftingResult(this.inputInventory));
+        } else {
+            this.outputSlot.putStack(ItemStack.EMPTY);
+        }
         this.detectAndSendChanges();
     }
 
