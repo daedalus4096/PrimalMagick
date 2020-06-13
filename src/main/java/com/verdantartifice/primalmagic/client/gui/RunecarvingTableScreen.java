@@ -1,9 +1,11 @@
 package com.verdantartifice.primalmagic.client.gui;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.containers.RunecarvingTableContainer;
 import com.verdantartifice.primalmagic.common.crafting.IRunecarvingRecipe;
 
@@ -11,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
@@ -63,7 +66,7 @@ public class RunecarvingTableScreen extends ContainerScreen<RunecarvingTableCont
         int i1 = this.guiTop + 14;
         int j1 = this.recipeIndexOffset + 12;
         this.drawRecipesBackground(mouseX, mouseY, l, i1, j1);
-        this.drawRecipesItems(l, i1, j1);
+        this.drawRecipesItems(mouseX, mouseY, l, i1, j1);
     }
     
     protected void drawRecipesBackground(int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
@@ -82,14 +85,18 @@ public class RunecarvingTableScreen extends ContainerScreen<RunecarvingTableCont
         }
     }
     
-    protected void drawRecipesItems(int left, int top, int recipeIndexOffsetMax) {
+    protected void drawRecipesItems(int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
         List<IRunecarvingRecipe> list = this.container.getRecipeList();
         for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.container.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = left + j % 4 * 16;
             int l = j / 4;
             int i1 = top + l * 18 + 2;
-            this.minecraft.getItemRenderer().renderItemAndEffectIntoGUI(list.get(i).getRecipeOutput(), k, i1);
+            ItemStack output = list.get(i).getRecipeOutput();
+            this.minecraft.getItemRenderer().renderItemAndEffectIntoGUI(output, k, i1);
+            if (mouseX >= k && mouseX < k + 16 && mouseY >= i1 && mouseY < i1 + 18) {
+                GuiUtils.renderCustomTooltip(Collections.singletonList(output.getDisplayName()), mouseX, mouseY);
+            }
         }
     }
     
