@@ -7,7 +7,8 @@
             "parents": [ "UNLOCK_RUNEWORKING" ],
             "stages": [
                 {
-                    "text": "primalmagic.research.basic_runeworking.text.stage.1"
+                    "text": "primalmagic.research.basic_runeworking.text.stage.1",
+                    "recipes": [ "primalmagic:rune_unattuned" ]
                 }
             ],
             "addenda": []
@@ -71,7 +72,8 @@
                     "required_knowledge": ["OBSERVATION;1"]
                 },
                 {
-                    "text": "primalmagic.research.rune_project.text.stage.2"
+                    "text": "primalmagic.research.rune_project.text.stage.2",
+                    "recipes": [ "primalmagic:rune_project" ]
                 }
             ],
             "addenda": []

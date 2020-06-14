@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.crafting.RitualRecipe;
+import com.verdantartifice.primalmagic.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.ShapelessArcaneRecipe;
 
@@ -29,6 +30,8 @@ public class RecipePageFactory {
             return new ShapedRecipePage((ShapedRecipe)recipe);
         } else if (recipe instanceof RitualRecipe) {
             return new RitualRecipePage((RitualRecipe)recipe);
+        } else if (recipe instanceof RunecarvingRecipe) {
+            return new RunecarvingRecipePage((RunecarvingRecipe)recipe);
         } else {
             return null;
         }

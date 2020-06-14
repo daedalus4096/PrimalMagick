@@ -938,6 +938,7 @@
     "primalmagic.grimoire.shapeless_recipe_header": "Workbench (Shapeless)",
     "primalmagic.grimoire.shaped_recipe_header": "Workbench",
     "primalmagic.grimoire.ritual_recipe_header": "Ritual Altar",
+    "primalmagic.grimoire.runecarving_recipe_header": "Runecarving Table",
     "primalmagic.grimoire.must_obtain_header": "Will be consumed:",
     "primalmagic.grimoire.must_craft_header": "Must craft:",
     "primalmagic.grimoire.required_knowledge_header": "Required knowledge:",
