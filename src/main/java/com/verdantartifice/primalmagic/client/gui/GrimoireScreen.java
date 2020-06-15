@@ -341,7 +341,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header." + headerName).applyTextStyle(TextFormatting.UNDERLINE);
         if (properties.heightRemaining < 36 && !properties.page.getContents().isEmpty()) {
             // If there's not room for the spacer, the header, and a first entry, skip to the next page
-            properties.heightRemaining = 165;
+            properties.heightRemaining = 155;
             this.pages.add(properties.page);
             properties.page = new DisciplinePage(discipline);
             properties.page.addContent(headerText);
@@ -359,7 +359,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             properties.page.addContent(entry);
             properties.heightRemaining -= 12;
             if (properties.heightRemaining < 12 && !properties.page.getContents().isEmpty()) {
-                properties.heightRemaining = 165;
+                properties.heightRemaining = 155;
                 this.pages.add(properties.page);
                 properties.page = new DisciplinePage(discipline);
             }
