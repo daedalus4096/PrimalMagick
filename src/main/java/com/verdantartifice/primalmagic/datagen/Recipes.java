@@ -1595,5 +1595,22 @@ public class Recipes extends RecipeProvider {
             .secondIngredient(Tags.Items.GEMS_LAPIS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_CREATURE")))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_HALLOWED.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_HALLOWED")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_POWER.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_VOID.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_POWER")))
+            .build(consumer);
     }
 }

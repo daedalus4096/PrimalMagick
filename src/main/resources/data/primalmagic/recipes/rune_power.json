@@ -1,0 +1,36 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "RUNE_POWER",
+  "ingredients": [
+    {
+      "item": "primalmagic:rune_unattuned"
+    },
+    {
+      "item": "primalmagic:essence_crystal_earth"
+    },
+    {
+      "item": "primalmagic:essence_crystal_sea"
+    },
+    {
+      "item": "primalmagic:essence_crystal_sky"
+    },
+    {
+      "item": "primalmagic:essence_crystal_sun"
+    },
+    {
+      "item": "primalmagic:essence_crystal_moon"
+    },
+    {
+      "item": "primalmagic:essence_crystal_blood"
+    },
+    {
+      "item": "primalmagic:essence_crystal_infernal"
+    },
+    {
+      "item": "primalmagic:essence_crystal_void"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:rune_power"
+  }
+}

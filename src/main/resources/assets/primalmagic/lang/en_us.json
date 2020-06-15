@@ -722,6 +722,14 @@
     "primalmagic.research.rune_creature.text.stage.1": "Creature rune: Lorem ipsum",
     "primalmagic.research.rune_creature.text.stage.2": "Creature rune research complete!",
     
+    "primalmagic.research.rune_hallowed.title": "Rune: Hallowed",
+    "primalmagic.research.rune_hallowed.text.stage.1": "Hallowed rune: Lorem ipsum",
+    "primalmagic.research.rune_hallowed.text.stage.2": "Hallowed rune research complete!",
+    
+    "primalmagic.research.rune_power.title": "Rune: Power",
+    "primalmagic.research.rune_power.text.stage.1": "Power rune: Lorem ipsum",
+    "primalmagic.research.rune_power.text.stage.2": "Power rune research complete!",
+    
     "primalmagic.research.basic_ritual.title": "Basic Ritual Magic",
     "primalmagic.research.basic_ritual.text.stage.1": "Basic ritual magic: Lorem ipsum",
     

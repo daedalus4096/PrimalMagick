@@ -1,0 +1,15 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "RUNE_HALLOWED",
+  "ingredients": [
+    {
+      "item": "primalmagic:rune_unattuned"
+    },
+    {
+      "item": "primalmagic:essence_dust_hallowed"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:rune_hallowed"
+  }
+}

@@ -349,6 +349,40 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "RUNE_HALLOWED",
+            "name": "primalmagic.research.rune_hallowed.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "MASTER_RUNEWORKING", "t_discover_hallowed" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_hallowed.text.stage.1",
+                    "required_knowledge": ["THEORY;2"]
+                },
+                {
+                    "text": "primalmagic.research.rune_hallowed.text.stage.2",
+                    "recipes": [ "primalmagic:rune_hallowed" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_POWER",
+            "name": "primalmagic.research.rune_power.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "MASTER_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_power.text.stage.1",
+                    "required_knowledge": ["THEORY;2"]
+                },
+                {
+                    "text": "primalmagic.research.rune_power.text.stage.2",
+                    "recipes": [ "primalmagic:rune_power" ]
+                }
+            ],
+            "addenda": []
         }
     ]
 }
