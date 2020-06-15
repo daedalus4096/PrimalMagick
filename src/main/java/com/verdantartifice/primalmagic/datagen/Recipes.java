@@ -1540,5 +1540,20 @@ public class Recipes extends RecipeProvider {
             .secondIngredient(Tags.Items.GEMS_LAPIS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_PROJECT")))
             .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_PROTECT.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_PROTECT")))
+            .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_ITEM.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_ITEM")))
+            .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_SELF.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SELF")))
+            .build(consumer);
     }
 }

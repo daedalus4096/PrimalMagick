@@ -162,6 +162,57 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "RUNE_PROTECT",
+            "name": "primalmagic.research.rune_protect.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "BASIC_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_protect.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_protect.text.stage.2",
+                    "recipes": [ "primalmagic:rune_protect" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_ITEM",
+            "name": "primalmagic.research.rune_item.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "BASIC_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_item.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_item.text.stage.2",
+                    "recipes": [ "primalmagic:rune_item" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_SELF",
+            "name": "primalmagic.research.rune_self.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "BASIC_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_self.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_self.text.stage.2",
+                    "recipes": [ "primalmagic:rune_self" ]
+                }
+            ],
+            "addenda": []
         }
     ]
 }

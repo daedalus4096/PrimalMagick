@@ -678,6 +678,18 @@
     "primalmagic.research.rune_project.text.stage.1": "Project rune: Lorem ipsum",
     "primalmagic.research.rune_project.text.stage.2": "Project rune research complete!",
     
+    "primalmagic.research.rune_protect.title": "Rune: Protect",
+    "primalmagic.research.rune_protect.text.stage.1": "Protect rune: Lorem ipsum",
+    "primalmagic.research.rune_protect.text.stage.2": "Protect rune research complete!",
+    
+    "primalmagic.research.rune_item.title": "Rune: Item",
+    "primalmagic.research.rune_item.text.stage.1": "Item rune: Lorem ipsum",
+    "primalmagic.research.rune_item.text.stage.2": "Item rune research complete!",
+    
+    "primalmagic.research.rune_self.title": "Rune: Self",
+    "primalmagic.research.rune_self.text.stage.1": "Self rune: Lorem ipsum",
+    "primalmagic.research.rune_self.text.stage.2": "Self rune research complete!",
+    
     "primalmagic.research.basic_ritual.title": "Basic Ritual Magic",
     "primalmagic.research.basic_ritual.text.stage.1": "Basic ritual magic: Lorem ipsum",
     

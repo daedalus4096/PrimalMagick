@@ -1,0 +1,13 @@
+{
+  "type": "primalmagic:runecarving",
+  "research": "RUNE_PROTECT",
+  "ingredient1": {
+    "item": "minecraft:stone_slab"
+  },
+  "ingredient2": {
+    "tag": "forge:gems/lapis"
+  },
+  "result": {
+    "item": "primalmagic:rune_protect"
+  }
+}
