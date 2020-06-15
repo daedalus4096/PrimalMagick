@@ -62,6 +62,91 @@
             "addenda": []
         },
         {
+            "key": "RUNE_EARTH",
+            "name": "primalmagic.research.rune_earth.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "BASIC_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_earth.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_earth.text.stage.2",
+                    "recipes": [ "primalmagic:rune_earth" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_SEA",
+            "name": "primalmagic.research.rune_sea.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "BASIC_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_sea.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_sea.text.stage.2",
+                    "recipes": [ "primalmagic:rune_sea" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_SKY",
+            "name": "primalmagic.research.rune_sky.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "BASIC_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_sky.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_sky.text.stage.2",
+                    "recipes": [ "primalmagic:rune_sky" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_SUN",
+            "name": "primalmagic.research.rune_sun.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "BASIC_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_sun.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_sun.text.stage.2",
+                    "recipes": [ "primalmagic:rune_sun" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_MOON",
+            "name": "primalmagic.research.rune_moon.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "BASIC_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_moon.text.stage.1",
+                    "required_knowledge": ["OBSERVATION;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_moon.text.stage.2",
+                    "recipes": [ "primalmagic:rune_moon" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "RUNE_PROJECT",
             "name": "primalmagic.research.rune_project.title",
             "discipline": "RUNEWORKING",

@@ -1510,6 +1510,31 @@ public class Recipes extends RecipeProvider {
             .secondIngredient(Tags.Items.GEMS_LAPIS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RUNEWORKING")))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_EARTH.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_EARTH")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_SEA.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SEA")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_SKY.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SKY")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_SUN.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SUN")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_MOON.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_MOON")))
+            .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_PROJECT.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)

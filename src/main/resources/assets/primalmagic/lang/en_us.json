@@ -654,6 +654,26 @@
     "primalmagic.research.supreme_runeworking.text.stage.1": "Supreme runeworking: Lorem ipsum",
     "primalmagic.research.supreme_runeworking.text.stage.2": "Supreme runeworking research complete!",
     
+    "primalmagic.research.rune_earth.title": "Rune: Earth",
+    "primalmagic.research.rune_earth.text.stage.1": "Earth rune: Lorem ipsum",
+    "primalmagic.research.rune_earth.text.stage.2": "Earth rune research complete!",
+    
+    "primalmagic.research.rune_sea.title": "Rune: Sea",
+    "primalmagic.research.rune_sea.text.stage.1": "Sea rune: Lorem ipsum",
+    "primalmagic.research.rune_sea.text.stage.2": "Sea rune research complete!",
+    
+    "primalmagic.research.rune_sky.title": "Rune: Sky",
+    "primalmagic.research.rune_sky.text.stage.1": "Sky rune: Lorem ipsum",
+    "primalmagic.research.rune_sky.text.stage.2": "Sky rune research complete!",
+    
+    "primalmagic.research.rune_sun.title": "Rune: Sun",
+    "primalmagic.research.rune_sun.text.stage.1": "Sun rune: Lorem ipsum",
+    "primalmagic.research.rune_sun.text.stage.2": "Sun rune research complete!",
+    
+    "primalmagic.research.rune_moon.title": "Rune: Moon",
+    "primalmagic.research.rune_moon.text.stage.1": "Moon rune: Lorem ipsum",
+    "primalmagic.research.rune_moon.text.stage.2": "Moon rune research complete!",
+    
     "primalmagic.research.rune_project.title": "Rune: Project",
     "primalmagic.research.rune_project.text.stage.1": "Project rune: Lorem ipsum",
     "primalmagic.research.rune_project.text.stage.2": "Project rune research complete!",
