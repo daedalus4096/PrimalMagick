@@ -702,6 +702,26 @@
     "primalmagic.research.rune_void.text.stage.1": "Void rune: Lorem ipsum",
     "primalmagic.research.rune_void.text.stage.2": "Void rune research complete!",
     
+    "primalmagic.research.rune_absorb.title": "Rune: Absorb",
+    "primalmagic.research.rune_absorb.text.stage.1": "Absorb rune: Lorem ipsum",
+    "primalmagic.research.rune_absorb.text.stage.2": "Absorb rune research complete!",
+    
+    "primalmagic.research.rune_dispel.title": "Rune: Dispel",
+    "primalmagic.research.rune_dispel.text.stage.1": "Dispel rune: Lorem ipsum",
+    "primalmagic.research.rune_dispel.text.stage.2": "Dispel rune research complete!",
+    
+    "primalmagic.research.rune_summon.title": "Rune: Summon",
+    "primalmagic.research.rune_summon.text.stage.1": "Summon rune: Lorem ipsum",
+    "primalmagic.research.rune_summon.text.stage.2": "Summon rune research complete!",
+    
+    "primalmagic.research.rune_area.title": "Rune: Area",
+    "primalmagic.research.rune_area.text.stage.1": "Area rune: Lorem ipsum",
+    "primalmagic.research.rune_area.text.stage.2": "Area rune research complete!",
+    
+    "primalmagic.research.rune_creature.title": "Rune: Creature",
+    "primalmagic.research.rune_creature.text.stage.1": "Creature rune: Lorem ipsum",
+    "primalmagic.research.rune_creature.text.stage.2": "Creature rune research complete!",
+    
     "primalmagic.research.basic_ritual.title": "Basic Ritual Magic",
     "primalmagic.research.basic_ritual.text.stage.1": "Basic ritual magic: Lorem ipsum",
     

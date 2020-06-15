@@ -264,6 +264,91 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "RUNE_ABSORB",
+            "name": "primalmagic.research.rune_absorb.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "EXPERT_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_absorb.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_absorb.text.stage.2",
+                    "recipes": [ "primalmagic:rune_absorb" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_DISPEL",
+            "name": "primalmagic.research.rune_dispel.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "EXPERT_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_dispel.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_dispel.text.stage.2",
+                    "recipes": [ "primalmagic:rune_dispel" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_SUMMON",
+            "name": "primalmagic.research.rune_summon.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "EXPERT_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_summon.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_summon.text.stage.2",
+                    "recipes": [ "primalmagic:rune_summon" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_AREA",
+            "name": "primalmagic.research.rune_area.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "EXPERT_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_area.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_area.text.stage.2",
+                    "recipes": [ "primalmagic:rune_area" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_CREATURE",
+            "name": "primalmagic.research.rune_creature.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "EXPERT_RUNEWORKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_creature.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_creature.text.stage.2",
+                    "recipes": [ "primalmagic:rune_creature" ]
+                }
+            ],
+            "addenda": []
         }
     ]
 }

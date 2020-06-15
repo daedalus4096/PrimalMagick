@@ -1570,5 +1570,30 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_VOID")))
             .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_ABSORB.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_ABSORB")))
+            .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_DISPEL.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_DISPEL")))
+            .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_SUMMON.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SUMMON")))
+            .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_AREA.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_AREA")))
+            .build(consumer);
+        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_CREATURE.get())
+            .firstIngredient(Items.STONE_SLAB)
+            .secondIngredient(Tags.Items.GEMS_LAPIS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_CREATURE")))
+            .build(consumer);
     }
 }
