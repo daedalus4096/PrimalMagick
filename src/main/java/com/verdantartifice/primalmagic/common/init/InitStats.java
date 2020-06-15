@@ -50,5 +50,8 @@ public class InitStats {
         StatTriggers.register(StatsPM.CRAFTED_MAGITECH, 10, SimpleResearchKey.parse("b_crafted_magitech_expert"));
         StatTriggers.register(StatsPM.CRAFTED_MAGITECH, 50, SimpleResearchKey.parse("b_crafted_magitech_master"));
         StatTriggers.register(StatsPM.CRAFTED_MAGITECH, 250, SimpleResearchKey.parse("b_crafted_magitech_supreme"));
+        StatTriggers.register(StatsPM.ITEMS_RUNESCRIBED, 2, SimpleResearchKey.parse("t_items_runescribed_expert"));
+        StatTriggers.register(StatsPM.ITEMS_RUNESCRIBED, 10, SimpleResearchKey.parse("t_items_runescribed_master"));
+        StatTriggers.register(StatsPM.ITEMS_RUNESCRIBED, 50, SimpleResearchKey.parse("t_items_runescribed_supreme"));
     }
 }

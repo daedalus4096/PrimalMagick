@@ -1081,6 +1081,9 @@
     "primalmagic.research.b_crafted_magitech_expert.text": "Craft 10 magitech items",
     "primalmagic.research.b_crafted_magitech_master.text": "Craft 50 magitech items",
     "primalmagic.research.b_crafted_magitech_supreme.text": "Craft 250 magitech items",
+    "primalmagic.research.t_items_runescribed_expert.text": "Runescribe 2 items",
+    "primalmagic.research.t_items_runescribed_master.text": "Runescribe 10 items",
+    "primalmagic.research.t_items_runescribed_supreme.text": "Runescribe 50 items",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
