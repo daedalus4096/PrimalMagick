@@ -1555,5 +1555,20 @@ public class Recipes extends RecipeProvider {
             .secondIngredient(Tags.Items.GEMS_LAPIS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SELF")))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_BLOOD.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_BLOOD")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_INFERNAL.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_INFERNAL")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_VOID.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_VOID")))
+            .build(consumer);
     }
 }

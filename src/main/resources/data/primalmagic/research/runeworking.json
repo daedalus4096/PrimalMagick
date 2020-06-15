@@ -213,6 +213,57 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "RUNE_BLOOD",
+            "name": "primalmagic.research.rune_blood.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "EXPERT_RUNEWORKING", "t_discover_blood" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_blood.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_blood.text.stage.2",
+                    "recipes": [ "primalmagic:rune_blood" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_INFERNAL",
+            "name": "primalmagic.research.rune_infernal.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "EXPERT_RUNEWORKING", "t_discover_infernal" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_infernal.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_infernal.text.stage.2",
+                    "recipes": [ "primalmagic:rune_infernal" ]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "RUNE_VOID",
+            "name": "primalmagic.research.rune_void.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "EXPERT_RUNEWORKING", "t_discover_void" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.rune_void.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.rune_void.text.stage.2",
+                    "recipes": [ "primalmagic:rune_void" ]
+                }
+            ],
+            "addenda": []
         }
     ]
 }

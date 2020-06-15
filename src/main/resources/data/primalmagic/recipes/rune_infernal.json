@@ -1,0 +1,15 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "RUNE_INFERNAL",
+  "ingredients": [
+    {
+      "item": "primalmagic:rune_unattuned"
+    },
+    {
+      "item": "primalmagic:essence_dust_infernal"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:rune_infernal"
+  }
+}

@@ -690,6 +690,18 @@
     "primalmagic.research.rune_self.text.stage.1": "Self rune: Lorem ipsum",
     "primalmagic.research.rune_self.text.stage.2": "Self rune research complete!",
     
+    "primalmagic.research.rune_blood.title": "Rune: Blood",
+    "primalmagic.research.rune_blood.text.stage.1": "Blood rune: Lorem ipsum",
+    "primalmagic.research.rune_blood.text.stage.2": "Blood rune research complete!",
+    
+    "primalmagic.research.rune_infernal.title": "Rune: Infernal",
+    "primalmagic.research.rune_infernal.text.stage.1": "Infernal rune: Lorem ipsum",
+    "primalmagic.research.rune_infernal.text.stage.2": "Infernal rune research complete!",
+    
+    "primalmagic.research.rune_void.title": "Rune: Void",
+    "primalmagic.research.rune_void.text.stage.1": "Void rune: Lorem ipsum",
+    "primalmagic.research.rune_void.text.stage.2": "Void rune research complete!",
+    
     "primalmagic.research.basic_ritual.title": "Basic Ritual Magic",
     "primalmagic.research.basic_ritual.text.stage.1": "Basic ritual magic: Lorem ipsum",
     
