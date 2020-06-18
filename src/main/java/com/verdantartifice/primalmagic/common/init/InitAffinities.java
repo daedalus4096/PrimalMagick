@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.init;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
@@ -442,5 +443,6 @@ public class InitAffinities {
         AffinityManager.registerEnchantmentBonusAffinity(Enchantments.PIERCING, Source.BLOOD);
         AffinityManager.registerEnchantmentBonusAffinity(Enchantments.MENDING, Source.SUN);
         AffinityManager.registerEnchantmentBonusAffinity(Enchantments.VANISHING_CURSE, Source.VOID);
+        AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.LIFESTEAL.get(), Source.BLOOD);
     }
 }
