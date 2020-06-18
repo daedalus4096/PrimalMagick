@@ -34,6 +34,7 @@ public class RuneManager {
     protected static final Map<VerbRune, Set<Enchantment>> VERB_ENCHANTMENTS = new HashMap<>();
     protected static final Map<NounRune, Set<Enchantment>> NOUN_ENCHANTMENTS = new HashMap<>();
     protected static final Map<SourceRune, Set<Enchantment>> SOURCE_ENCHANTMENTS = new HashMap<>();
+    protected static final String RUNE_TAG_NAME = PrimalMagic.MODID + ":runes";
     
     public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source) {
         if (enchantment != null && verb != null && noun != null && source != null) {
@@ -130,7 +131,7 @@ public class RuneManager {
         if (stack == null || stack.isEmpty() || !stack.hasTag()) {
             return false;
         } else {
-            return !stack.getTag().getList(PrimalMagic.MODID + ":runes", Constants.NBT.TAG_STRING).isEmpty();
+            return !stack.getTag().getList(RUNE_TAG_NAME, Constants.NBT.TAG_STRING).isEmpty();
         }
     }
     
@@ -147,7 +148,7 @@ public class RuneManager {
         }
         
         List<Rune> retVal = new ArrayList<>();
-        ListNBT tagList = stack.getTag().getList(PrimalMagic.MODID + ":runes", Constants.NBT.TAG_STRING);
+        ListNBT tagList = stack.getTag().getList(RUNE_TAG_NAME, Constants.NBT.TAG_STRING);
         for (int index = 0; index < tagList.size(); index++) {
             String tagStr = tagList.getString(index);
             Rune rune = Rune.getRune(new ResourceLocation(tagStr));
@@ -173,7 +174,18 @@ public class RuneManager {
                     tagList.add(StringNBT.valueOf(rune.getId().toString()));
                 }
             }
-            stack.setTagInfo(PrimalMagic.MODID + ":runes", tagList);
+            stack.setTagInfo(RUNE_TAG_NAME, tagList);
+        }
+    }
+    
+    /**
+     * Removes all runes from the given item stack.
+     * 
+     * @param stack the item stack to modify
+     */
+    public static void clearRunes(@Nullable ItemStack stack) {
+        if (stack != null) {
+            stack.removeChildTag(RUNE_TAG_NAME);
         }
     }
 }

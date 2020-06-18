@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.blocks.crafting;
 
+import com.verdantartifice.primalmagic.common.containers.RunicGrindstoneContainer;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 
 import net.minecraft.block.Block;
@@ -10,13 +11,16 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
@@ -55,13 +59,16 @@ public class RunicGrindstoneBlock extends GrindstoneBlock {
     
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        // TODO Auto-generated method stub
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        if (!worldIn.isRemote) {
+            player.openContainer(state.getContainer(worldIn, pos));
+        }
+        return ActionResultType.SUCCESS;
     }
     
     @Override
     public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
-        // TODO Auto-generated method stub
-        return super.getContainer(state, worldIn, pos);
+        return new SimpleNamedContainerProvider((windowId, playerInv, player) -> {
+            return new RunicGrindstoneContainer(windowId, playerInv, IWorldPosCallable.of(worldIn, pos));
+         }, new TranslationTextComponent(this.getTranslationKey()));
     }
 }
