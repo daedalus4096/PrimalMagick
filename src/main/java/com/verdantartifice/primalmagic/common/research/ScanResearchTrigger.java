@@ -26,10 +26,10 @@ public class ScanResearchTrigger implements IScanTrigger {
 
     @Override
     public void onMatch(ServerPlayerEntity player, IItemProvider itemProvider) {
-        ResearchManager.progressResearch(player, this.toUnlock);
         if (this.shouldUnlockScansPage()) {
             ResearchManager.completeResearch(player, SCANS_KEY);
         }
+        ResearchManager.completeResearch(player, this.toUnlock);
     }
     
     protected boolean shouldUnlockScansPage() {
