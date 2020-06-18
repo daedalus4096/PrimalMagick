@@ -383,6 +383,23 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "RUNIC_GRINDSTONE",
+            "name": "primalmagic.research.runic_grindstone.title",
+            "discipline": "RUNEWORKING",
+            "parents": [ "RUNE_DISPEL" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.runic_grindstone.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.runic_grindstone.text.stage.2",
+                    "recipes": [ "primalmagic:runic_grindstone" ]
+                }
+            ],
+            "addenda": []
         }
     ]
 }

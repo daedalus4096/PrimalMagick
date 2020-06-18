@@ -268,6 +268,17 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.SOUL_GEM_SLIVER.get(), 9)
             .addCriterion("has_sliver", this.hasItem(ItemsPM.SOUL_GEM_SLIVER.get()))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RUNIC_GRINDSTONE.get())
+            .patternLine(" D ")
+            .patternLine("SLS")
+            .patternLine("PDP")
+            .key('D', ItemsPM.RUNE_DISPEL.get())
+            .key('S', Tags.Items.RODS_WOODEN)
+            .key('L', Items.STONE_SLAB)
+            .key('P', ItemsPM.SUNWOOD_PLANKS.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNIC_GRINDSTONE")))
+            .manaCost(new SourceList().add(Source.EARTH, 25))
+            .build(consumer);
 
         CustomRecipeBuilder.func_218656_a(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");

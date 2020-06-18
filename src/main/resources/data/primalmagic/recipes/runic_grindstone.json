@@ -1,0 +1,29 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "RUNIC_GRINDSTONE",
+  "mana": {
+    "earth": 25
+  },
+  "pattern": [
+    " D ",
+    "SLS",
+    "PDP"
+  ],
+  "key": {
+    "D": {
+      "item": "primalmagic:rune_dispel"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "L": {
+      "item": "minecraft:stone_slab"
+    },
+    "P": {
+      "item": "primalmagic:sunwood_planks"
+    }
+  },
+  "result": {
+    "item": "primalmagic:runic_grindstone"
+  }
+}
