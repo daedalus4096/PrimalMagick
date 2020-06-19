@@ -446,5 +446,6 @@ public class InitAffinities {
         AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.LIFESTEAL.get(), Source.BLOOD);
         AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.ENDERLOCK.get(), Source.VOID);
         AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.JUDGMENT.get(), Source.HALLOWED);
+        AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.ENDERPORT.get(), Source.VOID);
     }
 }

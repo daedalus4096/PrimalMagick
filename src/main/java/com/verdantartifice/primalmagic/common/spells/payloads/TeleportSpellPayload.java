@@ -1,15 +1,13 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
-import com.verdantartifice.primalmagic.common.network.PacketHandler;
-import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -49,23 +47,7 @@ public class TeleportSpellPayload extends AbstractSpellPayload {
                 return;
             }
         }
-        
-        // Show a teleport particle effect at the destination
-        Vec3d hitVec = target.getHitVec();
-        PacketHandler.sendToAllAround(new TeleportArrivalPacket(hitVec.x, hitVec.y, hitVec.z), world.dimension.getType(), new BlockPos(hitVec), 64.0D);
-        
-        if (!world.isRemote && caster instanceof ServerPlayerEntity) {
-            ServerPlayerEntity spe = (ServerPlayerEntity)caster;
-            if (spe.connection.getNetworkManager().isChannelOpen() && spe.world == world && !spe.isSleeping()) {
-                if (caster.isPassenger()) {
-                    caster.stopRiding();
-                }
-                
-                // Do the teleportation
-                caster.setPositionAndUpdate(hitVec.x, hitVec.y, hitVec.z);
-                caster.fallDistance = 0.0F;
-            }
-        }
+        EntityUtils.teleportPlayer(caster, world, target.getHitVec());
     }
 
     @Override

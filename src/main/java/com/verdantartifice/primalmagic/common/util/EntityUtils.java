@@ -7,10 +7,15 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -163,6 +168,31 @@ public class EntityUtils {
      */
     public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRangeSorted(world, new Vec3d(x, y, z), exclude, entityClass, range);
+    }
+    
+    /**
+     * Teleports a player, with special effects, to the given destination point.
+     * 
+     * @param player the player to be teleported
+     * @param world the world in which to teleport
+     * @param destination the point to which to teleport
+     */
+    public static void teleportPlayer(PlayerEntity player, World world, Vec3d destination) {
+        // Show a teleport particle effect at the destination
+        PacketHandler.sendToAllAround(new TeleportArrivalPacket(destination.x, destination.y, destination.z), world.dimension.getType(), new BlockPos(destination), 64.0D);
+        
+        if (!world.isRemote && player instanceof ServerPlayerEntity) {
+            ServerPlayerEntity spe = (ServerPlayerEntity)player;
+            if (spe.connection.getNetworkManager().isChannelOpen() && spe.world == world && !spe.isSleeping()) {
+                if (player.isPassenger()) {
+                    player.stopRiding();
+                }
+                
+                // Do the teleportation
+                player.setPositionAndUpdate(destination.x, destination.y, destination.z);
+                player.fallDistance = 0.0F;
+            }
+        }
     }
     
     /**
