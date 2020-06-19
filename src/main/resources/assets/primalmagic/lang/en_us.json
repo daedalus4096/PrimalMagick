@@ -286,8 +286,10 @@
     "effect.primalmagic.manafruit": "Manafruit",
     "effect.primalmagic.drain_soul": "Drain Soul",
     "effect.primalmagic.mana_impedance": "Mana Impedance",
+    "effect.primalmagic.enderlock": "Enderlock",
     
     "enchantment.primalmagic.lifesteal": "Lifesteal",
+    "enchantment.primalmagic.enderlock": "Enderlock",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     "primalmagic.wand_core.unknown.name": "Unknown",

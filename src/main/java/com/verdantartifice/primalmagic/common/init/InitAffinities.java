@@ -444,5 +444,6 @@ public class InitAffinities {
         AffinityManager.registerEnchantmentBonusAffinity(Enchantments.MENDING, Source.SUN);
         AffinityManager.registerEnchantmentBonusAffinity(Enchantments.VANISHING_CURSE, Source.VOID);
         AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.LIFESTEAL.get(), Source.BLOOD);
+        AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.ENDERLOCK.get(), Source.VOID);
     }
 }
