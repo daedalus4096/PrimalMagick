@@ -49,6 +49,26 @@ public class RuneManager {
     }
     
     /**
+     * Gets the set of enchantments that can be replicated with runes.
+     * 
+     * @return the set of enchantments that can be replicated with runes
+     */
+    public static Set<Enchantment> getRuneEnchantments() {
+        return Collections.unmodifiableSet(REGISTRY.keySet());
+    }
+    
+    /**
+     * Gets the list of enchantments that can be replicated with runes, sorted by display name.
+     * 
+     * @return the list of enchantments that can be replicated with runes, sorted by display name
+     */
+    public static List<Enchantment> getRuneEnchantmentsSorted() {
+        return getRuneEnchantments().stream().sorted((e1, e2) -> {
+            return e1.getDisplayName(1).getString().compareTo(e2.getDisplayName(1).getString());
+        }).collect(Collectors.toList());
+    }
+    
+    /**
      * Calculate the map of enchantments and corresponding levels which are created by applying the given
      * combination of runes to the given item stack.
      * 

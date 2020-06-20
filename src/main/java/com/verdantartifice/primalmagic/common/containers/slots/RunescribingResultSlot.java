@@ -51,6 +51,9 @@ public class RunescribingResultSlot extends Slot {
             if (ResearchManager.isResearchComplete(this.player, SimpleResearchKey.parse("FIRST_STEPS"))) {
                 List<Rune> runes = RuneManager.getRunes(stack);
                 Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(runes, stack, false);
+                if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
+                    ResearchManager.completeResearch(this.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"));
+                }
                 for (Enchantment enchant : enchants.keySet()) {
                     SimpleResearchKey key = SimpleResearchKey.parseRuneEnchantment(enchant);
                     if (key != null) {

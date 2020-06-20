@@ -23,6 +23,8 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.PageImage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageString;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RecipePageFactory;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RequirementsPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.RuneEnchantmentIndexPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.RuneEnchantmentPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.StagePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.StatisticsPage;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.BackButton;
@@ -43,10 +45,12 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -149,10 +153,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             this.parseEntryPages((ResearchEntry)this.container.getTopic());
         } else if (this.container.getTopic() instanceof Source) {
             this.parseAttunementPage((Source)this.container.getTopic());
+        } else if (this.container.getTopic() instanceof Enchantment) {
+            this.parseRuneEnchantmentPage((Enchantment)this.container.getTopic());
         } else if (StatisticsPage.TOPIC.equals(this.container.getTopic())) {
             this.parseStatsPages();
         } else if (AttunementIndexPage.TOPIC.equals(this.container.getTopic())) {
             this.parseAttunementIndexPages();
+        } else if (RuneEnchantmentIndexPage.TOPIC.equals(this.container.getTopic())) {
+            this.parseRuneEnchantmentIndexPages();
         }
     }
     
@@ -702,6 +710,84 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         if (!tempPage.getElements().isEmpty()) {
             this.pages.add(tempPage);
         }
+    }
+    
+    protected void parseRuneEnchantmentPage(Enchantment enchant) {
+        String rawText = (new TranslationTextComponent(Util.makeTranslationKey("rune_enchantment.text", enchant.getRegistryName()))).getString();
+        
+        // Process text
+        int lineHeight = this.font.FONT_HEIGHT;
+        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        List<String> parsedText = parsedData.getA();
+        List<PageImage> images = parsedData.getB();
+        
+        // First page has less available space to account for title and rune combination
+        int heightRemaining = 113;
+
+        // Break parsed text into pages
+        RuneEnchantmentPage tempPage = new RuneEnchantmentPage(enchant, true);
+        List<PageImage> tempImages = new ArrayList<>();
+        for (String line : parsedText) {
+            if (line.contains("~I")) {
+                if (!images.isEmpty()) {
+                    tempImages.add(images.remove(0));
+                }
+                line = "";
+            }
+            if (line.contains("~L")) {
+                tempImages.add(IMAGE_LINE);
+                line = "";
+            }
+            if (line.contains("~P")) {
+                this.pages.add(tempPage);
+                tempPage = new RuneEnchantmentPage(enchant);
+                heightRemaining = 165;
+                line = "";
+            }
+            if (!line.isEmpty()) {
+                line = line.trim();
+                tempPage.addElement(new PageString(line));
+                heightRemaining -= lineHeight;
+                if (line.endsWith("~B")) {
+                    heightRemaining -= (int)(lineHeight * 0.66D);
+                }
+            }
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+            if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new RuneEnchantmentPage(enchant);
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+        
+        // Deal with any remaining images
+        tempPage = new RuneEnchantmentPage(enchant);
+        heightRemaining = 165;
+        while (!tempImages.isEmpty()) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new RuneEnchantmentPage(enchant);
+            } else {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+    }
+    
+    protected void parseRuneEnchantmentIndexPages() {
+        // TODO split enchantments across multiple pages
+        this.currentStageIndex = 0;
+        this.pages.add(new RuneEnchantmentIndexPage(true));
     }
     
     public void nextPage() {

@@ -1013,6 +1013,7 @@
     "primalmagic.grimoire.other_header": "Other Topics",
     "primalmagic.grimoire.stats_header": "Statistics",
     "primalmagic.grimoire.attunement_header": "Attunements",
+    "primalmagic.grimoire.rune_enchantment_header": "Rune Enchantments",
     "primalmagic.grimoire.attunement_gain_header": "Attunements Gained",
     "primalmagic.grimoire.addendum_header": "Addendum %1$d",
     "primalmagic.grimoire.requirements_header": "Requirements",
@@ -1182,6 +1183,10 @@
     "primalmagic.ritual.warning.missing_prop": "The ritual cannot find a required prop!",
     "primalmagic.ritual.warning.channel_interrupt": "The channeling of a required offering has been interrupted!",
     "primalmagic.ritual.warning.prop_interrupt": "The activation of a required prop has been interrupted!",
+    
+    "rune_enchantment.text.minecraft.sharpness": "Sharpness: lorem ipsum",
+    "rune_enchantment.text.minecraft.unbreaking": "Unbreaking: lorem ipsum",
+    "rune_enchantment.text.primalmagic.judgment": "Judgment: lorem ipsum",
     
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",

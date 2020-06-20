@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.AttunementIndexButton;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.DisciplineButton;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RuneEnchantmentIndexButton;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.StatisticsButton;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
@@ -43,6 +44,13 @@ public class OtherIndexPage extends AbstractPage {
         if (ResearchManager.isResearchComplete(Minecraft.getInstance().player, SimpleResearchKey.parse("ATTUNEMENTS"))) {
             text = (new TranslationTextComponent("primalmagic.grimoire.attunement_header")).getFormattedText();
             screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
+            y += 12;
+        }
+        
+        // Add rune enchantments button if rune enchantments are unlocked
+        if (ResearchManager.isResearchComplete(Minecraft.getInstance().player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
+            text = (new TranslationTextComponent("primalmagic.grimoire.rune_enchantment_header")).getFormattedText();
+            screen.addWidgetToScreen(new RuneEnchantmentIndexButton(x + 12 + (side * 140), y, text, screen));
             y += 12;
         }
         
