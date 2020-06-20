@@ -54,10 +54,11 @@ public class RuneManager {
      * 
      * @param runes the runes for which to determine enchantments
      * @param stack the item stack to which the given runes are to be applied
+     * @param filterIncompatible whether detection should exclude incompatible enchantments
      * @return the map of rune enchantments and the levels at which they should be applied
      */
     @Nonnull
-    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack) {
+    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack, boolean filterIncompatible) {
         if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty()) {
             return Collections.emptyMap();
         }
@@ -83,7 +84,7 @@ public class RuneManager {
                         // If the rune enchantment can be applied to the given item stack, is compatible with 
                         // those already found, and it meets the minimum power level, add it to the result set
                         if ( possible.canApply(stack) && 
-                             EnchantmentHelper.areAllCompatibleWith(retVal.keySet(), possible) && 
+                             (!filterIncompatible || EnchantmentHelper.areAllCompatibleWith(retVal.keySet(), possible)) && 
                              powerLevel >= possible.getMinLevel() ) {
                             retVal.put(possible, Math.min(powerLevel, possible.getMaxLevel()));
                         }

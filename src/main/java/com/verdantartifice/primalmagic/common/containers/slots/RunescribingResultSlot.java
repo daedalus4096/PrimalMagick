@@ -1,8 +1,16 @@
 package com.verdantartifice.primalmagic.common.containers.slots;
 
+import java.util.List;
+import java.util.Map;
+
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.runes.Rune;
+import com.verdantartifice.primalmagic.common.runes.RuneManager;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -33,9 +41,19 @@ public class RunescribingResultSlot extends Slot {
     protected void onCrafting(ItemStack stack) {
         super.onCrafting(stack);
         
-        // Increment the player's runescribing stat
-        if (this.player instanceof ServerPlayerEntity) {
-            StatsManager.incrementValue((ServerPlayerEntity)this.player, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
+        if (!this.player.world.isRemote) {
+            // Increment the player's runescribing stat
+            if (this.player instanceof ServerPlayerEntity) {
+                StatsManager.incrementValue((ServerPlayerEntity)this.player, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
+            }
+
+            // Grant the player rune enchantment research for each rune enchantmant imbued
+            List<Rune> runes = RuneManager.getRunes(stack);
+            Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(runes, stack, false);
+            for (Enchantment enchant : enchants.keySet()) {
+                SimpleResearchKey key = SimpleResearchKey.parse("&" + enchant.getRegistryName().toString());
+                ResearchManager.completeResearch(this.player, key);
+            }
         }
     }
     
