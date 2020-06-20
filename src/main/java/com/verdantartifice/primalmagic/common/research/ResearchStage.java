@@ -163,7 +163,7 @@ public class ResearchStage {
         
         // Check if player knows research for must-craft items
         for (Integer craftRef : this.craftReference) {
-            if (!knowledge.isResearchKnown(SimpleResearchKey.parse("[#]" + craftRef.intValue()))) {
+            if (!knowledge.isResearchKnown(SimpleResearchKey.parseCrafted(craftRef))) {
                 return false;
             }
         }
@@ -225,7 +225,7 @@ public class ResearchStage {
         List<Boolean> retVal = new ArrayList<>();
         for (Integer craftRef : this.craftReference) {
             // Check if the player knows the special research entry corresponding to the required hash code
-            retVal.add(Boolean.valueOf(knowledge.isResearchKnown(SimpleResearchKey.parse("[#]" + craftRef.intValue()))));
+            retVal.add(Boolean.valueOf(knowledge.isResearchKnown(SimpleResearchKey.parseCrafted(craftRef))));
         }
         return retVal;
     }

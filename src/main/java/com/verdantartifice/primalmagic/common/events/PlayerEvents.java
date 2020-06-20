@@ -347,7 +347,7 @@ public class PlayerEvents {
             
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
             if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(stackHash))) {
-                ResearchManager.completeResearch(event.getPlayer(), SimpleResearchKey.parse("[#]" + stackHash));
+                ResearchManager.completeResearch(event.getPlayer(), SimpleResearchKey.parseCrafted(stackHash));
             }
             
             // If a research entry requires crafting the a tag containing the item that was just crafted, grant the appropriate research
@@ -355,7 +355,7 @@ public class PlayerEvents {
                 if (tag != null) {
                     int tagHash = ("tag:" + tag.toString()).hashCode();
                     if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(tagHash))) {
-                        ResearchManager.completeResearch(event.getPlayer(), SimpleResearchKey.parse("[#]" + tagHash));
+                        ResearchManager.completeResearch(event.getPlayer(), SimpleResearchKey.parseCrafted(tagHash));
                     }
                 }
             }

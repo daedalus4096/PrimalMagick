@@ -5,8 +5,11 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 /**
  * Data object identifying a specific research entry, or a specific stage in that research entry.
@@ -14,6 +17,10 @@ import net.minecraft.entity.player.PlayerEntity;
  * @author Daedalus4096
  */
 public class SimpleResearchKey {
+    protected static final String SCAN_PREFIX = "!";
+    protected static final String CRAFTED_PREFIX = "[#]";
+    protected static final String RUNE_ENCHANT_PREFIX = "&";
+    
     protected String rootKey;
     protected Integer stage;
     
@@ -40,6 +47,30 @@ public class SimpleResearchKey {
         } else {
             // Key string indicates a research entry without a specific stage
             return new SimpleResearchKey(keyStr, null);
+        }
+    }
+    
+    @Nullable
+    public static SimpleResearchKey parseScan(@Nullable ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return null;
+        } else {
+            // Generate a research key based on the given itemstack's hash code after its NBT data has been stripped
+            return parse(SCAN_PREFIX + Integer.toString(ItemUtils.getHashCode(stack, true)));
+        }
+    }
+    
+    @Nullable
+    public static SimpleResearchKey parseCrafted(int hashCode) {
+        return parse(CRAFTED_PREFIX + Integer.toString(hashCode));
+    }
+    
+    @Nullable
+    public static SimpleResearchKey parseRuneEnchantment(@Nullable Enchantment enchant) {
+        if (enchant == null) {
+            return null;
+        } else {
+            return parse(RUNE_ENCHANT_PREFIX + enchant.getRegistryName().toString());
         }
     }
     

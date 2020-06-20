@@ -379,21 +379,6 @@ public class AffinityManager {
         return retVal;
     }
     
-    @Nullable
-    public static SimpleResearchKey getScanResearchKey(@Nullable ItemStack stack) {
-        if (stack == null || stack.isEmpty()) {
-            return null;
-        } else {
-            // Generate a research key based on the given itemstack's hash code after its NBT data has been stripped
-            return getScanResearchKey(ItemUtils.getHashCode(stack, true));
-        }
-    }
-    
-    @Nullable
-    protected static SimpleResearchKey getScanResearchKey(int hashCode) {
-        return SimpleResearchKey.parse("!" + Integer.toString(hashCode));
-    }
-    
     public static boolean isScanned(@Nullable ItemStack stack, @Nullable PlayerEntity player) {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
@@ -403,7 +388,7 @@ public class AffinityManager {
             // If the given itemstack has no affinities, consider it already scanned
             return true;
         }
-        SimpleResearchKey key = getScanResearchKey(stack);
+        SimpleResearchKey key = SimpleResearchKey.parseScan(stack);
         return (key != null && key.isKnownByStrict(player));
     }
     
@@ -422,7 +407,7 @@ public class AffinityManager {
         }
         
         // Generate a research key for the itemstack and add that research to the player
-        SimpleResearchKey key = getScanResearchKey(stack);
+        SimpleResearchKey key = SimpleResearchKey.parseScan(stack);
         if (key != null && knowledge.addResearch(key)) {
             // Determine how many observation points the itemstack is worth and add those to the player's knowledge
             int obsPoints = getObservationPoints(stack, player.getEntityWorld());
@@ -459,7 +444,7 @@ public class AffinityManager {
         for (Item item : ForgeRegistries.ITEMS) {
             // Generate a research key for the itemstack and add that research to the player
             stack = new ItemStack(item);
-            key = getScanResearchKey(stack);
+            key = SimpleResearchKey.parseScan(stack);
             if (key != null && knowledge.addResearch(key)) {
                 count++;
 

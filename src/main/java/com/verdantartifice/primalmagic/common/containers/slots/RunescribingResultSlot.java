@@ -51,8 +51,10 @@ public class RunescribingResultSlot extends Slot {
             List<Rune> runes = RuneManager.getRunes(stack);
             Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(runes, stack, false);
             for (Enchantment enchant : enchants.keySet()) {
-                SimpleResearchKey key = SimpleResearchKey.parse("&" + enchant.getRegistryName().toString());
-                ResearchManager.completeResearch(this.player, key);
+                SimpleResearchKey key = SimpleResearchKey.parseRuneEnchantment(enchant);
+                if (key != null) {
+                    ResearchManager.completeResearch(this.player, key);
+                }
             }
         }
     }
