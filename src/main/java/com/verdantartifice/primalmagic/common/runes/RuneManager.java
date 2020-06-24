@@ -69,6 +69,17 @@ public class RuneManager {
     }
     
     /**
+     * Gets the registered list of runes for the given enchantment, or null if no runes are registered.
+     * 
+     * @param enchant the enchantment to be queried
+     * @return the registered list of runes for the given enchantment
+     */
+    @Nullable
+    public static List<Rune> getRunesForEnchantment(@Nullable Enchantment enchant) {
+        return REGISTRY.get(enchant);
+    }
+    
+    /**
      * Calculate the map of enchantments and corresponding levels which are created by applying the given
      * combination of runes to the given item stack.
      * 
