@@ -36,7 +36,10 @@ import com.verdantartifice.primalmagic.common.research.ResearchAddendum;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.runes.RuneManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.Stat;
@@ -785,9 +788,24 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     protected void parseRuneEnchantmentIndexPages() {
-        // TODO split enchantments across multiple pages
         this.currentStageIndex = 0;
-        this.pages.add(new RuneEnchantmentIndexPage(true));
+        int heightRemaining = 137;
+        RuneEnchantmentIndexPage tempPage = new RuneEnchantmentIndexPage(true);
+        
+        for (Enchantment enchant : RuneManager.getRuneEnchantmentsSorted()) {
+            if (ResearchManager.isResearchComplete(Minecraft.getInstance().player, SimpleResearchKey.parseRuneEnchantment(enchant))) {
+                tempPage.addEnchantment(enchant);
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getEnchantments().isEmpty()) {
+                    heightRemaining = 155;
+                    this.pages.add(tempPage);
+                    tempPage = new RuneEnchantmentIndexPage();
+                }
+            }
+        }
+        if (!tempPage.getEnchantments().isEmpty()) {
+            this.pages.add(tempPage);
+        }
     }
     
     public void nextPage() {
