@@ -6,9 +6,18 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
+import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagic.common.runes.Rune;
+import com.verdantartifice.primalmagic.common.runes.RuneManager;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,6 +28,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class RuneEnchantmentPage extends AbstractPage {
+    protected static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire_overlay.png");
+    
     protected Enchantment enchant;
     protected List<IPageElement> contents = new ArrayList<>();
     protected boolean firstPage;
@@ -52,6 +63,11 @@ public class RuneEnchantmentPage extends AbstractPage {
     
     @Override
     public void render(int side, int x, int y, int mouseX, int mouseY) {
+        int startY = y;
+        int indent = 84;
+        int overlayWidth = 13;
+        int overlayHeight = 13;
+        
         // Draw title page if applicable
         if (this.isFirstPage() && side == 0) {
             this.renderTitle(side, x, y, mouseX, mouseY, null);
@@ -65,8 +81,30 @@ public class RuneEnchantmentPage extends AbstractPage {
             content.render(side, x, y);
             y = content.getNextY(y);
         }
+        
+        // Render overlay background
+        Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
+        RenderSystem.pushMatrix();
+        RenderSystem.translatef(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
+        this.blit(0, 0, 0, 51, overlayWidth, overlayHeight);
+        this.blit(32, 0, 0, 51, overlayWidth, overlayHeight);
+        RenderSystem.popMatrix();
     }
     
     @Override
-    public void initWidgets(GrimoireScreen screen, int side, int x, int y) {}
+    public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        int indent = 124;
+        int overlayWidth = 52;
+
+        // Render rune item stacks
+        List<Rune> runes = RuneManager.getRunesForEnchantment(this.enchant);
+        if (runes != null) {
+            for (int index = 0; index < Math.min(runes.size(), 3); index++) {
+                ItemStack runeStack = RuneItem.getRune(runes.get(index));
+                if (runeStack != null) {
+                    screen.addWidgetToScreen(new ItemStackWidget(runeStack, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (index * 32), y, false));
+                }
+            }
+        }
+    }
 }
