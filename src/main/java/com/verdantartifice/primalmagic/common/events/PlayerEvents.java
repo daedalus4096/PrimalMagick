@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
@@ -78,8 +79,9 @@ public class PlayerEvents {
                 doScheduledSyncs(player, false);
             }
             if (player.ticksExisted % 20 == 0) {
-                // Periodically check to see if attuned players should drop a light source
+                // Periodically check to see if attuned players should drop a light source or if regrowing equipment should mend
                 handleLightDrop(player);
+                handleRegrowth(player);
             }
             if (player.ticksExisted % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries and for photosynthesis
@@ -293,6 +295,14 @@ public class PlayerEvents {
         if (player.onGround && DOUBLE_JUMP_ALLOWED.containsKey(player.getEntityId())) {
             // Reset double jump permissions upon touching the ground
             DOUBLE_JUMP_ALLOWED.remove(player.getEntityId());
+        }
+    }
+    
+    protected static void handleRegrowth(PlayerEntity player) {
+        for (ItemStack stack : player.getEquipmentAndArmor()) {
+            if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack)) {
+                stack.damageItem(-1, player, p -> {});
+            }
         }
     }
     

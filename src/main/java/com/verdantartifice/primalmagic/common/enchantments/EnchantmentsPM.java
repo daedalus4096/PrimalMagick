@@ -20,4 +20,5 @@ public class EnchantmentsPM {
     public static final RegistryObject<Enchantment> ENDERLOCK = ENCHANTMENTS.register("enderlock", () -> new EnderlockEnchantment(Enchantment.Rarity.RARE, EquipmentSlotType.MAINHAND));
     public static final RegistryObject<Enchantment> JUDGMENT = ENCHANTMENTS.register("judgment", () -> new JudgmentEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlotType.MAINHAND));
     public static final RegistryObject<Enchantment> ENDERPORT = ENCHANTMENTS.register("enderport", () -> new EnderportEnchantment(Enchantment.Rarity.RARE, EquipmentSlotType.MAINHAND));
+    public static final RegistryObject<Enchantment> REGROWTH = ENCHANTMENTS.register("regrowth", () -> new RegrowthEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlotType.values()));
 }

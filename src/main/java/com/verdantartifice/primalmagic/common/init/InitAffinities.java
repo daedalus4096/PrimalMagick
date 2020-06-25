@@ -447,5 +447,6 @@ public class InitAffinities {
         AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.ENDERLOCK.get(), Source.VOID);
         AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.JUDGMENT.get(), Source.HALLOWED);
         AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.ENDERPORT.get(), Source.VOID);
+        AffinityManager.registerEnchantmentBonusAffinity(EnchantmentsPM.REGROWTH.get(), Source.HALLOWED);
     }
 }
