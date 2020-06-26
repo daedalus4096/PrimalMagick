@@ -293,6 +293,7 @@
     "enchantment.primalmagic.judgment": "Judgment",
     "enchantment.primalmagic.enderport": "Enderport",
     "enchantment.primalmagic.regrowth": "Regrowth",
+    "enchantment.primalmagic.aegis": "Aegis",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     "primalmagic.wand_core.unknown.name": "Unknown",
@@ -1223,6 +1224,7 @@
     "rune_enchantment.text.primalmagic.judgment": "Judgment: lorem ipsum",
     "rune_enchantment.text.primalmagic.enderport": "Enderport: lorem ipsum",
     "rune_enchantment.text.primalmagic.regrowth": "Regrowth: lorem ipsum",
+    "rune_enchantment.text.primalmagic.aegis": "Aegis: lorem ipsum",
     
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",

@@ -54,5 +54,6 @@ public class InitRunes {
         RuneManager.registerRuneEnchantment(EnchantmentsPM.JUDGMENT.get(), Rune.PROJECT, Rune.ITEM, Rune.HALLOWED);
         RuneManager.registerRuneEnchantment(EnchantmentsPM.ENDERPORT.get(), Rune.SUMMON, Rune.SELF, Rune.VOID);
         RuneManager.registerRuneEnchantment(EnchantmentsPM.REGROWTH.get(), Rune.ABSORB, Rune.ITEM, Rune.HALLOWED);
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.AEGIS.get(), Rune.PROTECT, Rune.SELF, Rune.HALLOWED);
     }
 }
