@@ -9,7 +9,7 @@ import net.minecraft.inventory.EquipmentSlotType;
  * 
  * @author Daedalus4096
  */
-public class RegrowthEnchantment extends Enchantment {
+public class RegrowthEnchantment extends AbstractRuneEnchantment {
     public RegrowthEnchantment(Enchantment.Rarity rarityIn, EquipmentSlotType... slots) {
         super(rarityIn, EnchantmentType.BREAKABLE, slots);
     }
