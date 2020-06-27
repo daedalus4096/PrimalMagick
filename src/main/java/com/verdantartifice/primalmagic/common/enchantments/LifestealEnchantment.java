@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
@@ -17,6 +20,8 @@ import net.minecraft.item.TridentItem;
  * @author Daedalus4096
  */
 public class LifestealEnchantment extends AbstractRuneEnchantment {
+    protected static final Map<Entity, Long> LAST_LEECHED = new HashMap<>();
+    
     public LifestealEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
         super(rarity, EnchantmentType.WEAPON, slots);
     }
@@ -45,8 +50,12 @@ public class LifestealEnchantment extends AbstractRuneEnchantment {
     @Override
     public void onEntityDamaged(LivingEntity user, Entity target, int level) {
         super.onEntityDamaged(user, target, level);
-        if (target instanceof LivingEntity && user.getRNG().nextInt(5) < level) {
+        
+        // Disallow leeching from the same entity multiple times in one tick to prevent bigger than intended heals
+        long ticks = user.world.getGameTime();
+        if (target instanceof LivingEntity && user.getRNG().nextInt(5) < level && LAST_LEECHED.getOrDefault(target, 0L) != ticks) {
             user.heal(1.0F);
+            LAST_LEECHED.put(target, ticks);
         }
     }
 }
