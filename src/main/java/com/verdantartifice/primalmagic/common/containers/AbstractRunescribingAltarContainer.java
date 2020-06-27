@@ -32,7 +32,12 @@ import net.minecraft.world.World;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarContainer extends Container {
-    protected final CraftingInventory altarInv = new CraftingInventory(this, 4, 3);
+    protected final CraftingInventory altarInv = new CraftingInventory(this, 4, 3) {
+        @Override
+        public int getInventoryStackLimit() {
+            return 1;
+        }
+    };
     protected final IInventory resultInv = new Inventory(1);
     protected final PlayerEntity player;
     protected final World world;
