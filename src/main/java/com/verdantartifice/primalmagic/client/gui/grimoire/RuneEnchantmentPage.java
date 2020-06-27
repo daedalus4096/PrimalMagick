@@ -68,10 +68,17 @@ public class RuneEnchantmentPage extends AbstractPage {
         int overlayWidth = 13;
         int overlayHeight = 13;
         
-        // Draw title page if applicable
+        // Draw title page and overlay background if applicable
         if (this.isFirstPage() && side == 0) {
             this.renderTitle(side, x, y, mouseX, mouseY, null);
             y += 77;
+            
+            Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
+            this.blit(0, 0, 0, 51, overlayWidth, overlayHeight);
+            this.blit(32, 0, 0, 51, overlayWidth, overlayHeight);
+            RenderSystem.popMatrix();
         } else {
             y += 25;
         }
@@ -81,14 +88,6 @@ public class RuneEnchantmentPage extends AbstractPage {
             content.render(side, x, y);
             y = content.getNextY(y);
         }
-        
-        // Render overlay background
-        Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
-        RenderSystem.pushMatrix();
-        RenderSystem.translatef(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
-        this.blit(0, 0, 0, 51, overlayWidth, overlayHeight);
-        this.blit(32, 0, 0, 51, overlayWidth, overlayHeight);
-        RenderSystem.popMatrix();
     }
     
     @Override
@@ -96,13 +95,15 @@ public class RuneEnchantmentPage extends AbstractPage {
         int indent = 124;
         int overlayWidth = 52;
 
-        // Render rune item stacks
-        List<Rune> runes = RuneManager.getRunesForEnchantment(this.enchant);
-        if (runes != null) {
-            for (int index = 0; index < Math.min(runes.size(), 3); index++) {
-                ItemStack runeStack = RuneItem.getRune(runes.get(index));
-                if (runeStack != null) {
-                    screen.addWidgetToScreen(new ItemStackWidget(runeStack, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (index * 32), y, false));
+        // Render rune item stacks if applicable
+        if (this.isFirstPage() && side == 0) {
+            List<Rune> runes = RuneManager.getRunesForEnchantment(this.enchant);
+            if (runes != null) {
+                for (int index = 0; index < Math.min(runes.size(), 3); index++) {
+                    ItemStack runeStack = RuneItem.getRune(runes.get(index));
+                    if (runeStack != null) {
+                        screen.addWidgetToScreen(new ItemStackWidget(runeStack, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (index * 32), y, false));
+                    }
                 }
             }
         }
