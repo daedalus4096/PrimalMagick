@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
+import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
@@ -212,7 +213,16 @@ public abstract class AbstractWandItem extends Item implements IWand {
         // Start with the base modifier, as determined by wand cap
         float modifier = this.getBaseCostModifier(stack);
         
-        // TODO Subtract discounts from equipped player gear
+        // Subtract discounts from equipped player gear
+        int gearDiscount = 0;
+        for (ItemStack gearStack : player.getEquipmentAndArmor()) {
+            if (gearStack.getItem() instanceof IManaDiscountGear) {
+                gearDiscount += ((IManaDiscountGear)gearStack.getItem()).getManaDiscount(gearStack, player);
+            }
+        }
+        if (gearDiscount > 0) {
+            modifier -= (0.01F * gearDiscount);
+        }
         
         // Subtract discounts from attuned sources
         if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
