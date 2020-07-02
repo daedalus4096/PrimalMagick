@@ -5,6 +5,7 @@ import java.util.Collections;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.config.Config;
+import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -36,6 +37,12 @@ public class ClientRenderEvents {
     public static void renderTooltip(ItemTooltipEvent event) {
         Minecraft mc = Minecraft.getInstance();
         Screen gui = mc.currentScreen;
+        
+        // Show a tooltip entry if the item stack grants a mana discount
+        if (event.getItemStack().getItem() instanceof IManaDiscountGear) {
+            int discount = ((IManaDiscountGear)event.getItemStack().getItem()).getManaDiscount(event.getItemStack(), mc.player);
+            event.getToolTip().add(new TranslationTextComponent("tooltip.primalmagic.mana_discount", discount).applyTextStyle(TextFormatting.DARK_AQUA));
+        }
         
         // Show a tooltip entry if the item stack is runescribed
         if (RuneManager.hasRunes(event.getItemStack())) {
