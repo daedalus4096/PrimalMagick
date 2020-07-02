@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.items.armor;
 
 import java.util.function.Supplier;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.inventory.EquipmentSlotType;
@@ -29,7 +30,7 @@ public enum ArmorMaterialPM implements IArmorMaterial {
     private final LazyValue<Ingredient> repairMaterial;
 
     private ArmorMaterialPM(String name, int maxDamageFactor, int[] damageReductionAmounts, int enchantability, SoundEvent equipSound, float toughness, Supplier<Ingredient> repairMaterialSupplier) {
-       this.name = name;
+       this.name = PrimalMagic.MODID + ":" + name;
        this.maxDamageFactor = maxDamageFactor;
        this.damageReductionAmountArray = damageReductionAmounts;
        this.enchantability = enchantability;

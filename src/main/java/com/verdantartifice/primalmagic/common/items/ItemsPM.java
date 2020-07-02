@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.common.items;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.AncientManaFontISTER;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
+import com.verdantartifice.primalmagic.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
@@ -26,6 +28,7 @@ import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.Food;
@@ -239,6 +242,12 @@ public class ItemsPM {
     public static final RegistryObject<Item> HEXIUM_NUGGET = ITEMS.register("hexium_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> HALLOWSTEEL_NUGGET = ITEMS.register("hallowsteel_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> QUARTZ_NUGGET = ITEMS.register("quartz_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    
+    // Register armor items
+    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_HEAD = ITEMS.register("spellcloth_head", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, EquipmentSlotType.HEAD, 2, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_CHEST = ITEMS.register("spellcloth_chest", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, EquipmentSlotType.CHEST, 3, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_LEGS = ITEMS.register("spellcloth_legs", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, EquipmentSlotType.LEGS, 3, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_FEET = ITEMS.register("spellcloth_feet", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, EquipmentSlotType.FEET, 2, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);
