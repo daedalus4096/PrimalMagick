@@ -244,6 +244,10 @@ public class ItemsPM {
     public static final RegistryObject<Item> QUARTZ_NUGGET = ITEMS.register("quartz_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register armor items
+    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = ITEMS.register("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlotType.HEAD, 1, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
+    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_CHEST = ITEMS.register("imbued_wool_chest", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlotType.CHEST, 2, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
+    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_LEGS = ITEMS.register("imbued_wool_legs", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlotType.LEGS, 1, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
+    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_FEET = ITEMS.register("imbued_wool_feet", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlotType.FEET, 1, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
     public static final RegistryObject<RobeArmorItem> SPELLCLOTH_HEAD = ITEMS.register("spellcloth_head", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, EquipmentSlotType.HEAD, 2, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<RobeArmorItem> SPELLCLOTH_CHEST = ITEMS.register("spellcloth_chest", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, EquipmentSlotType.CHEST, 3, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<RobeArmorItem> SPELLCLOTH_LEGS = ITEMS.register("spellcloth_legs", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, EquipmentSlotType.LEGS, 3, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));

@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -15,6 +16,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public enum ArmorMaterialPM implements IArmorMaterial {
+    IMBUED_WOOL("imbued_wool", 8, new int[] {1, 3, 4, 1}, 17, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F, () -> {
+        return Ingredient.fromTag(ItemTags.WOOL);
+    }),
     SPELLCLOTH("spellcloth", 20, new int[] {2, 5, 7, 2}, 22, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 1.0F, () -> {
         return Ingredient.fromItems(ItemsPM.SPELLCLOTH.get());
     });
