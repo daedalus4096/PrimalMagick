@@ -21,6 +21,9 @@ public enum ArmorMaterialPM implements IArmorMaterial {
     }),
     SPELLCLOTH("spellcloth", 20, new int[] {2, 5, 7, 2}, 22, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 1.0F, () -> {
         return Ingredient.fromItems(ItemsPM.SPELLCLOTH.get());
+    }),
+    HEXWEAVE("hexweave", 35, new int[] {3, 7, 9, 3}, 27, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 2.0F, () -> {
+        return Ingredient.fromItems(ItemsPM.HEXWEAVE.get());
     });
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[] {13, 15, 16, 11};
@@ -34,13 +37,13 @@ public enum ArmorMaterialPM implements IArmorMaterial {
     private final LazyValue<Ingredient> repairMaterial;
 
     private ArmorMaterialPM(String name, int maxDamageFactor, int[] damageReductionAmounts, int enchantability, SoundEvent equipSound, float toughness, Supplier<Ingredient> repairMaterialSupplier) {
-       this.name = PrimalMagic.MODID + ":" + name;
-       this.maxDamageFactor = maxDamageFactor;
-       this.damageReductionAmountArray = damageReductionAmounts;
-       this.enchantability = enchantability;
-       this.soundEvent = equipSound;
-       this.toughness = toughness;
-       this.repairMaterial = new LazyValue<>(repairMaterialSupplier);
+        this.name = PrimalMagic.MODID + ":" + name;
+        this.maxDamageFactor = maxDamageFactor;
+        this.damageReductionAmountArray = damageReductionAmounts;
+        this.enchantability = enchantability;
+        this.soundEvent = equipSound;
+        this.toughness = toughness;
+        this.repairMaterial = new LazyValue<>(repairMaterialSupplier);
     }
 
     @Override
