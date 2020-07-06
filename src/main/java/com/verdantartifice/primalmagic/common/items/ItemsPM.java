@@ -256,6 +256,10 @@ public class ItemsPM {
     public static final RegistryObject<RobeArmorItem> HEXWEAVE_CHEST = ITEMS.register("hexweave_chest", () -> new RobeArmorItem(ArmorMaterialPM.HEXWEAVE, EquipmentSlotType.CHEST, 5, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<RobeArmorItem> HEXWEAVE_LEGS = ITEMS.register("hexweave_legs", () -> new RobeArmorItem(ArmorMaterialPM.HEXWEAVE, EquipmentSlotType.LEGS, 4, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<RobeArmorItem> HEXWEAVE_FEET = ITEMS.register("hexweave_feet", () -> new RobeArmorItem(ArmorMaterialPM.HEXWEAVE, EquipmentSlotType.FEET, 3, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_HEAD = ITEMS.register("saintswool_head", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, EquipmentSlotType.HEAD, 4, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
+    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_CHEST = ITEMS.register("saintswool_chest", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, EquipmentSlotType.CHEST, 6, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
+    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_LEGS = ITEMS.register("saintswool_legs", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, EquipmentSlotType.LEGS, 6, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
+    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_FEET = ITEMS.register("saintswool_feet", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, EquipmentSlotType.FEET, 4, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
     
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);

@@ -24,6 +24,9 @@ public enum ArmorMaterialPM implements IArmorMaterial {
     }),
     HEXWEAVE("hexweave", 35, new int[] {3, 7, 9, 3}, 27, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 2.0F, () -> {
         return Ingredient.fromItems(ItemsPM.HEXWEAVE.get());
+    }),
+    SAINTSWOOL("saintswool", 50, new int[] {4, 8, 10, 4}, 32, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 3.0F, () -> {
+        return Ingredient.fromItems(ItemsPM.SAINTSWOOL.get());
     });
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[] {13, 15, 16, 11};
