@@ -267,6 +267,9 @@
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.apprentice_wand_gem_item": "Apprentice's Wand Gem",
+    "item.primalmagic.adept_wand_gem_item": "Adept's Wand Gem",
+    "item.primalmagic.wizard_wand_gem_item": "Wizard's Wand Gem",
+    "item.primalmagic.archmage_wand_gem_item": "Archmage's Wand Gem",
     "item.primalmagic.creative_wand_gem_item": "Creative Wand Gem",
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
@@ -319,6 +322,9 @@
     "primalmagic.wand_cap.unknown.name": "Unknown",
     
     "primalmagic.wand_gem.apprentice.name": "Apprentice's",
+    "primalmagic.wand_gem.adept.name": "Adept's",
+    "primalmagic.wand_gem.wizard.name": "Wizard's",
+    "primalmagic.wand_gem.archmage.name": "Archmage's",
     "primalmagic.wand_gem.creative.name": "Creative",
     "primalmagic.wand_gem.unknown.name": "Unknown",
     

@@ -24,6 +24,9 @@ public class WandGem {
     protected static final Map<String, WandGem> REGISTRY = new HashMap<>();
     
     public static final WandGem APPRENTICE = new WandGem("apprentice", Rarity.COMMON, 75);
+    public static final WandGem ADEPT = new WandGem("adept", Rarity.UNCOMMON, 250);
+    public static final WandGem WIZARD = new WandGem("wizard", Rarity.RARE, 750);
+    public static final WandGem ARCHMAGE = new WandGem("archmage", Rarity.EPIC, 2500);
     public static final WandGem CREATIVE = new WandGem("creative", Rarity.EPIC, -1);    // Creative-only wand gem allowing infinite mana
     
     protected final String tag;                 // Unique identifier for the wand gem

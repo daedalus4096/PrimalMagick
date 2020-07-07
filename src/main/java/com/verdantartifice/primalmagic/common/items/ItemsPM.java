@@ -359,5 +359,8 @@ public class ItemsPM {
     public static final RegistryObject<WandCoreItem> HEARTWOOD_WAND_CORE_ITEM = ITEMS.register("heartwood_wand_core_item", () -> new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCapItem> IRON_WAND_CAP_ITEM = ITEMS.register("iron_wand_cap_item", () -> new WandCapItem(WandCap.IRON, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandGemItem> APPRENTICE_WAND_GEM_ITEM = ITEMS.register("apprentice_wand_gem_item", () -> new WandGemItem(WandGem.APPRENTICE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandGemItem> ADEPT_WAND_GEM_ITEM = ITEMS.register("adept_wand_gem_item", () -> new WandGemItem(WandGem.ADEPT, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandGemItem> WIZARD_WAND_GEM_ITEM = ITEMS.register("wizard_wand_gem_item", () -> new WandGemItem(WandGem.WIZARD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandGemItem> ARCHMAGE_WAND_GEM_ITEM = ITEMS.register("archmage_wand_gem_item", () -> new WandGemItem(WandGem.ARCHMAGE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandGemItem> CREATIVE_WAND_GEM_ITEM = ITEMS.register("creative_wand_gem_item", () -> new WandGemItem(WandGem.CREATIVE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 }
