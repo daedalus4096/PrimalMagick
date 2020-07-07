@@ -334,7 +334,10 @@ public class InitAffinities {
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HALLOWSTEEL_INGOT.get()), new SourceList().add(Source.EARTH, 6).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1).add(Source.BLOOD, 11).add(Source.INFERNAL, 11).add(Source.VOID, 11).add(Source.HALLOWED, 37));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.HEARTWOOD.get()), new SourceList().add(Source.EARTH, 15).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 15).add(Source.MOON, 5));
         AffinityManager.registerAffinities(new ItemStack(ItemsPM.INCENSE_STICK.get()), new SourceList().add(Source.EARTH, 4).add(Source.SKY, 5).add(Source.SUN, 4));
-        AffinityManager.registerAffinities(new ItemStack(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()), new SourceList().add(Source.EARTH, 19).add(Source.SEA, 3).add(Source.SKY, 3).add(Source.SUN, 3).add(Source.MOON, 3));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()), new SourceList().add(Source.EARTH, 17).add(Source.SEA, 2).add(Source.SKY, 2).add(Source.SUN, 2).add(Source.MOON, 2));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.ADEPT_WAND_GEM_ITEM.get()), new SourceList().add(Source.EARTH, 18).add(Source.SEA, 3).add(Source.SKY, 3).add(Source.SUN, 3).add(Source.MOON, 3));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.WIZARD_WAND_GEM_ITEM.get()), new SourceList().add(Source.EARTH, 20).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5));
+        AffinityManager.registerAffinities(new ItemStack(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()), new SourceList().add(Source.EARTH, 22).add(Source.SEA, 7).add(Source.SKY, 7).add(Source.SUN, 7).add(Source.MOON, 7));
 
         // Register Primal Magic essence affinities
         for (Item tagItem : ItemTagsPM.ESSENCES.getAllElements()) {
