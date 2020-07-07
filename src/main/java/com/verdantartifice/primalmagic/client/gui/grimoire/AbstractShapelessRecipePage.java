@@ -32,7 +32,7 @@ public abstract class AbstractShapelessRecipePage<T extends IRecipe<?>> extends 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         int indent = 124;
-        int overlayWidth = 52;
+        int overlayWidth = 51;
 
         // Render ingredient stacks
         List<Ingredient> ingredients = this.recipe.getIngredients();
@@ -54,8 +54,8 @@ public abstract class AbstractShapelessRecipePage<T extends IRecipe<?>> extends 
         y += 53;
         
         int indent = 124;
-        int overlayWidth = 52;
-        int overlayHeight = 52;
+        int overlayWidth = 51;
+        int overlayHeight = 51;
         
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);        
@@ -66,7 +66,7 @@ public abstract class AbstractShapelessRecipePage<T extends IRecipe<?>> extends 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.translatef(x - 5 + (side * 140) + (indent / 2), y + 50 + (overlayHeight / 2), 0.0F);
+        RenderSystem.translatef(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);
         RenderSystem.scalef(2.0F, 2.0F, 1.0F);
         this.blit(-(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight);
         RenderSystem.popMatrix();
