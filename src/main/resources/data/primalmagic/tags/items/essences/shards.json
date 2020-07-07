@@ -1,11 +1,7 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:essence_shard_earth",
-    "primalmagic:essence_shard_sea",
-    "primalmagic:essence_shard_sky",
-    "primalmagic:essence_shard_sun",
-    "primalmagic:essence_shard_moon",
+    "#primalmagic:essences/terrestrial_shards",
     "primalmagic:essence_shard_blood",
     "primalmagic:essence_shard_infernal",
     "primalmagic:essence_shard_void",

@@ -35,8 +35,11 @@ public class ItemTagsPM {
     public static final Tag<Item> ESSENCES_DUSTS = tag("essences/dusts");
     public static final Tag<Item> ESSENCES_TERRESTRIAL_DUSTS = tag("essences/terrestrial_dusts");
     public static final Tag<Item> ESSENCES_SHARDS = tag("essences/shards");
+    public static final Tag<Item> ESSENCES_TERRESTRIAL_SHARDS = tag("essences/terrestrial_shards");
     public static final Tag<Item> ESSENCES_CRYSTALS = tag("essences/crystals");
+    public static final Tag<Item> ESSENCES_TERRESTRIAL_CRYSTALS = tag("essences/terrestrial_crystals");
     public static final Tag<Item> ESSENCES_CLUSTERS = tag("essences/clusters");
+    public static final Tag<Item> ESSENCES_TERRESTRIAL_CLUSTERS = tag("essences/terrestrial_clusters");
     
     public static final Tag<Item> INGOTS_PRIMALITE = tag("ingots/primalite");
     public static final Tag<Item> INGOTS_HEXIUM = tag("ingots/hexium");

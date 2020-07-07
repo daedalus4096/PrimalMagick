@@ -1,11 +1,7 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:essence_cluster_earth",
-    "primalmagic:essence_cluster_sea",
-    "primalmagic:essence_cluster_sky",
-    "primalmagic:essence_cluster_sun",
-    "primalmagic:essence_cluster_moon",
+    "#primalmagic:essences/terrestrial_clusters",
     "primalmagic:essence_cluster_blood",
     "primalmagic:essence_cluster_infernal",
     "primalmagic:essence_cluster_void",
