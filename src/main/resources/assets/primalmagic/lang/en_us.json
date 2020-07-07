@@ -671,6 +671,18 @@
     "primalmagic.research.sunlamp.text.stage.1": "Sunlamp: Lorem ipsum",
     "primalmagic.research.sunlamp.text.stage.2": "Sunlamp complete!",
     
+    "primalmagic.research.wand_gem_adept.title": "Wand Gem: Adept",
+    "primalmagic.research.wand_gem_adept.text.stage.1": "Adept wand gem: Lorem ipsum",
+    "primalmagic.research.wand_gem_adept.text.stage.2": "Adept wand gem complete!",
+    
+    "primalmagic.research.wand_gem_wizard.title": "Wand Gem: Wizard",
+    "primalmagic.research.wand_gem_wizard.text.stage.1": "Wizard wand gem: Lorem ipsum",
+    "primalmagic.research.wand_gem_wizard.text.stage.2": "Wizard wand gem complete!",
+    
+    "primalmagic.research.wand_gem_archmage.title": "Wand Gem: Archmage",
+    "primalmagic.research.wand_gem_archmage.text.stage.1": "Archmage wand gem: Lorem ipsum",
+    "primalmagic.research.wand_gem_archmage.text.stage.2": "Archmage wand gem complete!",
+    
     "primalmagic.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagic.research.basic_runeworking.text.stage.1": "Basic runeworking: Lorem ipsum",
     

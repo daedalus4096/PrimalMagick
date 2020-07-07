@@ -1409,6 +1409,24 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_APPRENTICE")))
             .manaCost(new SourceList().add(Source.EARTH, 10).add(Source.SEA, 10).add(Source.SKY, 10).add(Source.SUN, 10).add(Source.MOON, 10))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ADEPT_WAND_GEM_ITEM.get())
+            .addIngredient(Tags.Items.GEMS_DIAMOND)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_SHARDS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_ADEPT")))
+            .manaCost(new SourceList().add(Source.EARTH, 30).add(Source.SEA, 30).add(Source.SKY, 30).add(Source.SUN, 30).add(Source.MOON, 30))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.WIZARD_WAND_GEM_ITEM.get())
+            .addIngredient(Tags.Items.GEMS_DIAMOND)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_CRYSTALS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_WIZARD")))
+            .manaCost(new SourceList().add(Source.EARTH, 100).add(Source.SEA, 100).add(Source.SKY, 100).add(Source.SUN, 100).add(Source.MOON, 100))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get())
+            .addIngredient(Tags.Items.GEMS_DIAMOND)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_CLUSTERS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_ARCHMAGE")))
+            .manaCost(new SourceList().add(Source.EARTH, 300).add(Source.SEA, 300).add(Source.SKY, 300).add(Source.SUN, 300).add(Source.MOON, 300))
+            .build(consumer);
     }
     
     protected void registerRitualCandleRecipes(Consumer<IFinishedRecipe> consumer) {

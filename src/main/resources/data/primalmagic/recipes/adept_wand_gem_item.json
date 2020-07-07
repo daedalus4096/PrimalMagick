@@ -1,0 +1,22 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "WAND_GEM_ADEPT",
+  "mana": {
+    "earth": 30,
+    "sea": 30,
+    "sky": 30,
+    "sun": 30,
+    "moon": 30
+  },
+  "ingredients": [
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "primalmagic:essences/terrestrial_shards"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:adept_wand_gem_item"
+  }
+}

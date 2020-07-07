@@ -215,6 +215,60 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "WAND_GEM_ADEPT",
+            "name": "primalmagic.research.wand_gem_adept.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "EXPERT_MANAWEAVING", "WAND_GEM_APPRENTICE" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_gem_adept.text.stage.1",
+                    "required_item": [ "minecraft:diamond" ],
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_gem_adept.text.stage.2",
+                    "recipes": ["primalmagic:adept_wand_gem_item"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "WAND_GEM_WIZARD",
+            "name": "primalmagic.research.wand_gem_wizard.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "MASTER_MANAWEAVING", "WAND_GEM_ADEPT" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_gem_wizard.text.stage.1",
+                    "required_item": [ "minecraft:diamond" ],
+                    "required_knowledge": ["THEORY;2"]
+                },
+                {
+                    "text": "primalmagic.research.wand_gem_wizard.text.stage.2",
+                    "recipes": ["primalmagic:wizard_wand_gem_item"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "WAND_GEM_ARCHMAGE",
+            "name": "primalmagic.research.wand_gem_archmage.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "SUPREME_MANAWEAVING", "WAND_GEM_WIZARD" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_gem_archmage.text.stage.1",
+                    "required_item": [ "minecraft:diamond" ],
+                    "required_knowledge": ["THEORY;3"]
+                },
+                {
+                    "text": "primalmagic.research.wand_gem_archmage.text.stage.2",
+                    "recipes": ["primalmagic:archmage_wand_gem_item"]
+                }
+            ],
+            "addenda": []
         }
     ]
 }
