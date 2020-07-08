@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagic:item/wand_cap",
+    "textures": {
+        "cap": "primalmagic:block/hallowsteel_block"
+    }
+}
