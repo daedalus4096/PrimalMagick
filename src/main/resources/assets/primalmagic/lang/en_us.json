@@ -266,6 +266,10 @@
     "item.primalmagic.modular_wand": "%1$s %2$s %3$s Wand",
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
+    "item.primalmagic.gold_wand_cap_item": "Gold Wand Cap",
+    "item.primalmagic.primalite_wand_cap_item": "Primalite Wand Cap",
+    "item.primalmagic.hexium_wand_cap_item": "Hexium Wand Cap",
+    "item.primalmagic.hallowsteel_wand_cap_item": "Hallowsteel Wand Cap",
     "item.primalmagic.apprentice_wand_gem_item": "Apprentice's Wand Gem",
     "item.primalmagic.adept_wand_gem_item": "Adept's Wand Gem",
     "item.primalmagic.wizard_wand_gem_item": "Wizard's Wand Gem",
@@ -319,6 +323,10 @@
     "primalmagic.wand_core.unknown.name": "Unknown",
     
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
+    "primalmagic.wand_cap.gold.name": "Gold-Capped",
+    "primalmagic.wand_cap.primalite.name": "Primalite-Bossed",
+    "primalmagic.wand_cap.hexium.name": "Hexium-Bound",
+    "primalmagic.wand_cap.hallowsteel.name": "Hallowsteel-Crowned",
     "primalmagic.wand_cap.unknown.name": "Unknown",
     
     "primalmagic.wand_gem.apprentice.name": "Apprentice's",

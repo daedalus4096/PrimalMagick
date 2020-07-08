@@ -358,6 +358,10 @@ public class ItemsPM {
     public static final RegistryObject<ModularWandItem> MODULAR_WAND = ITEMS.register("modular_wand", ModularWandItem::new);
     public static final RegistryObject<WandCoreItem> HEARTWOOD_WAND_CORE_ITEM = ITEMS.register("heartwood_wand_core_item", () -> new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCapItem> IRON_WAND_CAP_ITEM = ITEMS.register("iron_wand_cap_item", () -> new WandCapItem(WandCap.IRON, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandCapItem> GOLD_WAND_CAP_ITEM = ITEMS.register("gold_wand_cap_item", () -> new WandCapItem(WandCap.GOLD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandCapItem> PRIMALITE_WAND_CAP_ITEM = ITEMS.register("primalite_wand_cap_item", () -> new WandCapItem(WandCap.PRIMALITE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandCapItem> HEXIUM_WAND_CAP_ITEM = ITEMS.register("hexium_wand_cap_item", () -> new WandCapItem(WandCap.HEXIUM, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandCapItem> HALLOWSTEEL_WAND_CAP_ITEM = ITEMS.register("hallowsteel_wand_cap_item", () -> new WandCapItem(WandCap.HALLOWSTEEL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandGemItem> APPRENTICE_WAND_GEM_ITEM = ITEMS.register("apprentice_wand_gem_item", () -> new WandGemItem(WandGem.APPRENTICE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandGemItem> ADEPT_WAND_GEM_ITEM = ITEMS.register("adept_wand_gem_item", () -> new WandGemItem(WandGem.ADEPT, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandGemItem> WIZARD_WAND_GEM_ITEM = ITEMS.register("wizard_wand_gem_item", () -> new WandGemItem(WandGem.WIZARD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

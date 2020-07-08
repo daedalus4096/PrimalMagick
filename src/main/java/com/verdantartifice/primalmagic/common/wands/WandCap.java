@@ -25,6 +25,10 @@ public class WandCap {
     protected static final Map<String, WandCap> REGISTRY = new HashMap<>();
     
     public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1F);
+    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 1.0F);
+    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 0.95F);
+    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 0.9F);
+    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 0.85F);
     
     protected final String tag;                 // Unique identifier for the wand cap
     protected final Rarity rarity;              // The cap's rarity, used to color its name and determine completed wand rarity
