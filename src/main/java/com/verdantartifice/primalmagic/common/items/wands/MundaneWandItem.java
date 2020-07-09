@@ -28,7 +28,7 @@ public class MundaneWandItem extends AbstractWandItem {
     }
     
     @Override
-    public float getBaseCostModifier(ItemStack stack) {
+    public double getBaseCostModifier(ItemStack stack) {
         // With no cap, a mundane wand gets a 20% penalty to all mana expenditures
         return 1.2F;
     }

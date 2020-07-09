@@ -54,13 +54,13 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     @Override
-    public float getBaseCostModifier(ItemStack stack) {
+    public double getBaseCostModifier(ItemStack stack) {
         // The base mana cost modifier of a wand is determined by its cap
         if (stack == null) {
-            return 1.2F;
+            return 1.2D;
         }
         WandCap cap = this.getWandCap(stack);
-        return (cap == null) ? 1.2F : cap.getBaseCostModifier();
+        return (cap == null) ? 1.2D : cap.getBaseCostModifier();
     }
 
     @Nullable

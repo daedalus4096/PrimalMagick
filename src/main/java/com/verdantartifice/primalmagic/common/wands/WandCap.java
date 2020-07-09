@@ -24,22 +24,22 @@ import net.minecraft.util.ResourceLocation;
 public class WandCap {
     protected static final Map<String, WandCap> REGISTRY = new HashMap<>();
     
-    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1F);
-    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 1.0F);
-    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 0.95F);
-    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 0.9F);
-    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 0.85F);
+    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1D);
+    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 1.0D);
+    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 0.95D);
+    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 0.9D);
+    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 0.85D);
     
     protected final String tag;                 // Unique identifier for the wand cap
     protected final Rarity rarity;              // The cap's rarity, used to color its name and determine completed wand rarity
-    protected final float baseCostModifier;     // The base discount or penalty to apply to mana usage, modified by other factors later
+    protected final double baseCostModifier;    // The base discount or penalty to apply to mana usage, modified by other factors later
     protected final ModelResourceLocation mrl;  // Resource location of the cap's model, stored in a blockstate file
     
-    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, float costModifier) {
+    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier) {
         this(tag, rarity, costModifier, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_cap"), ""));
     }
     
-    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, float costModifier, @Nonnull ModelResourceLocation mrl) {
+    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, @Nonnull ModelResourceLocation mrl) {
         if (REGISTRY.containsKey(tag)) {
             // Don't allow a given cap to be registered more than once
             throw new IllegalArgumentException("Wand cap " + tag + " already registered!");
@@ -61,7 +61,7 @@ public class WandCap {
         return this.rarity;
     }
     
-    public float getBaseCostModifier() {
+    public double getBaseCostModifier() {
         return this.baseCostModifier;
     }
     

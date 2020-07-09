@@ -209,9 +209,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public float getTotalCostModifier(ItemStack stack, PlayerEntity player, Source source) {
+    public double getTotalCostModifier(ItemStack stack, PlayerEntity player, Source source) {
         // Start with the base modifier, as determined by wand cap
-        float modifier = this.getBaseCostModifier(stack);
+        double modifier = this.getBaseCostModifier(stack);
         
         // Subtract discounts from equipped player gear
         int gearDiscount = 0;
@@ -258,7 +258,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
                     ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
-                    int modifier = MathHelper.floor(100.0F * this.getTotalCostModifier(stack, player, source));
+                    int modifier = MathHelper.floor(100.0D * this.getTotalCostModifier(stack, player, source));
                     ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getFormattedText(), this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }

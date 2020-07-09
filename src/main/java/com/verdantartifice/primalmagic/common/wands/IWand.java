@@ -111,7 +111,7 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the base mana cost modifier to be applied to mana consumption
      */
-    public float getBaseCostModifier(@Nullable ItemStack stack);
+    public double getBaseCostModifier(@Nullable ItemStack stack);
     
     /**
      * Get the total mana cost modifier to be applied to mana consumption, from all factors (e.g. wand cap, player gear, attunement).
@@ -121,7 +121,7 @@ public interface IWand {
      * @param source the type of mana being consumed
      * @return the total mana cost modifier to be applied to mana consumption
      */
-    public float getTotalCostModifier(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source);
+    public double getTotalCostModifier(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source);
 
     /**
      * Clear any stored position data for the last interacted-with tile.
