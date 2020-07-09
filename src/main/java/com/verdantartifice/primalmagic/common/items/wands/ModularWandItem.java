@@ -8,11 +8,13 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandISTER;
+import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -61,6 +63,19 @@ public class ModularWandItem extends AbstractWandItem {
         }
         WandCap cap = this.getWandCap(stack);
         return (cap == null) ? 1.2D : cap.getBaseCostModifier();
+    }
+    
+    @Override
+    public double getTotalCostModifier(ItemStack stack, PlayerEntity player, Source source) {
+        double mod = super.getTotalCostModifier(stack, player, source);
+        
+        // Subtract discount for wand core alignment, if any
+        WandCore core = this.getWandCore(stack);
+        if (core != null && core.getAlignedSources().contains(source)) {
+            mod -= 0.05D;
+        }
+        
+        return mod;
     }
 
     @Nullable

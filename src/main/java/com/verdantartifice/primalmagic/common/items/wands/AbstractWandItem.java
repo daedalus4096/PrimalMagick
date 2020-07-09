@@ -221,12 +221,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
             }
         }
         if (gearDiscount > 0) {
-            modifier -= (0.01F * gearDiscount);
+            modifier -= (0.01D * gearDiscount);
         }
         
         // Subtract discounts from attuned sources
         if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
-            modifier -= 0.05F;
+            modifier -= 0.05D;
         }
         
         // TODO Subtract discounts from wand enchantments
@@ -234,13 +234,13 @@ public abstract class AbstractWandItem extends Item implements IWand {
         // Substract discounts from temporary conditions
         if (player.isPotionActive(EffectsPM.MANAFRUIT.get())) {
             // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
-            modifier -= (0.01F * ((2 * player.getActivePotionEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
+            modifier -= (0.01D * ((2 * player.getActivePotionEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
         }
         
         // Add penalties from temporary conditions
         if (player.isPotionActive(EffectsPM.MANA_IMPEDANCE.get())) {
             // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
-            modifier += (0.05F * (player.getActivePotionEffect(EffectsPM.MANA_IMPEDANCE.get()).getAmplifier() + 1));
+            modifier += (0.05D * (player.getActivePotionEffect(EffectsPM.MANA_IMPEDANCE.get()).getAmplifier() + 1));
         }
         
         return modifier;
