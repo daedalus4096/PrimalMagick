@@ -1,0 +1,23 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "WAND_CAP_HALLOWSTEEL",
+  "mana": {
+    "earth": 150,
+    "sea": 150,
+    "sky": 150,
+    "sun": 150,
+    "moon": 150
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": {
+      "tag": "primalmagic:nuggets/hallowsteel"
+    }
+  },
+  "result": {
+    "item": "primalmagic:hallowsteel_wand_cap_item"
+  }
+}

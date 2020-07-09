@@ -1,0 +1,23 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "WAND_CAP_PRIMALITE",
+  "mana": {
+    "earth": 15,
+    "sea": 15,
+    "sky": 15,
+    "sun": 15,
+    "moon": 15
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": {
+      "tag": "primalmagic:nuggets/primalite"
+    }
+  },
+  "result": {
+    "item": "primalmagic:primalite_wand_cap_item"
+  }
+}

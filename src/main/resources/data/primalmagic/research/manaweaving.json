@@ -269,6 +269,78 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "WAND_CAP_GOLD",
+            "name": "primalmagic.research.wand_cap_gold.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "EXPERT_MANAWEAVING", "WAND_CAP_IRON" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_cap_gold.text.stage.1",
+                    "required_item": [ "minecraft:gold_ingot" ],
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_cap_gold.text.stage.2",
+                    "recipes": ["primalmagic:gold_wand_cap_item"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "WAND_CAP_PRIMALITE",
+            "name": "primalmagic.research.wand_cap_primalite.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "WAND_CAP_GOLD", "PRIMALITE" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_cap_primalite.text.stage.1",
+                    "required_item": [ "primalmagic:primalite_ingot" ],
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_cap_primalite.text.stage.2",
+                    "recipes": ["primalmagic:primalite_wand_cap_item"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "WAND_CAP_HEXIUM",
+            "name": "primalmagic.research.wand_cap_hexium.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "MASTER_MANAWEAVING", "WAND_CAP_PRIMALITE", "HEXIUM" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_cap_hexium.text.stage.1",
+                    "required_item": [ "primalmagic:hexium_ingot" ],
+                    "required_knowledge": ["THEORY;2"]
+                },
+                {
+                    "text": "primalmagic.research.wand_cap_hexium.text.stage.2",
+                    "recipes": ["primalmagic:hexium_wand_cap_item"]
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "WAND_CAP_HALLOWSTEEL",
+            "name": "primalmagic.research.wand_cap_hallowsteel.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "SUPREME_MANAWEAVING", "WAND_CAP_HEXIUM", "HALLOWSTEEL" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_cap_hallowsteel.text.stage.1",
+                    "required_item": [ "primalmagic:hallowsteel_ingot" ],
+                    "required_knowledge": ["THEORY;3"]
+                },
+                {
+                    "text": "primalmagic.research.wand_cap_hallowsteel.text.stage.2",
+                    "recipes": ["primalmagic:hallowsteel_wand_cap_item"]
+                }
+            ],
+            "addenda": []
         }
     ]
 }

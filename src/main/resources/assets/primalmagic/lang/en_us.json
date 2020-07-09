@@ -691,6 +691,22 @@
     "primalmagic.research.wand_gem_archmage.text.stage.1": "Archmage wand gem: Lorem ipsum",
     "primalmagic.research.wand_gem_archmage.text.stage.2": "Archmage wand gem complete!",
     
+    "primalmagic.research.wand_cap_gold.title": "Wand Cap: Gold",
+    "primalmagic.research.wand_cap_gold.text.stage.1": "Gold wand cap: Lorem ipsum",
+    "primalmagic.research.wand_cap_gold.text.stage.2": "Gold wand cap complete!",
+    
+    "primalmagic.research.wand_cap_primalite.title": "Wand Cap: Primalite",
+    "primalmagic.research.wand_cap_primalite.text.stage.1": "Primalite wand cap: Lorem ipsum",
+    "primalmagic.research.wand_cap_primalite.text.stage.2": "Primalite wand cap complete!",
+    
+    "primalmagic.research.wand_cap_hexium.title": "Wand Cap: Hexium",
+    "primalmagic.research.wand_cap_hexium.text.stage.1": "Hexium wand cap: Lorem ipsum",
+    "primalmagic.research.wand_cap_hexium.text.stage.2": "Hexium wand cap complete!",
+    
+    "primalmagic.research.wand_cap_hallowsteel.title": "Wand Cap: Hallowsteel",
+    "primalmagic.research.wand_cap_hallowsteel.text.stage.1": "Hallowsteel wand cap: Lorem ipsum",
+    "primalmagic.research.wand_cap_hallowsteel.text.stage.2": "Hallowsteel wand cap complete!",
+    
     "primalmagic.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagic.research.basic_runeworking.text.stage.1": "Basic runeworking: Lorem ipsum",
     
