@@ -302,7 +302,7 @@
     "tooltip.primalmagic.rune.item": "\"Mag\"",
     "tooltip.primalmagic.rune.self": "\"San\"",
     "tooltip.primalmagic.rune.power": "\"Par\"",
-    "tooltip.primalmagic.none": "none",
+    "tooltip.primalmagic.none": "None",
     
     "effect.primalmagic.flying": "Flying",
     "effect.primalmagic.polymorph": "Polymorph",
@@ -382,7 +382,8 @@
     "primalmagic.affinities.none": "Affinities: None",
     "primalmagic.affinities.unknown": "Affinities: Unknown",
     
-    "primalmagic.spells.wand_header": "Inscribed Spells:",
+    "primalmagic.spells.wand_header": "Inscribed Spells (Capacity %1$s):",
+    "primalmagic.spells.none": "   None",
     "primalmagic.spells.short_wand_header": "Active Spell: %1$s",
     
     "primalmagic.research.first_steps.title": "First Steps",

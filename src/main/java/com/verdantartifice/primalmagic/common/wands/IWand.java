@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
 /**
@@ -164,6 +165,14 @@ public interface IWand {
      * @return the number of spell packages currently inscribed
      */
     public int getSpellCount(@Nullable ItemStack stack);
+    
+    /**
+     * Get the text for the spell capacity of the given wand stack.
+     * 
+     * @param stack the wand stack to be queried
+     * @return the text for the spell capacity
+     */
+    public ITextComponent getSpellCapacityText(@Nullable ItemStack stack);
     
     /**
      * Get the index of the currently selected inscribed spell package on the given wand stack.

@@ -9,6 +9,8 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 /**
  * Item definition for a mundane wand.  Unlike modular wands, mundane wands cannot be inscribed with
@@ -43,6 +45,12 @@ public class MundaneWandItem extends AbstractWandItem {
     public int getSpellCount(ItemStack stack) {
         // Mundane wands can't carry spells
         return 0;
+    }
+    
+    @Override
+    public ITextComponent getSpellCapacityText(ItemStack stack) {
+        // Mundane wands can't carry spells
+        return new StringTextComponent("0");
     }
 
     @Override

@@ -25,6 +25,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
 
@@ -183,6 +184,27 @@ public class ModularWandItem extends AbstractWandItem {
             return stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND).size();
         } else {
             return 0;
+        }
+    }
+    
+    @Override
+    public ITextComponent getSpellCapacityText(ItemStack stack) {
+        if (stack == null) {
+            return new StringTextComponent("0");
+        } else {
+            WandCore core = this.getWandCore(stack);
+            if (core == null) {
+                return new StringTextComponent("0");
+            } else {
+                int baseSlots = core.getSpellSlots();
+                Source bonusSlot = core.getBonusSlot();
+                if (bonusSlot == null) {
+                    return new StringTextComponent(Integer.toString(baseSlots));
+                } else {
+                    ITextComponent bonusText = new TranslationTextComponent(bonusSlot.getNameTranslationKey());
+                    return new StringTextComponent(String.format("%1$d + 1 %2$s", baseSlots, bonusText.getFormattedText()));
+                }
+            }
         }
     }
 
