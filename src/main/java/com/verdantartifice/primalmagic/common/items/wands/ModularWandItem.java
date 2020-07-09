@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -27,6 +28,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -158,6 +160,25 @@ public class ModularWandItem extends AbstractWandItem {
             this.setWandCap(stack, WandCap.IRON);
             this.setWandGem(stack, WandGem.APPRENTICE);
             items.add(stack);
+        }
+    }
+    
+    @Override
+    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
+        
+        // Regenerate one mana per second for core-aligned sources
+        if (stack != null && entityIn.ticksExisted % 20 == 0) {
+            int maxMana = this.getMaxMana(stack);
+            WandCore core = this.getWandCore(stack);
+            if (core != null && maxMana != -1) {
+                for (Source alignedSource : core.getAlignedSources()) {
+                    int curMana = this.getMana(stack, alignedSource);
+                    if (curMana < (0.1D * maxMana)) {
+                        this.addRealMana(stack, alignedSource, 1);
+                    }
+                }
+            }
         }
     }
 
