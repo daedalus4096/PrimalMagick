@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.wands;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class WandCore {
     protected static final Map<String, WandCore> REGISTRY = new HashMap<>();
     
     public static final WandCore HEARTWOOD = new WandCore("heartwood", Rarity.COMMON, 1, null, Collections.emptyList());
+    public static final WandCore OBSIDIAN = new WandCore("obsidian", Rarity.COMMON, 1, Source.EARTH, Arrays.asList(Source.EARTH));
     
     protected final String tag;                 // Unique identifier for the wand core
     protected final Rarity rarity;              // The core's rarity, used to color its name and determine completed wand rarity

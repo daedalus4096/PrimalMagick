@@ -265,6 +265,7 @@
     "item.primalmagic.mundane_wand": "Mundane Wand",
     "item.primalmagic.modular_wand": "%1$s %2$s %3$s Wand",
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
+    "item.primalmagic.obsidian_wand_core_item": "Obsidian Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.gold_wand_cap_item": "Gold Wand Cap",
     "item.primalmagic.primalite_wand_cap_item": "Primalite Wand Cap",
@@ -320,6 +321,7 @@
     "enchantment.primalmagic.aegis": "Aegis",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
+    "primalmagic.wand_core.obsidian.name": "Obsidian",
     "primalmagic.wand_core.unknown.name": "Unknown",
     
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
