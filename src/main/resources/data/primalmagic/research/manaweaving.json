@@ -341,6 +341,27 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "WAND_CORE_OBSIDIAN",
+            "name": "primalmagic.research.wand_core_obsidian.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "EXPERT_MANAWEAVING", "WAND_CORE_HEARTWOOD" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_core_obsidian.text.stage.1",
+                    "required_item": [ "tag:forge:obsidian" ],
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_core_obsidian.text.stage.2",
+                    "recipes": ["primalmagic:obsidian_wand_core_item"],
+                    "attunements": {
+                        "earth": 2
+                    }
+                }
+            ],
+            "addenda": []
         }
     ]
 }
