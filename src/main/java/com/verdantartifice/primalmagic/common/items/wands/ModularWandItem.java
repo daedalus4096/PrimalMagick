@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.items.wands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -264,7 +265,7 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public boolean canAddSpell(ItemStack stack, SpellPackage spell) {
-        if (stack == null || spell == null) {
+        if (stack == null || spell == null || spell.getPayload() == null) {
             return false;
         }
         
@@ -274,13 +275,24 @@ public class ModularWandItem extends AbstractWandItem {
             return false;
         }
         
-        // TODO Include bonus spell slots from the core in determination
-        List<SpellPackage> existingSpells = this.getSpells(stack);
-        if (existingSpells.size() >= core.getSpellSlots()) {
+        // Determine the payload sources of all spells to be included in the given wand
+        List<Source> spellSources = this.getSpells(stack).stream()
+                .filter(p -> (p != null && p.getPayload() != null))
+                .map(p -> p.getPayload().getSource())
+                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+        spellSources.add(spell.getPayload().getSource());
+        
+        int coreSlots = core.getSpellSlots();
+        if (spellSources.size() < coreSlots + 1) {
+            // If the spells would fit in the base slots without the bonus, then it's fine
+            return true;
+        } else if (spellSources.size() > coreSlots + 1) {
+            // If the bonus slot wouldn't be enough to make them fit, then reject
             return false;
+        } else {
+            // If using exactly the slot count plus bonus slot, only allow if one of the spells is of the same source as the bonus
+            return core.getBonusSlot() != null && spellSources.contains(core.getBonusSlot());
         }
-
-        return true;
     }
 
     @Override
