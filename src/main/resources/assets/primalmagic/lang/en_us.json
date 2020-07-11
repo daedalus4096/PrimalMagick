@@ -267,6 +267,7 @@
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
     "item.primalmagic.obsidian_wand_core_item": "Obsidian Wand Core",
     "item.primalmagic.coral_wand_core_item": "Coral Wand Core",
+    "item.primalmagic.bamboo_wand_core_item": "Bamboo Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.gold_wand_cap_item": "Gold Wand Cap",
     "item.primalmagic.primalite_wand_cap_item": "Primalite Wand Cap",
@@ -324,6 +325,7 @@
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     "primalmagic.wand_core.obsidian.name": "Obsidian",
     "primalmagic.wand_core.coral.name": "Coral",
+    "primalmagic.wand_core.bamboo.name": "Bamboo",
     "primalmagic.wand_core.unknown.name": "Unknown",
     
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
