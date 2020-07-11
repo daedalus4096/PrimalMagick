@@ -358,6 +358,7 @@ public class ItemsPM {
     public static final RegistryObject<ModularWandItem> MODULAR_WAND = ITEMS.register("modular_wand", ModularWandItem::new);
     public static final RegistryObject<WandCoreItem> HEARTWOOD_WAND_CORE_ITEM = ITEMS.register("heartwood_wand_core_item", () -> new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCoreItem> OBSIDIAN_WAND_CORE_ITEM = ITEMS.register("obsidian_wand_core_item", () -> new WandCoreItem(WandCore.OBSIDIAN, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandCoreItem> CORAL_WAND_CORE_ITEM = ITEMS.register("coral_wand_core_item", () -> new WandCoreItem(WandCore.CORAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCapItem> IRON_WAND_CAP_ITEM = ITEMS.register("iron_wand_cap_item", () -> new WandCapItem(WandCap.IRON, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCapItem> GOLD_WAND_CAP_ITEM = ITEMS.register("gold_wand_cap_item", () -> new WandCapItem(WandCap.GOLD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCapItem> PRIMALITE_WAND_CAP_ITEM = ITEMS.register("primalite_wand_cap_item", () -> new WandCapItem(WandCap.PRIMALITE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

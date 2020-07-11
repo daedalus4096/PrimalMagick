@@ -31,6 +31,7 @@ public class WandCore {
     
     public static final WandCore HEARTWOOD = new WandCore("heartwood", Rarity.COMMON, 1, null, Collections.emptyList());
     public static final WandCore OBSIDIAN = new WandCore("obsidian", Rarity.COMMON, 1, Source.EARTH, Arrays.asList(Source.EARTH));
+    public static final WandCore CORAL = new WandCore("coral", Rarity.COMMON, 1, Source.SEA, Arrays.asList(Source.SEA));
     
     protected final String tag;                 // Unique identifier for the wand core
     protected final Rarity rarity;              // The core's rarity, used to color its name and determine completed wand rarity
