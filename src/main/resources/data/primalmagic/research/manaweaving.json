@@ -362,6 +362,27 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "WAND_CORE_CORAL",
+            "name": "primalmagic.research.wand_core_coral.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "EXPERT_MANAWEAVING", "WAND_CORE_HEARTWOOD" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_core_coral.text.stage.1",
+                    "required_item": [ "tag:primalmagic:coral_blocks" ],
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_core_coral.text.stage.2",
+                    "recipes": ["primalmagic:coral_wand_core_item"],
+                    "attunements": {
+                        "sea": 2
+                    }
+                }
+            ],
+            "addenda": []
         }
     ]
 }
