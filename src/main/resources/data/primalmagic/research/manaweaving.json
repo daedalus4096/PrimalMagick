@@ -404,6 +404,48 @@
                 }
             ],
             "addenda": []
+        },
+        {
+            "key": "WAND_CORE_SUNWOOD",
+            "name": "primalmagic.research.wand_core_sunwood.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "EXPERT_MANAWEAVING", "WAND_CORE_HEARTWOOD" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_core_sunwood.text.stage.1",
+                    "required_item": [ "primalmagic:sunwood_log" ],
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_core_sunwood.text.stage.2",
+                    "recipes": ["primalmagic:sunwood_wand_core_item"],
+                    "attunements": {
+                        "sun": 2
+                    }
+                }
+            ],
+            "addenda": []
+        },
+        {
+            "key": "WAND_CORE_MOONWOOD",
+            "name": "primalmagic.research.wand_core_moonwood.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "EXPERT_MANAWEAVING", "WAND_CORE_HEARTWOOD" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.wand_core_moonwood.text.stage.1",
+                    "required_item": [ "primalmagic:moonwood_log" ],
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.wand_core_moonwood.text.stage.2",
+                    "recipes": ["primalmagic:moonwood_wand_core_item"],
+                    "attunements": {
+                        "moon": 2
+                    }
+                }
+            ],
+            "addenda": []
         }
     ]
 }

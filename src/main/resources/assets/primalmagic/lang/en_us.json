@@ -268,6 +268,8 @@
     "item.primalmagic.obsidian_wand_core_item": "Obsidian Wand Core",
     "item.primalmagic.coral_wand_core_item": "Coral Wand Core",
     "item.primalmagic.bamboo_wand_core_item": "Bamboo Wand Core",
+    "item.primalmagic.sunwood_wand_core_item": "Sunwood Wand Core",
+    "item.primalmagic.moonwood_wand_core_item": "Moonwood Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.gold_wand_cap_item": "Gold Wand Cap",
     "item.primalmagic.primalite_wand_cap_item": "Primalite Wand Cap",
@@ -326,6 +328,8 @@
     "primalmagic.wand_core.obsidian.name": "Obsidian",
     "primalmagic.wand_core.coral.name": "Coral",
     "primalmagic.wand_core.bamboo.name": "Bamboo",
+    "primalmagic.wand_core.sunwood.name": "Sunwood",
+    "primalmagic.wand_core.moonwood.name": "Moonwood",
     "primalmagic.wand_core.unknown.name": "Unknown",
     
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
@@ -725,6 +729,14 @@
     "primalmagic.research.wand_core_bamboo.title": "Wand Core: Bamboo",
     "primalmagic.research.wand_core_bamboo.text.stage.1": "Bamboo wand core: Lorem ipsum",
     "primalmagic.research.wand_core_bamboo.text.stage.2": "Bamboo wand core complete!",
+    
+    "primalmagic.research.wand_core_sunwood.title": "Wand Core: Sunwood",
+    "primalmagic.research.wand_core_sunwood.text.stage.1": "Sunwood wand core: Lorem ipsum",
+    "primalmagic.research.wand_core_sunwood.text.stage.2": "Sunwood wand core complete!",
+    
+    "primalmagic.research.wand_core_moonwood.title": "Wand Core: Moonwood",
+    "primalmagic.research.wand_core_moonwood.text.stage.1": "Moonwood wand core: Lorem ipsum",
+    "primalmagic.research.wand_core_moonwood.text.stage.2": "Moonwood wand core complete!",
     
     "primalmagic.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagic.research.basic_runeworking.text.stage.1": "Basic runeworking: Lorem ipsum",
