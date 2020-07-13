@@ -1,0 +1,27 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "WAND_CORE_BONE",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5,
+    "blood": 15
+  },
+  "pattern": [
+    "D#",
+    "#D"
+  ],
+  "key": {
+    "D": {
+      "item": "primalmagic:essence_dust_blood"
+    },
+    "#": {
+      "item": "minecraft:bone"
+    }
+  },
+  "result": {
+    "item": "primalmagic:bone_wand_core_item"
+  }
+}

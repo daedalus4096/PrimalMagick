@@ -1436,6 +1436,14 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_MOONWOOD")))
             .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 15))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BONE_WAND_CORE_ITEM.get())
+            .patternLine("D#")
+            .patternLine("#D")
+            .key('D', ItemsPM.ESSENCE_DUST_BLOOD.get())
+            .key('#', Items.BONE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_BONE")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.BLOOD, 15))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IRON_WAND_CAP_ITEM.get())
             .patternLine("NNN")
             .patternLine("N N")
