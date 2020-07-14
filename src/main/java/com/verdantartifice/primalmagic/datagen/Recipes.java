@@ -1452,6 +1452,14 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_BLAZE_ROD")))
             .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.INFERNAL, 15))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PURPUR_WAND_CORE_ITEM.get())
+            .patternLine("D#")
+            .patternLine("#D")
+            .key('D', ItemsPM.ESSENCE_DUST_VOID.get())
+            .key('#', Items.PURPUR_BLOCK)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_PURPUR")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.VOID, 15))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IRON_WAND_CAP_ITEM.get())
             .patternLine("NNN")
             .patternLine("N N")

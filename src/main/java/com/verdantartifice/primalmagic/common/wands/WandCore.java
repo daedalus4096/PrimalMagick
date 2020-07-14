@@ -37,6 +37,7 @@ public class WandCore {
     public static final WandCore MOONWOOD = new WandCore("moonwood", Rarity.COMMON, 1, Source.MOON, Arrays.asList(Source.MOON));
     public static final WandCore BONE = new WandCore("bone", Rarity.UNCOMMON, 2, Source.BLOOD, Arrays.asList(Source.BLOOD));
     public static final WandCore BLAZE_ROD = new WandCore("blaze_rod", Rarity.UNCOMMON, 2, Source.INFERNAL, Arrays.asList(Source.INFERNAL));
+    public static final WandCore PURPUR = new WandCore("purpur", Rarity.UNCOMMON, 2, Source.VOID, Arrays.asList(Source.VOID));
     
     protected final String tag;                 // Unique identifier for the wand core
     protected final Rarity rarity;              // The core's rarity, used to color its name and determine completed wand rarity
