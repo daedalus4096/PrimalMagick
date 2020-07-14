@@ -1,0 +1,27 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "WAND_CORE_BLAZE_ROD",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5,
+    "infernal": 15
+  },
+  "pattern": [
+    "D#",
+    "#D"
+  ],
+  "key": {
+    "D": {
+      "item": "primalmagic:essence_dust_infernal"
+    },
+    "#": {
+      "tag": "forge:rods/blaze"
+    }
+  },
+  "result": {
+    "item": "primalmagic:blaze_rod_wand_core_item"
+  }
+}

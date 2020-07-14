@@ -271,6 +271,7 @@
     "item.primalmagic.sunwood_wand_core_item": "Sunwood Wand Core",
     "item.primalmagic.moonwood_wand_core_item": "Moonwood Wand Core",
     "item.primalmagic.bone_wand_core_item": "Bone Wand Core",
+    "item.primalmagic.blaze_rod_wand_core_item": "Blaze Rod Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.gold_wand_cap_item": "Gold Wand Cap",
     "item.primalmagic.primalite_wand_cap_item": "Primalite Wand Cap",
@@ -332,6 +333,7 @@
     "primalmagic.wand_core.sunwood.name": "Sunwood",
     "primalmagic.wand_core.moonwood.name": "Moonwood",
     "primalmagic.wand_core.bone.name": "Bone",
+    "primalmagic.wand_core.blaze_rod.name": "Blaze Rod",
     "primalmagic.wand_core.unknown.name": "Unknown",
     
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
@@ -743,6 +745,10 @@
     "primalmagic.research.wand_core_bone.title": "Wand Core: Bone",
     "primalmagic.research.wand_core_bone.text.stage.1": "Bone wand core: Lorem ipsum",
     "primalmagic.research.wand_core_bone.text.stage.2": "Bone wand core complete!",
+    
+    "primalmagic.research.wand_core_blaze_rod.title": "Wand Core: Blaze Rod",
+    "primalmagic.research.wand_core_blaze_rod.text.stage.1": "Blaze rod wand core: Lorem ipsum",
+    "primalmagic.research.wand_core_blaze_rod.text.stage.2": "Blaze rod wand core complete!",
     
     "primalmagic.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagic.research.basic_runeworking.text.stage.1": "Basic runeworking: Lorem ipsum",
