@@ -274,6 +274,7 @@
     "item.primalmagic.blaze_rod_wand_core_item": "Blaze Rod Wand Core",
     "item.primalmagic.purpur_wand_core_item": "Purpur Wand Core",
     "item.primalmagic.primal_wand_core_item": "Primal Wand Core",
+    "item.primalmagic.dark_primal_wand_core_item": "Dark Primal Wand Core",
     "item.primalmagic.iron_wand_cap_item": "Iron Wand Cap",
     "item.primalmagic.gold_wand_cap_item": "Gold Wand Cap",
     "item.primalmagic.primalite_wand_cap_item": "Primalite Wand Cap",
@@ -338,6 +339,7 @@
     "primalmagic.wand_core.blaze_rod.name": "Blaze Rod",
     "primalmagic.wand_core.purpur.name": "Purpur",
     "primalmagic.wand_core.primal.name": "Primal",
+    "primalmagic.wand_core.dark_primal.name": "Dark Primal",
     "primalmagic.wand_core.unknown.name": "Unknown",
     
     "primalmagic.wand_cap.iron.name": "Iron-Shod",
