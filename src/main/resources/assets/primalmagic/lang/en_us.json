@@ -902,6 +902,10 @@
     "primalmagic.research.wand_core_primal.text.stage.1": "Primal wand core: Lorem ipsum",
     "primalmagic.research.wand_core_primal.text.stage.2": "Primal wand core research complete!",
     
+    "primalmagic.research.wand_core_dark_primal.title": "Wand Core: Dark Primal",
+    "primalmagic.research.wand_core_dark_primal.text.stage.1": "Dark primal wand core: Lorem ipsum",
+    "primalmagic.research.wand_core_dark_primal.text.stage.2": "Dark primal wand core research complete!",
+    
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
     
