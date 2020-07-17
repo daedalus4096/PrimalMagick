@@ -40,6 +40,7 @@ public class WandCore {
     public static final WandCore PURPUR = new WandCore("purpur", Rarity.UNCOMMON, 2, Source.VOID, Arrays.asList(Source.VOID));
     public static final WandCore PRIMAL = new WandCore("primal", Rarity.UNCOMMON, 2, null, Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON));
     public static final WandCore DARK_PRIMAL = new WandCore("dark_primal", Rarity.RARE, 3, null, Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID));
+    public static final WandCore PURE_PRIMAL = new WandCore("pure_primal", Rarity.EPIC, 4, null, Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED));
     
     protected final String tag;                 // Unique identifier for the wand core
     protected final Rarity rarity;              // The core's rarity, used to color its name and determine completed wand rarity

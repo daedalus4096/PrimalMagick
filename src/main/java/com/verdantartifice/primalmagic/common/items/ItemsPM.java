@@ -367,6 +367,7 @@ public class ItemsPM {
     public static final RegistryObject<WandCoreItem> PURPUR_WAND_CORE_ITEM = ITEMS.register("purpur_wand_core_item", () -> new WandCoreItem(WandCore.PURPUR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCoreItem> PRIMAL_WAND_CORE_ITEM = ITEMS.register("primal_wand_core_item", () -> new WandCoreItem(WandCore.PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCoreItem> DARK_PRIMAL_WAND_CORE_ITEM = ITEMS.register("dark_primal_wand_core_item", () -> new WandCoreItem(WandCore.DARK_PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<WandCoreItem> PURE_PRIMAL_WAND_CORE_ITEM = ITEMS.register("pure_primal_wand_core_item", () -> new WandCoreItem(WandCore.PURE_PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCapItem> IRON_WAND_CAP_ITEM = ITEMS.register("iron_wand_cap_item", () -> new WandCapItem(WandCap.IRON, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCapItem> GOLD_WAND_CAP_ITEM = ITEMS.register("gold_wand_cap_item", () -> new WandCapItem(WandCap.GOLD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCapItem> PRIMALITE_WAND_CAP_ITEM = ITEMS.register("primalite_wand_cap_item", () -> new WandCapItem(WandCap.PRIMALITE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
