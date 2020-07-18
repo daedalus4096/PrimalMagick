@@ -392,4 +392,5 @@ public class ItemsPM {
     public static final RegistryObject<StaffCoreItem> BONE_STAFF_CORE_ITEM = ITEMS.register("bone_staff_core_item", () -> new StaffCoreItem(WandCore.BONE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<StaffCoreItem> BLAZE_ROD_STAFF_CORE_ITEM = ITEMS.register("blaze_rod_staff_core_item", () -> new StaffCoreItem(WandCore.BLAZE_ROD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<StaffCoreItem> PURPUR_STAFF_CORE_ITEM = ITEMS.register("purpur_staff_core_item", () -> new StaffCoreItem(WandCore.PURPUR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<StaffCoreItem> PRIMAL_STAFF_CORE_ITEM = ITEMS.register("primal_staff_core_item", () -> new StaffCoreItem(WandCore.PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 }
