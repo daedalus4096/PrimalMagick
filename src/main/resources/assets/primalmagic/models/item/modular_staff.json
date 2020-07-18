@@ -3,8 +3,8 @@
     "display": {
         "gui": {
             "rotation": [ 0, 0, 45 ],
-            "translation": [ 1, -1, 0],
-            "scale":[ 1.5, 1.5, 1.5 ]
+            "translation": [ -2, 2, 0],
+            "scale":[ 1.0, 1.0, 1.0 ]
         },
         "ground": {
             "rotation": [ 0, 0, 0 ],
