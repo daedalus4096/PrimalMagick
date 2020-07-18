@@ -42,18 +42,19 @@ public class WandCore {
     public static final WandCore DARK_PRIMAL = new WandCore("dark_primal", Rarity.RARE, 3, null, Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID));
     public static final WandCore PURE_PRIMAL = new WandCore("pure_primal", Rarity.EPIC, 4, null, Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED));
     
-    protected final String tag;                 // Unique identifier for the wand core
-    protected final Rarity rarity;              // The core's rarity, used to color its name and determine completed wand rarity
-    protected final int spellSlots;             // The base number of spell slots offered by the core
-    protected final Source bonusSlot;           // The source of the core's bonus spell slot, if any
-    protected final List<Source> aligned;       // List of sources to which the core is aligned
-    protected final ModelResourceLocation mrl;  // Resource location of the core's model, stored in a blockstate file
+    protected final String tag;                     // Unique identifier for the wand core
+    protected final Rarity rarity;                  // The core's rarity, used to color its name and determine completed wand rarity
+    protected final int spellSlots;                 // The base number of spell slots offered by the core
+    protected final Source bonusSlot;               // The source of the core's bonus spell slot, if any
+    protected final List<Source> aligned;           // List of sources to which the core is aligned
+    protected final ModelResourceLocation wandMrl;  // Resource location of the wand core's model, stored in a blockstate file
+    protected final ModelResourceLocation staffMrl; // Resource location of the staff core's model, stored in a blockstate file
 
     public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned) {
-        this(tag, rarity, spellSlots, bonusSlot, aligned, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_core"), ""));
+        this(tag, rarity, spellSlots, bonusSlot, aligned, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_core"), ""), new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_staff_core"), ""));
     }
     
-    public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned, @Nonnull ModelResourceLocation mrl) {
+    public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned, @Nonnull ModelResourceLocation wmrl, @Nonnull ModelResourceLocation smrl) {
         if (REGISTRY.containsKey(tag)) {
             // Don't allow a given core to be registered more than once
             throw new IllegalArgumentException("Wand core " + tag + " already registered!");
@@ -63,7 +64,8 @@ public class WandCore {
         this.spellSlots = spellSlots;
         this.bonusSlot = bonusSlot;
         this.aligned = aligned;
-        this.mrl = mrl;
+        this.wandMrl = wmrl;
+        this.staffMrl = smrl;
         REGISTRY.put(tag, this);
     }
     
@@ -92,8 +94,13 @@ public class WandCore {
     }
     
     @Nonnull
-    public ModelResourceLocation getModelResourceLocation() {
-        return this.mrl;
+    public ModelResourceLocation getWandModelResourceLocation() {
+        return this.wandMrl;
+    }
+    
+    @Nonnull
+    public ModelResourceLocation getStaffModelResourceLocation() {
+        return this.staffMrl;
     }
     
     @Nonnull

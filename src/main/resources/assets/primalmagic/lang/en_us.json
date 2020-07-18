@@ -264,6 +264,7 @@
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",
     "item.primalmagic.modular_wand": "%1$s %2$s %3$s Wand",
+    "item.primalmagic.modular_staff": "%1$s %2$s %3$s Staff",
     "item.primalmagic.heartwood_wand_core_item": "Heartwood Wand Core",
     "item.primalmagic.obsidian_wand_core_item": "Obsidian Wand Core",
     "item.primalmagic.coral_wand_core_item": "Coral Wand Core",

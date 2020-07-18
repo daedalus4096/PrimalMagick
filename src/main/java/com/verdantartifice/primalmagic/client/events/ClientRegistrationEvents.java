@@ -51,10 +51,12 @@ public class ClientRegistrationEvents {
     public static void onModelRegister(ModelRegistryEvent event) {
         ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), ""));
         for (WandCore core : WandCore.getAllWandCores()) {
-            ModelLoader.addSpecialModel(core.getModelResourceLocation());
+            ModelLoader.addSpecialModel(core.getWandModelResourceLocation());
+            ModelLoader.addSpecialModel(core.getStaffModelResourceLocation());
         }
         for (WandCap cap : WandCap.getAllWandCaps()) {
-            ModelLoader.addSpecialModel(cap.getModelResourceLocation());
+            ModelLoader.addSpecialModel(cap.getWandModelResourceLocation());
+            ModelLoader.addSpecialModel(cap.getStaffModelResourceLocation());
         }
         for (WandGem gem : WandGem.getAllWandGems()) {
             ModelLoader.addSpecialModel(gem.getModelResourceLocation());

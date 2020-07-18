@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
@@ -21,13 +22,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
- * Custom item stack renderer for a modular wand.
+ * Custom item stack renderer for a modular staff.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagic.common.items.wands.ModularWandItem}
+ * @see {@link com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem}
  */
 @OnlyIn(Dist.CLIENT)
-public class ModularWandISTER extends ItemStackTileEntityRenderer {
+public class ModularStaffISTER extends ItemStackTileEntityRenderer {
     private static Method RENDER_MODEL_METHOD;
 
     static {
@@ -43,12 +44,12 @@ public class ModularWandISTER extends ItemStackTileEntityRenderer {
 
     @Override
     public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        if (itemStack.getItem() instanceof ModularWandItem) {
+        if (itemStack.getItem() instanceof ModularStaffItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             
-            // Get the wand components so we can extract their model resource locations
-            ModularWandItem wand = (ModularWandItem)itemStack.getItem();
+            // Get the staff components so we can extract their model resource locations
+            ModularWandItem wand = (ModularStaffItem)itemStack.getItem();
             WandCore core = wand.getWandCore(itemStack);
             WandCap cap = wand.getWandCap(itemStack);
             WandGem gem = wand.getWandGem(itemStack);
@@ -56,17 +57,17 @@ public class ModularWandISTER extends ItemStackTileEntityRenderer {
             IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
             try {
                 if (core != null) {
-                    // Render the wand core
-                    IBakedModel model = mc.getModelManager().getModel(core.getWandModelResourceLocation());
+                    // Render the staff core
+                    IBakedModel model = mc.getModelManager().getModel(core.getStaffModelResourceLocation());
                     RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
                 }
                 if (cap != null) {
-                    // Render the wand cap
-                    IBakedModel model = mc.getModelManager().getModel(cap.getWandModelResourceLocation());
+                    // Render the staff cap
+                    IBakedModel model = mc.getModelManager().getModel(cap.getStaffModelResourceLocation());
                     RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
                 }
                 if (gem != null) {
-                    // Render the wand gem
+                    // Render the staff gem
                     IBakedModel model = mc.getModelManager().getModel(gem.getModelResourceLocation());
                     RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
                 }

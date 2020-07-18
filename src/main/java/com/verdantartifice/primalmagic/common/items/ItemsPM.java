@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.items;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.AncientManaFontISTER;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularStaffISTER;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagic.common.items.armor.RobeArmorItem;
@@ -16,6 +18,7 @@ import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
 import com.verdantartifice.primalmagic.common.items.misc.ManafruitItem;
 import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
@@ -355,7 +358,8 @@ public class ItemsPM {
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<SpellScrollItem> SPELL_SCROLL_FILLED = ITEMS.register("spell_scroll_filled", SpellScrollItem::new);
     public static final RegistryObject<MundaneWandItem> MUNDANE_WAND = ITEMS.register("mundane_wand", MundaneWandItem::new);
-    public static final RegistryObject<ModularWandItem> MODULAR_WAND = ITEMS.register("modular_wand", ModularWandItem::new);
+    public static final RegistryObject<ModularWandItem> MODULAR_WAND = ITEMS.register("modular_wand", () -> new ModularWandItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> ModularWandISTER::new)));
+    public static final RegistryObject<ModularStaffItem> MODULAR_STAFF = ITEMS.register("modular_staff", () -> new ModularStaffItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> ModularStaffISTER::new)));
     public static final RegistryObject<WandCoreItem> HEARTWOOD_WAND_CORE_ITEM = ITEMS.register("heartwood_wand_core_item", () -> new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCoreItem> OBSIDIAN_WAND_CORE_ITEM = ITEMS.register("obsidian_wand_core_item", () -> new WandCoreItem(WandCore.OBSIDIAN, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandCoreItem> CORAL_WAND_CORE_ITEM = ITEMS.register("coral_wand_core_item", () -> new WandCoreItem(WandCore.CORAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

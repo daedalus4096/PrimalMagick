@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
@@ -17,7 +15,6 @@ import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -39,8 +36,8 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class ModularWandItem extends AbstractWandItem {
-    public ModularWandItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> ModularWandISTER::new));
+    public ModularWandItem(Properties properties) {
+        super(properties);
     }
 
     @Override
