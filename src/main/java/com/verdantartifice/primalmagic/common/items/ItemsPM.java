@@ -394,4 +394,5 @@ public class ItemsPM {
     public static final RegistryObject<StaffCoreItem> PURPUR_STAFF_CORE_ITEM = ITEMS.register("purpur_staff_core_item", () -> new StaffCoreItem(WandCore.PURPUR, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<StaffCoreItem> PRIMAL_STAFF_CORE_ITEM = ITEMS.register("primal_staff_core_item", () -> new StaffCoreItem(WandCore.PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<StaffCoreItem> DARK_PRIMAL_STAFF_CORE_ITEM = ITEMS.register("dark_primal_staff_core_item", () -> new StaffCoreItem(WandCore.DARK_PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<StaffCoreItem> PURE_PRIMAL_STAFF_CORE_ITEM = ITEMS.register("pure_primal_staff_core_item", () -> new StaffCoreItem(WandCore.PURE_PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 }
