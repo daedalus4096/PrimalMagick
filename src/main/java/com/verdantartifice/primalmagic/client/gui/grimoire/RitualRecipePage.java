@@ -64,12 +64,12 @@ public class RitualRecipePage extends AbstractRecipePage {
         if (!this.recipe.getIngredients().isEmpty()) {
             y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
             for (Ingredient ingredient : this.recipe.getIngredients()) {
-                screen.addWidgetToScreen(new IngredientWidget(ingredient, x + 8 + deltaX + (side * 144), y));
-                deltaX += 18;
                 if (deltaX >= (ITEMS_PER_ROW * 18)) {
                     deltaX = 0;
                     y += 18;
                 }
+                screen.addWidgetToScreen(new IngredientWidget(ingredient, x + 8 + deltaX + (side * 144), y));
+                deltaX += 18;
             }
             deltaX = 0;
             y += 18;
@@ -80,12 +80,12 @@ public class RitualRecipePage extends AbstractRecipePage {
         if (!this.recipe.getProps().isEmpty()) {
             y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
             for (BlockIngredient prop : this.recipe.getProps()) {
-                screen.addWidgetToScreen(new BlockIngredientWidget(prop, x + 8 + deltaX + (side * 144), y));
-                deltaX += 18;
                 if (deltaX >= (ITEMS_PER_ROW * 18)) {
                     deltaX = 0;
                     y += 18;
                 }
+                screen.addWidgetToScreen(new BlockIngredientWidget(prop, x + 8 + deltaX + (side * 144), y));
+                deltaX += 18;
             }
             deltaX = 0;
             y += 18;
@@ -110,7 +110,7 @@ public class RitualRecipePage extends AbstractRecipePage {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.ritual_offerings_header").applyTextStyle(TextFormatting.UNDERLINE);
             mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
-            y += (1 + (this.recipe.getIngredients().size() / ITEMS_PER_ROW)) * 18;  // Make room for ingredient widgets
+            y += 18 * MathHelper.ceil((double)this.recipe.getIngredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
             y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66F);
         }
         
@@ -119,7 +119,7 @@ public class RitualRecipePage extends AbstractRecipePage {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.ritual_props_header").applyTextStyle(TextFormatting.UNDERLINE);
             mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
-            y += (1 + (this.recipe.getProps().size() / ITEMS_PER_ROW)) * 18;    // Make room for prop widgets
+            y += 18 * MathHelper.ceil((double)this.recipe.getProps().size() / (double)ITEMS_PER_ROW);       // Make room for prop widgets
             y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66F);
         }
         
