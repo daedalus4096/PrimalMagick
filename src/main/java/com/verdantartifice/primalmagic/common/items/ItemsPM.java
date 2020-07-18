@@ -386,4 +386,5 @@ public class ItemsPM {
     public static final RegistryObject<StaffCoreItem> HEARTWOOD_STAFF_CORE_ITEM = ITEMS.register("heartwood_staff_core_item", () -> new StaffCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<StaffCoreItem> OBSIDIAN_STAFF_CORE_ITEM = ITEMS.register("obsidian_staff_core_item", () -> new StaffCoreItem(WandCore.OBSIDIAN, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<StaffCoreItem> CORAL_STAFF_CORE_ITEM = ITEMS.register("coral_staff_core_item", () -> new StaffCoreItem(WandCore.CORAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<StaffCoreItem> BAMBOO_STAFF_CORE_ITEM = ITEMS.register("bamboo_staff_core_item", () -> new StaffCoreItem(WandCore.BAMBOO, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 }
