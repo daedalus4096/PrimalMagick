@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.SpellScrollItem;
+import com.verdantartifice.primalmagic.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandGemItem;
@@ -382,4 +383,5 @@ public class ItemsPM {
     public static final RegistryObject<WandGemItem> WIZARD_WAND_GEM_ITEM = ITEMS.register("wizard_wand_gem_item", () -> new WandGemItem(WandGem.WIZARD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandGemItem> ARCHMAGE_WAND_GEM_ITEM = ITEMS.register("archmage_wand_gem_item", () -> new WandGemItem(WandGem.ARCHMAGE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<WandGemItem> CREATIVE_WAND_GEM_ITEM = ITEMS.register("creative_wand_gem_item", () -> new WandGemItem(WandGem.CREATIVE, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<StaffCoreItem> HEARTWOOD_STAFF_CORE_ITEM = ITEMS.register("heartwood_staff_core_item", () -> new StaffCoreItem(WandCore.HEARTWOOD, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 }
