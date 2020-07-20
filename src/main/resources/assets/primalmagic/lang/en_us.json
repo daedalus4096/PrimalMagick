@@ -695,9 +695,14 @@
     "primalmagic.research.advanced_wandmaking.text.stage.1": "Advanced wandmaking: Lorem ipsum",
     "primalmagic.research.advanced_wandmaking.text.stage.2": "Advanced wandmaking complete!",
     
+    "primalmagic.research.staves.title": "Magical Staves",
+    "primalmagic.research.staves.text.stage.1": "Magical staves: Lorem ipsum",
+    "primalmagic.research.staves.text.stage.2": "Magical staves complete!",
+    
     "primalmagic.research.wand_core_heartwood.title": "Wand Core: Heartwood",
     "primalmagic.research.wand_core_heartwood.text.stage.1": "Heartwood wand core: Lorem ipsum",
     "primalmagic.research.wand_core_heartwood.text.stage.2": "Heartwood wand core complete!",
+    "primalmagic.research.wand_core_heartwood.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_cap_iron.title": "Wand Cap: Iron",
     "primalmagic.research.wand_cap_iron.text.stage.1": "Iron wand cap: Lorem ipsum",
@@ -746,34 +751,42 @@
     "primalmagic.research.wand_core_obsidian.title": "Wand Core: Obsidian",
     "primalmagic.research.wand_core_obsidian.text.stage.1": "Obsidian wand core: Lorem ipsum",
     "primalmagic.research.wand_core_obsidian.text.stage.2": "Obsidian wand core complete!",
+    "primalmagic.research.wand_core_obsidian.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_core_coral.title": "Wand Core: Coral",
     "primalmagic.research.wand_core_coral.text.stage.1": "Coral wand core: Lorem ipsum",
     "primalmagic.research.wand_core_coral.text.stage.2": "Coral wand core complete!",
+    "primalmagic.research.wand_core_coral.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_core_bamboo.title": "Wand Core: Bamboo",
     "primalmagic.research.wand_core_bamboo.text.stage.1": "Bamboo wand core: Lorem ipsum",
     "primalmagic.research.wand_core_bamboo.text.stage.2": "Bamboo wand core complete!",
+    "primalmagic.research.wand_core_bamboo.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_core_sunwood.title": "Wand Core: Sunwood",
     "primalmagic.research.wand_core_sunwood.text.stage.1": "Sunwood wand core: Lorem ipsum",
     "primalmagic.research.wand_core_sunwood.text.stage.2": "Sunwood wand core complete!",
+    "primalmagic.research.wand_core_sunwood.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_core_moonwood.title": "Wand Core: Moonwood",
     "primalmagic.research.wand_core_moonwood.text.stage.1": "Moonwood wand core: Lorem ipsum",
     "primalmagic.research.wand_core_moonwood.text.stage.2": "Moonwood wand core complete!",
+    "primalmagic.research.wand_core_moonwood.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_core_bone.title": "Wand Core: Bone",
     "primalmagic.research.wand_core_bone.text.stage.1": "Bone wand core: Lorem ipsum",
     "primalmagic.research.wand_core_bone.text.stage.2": "Bone wand core complete!",
+    "primalmagic.research.wand_core_bone.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_core_blaze_rod.title": "Wand Core: Blaze Rod",
     "primalmagic.research.wand_core_blaze_rod.text.stage.1": "Blaze rod wand core: Lorem ipsum",
     "primalmagic.research.wand_core_blaze_rod.text.stage.2": "Blaze rod wand core complete!",
+    "primalmagic.research.wand_core_blaze_rod.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_core_purpur.title": "Wand Core: Purpur",
     "primalmagic.research.wand_core_purpur.text.stage.1": "Purpur wand core: Lorem ipsum",
     "primalmagic.research.wand_core_purpur.text.stage.2": "Purpur wand core complete!",
+    "primalmagic.research.wand_core_purpur.text.addenda.1": "Staff core",
     
     "primalmagic.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagic.research.basic_runeworking.text.stage.1": "Basic runeworking: Lorem ipsum",
@@ -916,10 +929,12 @@
     "primalmagic.research.wand_core_primal.title": "Wand Core: Primal",
     "primalmagic.research.wand_core_primal.text.stage.1": "Primal wand core: Lorem ipsum",
     "primalmagic.research.wand_core_primal.text.stage.2": "Primal wand core research complete!",
+    "primalmagic.research.wand_core_primal.text.addenda.1": "Staff core",
     
     "primalmagic.research.wand_core_dark_primal.title": "Wand Core: Dark Primal",
     "primalmagic.research.wand_core_dark_primal.text.stage.1": "Dark primal wand core: Lorem ipsum",
     "primalmagic.research.wand_core_dark_primal.text.stage.2": "Dark primal wand core research complete!",
+    "primalmagic.research.wand_core_dark_primal.text.addenda.1": "Staff core",
     
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",

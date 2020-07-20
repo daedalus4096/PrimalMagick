@@ -121,6 +121,22 @@
             "addenda": []
         },
         {
+            "key": "STAVES",
+            "name": "primalmagic.research.staves.title",
+            "discipline": "MANAWEAVING",
+            "parents": [ "EXPERT_MANAWEAVING", "ADVANCED_WANDMAKING" ],
+            "stages": [
+                {
+                    "text": "primalmagic.research.staves.text.stage.1",
+                    "required_knowledge": ["THEORY;1"]
+                },
+                {
+                    "text": "primalmagic.research.staves.text.stage.2"
+                }
+            ],
+            "addenda": []
+        },
+        {
             "key": "WAND_CORE_HEARTWOOD",
             "name": "primalmagic.research.wand_core_heartwood.title",
             "discipline": "MANAWEAVING",
@@ -136,7 +152,13 @@
                     "recipes": ["primalmagic:heartwood_wand_core_item"]
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_heartwood.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:heartwood_staff_core_item" ]
+                }
+            ]
         },
         {
             "key": "WAND_CAP_IRON",
@@ -361,7 +383,13 @@
                     }
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_obsidian.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:obsidian_staff_core_item" ]
+                }
+            ]
         },
         {
             "key": "WAND_CORE_CORAL",
@@ -382,7 +410,13 @@
                     }
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_coral.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:coral_staff_core_item" ]
+                }
+            ]
         },
         {
             "key": "WAND_CORE_BAMBOO",
@@ -403,7 +437,13 @@
                     }
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_bamboo.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:bamboo_staff_core_item" ]
+                }
+            ]
         },
         {
             "key": "WAND_CORE_SUNWOOD",
@@ -424,7 +464,13 @@
                     }
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_sunwood.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:sunwood_staff_core_item" ]
+                }
+            ]
         },
         {
             "key": "WAND_CORE_MOONWOOD",
@@ -445,7 +491,13 @@
                     }
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_moonwood.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:moonwood_staff_core_item" ]
+                }
+            ]
         },
         {
             "key": "WAND_CORE_BONE",
@@ -466,7 +518,13 @@
                     }
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_bone.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:bone_staff_core_item" ]
+                }
+            ]
         },
         {
             "key": "WAND_CORE_BLAZE_ROD",
@@ -487,7 +545,13 @@
                     }
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_blaze_rod.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:blaze_rod_staff_core_item" ]
+                }
+            ]
         },
         {
             "key": "WAND_CORE_PURPUR",
@@ -508,7 +572,13 @@
                     }
                 }
             ],
-            "addenda": []
+            "addenda": [
+                {
+                    "text": "primalmagic.research.wand_core_purpur.text.addenda.1",
+                    "required_research": ["STAVES"],
+                    "recipes": [ "primalmagic:purpur_staff_core_item" ]
+                }
+            ]
         }
     ]
 }
