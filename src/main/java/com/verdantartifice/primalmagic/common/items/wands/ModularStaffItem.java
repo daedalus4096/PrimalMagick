@@ -31,4 +31,10 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
         ITextComponent gemName = (gem == null) ? new TranslationTextComponent("primalmagic.wand_gem.unknown.name") : new TranslationTextComponent(gem.getNameTranslationKey());
         return new TranslationTextComponent("item.primalmagic.modular_staff", gemName, capName, coreName);
     }
+    
+    @Override
+    protected int getCoreSpellSlotCount(WandCore core) {
+        // Staves get double the normal spell slots provided by their core
+        return (core == null) ? 0 : (2 * core.getSpellSlots());
+    }
 }

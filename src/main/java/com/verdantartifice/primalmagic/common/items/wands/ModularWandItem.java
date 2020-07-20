@@ -179,6 +179,10 @@ public class ModularWandItem extends AbstractWandItem {
             }
         }
     }
+    
+    protected int getCoreSpellSlotCount(@Nullable WandCore core) {
+        return (core == null) ? 0 : core.getSpellSlots();
+    }
 
     @Override
     public List<SpellPackage> getSpells(ItemStack stack) {
@@ -215,7 +219,7 @@ public class ModularWandItem extends AbstractWandItem {
             if (core == null) {
                 return new StringTextComponent("0");
             } else {
-                int baseSlots = core.getSpellSlots();
+                int baseSlots = this.getCoreSpellSlotCount(core);
                 Source bonusSlot = core.getBonusSlot();
                 if (bonusSlot == null) {
                     return new StringTextComponent(Integer.toString(baseSlots));
@@ -279,7 +283,7 @@ public class ModularWandItem extends AbstractWandItem {
                 .collect(Collectors.toCollection(() -> new ArrayList<>()));
         spellSources.add(spell.getPayload().getSource());
         
-        int coreSlots = core.getSpellSlots();
+        int coreSlots = this.getCoreSpellSlotCount(core);
         if (spellSources.size() < coreSlots + 1) {
             // If the spells would fit in the base slots without the bonus, then it's fine
             return true;
