@@ -54,7 +54,7 @@ public class ArcaneWorkbenchContainer extends Container {
         this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 138, 52));
         
         // Slot 1: Crafting wand
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52));
+        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52, false));
         
         // Slots 2-10: Crafting inputs
         int i, j;

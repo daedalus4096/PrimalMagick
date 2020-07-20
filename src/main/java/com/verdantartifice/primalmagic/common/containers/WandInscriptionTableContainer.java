@@ -52,7 +52,7 @@ public class WandInscriptionTableContainer extends Container {
         this.addSlot(new CraftingResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Input wand
-        this.wandSlot = this.addSlot(new WandSlot(this.componentInv, 0, 30, 35));
+        this.wandSlot = this.addSlot(new WandSlot(this.componentInv, 0, 30, 35, true));
         
         // Slot 2: Input scroll
         this.scrollSlot = this.addSlot(new SpellScrollFilledSlot(this.componentInv, 1, 66, 35));

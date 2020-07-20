@@ -41,7 +41,7 @@ public class WandChargerContainer extends Container {
         this.essenceSlot = this.addSlot(new EssenceSlot(this.chargerInv, 0, 52, 35));
         
         // Slot 1: wand input/output
-        this.wandSlot = this.addSlot(new WandSlot(this.chargerInv, 1, 108, 35));
+        this.wandSlot = this.addSlot(new WandSlot(this.chargerInv, 1, 108, 35, true));
         
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {

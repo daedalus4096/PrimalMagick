@@ -84,7 +84,7 @@ public class SpellcraftingAltarContainer extends Container {
         this.addSlot(new SpellcraftingResultSlot(this.player, this.scrollInv, this.wandInv, this::getManaCosts, this.resultInv, 0, 206, 8));
         
         // Slot 1: Input wand
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 8, 8));
+        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 8, 8, false));
 
         // Slot 2: Blank scroll
         this.scrollSlot = this.addSlot(new SpellScrollBlankSlot(this.scrollInv, 0, 160, 8));
