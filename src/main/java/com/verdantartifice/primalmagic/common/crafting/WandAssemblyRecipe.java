@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.crafting;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
+import com.verdantartifice.primalmagic.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandGemItem;
@@ -31,7 +32,7 @@ public class WandAssemblyRecipe extends SpecialRecipe {
         ItemStack capStack2 = inv.getStackInSlot(3);
         
         // Make sure the crafting inventory has a core, a gem, and two identical caps
-        return !coreStack.isEmpty() && (coreStack.getItem() instanceof WandCoreItem) &&
+        return !coreStack.isEmpty() && ((coreStack.getItem() instanceof WandCoreItem) || (coreStack.getItem() instanceof StaffCoreItem)) &&
                !gemStack.isEmpty() && (gemStack.getItem() instanceof WandGemItem) &&
                !capStack1.isEmpty() && (capStack1.getItem() instanceof WandCapItem) &&
                !capStack2.isEmpty() && capStack1.isItemEqual(capStack2);
@@ -42,15 +43,22 @@ public class WandAssemblyRecipe extends SpecialRecipe {
         ItemStack coreStack = inv.getStackInSlot(0);
         ItemStack gemStack = inv.getStackInSlot(1);
         ItemStack capStack = inv.getStackInSlot(2);
-        ItemStack wandStack = new ItemStack(ItemsPM.MODULAR_WAND.get());
-        ModularWandItem wandItem = (ModularWandItem)wandStack.getItem();
         
-        // Set the components of the modular wand
-        wandItem.setWandCore(wandStack, ((WandCoreItem)coreStack.getItem()).getWandCore());
-        wandItem.setWandGem(wandStack, ((WandGemItem)gemStack.getItem()).getWandGem());
-        wandItem.setWandCap(wandStack, ((WandCapItem)capStack.getItem()).getWandCap());
+        ItemStack outputStack = (coreStack.getItem() instanceof StaffCoreItem) ? 
+                new ItemStack(ItemsPM.MODULAR_STAFF.get()) : 
+                new ItemStack(ItemsPM.MODULAR_WAND.get());
+        ModularWandItem outputItem = (ModularWandItem)outputStack.getItem();
         
-        return wandStack;
+        // Set the components of the modular wand/staff
+        if (coreStack.getItem() instanceof StaffCoreItem) {
+            outputItem.setWandCore(outputStack, ((StaffCoreItem)coreStack.getItem()).getWandCore());
+        } else {
+            outputItem.setWandCore(outputStack, ((WandCoreItem)coreStack.getItem()).getWandCore());
+        }
+        outputItem.setWandGem(outputStack, ((WandGemItem)gemStack.getItem()).getWandGem());
+        outputItem.setWandCap(outputStack, ((WandCapItem)capStack.getItem()).getWandCap());
+        
+        return outputStack;
     }
 
     @Override

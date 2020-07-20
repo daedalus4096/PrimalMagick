@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.containers.slots;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 
 import net.minecraft.client.renderer.texture.AtlasTexture;
@@ -25,7 +26,7 @@ public class WandCoreSlot extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        // Only allow wand cores to be dropped into the slot
-        return stack.getItem() instanceof WandCoreItem;
+        // Only allow wand or staff cores to be dropped into the slot
+        return (stack.getItem() instanceof WandCoreItem) || (stack.getItem() instanceof StaffCoreItem);
     }
 }
