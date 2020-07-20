@@ -1,23 +1,32 @@
 package com.verdantartifice.primalmagic.common.items.wands;
 
+import com.google.common.collect.Multimap;
 import com.verdantartifice.primalmagic.common.wands.IStaff;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 /**
  * Item definition for a modular staff.  Modular staves are made up of cores, caps, and gems, and their
- * properties are determined by those components.
+ * properties are determined by those components.  Staves also serve as basic melee weapons.
  * 
  * @author Daedalus4096
  */
 public class ModularStaffItem extends ModularWandItem implements IStaff {
-    public ModularStaffItem(Properties properties) {
+    protected final float attackDamage;
+    protected final float attackSpeed;
+    
+    public ModularStaffItem(int attackDamage, float attackSpeed, Properties properties) {
         super(properties);
+        this.attackDamage = (float)attackDamage;
+        this.attackSpeed = attackSpeed;
     }
     
     @Override
@@ -36,5 +45,16 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
     protected int getCoreSpellSlotCount(WandCore core) {
         // Staves get double the normal spell slots provided by their core
         return (core == null) ? 0 : (2 * core.getSpellSlots());
+    }
+    
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        @SuppressWarnings("deprecation")
+        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
+        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        }
+        return multimap;
     }
 }
