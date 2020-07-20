@@ -21,7 +21,7 @@ import net.minecraft.util.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class WandCap {
+public class WandCap implements IWandComponent {
     protected static final Map<String, WandCap> REGISTRY = new HashMap<>();
     
     public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1D);
@@ -53,12 +53,12 @@ public class WandCap {
         REGISTRY.put(tag, this);
     }
     
-    @Nonnull
+    @Override
     public String getTag() {
         return this.tag;
     }
     
-    @Nonnull
+    @Override
     public Rarity getRarity() {
         return this.rarity;
     }
@@ -77,7 +77,7 @@ public class WandCap {
         return this.staffMrl;
     }
     
-    @Nonnull
+    @Override
     public String getNameTranslationKey() {
         return "primalmagic.wand_cap." + this.tag + ".name";
     }

@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class WandGem {
+public class WandGem implements IWandComponent {
     protected static final Map<String, WandGem> REGISTRY = new HashMap<>();
     
     public static final WandGem APPRENTICE = new WandGem("apprentice", Rarity.COMMON, 75);
@@ -50,7 +50,7 @@ public class WandGem {
         REGISTRY.put(tag, this);
     }
     
-    @Nonnull
+    @Override
     public String getTag() {
         return this.tag;
     }
@@ -59,7 +59,7 @@ public class WandGem {
         return this.capacity;
     }
     
-    @Nonnull
+    @Override
     public Rarity getRarity() {
         return this.rarity;
     }
@@ -69,7 +69,7 @@ public class WandGem {
         return this.mrl;
     }
     
-    @Nonnull
+    @Override
     public String getNameTranslationKey() {
         return "primalmagic.wand_gem." + this.tag + ".name";
     }

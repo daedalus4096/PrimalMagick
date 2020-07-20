@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagic.common.items.wands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -9,6 +11,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.wands.IWandComponent;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -118,6 +121,11 @@ public class ModularWandItem extends AbstractWandItem {
         stack.setTagInfo("gem", StringNBT.valueOf(gem.getTag()));
     }
     
+    @Nonnull
+    protected List<IWandComponent> getComponents(@Nonnull ItemStack stack) {
+        return Arrays.asList(this.getWandCore(stack), this.getWandCap(stack), this.getWandGem(stack)).stream().filter(Objects::nonNull).collect(Collectors.toList());
+    }
+    
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
         // A modular wand's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Wand")
@@ -147,6 +155,12 @@ public class ModularWandItem extends AbstractWandItem {
             retVal = gem.getRarity();
         }
         return retVal;
+    }
+    
+    @Override
+    public int getItemEnchantability(ItemStack stack) {
+        // The enchantability of a wand is determined by its components
+        return this.getComponents(stack).stream().mapToInt(IWandComponent::getEnchantability).sum();
     }
     
     @Override

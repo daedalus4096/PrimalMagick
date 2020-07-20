@@ -26,7 +26,7 @@ import net.minecraft.util.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class WandCore {
+public class WandCore implements IWandComponent {
     protected static final Map<String, WandCore> REGISTRY = new HashMap<>();
     
     public static final WandCore HEARTWOOD = new WandCore("heartwood", Rarity.COMMON, 1, null, Collections.emptyList());
@@ -69,12 +69,12 @@ public class WandCore {
         REGISTRY.put(tag, this);
     }
     
-    @Nonnull
+    @Override
     public String getTag() {
         return this.tag;
     }
     
-    @Nonnull
+    @Override
     public Rarity getRarity() {
         return this.rarity;
     }
@@ -103,7 +103,7 @@ public class WandCore {
         return this.staffMrl;
     }
     
-    @Nonnull
+    @Override
     public String getNameTranslationKey() {
         return "primalmagic.wand_core." + this.tag + ".name";
     }
