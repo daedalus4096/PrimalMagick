@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.mods.ForkSpellMod;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -33,7 +34,7 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     }
 
     @Override
-    public void execute(SpellPackage spell, World world, PlayerEntity caster) {
+    public void execute(SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (spell.getPayload() != null) {
             ForkSpellMod forkMod = spell.getMod(ForkSpellMod.class, "forks");
             Vec3d baseLookVector = caster.getLook(1.0F);
@@ -48,7 +49,7 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
             
             for (Vec3d lookVector : lookVectors) {
                 // Instantiate the projectile entity and launch it into the world
-                SpellProjectileEntity projectile = new SpellProjectileEntity(world, caster, spell);
+                SpellProjectileEntity projectile = new SpellProjectileEntity(world, caster, spell, spellSource);
                 projectile.shoot(lookVector.x, lookVector.y, lookVector.z, 1.5F, 0.0F);
                 world.addEntity(projectile);
             }

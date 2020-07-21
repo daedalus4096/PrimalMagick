@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -46,29 +47,30 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
      * 
      * @param target the target entity being damaged
      * @param spell the spell package containing this payload
+     * @param spellSource the wand or scroll containing the spell package
      * @return the total amount of damage to be done
      */
-    protected abstract float getTotalDamage(Entity target, SpellPackage spell);
+    protected abstract float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource);
     
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
         return DamageSource.causeThrownDamage(target, source);
     }
 
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null) {
                 // Damage the target entity
-                entityTarget.getEntity().attackEntityFrom(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity(), spell));
+                entityTarget.getEntity().attackEntityFrom(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource));
             }
         }
         
         // Apply any secondary effects from the payload
-        this.applySecondaryEffects(target, burstPoint, spell, world, caster);
+        this.applySecondaryEffects(target, burstPoint, spell, world, caster, spellSource);
     }
     
-    protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nullable Vec3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster) {
+    protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nullable Vec3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nonnull ItemStack spellSource) {
         // Do nothing by default
     }
 }

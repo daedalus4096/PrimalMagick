@@ -83,7 +83,7 @@ public class SpellScrollItem extends Item {
             // Check to see if the player's spells are on cooldown
             if (spell != null && !SpellManager.isOnCooldown(playerIn)) {
                 SpellManager.setCooldown(playerIn, spell.getCooldownTicks());
-                spell.cast(worldIn, playerIn);
+                spell.cast(worldIn, playerIn, stack);
                 stack.shrink(1);
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
             } else {

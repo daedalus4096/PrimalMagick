@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -48,12 +49,12 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell) {
-        return 3.0F + this.getModdedPropertyValue("power", spell);
+    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
+        return 3.0F + this.getModdedPropertyValue("power", spell, spellSource);
     }
     
     @Override
-    protected void applySecondaryEffects(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster) {
+    protected void applySecondaryEffects(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
@@ -67,7 +68,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
                     Vec3d knockbackSource = burstPoint == null || burstPoint.equals(target.getHitVec()) ? caster.getEyePosition(1.0F) : burstPoint;
                     knockbackVec = target.getHitVec().subtract(knockbackSource).scale(-1.0D).normalize();
                 }
-                ((LivingEntity)entityTarget.getEntity()).knockBack(caster, 0.25F * this.getTotalDamage(entityTarget.getEntity(), spell), knockbackVec.x, knockbackVec.z);
+                ((LivingEntity)entityTarget.getEntity()).knockBack(caster, 0.25F * this.getTotalDamage(entityTarget.getEntity(), spell, spellSource), knockbackVec.x, knockbackVec.z);
             }
         }
     }

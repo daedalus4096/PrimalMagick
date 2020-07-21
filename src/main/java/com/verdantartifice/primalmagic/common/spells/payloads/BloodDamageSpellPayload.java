@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -52,8 +53,8 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell) {
-        return 3.0F + this.getModdedPropertyValue("power", spell);
+    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
+        return 3.0F + this.getModdedPropertyValue("power", spell, spellSource);
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -45,8 +46,8 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell) {
-        int damage = 3 + this.getModdedPropertyValue("power", spell);
+    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
+        int damage = 3 + this.getModdedPropertyValue("power", spell, spellSource);
         if (target instanceof LivingEntity && ((LivingEntity)target).isEntityUndead()) {
             // Deal double damage to undead entities
             damage *= 2;

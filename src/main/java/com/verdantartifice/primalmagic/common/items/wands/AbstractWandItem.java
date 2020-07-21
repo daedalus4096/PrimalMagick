@@ -366,7 +366,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
             } else if (this.consumeRealMana(stack, playerIn, activeSpell.getManaCost())) {
                 // If the wand contains enough mana, consume it and cast the spell
-                activeSpell.cast(worldIn, playerIn);
+                activeSpell.cast(worldIn, playerIn, stack);
                 playerIn.swingArm(handIn);
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
             } else {

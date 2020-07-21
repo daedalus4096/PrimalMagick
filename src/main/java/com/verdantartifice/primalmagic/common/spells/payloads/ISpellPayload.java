@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -35,8 +36,9 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
      * @param spell the full spell package containing this payload
      * @param world the world in which the payload should be executed
      * @param caster the player that originally casted the spell
+     * @param spellSource the wand or scroll containing the spell package
      */
-    public void execute(@Nullable RayTraceResult target, @Nullable Vec3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull PlayerEntity caster);
+    public void execute(@Nullable RayTraceResult target, @Nullable Vec3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull PlayerEntity caster, @Nonnull ItemStack spellSource);
     
     /**
      * Determine whether this payload has an effect that should be executed.  Should be true for all but

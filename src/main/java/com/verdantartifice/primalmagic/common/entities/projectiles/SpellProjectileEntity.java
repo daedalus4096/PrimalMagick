@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -31,24 +32,28 @@ public class SpellProjectileEntity extends ThrowableEntity {
     protected static final DataParameter<Integer> COLOR = EntityDataManager.createKey(SpellProjectileEntity.class, DataSerializers.VARINT);
     
     protected final SpellPackage spell;
+    protected final ItemStack spellSource;
     
     public SpellProjectileEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
         super(type, worldIn);
         this.spell = null;
+        this.spellSource = null;
     }
     
-    public SpellProjectileEntity(World world, LivingEntity thrower, SpellPackage spell) {
+    public SpellProjectileEntity(World world, LivingEntity thrower, SpellPackage spell, ItemStack spellSource) {
         super(EntityTypesPM.SPELL_PROJECTILE.get(), thrower, world);
         this.spell = spell;
+        this.spellSource = spellSource.copy();
         if (spell != null && spell.getPayload() != null) {
             // Store the spell payload's color for use in rendering
             this.setColor(spell.getPayload().getSource().getColor());
         }
     }
     
-    public SpellProjectileEntity(World world, double x, double y, double z, SpellPackage spell) {
+    public SpellProjectileEntity(World world, double x, double y, double z, SpellPackage spell, ItemStack spellSource) {
         super(EntityTypesPM.SPELL_PROJECTILE.get(), x, y, z, world);
         this.spell = spell;
+        this.spellSource = spellSource.copy();
         if (spell != null && spell.getPayload() != null) {
             // Store the spell payload's color for use in rendering
             this.setColor(spell.getPayload().getSource().getColor());
@@ -89,7 +94,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
                 return;
             }
             if (this.spell != null && this.spell.getPayload() != null && this.getThrower() instanceof PlayerEntity) {
-                SpellManager.executeSpellPayload(this.spell, result, this.world, (PlayerEntity)this.getThrower(), true);
+                SpellManager.executeSpellPayload(this.spell, result, this.world, (PlayerEntity)this.getThrower(), this.spellSource, true);
             }
             this.remove();
         }

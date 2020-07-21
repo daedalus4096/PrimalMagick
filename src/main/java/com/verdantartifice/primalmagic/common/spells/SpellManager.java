@@ -185,7 +185,7 @@ public class SpellManager {
         }
     }
     
-    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull PlayerEntity caster, boolean allowMine) {
+    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull PlayerEntity caster, @Nonnull ItemStack spellSource, boolean allowMine) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (!world.isRemote && spell.getPayload() != null) {
             Vec3d hitVec = result.getHitVec();
@@ -203,17 +203,17 @@ public class SpellManager {
             if (allowMine && mineMod != null) {
                 // If the spell package has the Mine mod and mines are allowed (i.e. this payload wasn't triggered by an existing mine),
                 // spawn a new mine
-                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, mineMod.getModdedPropertyValue("duration", spell));
+                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, spellSource, mineMod.getModdedPropertyValue("duration", spell, spellSource));
                 world.addEntity(mineEntity);
             } else if (burstMod != null) {
                 // If the spell package has the burst mod, calculate the set of affected blocks/entities and execute the payload on each
-                Set<RayTraceResult> targetSet = burstMod.getBurstTargets(result, spell, world);
+                Set<RayTraceResult> targetSet = burstMod.getBurstTargets(result, spell, spellSource, world);
                 for (RayTraceResult target : targetSet) {
-                    spell.getPayload().execute(target, hitVec, spell, world, caster);
+                    spell.getPayload().execute(target, hitVec, spell, world, caster, spellSource);
                 }
             } else {
                 // Otherwise, just execute the payload on the given target
-                spell.getPayload().execute(result, null, spell, world, caster);
+                spell.getPayload().execute(result, null, spell, world, caster, spellSource);
             }
         }
     }

@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
@@ -62,8 +63,8 @@ public class VoidDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell) {
-        return 3.0F + this.getModdedPropertyValue("power", spell);
+    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
+        return 3.0F + this.getModdedPropertyValue("power", spell, spellSource);
     }
 
     @Override
@@ -72,12 +73,12 @@ public class VoidDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected void applySecondaryEffects(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster) {
-        int duration = this.getModdedPropertyValue("duration", spell);
+    protected void applySecondaryEffects(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
+        int duration = this.getModdedPropertyValue("duration", spell, spellSource);
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY && duration > 0) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
-                int potency = (int)((1.0F + this.getModdedPropertyValue("power", spell)) / 3.0F);   // 0, 1, 1, 1, 2
+                int potency = (int)((1.0F + this.getModdedPropertyValue("power", spell, spellSource)) / 3.0F);   // 0, 1, 1, 1, 2
                 ((LivingEntity)entityTarget.getEntity()).addPotionEffect(new EffectInstance(Effects.WITHER, 20 * duration, potency));
             }
         }

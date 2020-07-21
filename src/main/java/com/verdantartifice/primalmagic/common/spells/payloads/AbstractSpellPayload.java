@@ -7,10 +7,13 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.spells.mods.AmplifySpellMod;
 
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -77,14 +80,20 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
         return this.properties.containsKey(name) ? this.properties.get(name).getValue() : 0;
     }
     
-    public int getModdedPropertyValue(String name, SpellPackage spell) {
+    public int getModdedPropertyValue(String name, SpellPackage spell, ItemStack spellSource) {
         int retVal = this.getPropertyValue(name);
         if (retVal > 0 && ("power".equals(name) || "duration".equals(name))) {
+            // For power or duration properties greater than zero, increase the total result by
+            // the power of any attached Amplify spell mod or Spell Power enchantment
             AmplifySpellMod ampMod = spell.getMod(AmplifySpellMod.class, "power");
             if (ampMod != null) {
-                // For power or duration properties greater than zero, increase the total result by
-                // the power of any attached Amplify spell mod
                 retVal += ampMod.getPropertyValue("power");
+            }
+            if (spellSource != null) {
+                int enchLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get(), spellSource);
+                if (enchLevel > 0) {
+                    retVal += enchLevel;
+                }
             }
         }
         return retVal;

@@ -14,6 +14,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 /**
@@ -44,6 +46,7 @@ public class SpellMineEntity extends Entity {
     protected SpellPackage spell;
     protected PlayerEntity caster;
     protected UUID casterId;
+    protected ItemStack spellSource;
     protected int currentLife = 0;
     
     public SpellMineEntity(EntityType<?> entityTypeIn, World worldIn) {
@@ -51,10 +54,11 @@ public class SpellMineEntity extends Entity {
         this.spell = null;
     }
     
-    public SpellMineEntity(World world, Vec3d pos, PlayerEntity caster, SpellPackage spell, int duration) {
+    public SpellMineEntity(World world, Vec3d pos, PlayerEntity caster, SpellPackage spell, ItemStack spellSource, int duration) {
         super(EntityTypesPM.SPELL_MINE.get(), world);
         this.setPosition(pos.x, pos.y, pos.z);
         this.spell = spell;
+        this.spellSource = spellSource.copy();
         this.caster = caster;
         this.casterId = caster.getUniqueID();
         this.setLifespan(duration * DURATION_FACTOR);
@@ -117,12 +121,12 @@ public class SpellMineEntity extends Entity {
     @Override
     protected void readAdditional(CompoundNBT compound) {
         this.caster = null;
-        if (compound.contains("Caster", 10)) {
+        if (compound.contains("Caster", Constants.NBT.TAG_COMPOUND)) {
             this.casterId = NBTUtil.readUniqueId(compound.getCompound("Caster"));
         }
         
         this.spell = null;
-        if (compound.contains("Spell", 10)) {
+        if (compound.contains("Spell", Constants.NBT.TAG_COMPOUND)) {
             this.spell = new SpellPackage(compound.getCompound("Spell"));
         }
         if (this.spell != null && !this.spell.isValid()) {
@@ -130,6 +134,11 @@ public class SpellMineEntity extends Entity {
         }
         if (this.spell != null && this.spell.getPayload() != null) {
             this.setColor(this.spell.getPayload().getSource().getColor());
+        }
+        
+        this.spellSource = null;
+        if (compound.contains("SpellSource", Constants.NBT.TAG_COMPOUND)) {
+            this.spellSource = ItemStack.read(compound.getCompound("SpellSource"));
         }
         
         this.currentLife = compound.getInt("CurrentLife");
@@ -143,6 +152,9 @@ public class SpellMineEntity extends Entity {
         }
         if (this.spell != null) {
             compound.put("Spell", this.spell.serializeNBT());
+        }
+        if (this.spellSource != null) {
+            compound.put("SpellSource", this.spellSource.serializeNBT());
         }
         compound.putInt("CurrentLife", this.currentLife);
         compound.putInt("Lifespan", this.getLifespan());
@@ -178,7 +190,7 @@ public class SpellMineEntity extends Entity {
                             this.spell.getPayload().playSounds(this.world, this.getPosition());
                         }
                         if (this.getCaster() != null) {
-                            SpellManager.executeSpellPayload(this.spell, new EntityRayTraceResult(entity, this.getPositionVec().add(0.0D, 0.5D, 0.0D)), this.world, this.getCaster(), false);
+                            SpellManager.executeSpellPayload(this.spell, new EntityRayTraceResult(entity, this.getPositionVec().add(0.0D, 0.5D, 0.0D)), this.world, this.getCaster(), this.spellSource, false);
                         }
                         found = true;
                     }

@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.mods.ForkSpellMod;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -39,7 +40,7 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
     }
     
     @Override
-    public void execute(SpellPackage spell, World world, PlayerEntity caster) {
+    public void execute(SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (spell.getPayload() != null) {
             ForkSpellMod forkMod = spell.getMod(ForkSpellMod.class, "forks");
             Vec3d baseLookVector = caster.getLook(1.0F);
@@ -79,7 +80,7 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
                 this.drawFx(world, spell, eyePos.add(lookVector.scale(0.1D)), result.getHitVec());
                 
                 // Execute the spell payload on the found target
-                SpellManager.executeSpellPayload(spell, result, world, caster, true);
+                SpellManager.executeSpellPayload(spell, result, world, caster, spellSource, true);
             }
         }
     }

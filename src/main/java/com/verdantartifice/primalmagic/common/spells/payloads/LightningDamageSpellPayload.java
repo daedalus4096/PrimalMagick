@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -44,8 +45,8 @@ public class LightningDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell) {
-        return 2.0F * this.getModdedPropertyValue("power", spell);
+    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
+        return 2.0F * this.getModdedPropertyValue("power", spell, spellSource);
     }
 
     @Override

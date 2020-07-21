@@ -39,7 +39,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
     }
     
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (target != null) {
             ItemStack stack = this.getSimulatedItemStack(this.fluid);
             if (target.getType() == RayTraceResult.Type.BLOCK) {

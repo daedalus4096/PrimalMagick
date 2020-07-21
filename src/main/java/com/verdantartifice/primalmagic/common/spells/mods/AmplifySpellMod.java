@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
+import net.minecraft.item.ItemStack;
+
 /**
  * Definition of the Amplify spell mod.  This mod increases the effective value of power and duration
  * properties of each other component in the spell package by its own power property value.
@@ -53,8 +55,8 @@ public class AmplifySpellMod extends AbstractSpellMod {
     }
     
     @Override
-    public int getModdedPropertyValue(String name, SpellPackage spell) {
-        // Don't amplify self
+    public int getModdedPropertyValue(String name, SpellPackage spell, ItemStack spellSource) {
+        // Don't amplify self or take amplification from wand enchantments
         return this.getPropertyValue(name);
     }
 }

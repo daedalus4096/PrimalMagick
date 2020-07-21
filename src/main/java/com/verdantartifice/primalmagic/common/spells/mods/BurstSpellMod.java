@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -76,13 +77,13 @@ public class BurstSpellMod extends AbstractSpellMod {
     }
 
     @Nonnull
-    public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, World world) {
+    public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, ItemStack spellSource, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();
         Set<BlockPos> affectedBlocks = new HashSet<>();
         Vec3d hitVec = origin.getHitVec();
         BlockPos hitPos = new BlockPos(hitVec);
         int radius = this.getPropertyValue("radius");
-        int power = this.getModdedPropertyValue("power", spell);
+        int power = this.getModdedPropertyValue("power", spell, spellSource);
         double sqRadius = (double)(radius * radius);
         int searchRadius = radius + 1;
         Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.Mode.NONE);

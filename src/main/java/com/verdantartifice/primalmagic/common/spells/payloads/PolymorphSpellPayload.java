@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -57,14 +58,14 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
             if (!entityTarget.getEntity().getType().equals(EntityType.WOLF) && entityTarget.getEntity().isNonBoss()) {
                 // Create and enqueue an entity swapper for the target entity
                 UUID entityId = entityTarget.getEntity().getUniqueID();
                 CompoundNBT originalData = entityTarget.getEntity().writeWithoutTypeId(new CompoundNBT());
-                int ticks = this.getModdedPropertyValue("duration", spell) * TICKS_PER_DURATION;
+                int ticks = this.getModdedPropertyValue("duration", spell, spellSource) * TICKS_PER_DURATION;
                 EntitySwapper.enqueue(world, new EntitySwapper(entityId, EntityType.WOLF, originalData, Optional.of(Integer.valueOf(ticks)), 0));
             }
         }

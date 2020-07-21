@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -30,8 +31,9 @@ public interface ISpellVehicle extends INBTSerializable<CompoundNBT> {
      * @param spell the full spell package containing this vehicle
      * @param world the world in which the vehicle should be executed
      * @param caster the player that originally casted the spell
+     * @param spellSource the wand or scroll that originally contained the spell
      */
-    public void execute(@Nonnull SpellPackage spell, @Nonnull World world, @Nonnull PlayerEntity caster);
+    public void execute(@Nonnull SpellPackage spell, @Nonnull World world, @Nonnull PlayerEntity caster, @Nonnull ItemStack spellSource);
 
     /**
      * Determine whether this vehicle has an effect that should be executed.  Should be true for all but

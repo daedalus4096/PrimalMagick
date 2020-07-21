@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -52,14 +53,14 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (target != null && target.getType() == RayTraceResult.Type.BLOCK) {
             // Create and enqueue a block breaker for the target block
             BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
             BlockPos pos = blockTarget.getPos();
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
-            BlockBreaker.enqueue(world, new BlockBreaker(this.getModdedPropertyValue("power", spell), pos, state, durability, durability, caster));
+            BlockBreaker.enqueue(world, new BlockBreaker(this.getModdedPropertyValue("power", spell, spellSource), pos, state, durability, durability, caster));
         }
     }
 

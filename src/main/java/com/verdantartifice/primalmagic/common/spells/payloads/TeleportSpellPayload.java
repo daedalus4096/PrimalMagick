@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -35,7 +36,7 @@ public class TeleportSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster) {
+    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (burstPoint != null) {
             // Do nothing if this was from a burst spell
             return;
