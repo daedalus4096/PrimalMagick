@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -24,6 +25,7 @@ import com.verdantartifice.primalmagic.common.wands.IWand;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -229,7 +231,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
             modifier -= 0.05D;
         }
         
-        // TODO Subtract discounts from wand enchantments
+        // Subtract discounts from wand enchantments
+        int efficiencyLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.MANA_EFFICIENCY.get(), stack);
+        if (efficiencyLevel > 0) {
+            modifier -= (0.02D * efficiencyLevel);
+        }
         
         // Substract discounts from temporary conditions
         if (player.isPotionActive(EffectsPM.MANAFRUIT.get())) {
