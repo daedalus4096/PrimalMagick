@@ -158,6 +158,11 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+    
+    @Override
     public int getItemEnchantability(ItemStack stack) {
         // The enchantability of a wand is determined by its components
         return this.getComponents(stack).stream().mapToInt(IWandComponent::getEnchantability).sum();
