@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectM
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Util;
 
 /**
  * Definition of a research project option.
@@ -18,22 +19,20 @@ import net.minecraft.entity.player.PlayerEntity;
 public class SpellworkProject extends AbstractProject {
     public static final String TYPE = "spellwork";
     
-    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
+    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(new ItemProjectMaterial(ItemsPM.SPELLCRAFTING_ALTAR.get(), false), 2);
+        bag.add(new ItemProjectMaterial(ItemsPM.WAND_INSCRIPTION_TABLE.get(), false), 2);
+        bag.add(new ItemProjectMaterial(ItemsPM.WAND_CHARGER.get(), false), 2);
+        bag.add(new ItemProjectMaterial(ItemsPM.MUNDANE_WAND.get(), false), 1);
+        bag.add(new ItemProjectMaterial(ItemsPM.SPELL_SCROLL_BLANK.get(), true), 5);
+        bag.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_EARTH.get(), true), 1);
+        bag.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_SEA.get(), true), 1);
+        bag.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_SKY.get(), true), 1);
+        bag.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_SUN.get(), true), 1);
+        bag.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_MOON.get(), true), 1);
+        bag.add(new ObservationProjectMaterial(), 5);
+    });
     protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.parse("BASIC_SORCERY");
-    
-    static {
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.SPELLCRAFTING_ALTAR.get(), false), 2);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.WAND_INSCRIPTION_TABLE.get(), false), 2);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.WAND_CHARGER.get(), false), 2);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.MUNDANE_WAND.get(), false), 1);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.SPELL_SCROLL_BLANK.get(), true), 5);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_EARTH.get(), true), 1);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_SEA.get(), true), 1);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_SKY.get(), true), 1);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_SUN.get(), true), 1);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.ESSENCE_DUST_MOON.get(), true), 1);
-        OPTIONS.add(new ObservationProjectMaterial(), 5);
-    }
     
     @Override
     protected String getProjectType() {

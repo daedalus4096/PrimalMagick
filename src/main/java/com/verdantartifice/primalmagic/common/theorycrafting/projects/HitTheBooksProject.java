@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
+import net.minecraft.util.Util;
 
 /**
  * Definition of a research project option.
@@ -19,13 +20,11 @@ import net.minecraft.item.Items;
 public class HitTheBooksProject extends AbstractProject {
     public static final String TYPE = "hit_the_books";
     
-    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
+    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(new ItemProjectMaterial(Items.BOOK, false), 1);
+    });
     protected static final Block AID = Blocks.BOOKSHELF;
     
-    static {
-        OPTIONS.add(new ItemProjectMaterial(Items.BOOK, false), 1);
-    }
-
     @Override
     protected String getProjectType() {
         return TYPE;

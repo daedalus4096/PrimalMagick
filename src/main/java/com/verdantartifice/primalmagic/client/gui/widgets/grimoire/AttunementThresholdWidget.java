@@ -18,6 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,19 +31,16 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class AttunementThresholdWidget extends Widget {
-    protected static final ItemStack WAND_STACK;
+    protected static final ItemStack WAND_STACK = Util.make(new ItemStack(ItemsPM.MODULAR_WAND.get()), stack -> {
+        ItemsPM.MODULAR_WAND.get().setWandCore(stack, WandCore.HEARTWOOD);
+        ItemsPM.MODULAR_WAND.get().setWandCap(stack, WandCap.IRON);
+        ItemsPM.MODULAR_WAND.get().setWandGem(stack, WandGem.APPRENTICE);
+    });
     
     protected final Source source;
     protected final AttunementThreshold threshold;
     protected final ResourceLocation texture;
     protected final ITextComponent tooltipText;
-    
-    static {
-        WAND_STACK = new ItemStack(ItemsPM.MODULAR_WAND.get());
-        ItemsPM.MODULAR_WAND.get().setWandCore(WAND_STACK, WandCore.HEARTWOOD);
-        ItemsPM.MODULAR_WAND.get().setWandCap(WAND_STACK, WandCap.IRON);
-        ItemsPM.MODULAR_WAND.get().setWandGem(WAND_STACK, WandGem.APPRENTICE);
-    }
     
     public AttunementThresholdWidget(@Nonnull Source source, @Nonnull AttunementThreshold threshold, int x, int y) {
         super(x, y, 18, 18, "");

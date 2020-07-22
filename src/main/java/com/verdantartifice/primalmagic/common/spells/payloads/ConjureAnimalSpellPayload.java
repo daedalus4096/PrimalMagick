@@ -15,6 +15,7 @@ import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -32,33 +33,31 @@ import net.minecraft.world.World;
 public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "conjure_animal";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_ANIMAL"));
-    protected static final WeightedRandomBag<EntityType<?>> LAND_ANIMALS = new WeightedRandomBag<>();
-    protected static final WeightedRandomBag<EntityType<?>> WATER_ANIMALS = new WeightedRandomBag<>();
+    protected static final WeightedRandomBag<EntityType<?>> LAND_ANIMALS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(EntityType.BAT, 2);
+        bag.add(EntityType.CAT, 5);
+        bag.add(EntityType.CHICKEN, 10);
+        bag.add(EntityType.COW, 10);
+        bag.add(EntityType.DONKEY, 2);
+        bag.add(EntityType.FOX, 5);
+        bag.add(EntityType.HORSE, 2);
+        bag.add(EntityType.MOOSHROOM, 1);
+        bag.add(EntityType.OCELOT, 5);
+        bag.add(EntityType.PARROT, 2);
+        bag.add(EntityType.PIG, 10);
+        bag.add(EntityType.RABBIT, 5);
+        bag.add(EntityType.SHEEP, 10);
+        bag.add(EntityType.TURTLE, 5);
+    });
+    protected static final WeightedRandomBag<EntityType<?>> WATER_ANIMALS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(EntityType.COD, 10);
+        bag.add(EntityType.PUFFERFISH, 10);
+        bag.add(EntityType.SALMON, 10);
+        bag.add(EntityType.SQUID, 5);
+        bag.add(EntityType.TROPICAL_FISH, 10);
+        bag.add(EntityType.TURTLE, 5);
+    });
     
-    static {
-        LAND_ANIMALS.add(EntityType.BAT, 2);
-        LAND_ANIMALS.add(EntityType.CAT, 5);
-        LAND_ANIMALS.add(EntityType.CHICKEN, 10);
-        LAND_ANIMALS.add(EntityType.COW, 10);
-        LAND_ANIMALS.add(EntityType.DONKEY, 2);
-        LAND_ANIMALS.add(EntityType.FOX, 5);
-        LAND_ANIMALS.add(EntityType.HORSE, 2);
-        LAND_ANIMALS.add(EntityType.MOOSHROOM, 1);
-        LAND_ANIMALS.add(EntityType.OCELOT, 5);
-        LAND_ANIMALS.add(EntityType.PARROT, 2);
-        LAND_ANIMALS.add(EntityType.PIG, 10);
-        LAND_ANIMALS.add(EntityType.RABBIT, 5);
-        LAND_ANIMALS.add(EntityType.SHEEP, 10);
-        LAND_ANIMALS.add(EntityType.TURTLE, 5);
-        
-        WATER_ANIMALS.add(EntityType.COD, 10);
-        WATER_ANIMALS.add(EntityType.PUFFERFISH, 10);
-        WATER_ANIMALS.add(EntityType.SALMON, 10);
-        WATER_ANIMALS.add(EntityType.SQUID, 5);
-        WATER_ANIMALS.add(EntityType.TROPICAL_FISH, 10);
-        WATER_ANIMALS.add(EntityType.TURTLE, 5);
-    }
-
     public ConjureAnimalSpellPayload() {
         super();
     }

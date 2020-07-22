@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Util;
 
 /**
  * Definition of a research project option.
@@ -19,13 +20,11 @@ import net.minecraft.entity.player.PlayerEntity;
 public class PortalDetritusProject extends AbstractProject {
     public static final String TYPE = "portal_detritus";
     
-    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
+    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(new ItemProjectMaterial(ItemsPM.MAGNIFYING_GLASS.get(), false), 1);
+    });
     protected static final Block AID = Blocks.NETHER_PORTAL;
     
-    static {
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.MAGNIFYING_GLASS.get(), false), 1);
-    }
-
     @Override
     protected String getProjectType() {
         return TYPE;

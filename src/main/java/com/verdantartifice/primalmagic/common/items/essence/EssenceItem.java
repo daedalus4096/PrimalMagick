@@ -21,12 +21,6 @@ import net.minecraft.item.ItemStack;
 public class EssenceItem extends Item {
     protected static final Map<EssenceType, Map<Source, Item>> ESSENCES = new HashMap<>();
     
-    static {
-        for (EssenceType type : EssenceType.values()) {
-            ESSENCES.put(type, new HashMap<>());
-        }
-    }
-    
     protected final EssenceType type;
     protected final Source source;
 
@@ -46,7 +40,7 @@ public class EssenceItem extends Item {
     }
     
     protected static void register(@Nonnull EssenceType type, @Nonnull Source source, @Nonnull Item item) {
-        ESSENCES.get(type).put(source, item);
+        ESSENCES.computeIfAbsent(type, k -> new HashMap<>()).put(source, item);
     }
     
     @Nonnull

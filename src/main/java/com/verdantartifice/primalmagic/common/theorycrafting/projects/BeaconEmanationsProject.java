@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 
 /**
  * Definition of a research project option.
@@ -19,13 +20,11 @@ import net.minecraft.util.ResourceLocation;
 public class BeaconEmanationsProject extends AbstractProject {
     public static final String TYPE = "beacon_emanations";
     
-    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
+    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "beacon_payment"), true), 1);
+    });
     protected static final Block AID = Blocks.BEACON;
     
-    static {
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "beacon_payment"), true), 1);
-    }
-
     @Override
     protected String getProjectType() {
         return TYPE;

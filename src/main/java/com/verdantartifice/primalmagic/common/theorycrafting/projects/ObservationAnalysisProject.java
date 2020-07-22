@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Util;
 
 /**
  * Definition of a research project option.
@@ -18,13 +19,11 @@ import net.minecraft.entity.player.PlayerEntity;
 public class ObservationAnalysisProject extends AbstractProject {
     public static final String TYPE = "observation_analysis";
     
-    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
+    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(new ObservationProjectMaterial(), 1);
+    });
     protected static final Block AID = BlocksPM.ANALYSIS_TABLE.get();
     
-    static {
-        OPTIONS.add(new ObservationProjectMaterial(), 1);
-    }
-
     @Override
     protected String getProjectType() {
         return TYPE;

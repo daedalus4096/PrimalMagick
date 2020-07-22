@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 
 /**
  * Definition of a research project option.
@@ -22,23 +23,21 @@ import net.minecraft.util.ResourceLocation;
 public class WandTinkeringProject extends AbstractProject {
     public static final String TYPE = "wand_tinkering";
     
-    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = new WeightedRandomBag<>();
+    protected static final WeightedRandomBag<AbstractProjectMaterial> OPTIONS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(new ItemProjectMaterial(ItemsPM.WAND_ASSEMBLY_TABLE.get(), false), 3);
+        bag.add(new ItemProjectMaterial(ItemsPM.HEARTWOOD.get(), true), 1);
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "obsidian"), true), 1);
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation(PrimalMagic.MODID, "coral_blocks"), true), 1);
+        bag.add(new ItemProjectMaterial(Items.BAMBOO, true), 1);
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation(PrimalMagic.MODID, "sunwood_logs"), true), 1);
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation(PrimalMagic.MODID, "moonwood_logs"), true), 1);
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "ingots/iron"), true), 1);
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "ingots/gold"), true), 1);
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "gems/diamond"), true), 1);
+        bag.add(new ItemTagProjectMaterial(new ResourceLocation(PrimalMagic.MODID, "essences/terrestrial_dusts"), true), 1);
+        bag.add(new ObservationProjectMaterial(), 5);
+    });
     protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.parse("BASIC_SORCERY");
-    
-    static {
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.WAND_ASSEMBLY_TABLE.get(), false), 3);
-        OPTIONS.add(new ItemProjectMaterial(ItemsPM.HEARTWOOD.get(), true), 1);
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "obsidian"), true), 1);
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation(PrimalMagic.MODID, "coral_blocks"), true), 1);
-        OPTIONS.add(new ItemProjectMaterial(Items.BAMBOO, true), 1);
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation(PrimalMagic.MODID, "sunwood_logs"), true), 1);
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation(PrimalMagic.MODID, "moonwood_logs"), true), 1);
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "ingots/iron"), true), 1);
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "ingots/gold"), true), 1);
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation("forge", "gems/diamond"), true), 1);
-        OPTIONS.add(new ItemTagProjectMaterial(new ResourceLocation(PrimalMagic.MODID, "essences/terrestrial_dusts"), true), 1);
-        OPTIONS.add(new ObservationProjectMaterial(), 5);
-    }
     
     @Override
     protected String getProjectType() {
