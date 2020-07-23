@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
-import java.lang.reflect.Method;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
@@ -42,20 +39,8 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation MRL3 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_3"), "");
     private static final ModelResourceLocation MRL4 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_4"), "");
     private static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "scan_state");
-    private static Method RENDER_MODEL_METHOD;
     private static boolean isRenderingScreen = false;
 
-    static {
-        // The renderModel method of ItemRenderer is private, but we need it; so, expose it via reflection
-        try {
-            RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, ItemStack.class, int.class, int.class, MatrixStack.class, IVertexBuilder.class);
-            RENDER_MODEL_METHOD.setAccessible(true);
-        } catch (Exception e) {
-            RENDER_MODEL_METHOD = null;
-            PrimalMagic.LOGGER.catching(e);
-        }
-    }
-    
     @Override
     public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         if (itemStack.getItem() instanceof ArcanometerItem) {
@@ -64,11 +49,7 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
 
             // Render the base model
             IBakedModel model = mc.getModelManager().getModel(this.getModelResourceLocation(itemStack));
-            try {
-                RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, buffer.getBuffer(RenderType.solid()));
-            } catch (Exception e) {
-                PrimalMagic.LOGGER.catching(e);
-            }
+            itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, buffer.getBuffer(RenderType.solid()));
             
             if (!isRenderingScreen) {
                 // We might be asked to show another arcanometer on screen; don't recurse in that case

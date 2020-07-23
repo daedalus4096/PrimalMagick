@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
-import java.lang.reflect.Method;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -28,18 +26,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class MundaneWandISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation CORE_MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), "");
-    private static Method RENDER_MODEL_METHOD;
-
-    static {
-        // The renderModel method of ItemRenderer is private, but we need it; so, expose it via reflection
-        try {
-            RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, ItemStack.class, int.class, int.class, MatrixStack.class, IVertexBuilder.class);
-            RENDER_MODEL_METHOD.setAccessible(true);
-        } catch (Exception e) {
-            RENDER_MODEL_METHOD = null;
-            PrimalMagic.LOGGER.catching(e);
-        }
-    }
     
     @Override
     public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
@@ -47,14 +33,10 @@ public class MundaneWandISTER extends ItemStackTileEntityRenderer {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
 
+            // Render the wand core
             IBakedModel model = mc.getModelManager().getModel(CORE_MRL);
             IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
-            try {
-                // Render the wand core
-                RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
-            } catch (Exception e) {
-                PrimalMagic.LOGGER.catching(e);
-            }
+            itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
         }
     }
 }

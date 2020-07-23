@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
 import java.awt.Color;
-import java.lang.reflect.Method;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -35,19 +34,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AncientManaFontISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
-    private static Method RENDER_MODEL_METHOD;
     
-    static {
-        // The renderModel method of ItemRenderer is private, but we need it; so, expose it via reflection
-        try {
-            RENDER_MODEL_METHOD = ItemRenderer.class.getDeclaredMethod("renderModel", IBakedModel.class, ItemStack.class, int.class, int.class, MatrixStack.class, IVertexBuilder.class);
-            RENDER_MODEL_METHOD.setAccessible(true);
-        } catch (Exception e) {
-            RENDER_MODEL_METHOD = null;
-            PrimalMagic.LOGGER.catching(e);
-        }
-    }
-
     protected void addVertex(IVertexBuilder renderer, MatrixStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
         renderer.pos(stack.getLast().getPositionMatrix(), x, y, z)
                 .color(r, g, b, 1.0F)
@@ -76,11 +63,7 @@ public class AncientManaFontISTER extends ItemStackTileEntityRenderer {
             
             // Draw the font base
             IBakedModel model = mc.getModelManager().getModel(MRL);
-            try {
-                RENDER_MODEL_METHOD.invoke(itemRenderer, model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
-            } catch (Exception e) {
-                PrimalMagic.LOGGER.catching(e);
-            }
+            itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             
             // Draw the font core
             matrixStack.push();
