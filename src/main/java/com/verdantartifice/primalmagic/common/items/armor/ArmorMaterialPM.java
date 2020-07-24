@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
@@ -15,6 +16,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Definition of tiered armor materials for the mod.
+ * 
+ * @author Daedalus4096
+ */
 public enum ArmorMaterialPM implements IArmorMaterial {
     IMBUED_WOOL("imbued_wool", 8, new int[] {1, 3, 4, 1}, 17, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F, () -> {
         return Ingredient.fromTag(ItemTags.WOOL);
@@ -27,6 +33,9 @@ public enum ArmorMaterialPM implements IArmorMaterial {
     }),
     SAINTSWOOL("saintswool", 50, new int[] {4, 8, 10, 4}, 32, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 3.0F, () -> {
         return Ingredient.fromItems(ItemsPM.SAINTSWOOL.get());
+    }),
+    PRIMALITE("primalite", 30, new int[] {3, 5, 7, 3}, 18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, () -> {
+        return Ingredient.fromTag(ItemTagsPM.INGOTS_PRIMALITE);
     });
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[] {13, 15, 16, 11};

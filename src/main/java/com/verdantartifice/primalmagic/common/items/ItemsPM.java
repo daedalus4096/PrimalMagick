@@ -34,6 +34,7 @@ import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockNamedItem;
@@ -277,6 +278,10 @@ public class ItemsPM {
     public static final RegistryObject<RobeArmorItem> SAINTSWOOL_CHEST = ITEMS.register("saintswool_chest", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, EquipmentSlotType.CHEST, 6, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<RobeArmorItem> SAINTSWOOL_LEGS = ITEMS.register("saintswool_legs", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, EquipmentSlotType.LEGS, 6, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<RobeArmorItem> SAINTSWOOL_FEET = ITEMS.register("saintswool_feet", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, EquipmentSlotType.FEET, 4, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
+    public static final RegistryObject<ArmorItem> PRIMALITE_HEAD = ITEMS.register("primalite_head", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, EquipmentSlotType.HEAD, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ArmorItem> PRIMALITE_CHEST = ITEMS.register("primalite_chest", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, EquipmentSlotType.CHEST, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ArmorItem> PRIMALITE_LEGS = ITEMS.register("primalite_legs", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, EquipmentSlotType.LEGS, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ArmorItem> PRIMALITE_FEET = ITEMS.register("primalite_feet", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, EquipmentSlotType.FEET, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);
