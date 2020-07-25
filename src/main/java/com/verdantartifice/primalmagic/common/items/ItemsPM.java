@@ -255,11 +255,11 @@ public class ItemsPM {
     public static final RegistryObject<Item> QUARTZ_NUGGET = ITEMS.register("quartz_nugget", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register tool items
-    public static final RegistryObject<SwordItem> PRIMALITE_SWORD = ITEMS.register("primalite_sword", () -> new SwordItem(ItemTierPM.PRIMALITE, 3, -2.4F, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<ShovelItem> PRIMALITE_SHOVEL = ITEMS.register("primalite_shovel", () -> new ShovelItem(ItemTierPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<PickaxeItem> PRIMALITE_PICKAXE = ITEMS.register("primalite_pickaxe", () -> new PickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<AxeItem> PRIMALITE_AXE = ITEMS.register("primalite_axe", () -> new AxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<HoeItem> PRIMALITE_HOE = ITEMS.register("primalite_hoe", () -> new HoeItem(ItemTierPM.PRIMALITE, 0.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<SwordItem> PRIMALITE_SWORD = ITEMS.register("primalite_sword", () -> new SwordItem(ItemTierPM.PRIMALITE, 3, -2.4F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ShovelItem> PRIMALITE_SHOVEL = ITEMS.register("primalite_shovel", () -> new ShovelItem(ItemTierPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PickaxeItem> PRIMALITE_PICKAXE = ITEMS.register("primalite_pickaxe", () -> new PickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<AxeItem> PRIMALITE_AXE = ITEMS.register("primalite_axe", () -> new AxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<HoeItem> PRIMALITE_HOE = ITEMS.register("primalite_hoe", () -> new HoeItem(ItemTierPM.PRIMALITE, 0.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<SwordItem> HEXIUM_SWORD = ITEMS.register("hexium_sword", () -> new SwordItem(ItemTierPM.HEXIUM, 3, -2.4F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<ShovelItem> HEXIUM_SHOVEL = ITEMS.register("hexium_shovel", () -> new ShovelItem(ItemTierPM.HEXIUM, 1.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<PickaxeItem> HEXIUM_PICKAXE = ITEMS.register("hexium_pickaxe", () -> new PickaxeItem(ItemTierPM.HEXIUM, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
