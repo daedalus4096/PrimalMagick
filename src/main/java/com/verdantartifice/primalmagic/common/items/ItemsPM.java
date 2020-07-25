@@ -287,6 +287,10 @@ public class ItemsPM {
     public static final RegistryObject<ArmorItem> PRIMALITE_CHEST = ITEMS.register("primalite_chest", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, EquipmentSlotType.CHEST, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<ArmorItem> PRIMALITE_LEGS = ITEMS.register("primalite_legs", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, EquipmentSlotType.LEGS, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<ArmorItem> PRIMALITE_FEET = ITEMS.register("primalite_feet", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, EquipmentSlotType.FEET, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ArmorItem> HEXIUM_HEAD = ITEMS.register("hexium_head", () -> new ArmorItem(ArmorMaterialPM.HEXIUM, EquipmentSlotType.HEAD, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<ArmorItem> HEXIUM_CHEST = ITEMS.register("hexium_chest", () -> new ArmorItem(ArmorMaterialPM.HEXIUM, EquipmentSlotType.CHEST, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<ArmorItem> HEXIUM_LEGS = ITEMS.register("hexium_legs", () -> new ArmorItem(ArmorMaterialPM.HEXIUM, EquipmentSlotType.LEGS, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<ArmorItem> HEXIUM_FEET = ITEMS.register("hexium_feet", () -> new ArmorItem(ArmorMaterialPM.HEXIUM, EquipmentSlotType.FEET, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     
     // Register miscellaneous items
     public static final RegistryObject<GrimoireItem> GRIMOIRE = ITEMS.register("grimoire", GrimoireItem::new);
