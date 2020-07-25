@@ -446,7 +446,18 @@
                         "infernal": 2,
                         "void": 2
                     },
-                    "recipes": ["primalmagic:hexium_ingot"]
+                    "recipes": [
+                        "primalmagic:hexium_ingot",
+                        "primalmagic:hexium_sword",
+                        "primalmagic:hexium_shovel",
+                        "primalmagic:hexium_pickaxe",
+                        "primalmagic:hexium_axe",
+                        "primalmagic:hexium_hoe",
+                        "primalmagic:hexium_head",
+                        "primalmagic:hexium_chest",
+                        "primalmagic:hexium_legs",
+                        "primalmagic:hexium_feet"
+                    ]
                 }
             ],
             "addenda": []

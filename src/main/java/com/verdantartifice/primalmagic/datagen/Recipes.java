@@ -1422,6 +1422,72 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_HEXIUM))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_SWORD.get())
+            .patternLine("I")
+            .patternLine("I")
+            .patternLine("S")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_SHOVEL.get())
+            .patternLine("I")
+            .patternLine("S")
+            .patternLine("S")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_PICKAXE.get())
+            .patternLine("III")
+            .patternLine(" S ")
+            .patternLine(" S ")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_AXE.get())
+            .patternLine("II")
+            .patternLine("IS")
+            .patternLine(" S")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_HOE.get())
+            .patternLine("II")
+            .patternLine(" S")
+            .patternLine(" S")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_HEAD.get())
+            .patternLine("III")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_CHEST.get())
+            .patternLine("I I")
+            .patternLine("III")
+            .patternLine("III")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_LEGS.get())
+            .patternLine("III")
+            .patternLine("I I")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_FEET.get())
+            .patternLine("I I")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
     }
     
     protected void registerHallowsteelRecipes(Consumer<IFinishedRecipe> consumer) {

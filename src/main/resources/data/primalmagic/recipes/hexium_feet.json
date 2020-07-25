@@ -1,0 +1,16 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "HEXIUM",
+  "pattern": [
+    "I I",
+    "I I"
+  ],
+  "key": {
+    "I": {
+      "tag": "primalmagic:ingots/hexium"
+    }
+  },
+  "result": {
+    "item": "primalmagic:hexium_feet"
+  }
+}

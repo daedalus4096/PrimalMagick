@@ -1,0 +1,20 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "HEXIUM",
+  "pattern": [
+    "I",
+    "I",
+    "S"
+  ],
+  "key": {
+    "I": {
+      "tag": "primalmagic:ingots/hexium"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "primalmagic:hexium_sword"
+  }
+}
