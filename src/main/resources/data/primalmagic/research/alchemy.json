@@ -289,7 +289,18 @@
                         "sun": 1,
                         "moon": 1
                     },
-                    "recipes": ["primalmagic:primalite_ingot"]
+                    "recipes": [
+                        "primalmagic:primalite_ingot",
+                        "primalmagic:primalite_sword",
+                        "primalmagic:primalite_shovel",
+                        "primalmagic:primalite_pickaxe",
+                        "primalmagic:primalite_axe",
+                        "primalmagic:primalite_hoe",
+                        "primalmagic:primalite_head",
+                        "primalmagic:primalite_chest",
+                        "primalmagic:primalite_legs",
+                        "primalmagic:primalite_feet"
+                    ]
                 }
             ],
             "addenda": []

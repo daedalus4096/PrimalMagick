@@ -1,0 +1,17 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "PRIMALITE",
+  "pattern": [
+    "I I",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "tag": "primalmagic:ingots/primalite"
+    }
+  },
+  "result": {
+    "item": "primalmagic:primalite_chest"
+  }
+}

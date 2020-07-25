@@ -1324,6 +1324,72 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_PRIMALITE))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_SWORD.get())
+            .patternLine("I")
+            .patternLine("I")
+            .patternLine("S")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_SHOVEL.get())
+            .patternLine("I")
+            .patternLine("S")
+            .patternLine("S")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_PICKAXE.get())
+            .patternLine("III")
+            .patternLine(" S ")
+            .patternLine(" S ")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_AXE.get())
+            .patternLine("II")
+            .patternLine("IS")
+            .patternLine(" S")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_HOE.get())
+            .patternLine("II")
+            .patternLine(" S")
+            .patternLine(" S")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_HEAD.get())
+            .patternLine("III")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_CHEST.get())
+            .patternLine("I I")
+            .patternLine("III")
+            .patternLine("III")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_LEGS.get())
+            .patternLine("III")
+            .patternLine("I I")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_FEET.get())
+            .patternLine("I I")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
     }
     
     protected void registerHexiumRecipes(Consumer<IFinishedRecipe> consumer) {
