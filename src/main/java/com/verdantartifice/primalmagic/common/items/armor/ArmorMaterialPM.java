@@ -39,6 +39,9 @@ public enum ArmorMaterialPM implements IArmorMaterial {
     }),
     HEXIUM("hexium", 45, new int[] {4, 7, 9, 4}, 23, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F, () -> {
         return Ingredient.fromTag(ItemTagsPM.INGOTS_HEXIUM);
+    }),
+    HALLOWSTEEL("hallowsteel", 60, new int[] {5, 8, 10, 5}, 28, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.0F, () -> {
+        return Ingredient.fromTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
     });
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[] {13, 15, 16, 11};
