@@ -599,7 +599,18 @@
                     "attunements": {
                         "hallowed": 3
                     },
-                    "recipes": ["primalmagic:hallowsteel_ingot"]
+                    "recipes": [
+                        "primalmagic:hallowsteel_ingot",
+                        "primalmagic:hallowsteel_sword",
+                        "primalmagic:hallowsteel_shovel",
+                        "primalmagic:hallowsteel_pickaxe",
+                        "primalmagic:hallowsteel_axe",
+                        "primalmagic:hallowsteel_hoe",
+                        "primalmagic:hallowsteel_head",
+                        "primalmagic:hallowsteel_chest",
+                        "primalmagic:hallowsteel_legs",
+                        "primalmagic:hallowsteel_feet"
+                    ]
                 }
             ],
             "addenda": []

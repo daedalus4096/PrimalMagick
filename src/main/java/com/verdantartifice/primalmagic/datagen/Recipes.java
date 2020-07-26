@@ -1518,6 +1518,72 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .addCriterion("has_ingot", this.hasItem(ItemTagsPM.INGOTS_HALLOWSTEEL))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_SWORD.get())
+            .patternLine("I")
+            .patternLine("I")
+            .patternLine("S")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_SHOVEL.get())
+            .patternLine("I")
+            .patternLine("S")
+            .patternLine("S")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_PICKAXE.get())
+            .patternLine("III")
+            .patternLine(" S ")
+            .patternLine(" S ")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_AXE.get())
+            .patternLine("II")
+            .patternLine("IS")
+            .patternLine(" S")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_HOE.get())
+            .patternLine("II")
+            .patternLine(" S")
+            .patternLine(" S")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_HEAD.get())
+            .patternLine("III")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_CHEST.get())
+            .patternLine("I I")
+            .patternLine("III")
+            .patternLine("III")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_LEGS.get())
+            .patternLine("III")
+            .patternLine("I I")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_FEET.get())
+            .patternLine("I I")
+            .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
     }
     
     protected void registerWandComponentRecipes(Consumer<IFinishedRecipe> consumer) {

@@ -1,0 +1,17 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "HALLOWSTEEL",
+  "pattern": [
+    "I I",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "tag": "primalmagic:ingots/hallowsteel"
+    }
+  },
+  "result": {
+    "item": "primalmagic:hallowsteel_chest"
+  }
+}
