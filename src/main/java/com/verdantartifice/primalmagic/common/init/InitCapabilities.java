@@ -4,11 +4,13 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
+import com.verdantartifice.primalmagic.common.capabilities.ITileManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.IWorldEntitySwappers;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PlayerStats;
+import com.verdantartifice.primalmagic.common.capabilities.TileManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.WorldEntitySwappers;
 
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -25,5 +27,6 @@ public class InitCapabilities {
         CapabilityManager.INSTANCE.register(IPlayerStats.class, new PlayerStats.Storage(), new PlayerStats.Factory());
         CapabilityManager.INSTANCE.register(IPlayerAttunements.class, new PlayerAttunements.Storage(), new PlayerAttunements.Factory());
         CapabilityManager.INSTANCE.register(IWorldEntitySwappers.class, new WorldEntitySwappers.Storage(), new WorldEntitySwappers.Factory());
+        CapabilityManager.INSTANCE.register(ITileManaStorage.class, new TileManaStorage.Storage(), new TileManaStorage.Factory());
     }
 }

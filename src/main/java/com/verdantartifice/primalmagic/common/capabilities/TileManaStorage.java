@@ -3,12 +3,16 @@ package com.verdantartifice.primalmagic.common.capabilities;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.capabilities.Capability;
 
 /**
  * Default implementation of the tile mana storage capability.
@@ -114,5 +118,39 @@ public class TileManaStorage implements ITileManaStorage {
     
     protected void onManaChanged() {
         // Do nothing by default
+    }
+    
+    /**
+     * Storage manager for the tile mana storage capability.  Used to register the capability.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
+     */
+    public static class Storage implements Capability.IStorage<ITileManaStorage> {
+        @Override
+        public INBT writeNBT(Capability<ITileManaStorage> capability, ITileManaStorage instance, Direction side) {
+            // Use the instance's pre-defined serialization
+            return instance.serializeNBT();
+        }
+
+        @Override
+        public void readNBT(Capability<ITileManaStorage> capability, ITileManaStorage instance, Direction side, INBT nbt) {
+            // Use the instance's pre-defined deserialization
+            instance.deserializeNBT((CompoundNBT)nbt);
+        }
+    }
+    
+    /**
+     * Factory for the tile mana storage capability.  Returns a stub default implementation.  Used
+     * to register the capability.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
+     */
+    public static class Factory implements Callable<ITileManaStorage> {
+        @Override
+        public ITileManaStorage call() throws Exception {
+            return new TileManaStorage(0, new Source[0]);
+        }
     }
 }
