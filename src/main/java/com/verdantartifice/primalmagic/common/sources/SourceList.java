@@ -31,6 +31,10 @@ public class SourceList implements INBTSerializable<CompoundNBT> {
         return this.sources.getOrDefault(source, Integer.valueOf(0)).intValue();
     }
     
+    public void clear() {
+        this.sources.clear();
+    }
+    
     @Nonnull
     public SourceList add(@Nullable Source source, int amount) {
         // Add the given amount of the given source to this list.  Do not allow non-positive values;
