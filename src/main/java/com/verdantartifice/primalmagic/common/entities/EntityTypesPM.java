@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class EntityTypesPM {
-    private static final DeferredRegister<EntityType<?>> ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES, PrimalMagic.MODID);
+    private static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, PrimalMagic.MODID);
     
     public static void init() {
         ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());

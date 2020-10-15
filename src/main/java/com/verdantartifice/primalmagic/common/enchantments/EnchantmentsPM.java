@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class EnchantmentsPM {
-    private static final DeferredRegister<Enchantment> ENCHANTMENTS = new DeferredRegister<>(ForgeRegistries.ENCHANTMENTS, PrimalMagic.MODID);
+    private static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, PrimalMagic.MODID);
     
     public static void init() {
         ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());

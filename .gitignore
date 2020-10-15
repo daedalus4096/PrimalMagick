@@ -69,3 +69,4 @@ local.properties
 #################
 
 /src/generated/
+*.hprof

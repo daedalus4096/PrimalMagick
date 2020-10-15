@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class FeaturesPM {
-    private static final DeferredRegister<Feature<?>> FEATURES = new DeferredRegister<>(ForgeRegistries.FEATURES, PrimalMagic.MODID);
+    private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, PrimalMagic.MODID);
     
     public static void init() {
         FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());

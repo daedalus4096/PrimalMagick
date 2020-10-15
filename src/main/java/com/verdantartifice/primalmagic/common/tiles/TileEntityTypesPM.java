@@ -28,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class TileEntityTypesPM {
-    private static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, PrimalMagic.MODID);
+    private static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, PrimalMagic.MODID);
     
     public static void init() {
         TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());

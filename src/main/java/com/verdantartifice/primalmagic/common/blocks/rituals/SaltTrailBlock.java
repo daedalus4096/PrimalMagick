@@ -142,22 +142,21 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     
     @Override
     public void updateDiagonalNeighbors(BlockState state, IWorld world, BlockPos pos, int flags) {
-        try (BlockPos.PooledMutable pmbp = BlockPos.PooledMutable.retain()) {
-            for (Direction dir : Direction.Plane.HORIZONTAL) {
-                SaltSide saltSide = state.get(FACING_PROPERTY_MAP.get(dir));
-                if (saltSide != SaltSide.NONE && world.getBlockState(pmbp.setPos(pos).move(dir)).getBlock() != this) {
-                    pmbp.move(Direction.DOWN);
-                    BlockState downState = world.getBlockState(pmbp);
-                    BlockPos oppDownPos = pmbp.offset(dir.getOpposite());
-                    BlockState newDownState = downState.updatePostPlacement(dir.getOpposite(), world.getBlockState(oppDownPos), world, pmbp, oppDownPos);
-                    replaceBlock(downState, newDownState, world, pmbp, flags);
-                    
-                    pmbp.setPos(pos).move(dir).move(Direction.UP);
-                    BlockState upState = world.getBlockState(pmbp);
-                    BlockPos oppUpPos = pmbp.offset(dir.getOpposite());
-                    BlockState newUpState = upState.updatePostPlacement(dir.getOpposite(), world.getBlockState(oppUpPos), world, pmbp, oppUpPos);
-                    replaceBlock(upState, newUpState, world, pmbp, flags);
-                }
+    	BlockPos.Mutable mbp = new BlockPos.Mutable();
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            SaltSide saltSide = state.get(FACING_PROPERTY_MAP.get(dir));
+            if (saltSide != SaltSide.NONE && world.getBlockState(mbp.setPos(pos).move(dir)).getBlock() != this) {
+            	mbp.move(Direction.DOWN);
+                BlockState downState = world.getBlockState(mbp);
+                BlockPos oppDownPos = mbp.offset(dir.getOpposite());
+                BlockState newDownState = downState.updatePostPlacement(dir.getOpposite(), world.getBlockState(oppDownPos), world, mbp, oppDownPos);
+                replaceBlock(downState, newDownState, world, mbp, flags);
+                
+                mbp.setPos(pos).move(dir).move(Direction.UP);
+                BlockState upState = world.getBlockState(mbp);
+                BlockPos oppUpPos = mbp.offset(dir.getOpposite());
+                BlockState newUpState = upState.updatePostPlacement(dir.getOpposite(), world.getBlockState(oppUpPos), world, mbp, oppUpPos);
+                replaceBlock(upState, newUpState, world, mbp, flags);
             }
         }
     }

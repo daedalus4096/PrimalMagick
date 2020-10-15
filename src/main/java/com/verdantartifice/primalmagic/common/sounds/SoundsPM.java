@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class SoundsPM {
-    private static final DeferredRegister<SoundEvent> SOUNDS = new DeferredRegister<>(ForgeRegistries.SOUND_EVENTS, PrimalMagic.MODID);
+    private static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PrimalMagic.MODID);
     
     public static void init() {
         SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());

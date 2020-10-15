@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.effects;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
+import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
@@ -18,7 +18,7 @@ public class FlyingEffect extends Effect {
     }
 
     @Override
-    public void applyAttributesModifiersToEntity(LivingEntity entityLivingBaseIn, AbstractAttributeMap attributeMapIn, int amplifier) {
+    public void applyAttributesModifiersToEntity(LivingEntity entityLivingBaseIn, AttributeModifierManager attributeMapIn, int amplifier) {
         if (!entityLivingBaseIn.world.isRemote && entityLivingBaseIn instanceof ServerPlayerEntity) {
             // Set the allowFlying player ability when this effect is applied and send the change to clients
             ServerPlayerEntity player = (ServerPlayerEntity)entityLivingBaseIn;
@@ -29,10 +29,10 @@ public class FlyingEffect extends Effect {
     }
     
     @Override
-    public void removeAttributesModifiersFromEntity(LivingEntity entityLivingBaseIn, AbstractAttributeMap attributeMapIn, int amplifier) {
+    public void removeAttributesModifiersFromEntity(LivingEntity entityLivingBaseIn, AttributeModifierManager attributeMapIn, int amplifier) {
         if (!entityLivingBaseIn.world.isRemote && entityLivingBaseIn instanceof ServerPlayerEntity) {
             ServerPlayerEntity player = (ServerPlayerEntity)entityLivingBaseIn;
-            GameType type = player.world.getWorldInfo().getGameType();
+            GameType type = player.interactionManager.getGameType();
             player.abilities.allowFlying = (type == GameType.CREATIVE || type == GameType.SPECTATOR);   // Cancel flight ability if not appropriate for game mode
             if (!player.abilities.allowFlying) {
                 // If flying is no longer allowed, end the player's flight

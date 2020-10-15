@@ -116,13 +116,12 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IShear
     
     private static BlockState updateDistance(BlockState state, IWorld world, BlockPos pos) {
         int dist = 7;
-        try (BlockPos.PooledMutable pmbp = BlockPos.PooledMutable.retain()) {
-            for (Direction dir : Direction.values()) {
-                pmbp.setPos(pos).move(dir);
-                dist = Math.min(dist, getDistance(world.getBlockState(pmbp)) + 1);
-                if (dist == 1) {
-                    break;
-                }
+        BlockPos.Mutable mbp = new BlockPos.Mutable();
+        for (Direction dir : Direction.values()) {
+            mbp.setPos(pos).move(dir);
+            dist = Math.min(dist, getDistance(world.getBlockState(mbp)) + 1);
+            if (dist == 1) {
+                break;
             }
         }
         return state.with(DISTANCE, Integer.valueOf(dist));

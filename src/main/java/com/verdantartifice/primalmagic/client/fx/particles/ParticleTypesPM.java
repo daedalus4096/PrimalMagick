@@ -19,7 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 @OnlyIn(Dist.CLIENT)
 public class ParticleTypesPM {
-    private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, PrimalMagic.MODID);
+    private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PrimalMagic.MODID);
 
     public static void init() {
         PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());

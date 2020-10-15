@@ -57,7 +57,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ItemsPM {
-    private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, PrimalMagic.MODID);
+    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PrimalMagic.MODID);
     
     public static void init() {
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

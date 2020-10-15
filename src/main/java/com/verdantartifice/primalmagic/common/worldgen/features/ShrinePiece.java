@@ -117,13 +117,13 @@ public class ShrinePiece extends TemplateStructurePiece {
         
         // Generate infused stone under the shrine
         BlockState bs = this.getInfusedStone().getDefaultState();
-        BlockPos.PooledMutable pmbp = BlockPos.PooledMutable.retain();
+        BlockPos.Mutable mbp = BlockPos.Mutable.retain();
         for (int x = 2; x < 11; x++) {
             for (int y = -3; y < 0; y++) {
                 for (int z = 2; z < 11; z++) {
                     // Only replace blocks that aren't air
-                    pmbp.setPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
-                    if (!worldIn.isAirBlock(pmbp)) {
+                    mbp.setPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
+                    if (!worldIn.isAirBlock(mbp)) {
                         // Only a 30% chance to spawn infused stone at each valid position
                         if (randomIn.nextInt(10) < 3) {
                             this.setBlockState(worldIn, bs, x, y, z, structureBoundingBoxIn);

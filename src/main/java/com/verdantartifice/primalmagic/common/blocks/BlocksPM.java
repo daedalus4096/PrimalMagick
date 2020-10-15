@@ -73,7 +73,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class BlocksPM {
-    private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, PrimalMagic.MODID);
+    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, PrimalMagic.MODID);
     
     public static void init() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
