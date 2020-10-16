@@ -20,7 +20,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -102,7 +102,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param tag the item tag to use for the given symbol
      * @return the modified builder
      */
-    public ArcaneShapedRecipeBuilder key(Character symbol, Tag<Item> tag) {
+    public ArcaneShapedRecipeBuilder key(Character symbol, ITag<Item> tag) {
         return key(symbol, Ingredient.fromTag(tag));
     }
     

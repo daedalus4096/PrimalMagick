@@ -15,7 +15,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -111,7 +111,7 @@ public class ArcaneShapelessRecipeBuilder {
      * @param tag the tag of items to be added
      * @return the modified builder
      */
-    public ArcaneShapelessRecipeBuilder addIngredient(Tag<Item> tag) {
+    public ArcaneShapelessRecipeBuilder addIngredient(ITag<Item> tag) {
         return this.addIngredient(Ingredient.fromTag(tag));
     }
     
