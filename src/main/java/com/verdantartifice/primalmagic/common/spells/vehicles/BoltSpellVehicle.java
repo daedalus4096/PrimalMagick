@@ -56,7 +56,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
             // Show a bolt particle effect to every player in range
             PacketHandler.sendToAllAround(
                     new SpellBoltPacket(source, target, spell.getPayload().getSource().getColor()), 
-                    world.dimension.getType(), 
+                    world.getDimensionKey(), 
                     new BlockPos(source), 
                     64.0D);
         }

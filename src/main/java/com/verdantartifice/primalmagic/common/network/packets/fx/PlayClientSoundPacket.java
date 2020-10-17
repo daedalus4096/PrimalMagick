@@ -50,10 +50,11 @@ public class PlayClientSoundPacket implements IMessageToClient {
     public static class Handler {
         public static void onMessage(PlayClientSoundPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
+        	Minecraft mc = Minecraft.getInstance();
             ctx.get().enqueueWork(() -> {
                 ResourceLocation eventLoc = ResourceLocation.tryCreate(message.eventLoc);
                 if (eventLoc != null && ForgeRegistries.SOUND_EVENTS.containsKey(eventLoc)) {
-                    Minecraft.getInstance().player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(eventLoc), message.volume, message.pitch);
+                    mc.player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(eventLoc), message.volume, message.pitch);
                 }
             });
             

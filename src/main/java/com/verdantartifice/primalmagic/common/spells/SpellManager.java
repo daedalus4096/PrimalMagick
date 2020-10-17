@@ -196,7 +196,7 @@ public class SpellManager {
             int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue("radius");
             PacketHandler.sendToAllAround(
                     new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
-                    world.getDimension().getType(), 
+                    world.getDimensionKey(), 
                     new BlockPos(hitVec), 
                     64.0D);
             

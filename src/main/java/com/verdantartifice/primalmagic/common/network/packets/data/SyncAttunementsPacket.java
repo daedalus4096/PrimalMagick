@@ -43,7 +43,8 @@ public class SyncAttunementsPacket implements IMessageToClient {
         public static void onMessage(SyncAttunementsPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                PlayerEntity player = Minecraft.getInstance().player;
+            	Minecraft mc = Minecraft.getInstance();
+                PlayerEntity player = mc.player;
                 IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
                 if (attunements != null) {
                     attunements.deserializeNBT(message.data);

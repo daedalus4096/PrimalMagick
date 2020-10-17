@@ -80,7 +80,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
                     new SpellTrailPacket(this.getPositionVec(), this.spell.getPayload().getSource().getColor()), 
-                    this.dimension, 
+                    this.world.getDimensionKey(), 
                     this.getPosition(), 
                     64.0D);
         }

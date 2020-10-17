@@ -66,7 +66,7 @@ public class TilePM extends TileEntity {
     public void sendMessageToClient(CompoundNBT nbt, @Nullable ServerPlayerEntity player) {
         if (player == null) {
             if (this.hasWorld()) {
-                PacketHandler.sendToAllAround(new TileToClientPacket(this.pos, nbt), this.world.dimension.getType(), this.pos, 128.0D);
+                PacketHandler.sendToAllAround(new TileToClientPacket(this.pos, nbt), this.world.getDimensionKey(), this.pos, 128.0D);
             }
         } else {
             PacketHandler.sendToPlayer(new TileToClientPacket(this.pos, nbt), player);

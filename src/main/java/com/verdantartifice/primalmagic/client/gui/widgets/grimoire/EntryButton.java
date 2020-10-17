@@ -35,18 +35,19 @@ public class EntryButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof EntryButton) {
+            	Minecraft mc = Minecraft.getInstance();
                 EntryButton geb = (EntryButton)button;
                 
                 // Push the current grimoire topic onto the history stack
                 GrimoireScreen.HISTORY.add(geb.getScreen().getContainer().getTopic());
                 geb.getScreen().getContainer().setTopic(geb.getEntry());
-                if (geb.getEntry().getKey().isKnownBy(Minecraft.getInstance().player)) {
+                if (geb.getEntry().getKey().isKnownBy(mc.player)) {
                     // If the research entry has been flagged as new or updated, clear those flags
-                    IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(Minecraft.getInstance().player);
+                    IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(mc.player);
                     if (knowledge != null) {
                         knowledge.removeResearchFlag(geb.getEntry().getKey(), IPlayerKnowledge.ResearchFlag.NEW);
                         knowledge.removeResearchFlag(geb.getEntry().getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
-                        PacketHandler.sendToServer(new SyncResearchFlagsPacket(Minecraft.getInstance().player, geb.getEntry().getKey()));
+                        PacketHandler.sendToServer(new SyncResearchFlagsPacket(mc.player, geb.getEntry().getKey()));
                     }
                 } else {
                     PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().getKey(), true, false, true));  // Advance research from unknown to stage 1

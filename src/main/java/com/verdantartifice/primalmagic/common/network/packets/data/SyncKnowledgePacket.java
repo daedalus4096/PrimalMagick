@@ -49,7 +49,8 @@ public class SyncKnowledgePacket implements IMessageToClient {
         public static void onMessage(SyncKnowledgePacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                PlayerEntity player = Minecraft.getInstance().player;
+            	Minecraft mc = Minecraft.getInstance();
+                PlayerEntity player = mc.player;
                 IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                 if (knowledge != null) {
                     knowledge.deserializeNBT(message.data);

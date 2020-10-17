@@ -86,7 +86,7 @@ public class CommonProxy implements IProxyPM {
 
     @Override
     public void serverStarting(FMLServerStartingEvent event) {
-        PrimalMagicCommand.register(event.getCommandDispatcher());
+        PrimalMagicCommand.register(event.getServer().getCommandManager().getDispatcher());
         InitAffinities.initAffinities(event.getServer());
     }
     

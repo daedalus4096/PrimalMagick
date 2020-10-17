@@ -38,7 +38,7 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof IRitualPropTileEntity) {
             ((IRitualPropTileEntity)tile).setAltarPos(altarPos);
-            PacketHandler.sendToAllAround(new PropMarkerPacket(pos), world.dimension.getType(), pos, 32.0D);
+            PacketHandler.sendToAllAround(new PropMarkerPacket(pos), world.getDimensionKey(), pos, 32.0D);
             if (player != null) {
                 this.sendPropStatusMessage(player);
             }
@@ -49,7 +49,7 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof IRitualPropTileEntity) {
             ((IRitualPropTileEntity)tile).setAltarPos(null);
-            PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), world.dimension.getType(), pos, 32.0D);
+            PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), world.getDimensionKey(), pos, 32.0D);
         }
     }
     

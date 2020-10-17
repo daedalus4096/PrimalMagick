@@ -128,7 +128,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
                         double targetY = playerPos.y + (player.getEyeHeight() / 2.0D);
                         PacketHandler.sendToAllAround(
                                 new ManaSparklePacket(this.pos, playerPos.x, targetY, playerPos.z, 20, source.getColor()), 
-                                this.world.getDimension().getType(), 
+                                this.world.getDimensionKey(), 
                                 this.pos, 
                                 32.0D);
                     }

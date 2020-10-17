@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 /**
  * Collection of utility methods pertaining to 3D vectors.
@@ -18,8 +18,8 @@ public class VectorUtils {
      * @param rng the random number generator to use
      * @return a random unit vector in 3D space
      */
-    public static Vec3d getRandomUnitVector(@Nonnull Random rng) {
-        return new Vec3d(rng.nextGaussian(), rng.nextGaussian(), rng.nextGaussian()).normalize();
+    public static Vector3d getRandomUnitVector(@Nonnull Random rng) {
+        return new Vector3d(rng.nextGaussian(), rng.nextGaussian(), rng.nextGaussian()).normalize();
     }
     
     /**
@@ -29,12 +29,12 @@ public class VectorUtils {
      * @param rng the random number generator to use
      * @return a random unit vector that is orthogonal to the given 3D vector
      */
-    public static Vec3d getRandomOrthogonalUnitVector(@Nonnull Vec3d vec, @Nonnull Random rng) {
+    public static Vector3d getRandomOrthogonalUnitVector(@Nonnull Vector3d vec, @Nonnull Random rng) {
         // Generate a random other vector
-        Vec3d other = getRandomUnitVector(rng);
+    	Vector3d other = getRandomUnitVector(rng);
         
         // Ensure that the given vector and the other vector are not co-linear
-        Vec3d normVec = vec.normalize();
+    	Vector3d normVec = vec.normalize();
         if (other.equals(normVec) || other.equals(normVec.scale(-1.0D))) {
             other = (other.y == 0.0D && other.z == 0.0D) ? other.add(0, 1, 0) : other.add(1, 0, 0);
         }

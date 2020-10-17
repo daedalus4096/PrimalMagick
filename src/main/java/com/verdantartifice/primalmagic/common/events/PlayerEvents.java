@@ -308,7 +308,8 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void playerJoinEvent(EntityJoinWorldEvent event) {
-        if (!event.getWorld().isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
+    	World world = event.getWorld();
+        if (!world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
             // When a player first joins a world, sync that player's capabilities to their client
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
             doScheduledSyncs(player, true);
