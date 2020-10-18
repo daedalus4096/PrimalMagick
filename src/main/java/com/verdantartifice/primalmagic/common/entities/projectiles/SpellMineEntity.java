@@ -23,7 +23,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
@@ -54,7 +54,7 @@ public class SpellMineEntity extends Entity {
         this.spell = null;
     }
     
-    public SpellMineEntity(World world, Vec3d pos, PlayerEntity caster, SpellPackage spell, ItemStack spellSource, int duration) {
+    public SpellMineEntity(World world, Vector3d pos, PlayerEntity caster, SpellPackage spell, ItemStack spellSource, int duration) {
         super(EntityTypesPM.SPELL_MINE.get(), world);
         this.setPosition(pos.x, pos.y, pos.z);
         this.spell = spell;

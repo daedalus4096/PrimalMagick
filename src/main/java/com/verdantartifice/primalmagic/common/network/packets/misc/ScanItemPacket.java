@@ -46,11 +46,11 @@ public class ScanItemPacket implements IMessageToServer {
                 if (message.stack != null && !message.stack.isEmpty()) {
                     ServerPlayerEntity player = ctx.get().getSender();
                     if (AffinityManager.isScanned(message.stack, player)) {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").applyTextStyle(TextFormatting.RED), true);
+                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").mergeStyle(TextFormatting.RED), true);
                     } else if (AffinityManager.setScanned(message.stack, player)) {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").applyTextStyle(TextFormatting.GREEN), true);
+                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").mergeStyle(TextFormatting.GREEN), true);
                     } else {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.fail").applyTextStyle(TextFormatting.RED), true);
+                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.fail").mergeStyle(TextFormatting.RED), true);
                     }
                 }
             });

@@ -24,7 +24,7 @@ public class ScanSourceUnlockTrigger extends ScanResearchTrigger {
     @Override
     public void onMatch(ServerPlayerEntity player, IItemProvider itemProvider) {
         super.onMatch(player, itemProvider);
-        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source." + this.source.getTag()).applyTextStyle(TextFormatting.GREEN), false);
+        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source." + this.source.getTag()).mergeStyle(TextFormatting.GREEN), false);
     }
     
     @Override

@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -29,7 +29,7 @@ public class SpellTrailPacket implements IMessageToClient {
         this.color = color;
     }
     
-    public SpellTrailPacket(Vec3d pos, int color) {
+    public SpellTrailPacket(Vector3d pos, int color) {
         this(pos.x, pos.y, pos.z, color);
     }
     

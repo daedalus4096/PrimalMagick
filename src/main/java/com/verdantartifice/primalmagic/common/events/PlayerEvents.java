@@ -40,6 +40,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.LightType;
@@ -179,7 +180,7 @@ public class PlayerEvents {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
             if (player.getPositionVec().y < 10.0D && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_earth").applyTextStyle(TextFormatting.GREEN), false);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_earth").mergeStyle(TextFormatting.GREEN), false);
             }
         }
         
@@ -188,7 +189,7 @@ public class PlayerEvents {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
             if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sea").applyTextStyle(TextFormatting.GREEN), false);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sea").mergeStyle(TextFormatting.GREEN), false);
             }
         }
         
@@ -197,7 +198,7 @@ public class PlayerEvents {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
             if (player.getPositionVec().y > 100.0D && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sky").applyTextStyle(TextFormatting.GREEN), false);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sky").mergeStyle(TextFormatting.GREEN), false);
             }
         }
         
@@ -206,7 +207,7 @@ public class PlayerEvents {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
             if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY) && TimePhase.getSunPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sun").applyTextStyle(TextFormatting.GREEN), false);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sun").mergeStyle(TextFormatting.GREEN), false);
             }
         }
         
@@ -215,7 +216,7 @@ public class PlayerEvents {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
             if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST) && TimePhase.getMoonPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_moon").applyTextStyle(TextFormatting.GREEN), false);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_moon").mergeStyle(TextFormatting.GREEN), false);
             }
         }
     }
@@ -233,7 +234,7 @@ public class PlayerEvents {
         World world = player.world;
         if (world.rand.nextDouble() < 0.1D && 
                 AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.GREATER) && 
-                !player.isShiftKeyDown() && 
+                !player.isSneaking() && 
                 world.isAirBlock(pos) && 
                 world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().getDefaultState() && 
                 world.getLightFor(LightType.BLOCK, pos) < 11) {
@@ -243,7 +244,7 @@ public class PlayerEvents {
     }
 
     protected static void handleStepHeightChange(PlayerEntity player) {
-        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
+        if (!player.isSneaking() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height and save the old one
             if (!PREV_STEP_HEIGHTS.containsKey(Integer.valueOf(player.getEntityId()))) {
                 PREV_STEP_HEIGHTS.put(Integer.valueOf(player.getEntityId()), Float.valueOf(player.stepHeight));
@@ -258,11 +259,12 @@ public class PlayerEvents {
     }
 
     protected static void handleDoubleJump(PlayerEntity player) {
-        boolean jumpPressed = Minecraft.getInstance().gameSettings.keyBindJump.isPressed();
+    	Minecraft mc = Minecraft.getInstance();
+        boolean jumpPressed = mc.gameSettings.keyBindJump.isPressed();
         if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getEntityId())) {
             DOUBLE_JUMP_ALLOWED.put(player.getEntityId(), Boolean.TRUE);
         }
-        if (jumpPressed && !player.onGround && !player.isInWater() && 
+        if (jumpPressed && !player.isOnGround() && !player.isInWater() && 
                 DOUBLE_JUMP_ALLOWED.getOrDefault(player.getEntityId(), Boolean.FALSE).booleanValue() && 
                 AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
             // If the conditions are right, execute the second jump
@@ -271,7 +273,7 @@ public class PlayerEvents {
             DOUBLE_JUMP_ALLOWED.put(player.getEntityId(), Boolean.FALSE);
             
             // Update motion
-            Vec3d oldMotion = player.getMotion();
+            Vector3d oldMotion = player.getMotion();
             double motionX = oldMotion.x;
             double motionY = 0.75D;
             double motionZ = oldMotion.z;
@@ -292,7 +294,7 @@ public class PlayerEvents {
             // Trigger jump events
             ForgeHooks.onLivingJump(player);
         }
-        if (player.onGround && DOUBLE_JUMP_ALLOWED.containsKey(player.getEntityId())) {
+        if (player.isOnGround() && DOUBLE_JUMP_ALLOWED.containsKey(player.getEntityId())) {
             // Reset double jump permissions upon touching the ground
             DOUBLE_JUMP_ALLOWED.remove(player.getEntityId());
         }
@@ -393,12 +395,12 @@ public class PlayerEvents {
         ItemStack journal = new ItemStack(Items.WRITTEN_BOOK);
         CompoundNBT contents = new CompoundNBT();
         contents.putInt("generation", 3);
-        contents.putString("title", new TranslationTextComponent("primalmagic.dream_journal.title").getFormattedText());
-        contents.putString("author", player.getName().getFormattedText());
+        contents.putString("title", new TranslationTextComponent("primalmagic.dream_journal.title").getString());
+        contents.putString("author", player.getName().getString());
         ListNBT pages = new ListNBT();
-        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.1").getFormattedText()));
-        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.2").getFormattedText()));
-        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.3").getFormattedText()));
+        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.1").getString()));
+        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.2").getString()));
+        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.3").getString()));
         contents.put("pages", pages);
         journal.setTag(contents);
         
@@ -406,7 +408,7 @@ public class PlayerEvents {
         if (!player.addItemStackToInventory(journal)) {
             player.dropItem(journal, false);
         }
-        player.sendMessage(new TranslationTextComponent("event.primalmagic.got_dream").applyTextStyle(TextFormatting.GREEN));
+        player.sendMessage(new TranslationTextComponent("event.primalmagic.got_dream").mergeStyle(TextFormatting.GREEN));
     }
     
     @SubscribeEvent

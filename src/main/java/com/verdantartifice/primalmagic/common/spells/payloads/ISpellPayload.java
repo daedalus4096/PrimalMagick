@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -38,7 +38,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
      * @param caster the player that originally casted the spell
      * @param spellSource the wand or scroll containing the spell package
      */
-    public void execute(@Nullable RayTraceResult target, @Nullable Vec3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull PlayerEntity caster, @Nonnull ItemStack spellSource);
+    public void execute(@Nullable RayTraceResult target, @Nullable Vector3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull PlayerEntity caster, @Nonnull ItemStack spellSource);
     
     /**
      * Determine whether this payload has an effect that should be executed.  Should be true for all but

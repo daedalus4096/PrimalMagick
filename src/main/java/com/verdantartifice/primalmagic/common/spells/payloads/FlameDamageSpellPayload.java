@@ -17,7 +17,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 /**
@@ -76,7 +76,7 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected void applySecondaryEffects(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
+    protected void applySecondaryEffects(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
         int duration = this.getModdedPropertyValue("duration", spell, spellSource);
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY && duration > 0) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;

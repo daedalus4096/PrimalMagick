@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.common.ForgeMod;
 
 /**
  * Definition of a touch spell vehicle.  This vehicle selects the closest target within the caster's
@@ -26,6 +27,6 @@ public class TouchSpellVehicle extends AbstractRaycastSpellVehicle {
     
     @Override
     protected double getReachDistance(PlayerEntity caster) {
-        return caster.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
+        return caster.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
     }
 }

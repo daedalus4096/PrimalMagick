@@ -37,7 +37,7 @@ public class RitualStep implements INBTSerializable<CompoundNBT> {
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT retVal = new CompoundNBT();
-        retVal.putString("Type", this.type.getName());
+        retVal.putString("Type", this.type.getString());
         retVal.putInt("Index", this.index);
         return retVal;
     }

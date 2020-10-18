@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -36,7 +36,7 @@ public class SpellBoltPacket implements IMessageToClient {
         this.color = color;
     }
 
-    public SpellBoltPacket(Vec3d source, Vec3d target, int color) {
+    public SpellBoltPacket(Vector3d source, Vector3d target, int color) {
         this(source.x, source.y, source.z, target.x, target.y, target.z, color);
     }
     

@@ -22,14 +22,14 @@ public enum RitualStepType implements IStringSerializable {
 
     @Override
     @Nonnull
-    public String getName() {
+    public String getString() {
         return this.name;
     }
     
     @Nullable
     public static RitualStepType fromName(@Nullable String name) {
         for (RitualStepType step : values()) {
-            if (step.getName().equals(name)) {
+            if (step.getString().equals(name)) {
                 return step;
             }
         }

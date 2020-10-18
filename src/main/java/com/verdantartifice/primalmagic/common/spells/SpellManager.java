@@ -29,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -188,7 +189,7 @@ public class SpellManager {
     public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull PlayerEntity caster, @Nonnull ItemStack spellSource, boolean allowMine) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (!world.isRemote && spell.getPayload() != null) {
-            Vec3d hitVec = result.getHitVec();
+            Vector3d hitVec = result.getHitVec();
             BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
             MineSpellMod mineMod = spell.getMod(MineSpellMod.class, "duration");
             

@@ -70,7 +70,7 @@ public enum TimePhase implements IStringSerializable {
     }
 
     @Override
-    public String getName() {
+    public String getString() {
         return this.name;
     }
     

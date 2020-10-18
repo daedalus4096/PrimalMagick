@@ -6,12 +6,12 @@ import java.util.List;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
-import net.minecraft.world.storage.loot.ConstantRange;
-import net.minecraft.world.storage.loot.ItemLootEntry;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.functions.LootingEnchantBonus;
-import net.minecraft.world.storage.loot.functions.SetCount;
+import net.minecraft.loot.ConstantRange;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.RandomValueRange;
+import net.minecraft.loot.functions.LootingEnchantBonus;
+import net.minecraft.loot.functions.SetCount;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

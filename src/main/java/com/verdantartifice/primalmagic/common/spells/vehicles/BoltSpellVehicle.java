@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 /**
@@ -51,7 +51,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     }
     
     @Override
-    protected void drawFx(World world, SpellPackage spell, Vec3d source, Vec3d target) {
+    protected void drawFx(World world, SpellPackage spell, Vector3d source, Vector3d target) {
         if (spell.getPayload() != null) {
             // Show a bolt particle effect to every player in range
             PacketHandler.sendToAllAround(

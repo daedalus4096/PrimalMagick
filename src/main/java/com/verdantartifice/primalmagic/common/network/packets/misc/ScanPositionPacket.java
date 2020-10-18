@@ -81,7 +81,7 @@ public class ScanPositionPacket implements IMessageToServer {
                             if (chestStack != null && !chestStack.isEmpty()) {
                                 // Limit how much of an inventory can be scanned
                                 if (scanCount >= AffinityManager.MAX_SCAN_COUNT) {
-                                    player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.toobig").applyTextStyle(TextFormatting.RED), true);
+                                    player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.toobig").mergeStyle(TextFormatting.RED), true);
                                     break;
                                 }
                                 if (AffinityManager.setScanned(chestStack, player, false)) {
@@ -95,10 +95,10 @@ public class ScanPositionPacket implements IMessageToServer {
                     
                     // If at least one unscanned item was processed, send a success message
                     if (found) {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").applyTextStyle(TextFormatting.GREEN), true);
+                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").mergeStyle(TextFormatting.GREEN), true);
                         knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
                     } else {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").applyTextStyle(TextFormatting.RED), true);
+                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").mergeStyle(TextFormatting.RED), true);
                     }
                 }
             });

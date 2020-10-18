@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
@@ -80,7 +80,7 @@ public class BurstSpellMod extends AbstractSpellMod {
     public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, ItemStack spellSource, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();
         Set<BlockPos> affectedBlocks = new HashSet<>();
-        Vec3d hitVec = origin.getHitVec();
+        Vector3d hitVec = origin.getHitVec();
         BlockPos hitPos = new BlockPos(hitVec);
         int radius = this.getPropertyValue("radius");
         int power = this.getModdedPropertyValue("power", spell, spellSource);
@@ -94,22 +94,22 @@ public class BurstSpellMod extends AbstractSpellMod {
                 for (int k = 0; k < 16; k++) {
                     if (i == 0 || i == 15 || j == 0 || j == 15 || k == 0 || k == 15) {
                         // Calculate a direction vector for the burst
-                        Vec3d dirVec = new Vec3d((double)i / 15.0D * 2.0D - 1.0D, (double)j / 15.0D * 2.0D - 1.0D, (double)k / 15.0D * 2.0D - 1.0D).normalize();
-                        Vec3d curVec = new Vec3d(hitVec.x, hitVec.y, hitVec.z);
+                    	Vector3d dirVec = new Vector3d((double)i / 15.0D * 2.0D - 1.0D, (double)j / 15.0D * 2.0D - 1.0D, (double)k / 15.0D * 2.0D - 1.0D).normalize();
+                    	Vector3d curVec = new Vector3d(hitVec.x, hitVec.y, hitVec.z);
                         float remainingPower = (float)power;
                         
                         while (remainingPower >= 0.0F && curVec.squareDistanceTo(hitVec) < sqRadius) {
                             // Add the current block to the result set if it hasn't already been hit
                             BlockPos curPos = new BlockPos(curVec);
                             if (affectedBlocks.add(curPos)) {
-                                Vec3d relVec = hitVec.subtract(curVec);
+                            	Vector3d relVec = hitVec.subtract(curVec);
                                 Direction dir = Direction.getFacingFromVector(relVec.x, relVec.y, relVec.z);
                                 retVal.add(new BlockRayTraceResult(curVec, dir, curPos, false));
                             }
                             
                             // Decrement the remaining power based on the block's explosion resistance
                             BlockState blockState = world.getBlockState(curPos);
-                            IFluidState fluidState = world.getFluidState(curPos);
+                            FluidState fluidState = world.getFluidState(curPos);
                             if (!blockState.isAir(world, curPos) || !fluidState.isEmpty()) {
                                 float resistance = Math.max(blockState.getExplosionResistance(world, curPos, null, explosion), fluidState.getExplosionResistance(world, curPos, null, explosion));
                                 remainingPower -= (resistance + 0.3F) * 0.3F;
