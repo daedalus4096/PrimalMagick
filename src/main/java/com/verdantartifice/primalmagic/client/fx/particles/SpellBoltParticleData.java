@@ -8,7 +8,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -35,14 +35,14 @@ public class SpellBoltParticleData implements IParticleData {
         }
     };
     
-    protected final Vec3d target;
+    protected final Vector3d target;
     
-    public SpellBoltParticleData(Vec3d target) {
+    public SpellBoltParticleData(Vector3d target) {
         this(target.x, target.y, target.z);
     }
     
     public SpellBoltParticleData(double targetX, double targetY, double targetZ) {
-        this.target = new Vec3d(targetX, targetY, targetZ);
+        this.target = new Vector3d(targetX, targetY, targetZ);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SpellBoltParticleData implements IParticleData {
         return String.format(Locale.ROOT, "%s %d %d %d", ForgeRegistries.PARTICLE_TYPES.getKey(this.getType()), this.target.x, this.target.y, this.target.z);
     }
 
-    public Vec3d getTargetVec() {
+    public Vector3d getTargetVec() {
         return this.target;
     }
 }

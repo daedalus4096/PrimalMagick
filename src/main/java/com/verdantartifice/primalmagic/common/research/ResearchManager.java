@@ -28,6 +28,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -281,7 +282,7 @@ public class ResearchManager {
                         if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key) && addendum.getRequiredResearch().isKnownByStrict(player)) {
                             // Announce completion of the addendum
                             ITextComponent nameComp = new TranslationTextComponent(searchEntry.getNameTranslationKey());
-                            player.sendMessage(new TranslationTextComponent("event.primalmagic.add_addendum", nameComp));
+                            player.sendMessage(new TranslationTextComponent("event.primalmagic.add_addendum", nameComp), Util.DUMMY_UUID);
                             knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
                             
                             // Process attunement grants

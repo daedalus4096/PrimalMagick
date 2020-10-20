@@ -21,8 +21,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -76,7 +77,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
             for (PlayerEntity player : players) {
                 if (!ResearchManager.isResearchComplete(player, research) && !ResearchManager.isResearchComplete(player, firstSteps)) {
                     ResearchManager.completeResearch(player, research);
-                    player.sendMessage(new TranslationTextComponent("event.primalmagic.found_shrine").applyTextStyle(TextFormatting.GREEN));
+                    player.sendMessage(new TranslationTextComponent("event.primalmagic.found_shrine").mergeStyle(TextFormatting.GREEN), Util.DUMMY_UUID);
                 }
                 if (this.getBlockState().getBlock() instanceof AncientManaFontBlock) {
                     StatsManager.discoverShrine(player, ((AncientManaFontBlock)this.getBlockState().getBlock()).getSource(), this.pos);
@@ -124,7 +125,7 @@ public class AncientManaFontTileEntity extends TilePM implements ITickableTileEn
                         this.syncTile(true);
                         
                         // Show fancy sparkles
-                        Vec3d playerPos = player.getPositionVec();
+                        Vector3d playerPos = player.getPositionVec();
                         double targetY = playerPos.y + (player.getEyeHeight() / 2.0D);
                         PacketHandler.sendToAllAround(
                                 new ManaSparklePacket(this.pos, playerPos.x, targetY, playerPos.z, 20, source.getColor()), 

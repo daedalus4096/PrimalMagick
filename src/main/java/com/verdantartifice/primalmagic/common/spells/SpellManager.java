@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagic.common.wands.IWand;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -178,9 +179,9 @@ public class SpellManager {
             if (player != null) {
                 SpellPackage spell = wand.getActiveSpell(wandStack);
                 if (spell == null) {
-                    player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell.none"));
+                    player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell.none"), Util.DUMMY_UUID);
                 } else {
-                    player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell", spell.getName()));
+                    player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell", spell.getName()), Util.DUMMY_UUID);
                 }
             }
         }

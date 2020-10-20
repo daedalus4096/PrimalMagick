@@ -5,8 +5,8 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteTexturedParticle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,7 +20,7 @@ public class PropMarkerParticle extends SpriteTexturedParticle {
     protected final IAnimatedSprite spriteSet;
     protected final double initY;
     
-    public PropMarkerParticle(World world, double x, double y, double z, IAnimatedSprite spriteSet) {
+    public PropMarkerParticle(ClientWorld world, double x, double y, double z, IAnimatedSprite spriteSet) {
         super(world, x, y, z);
         this.initY = y;
         this.particleScale = 0.33F;
@@ -55,7 +55,7 @@ public class PropMarkerParticle extends SpriteTexturedParticle {
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             PropMarkerParticle particle = new PropMarkerParticle(worldIn, x, y, z, this.spriteSet);
             return particle;
         }

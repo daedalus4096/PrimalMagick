@@ -20,8 +20,8 @@ import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -37,13 +37,13 @@ public class SpellBoltParticle extends Particle {
     protected static final double PERTURB_DISTANCE = 0.002D;
     protected static final int GENERATIONS = 5;
     
-    protected final Vec3d delta;
+    protected final Vector3d delta;
     protected final List<LineSegment> segmentList;
-    protected final List<Vec3d> perturbList;
+    protected final List<Vector3d> perturbList;
     
-    protected SpellBoltParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, Vec3d target) {
+    protected SpellBoltParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, Vector3d target) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.delta = target.subtract(new Vec3d(x, y, z));
+        this.delta = target.subtract(new Vector3d(x, y, z));
         this.motionX = 0.0D;
         this.motionY = 0.0D;
         this.motionZ = 0.0D;
@@ -58,11 +58,11 @@ public class SpellBoltParticle extends Particle {
         double curDisplacement = MAX_DISPLACEMENT;
         
         // Fractally generate a series of line segments, splitting each at the midpoint and adding an orthogonal displacement
-        retVal.add(new LineSegment(Vec3d.ZERO, this.delta));
+        retVal.add(new LineSegment(Vector3d.ZERO, this.delta));
         for (int gen = 0; gen < GENERATIONS; gen++) {
             List<LineSegment> tempList = new ArrayList<>();
             for (LineSegment segment : retVal) {
-                Vec3d midpoint = segment.getMiddle();
+            	Vector3d midpoint = segment.getMiddle();
                 midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), this.world.rand).scale(curDisplacement));
                 tempList.add(new LineSegment(segment.getStart(), midpoint));
                 tempList.add(new LineSegment(midpoint, segment.getEnd()));
@@ -74,12 +74,12 @@ public class SpellBoltParticle extends Particle {
     }
     
     @Nonnull
-    protected List<Vec3d> calcPerturbs() {
+    protected List<Vector3d> calcPerturbs() {
         // Generate a perturbation vector for each point in the segment list, except for the start and end points
-        List<Vec3d> retVal = new ArrayList<>();
-        retVal.add(Vec3d.ZERO);
+        List<Vector3d> retVal = new ArrayList<>();
+        retVal.add(Vector3d.ZERO);
         for (LineSegment segment : this.segmentList) {
-            retVal.add(segment.getEnd().equals(this.delta) ? Vec3d.ZERO : VectorUtils.getRandomUnitVector(this.world.rand).scale(PERTURB_DISTANCE * this.world.rand.nextDouble()));
+            retVal.add(segment.getEnd().equals(this.delta) ? Vector3d.ZERO : VectorUtils.getRandomUnitVector(this.world.rand).scale(PERTURB_DISTANCE * this.world.rand.nextDouble()));
         }
         return retVal;
     }
@@ -129,7 +129,7 @@ public class SpellBoltParticle extends Particle {
         public Factory(IAnimatedSprite spriteSet) {}
         
         @Override
-        public Particle makeParticle(SpellBoltParticleData typeIn, World worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle makeParticle(SpellBoltParticleData typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new SpellBoltParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, typeIn.getTargetVec());
         }
     }

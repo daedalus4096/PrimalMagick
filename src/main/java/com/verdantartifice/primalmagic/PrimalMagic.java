@@ -29,7 +29,7 @@ public class PrimalMagic {
     public static final Logger LOGGER = LogManager.getLogger(PrimalMagic.MODID);
     public static final ItemGroup ITEM_GROUP = new ItemGroupPM();
     
-    public static IProxyPM proxy = DistExecutor.runForDist(()->()->new ClientProxy(), ()->()->new ServerProxy());
+    public static IProxyPM proxy = DistExecutor.safeRunForDist(()->()->new ClientProxy(), ()->()->new ServerProxy());
     
     public PrimalMagic() {
         Config.register();

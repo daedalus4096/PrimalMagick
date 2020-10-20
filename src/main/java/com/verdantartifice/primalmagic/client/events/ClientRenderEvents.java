@@ -41,12 +41,12 @@ public class ClientRenderEvents {
         // Show a tooltip entry if the item stack grants a mana discount
         if (event.getItemStack().getItem() instanceof IManaDiscountGear) {
             int discount = ((IManaDiscountGear)event.getItemStack().getItem()).getManaDiscount(event.getItemStack(), mc.player);
-            event.getToolTip().add(new TranslationTextComponent("tooltip.primalmagic.mana_discount", discount).applyTextStyle(TextFormatting.DARK_AQUA));
+            event.getToolTip().add(new TranslationTextComponent("tooltip.primalmagic.mana_discount", discount).mergeStyle(TextFormatting.DARK_AQUA));
         }
         
         // Show a tooltip entry if the item stack is runescribed
         if (RuneManager.hasRunes(event.getItemStack())) {
-            event.getToolTip().add(new TranslationTextComponent("tooltip.primalmagic.runescribed").applyTextStyle(TextFormatting.DARK_AQUA));
+            event.getToolTip().add(new TranslationTextComponent("tooltip.primalmagic.runescribed").mergeStyle(TextFormatting.DARK_AQUA));
         }
         
         // Make the tooltip changes for showing primal affinities on an itemstack
@@ -88,9 +88,9 @@ public class ClientRenderEvents {
             if (!event.getLines().isEmpty()) {
                 for (int index = event.getLines().size() - 1; index >= 0; index--) {
                     // TODO scan for affinities label and use that as an anchor
-                    if (event.getLines().get(index) != null && !event.getLines().get(index).contains("     ")) {
+                    if (event.getLines().get(index) != null && !event.getLines().get(index).getString().contains("     ")) {
                         bottom -= 10;
-                    } else if (index > 0 && event.getLines().get(index - 1) != null && event.getLines().get(index - 1).contains("     ")) {
+                    } else if (index > 0 && event.getLines().get(index - 1) != null && event.getLines().get(index - 1).getString().contains("     ")) {
                         SourceList sources = AffinityManager.getAffinities(event.getStack(), mc.world);
                         GuiUtils.renderSourcesForPlayer(sources, mc.player, event.getX(), event.getY() + bottom - 16);
                         break;

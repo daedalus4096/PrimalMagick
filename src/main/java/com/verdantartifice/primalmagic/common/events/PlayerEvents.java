@@ -37,6 +37,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -408,7 +409,7 @@ public class PlayerEvents {
         if (!player.addItemStackToInventory(journal)) {
             player.dropItem(journal, false);
         }
-        player.sendMessage(new TranslationTextComponent("event.primalmagic.got_dream").mergeStyle(TextFormatting.GREEN));
+        player.sendMessage(new TranslationTextComponent("event.primalmagic.got_dream").mergeStyle(TextFormatting.GREEN), Util.DUMMY_UUID);
     }
     
     @SubscribeEvent
