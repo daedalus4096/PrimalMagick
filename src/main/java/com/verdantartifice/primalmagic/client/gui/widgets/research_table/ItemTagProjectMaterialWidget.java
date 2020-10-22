@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
@@ -12,6 +13,7 @@ import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMater
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.text.ITextComponent;
@@ -34,26 +36,26 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw time-selected stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
         ItemStack toDisplay = this.getStackToDisplay();
         if (!toDisplay.isEmpty()) {
-            GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage(), false);
+            GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
             if (this.material.getQuantity() > 1) {
                 ITextComponent amountText = new StringTextComponent(Integer.toString(this.material.getQuantity()));
-                int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
+                int width = mc.fontRenderer.getStringWidth(amountText.getString());
                 RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.pushMatrix();
                 RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 500.0F);
                 RenderSystem.scaled(0.5D, 0.5D, 0.5D);
-                mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
+                mc.fontRenderer.drawStringWithShadow(matrixStack, amountText.getString(), 0.0F, 0.0F, Color.WHITE.getRGB());
                 RenderSystem.popMatrix();
             }
         }
         
         // Draw base class stuff
-        super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     @Override
@@ -63,7 +65,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
 
     @Nonnull
     protected ItemStack getStackToDisplay() {
-        Tag<Item> itemTag = ItemTags.getCollection().getOrCreate(this.material.getTagName());
+        ITag<Item> itemTag = ItemTags.getCollection().get(this.material.getTagName());
         Collection<Item> tagContents = itemTag.getAllElements();
         if (tagContents != null && !tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time

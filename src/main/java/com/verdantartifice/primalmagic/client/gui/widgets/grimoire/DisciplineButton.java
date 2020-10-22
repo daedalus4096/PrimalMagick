@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class DisciplineButton extends AbstractTopicButton {
     protected ResearchDiscipline discipline;
 
-    public DisciplineButton(int widthIn, int heightIn, String text, GrimoireScreen screen, ResearchDiscipline discipline) {
+    public DisciplineButton(int widthIn, int heightIn, ITextComponent text, GrimoireScreen screen, ResearchDiscipline discipline) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());
         this.discipline = discipline;
     }

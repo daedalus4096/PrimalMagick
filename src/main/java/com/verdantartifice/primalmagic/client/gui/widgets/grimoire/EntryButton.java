@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -22,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EntryButton extends AbstractTopicButton {
     protected ResearchEntry entry;
 
-    public EntryButton(int widthIn, int heightIn, String text, GrimoireScreen screen, ResearchEntry entry) {
+    public EntryButton(int widthIn, int heightIn, ITextComponent text, GrimoireScreen screen, ResearchEntry entry) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());
         this.entry = entry;
     }

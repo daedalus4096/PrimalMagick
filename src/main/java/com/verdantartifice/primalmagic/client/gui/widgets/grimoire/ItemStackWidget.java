@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -30,27 +31,27 @@ public class ItemStackWidget extends Widget {
     protected boolean isComplete;
     
     public ItemStackWidget(ItemStack stack, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, "");
+        super(x, y, 16, 16, StringTextComponent.EMPTY);
         this.stack = stack;
         this.isComplete = isComplete;
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
         // Draw stack icon
-        GuiUtils.renderItemStack(this.stack, this.x, this.y, this.getMessage(), false);
+        GuiUtils.renderItemStack(this.stack, this.x, this.y, this.getMessage().getString(), false);
         
         // Draw amount string if applicable
         if (this.stack.getCount() > 1) {
             ITextComponent amountText = new StringTextComponent(Integer.toString(this.stack.getCount()));
-            int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
+            int width = mc.fontRenderer.getStringWidth(amountText.getString());
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
             RenderSystem.scaled(0.5D, 0.5D, 0.5D);
-            mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
+            mc.fontRenderer.drawStringWithShadow(matrixStack, amountText.getString(), 0.0F, 0.0F, Color.WHITE.getRGB());
             RenderSystem.popMatrix();
         }
         
@@ -60,12 +61,13 @@ public class ItemStackWidget extends Widget {
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x + 8, this.y, 200.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
-            this.blit(0, 0, 159, 207, 10, 10);
+            this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             RenderSystem.popMatrix();
         }
         if (this.isHovered()) {
             // Render tooltip
-            List<ITextComponent> textList = Collections.singletonList(this.stack.getDisplayName().applyTextStyle(this.stack.getItem().getRarity(this.stack).color));
+        	StringTextComponent name = new StringTextComponent(this.stack.getDisplayName().getString());
+            List<ITextComponent> textList = Collections.singletonList(name.mergeStyle(this.stack.getItem().getRarity(this.stack).color));
             GuiUtils.renderCustomTooltip(textList, this.x, this.y);
         }
     }

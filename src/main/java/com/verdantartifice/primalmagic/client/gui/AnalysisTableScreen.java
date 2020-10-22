@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.AffinityWidget;
@@ -41,22 +42,22 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
     }
     
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.initWidgets();
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
     
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
         ITextComponent text = null;
         ItemStack lastScannedStack = this.container.getLastScannedStack();
         
@@ -72,10 +73,10 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
         
         // Render any generated text
         if (text != null) {
-            int width = this.font.getStringWidth(text.getFormattedText());
+            int width = this.font.getStringWidth(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
             int y = 10 + (16 - this.font.FONT_HEIGHT) / 2;
-            this.font.drawString(text.getFormattedText(), x, y, Color.BLACK.getRGB());
+            this.font.drawString(matrixStack, text.getString(), x, y, Color.BLACK.getRGB());
         }
     }
 

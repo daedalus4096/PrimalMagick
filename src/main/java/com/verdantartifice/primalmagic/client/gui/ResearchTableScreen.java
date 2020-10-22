@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.AidUnlockWidget;
@@ -73,7 +74,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     }
     
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh, or writing tool availability
         long millis = System.currentTimeMillis();
         this.lastWritingReady = this.writingReady;
@@ -89,57 +90,57 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             this.initButtons();
         }
 
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
     
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
         
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
         
         if (this.isProjectReady()) {
             int y = 11;
             
             // Render title text
-            ITextComponent titleText = new TranslationTextComponent(this.project.getNameTranslationKey()).applyTextStyle(TextFormatting.BOLD);
-            int titleWidth = mc.fontRenderer.getStringWidth(titleText.getFormattedText());
-            mc.fontRenderer.drawString(titleText.getFormattedText(), 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
+            ITextComponent titleText = new TranslationTextComponent(this.project.getNameTranslationKey()).mergeStyle(TextFormatting.BOLD);
+            int titleWidth = mc.fontRenderer.getStringWidth(titleText.getString());
+            mc.fontRenderer.drawString(matrixStack, titleText.getString(), 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
             y += (int)(mc.fontRenderer.FONT_HEIGHT * 1.66D);
             
             // Render description text
             ITextComponent descText = new TranslationTextComponent(this.project.getTextTranslationKey());
-            List<String> descLines = mc.fontRenderer.listFormattedStringToWidth(descText.getFormattedText(), 154);
+            List<String> descLines = mc.fontRenderer.listFormattedStringToWidth(descText.getString(), 154);
             for (String line : descLines) {
-                mc.fontRenderer.drawString(line, 38, y, Color.BLACK.getRGB());
+                mc.fontRenderer.drawString(matrixStack, line, 38, y, Color.BLACK.getRGB());
                 y += mc.fontRenderer.FONT_HEIGHT;
             }
         } else if (!this.container.isWritingReady()) {
             // Render missing writing materials text
             ITextComponent text = new TranslationTextComponent("primalmagic.research_table.missing_writing_supplies");
-            int width = mc.fontRenderer.getStringWidth(text.getFormattedText());
-            mc.fontRenderer.drawString(text.getFormattedText(), 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
+            int width = mc.fontRenderer.getStringWidth(text.getString());
+            mc.fontRenderer.drawString(matrixStack, text.getString(), 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
         } else {
             // Render ready to start text
             ITextComponent text = new TranslationTextComponent("primalmagic.research_table.ready");
-            int width = mc.fontRenderer.getStringWidth(text.getFormattedText());
-            mc.fontRenderer.drawString(text.getFormattedText(), 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
+            int width = mc.fontRenderer.getStringWidth(text.getString());
+            mc.fontRenderer.drawString(matrixStack, text.getString(), 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
         }
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render the GUI background
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         
         // If a research project is ready to go, render the page overlay
         if (this.isProjectReady()) {
             this.minecraft.getTextureManager().bindTexture(OVERLAY);
-            this.blit(this.guiLeft + 34, this.guiTop + 7, 0, 0, 162, 128);
+            this.blit(matrixStack, this.guiLeft + 34, this.guiTop + 7, 0, 0, 162, 128);
         }
     }
     
@@ -172,23 +173,23 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             if (this.progressing) {
                 // Render starting widget
                 ITextComponent text = new TranslationTextComponent("primalmagic.research_table.starting");
-                this.addButton(new WaitingWidget(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText()));
+                this.addButton(new WaitingWidget(this.guiLeft + 38, this.guiTop + 111, text));
             } else {
                 // Render start project button
                 ITextComponent text = new TranslationTextComponent("primalmagic.research_table.start");
-                this.addButton(new StartProjectButton(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText(), this));
+                this.addButton(new StartProjectButton(this.guiLeft + 38, this.guiTop + 111, text, this));
             }
         } else if (this.isProjectReady()) {
             if (this.progressing) {
                 // Render completing widget
                 ITextComponent text = new TranslationTextComponent("primalmagic.research_table.completing");
-                this.addButton(new WaitingWidget(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText()));
+                this.addButton(new WaitingWidget(this.guiLeft + 38, this.guiTop + 111, text));
             } else {
                 // Render complete project button
-                PlayerEntity player = Minecraft.getInstance().player;
+                PlayerEntity player = this.minecraft.player;
                 double chance = 100.0D * this.project.getSuccessChance(player);
                 ITextComponent text = new TranslationTextComponent("primalmagic.research_table.complete", FORMATTER.format(chance));
-                this.completeProjectButton = this.addButton(new CompleteProjectButton(this.guiLeft + 38, this.guiTop + 111, text.getFormattedText(), this));
+                this.completeProjectButton = this.addButton(new CompleteProjectButton(this.guiLeft + 38, this.guiTop + 111, text, this));
                 this.completeProjectButton.active = this.project.isSatisfied(player);
                 
                 // Render unlock widget, if applicable
@@ -223,7 +224,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
      * @author Daedalus4096
      */
     protected static class WaitingWidget extends Widget {
-        public WaitingWidget(int xIn, int yIn, String msg) {
+        public WaitingWidget(int xIn, int yIn, ITextComponent msg) {
             super(xIn, yIn, 154, 20, msg);
             this.active = false;
         }
@@ -237,7 +238,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     protected static class StartProjectButton extends Button {
         protected ResearchTableScreen screen;
         
-        public StartProjectButton(int xIn, int yIn, String text, ResearchTableScreen screen) {
+        public StartProjectButton(int xIn, int yIn, ITextComponent text, ResearchTableScreen screen) {
             super(xIn, yIn, 154, 20, text, new Handler());
             this.screen = screen;
         }
@@ -267,7 +268,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     protected static class CompleteProjectButton extends Button {
         protected ResearchTableScreen screen;
         
-        public CompleteProjectButton(int xIn, int yIn, String text, ResearchTableScreen screen) {
+        public CompleteProjectButton(int xIn, int yIn, ITextComponent text, ResearchTableScreen screen) {
             super(xIn, yIn, 154, 20, text, new Handler());
             this.screen = screen;
         }

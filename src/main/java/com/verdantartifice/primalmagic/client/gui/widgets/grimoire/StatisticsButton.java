@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.StatisticsPage;
 
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -14,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class StatisticsButton extends AbstractTopicButton {
-    public StatisticsButton(int widthIn, int heightIn, String text, GrimoireScreen screen) {
+    public StatisticsButton(int widthIn, int heightIn, ITextComponent text, GrimoireScreen screen) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());
     }
     

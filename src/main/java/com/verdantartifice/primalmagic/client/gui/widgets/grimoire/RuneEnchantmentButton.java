@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class RuneEnchantmentButton extends AbstractTopicButton {
     protected Enchantment enchant;
     
-    public RuneEnchantmentButton(int widthIn, int heightIn, String text, GrimoireScreen screen, Enchantment enchant) {
+    public RuneEnchantmentButton(int widthIn, int heightIn, ITextComponent text, GrimoireScreen screen, Enchantment enchant) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());
         this.enchant = enchant;
     }

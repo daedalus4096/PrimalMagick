@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
 import java.awt.Color;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.common.theorycrafting.ExperienceProjectMaterial;
 
@@ -30,7 +31,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw experience orb
@@ -47,23 +48,23 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         RenderSystem.translatef(this.x, this.y, 0.0F);
         RenderSystem.scaled(0.25D, 0.25D, 0.25D);
         RenderSystem.color4f(r, g, b, a);
-        this.blit(0, 0, uMin, vMin, 63, 63);
+        this.blit(matrixStack, 0, 0, uMin, vMin, 63, 63);
         RenderSystem.popMatrix();
 
         // If applicable, draw level count string
         if (this.material.getLevels() > 1) {
             ITextComponent amountText = new StringTextComponent(Integer.toString(this.material.getLevels()));
-            int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
+            int width = mc.fontRenderer.getStringWidth(amountText.getString());
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 500.0F);
             RenderSystem.scaled(0.5D, 0.5D, 0.5D);
-            mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
+            mc.fontRenderer.drawStringWithShadow(matrixStack, amountText.getString(), 0.0F, 0.0F, Color.WHITE.getRGB());
             RenderSystem.popMatrix();
         }
 
         // Draw base class stuff
-        super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     protected int getTextureIndexByXP(int xpValue) {

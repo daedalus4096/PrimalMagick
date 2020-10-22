@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressP
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,7 +20,7 @@ public class ProgressButton extends Button {
     protected ResearchStage stage;
     protected GrimoireScreen screen;
     
-    public ProgressButton(ResearchStage stage, int widthIn, int heightIn, String text, GrimoireScreen screen) {
+    public ProgressButton(ResearchStage stage, int widthIn, int heightIn, ITextComponent text, GrimoireScreen screen) {
         super(widthIn, heightIn, 119, 20, text, new Handler());
         this.stage = stage;
         this.screen = screen;
