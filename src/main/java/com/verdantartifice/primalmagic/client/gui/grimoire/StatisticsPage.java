@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -46,10 +47,10 @@ public class StatisticsPage extends AbstractPage {
     }
 
     @Override
-    public void render(int side, int x, int y, int mouseX, int mouseY) {
+    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         // Draw title page if applicable
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(side, x, y, mouseX, mouseY, null);
+            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
             y += 53;
         } else {
             y += 25;
@@ -57,7 +58,7 @@ public class StatisticsPage extends AbstractPage {
         
         // Render page contents
         for (IPageElement content : this.contents) {
-            content.render(side, x, y);
+            content.render(matrixStack, side, x, y);
             y = content.getNextY(y);
         }
     }

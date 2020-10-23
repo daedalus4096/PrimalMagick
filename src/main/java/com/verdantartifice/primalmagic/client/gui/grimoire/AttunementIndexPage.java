@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.AttunementButton;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -29,10 +31,10 @@ public class AttunementIndexPage extends AbstractPage {
     }
     
     @Override
-    public void render(int side, int x, int y, int mouseX, int mouseY) {
+    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(side, x, y, mouseX, mouseY, null);
+            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
         }
     }
 
@@ -48,9 +50,10 @@ public class AttunementIndexPage extends AbstractPage {
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each discovered source
+    	Minecraft mc = Minecraft.getInstance();
         for (Source source : Source.SORTED_SOURCES) {
-            if (source.isDiscovered(Minecraft.getInstance().player)) {
-                String text = new TranslationTextComponent(source.getNameTranslationKey()).getFormattedText();
+            if (source.isDiscovered(mc.player)) {
+                ITextComponent text = new TranslationTextComponent(source.getNameTranslationKey());
                 screen.addWidgetToScreen(new AttunementButton(x + 12 + (side * 140), y, text, screen, source));
                 y += 12;
             }

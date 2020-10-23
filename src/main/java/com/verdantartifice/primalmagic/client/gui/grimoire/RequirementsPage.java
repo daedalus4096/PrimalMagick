@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 import java.awt.Color;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
@@ -121,17 +122,17 @@ public class RequirementsPage extends AbstractPage {
         y = screen.height - 59;
         if (screen.isProgressing()) {
             ITextComponent text = new TranslationTextComponent("primalmagic.grimoire.completing_text");
-            screen.addWidgetToScreen(new ProgressingWidget(startX + 16 + (side * 136), y, text.getFormattedText()));
+            screen.addWidgetToScreen(new ProgressingWidget(startX + 16 + (side * 136), y, text));
         } else if (this.stage.arePrerequisitesMet(mc.player)) {
             ITextComponent text = new TranslationTextComponent("primalmagic.grimoire.complete_button");
-            screen.addWidgetToScreen(new ProgressButton(this.stage, startX + 16 + (side * 136), y, text.getFormattedText(), screen));
+            screen.addWidgetToScreen(new ProgressButton(this.stage, startX + 16 + (side * 136), y, text, screen));
         }
     }
 
     @Override
-    public void render(int side, int x, int y, int mouseX, int mouseY) {
+    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         // Render page title
-        this.renderTitle(side, x, y, mouseX, mouseY, null);
+        this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
         y += 53;
         
         RenderSystem.pushMatrix();
@@ -143,32 +144,32 @@ public class RequirementsPage extends AbstractPage {
         
         // Render obtain requirement section
         if (!this.stage.getMustObtain().isEmpty()) {
-            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_obtain_header").applyTextStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_obtain_header").mergeStyle(TextFormatting.UNDERLINE);
+            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for obtain widgets
         }
         
         // Render craft requirement section
         if (!this.stage.getMustCraft().isEmpty()) {
-            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_craft_header").applyTextStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_craft_header").mergeStyle(TextFormatting.UNDERLINE);
+            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for craft widgets
         }
         
         // Render knowledge requirement section
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
-            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_knowledge_header").applyTextStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_knowledge_header").mergeStyle(TextFormatting.UNDERLINE);
+            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for knowledge widgets
         }
         
         // Render research requirement section
         if (this.stage.getRequiredResearch() != null) {
-            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_research_header").applyTextStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(leadComponent.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_research_header").mergeStyle(TextFormatting.UNDERLINE);
+            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for research widgets
         }

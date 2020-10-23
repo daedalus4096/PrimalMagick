@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
@@ -49,8 +50,8 @@ public abstract class AbstractShapelessRecipePage<T extends IRecipe<?>> extends 
     }
     
     @Override
-    public void render(int side, int x, int y, int mouseX, int mouseY) {
-        super.render(side, x, y, mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+        super.render(matrixStack, side, x, y, mouseX, mouseY);
         y += 53;
         
         int indent = 124;
@@ -68,7 +69,7 @@ public abstract class AbstractShapelessRecipePage<T extends IRecipe<?>> extends 
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.translatef(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);
         RenderSystem.scalef(2.0F, 2.0F, 1.0F);
-        this.blit(-(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight);
+        this.blit(matrixStack, -(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight);
         RenderSystem.popMatrix();
     }
 }

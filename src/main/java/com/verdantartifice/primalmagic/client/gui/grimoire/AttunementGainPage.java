@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -34,9 +35,9 @@ public class AttunementGainPage extends AbstractPage {
     }
 
     @Override
-    public void render(int side, int x, int y, int mouseX, int mouseY) {
+    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         // Render page title
-        this.renderTitle(side, x, y, mouseX, mouseY, null);
+        this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
         y += 53;
 
         // Render attunement gain list
@@ -48,7 +49,7 @@ public class AttunementGainPage extends AbstractPage {
                     new TranslationTextComponent(Source.getUnknownTranslationKey());
             ITextComponent amountText = new TranslationTextComponent("primalmagic.attunement_gain." + Integer.toString(amount));
             ITextComponent fullText = new TranslationTextComponent("primalmagic.attunement_gain.text", labelText, amountText);
-            mc.fontRenderer.drawString(fullText.getFormattedText(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            mc.fontRenderer.drawString(matrixStack, fullText.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
         }
     }

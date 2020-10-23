@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.awt.Color;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -27,12 +28,13 @@ public class PageString implements IPageElement {
     }
 
     @Override
-    public void render(int side, int x, int y) {
+    public void render(MatrixStack matrixStack, int side, int x, int y) {
         // Render this element's string to the screen
+    	Minecraft mc = Minecraft.getInstance();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Minecraft.getInstance().fontRenderer.drawString(this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB());
+        mc.fontRenderer.drawString(matrixStack, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB());
     }
 
     @Override
