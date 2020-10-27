@@ -12,8 +12,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -22,6 +22,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -36,7 +37,7 @@ public class AncientManaFontISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
     
     protected void addVertex(IVertexBuilder renderer, MatrixStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
-        renderer.pos(stack.getLast().getPositionMatrix(), x, y, z)
+        renderer.pos(stack.getLast().getMatrix(), x, y, z)
                 .color(r, g, b, 1.0F)
                 .tex(u, v)
                 .lightmap(0, 240)
@@ -45,7 +46,7 @@ public class AncientManaFontISTER extends ItemStackTileEntityRenderer {
     }
     
     @Override
-    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         Item item = itemStack.getItem();
         if (item instanceof BlockItem && ((BlockItem)item).getBlock() instanceof AncientManaFontBlock) {
             Minecraft mc = Minecraft.getInstance();
@@ -58,8 +59,8 @@ public class AncientManaFontISTER extends ItemStackTileEntityRenderer {
             float ds = 0.1875F;
 
             @SuppressWarnings("deprecation")
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(AncientManaFontTER.TEXTURE);
-            IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
+            TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(AncientManaFontTER.TEXTURE);
+            IVertexBuilder builder = buffer.getBuffer(RenderType.getSolid());
             
             // Draw the font base
             IBakedModel model = mc.getModelManager().getModel(MRL);

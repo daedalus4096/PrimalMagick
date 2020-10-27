@@ -6,11 +6,11 @@ import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTi
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,7 +20,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarBlock}
  */
-@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class RunescribingAltarTER extends TileEntityRenderer<RunescribingAltarTileEntity> {
     protected ItemStack runeStack = null;

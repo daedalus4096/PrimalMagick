@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
@@ -21,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -42,14 +42,14 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
     private static boolean isRenderingScreen = false;
 
     @Override
-    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         if (itemStack.getItem() instanceof ArcanometerItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
 
             // Render the base model
             IBakedModel model = mc.getModelManager().getModel(this.getModelResourceLocation(itemStack));
-            itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, buffer.getBuffer(RenderType.solid()));
+            itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, buffer.getBuffer(RenderType.getSolid()));
             
             if (!isRenderingScreen) {
                 // We might be asked to show another arcanometer on screen; don't recurse in that case

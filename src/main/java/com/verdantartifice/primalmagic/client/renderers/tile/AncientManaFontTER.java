@@ -12,12 +12,12 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -36,7 +36,7 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
     }
     
     protected void addVertex(IVertexBuilder renderer, MatrixStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
-        renderer.pos(stack.getLast().getPositionMatrix(), x, y, z)
+        renderer.pos(stack.getLast().getMatrix(), x, y, z)
                 .color(r, g, b, 1.0F)
                 .tex(u, v)
                 .lightmap(0, 240)
@@ -46,6 +46,7 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
     
     @Override
     public void render(AncientManaFontTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    	Minecraft mc = Minecraft.getInstance();
         Block block = tileEntityIn.getBlockState().getBlock();
         if (tileEntityIn != null && block instanceof AncientManaFontBlock) {
             // Color the tile entity core according to the block's source
@@ -58,8 +59,8 @@ public class AncientManaFontTER extends TileEntityRenderer<AncientManaFontTileEn
             float scale = (float)tileEntityIn.getMana() / (float)tileEntityIn.getManaCapacity();    // Shrink the core as it holds less mana
             
             @SuppressWarnings("deprecation")
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(TEXTURE);
-            IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
+            TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(AncientManaFontTER.TEXTURE);
+            IVertexBuilder builder = buffer.getBuffer(RenderType.getSolid());
             
             matrixStack.push();
             matrixStack.translate(0.5D, 0.5D, 0.5D);

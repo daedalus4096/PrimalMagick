@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
@@ -28,14 +29,14 @@ public class MundaneWandISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation CORE_MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), "");
     
     @Override
-    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         if (itemStack.getItem() instanceof MundaneWandItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
 
             // Render the wand core
             IBakedModel model = mc.getModelManager().getModel(CORE_MRL);
-            IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
+            IVertexBuilder builder = buffer.getBuffer(RenderType.getSolid());
             itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
         }
     }
