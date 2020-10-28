@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.IShearable;
+import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -38,7 +38,7 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 @SuppressWarnings("deprecation")
-public abstract class AbstractPhasingLeavesBlock extends Block implements IShearable {
+public abstract class AbstractPhasingLeavesBlock extends Block implements IForgeShearable {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
     public static final IntegerProperty DISTANCE = BlockStateProperties.DISTANCE_1_7;
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
@@ -155,16 +155,6 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IShear
     }
     
     @Override
-    public boolean causesSuffocation(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return false;
-    }
-    
-    @Override
-    public boolean canEntitySpawn(BlockState state, IBlockReader worldIn, BlockPos pos, EntityType<?> type) {
-        return type == EntityType.OCELOT || type == EntityType.PARROT;
-    }
-    
-    @Override
     public float getBlockHardness(BlockState blockState, IBlockReader worldIn, BlockPos pos) {
         if (blockState.get(PHASE) == TimePhase.FULL) {
             // If the block is fully phased in, use its default hardness as those aren't all the same
@@ -184,8 +174,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IShear
         }
     }
 
-    @Override
-    public int getLightValue(BlockState state) {
-        return state.get(PHASE).getLightLevel();
+    protected static Boolean allowsSpawnOnLeaves(BlockState state, IBlockReader reader, BlockPos pos, EntityType<?> entity) {
+       return entity == EntityType.OCELOT || entity == EntityType.PARROT;
     }
 }

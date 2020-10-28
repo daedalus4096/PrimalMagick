@@ -6,9 +6,7 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.LogBlock;
 import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
@@ -35,13 +33,13 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractPhasingLogBlock extends LogBlock {
+public abstract class AbstractPhasingLogBlock extends RotatedPillarBlock {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
     
     protected final Block strippedVersion;
     
-    public AbstractPhasingLogBlock(Block stripped, MaterialColor color, Block.Properties properties) {
-        super(color, properties);
+    public AbstractPhasingLogBlock(Block stripped, Block.Properties properties) {
+        super(properties);
         this.setDefaultState(this.getDefaultState().with(PHASE, TimePhase.FULL));
         this.strippedVersion = stripped;
     }

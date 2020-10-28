@@ -15,7 +15,6 @@ import com.verdantartifice.primalmagic.common.blocks.devices.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock;
-import com.verdantartifice.primalmagic.common.blocks.minerals.MagicalMetalBlock;
 import com.verdantartifice.primalmagic.common.blocks.minerals.QuartzOreBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.GlowFieldBlock;

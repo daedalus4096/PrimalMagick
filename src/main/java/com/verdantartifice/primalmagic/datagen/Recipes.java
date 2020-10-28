@@ -743,13 +743,13 @@ public class Recipes extends RecipeProvider {
                     Item quartzItem = upgradeType.getUpgradeMedium();
                     if (!baseStack.isEmpty() && !upgradeStack.isEmpty() && quartzItem != null) {
                         CompoundResearchKey research;
-                        SimpleResearchKey baseResearch = SimpleResearchKey.parse(upgradeType.getName().toUpperCase() + "_SYNTHESIS");
+                        SimpleResearchKey baseResearch = SimpleResearchKey.parse(upgradeType.getString().toUpperCase() + "_SYNTHESIS");
                         if (source.getDiscoverKey() == null) {
                             research = CompoundResearchKey.from(baseResearch);
                         } else {
                             research = CompoundResearchKey.from(true, baseResearch, source.getDiscoverKey());
                         }
-                        String name = "essence_" + upgradeType.getName() + "_" + source.getTag() + "_from_" + baseType.getName();
+                        String name = "essence_" + upgradeType.getString() + "_" + source.getTag() + "_from_" + baseType.getString();
                         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(upgradeStack.getItem())
                             .patternLine("###")
                             .patternLine("#Q#")
@@ -773,13 +773,13 @@ public class Recipes extends RecipeProvider {
                     ItemStack downgradeStack = EssenceItem.getEssence(downgradeType, source);
                     if (!baseStack.isEmpty() && !downgradeStack.isEmpty()) {
                         CompoundResearchKey research;
-                        SimpleResearchKey baseResearch = SimpleResearchKey.parse(baseType.getName().toUpperCase() + "_DESYNTHESIS");
+                        SimpleResearchKey baseResearch = SimpleResearchKey.parse(baseType.getString().toUpperCase() + "_DESYNTHESIS");
                         if (source.getDiscoverKey() == null) {
                             research = CompoundResearchKey.from(baseResearch);
                         } else {
                             research = CompoundResearchKey.from(true, baseResearch, source.getDiscoverKey());
                         }
-                        String name = "essence_" + downgradeType.getName() + "_" + source.getTag() + "_from_" + baseType.getName();
+                        String name = "essence_" + downgradeType.getString() + "_" + source.getTag() + "_from_" + baseType.getString();
                         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(downgradeStack.getItem(), 4)
                             .addIngredient(baseStack.getItem())
                             .research(research)
