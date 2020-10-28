@@ -17,6 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
@@ -31,7 +32,7 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class BlockBreaker {
-    protected static final Map<Integer, Queue<BlockBreaker>> REGISTRY = new HashMap<>();
+    protected static final Map<ResourceLocation, Queue<BlockBreaker>> REGISTRY = new HashMap<>();
     
     protected final float power;
     protected final BlockPos pos;
@@ -60,20 +61,14 @@ public class BlockBreaker {
     
     @Nonnull
     public static Queue<BlockBreaker> getWorldBreakers(@Nonnull World world) {
-        int dim = world.getDimension().getType().getId();
-        Queue<BlockBreaker> breakerQueue = REGISTRY.get(Integer.valueOf(dim));
-        if (breakerQueue == null) {
-            // If no breaker queue is defined for the world, create one
-            breakerQueue = new LinkedBlockingQueue<>();
-            REGISTRY.put(Integer.valueOf(dim), breakerQueue);
-        }
-        return breakerQueue;
+    	return REGISTRY.computeIfAbsent(world.getDimensionKey().getLocation(), (key) -> {
+    		return new LinkedBlockingQueue<>();
+    	});
     }
     
     public static void setWorldBreakerQueue(@Nonnull World world, @Nonnull Queue<BlockBreaker> breakerQueue) {
         // Replace the world's breaker queue with the given one
-        int dim = world.getDimension().getType().getId();
-        REGISTRY.put(Integer.valueOf(dim), breakerQueue);
+    	REGISTRY.put(world.getDimensionKey().getLocation(), breakerQueue);
     }
     
     @Nullable
