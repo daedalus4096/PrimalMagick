@@ -244,7 +244,7 @@ public class ModularWandItem extends AbstractWandItem {
                     return new StringTextComponent(Integer.toString(baseSlots));
                 } else {
                     ITextComponent bonusText = new TranslationTextComponent(bonusSlot.getNameTranslationKey());
-                    return new StringTextComponent(String.format("%1$d + 1 %2$s", baseSlots, bonusText.getFormattedText()));
+                    return new StringTextComponent(String.format("%1$d + 1 %2$s", baseSlots, bonusText.getString()));
                 }
             }
         }

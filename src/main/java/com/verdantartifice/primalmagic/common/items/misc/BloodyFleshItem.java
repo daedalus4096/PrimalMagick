@@ -41,7 +41,7 @@ public class BloodyFleshItem extends Item {
             if (knowledge != null && knowledge.isResearchKnown(SimpleResearchKey.parse("FIRST_STEPS")) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
                 // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
                 ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.blood").applyTextStyle(TextFormatting.GREEN), false);
+                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.blood").mergeStyle(TextFormatting.GREEN), false);
             }
         }
         return super.onItemUseFinish(stack, worldIn, entityLiving);
@@ -50,7 +50,7 @@ public class BloodyFleshItem extends Item {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.bloody_flesh.1").applyTextStyles(TextFormatting.DARK_RED, TextFormatting.ITALIC));
-        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.bloody_flesh.2").applyTextStyles(TextFormatting.DARK_RED, TextFormatting.ITALIC));
+        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.bloody_flesh.1").mergeStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
+        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.bloody_flesh.2").mergeStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
     }
 }

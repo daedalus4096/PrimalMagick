@@ -9,8 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,11 +32,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 public class ConsecrationFieldBlock extends Block {
-    // Define a replaceable, transparent material that does not block movement
-    protected static final Material MATERIAL = new Material(MaterialColor.AIR, false, false, false, false, true, false, true, PushReaction.NORMAL);
-
     public ConsecrationFieldBlock() {
-        super(Block.Properties.create(MATERIAL).hardnessAndResistance(-1, 3600000).lightValue(15).noDrops());
+        super(Block.Properties.create(Material.AIR).hardnessAndResistance(-1, 3600000).setLightLevel((state) -> { return 15; }).noDrops());
     }
 
     @Override

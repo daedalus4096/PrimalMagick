@@ -27,7 +27,7 @@ public enum TimePhase implements IStringSerializable {
     }
     
     public static TimePhase getSunPhase(IWorld world) {
-        float angle = world.getCelestialAngle(1.0F);
+        float angle = world.func_242415_f(1.0F);
         if (angle < 0.1875F) {
             return FULL;    // Afternoon
         } else if (angle < 0.25F) {
@@ -46,7 +46,7 @@ public enum TimePhase implements IStringSerializable {
     }
     
     public static TimePhase getMoonPhase(IWorld world) {
-        float angle = world.getCelestialAngle(1.0F);
+        float angle = world.func_242415_f(1.0F);
         if (angle < 0.1875F) {
             return FADED;   // Afternoon
         } else if (angle < 0.25F) {

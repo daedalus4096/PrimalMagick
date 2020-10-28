@@ -50,7 +50,7 @@ public class AidUnlockWidget extends Widget {
         if (this.isHovered() && this.aidBlock != null) {
             // Render tooltip
             ITextComponent unlockText = new TranslationTextComponent("primalmagic.research_table.unlock", this.aidBlock.getTranslatedName());
-            GuiUtils.renderCustomTooltip(Collections.singletonList(unlockText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(unlockText), this.x, this.y);
         }
     }
     

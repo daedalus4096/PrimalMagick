@@ -44,7 +44,7 @@ public class PyramidBlock extends Block {
     
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.has(FACING)) {
+        if (state.hasProperty(FACING)) {
             return SHAPES.get(state.get(FACING));
         } else {
             return BASE_SHAPE;
@@ -68,7 +68,8 @@ public class PyramidBlock extends Block {
         return state.with(FACING, rot.rotate(state.get(FACING)));
     }
     
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.toRotation(state.get(FACING)));
     }

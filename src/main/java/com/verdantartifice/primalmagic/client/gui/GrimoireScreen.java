@@ -233,7 +233,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int current = 0;
         for (AbstractPage page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
-                page.render(current % 2, unscaledLeft, unscaledTop - 10, mouseX, mouseY);
+                page.render(matrixStack, current % 2, unscaledLeft, unscaledTop - 10, mouseX, mouseY);
             }
             current++;
             if (current > this.currentPage + 1) {

@@ -69,13 +69,6 @@ public class RitualCandleBlock extends Block implements IRitualPropBlock {
         builder.add(LIT);
     }
     
-    @SuppressWarnings("deprecation")
-    @Override
-    public int getLightValue(BlockState state) {
-        // Only give off light if the candle is lit
-        return state.get(LIT) ? super.getLightValue(state) : 0;
-    }
-    
     @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {

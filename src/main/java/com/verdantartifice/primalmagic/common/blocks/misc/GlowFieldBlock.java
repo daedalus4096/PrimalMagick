@@ -20,7 +20,7 @@ import net.minecraft.world.IBlockReader;
  */
 public class GlowFieldBlock extends Block {
     public GlowFieldBlock() {
-        super(Block.Properties.create(Material.AIR).hardnessAndResistance(-1, 3600000).lightValue(15).noDrops());
+        super(Block.Properties.create(Material.AIR).hardnessAndResistance(-1, 3600000).setLightLevel((state) -> { return 15; }).noDrops());
     }
     
     @Override

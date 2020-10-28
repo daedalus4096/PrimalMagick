@@ -54,7 +54,7 @@ public class SpellScrollItem extends Item {
         // A scroll's name is determined by that of the spell it holds (e.g. "Scroll of Lightning Bolt")
         SpellPackage spell = this.getSpell(stack);
         ITextComponent spellName = (spell == null) ? new TranslationTextComponent("tooltip.primalmagic.none") : spell.getName();
-        return new TranslationTextComponent(this.getTranslationKey(stack), spellName).applyTextStyle(TextFormatting.ITALIC);
+        return new TranslationTextComponent(this.getTranslationKey(stack), spellName).mergeStyle(TextFormatting.ITALIC);
     }
     
     @Override

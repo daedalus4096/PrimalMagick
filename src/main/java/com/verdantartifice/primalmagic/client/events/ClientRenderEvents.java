@@ -92,7 +92,7 @@ public class ClientRenderEvents {
                         bottom -= 10;
                     } else if (index > 0 && event.getLines().get(index - 1) != null && event.getLines().get(index - 1).getString().contains("     ")) {
                         SourceList sources = AffinityManager.getAffinities(event.getStack(), mc.world);
-                        GuiUtils.renderSourcesForPlayer(sources, mc.player, event.getX(), event.getY() + bottom - 16);
+                        GuiUtils.renderSourcesForPlayer(event.getMatrixStack(), sources, mc.player, event.getX(), event.getY() + bottom - 16);
                         break;
                     }
                 }

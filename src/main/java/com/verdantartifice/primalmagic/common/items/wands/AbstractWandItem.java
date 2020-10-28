@@ -76,7 +76,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         }
     }
     
-    protected ITextComponent getManaText(ItemStack stack, Source source) {
+    protected StringTextComponent getManaText(ItemStack stack, Source source) {
         int mana = this.getMana(stack, source);
         if (mana == -1) {
             // If the given wand stack has infinte mana, show the infinity symbol
@@ -105,7 +105,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         return retVal;
     }
 
-    protected ITextComponent getMaxManaText(ItemStack stack) {
+    protected StringTextComponent getMaxManaText(ItemStack stack) {
         int mana = this.getMaxMana(stack);
         if (mana == -1) {
             // If the given wand stack has infinte mana, show the infinity symbol
@@ -256,16 +256,18 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        PlayerEntity player = Minecraft.getInstance().player;
+        
+        Minecraft mc = Minecraft.getInstance();
+        PlayerEntity player = mc.player;
         
         if (PrimalMagic.proxy.isShiftDown()) {
             // Add detailed mana information
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
-                    ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
+                    ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor());
                     int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source));
-                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getFormattedText(), this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
+                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getString(), this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }
             }
@@ -273,7 +275,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add inscribed spell listing
             List<SpellPackage> spells = this.getSpells(stack);
             int activeIndex = this.getActiveSpellIndex(stack);
-            tooltip.add(new TranslationTextComponent("primalmagic.spells.wand_header", this.getSpellCapacityText(stack).getFormattedText()));
+            tooltip.add(new TranslationTextComponent("primalmagic.spells.wand_header", this.getSpellCapacityText(stack).getString()));
             if (spells.isEmpty()) {
                 tooltip.add(new TranslationTextComponent("primalmagic.spells.none"));
             } else {
@@ -284,7 +286,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                         // Prefix the active spell name with an asterisk to distinguish it
                         sb.append("*");
                     }
-                    sb.append(spell.getName().getFormattedText());
+                    sb.append(spell.getName().getString());
                     tooltip.add(new StringTextComponent(sb.toString()));
                 }
             }
@@ -298,8 +300,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     if (!first) {
                         sb.append("/");
                     }
-                    ITextComponent manaStr = this.getManaText(stack, source).applyTextStyle(source.getChatColor());
-                    sb.append(manaStr.getFormattedText());
+                    ITextComponent manaStr = this.getManaText(stack, source).mergeStyle(source.getChatColor());
+                    sb.append(manaStr.getString());
                     first = false;
                 }
             }
@@ -380,12 +382,13 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
         // Only process on server side
-        if (context.getWorld().isRemote) {
+    	World world = context.getWorld();
+        if (world.isRemote) {
             return ActionResultType.PASS;
         }
         
         // Bypass wand functionality if the player is sneaking
-        if (context.getPlayer().isShiftKeyDown()) {
+        if (context.getPlayer().isSneaking()) {
             return ActionResultType.PASS;
         }
         

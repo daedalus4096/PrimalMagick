@@ -65,7 +65,7 @@ public class ManaCostSummaryWidget extends Widget {
                     tooltip.add(new TranslationTextComponent("primalmagic.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
                 }
             }
-            GuiUtils.renderCustomTooltip(tooltip, this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
         }
     }
     

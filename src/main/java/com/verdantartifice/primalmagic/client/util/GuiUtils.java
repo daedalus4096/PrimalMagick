@@ -9,9 +9,11 @@ import javax.annotation.Nullable;
 
 import org.lwjgl.opengl.GL11;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
@@ -80,11 +82,11 @@ public class GuiUtils {
         return retVal;
     }
     
-    public static void renderCustomTooltip(List<ITextComponent> textList, int x, int y) {
-        renderCustomTooltip(textList, x, y, false);
+    public static void renderCustomTooltip(MatrixStack matrixStack, List<ITextComponent> textList, int x, int y) {
+        renderCustomTooltip(matrixStack, textList, x, y, false);
     }
     
-    public static void renderCustomTooltip(List<ITextComponent> textList, int x, int y, boolean ignoreMouse) {
+    public static void renderCustomTooltip(MatrixStack matrixStack, List<ITextComponent> textList, int x, int y, boolean ignoreMouse) {
         if (textList == null || textList.isEmpty()) {
             return;
         }
@@ -112,7 +114,7 @@ public class GuiUtils {
         // Break up each line of the tooltip to fit in the available X-space
         List<String> parsedList = new ArrayList<>();
         for (ITextComponent text : textList)  {
-            List<String> strList = mc.fontRenderer.listFormattedStringToWidth(text.getFormattedText(), max);
+            List<String> strList = mc.fontRenderer.listFormattedStringToWidth(text.getString(), max);
             parsedList.addAll(strList);
         }
         
@@ -166,7 +168,7 @@ public class GuiUtils {
             RenderSystem.pushMatrix();
             sY += mc.fontRenderer.FONT_HEIGHT;
             RenderSystem.translatef(0.0F, 0.0F, 301.0F);
-            mc.fontRenderer.drawStringWithShadow(str, 0.0F, 0.0F, -1);
+            mc.fontRenderer.drawStringWithShadow(matrixStack, str, 0.0F, 0.0F, -1);
             RenderSystem.popMatrix();
             if (i == 0) {
                 sY += 2;
@@ -226,7 +228,7 @@ public class GuiUtils {
         RenderSystem.enableTexture();
     }
     
-    public static void renderSourcesForPlayer(@Nullable SourceList sources, @Nullable PlayerEntity player, int startX, int startY) {
+    public static void renderSourcesForPlayer(MatrixStack matrixStack, @Nullable SourceList sources, @Nullable PlayerEntity player, int startX, int startY) {
         if (sources == null || sources.isEmpty()) {
             return;
         }
@@ -241,9 +243,9 @@ public class GuiUtils {
                 
                 // If the source hasn't been discovered by the player, render an unknown icon instead
                 if (source.isDiscovered(player)) {
-                    GuiUtils.renderSourceIcon(x, startY, source, sources.getAmount(source), 998);
+                    GuiUtils.renderSourceIcon(matrixStack, x, startY, source, sources.getAmount(source), 998);
                 } else {
-                    GuiUtils.renderUnknownSourceIcon(x, startY, sources.getAmount(source), 998);
+                    GuiUtils.renderUnknownSourceIcon(matrixStack, x, startY, sources.getAmount(source), 998);
                 }
                 index++;
             }
@@ -251,17 +253,17 @@ public class GuiUtils {
         RenderSystem.popMatrix();
     }
     
-    public static void renderSourceIcon(int x, int y, @Nullable Source source, int amount, double z) {
+    public static void renderSourceIcon(MatrixStack matrixStack, int x, int y, @Nullable Source source, int amount, double z) {
         if (source != null) {
-            renderSourceIcon(x, y, source.getAtlasLocation(), amount, z);
+            renderSourceIcon(matrixStack, x, y, source.getAtlasLocation(), amount, z);
         }
     }
     
-    public static void renderUnknownSourceIcon(int x, int y, int amount, double z) {
-        renderSourceIcon(x, y, Source.getUnknownAtlasLocation(), amount, z);
+    public static void renderUnknownSourceIcon(MatrixStack matrixStack, int x, int y, int amount, double z) {
+        renderSourceIcon(matrixStack, x, y, Source.getUnknownAtlasLocation(), amount, z);
     }
     
-    protected static void renderSourceIcon(int x, int y, @Nonnull ResourceLocation imageLoc, int amount, double z) {
+    protected static void renderSourceIcon(MatrixStack matrixStack, int x, int y, @Nonnull ResourceLocation imageLoc, int amount, double z) {
         // Preserve previous values for blend and lighting GL attributes
         boolean isBlendOn = GL11.glIsEnabled(GL11.GL_BLEND);
         boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
@@ -278,9 +280,9 @@ public class GuiUtils {
         
         // Render the source's icon
         @SuppressWarnings("deprecation")
-        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(imageLoc);
-        IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
-        IVertexBuilder builder = buffer.getBuffer(RenderType.cutout());
+        TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(imageLoc);
+        IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
+        IVertexBuilder builder = buffer.getBuffer(RenderType.getCutout());
         builder.pos(x + 0.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
         builder.pos(x + 16.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
         builder.pos(x + 16.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
@@ -297,7 +299,7 @@ public class GuiUtils {
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
-            mc.fontRenderer.drawString(amountStr, (32 - amountWidth + (x * 2)), (32 - mc.fontRenderer.FONT_HEIGHT + (y * 2)), Color.WHITE.getRGB());
+            mc.fontRenderer.drawString(matrixStack, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.fontRenderer.FONT_HEIGHT + (y * 2)), Color.WHITE.getRGB());
             RenderSystem.popMatrix();
         }
         

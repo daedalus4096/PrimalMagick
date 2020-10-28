@@ -96,7 +96,7 @@ public class RunecarvingTableScreen extends ContainerScreen<RunecarvingTableCont
             ItemStack output = list.get(i).getRecipeOutput();
             this.minecraft.getItemRenderer().renderItemAndEffectIntoGUI(output, k, i1);
             if (mouseX >= k && mouseX < k + 16 && mouseY >= i1 && mouseY < i1 + 18) {
-                GuiUtils.renderCustomTooltip(Collections.singletonList(output.getDisplayName()), mouseX, mouseY);
+                GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(output.getDisplayName()), mouseX, mouseY);
             }
         }
     }

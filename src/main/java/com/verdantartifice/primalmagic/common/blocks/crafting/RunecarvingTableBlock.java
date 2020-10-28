@@ -67,7 +67,8 @@ public class RunecarvingTableBlock extends Block {
         return state.with(FACING, rot.rotate(state.get(FACING)));
     }
     
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.toRotation(state.get(FACING)));
     }

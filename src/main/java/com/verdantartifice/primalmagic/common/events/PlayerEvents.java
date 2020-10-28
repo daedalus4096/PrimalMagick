@@ -10,10 +10,10 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
@@ -40,7 +40,6 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -168,12 +167,12 @@ public class PlayerEvents {
         if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER)) {
             // If the player is in a Nether-based biome, discover the Infernal source
             ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
-            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.infernal").applyTextStyle(TextFormatting.GREEN), false);
+            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.infernal").mergeStyle(TextFormatting.GREEN), false);
         }
         if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.END)) {
             // If the player is in an End-based biome, discover the Void source
             ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
-            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.void").applyTextStyle(TextFormatting.GREEN), false);
+            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.void").mergeStyle(TextFormatting.GREEN), false);
         }
         
         // If the player is working on the Earth Source research, check if they're far enough down
@@ -418,7 +417,7 @@ public class PlayerEvents {
             PlayerEntity player = (PlayerEntity)event.getEntityLiving();
             if (AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
                 // Boost the player's vertical motion on jump if they have greater sky attunement
-                Vec3d motion = player.getMotion();
+                Vector3d motion = player.getMotion();
                 motion = motion.add(0.0D, 0.275D, 0.0D);
                 player.setMotion(motion);
             }

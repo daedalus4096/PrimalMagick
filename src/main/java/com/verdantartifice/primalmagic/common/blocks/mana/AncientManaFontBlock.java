@@ -26,7 +26,7 @@ public class AncientManaFontBlock extends Block {
     protected Source source;
     
     public AncientManaFontBlock(Source source) {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F).sound(SoundType.STONE).lightValue(15).noDrops());
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F).sound(SoundType.STONE).setLightLevel((state) -> { return 15; }).noDrops());
         this.source = source;
     }
     

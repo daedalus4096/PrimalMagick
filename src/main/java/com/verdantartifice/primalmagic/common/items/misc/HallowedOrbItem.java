@@ -29,7 +29,7 @@ public class HallowedOrbItem extends Item {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.hallowed_orb.1").applyTextStyles(TextFormatting.WHITE, TextFormatting.ITALIC));
-        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.hallowed_orb.2").applyTextStyles(TextFormatting.WHITE, TextFormatting.ITALIC));
+        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.hallowed_orb.1").mergeStyle(TextFormatting.WHITE, TextFormatting.ITALIC));
+        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.hallowed_orb.2").mergeStyle(TextFormatting.WHITE, TextFormatting.ITALIC));
     }
 }

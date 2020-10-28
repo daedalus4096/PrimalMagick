@@ -58,7 +58,7 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
         if (this.isHovered()) {
             // Render tooltip
             List<ITextComponent> textList = Collections.singletonList(this.getHoverText());
-            GuiUtils.renderCustomTooltip(textList, this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
         }
     }
     

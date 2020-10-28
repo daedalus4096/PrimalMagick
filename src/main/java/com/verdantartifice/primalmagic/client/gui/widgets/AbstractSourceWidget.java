@@ -69,7 +69,7 @@ public abstract class AbstractSourceWidget extends Widget {
                     new TranslationTextComponent(this.source.getNameTranslationKey()).mergeStyle(this.source.getChatColor()) :
                     new TranslationTextComponent(Source.getUnknownTranslationKey());
             ITextComponent labelText = new TranslationTextComponent(this.getTooltipTranslationKey(), this.amount, sourceText);
-            GuiUtils.renderCustomTooltip(Collections.singletonList(labelText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);
         }
     }
     

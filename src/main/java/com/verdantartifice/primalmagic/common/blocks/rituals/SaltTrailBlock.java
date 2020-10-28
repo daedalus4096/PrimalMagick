@@ -104,7 +104,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
             boolean isSolid = faceState.isSolidSide(world, facePos, Direction.UP);
             boolean canConnectFaceUp = this.canConnectTo(world.getBlockState(facePos.up()), world, facePos.up(), null);
             if (isSolid && canConnectFaceUp) {
-                if (faceState.isCollisionShapeOpaque(world, facePos)) {
+                if (faceState.isSolidSide(world, facePos, face.getOpposite())) {
                     return SaltSide.UP;
                 } else {
                     return SaltSide.SIDE;
@@ -141,7 +141,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     }
     
     @Override
-    public void updateDiagonalNeighbors(BlockState state, IWorld world, BlockPos pos, int flags) {
+    public void updateDiagonalNeighbors(BlockState state, IWorld world, BlockPos pos, int flags, int recursionLeft) {
     	BlockPos.Mutable mbp = new BlockPos.Mutable();
         for (Direction dir : Direction.Plane.HORIZONTAL) {
             SaltSide saltSide = state.get(FACING_PROPERTY_MAP.get(dir));
@@ -150,13 +150,13 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
                 BlockState downState = world.getBlockState(mbp);
                 BlockPos oppDownPos = mbp.offset(dir.getOpposite());
                 BlockState newDownState = downState.updatePostPlacement(dir.getOpposite(), world.getBlockState(oppDownPos), world, mbp, oppDownPos);
-                replaceBlock(downState, newDownState, world, mbp, flags);
+                replaceBlockState(downState, newDownState, world, mbp, flags, recursionLeft);
                 
                 mbp.setPos(pos).move(dir).move(Direction.UP);
                 BlockState upState = world.getBlockState(mbp);
                 BlockPos oppUpPos = mbp.offset(dir.getOpposite());
                 BlockState newUpState = upState.updatePostPlacement(dir.getOpposite(), world.getBlockState(oppUpPos), world, mbp, oppUpPos);
-                replaceBlock(upState, newUpState, world, mbp, flags);
+                replaceBlockState(upState, newUpState, world, mbp, flags, recursionLeft);
             }
         }
     }

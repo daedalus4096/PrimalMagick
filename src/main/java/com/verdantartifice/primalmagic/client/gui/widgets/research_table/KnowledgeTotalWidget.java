@@ -85,7 +85,7 @@ public class KnowledgeTotalWidget extends Widget {
         if (this.isHovered()) {
             // Render tooltip
             ITextComponent knowledgeText = new TranslationTextComponent(this.type.getNameTranslationKey());
-            GuiUtils.renderCustomTooltip(Collections.singletonList(knowledgeText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), this.x, this.y);
         }
     }
     

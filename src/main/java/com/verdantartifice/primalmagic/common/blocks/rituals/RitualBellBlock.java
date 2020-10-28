@@ -26,7 +26,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.DirectionProperty;
@@ -128,7 +128,8 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
     
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return HorizontalFaceBlock.func_220185_b(worldIn, pos, getAttachmentDirection(state));
+        Direction direction = getAttachmentDirection(state);
+        return direction == Direction.UP ? Block.hasEnoughSolidSide(worldIn, pos.up(), Direction.DOWN) : HorizontalFaceBlock.isSideSolidForDirection(worldIn, pos, direction);
     }
     
     @Override
@@ -210,12 +211,10 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit, Entity projectile) {
-        if (projectile instanceof AbstractArrowEntity) {
-            Entity entity = ((AbstractArrowEntity)projectile).getShooter();
-            PlayerEntity playerentity = entity instanceof PlayerEntity ? (PlayerEntity)entity : null;
-            this.tryRing(worldIn, state, hit, playerentity);
-        }
+    public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit, ProjectileEntity projectile) {
+        Entity entity = projectile.func_234616_v_();
+        PlayerEntity playerentity = entity instanceof PlayerEntity ? (PlayerEntity)entity : null;
+        this.tryRing(worldIn, state, hit, playerentity);
     }
     
     @Override

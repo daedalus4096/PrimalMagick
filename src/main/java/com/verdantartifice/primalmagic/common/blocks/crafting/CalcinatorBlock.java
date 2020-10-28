@@ -50,7 +50,9 @@ public class CalcinatorBlock extends Block {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/calcinator"));
     
     public CalcinatorBlock() {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).lightValue(13).sound(SoundType.STONE));
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).setLightLevel((state) -> { 
+        	return state.get(BlockStateProperties.LIT) ? 13 : 0; 
+    	}).sound(SoundType.STONE));
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(LIT, Boolean.valueOf(false)));
     }
     
@@ -76,16 +78,10 @@ public class CalcinatorBlock extends Block {
         return state.with(FACING, rot.rotate(state.get(FACING)));
     }
     
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.toRotation(state.get(FACING)));
-    }
-    
-    @SuppressWarnings("deprecation")
-    @Override
-    public int getLightValue(BlockState state) {
-        // Only give off light if the calcinator is lit
-        return state.get(LIT) ? super.getLightValue(state) : 0;
     }
     
     @Override

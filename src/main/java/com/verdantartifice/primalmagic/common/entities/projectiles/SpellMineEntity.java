@@ -16,7 +16,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -122,7 +121,7 @@ public class SpellMineEntity extends Entity {
     protected void readAdditional(CompoundNBT compound) {
         this.caster = null;
         if (compound.contains("Caster", Constants.NBT.TAG_COMPOUND)) {
-            this.casterId = NBTUtil.readUniqueId(compound.getCompound("Caster"));
+            this.casterId =  compound.getUniqueId("Caster");
         }
         
         this.spell = null;
@@ -148,7 +147,7 @@ public class SpellMineEntity extends Entity {
     @Override
     protected void writeAdditional(CompoundNBT compound) {
         if (this.casterId != null) {
-            compound.put("Caster", NBTUtil.writeUniqueId(this.casterId));
+            compound.putUniqueId("Caster", this.casterId);
         }
         if (this.spell != null) {
             compound.put("Spell", this.spell.serializeNBT());

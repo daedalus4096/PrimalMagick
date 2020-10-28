@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemPropertyGetter;
@@ -37,22 +38,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 public class ArcanometerItem extends Item {
+    public static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "scan_state");
+
     public ArcanometerItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON).setISTER(() -> ArcanometerISTER::new));
-        this.addPropertyOverride(new ResourceLocation(PrimalMagic.MODID, "scan_state"), new IItemPropertyGetter() {
+    }
+    
+    public static IItemPropertyGetter getScanStateProperty() {
+    	return new IItemPropertyGetter() {
             @OnlyIn(Dist.CLIENT)
             protected float scanState = 0;
 
             @OnlyIn(Dist.CLIENT)
             @Override
-            public float call(ItemStack stack, World world, LivingEntity entity) {
+            public float call(ItemStack stack, ClientWorld world, LivingEntity entity) {
                 if (entity == null || !(entity instanceof PlayerEntity)) {
                     return 0.0F;
                 } else {
-                    if (world == null) {
-                        world = entity.world;
-                    }
-                    
                     // If the currently moused-over block/item has not yet been scanned, raise the antennae
                     if (isMouseOverScannable(RayTraceUtils.getMouseOver(), world, (PlayerEntity)entity)) {
                         this.incrementScanState();
@@ -72,10 +74,10 @@ public class ArcanometerItem extends Item {
             protected void decrementScanState() {
                 this.scanState = Math.max(0.0F, this.scanState - 0.25F);
             }
-        });
+        };
     }
     
-    protected static boolean isMouseOverScannable(@Nullable RayTraceResult result, @Nullable World world, @Nullable PlayerEntity player) {
+    public static boolean isMouseOverScannable(@Nullable RayTraceResult result, @Nullable World world, @Nullable PlayerEntity player) {
         if (result == null || world == null) {
             return false;
         } else if (result.getType() == RayTraceResult.Type.ENTITY) {

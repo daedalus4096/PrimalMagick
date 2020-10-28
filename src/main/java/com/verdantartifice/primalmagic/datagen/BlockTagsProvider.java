@@ -33,6 +33,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
     @Override
     protected void registerTags() {
         // Add entries to vanilla tags
+    	this.getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         this.getOrCreateBuilder(BlockTags.LOGS).addTag(BlockTagsPM.MOONWOOD_LOGS).addTag(BlockTagsPM.SUNWOOD_LOGS);
         this.getOrCreateBuilder(BlockTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.SUNWOOD_LEAVES.get());
         this.getOrCreateBuilder(BlockTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.get(), BlocksPM.SUNWOOD_PLANKS.get());

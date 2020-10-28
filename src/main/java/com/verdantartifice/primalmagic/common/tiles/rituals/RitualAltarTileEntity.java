@@ -189,8 +189,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     }
     
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
         this.active = compound.getBoolean("Active");
         this.currentStepComplete = compound.getBoolean("CurrentStepComplete");
         this.activeCount = compound.getInt("ActiveCount");
@@ -241,7 +241,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         compound.putInt("NextCheckCount", this.nextCheckCount);
         compound.putFloat("Stability", this.stability);
         if (this.activePlayerId != null) {
-            compound.put("ActivePlayer", NBTUtil.writeUniqueId(this.activePlayerId));
+        	compound.putUniqueId("ActivePlayer", this.activePlayerId);
         }
         if (this.activeRecipeId != null) {
             compound.putString("ActiveRecipeId", this.activeRecipeId.toString());

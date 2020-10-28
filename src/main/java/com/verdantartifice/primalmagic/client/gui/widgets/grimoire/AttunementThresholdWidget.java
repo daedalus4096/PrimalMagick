@@ -73,7 +73,7 @@ public class AttunementThresholdWidget extends Widget {
         
         if (this.isHovered()) {
             // Render tooltip
-            GuiUtils.renderCustomTooltip(Collections.singletonList(this.tooltipText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltipText), this.x, this.y);
         }
     }
     

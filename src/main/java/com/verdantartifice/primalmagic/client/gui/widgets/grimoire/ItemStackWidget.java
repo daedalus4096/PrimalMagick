@@ -68,7 +68,7 @@ public class ItemStackWidget extends Widget {
             // Render tooltip
         	StringTextComponent name = new StringTextComponent(this.stack.getDisplayName().getString());
             List<ITextComponent> textList = Collections.singletonList(name.mergeStyle(this.stack.getItem().getRarity(this.stack).color));
-            GuiUtils.renderCustomTooltip(textList, this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
         }
     }
     

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.proxy;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.config.KeyBindings;
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagic.client.gui.AnalysisTableScreen;
@@ -28,12 +29,16 @@ import com.verdantartifice.primalmagic.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -57,6 +62,7 @@ public class ClientProxy extends CommonProxy {
         this.registerScreens();
         this.registerTERs();
         this.registerEntityRenderers();
+        this.registerItemProperties(event);
         this.setRenderLayers();
     }
     
@@ -97,6 +103,13 @@ public class ClientProxy extends CommonProxy {
         // Register renderers for each entity type
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
+    }
+    
+    private void registerItemProperties(FMLClientSetupEvent event) {
+    	// Register properties for items on the main thread in a thread-safe fashion
+    	event.enqueueWork(() -> {
+    		ItemModelsProperties.registerProperty(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, ArcanometerItem.getScanStateProperty());
+    	});
     }
     
     private void setRenderLayers() {
