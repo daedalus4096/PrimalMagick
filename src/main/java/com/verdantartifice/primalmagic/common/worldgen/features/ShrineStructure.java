@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
@@ -31,28 +30,18 @@ public class ShrineStructure extends Structure<ShrineConfig> {
     }
 
     @Override
-    protected int getSeedModifier() {
-        return 11893192;
-    }
-
-    @Override
     public Structure.IStartFactory<ShrineConfig> getStartFactory() {
         return ShrineStructure.Start::new;
     }
     
     @Override
-    public GenerationStage.Decoration func_236396_f_() {
+    public GenerationStage.Decoration getDecorationStage() {
         return GenerationStage.Decoration.SURFACE_STRUCTURES;
     }
 
     @Override
     public String getStructureName() {
         return "primalmagic:shrine";
-    }
-
-    @Override
-    public int getSize() {
-        return 3;
     }
 
     public static class Start extends StructureStart<ShrineConfig> {

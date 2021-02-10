@@ -14,11 +14,11 @@ import net.minecraft.world.gen.feature.StructureFeature;
  * @author Daedalus4096
  */
 public class ConfiguredFeaturesPM {
-	public static final StructureFeature<?, ?> CONFIGURED_EARTH_SHRINE = FeaturesPM.SHRINE.get().func_236391_a_(new ShrineConfig(ShrineStructure.Type.EARTH));
-	public static final StructureFeature<?, ?> CONFIGURED_SEA_SHRINE = FeaturesPM.SHRINE.get().func_236391_a_(new ShrineConfig(ShrineStructure.Type.SEA));
-	public static final StructureFeature<?, ?> CONFIGURED_SKY_SHRINE = FeaturesPM.SHRINE.get().func_236391_a_(new ShrineConfig(ShrineStructure.Type.SKY));
-	public static final StructureFeature<?, ?> CONFIGURED_SUN_SHRINE = FeaturesPM.SHRINE.get().func_236391_a_(new ShrineConfig(ShrineStructure.Type.SUN));
-	public static final StructureFeature<?, ?> CONFIGURED_MOON_SHRINE = FeaturesPM.SHRINE.get().func_236391_a_(new ShrineConfig(ShrineStructure.Type.MOON));
+	public static final StructureFeature<?, ?> CONFIGURED_EARTH_SHRINE = FeaturesPM.SHRINE.get().withConfiguration(new ShrineConfig(ShrineStructure.Type.EARTH));
+	public static final StructureFeature<?, ?> CONFIGURED_SEA_SHRINE = FeaturesPM.SHRINE.get().withConfiguration(new ShrineConfig(ShrineStructure.Type.SEA));
+	public static final StructureFeature<?, ?> CONFIGURED_SKY_SHRINE = FeaturesPM.SHRINE.get().withConfiguration(new ShrineConfig(ShrineStructure.Type.SKY));
+	public static final StructureFeature<?, ?> CONFIGURED_SUN_SHRINE = FeaturesPM.SHRINE.get().withConfiguration(new ShrineConfig(ShrineStructure.Type.SUN));
+	public static final StructureFeature<?, ?> CONFIGURED_MOON_SHRINE = FeaturesPM.SHRINE.get().withConfiguration(new ShrineConfig(ShrineStructure.Type.MOON));
 	
 	public static void registerConfiguredStructures() {
         Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;

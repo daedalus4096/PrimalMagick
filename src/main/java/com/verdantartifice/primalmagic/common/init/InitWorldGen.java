@@ -28,63 +28,11 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class InitWorldGen {
     public static void initWorldGen() {
-        // Add Earth shrines to plains and savanna type biomes
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS).stream().forEach((biome) -> {
-            addShrine(biome, Source.EARTH);
-        });
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.SAVANNA).stream().forEach((biome) -> {
-            addShrine(biome, Source.EARTH);
-        });
-        
-        // Add Sea shrines to river, beach, and swamp type biomes
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.RIVER).stream().forEach((biome) -> {
-            addShrine(biome, Source.SEA);
-        });
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.BEACH).stream().forEach((biome) -> {
-            addShrine(biome, Source.SEA);
-        });
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.SWAMP).stream().forEach((biome) -> {
-            addShrine(biome, Source.SEA);
-        });
-        
-        // Add Sky shrines to mountain and hill type biomes
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.MOUNTAIN).stream().forEach((biome) -> {
-            addShrine(biome, Source.SKY);
-        });
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.HILLS).stream().forEach((biome) -> {
-            addShrine(biome, Source.SKY);
-        });
-        
-        // Add Sun shrines to hot+dry and sandy type biomes
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.HOT).stream().filter((biome) -> BiomeDictionary.hasType(biome, BiomeDictionary.Type.DRY)).forEach((biome) -> {
-            addShrine(biome, Source.SUN);
-        });
-        BiomeDictionary.getBiomes(BiomeDictionary.Type.SANDY).stream().forEach((biome) -> {
-            addShrine(biome, Source.SUN);
-        });
-        
-        // Add Moon shrines to forest type biomes.  Also add sunwood and moonwood trees.
+        // Add sunwood and moonwood trees.
         BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).stream().forEach((biome) -> {
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(FeatureConfigsPM.SUNWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(0, 0.1F, 1))));
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(FeatureConfigsPM.MOONWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.func_227446_a_(new AtSurfaceWithExtraConfig(0, 0.1F, 1))));
             addShrine(biome, Source.MOON);
         });
-    }
-
-    private static boolean isOverworldBiome(@Nonnull Biome biome) {
-        if (biome.equals(Biomes.STONE_SHORE)) {
-            // Stone Shore has a category of None, but it still exists in the Overworld
-            return true;
-        } else {
-            Biome.Category cat = biome.getCategory();
-            return !Biome.Category.NONE.equals(cat) && !Biome.Category.NETHER.equals(cat) && !Biome.Category.THEEND.equals(cat);
-        }
-    }
-    
-    private static void addShrine(@Nonnull Biome biome, @Nonnull Source source) {
-        // Structures must be added as both a structure and a feature of the biome in order to spawn
-        ShrineConfig config = new ShrineConfig(source);
-        biome.addStructure(FeaturesPM.SHRINE.get().withConfiguration(config));
-        biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeaturesPM.SHRINE.get().withConfiguration(config).withPlacement(Placement.NOPE.func_227446_a_(IPlacementConfig.NO_PLACEMENT_CONFIG)));
     }
 }
