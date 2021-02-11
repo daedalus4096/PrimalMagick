@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.particles.ParticleTypes;
@@ -19,10 +18,8 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,7 +34,6 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
 public abstract class AbstractPhasingLeavesBlock extends Block implements IForgeShearable {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
     public static final IntegerProperty DISTANCE = BlockStateProperties.DISTANCE_1_7;
@@ -151,26 +147,6 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
                     worldIn.addParticle(ParticleTypes.DRIPPING_WATER, x, y, z, 0.0D, 0.0D, 0.0D);
                 }
             }
-        }
-    }
-    
-    @Override
-    public float getBlockHardness(BlockState blockState, IBlockReader worldIn, BlockPos pos) {
-        if (blockState.get(PHASE) == TimePhase.FULL) {
-            // If the block is fully phased in, use its default hardness as those aren't all the same
-            return this.blockHardness;
-        } else {
-            return blockState.get(PHASE).getHardness();
-        }
-    }
-    
-    @Override
-    public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, Entity exploder, Explosion explosion) {
-        if (state.get(PHASE) == TimePhase.FULL) {
-            // If the block is fully phased in, use its default resistance as those aren't all the same
-            return this.blockResistance;
-        } else {
-            return state.get(PHASE).getResistance();
         }
     }
 

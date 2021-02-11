@@ -9,20 +9,16 @@ import net.minecraft.world.IWorld;
  * @author Daedalus4096
  */
 public enum TimePhase implements IStringSerializable {
-    FULL("full", 0.0F, 0.0F, 10),           // The block is fully phased in; use default attributes and full light
-    WAXING("waxing", 6.0F, 12.0F, 5),       // The block is mostly phased in; increased hardness/resistance and half light
-    WANING("waning", 50.0F, 1200.0F, 0),    // The block is mostly phased out; very high hardness/resistance and no light
-    FADED("faded", -1.0F, 3600000.0F, 0);   // The block is fully phased out; unbreakable and no light
+    FULL("full", 10),		// The block is fully phased in; use full light
+    WAXING("waxing", 5),	// The block is mostly phased in; half light
+    WANING("waning", 0),    // The block is mostly phased out; no light
+    FADED("faded", 0);		// The block is fully phased out; no light
     
     private final String name;
-    private final float hardness;
-    private final float resistance;
     private final int light;
     
-    private TimePhase(String name, float hardness, float resistance, int light) {
+    private TimePhase(String name, int light) {
         this.name = name;
-        this.hardness = hardness;
-        this.resistance = resistance;
         this.light = light;
     }
     
@@ -72,14 +68,6 @@ public enum TimePhase implements IStringSerializable {
     @Override
     public String getString() {
         return this.name;
-    }
-    
-    public float getHardness() {
-        return this.hardness;
-    }
-    
-    public float getResistance() {
-        return this.resistance;
     }
     
     public int getLightLevel() {
