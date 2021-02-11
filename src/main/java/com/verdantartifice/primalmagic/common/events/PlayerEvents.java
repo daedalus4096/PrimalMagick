@@ -46,7 +46,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -164,12 +163,12 @@ public class PlayerEvents {
         }
         
         Biome biome = player.world.getBiome(player.getPosition());
-        if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER)) {
+        if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && Biome.Category.NETHER.equals(biome.getCategory())) {
             // If the player is in a Nether-based biome, discover the Infernal source
             ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
             player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.infernal").mergeStyle(TextFormatting.GREEN), false);
         }
-        if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.END)) {
+        if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && Biome.Category.THEEND.equals(biome.getCategory())) {
             // If the player is in an End-based biome, discover the Void source
             ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
             player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.void").mergeStyle(TextFormatting.GREEN), false);
@@ -187,7 +186,7 @@ public class PlayerEvents {
         // If the player is working on the Sea Source research, check if they're in the ocean
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
-            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) && !knowledge.isResearchKnown(key)) {
+            if (Biome.Category.OCEAN.equals(biome.getCategory()) && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
                 player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sea").mergeStyle(TextFormatting.GREEN), false);
             }
@@ -205,7 +204,7 @@ public class PlayerEvents {
         // If the player is working on the Sun Source research, check if they're in the desert during the daytime
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
-            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY) && TimePhase.getSunPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+            if (Biome.Category.DESERT.equals(biome.getCategory()) && TimePhase.getSunPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
                 player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sun").mergeStyle(TextFormatting.GREEN), false);
             }
@@ -214,7 +213,7 @@ public class PlayerEvents {
         // If the player is working on the Moon Source research, check if they're in the forest during the night-time
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
-            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST) && TimePhase.getMoonPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+            if (Biome.Category.FOREST.equals(biome.getCategory()) && TimePhase.getMoonPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
                 player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_moon").mergeStyle(TextFormatting.GREEN), false);
             }
