@@ -11,10 +11,10 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
  * @author Daedalus4096
  */
 public class ShrineConfig implements IFeatureConfig {
-	public static final Codec<ShrineConfig> CODEC = RecordCodecBuilder.create((instance) -> {
-		return instance.group(ShrineStructure.Type.CODEC.fieldOf("type").forGetter((c) -> { return c.type; })).apply(instance, ShrineConfig::new);
-	});
-	
+    public static final Codec<ShrineConfig> CODEC = RecordCodecBuilder.create((instance) -> {
+        return instance.group(ShrineStructure.Type.CODEC.fieldOf("type").forGetter((c) -> { return c.type; })).apply(instance, ShrineConfig::new);
+    });
+    
     public final ShrineStructure.Type type;
     
     public ShrineConfig(ShrineStructure.Type type) {
