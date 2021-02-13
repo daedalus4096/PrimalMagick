@@ -72,7 +72,7 @@ public class BlockSwapper {
         
         // Only allow the swap if the source block could normally be removed by the player and there's a difference to be had
         boolean allow = (state.getBlockHardness(world, this.pos) >= 0.0F) && (this.source == null || this.source.equals(state));
-        if (allow && world.canMineBlockBody(this.player, this.pos) && this.isTargetDifferent(state) && this.canPlace(world, state)) {
+        if (allow && world.isBlockModifiable(this.player, this.pos) && this.isTargetDifferent(state) && this.canPlace(world, state)) {
             if (this.target == null || this.target.isEmpty()) {
                 // If the swap target is empty, just remove the source block
                 world.removeBlock(this.pos, false);

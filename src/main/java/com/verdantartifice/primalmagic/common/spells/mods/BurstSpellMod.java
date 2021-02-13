@@ -111,7 +111,7 @@ public class BurstSpellMod extends AbstractSpellMod {
                             BlockState blockState = world.getBlockState(curPos);
                             FluidState fluidState = world.getFluidState(curPos);
                             if (!blockState.isAir(world, curPos) || !fluidState.isEmpty()) {
-                                float resistance = Math.max(blockState.getExplosionResistance(world, curPos, null, explosion), fluidState.getExplosionResistance(world, curPos, null, explosion));
+                                float resistance = Math.max(blockState.getExplosionResistance(world, curPos, explosion), fluidState.getExplosionResistance(world, curPos, explosion));
                                 remainingPower -= (resistance + 0.3F) * 0.3F;
                             }
                             

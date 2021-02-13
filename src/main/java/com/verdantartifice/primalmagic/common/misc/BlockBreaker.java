@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants;
 
@@ -77,7 +78,7 @@ public class BlockBreaker {
         BlockState state = world.getBlockState(this.pos);
         if (state == this.targetBlock) {
             // Only allow block breakers to act on blocks that could normally be broken by a player
-            if (world.canMineBlockBody(this.player, this.pos) && state.getBlockHardness(world, this.pos) >= 0.0F) {
+            if (world.isBlockModifiable(this.player, this.pos) && state.getBlockHardness(world, this.pos) >= 0.0F) {
                 // Send packets showing the visual effects of the block breaker's progress
                 world.sendBlockBreakProgress(this.pos.hashCode(), this.pos, (int)((1.0F - this.currentDurability / this.maxDurability) * 10.0F));
                 
@@ -108,6 +109,7 @@ public class BlockBreaker {
             return false;
         }
         ServerPlayerEntity serverPlayer = (ServerPlayerEntity)this.player;
+        ServerWorld serverWorld = (ServerWorld)world;
         int exp = ForgeHooks.onBlockBreakEvent(world, serverPlayer.interactionManager.getGameType(), serverPlayer, this.pos);
         if (exp == -1) {
             return false;
@@ -120,7 +122,7 @@ public class BlockBreaker {
                 return false;
             } else if (serverPlayer.getHeldItemMainhand().onBlockStartBreak(this.pos, serverPlayer)) {
                 return false;
-            } else if (serverPlayer.func_223729_a(world, this.pos, serverPlayer.interactionManager.getGameType())) {
+            } else if (serverPlayer.blockActionRestricted(world, this.pos, serverPlayer.interactionManager.getGameType())) {
                 return false;
             } else {
                 if (serverPlayer.interactionManager.isCreative()) {
@@ -135,7 +137,7 @@ public class BlockBreaker {
                         block.harvestBlock(world, serverPlayer, this.pos, state, tile, stack.copy());
                     }
                     if (success && exp > 0) {
-                        block.dropXpOnBlockBreak(world, this.pos, exp);
+                        block.dropXpOnBlockBreak(serverWorld, this.pos, exp);
                     }
                     return true;
                 }

@@ -224,7 +224,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         String str;
         int strWidth;
         for (Map.Entry<Vector3i, ITextComponent> entry : this.texts.entrySet()) {
-            str = this.font.trimStringToWidth(entry.getValue().getString(), entry.getKey().getZ());
+            str = this.font.trimStringToWidth(entry.getValue(), entry.getKey().getZ());
             strWidth = this.font.getStringWidth(str);
             this.font.drawString(matrixStack, str, entry.getKey().getX() - this.guiLeft + ((entry.getKey().getZ() - strWidth) / 2), entry.getKey().getY() - this.guiTop, color);
         }
