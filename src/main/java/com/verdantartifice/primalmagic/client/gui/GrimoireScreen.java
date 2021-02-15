@@ -56,7 +56,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -420,12 +422,12 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // Format text by font
-        List<String> parsedText = new ArrayList<>();
+        List<ITextProperties> parsedText = new ArrayList<>();
         for (String str : firstPassText) {
-            parsedText.addAll(this.font.listFormattedStringToWidth(str, 124));
+            parsedText.addAll(this.font.getCharacterManager().func_238362_b_(ITextProperties.func_240652_a_(str), 124, Style.EMPTY));   // list formatted string to width
         }
         
-        return new Tuple<>(parsedText, images);
+        return new Tuple<>(parsedText.stream().map((t) -> t.getString()).collect(Collectors.toList()), images);
     }
     
     protected void parseEntryPages(ResearchEntry entry) {
@@ -583,14 +585,15 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         int heightRemaining = 137;  // Leave enough room for the page header
         int dotWidth = this.font.getStringWidth(".");
         StatisticsPage tempPage = new StatisticsPage(true);
+        Minecraft mc = this.getMinecraft();
         for (Stat stat : stats) {
-            int statValue = StatsManager.getValue(this.getMinecraft().player, stat);
+            int statValue = StatsManager.getValue(mc.player, stat);
             if (!stat.isHidden() || statValue > 0) {
                 // Join the stat text and formatted value with periods in between for spacing
                 ITextComponent statText = new TranslationTextComponent(stat.getTranslationKey());
-                List<String> statTextSegments = new ArrayList<>(this.font.listFormattedStringToWidth(statText.getString(), 124));
-                String lastStatTextSegment = statTextSegments.get(statTextSegments.size() - 1);
-                int lastStatTextSegmentWidth = this.font.getStringWidth(lastStatTextSegment);
+                List<ITextProperties> statTextSegments = new ArrayList<>(this.font.getCharacterManager().func_238362_b_(statText, 124, Style.EMPTY));
+                ITextProperties lastStatTextSegment = statTextSegments.get(statTextSegments.size() - 1);
+                int lastStatTextSegmentWidth = this.font.getStringPropertyWidth(lastStatTextSegment);
                 String statFormattedValueStr = stat.getFormatter().format(statValue);
                 int statFormattedValueStrWidth = this.font.getStringWidth(statFormattedValueStr);
                 int remainingWidth = 124 - lastStatTextSegmentWidth - statFormattedValueStrWidth;
@@ -598,12 +601,12 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                     // If there isn't enough room to put them on the same line, put the last text segment and the formatted value on different lines
                     String joiner1 = String.join("", Collections.nCopies((124 - lastStatTextSegmentWidth) / dotWidth, "."));
                     String joiner2 = String.join("", Collections.nCopies((124 - statFormattedValueStrWidth) / dotWidth, "."));
-                    statTextSegments.set(statTextSegments.size() - 1, lastStatTextSegment + joiner1);
-                    statTextSegments.add(joiner2 + statFormattedValueStr + "~B");   // Include a section break at the end
+                    statTextSegments.set(statTextSegments.size() - 1, ITextProperties.func_240652_a_(lastStatTextSegment.getString() + joiner1));
+                    statTextSegments.add(ITextProperties.func_240652_a_(joiner2 + statFormattedValueStr + "~B"));   // Include a section break at the end
                 } else {
                     // Otherwise, join them as the last line of the block
                     String joiner = String.join("", Collections.nCopies(remainingWidth / dotWidth, "."));
-                    statTextSegments.set(statTextSegments.size() - 1, lastStatTextSegment + joiner + statFormattedValueStr + "~B"); // Include a section break at the end
+                    statTextSegments.set(statTextSegments.size() - 1, ITextProperties.func_240652_a_(lastStatTextSegment + joiner + statFormattedValueStr + "~B")); // Include a section break at the end
                 }
                 
                 // Calculate the total height of the stat block, including spacer, and determine if it will fit on the current page
@@ -616,8 +619,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 }
                 
                 // Add the stat block and its section break to the page
-                for (String str : statTextSegments) {
-                    tempPage.addElement(new PageString(str));
+                for (ITextProperties str : statTextSegments) {
+                    tempPage.addElement(new PageString(str.getString()));
                     heightRemaining -= this.font.FONT_HEIGHT;
                 }
                 heightRemaining -= (int)(this.font.FONT_HEIGHT * 0.66D);

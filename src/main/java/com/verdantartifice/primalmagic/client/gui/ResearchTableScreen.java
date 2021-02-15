@@ -29,6 +29,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -112,9 +114,9 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             
             // Render description text
             ITextComponent descText = new TranslationTextComponent(this.project.getTextTranslationKey());
-            List<String> descLines = mc.fontRenderer.listFormattedStringToWidth(descText.getString(), 154);
-            for (String line : descLines) {
-                mc.fontRenderer.drawString(matrixStack, line, 38, y, Color.BLACK.getRGB());
+            List<ITextProperties> descLines = mc.fontRenderer.getCharacterManager().func_238362_b_(descText, 154, Style.EMPTY); // list formatted string to width
+            for (ITextProperties line : descLines) {
+                mc.fontRenderer.drawString(matrixStack, line.getString(), 38, y, Color.BLACK.getRGB());
                 y += mc.fontRenderer.FONT_HEIGHT;
             }
         } else if (!this.container.isWritingReady()) {
