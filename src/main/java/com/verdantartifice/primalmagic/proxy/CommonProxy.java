@@ -24,7 +24,6 @@ import com.verdantartifice.primalmagic.common.init.InitResearch;
 import com.verdantartifice.primalmagic.common.init.InitRunes;
 import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
-import com.verdantartifice.primalmagic.common.init.InitWorldGen;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
@@ -68,7 +67,6 @@ public class CommonProxy implements IProxyPM {
         InitCapabilities.initCapabilities();
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();
-        InitWorldGen.initWorldGen();
         InitSpells.initSpells();
         InitStats.initStats();
         InitRunes.initRuneEnchantments();

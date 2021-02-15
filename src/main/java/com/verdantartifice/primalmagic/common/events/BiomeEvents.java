@@ -55,7 +55,9 @@ public class BiomeEvents {
 		
 		// Add moon shrines to forests
 		if (Biome.Category.FOREST.equals(cat)) {
-			// TODO Add sunwood and moonwood trees
+			// TODO Phase sunwood and moonwood trees appropriately
+		    event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_SUNWOOD_FULL);
+		    event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_MOONWOOD_FULL);
 			event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_MOON_SHRINE);
 		}
 	}
