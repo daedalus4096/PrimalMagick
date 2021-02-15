@@ -71,6 +71,7 @@ public class CommonProxy implements IProxyPM {
         InitStats.initStats();
         InitRunes.initRuneEnchantments();
         
+        FeaturesPM.setupFeatures();
         FeaturesPM.setupStructures();
         ConfiguredFeaturesPM.registerConfiguredStructures();
 
