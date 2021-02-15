@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.items.wands;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableMultimap.Builder;
 import com.google.common.collect.Multimap;
 import com.verdantartifice.primalmagic.common.wands.IStaff;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
@@ -23,11 +25,16 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class ModularStaffItem extends ModularWandItem implements IStaff {
     protected final float attackDamage;
     protected final float attackSpeed;
-    
+    protected final Multimap<Attribute, AttributeModifier> attributeModifiers;
+
     public ModularStaffItem(int attackDamage, float attackSpeed, Properties properties) {
         super(properties);
         this.attackDamage = (float)attackDamage;
         this.attackSpeed = attackSpeed;
+        Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        this.attributeModifiers = builder.build();
     }
     
     @Override
@@ -49,13 +56,8 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
     }
     
     @Override
+    @SuppressWarnings("deprecation")
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        @SuppressWarnings("deprecation")
-        Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
-        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-            multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
-        }
-        return multimap;
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
     }
 }
