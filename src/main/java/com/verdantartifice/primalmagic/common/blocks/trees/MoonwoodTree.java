@@ -19,16 +19,14 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
  * @author Daedalus4096
  */
 public class MoonwoodTree extends AbstractPhasingTree {
-    protected static final Map<TimePhase, ConfiguredFeature<BaseTreeFeatureConfig, ?>> FEATURES = Util.make(new HashMap<>(), (map) -> {
-        map.put(TimePhase.FULL, FeaturesPM.TREE_MOONWOOD_FULL);
-        map.put(TimePhase.WAXING, FeaturesPM.TREE_MOONWOOD_WAXING);
-        map.put(TimePhase.WANING, FeaturesPM.TREE_MOONWOOD_WANING);
-        map.put(TimePhase.FADED, FeaturesPM.TREE_MOONWOOD_FADED);
-    });
-
     @Override
     protected Map<TimePhase, ConfiguredFeature<BaseTreeFeatureConfig, ?>> getTreeFeaturesByPhase(Random rand, boolean largeHive) {
-        return FEATURES;
+        return Util.make(new HashMap<>(), (map) -> {
+            map.put(TimePhase.FULL, FeaturesPM.TREE_MOONWOOD_FULL);
+            map.put(TimePhase.WAXING, FeaturesPM.TREE_MOONWOOD_WAXING);
+            map.put(TimePhase.WANING, FeaturesPM.TREE_MOONWOOD_WANING);
+            map.put(TimePhase.FADED, FeaturesPM.TREE_MOONWOOD_FADED);
+        });
     }
 
     @Override
