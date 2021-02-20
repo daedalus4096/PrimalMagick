@@ -10,7 +10,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.TagsProvider;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagCollection;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
@@ -34,78 +33,74 @@ public class BlockTagsProvider extends TagsProvider<Block> {
     @Override
     protected void registerTags() {
         // Add entries to vanilla tags
-        this.getBuilder(BlockTags.LOGS).add(BlockTagsPM.MOONWOOD_LOGS, BlockTagsPM.SUNWOOD_LOGS);
-        this.getBuilder(BlockTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.SUNWOOD_LEAVES.get());
-        this.getBuilder(BlockTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.get(), BlocksPM.SUNWOOD_PLANKS.get());
-        this.getBuilder(BlockTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING.get(), BlocksPM.SUNWOOD_SAPLING.get());
-        this.getBuilder(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL.get(), BlocksPM.MARBLE_BRICK_WALL.get(), BlocksPM.MARBLE_ENCHANTED_WALL.get(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), BlocksPM.MARBLE_SMOKED_WALL.get(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.get());
-        this.getBuilder(BlockTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.SUNWOOD_SLAB.get());
-        this.getBuilder(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.get(), BlocksPM.SUNWOOD_STAIRS.get());
+    	this.getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.getOrCreateBuilder(BlockTags.LOGS).addTag(BlockTagsPM.MOONWOOD_LOGS).addTag(BlockTagsPM.SUNWOOD_LOGS);
+        this.getOrCreateBuilder(BlockTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.SUNWOOD_LEAVES.get());
+        this.getOrCreateBuilder(BlockTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.get(), BlocksPM.SUNWOOD_PLANKS.get());
+        this.getOrCreateBuilder(BlockTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING.get(), BlocksPM.SUNWOOD_SAPLING.get());
+        this.getOrCreateBuilder(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL.get(), BlocksPM.MARBLE_BRICK_WALL.get(), BlocksPM.MARBLE_ENCHANTED_WALL.get(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), BlocksPM.MARBLE_SMOKED_WALL.get(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.get());
+        this.getOrCreateBuilder(BlockTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.SUNWOOD_SLAB.get());
+        this.getOrCreateBuilder(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.get(), BlocksPM.SUNWOOD_STAIRS.get());
         
         // Add entries to Forge tags
-        this.getBuilder(Tags.Blocks.ORES_QUARTZ).add(BlocksPM.QUARTZ_ORE.get());
-        this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE, BlockTagsPM.STORAGE_BLOCKS_HEXIUM, BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.getOrCreateBuilder(Tags.Blocks.ORES_QUARTZ).add(BlocksPM.QUARTZ_ORE.get());
+        this.getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag( BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         
-        this.getBuilder(Tags.Blocks.GLASS_COLORLESS).add(BlocksPM.SKYGLASS.get());
-        this.getBuilder(Tags.Blocks.GLASS_BLACK).add(BlocksPM.STAINED_SKYGLASS_BLACK.get());
-        this.getBuilder(Tags.Blocks.GLASS_BLUE).add(BlocksPM.STAINED_SKYGLASS_BLUE.get());
-        this.getBuilder(Tags.Blocks.GLASS_BROWN).add(BlocksPM.STAINED_SKYGLASS_BROWN.get());
-        this.getBuilder(Tags.Blocks.GLASS_CYAN).add(BlocksPM.STAINED_SKYGLASS_CYAN.get());
-        this.getBuilder(Tags.Blocks.GLASS_GRAY).add(BlocksPM.STAINED_SKYGLASS_GRAY.get());
-        this.getBuilder(Tags.Blocks.GLASS_GREEN).add(BlocksPM.STAINED_SKYGLASS_GREEN.get());
-        this.getBuilder(Tags.Blocks.GLASS_LIGHT_BLUE).add(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get());
-        this.getBuilder(Tags.Blocks.GLASS_LIGHT_GRAY).add(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get());
-        this.getBuilder(Tags.Blocks.GLASS_LIME).add(BlocksPM.STAINED_SKYGLASS_LIME.get());
-        this.getBuilder(Tags.Blocks.GLASS_MAGENTA).add(BlocksPM.STAINED_SKYGLASS_MAGENTA.get());
-        this.getBuilder(Tags.Blocks.GLASS_ORANGE).add(BlocksPM.STAINED_SKYGLASS_ORANGE.get());
-        this.getBuilder(Tags.Blocks.GLASS_PINK).add(BlocksPM.STAINED_SKYGLASS_PINK.get());
-        this.getBuilder(Tags.Blocks.GLASS_PURPLE).add(BlocksPM.STAINED_SKYGLASS_PURPLE.get());
-        this.getBuilder(Tags.Blocks.GLASS_RED).add(BlocksPM.STAINED_SKYGLASS_RED.get());
-        this.getBuilder(Tags.Blocks.GLASS_WHITE).add(BlocksPM.STAINED_SKYGLASS_WHITE.get());
-        this.getBuilder(Tags.Blocks.GLASS_YELLOW).add(BlocksPM.STAINED_SKYGLASS_YELLOW.get());
-        this.getBuilder(Tags.Blocks.STAINED_GLASS).add(BlockTagsPM.STAINED_SKYGLASS);
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_COLORLESS).add(BlocksPM.SKYGLASS.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_BLACK).add(BlocksPM.STAINED_SKYGLASS_BLACK.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_BLUE).add(BlocksPM.STAINED_SKYGLASS_BLUE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_BROWN).add(BlocksPM.STAINED_SKYGLASS_BROWN.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_CYAN).add(BlocksPM.STAINED_SKYGLASS_CYAN.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_GRAY).add(BlocksPM.STAINED_SKYGLASS_GRAY.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_GREEN).add(BlocksPM.STAINED_SKYGLASS_GREEN.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_LIGHT_BLUE).add(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_LIGHT_GRAY).add(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_LIME).add(BlocksPM.STAINED_SKYGLASS_LIME.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_MAGENTA).add(BlocksPM.STAINED_SKYGLASS_MAGENTA.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_ORANGE).add(BlocksPM.STAINED_SKYGLASS_ORANGE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PINK).add(BlocksPM.STAINED_SKYGLASS_PINK.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PURPLE).add(BlocksPM.STAINED_SKYGLASS_PURPLE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_RED).add(BlocksPM.STAINED_SKYGLASS_RED.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_WHITE).add(BlocksPM.STAINED_SKYGLASS_WHITE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_YELLOW).add(BlocksPM.STAINED_SKYGLASS_YELLOW.get());
+        this.getOrCreateBuilder(Tags.Blocks.STAINED_GLASS).addTag(BlockTagsPM.STAINED_SKYGLASS);
         
-        this.getBuilder(Tags.Blocks.GLASS_PANES_COLORLESS).add(BlocksPM.SKYGLASS_PANE.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_BLACK).add(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_BLUE).add(BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_BROWN).add(BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_CYAN).add(BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_GRAY).add(BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_GREEN).add(BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_LIGHT_BLUE).add(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_LIGHT_GRAY).add(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_LIME).add(BlocksPM.STAINED_SKYGLASS_PANE_LIME.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_MAGENTA).add(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_ORANGE).add(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_PINK).add(BlocksPM.STAINED_SKYGLASS_PANE_PINK.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_PURPLE).add(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_RED).add(BlocksPM.STAINED_SKYGLASS_PANE_RED.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_WHITE).add(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get());
-        this.getBuilder(Tags.Blocks.GLASS_PANES_YELLOW).add(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
-        this.getBuilder(Tags.Blocks.STAINED_GLASS_PANES).add(BlockTagsPM.STAINED_SKYGLASS_PANES);
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_COLORLESS).add(BlocksPM.SKYGLASS_PANE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_BLACK).add(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_BLUE).add(BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_BROWN).add(BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_CYAN).add(BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_GRAY).add(BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_GREEN).add(BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_LIGHT_BLUE).add(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_LIGHT_GRAY).add(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_LIME).add(BlocksPM.STAINED_SKYGLASS_PANE_LIME.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_MAGENTA).add(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_ORANGE).add(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_PINK).add(BlocksPM.STAINED_SKYGLASS_PANE_PINK.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_PURPLE).add(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_RED).add(BlocksPM.STAINED_SKYGLASS_PANE_RED.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_WHITE).add(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get());
+        this.getOrCreateBuilder(Tags.Blocks.GLASS_PANES_YELLOW).add(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
+        this.getOrCreateBuilder(Tags.Blocks.STAINED_GLASS_PANES).addTag(BlockTagsPM.STAINED_SKYGLASS_PANES);
         
         // Create custom tags
-        this.getBuilder(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);
-        this.getBuilder(BlockTagsPM.CONCRETE).add(Blocks.BLACK_CONCRETE, Blocks.BLUE_CONCRETE, Blocks.BROWN_CONCRETE, Blocks.CYAN_CONCRETE, Blocks.GRAY_CONCRETE, Blocks.GREEN_CONCRETE, Blocks.LIGHT_BLUE_CONCRETE, Blocks.LIGHT_GRAY_CONCRETE, Blocks.LIME_CONCRETE, Blocks.MAGENTA_CONCRETE, Blocks.ORANGE_CONCRETE, Blocks.PINK_CONCRETE, Blocks.PURPLE_CONCRETE, Blocks.RED_CONCRETE, Blocks.WHITE_CONCRETE, Blocks.YELLOW_CONCRETE);
-        this.getBuilder(BlockTagsPM.DEAD_CORAL_BLOCKS).add(Blocks.DEAD_BRAIN_CORAL_BLOCK, Blocks.DEAD_BUBBLE_CORAL_BLOCK, Blocks.DEAD_FIRE_CORAL_BLOCK, Blocks.DEAD_HORN_CORAL_BLOCK, Blocks.DEAD_TUBE_CORAL_BLOCK);
-        this.getBuilder(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL, Blocks.DEAD_BUBBLE_CORAL, Blocks.DEAD_FIRE_CORAL, Blocks.DEAD_HORN_CORAL, Blocks.DEAD_TUBE_CORAL);
-        this.getBuilder(BlockTagsPM.DEAD_CORALS).add(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL_FAN, Blocks.DEAD_BUBBLE_CORAL_FAN, Blocks.DEAD_FIRE_CORAL_FAN, Blocks.DEAD_HORN_CORAL_FAN, Blocks.DEAD_TUBE_CORAL_FAN);
-        this.getBuilder(BlockTagsPM.MOONWOOD_LOGS).add(BlocksPM.MOONWOOD_LOG.get(), BlocksPM.STRIPPED_MOONWOOD_LOG.get(), BlocksPM.MOONWOOD_WOOD.get(), BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
-        this.getBuilder(BlockTagsPM.RITUAL_CANDLES).add(BlocksPM.RITUAL_CANDLE_BLACK.get(), BlocksPM.RITUAL_CANDLE_BLUE.get(), BlocksPM.RITUAL_CANDLE_BROWN.get(), BlocksPM.RITUAL_CANDLE_CYAN.get(), BlocksPM.RITUAL_CANDLE_GRAY.get(), BlocksPM.RITUAL_CANDLE_GREEN.get(), BlocksPM.RITUAL_CANDLE_LIGHT_BLUE.get(), BlocksPM.RITUAL_CANDLE_LIGHT_GRAY.get(), BlocksPM.RITUAL_CANDLE_LIME.get(), BlocksPM.RITUAL_CANDLE_MAGENTA.get(), BlocksPM.RITUAL_CANDLE_ORANGE.get(), BlocksPM.RITUAL_CANDLE_PINK.get(), BlocksPM.RITUAL_CANDLE_PURPLE.get(), BlocksPM.RITUAL_CANDLE_RED.get(), BlocksPM.RITUAL_CANDLE_WHITE.get(), BlocksPM.RITUAL_CANDLE_YELLOW.get());
-        this.getBuilder(BlockTagsPM.SHULKER_BOXES).add(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.SHULKER_BOX);
-        this.getBuilder(BlockTagsPM.SKYGLASS).add(BlocksPM.SKYGLASS.get()).add(BlockTagsPM.STAINED_SKYGLASS);
-        this.getBuilder(BlockTagsPM.SKYGLASS_PANES).add(BlocksPM.SKYGLASS_PANE.get()).add(BlockTagsPM.STAINED_SKYGLASS_PANES);
-        this.getBuilder(BlockTagsPM.STAINED_SKYGLASS).add(BlocksPM.STAINED_SKYGLASS_BLACK.get(), BlocksPM.STAINED_SKYGLASS_BLUE.get(), BlocksPM.STAINED_SKYGLASS_BROWN.get(), BlocksPM.STAINED_SKYGLASS_CYAN.get(), BlocksPM.STAINED_SKYGLASS_GRAY.get(), BlocksPM.STAINED_SKYGLASS_GREEN.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_LIME.get(), BlocksPM.STAINED_SKYGLASS_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PINK.get(), BlocksPM.STAINED_SKYGLASS_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_RED.get(), BlocksPM.STAINED_SKYGLASS_WHITE.get(), BlocksPM.STAINED_SKYGLASS_YELLOW.get());
-        this.getBuilder(BlockTagsPM.STAINED_SKYGLASS_PANES).add(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
-        this.getBuilder(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL).add(BlocksPM.HALLOWSTEEL_BLOCK.get());
-        this.getBuilder(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).add(BlocksPM.HEXIUM_BLOCK.get());
-        this.getBuilder(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
-        this.getBuilder(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.get(), BlocksPM.STRIPPED_SUNWOOD_LOG.get(), BlocksPM.SUNWOOD_WOOD.get(), BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
-    }
-
-    @Override
-    protected void setCollection(TagCollection<Block> colectionIn) {
-        // Do nothing
+        this.getOrCreateBuilder(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);
+        this.getOrCreateBuilder(BlockTagsPM.CONCRETE).add(Blocks.BLACK_CONCRETE, Blocks.BLUE_CONCRETE, Blocks.BROWN_CONCRETE, Blocks.CYAN_CONCRETE, Blocks.GRAY_CONCRETE, Blocks.GREEN_CONCRETE, Blocks.LIGHT_BLUE_CONCRETE, Blocks.LIGHT_GRAY_CONCRETE, Blocks.LIME_CONCRETE, Blocks.MAGENTA_CONCRETE, Blocks.ORANGE_CONCRETE, Blocks.PINK_CONCRETE, Blocks.PURPLE_CONCRETE, Blocks.RED_CONCRETE, Blocks.WHITE_CONCRETE, Blocks.YELLOW_CONCRETE);
+        this.getOrCreateBuilder(BlockTagsPM.DEAD_CORAL_BLOCKS).add(Blocks.DEAD_BRAIN_CORAL_BLOCK, Blocks.DEAD_BUBBLE_CORAL_BLOCK, Blocks.DEAD_FIRE_CORAL_BLOCK, Blocks.DEAD_HORN_CORAL_BLOCK, Blocks.DEAD_TUBE_CORAL_BLOCK);
+        this.getOrCreateBuilder(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL, Blocks.DEAD_BUBBLE_CORAL, Blocks.DEAD_FIRE_CORAL, Blocks.DEAD_HORN_CORAL, Blocks.DEAD_TUBE_CORAL);
+        this.getOrCreateBuilder(BlockTagsPM.DEAD_CORALS).addTag(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL_FAN, Blocks.DEAD_BUBBLE_CORAL_FAN, Blocks.DEAD_FIRE_CORAL_FAN, Blocks.DEAD_HORN_CORAL_FAN, Blocks.DEAD_TUBE_CORAL_FAN);
+        this.getOrCreateBuilder(BlockTagsPM.MOONWOOD_LOGS).add(BlocksPM.MOONWOOD_LOG.get(), BlocksPM.STRIPPED_MOONWOOD_LOG.get(), BlocksPM.MOONWOOD_WOOD.get(), BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
+        this.getOrCreateBuilder(BlockTagsPM.RITUAL_CANDLES).add(BlocksPM.RITUAL_CANDLE_BLACK.get(), BlocksPM.RITUAL_CANDLE_BLUE.get(), BlocksPM.RITUAL_CANDLE_BROWN.get(), BlocksPM.RITUAL_CANDLE_CYAN.get(), BlocksPM.RITUAL_CANDLE_GRAY.get(), BlocksPM.RITUAL_CANDLE_GREEN.get(), BlocksPM.RITUAL_CANDLE_LIGHT_BLUE.get(), BlocksPM.RITUAL_CANDLE_LIGHT_GRAY.get(), BlocksPM.RITUAL_CANDLE_LIME.get(), BlocksPM.RITUAL_CANDLE_MAGENTA.get(), BlocksPM.RITUAL_CANDLE_ORANGE.get(), BlocksPM.RITUAL_CANDLE_PINK.get(), BlocksPM.RITUAL_CANDLE_PURPLE.get(), BlocksPM.RITUAL_CANDLE_RED.get(), BlocksPM.RITUAL_CANDLE_WHITE.get(), BlocksPM.RITUAL_CANDLE_YELLOW.get());
+        this.getOrCreateBuilder(BlockTagsPM.SHULKER_BOXES).addTag(BlockTagsPM.COLORED_SHULKER_BOXES).add(Blocks.SHULKER_BOX);
+        this.getOrCreateBuilder(BlockTagsPM.SKYGLASS).add(BlocksPM.SKYGLASS.get()).addTag(BlockTagsPM.STAINED_SKYGLASS);
+        this.getOrCreateBuilder(BlockTagsPM.SKYGLASS_PANES).add(BlocksPM.SKYGLASS_PANE.get()).addTag(BlockTagsPM.STAINED_SKYGLASS_PANES);
+        this.getOrCreateBuilder(BlockTagsPM.STAINED_SKYGLASS).add(BlocksPM.STAINED_SKYGLASS_BLACK.get(), BlocksPM.STAINED_SKYGLASS_BLUE.get(), BlocksPM.STAINED_SKYGLASS_BROWN.get(), BlocksPM.STAINED_SKYGLASS_CYAN.get(), BlocksPM.STAINED_SKYGLASS_GRAY.get(), BlocksPM.STAINED_SKYGLASS_GREEN.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_LIME.get(), BlocksPM.STAINED_SKYGLASS_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PINK.get(), BlocksPM.STAINED_SKYGLASS_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_RED.get(), BlocksPM.STAINED_SKYGLASS_WHITE.get(), BlocksPM.STAINED_SKYGLASS_YELLOW.get());
+        this.getOrCreateBuilder(BlockTagsPM.STAINED_SKYGLASS_PANES).add(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
+        this.getOrCreateBuilder(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL).add(BlocksPM.HALLOWSTEEL_BLOCK.get());
+        this.getOrCreateBuilder(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).add(BlocksPM.HEXIUM_BLOCK.get());
+        this.getOrCreateBuilder(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
+        this.getOrCreateBuilder(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.get(), BlocksPM.STRIPPED_SUNWOOD_LOG.get(), BlocksPM.SUNWOOD_WOOD.get(), BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
     }
 
     @Override

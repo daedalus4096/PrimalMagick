@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -39,7 +39,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
     }
     
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
+    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (target != null) {
             ItemStack stack = this.getSimulatedItemStack(this.fluid);
             if (target.getType() == RayTraceResult.Type.BLOCK) {
@@ -81,7 +81,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
         boolean isSolid = material.isSolid();
         boolean isReplaceable = material.isReplaceable();
         if (world.isAirBlock(pos) || !isSolid || isReplaceable || (block instanceof ILiquidContainer && ((ILiquidContainer)block).canContainFluid(world, pos, state, this.fluid))) {
-            if (world.dimension.doesWaterVaporize() && this.fluid.isIn(FluidTags.WATER)) {
+            if (world.getDimensionType().isUltrawarm() && this.fluid.isIn(FluidTags.WATER)) {
                 // Do nothing for water in the Nether or similar dimensions
                 return;
             } else if (block instanceof ILiquidContainer && this.fluid == Fluids.WATER) {

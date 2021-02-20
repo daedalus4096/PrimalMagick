@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 /**
@@ -35,7 +35,7 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
      */
     protected abstract double getReachDistance(@Nonnull PlayerEntity caster);
     
-    protected void drawFx(@Nonnull World world, @Nonnull SpellPackage spell, Vec3d source, Vec3d target) {
+    protected void drawFx(@Nonnull World world, @Nonnull SpellPackage spell, Vector3d source, Vector3d target) {
         // Do nothing by default
     }
     
@@ -43,8 +43,8 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
     public void execute(SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (spell.getPayload() != null) {
             ForkSpellMod forkMod = spell.getMod(ForkSpellMod.class, "forks");
-            Vec3d baseLookVector = caster.getLook(1.0F);
-            List<Vec3d> lookVectors;
+            Vector3d baseLookVector = caster.getLook(1.0F);
+            List<Vector3d> lookVectors;
             if (forkMod == null) {
                 // If no Fork mod is in the spell package, use the caster's line of sight for the direction vector
                 lookVectors = Arrays.asList(baseLookVector.normalize());
@@ -54,9 +54,9 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
             }
             
             double reachDistance = this.getReachDistance(caster);
-            Vec3d eyePos = caster.getEyePosition(1.0F);
-            for (Vec3d lookVector : lookVectors) {
-                Vec3d reachPos = eyePos.add(lookVector.scale(reachDistance));
+            Vector3d eyePos = caster.getEyePosition(1.0F);
+            for (Vector3d lookVector : lookVectors) {
+            	Vector3d reachPos = eyePos.add(lookVector.scale(reachDistance));
                 AxisAlignedBB aabb = caster.getBoundingBox().expand(lookVector.scale(reachDistance)).grow(1.0D, 1.0D, 1.0D);
                 
                 // Determine if an entity hit was found by the raycast

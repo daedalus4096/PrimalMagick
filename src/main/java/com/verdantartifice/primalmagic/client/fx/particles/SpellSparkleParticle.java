@@ -5,8 +5,8 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteTexturedParticle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,11 +19,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class SpellSparkleParticle extends SpriteTexturedParticle {
     protected final IAnimatedSprite spriteSet;
 
-    public SpellSparkleParticle(World world, double x, double y, double z, IAnimatedSprite spriteSet) {
+    public SpellSparkleParticle(ClientWorld world, double x, double y, double z, IAnimatedSprite spriteSet) {
         this(world, x, y, z, 0.0D, 0.0D, 0.0D, spriteSet);
     }
     
-    public SpellSparkleParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite spriteSet) {
+    public SpellSparkleParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite spriteSet) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
         this.motionX = xSpeed;
         this.motionY = ySpeed;
@@ -55,7 +55,7 @@ public class SpellSparkleParticle extends SpriteTexturedParticle {
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new SpellSparkleParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
         }
         

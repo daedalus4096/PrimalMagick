@@ -7,8 +7,8 @@ import com.verdantartifice.primalmagic.common.tiles.rituals.RitualBellTileEntity
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.Material;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -28,7 +28,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class RitualBellTER extends TileEntityRenderer<RitualBellTileEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/ritual_bell_body");
-    public static final Material BODY_MATERIAL = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, TEXTURE);
+    public static final RenderMaterial BODY_MATERIAL = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, TEXTURE);
     protected final ModelRenderer modelRenderer = new ModelRenderer(32, 32, 0, 0);
 
     public RitualBellTER(TileEntityRendererDispatcher rendererDispatcherIn) {
@@ -59,7 +59,7 @@ public class RitualBellTER extends TileEntityRenderer<RitualBellTileEntity> {
                 this.modelRenderer.rotateAngleZ = delta;
             }
         }
-        IVertexBuilder ivertexbuilder = BODY_MATERIAL.getBuffer(bufferIn, RenderType::entitySolid);
+        IVertexBuilder ivertexbuilder = BODY_MATERIAL.getBuffer(bufferIn, RenderType::getEntitySolid);
         this.modelRenderer.render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn);
     }
 }

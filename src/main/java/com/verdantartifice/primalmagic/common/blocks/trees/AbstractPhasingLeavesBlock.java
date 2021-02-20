@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.particles.ParticleTypes;
@@ -19,15 +18,13 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.IShearable;
+import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -37,8 +34,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
-public abstract class AbstractPhasingLeavesBlock extends Block implements IShearable {
+public abstract class AbstractPhasingLeavesBlock extends Block implements IForgeShearable {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
     public static final IntegerProperty DISTANCE = BlockStateProperties.DISTANCE_1_7;
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
@@ -116,13 +112,12 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IShear
     
     private static BlockState updateDistance(BlockState state, IWorld world, BlockPos pos) {
         int dist = 7;
-        try (BlockPos.PooledMutable pmbp = BlockPos.PooledMutable.retain()) {
-            for (Direction dir : Direction.values()) {
-                pmbp.setPos(pos).move(dir);
-                dist = Math.min(dist, getDistance(world.getBlockState(pmbp)) + 1);
-                if (dist == 1) {
-                    break;
-                }
+        BlockPos.Mutable mbp = new BlockPos.Mutable();
+        for (Direction dir : Direction.values()) {
+            mbp.setPos(pos).move(dir);
+            dist = Math.min(dist, getDistance(world.getBlockState(mbp)) + 1);
+            if (dist == 1) {
+                break;
             }
         }
         return state.with(DISTANCE, Integer.valueOf(dist));
@@ -154,39 +149,8 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IShear
             }
         }
     }
-    
-    @Override
-    public boolean causesSuffocation(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return false;
-    }
-    
-    @Override
-    public boolean canEntitySpawn(BlockState state, IBlockReader worldIn, BlockPos pos, EntityType<?> type) {
-        return type == EntityType.OCELOT || type == EntityType.PARROT;
-    }
-    
-    @Override
-    public float getBlockHardness(BlockState blockState, IBlockReader worldIn, BlockPos pos) {
-        if (blockState.get(PHASE) == TimePhase.FULL) {
-            // If the block is fully phased in, use its default hardness as those aren't all the same
-            return this.blockHardness;
-        } else {
-            return blockState.get(PHASE).getHardness();
-        }
-    }
-    
-    @Override
-    public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, Entity exploder, Explosion explosion) {
-        if (state.get(PHASE) == TimePhase.FULL) {
-            // If the block is fully phased in, use its default resistance as those aren't all the same
-            return this.blockResistance;
-        } else {
-            return state.get(PHASE).getResistance();
-        }
-    }
 
-    @Override
-    public int getLightValue(BlockState state) {
-        return state.get(PHASE).getLightLevel();
+    protected static Boolean allowsSpawnOnLeaves(BlockState state, IBlockReader reader, BlockPos pos, EntityType<?> entity) {
+       return entity == EntityType.OCELOT || entity == EntityType.PARROT;
     }
 }

@@ -8,9 +8,9 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 
 /**
  * Definition of an attunement-linked attribute modifier.  Used to modify entity attributes when
@@ -21,10 +21,10 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 public class AttunementAttributeModifier {
     protected final Source source;
     protected final AttunementThreshold threshold;
-    protected final IAttribute attribute;
+    protected final Attribute attribute;
     protected final AttributeModifier modifier;
     
-    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull IAttribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Attribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
         this.source = source;
         this.threshold = threshold;
         this.attribute = attribute;
@@ -46,7 +46,7 @@ public class AttunementAttributeModifier {
     }
     
     @Nonnull
-    public IAttribute getAttribute() {
+    public Attribute getAttribute() {
         return this.attribute;
     }
     
@@ -57,17 +57,17 @@ public class AttunementAttributeModifier {
     
     public void applyToEntity(@Nullable LivingEntity entity) {
         if (entity != null && !entity.world.isRemote) {
-            IAttributeInstance instance = entity.getAttributes().getAttributeInstance(this.getAttribute());
+        	ModifiableAttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
                 instance.removeModifier(this.getModifier());
-                instance.applyModifier(this.getModifier());
+                instance.applyPersistentModifier(this.getModifier());
             }
         }
     }
     
     public void removeFromEntity(@Nullable LivingEntity entity) {
         if (entity != null && !entity.world.isRemote) {
-            IAttributeInstance instance = entity.getAttributes().getAttributeInstance(this.getAttribute());
+        	ModifiableAttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
                 instance.removeModifier(this.getModifier());
             }

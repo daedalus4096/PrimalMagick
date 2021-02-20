@@ -33,7 +33,7 @@ public class SpellProjectileModel extends SegmentedModel<SpellProjectileEntity> 
     }
 
     @Override
-    public void render(SpellProjectileEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(SpellProjectileEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.renderer.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
         this.renderer.rotateAngleX = headPitch * ((float)Math.PI / 180F);
     }

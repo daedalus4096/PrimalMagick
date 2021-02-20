@@ -43,7 +43,8 @@ public class SyncCooldownsPacket implements IMessageToClient {
         public static void onMessage(SyncCooldownsPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                PlayerEntity player = Minecraft.getInstance().player;
+            	Minecraft mc = Minecraft.getInstance();
+                PlayerEntity player = mc.player;
                 IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
                 if (cooldowns != null) {
                     cooldowns.deserializeNBT(message.data);

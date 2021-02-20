@@ -18,7 +18,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -116,7 +116,7 @@ public class RitualRecipeBuilder {
      * @param quantity the number of the tag to add
      * @return the modified builder
      */
-    public RitualRecipeBuilder addIngredient(Tag<Item> tag, int quantity) {
+    public RitualRecipeBuilder addIngredient(ITag<Item> tag, int quantity) {
         return this.addIngredient(Ingredient.fromTag(tag), quantity);
     }
     
@@ -126,7 +126,7 @@ public class RitualRecipeBuilder {
      * @param tag the tag of items to be added
      * @return the modified builder
      */
-    public RitualRecipeBuilder addIngredient(Tag<Item> tag) {
+    public RitualRecipeBuilder addIngredient(ITag<Item> tag) {
         return this.addIngredient(tag, 1);
     }
     
@@ -182,7 +182,7 @@ public class RitualRecipeBuilder {
      * @param quantity the number of the tag to add
      * @return the modified builder
      */
-    public RitualRecipeBuilder addProp(Tag<Block> tag, int quantity) {
+    public RitualRecipeBuilder addProp(ITag<Block> tag, int quantity) {
         return this.addProp(BlockIngredient.fromTag(tag), quantity);
     }
     
@@ -192,7 +192,7 @@ public class RitualRecipeBuilder {
      * @param tag the tag of blocks to be added
      * @return the modified builder
      */
-    public RitualRecipeBuilder addProp(Tag<Block> tag) {
+    public RitualRecipeBuilder addProp(ITag<Block> tag) {
         return this.addProp(tag, 1);
     }
     

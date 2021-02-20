@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -20,10 +20,10 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,13 +47,13 @@ public class RayTraceUtils {
         Minecraft mc = Minecraft.getInstance();
         Entity viewEntity = mc.getRenderViewEntity();
         double reachDistance = mc.playerController.extendedReach() ? 6.0D : (double)mc.playerController.getBlockReachDistance();
-        Vec3d eyePos = viewEntity.getEyePosition(1.0F);
+        Vector3d eyePos = viewEntity.getEyePosition(1.0F);
         
         // Calculate the square of the distance to search in the raytrace; limit to the square distance of the current mouseover block
         double sqReachDistance = (mc.objectMouseOver != null) ? mc.objectMouseOver.getHitVec().squareDistanceTo(eyePos) : (reachDistance * reachDistance);
         
-        Vec3d lookVector = viewEntity.getLook(1.0F);
-        Vec3d reachPos = eyePos.add(lookVector.scale(reachDistance));
+        Vector3d lookVector = viewEntity.getLook(1.0F);
+        Vector3d reachPos = eyePos.add(lookVector.scale(reachDistance));
         AxisAlignedBB aabb = viewEntity.getBoundingBox().expand(lookVector.scale(reachDistance)).grow(1.0D, 1.0D, 1.0D);
         
         // Determine if there's an entity closer than the current mouseover block
@@ -85,15 +85,15 @@ public class RayTraceUtils {
      * @see {@link net.minecraft.entity.projectile.ProjectileHelper#func_221269_a}
      */
     @Nullable
-    public static EntityRayTraceResult rayTraceEntities(@Nonnull World world, @Nullable Entity excludeEntity, @Nonnull Vec3d startVec, @Nonnull Vec3d endVec, @Nonnull AxisAlignedBB aabb, @Nullable Predicate<Entity> selector, double maxSqDistance) {
+    public static EntityRayTraceResult rayTraceEntities(@Nonnull World world, @Nullable Entity excludeEntity, @Nonnull Vector3d startVec, @Nonnull Vector3d endVec, @Nonnull AxisAlignedBB aabb, @Nullable Predicate<Entity> selector, double maxSqDistance) {
         double sqDistThreshold = maxSqDistance;
         Entity hitEntity = null;
-        Vec3d hitVec = null;
+        Vector3d hitVec = null;
         
         // Get all entities in the given bounding box which satisfy the given criteria
         for (Entity entity : world.getEntitiesInAABBexcluding(excludeEntity, aabb, selector)) {
             AxisAlignedBB entityAABB = entity.getBoundingBox().grow(0.3D);
-            Optional<Vec3d> optionalHitVec = entityAABB.rayTrace(startVec, endVec);
+            Optional<Vector3d> optionalHitVec = entityAABB.rayTrace(startVec, endVec);
             if (optionalHitVec.isPresent()) {
                 // If the entity is hit by the ray, determine if it's the closest one yet
                 double sqDist = startVec.squareDistanceTo(optionalHitVec.get());
@@ -125,12 +125,12 @@ public class RayTraceUtils {
         
         // Get the raytrace result's hitVec and the entity's position
         BlockPos targetPos = new BlockPos(entityResult.getHitVec());
-        Vec3d entityVec = entityResult.getEntity().getPositionVec();
+        Vector3d entityVec = entityResult.getEntity().getPositionVec();
         BlockPos entityPos = new BlockPos(entityVec);
-        Vec3d targetVec = new Vec3d(targetPos.getX() + 0.5D, targetPos.getY() + 0.5D, targetPos.getZ() + 0.5D);
+        Vector3d targetVec = new Vector3d(targetPos.getX() + 0.5D, targetPos.getY() + 0.5D, targetPos.getZ() + 0.5D);
         
         // Calculate a direction vector based on the raytrace result's hitVec and the entity's position
-        Vec3d dirVec = entityVec.subtract(targetVec);
+        Vector3d dirVec = entityVec.subtract(targetVec);
         Direction dir = Direction.getFacingFromVector(dirVec.x, dirVec.y, dirVec.z);
         
         return new BlockRayTraceResult(entityResult.getHitVec(), dir, entityPos, false);
@@ -149,8 +149,8 @@ public class RayTraceUtils {
             return false;
         }
         
-        Vec3d startVec = new Vec3d(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D);
-        Vec3d endVec = new Vec3d(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D);
+        Vector3d startVec = new Vector3d(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D);
+        Vector3d endVec = new Vector3d(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D);
         EntitylessRayTraceContext context = new EntitylessRayTraceContext(world, startVec, endVec, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.ANY);
         BlockRayTraceResult result = RayTraceUtils.rayTraceBlocksIgnoringSource(context);
 
@@ -173,9 +173,9 @@ public class RayTraceUtils {
     protected static BlockRayTraceResult doRayTraceCheck(EntitylessRayTraceContext context, BlockPos pos) {
         IBlockReader world = context.getWorld();
         BlockState blockState = world.getBlockState(pos);
-        IFluidState fluidState = world.getFluidState(pos);
-        Vec3d startVec = context.getStartVec();
-        Vec3d endVec = context.getEndVec();
+        FluidState fluidState = world.getFluidState(pos);
+        Vector3d startVec = context.getStartVec();
+        Vector3d endVec = context.getEndVec();
         VoxelShape blockShape = context.getBlockShape(blockState, world, pos);
         BlockRayTraceResult blockResult = RayTraceUtils.doCollisionCheck(world, startVec, endVec, pos, blockShape, blockState);
         VoxelShape fluidShape = context.getFluidShape(fluidState, world, pos);
@@ -186,19 +186,19 @@ public class RayTraceUtils {
     }
     
     protected static BlockRayTraceResult createMiss(EntitylessRayTraceContext context) {
-        Vec3d endVec = context.getEndVec();
-        Vec3d delta = context.getStartVec().subtract(endVec);
+    	Vector3d endVec = context.getEndVec();
+    	Vector3d delta = context.getStartVec().subtract(endVec);
         return BlockRayTraceResult.createMiss(endVec, Direction.getFacingFromVector(delta.x, delta.y, delta.z), new BlockPos(endVec));
     }
     
     /**
-     * @see {@link net.minecraft.world.IBlockReader#rayTraceBlocks(Vec3d, Vec3d, BlockPos, VoxelShape, BlockState)}
+     * @see {@link net.minecraft.world.IBlockReader#rayTraceBlocks(Vector3d, Vector3d, BlockPos, VoxelShape, BlockState)}
      */
     @Nullable
-    protected static BlockRayTraceResult doCollisionCheck(IBlockReader world, Vec3d startVec, Vec3d endVec, BlockPos iteratedPos, VoxelShape iteratedShape, BlockState iteratedState) {
+    protected static BlockRayTraceResult doCollisionCheck(IBlockReader world, Vector3d startVec, Vector3d endVec, BlockPos iteratedPos, VoxelShape iteratedShape, BlockState iteratedState) {
         BlockRayTraceResult result = iteratedShape.rayTrace(startVec, endVec, iteratedPos);
         if (result != null) {
-            BlockRayTraceResult faceResult = iteratedState.getRaytraceShape(world, iteratedPos).rayTrace(startVec, endVec, iteratedPos);
+            BlockRayTraceResult faceResult = iteratedState.getRayTraceShape(world, iteratedPos).rayTrace(startVec, endVec, iteratedPos);
             if (faceResult != null && (faceResult.getHitVec().subtract(startVec).lengthSquared() < result.getHitVec().subtract(startVec).lengthSquared())) {
                 return result.withFace(faceResult.getFace());
             }
@@ -210,8 +210,8 @@ public class RayTraceUtils {
      * @see {@link net.minecraft.world.IBlockReader#func_217300_a(RayTraceContext, BiFunction, Function)}
      */
     protected static BlockRayTraceResult iterateRayTrace(EntitylessRayTraceContext context, BiFunction<EntitylessRayTraceContext, BlockPos, BlockRayTraceResult> checkFunc, Function<EntitylessRayTraceContext, BlockRayTraceResult> missFunc) {
-        Vec3d startVec = context.getStartVec();
-        Vec3d endVec = context.getEndVec();
+    	Vector3d startVec = context.getStartVec();
+    	Vector3d endVec = context.getEndVec();
         if (startVec.equals(endVec)) {
             return missFunc.apply(context);
         } else {
@@ -273,12 +273,12 @@ public class RayTraceUtils {
      */
     protected static class EntitylessRayTraceContext {
         private final IBlockReader world;
-        private final Vec3d startVec;
-        private final Vec3d endVec;
+        private final Vector3d startVec;
+        private final Vector3d endVec;
         private final RayTraceContext.BlockMode blockMode;
         private final RayTraceContext.FluidMode fluidMode;
 
-        public EntitylessRayTraceContext(IBlockReader world, Vec3d startVec, Vec3d endVec, RayTraceContext.BlockMode blockMode, RayTraceContext.FluidMode fluidMode) {
+        public EntitylessRayTraceContext(IBlockReader world, Vector3d startVec, Vector3d endVec, RayTraceContext.BlockMode blockMode, RayTraceContext.FluidMode fluidMode) {
             this.world = world;
             this.startVec = startVec;
             this.endVec = endVec;
@@ -290,11 +290,11 @@ public class RayTraceUtils {
             return this.world;
         }
         
-        public Vec3d getStartVec() {
+        public Vector3d getStartVec() {
             return this.startVec;
         }
         
-        public Vec3d getEndVec() {
+        public Vector3d getEndVec() {
             return this.endVec;
         }
         
@@ -302,7 +302,7 @@ public class RayTraceUtils {
             return this.blockMode.get(state, world, pos, ISelectionContext.dummy());
         }
         
-        public VoxelShape getFluidShape(IFluidState state, IBlockReader world, BlockPos pos) {
+        public VoxelShape getFluidShape(FluidState state, IBlockReader world, BlockPos pos) {
             return this.fluidMode.test(state) ? state.getShape(world, pos) : VoxelShapes.empty();
         }
     }

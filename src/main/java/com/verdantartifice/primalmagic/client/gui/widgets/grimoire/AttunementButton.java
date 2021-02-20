@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AttunementButton extends AbstractTopicButton {
     protected Source source;
     
-    public AttunementButton(int widthIn, int heightIn, String text, GrimoireScreen screen, Source source) {
+    public AttunementButton(int widthIn, int heightIn, ITextComponent text, GrimoireScreen screen, Source source) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());
         this.source = source;
     }

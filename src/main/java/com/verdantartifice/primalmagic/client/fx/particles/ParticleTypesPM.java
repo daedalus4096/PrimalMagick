@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.particles.BasicParticleType;
@@ -19,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 @OnlyIn(Dist.CLIENT)
 public class ParticleTypesPM {
-    private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, PrimalMagic.MODID);
+    private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PrimalMagic.MODID);
 
     public static void init() {
         PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -28,7 +29,17 @@ public class ParticleTypesPM {
     public static final RegistryObject<BasicParticleType> WAND_POOF = PARTICLE_TYPES.register("wand_poof", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MANA_SPARKLE = PARTICLE_TYPES.register("mana_sparkle", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SPELL_SPARKLE = PARTICLE_TYPES.register("spell_sparkle", () -> new BasicParticleType(true));
-    public static final RegistryObject<ParticleType<SpellBoltParticleData>> SPELL_BOLT = PARTICLE_TYPES.register("spell_bolt", () -> new ParticleType<>(false, SpellBoltParticleData.DESERIALIZER));
-    public static final RegistryObject<ParticleType<ItemParticleData>> OFFERING = PARTICLE_TYPES.register("offering", () -> new ParticleType<>(false, ItemParticleData.DESERIALIZER));
+    public static final RegistryObject<ParticleType<SpellBoltParticleData>> SPELL_BOLT = PARTICLE_TYPES.register("spell_bolt", () -> new ParticleType<SpellBoltParticleData>(false, SpellBoltParticleData.DESERIALIZER) {
+        @Override
+        public Codec<SpellBoltParticleData> func_230522_e_() {
+            return SpellBoltParticleData.CODEC;
+        }
+    });
+    public static final RegistryObject<ParticleType<ItemParticleData>> OFFERING = PARTICLE_TYPES.register("offering", () -> new ParticleType<ItemParticleData>(false, ItemParticleData.DESERIALIZER) {
+        @Override
+        public Codec<ItemParticleData> func_230522_e_() {
+            return ItemParticleData.func_239809_a_(this);
+        }
+    });
     public static final RegistryObject<BasicParticleType> PROP_MARKER = PARTICLE_TYPES.register("prop_marker", () -> new BasicParticleType(true));
 }

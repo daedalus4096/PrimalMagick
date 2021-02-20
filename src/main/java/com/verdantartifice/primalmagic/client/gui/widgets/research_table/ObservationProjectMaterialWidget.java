@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
@@ -25,17 +26,17 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw observation icon
         Minecraft.getInstance().getTextureManager().bindTexture(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
         RenderSystem.pushMatrix();
         RenderSystem.translatef(this.x, this.y, 0.0F);
         RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
-        this.blit(0, 0, 0, 0, 255, 255);
+        this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         RenderSystem.popMatrix();
         
         // Draw base class stuff
-        super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     @Override

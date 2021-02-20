@@ -10,12 +10,12 @@ import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEnti
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -27,7 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/spell_projectile.png");
-    protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
+    protected static final RenderType TRANSLUCENT_TYPE = RenderType.getEntityTranslucent(TEXTURE);
 
     protected final SpellMineModel model = new SpellMineModel();
 
@@ -53,12 +53,12 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
         matrixStack.rotate(Vector3f.XP.rotationDegrees(MathHelper.cos(ticks * 0.1F) * 180.0F));
         matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.sin(ticks * 0.15F) * 360.0F));
         matrixStack.scale(-0.5F, -0.5F, 0.5F);
-        this.model.render(entity, 0.0F, 0.0F, 0.0F, yaw, pitch);
+        this.model.setRotationAngles(entity, 0.0F, 0.0F, 0.0F, yaw, pitch);
         IVertexBuilder coreVertexBuilder = buffer.getBuffer(this.model.getRenderType(TEXTURE));
-        this.model.render(matrixStack, coreVertexBuilder, packedLight, OverlayTexture.DEFAULT_LIGHT, r, g, b, 1.0F * alphaFactor);  // Render the core of the mine
+        this.model.render(matrixStack, coreVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F * alphaFactor);  // Render the core of the mine
         matrixStack.scale(1.5F, 1.5F, 1.5F);
         IVertexBuilder glowVertexBuilder = buffer.getBuffer(TRANSLUCENT_TYPE);
-        this.model.render(matrixStack, glowVertexBuilder, packedLight, OverlayTexture.DEFAULT_LIGHT, r, g, b, 0.5F * alphaFactor);  // Render the transparent glow of the mine
+        this.model.render(matrixStack, glowVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 0.5F * alphaFactor);  // Render the transparent glow of the mine
         matrixStack.pop();
         super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
     }

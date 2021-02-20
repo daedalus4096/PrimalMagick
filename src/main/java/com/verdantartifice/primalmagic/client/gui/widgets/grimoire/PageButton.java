@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
@@ -11,6 +12,7 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -27,7 +29,7 @@ public class PageButton extends Button {
     protected boolean isNext;
 
     public PageButton(int widthIn, int heightIn, GrimoireScreen screen, boolean isNext) {
-        super(widthIn, heightIn, 12, 5, "", new Handler());
+        super(widthIn, heightIn, 12, 5, StringTextComponent.EMPTY, new Handler());
         this.screen = screen;
         this.isNext = isNext;
     }
@@ -41,7 +43,7 @@ public class PageButton extends Button {
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(TEXTURE);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -53,10 +55,10 @@ public class PageButton extends Button {
             int dy = this.height / 2;
             RenderSystem.translatef(this.x + dx, this.y + dy, 0.0F);
             RenderSystem.scalef(1.0F + scaleMod, 1.0F + scaleMod, 1.0F);
-            this.blit(-dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
+            this.blit(matrixStack, -dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
             RenderSystem.popMatrix();
         } else {
-            this.blit(this.x, this.y, this.isNext ? 12 : 0, 185, this.width, this.height);
+            this.blit(matrixStack, this.x, this.y, this.isNext ? 12 : 0, 185, this.width, this.height);
         }
     }
     

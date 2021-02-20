@@ -22,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.BlockSnapshot;
@@ -36,7 +37,7 @@ import net.minecraftforge.event.ForgeEventFactory;
  * @author Daedalus4096
  */
 public class BlockSwapper {
-    protected static final Map<Integer, Queue<BlockSwapper>> REGISTRY = new HashMap<>();
+    protected static final Map<ResourceLocation, Queue<BlockSwapper>> REGISTRY = new HashMap<>();
     
     protected final BlockPos pos;
     protected final BlockState source;
@@ -61,14 +62,9 @@ public class BlockSwapper {
     
     @Nonnull
     public static Queue<BlockSwapper> getWorldSwappers(@Nonnull World world) {
-        int dim = world.getDimension().getType().getId();
-        Queue<BlockSwapper> swapperQueue = REGISTRY.get(Integer.valueOf(dim));
-        if (swapperQueue == null) {
-            // If no swapper queue is defined for the world, create one
-            swapperQueue = new LinkedBlockingQueue<>();
-            REGISTRY.put(Integer.valueOf(dim), swapperQueue);
-        }
-        return swapperQueue;
+    	return REGISTRY.computeIfAbsent(world.getDimensionKey().getLocation(), (key) -> {
+    		return new LinkedBlockingQueue<>();
+    	});
     }
     
     public void execute(World world) {
@@ -76,7 +72,7 @@ public class BlockSwapper {
         
         // Only allow the swap if the source block could normally be removed by the player and there's a difference to be had
         boolean allow = (state.getBlockHardness(world, this.pos) >= 0.0F) && (this.source == null || this.source.equals(state));
-        if (allow && world.canMineBlockBody(this.player, this.pos) && this.isTargetDifferent(state) && this.canPlace(world, state)) {
+        if (allow && world.isBlockModifiable(this.player, this.pos) && this.isTargetDifferent(state) && this.canPlace(world, state)) {
             if (this.target == null || this.target.isEmpty()) {
                 // If the swap target is empty, just remove the source block
                 world.removeBlock(this.pos, false);
@@ -85,9 +81,9 @@ public class BlockSwapper {
                 if (targetBlock != null && targetBlock != Blocks.AIR) {
                     // If the target is a block, set its state, with facing if applicable, in the world
                     BlockState targetState = targetBlock.getDefaultState();
-                    if (state.has(BlockStateProperties.FACING)) {
+                    if (state.hasProperty(BlockStateProperties.FACING)) {
                         targetState = targetState.with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING));
-                    } else if (state.has(BlockStateProperties.HORIZONTAL_FACING)) {
+                    } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
                         targetState = targetState.with(BlockStateProperties.HORIZONTAL_FACING, state.get(BlockStateProperties.HORIZONTAL_FACING));
                     }
                     world.setBlockState(this.pos, targetState, Constants.BlockFlags.DEFAULT);
@@ -104,7 +100,7 @@ public class BlockSwapper {
                     entity.setMotion(0.0D, 0.0D, 0.0D);
                     world.addEntity(entity);
                 }
-                PacketHandler.sendToAllAround(new WandPoofPacket(this.pos, Color.WHITE.getRGB(), true, Direction.UP), world.getDimension().getType(), this.pos, 32.0D);
+                PacketHandler.sendToAllAround(new WandPoofPacket(this.pos, Color.WHITE.getRGB(), true, Direction.UP), world.getDimensionKey(), this.pos, 32.0D);
             }
         }
     }
@@ -114,6 +110,6 @@ public class BlockSwapper {
     }
     
     protected boolean canPlace(World world, BlockState state) {
-        return !ForgeEventFactory.onBlockPlace(this.player, new BlockSnapshot(world, this.pos, state), Direction.UP);
+        return !ForgeEventFactory.onBlockPlace(this.player, BlockSnapshot.create(world.getDimensionKey(), world, this.pos), Direction.UP);
     }
 }

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import java.util.Collections;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -12,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -33,13 +35,13 @@ public class ResearchWidget extends Widget {
     protected boolean isComplete;
     
     public ResearchWidget(SimpleResearchKey key, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, "");
+        super(x, y, 16, 16, StringTextComponent.EMPTY);
         this.key = key;
         this.isComplete = isComplete;
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         // Pick the icon to show based on the prefix of the research key
@@ -61,7 +63,7 @@ public class ResearchWidget extends Widget {
         Minecraft.getInstance().getTextureManager().bindTexture(loc);
         RenderSystem.translatef(this.x, this.y, 0.0F);
         RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
-        this.blit(0, 0, 0, 0, 255, 255);
+        this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         RenderSystem.popMatrix();
         
         if (this.isComplete) {
@@ -70,14 +72,14 @@ public class ResearchWidget extends Widget {
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x + 8, this.y, 100.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
-            this.blit(0, 0, 159, 207, 10, 10);
+            this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             RenderSystem.popMatrix();
         }
         
         if (this.isHovered()) {
             // Render tooltip
             ITextComponent text = new TranslationTextComponent("primalmagic.research." + this.key.getRootKey() + ".text");
-            GuiUtils.renderCustomTooltip(Collections.singletonList(text), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(text), this.x, this.y);
         }
     }
     

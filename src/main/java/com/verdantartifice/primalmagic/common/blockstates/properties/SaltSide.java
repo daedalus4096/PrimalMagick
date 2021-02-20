@@ -19,12 +19,12 @@ public enum SaltSide implements IStringSerializable {
     }
     
     @Override
-    public String getName() {
+    public String getString() {
         return this.name;
     }
     
     @Override
     public String toString() {
-        return this.getName();
+        return this.getString();
     }
 }

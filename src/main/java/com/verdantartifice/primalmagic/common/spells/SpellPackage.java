@@ -52,7 +52,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     @Nonnull
     public ITextComponent getName() {
         // Color spell names according to their rarity, like with items
-        return new StringTextComponent(this.name).applyTextStyle(this.getRarity().color);
+        return new StringTextComponent(this.name).mergeStyle(this.getRarity().color);
     }
     
     public void setName(@Nullable String name) {

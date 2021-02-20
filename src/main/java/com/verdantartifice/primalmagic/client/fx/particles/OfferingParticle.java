@@ -6,11 +6,11 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteTexturedParticle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -29,7 +29,7 @@ public class OfferingParticle extends SpriteTexturedParticle {
     protected final double targetZ;
 
     @SuppressWarnings("deprecation")
-    protected OfferingParticle(World world, double x, double y, double z, double tx, double ty, double tz, ItemStack stack) {
+    protected OfferingParticle(ClientWorld world, double x, double y, double z, double tx, double ty, double tz, ItemStack stack) {
         super(world, x, y, z);
         this.setSprite(Minecraft.getInstance().getItemRenderer().getItemModelWithOverrides(stack, world, (LivingEntity)null).getParticleTexture());
         this.targetX = tx;
@@ -129,7 +129,7 @@ public class OfferingParticle extends SpriteTexturedParticle {
         public Factory(IAnimatedSprite spriteSet) {}
 
         @Override
-        public Particle makeParticle(ItemParticleData typeIn, World worldIn, double x, double y, double z, double tx, double ty, double tz) {
+        public Particle makeParticle(ItemParticleData typeIn, ClientWorld worldIn, double x, double y, double z, double tx, double ty, double tz) {
             return new OfferingParticle(worldIn, x, y, z, tx, ty, tz, typeIn.getItemStack());
         }
     }

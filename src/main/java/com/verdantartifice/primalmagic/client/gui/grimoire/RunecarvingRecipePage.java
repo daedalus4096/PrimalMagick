@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
@@ -40,8 +41,8 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
     }
 
     @Override
-    public void render(int side, int x, int y, int mouseX, int mouseY) {
-        super.render(side, x, y, mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+        super.render(matrixStack, side, x, y, mouseX, mouseY);
         y += 53;
         
         int indent = 84;
@@ -59,7 +60,7 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.translatef(x + 16 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 68, 0.0F);
         RenderSystem.scalef(2.0F, 2.0F, 1.0F);
-        this.blit(0, 0, 0, 51, overlayWidth, overlayHeight);
+        this.blit(matrixStack, 0, 0, 0, 51, overlayWidth, overlayHeight);
         RenderSystem.popMatrix();
     }
 }

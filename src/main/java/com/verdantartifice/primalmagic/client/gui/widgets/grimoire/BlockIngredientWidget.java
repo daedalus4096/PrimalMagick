@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 
@@ -13,6 +14,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,12 +30,12 @@ public class BlockIngredientWidget extends Widget {
     protected final BlockIngredient ingredient;
     
     public BlockIngredientWidget(@Nullable BlockIngredient ingredient, int xIn, int yIn) {
-        super(xIn, yIn, 16, 16, "");
+        super(xIn, yIn, 16, 16, StringTextComponent.EMPTY);
         this.ingredient = ingredient;
     }
 
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (this.ingredient != null) {
             Block[] matching = this.ingredient.getMatchingBlocks();
             if (matching != null && matching.length > 0) {
@@ -43,11 +45,12 @@ public class BlockIngredientWidget extends Widget {
                 ItemStack toDisplay = (block != null) ? 
                         new ItemStack(block) : 
                         new ItemStack(Blocks.BARRIER).setDisplayName(new TranslationTextComponent("primalmagic.grimoire.missing_block"));
-                GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage(), false);
+                GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
                 if (this.isHovered()) {
                     // If hovered, show a tooltip with the display name of the current matching itemstack
-                    List<ITextComponent> textList = Collections.singletonList(toDisplay.getDisplayName().applyTextStyle(toDisplay.getItem().getRarity(toDisplay).color));
-                    GuiUtils.renderCustomTooltip(textList, this.x, this.y);
+                	StringTextComponent name = new StringTextComponent(toDisplay.getDisplayName().getString());
+                    List<ITextComponent> textList = Collections.singletonList(name.mergeStyle(toDisplay.getItem().getRarity(toDisplay).color));
+                    GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
                 }
             }
         }

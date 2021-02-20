@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.SoundCategory;
@@ -20,8 +20,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 /**
  * Definition for an animal conjuration spell.  Spawns a random passive animal at the target location.
@@ -67,7 +68,7 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vec3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
+    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (burstPoint != null) {
             // Do nothing if this is a burst spell
             return;
@@ -80,14 +81,14 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
     
     protected void placeRandomAnimal(World world, BlockRayTraceResult blockTarget) {
         BlockPos pos = blockTarget.getPos().offset(blockTarget.getFace());
-        IFluidState state = world.getFluidState(pos);
+        FluidState state = world.getFluidState(pos);
         
         // Get a random entity type for either land or water, depending on the fluid state of the target location
         EntityType<?> entityType = (state.isTagged(FluidTags.WATER) && state.isSource()) ? 
                 WATER_ANIMALS.getRandom(world.rand) : 
                 LAND_ANIMALS.getRandom(world.rand);
-        if (entityType != null) {
-            entityType.spawn(world, null, null, pos, SpawnReason.MOB_SUMMONED, false, false);
+        if (entityType != null && world instanceof ServerWorld) {
+            entityType.spawn((ServerWorld)world, null, null, pos, SpawnReason.MOB_SUMMONED, false, false);
         }
     }
 

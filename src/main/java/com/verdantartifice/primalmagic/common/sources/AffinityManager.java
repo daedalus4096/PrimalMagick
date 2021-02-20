@@ -81,7 +81,7 @@ public class AffinityManager {
         if (sources == null) {
             sources = new SourceList();
         }
-        for (Item item : ItemTags.getCollection().getOrCreate(tag).getAllElements()) {
+        for (Item item : ItemTags.getCollection().get(tag).getAllElements()) {
             // Register affinities for each item in the tag
             registerAffinities(new ItemStack(item, 1), sources);
         }
@@ -94,7 +94,7 @@ public class AffinityManager {
         if (sources == null) {
             sources = new SourceList();
         }
-        for (Block block : BlockTags.getCollection().getOrCreate(tag).getAllElements()) {
+        for (Block block : BlockTags.getCollection().get(tag).getAllElements()) {
             // Register affinities for each block in the tag
             registerAffinities(new ItemStack(block, 1), sources);
         }

@@ -33,7 +33,7 @@ public enum EssenceType implements IStringSerializable {
 
     @Override
     @Nonnull
-    public String getName() {
+    public String getString() {
         return this.name;
     }
     

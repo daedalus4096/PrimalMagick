@@ -5,9 +5,9 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteTexturedParticle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,7 +32,7 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
     protected final double loops = 2.0D;
     protected double dist = 1.0D;
 
-    protected ManaSparkleParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite spriteSet) {
+    protected ManaSparkleParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite spriteSet) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
         this.initX = x;
         this.initY = y;
@@ -60,12 +60,12 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
         double z2 = (this.initZSpeed * (double)this.maxAge) + this.initZ;
         
         // Compute the distance the particle travels
-        Vec3d start = new Vec3d(this.initX, this.initY, this.initZ);
-        Vec3d end = new Vec3d(x2, y2, z2);
+        Vector3d start = new Vector3d(this.initX, this.initY, this.initZ);
+        Vector3d end = new Vector3d(x2, y2, z2);
         this.dist = end.subtract(start).length();
 
         // Solve for pitch and yaw of the particle vector
-        Vec3d unitPath = end.subtract(start).normalize();
+        Vector3d unitPath = end.subtract(start).normalize();
         double pitch = Math.asin(unitPath.y);
         double yaw = (Math.PI / 2.0D) - Math.atan2(unitPath.x, unitPath.z);
         this.sinYaw = Math.sin(yaw);
@@ -104,7 +104,7 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new ManaSparkleParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
         }
     }

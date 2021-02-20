@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
@@ -25,27 +26,27 @@ public class CalcinatorScreen extends ContainerScreen<CalcinatorContainer> {
     }
     
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         
         // Animate burn indicator
         if (this.container.isBurning()) {
             int burn = this.container.getBurnLeftScaled();
-            this.blit(this.guiLeft + 34, this.guiTop + 48 - burn, 176, 12 - burn, 14, burn + 1);
+            this.blit(matrixStack, this.guiLeft + 34, this.guiTop + 48 - burn, 176, 12 - burn, 14, burn + 1);
         }
         
         // Animate cook progress indicator
         int cook = this.container.getCookProgressionScaled();
-        this.blit(this.guiLeft + 57, this.guiTop + 34, 176, 14, cook + 1, 16);
+        this.blit(matrixStack, this.guiLeft + 57, this.guiTop + 34, 176, 14, cook + 1, 16);
     }
 }

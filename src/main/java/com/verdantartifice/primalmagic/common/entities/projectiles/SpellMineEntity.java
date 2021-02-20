@@ -16,14 +16,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
@@ -54,7 +53,7 @@ public class SpellMineEntity extends Entity {
         this.spell = null;
     }
     
-    public SpellMineEntity(World world, Vec3d pos, PlayerEntity caster, SpellPackage spell, ItemStack spellSource, int duration) {
+    public SpellMineEntity(World world, Vector3d pos, PlayerEntity caster, SpellPackage spell, ItemStack spellSource, int duration) {
         super(EntityTypesPM.SPELL_MINE.get(), world);
         this.setPosition(pos.x, pos.y, pos.z);
         this.spell = spell;
@@ -122,7 +121,7 @@ public class SpellMineEntity extends Entity {
     protected void readAdditional(CompoundNBT compound) {
         this.caster = null;
         if (compound.contains("Caster", Constants.NBT.TAG_COMPOUND)) {
-            this.casterId = NBTUtil.readUniqueId(compound.getCompound("Caster"));
+            this.casterId =  compound.getUniqueId("Caster");
         }
         
         this.spell = null;
@@ -148,7 +147,7 @@ public class SpellMineEntity extends Entity {
     @Override
     protected void writeAdditional(CompoundNBT compound) {
         if (this.casterId != null) {
-            compound.put("Caster", NBTUtil.writeUniqueId(this.casterId));
+            compound.putUniqueId("Caster", this.casterId);
         }
         if (this.spell != null) {
             compound.put("Spell", this.spell.serializeNBT());

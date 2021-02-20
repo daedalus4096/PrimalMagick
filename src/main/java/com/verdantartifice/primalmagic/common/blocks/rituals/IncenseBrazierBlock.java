@@ -47,7 +47,9 @@ public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/incense_brazier"));
 
     public IncenseBrazierBlock() {
-        super(Block.Properties.create(Material.IRON).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.METAL).lightValue(7));
+        super(Block.Properties.create(Material.IRON).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.METAL).setLightLevel((state) -> { 
+        	return state.get(BlockStateProperties.LIT) ? 7 : 0; 
+    	}));
         this.setDefaultState(this.getDefaultState().with(LIT, Boolean.FALSE));
     }
     
@@ -62,13 +64,6 @@ public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
         builder.add(LIT);
     }
     
-    @SuppressWarnings("deprecation")
-    @Override
-    public int getLightValue(BlockState state) {
-        // Only give off light if the brazier is lit
-        return state.get(LIT) ? super.getLightValue(state) : 0;
-    }
-
     @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {

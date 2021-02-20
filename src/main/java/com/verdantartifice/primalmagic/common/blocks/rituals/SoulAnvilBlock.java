@@ -93,13 +93,17 @@ public class SoulAnvilBlock extends FallingBlock implements IRitualPropBlock {
     }
     
     @Override
-    public void onEndFalling(World worldIn, BlockPos pos, BlockState fallingState, BlockState hitState) {
-        worldIn.playEvent(1031, pos, 0);
+    public void onEndFalling(World worldIn, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
+    	if (!fallingBlock.isSilent()) {
+            worldIn.playEvent(1031, pos, 0);
+    	}
     }
     
     @Override
-    public void onBroken(World worldIn, BlockPos pos) {
-        worldIn.playEvent(1029, pos, 0);
+    public void onBroken(World worldIn, BlockPos pos, FallingBlockEntity fallingBlock) {
+    	if (!fallingBlock.isSilent()) {
+            worldIn.playEvent(1029, pos, 0);
+    	}
     }
     
     @Override

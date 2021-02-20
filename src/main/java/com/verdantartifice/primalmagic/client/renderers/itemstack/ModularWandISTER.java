@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,7 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ModularWandISTER extends ItemStackTileEntityRenderer {
     @Override
-    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         if (itemStack.getItem() instanceof ModularWandItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
@@ -37,7 +38,7 @@ public class ModularWandISTER extends ItemStackTileEntityRenderer {
             WandCap cap = wand.getWandCap(itemStack);
             WandGem gem = wand.getWandGem(itemStack);
             
-            IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
+            IVertexBuilder builder = buffer.getBuffer(RenderType.getSolid());
             if (core != null) {
                 // Render the wand core
                 IBakedModel model = mc.getModelManager().getModel(core.getWandModelResourceLocation());

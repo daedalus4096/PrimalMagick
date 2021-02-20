@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagic.common.worldgen.features;
 
-import com.google.common.collect.ImmutableMap;
-import com.mojang.datafixers.Dynamic;
-import com.mojang.datafixers.types.DynamicOps;
-import com.verdantartifice.primalmagic.common.sources.Source;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.world.gen.feature.IFeatureConfig;
 
@@ -13,19 +11,13 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
  * @author Daedalus4096
  */
 public class ShrineConfig implements IFeatureConfig {
-    public final Source source;
+    public static final Codec<ShrineConfig> CODEC = RecordCodecBuilder.create((instance) -> {
+        return instance.group(ShrineStructure.Type.CODEC.fieldOf("type").forGetter((c) -> { return c.type; })).apply(instance, ShrineConfig::new);
+    });
     
-    public ShrineConfig(Source source) {
-        this.source = source;
-    }
+    public final ShrineStructure.Type type;
     
-    @Override
-    public <T> Dynamic<T> serialize(DynamicOps<T> ops) {
-        return new Dynamic<>(ops, ops.createMap(ImmutableMap.of(ops.createString("source"), ops.createString(this.source.getTag()))));
-    }
-
-    public static <T> ShrineConfig deserialize(Dynamic<T> params) {
-        Source source = Source.getSource(params.get("source").asString(""));
-        return new ShrineConfig(source);
+    public ShrineConfig(ShrineStructure.Type type) {
+        this.type = type;
     }
 }

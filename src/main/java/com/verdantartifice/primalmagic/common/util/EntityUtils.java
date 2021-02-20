@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 /**
@@ -93,7 +93,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, @Nonnull Vec3d center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, @Nonnull Vector3d center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRange(world, center.getX(), center.getY(), center.getZ(), exclude, entityClass, range);
     }
 
@@ -147,7 +147,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, @Nonnull Vec3d center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, @Nonnull Vector3d center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         List<T> entities = getEntitiesInRange(world, center, exclude, entityClass, range);
         return entities.stream().sorted(new EntityDistanceComparator(center)).collect(Collectors.toList());
     }
@@ -167,7 +167,7 @@ public class EntityUtils {
      * @return a list of all such entities in range
      */
     public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
-        return getEntitiesInRangeSorted(world, new Vec3d(x, y, z), exclude, entityClass, range);
+        return getEntitiesInRangeSorted(world, new Vector3d(x, y, z), exclude, entityClass, range);
     }
     
     /**
@@ -177,9 +177,9 @@ public class EntityUtils {
      * @param world the world in which to teleport
      * @param destination the point to which to teleport
      */
-    public static void teleportPlayer(PlayerEntity player, World world, Vec3d destination) {
+    public static void teleportPlayer(PlayerEntity player, World world, Vector3d destination) {
         // Show a teleport particle effect at the destination
-        PacketHandler.sendToAllAround(new TeleportArrivalPacket(destination.x, destination.y, destination.z), world.dimension.getType(), new BlockPos(destination), 64.0D);
+        PacketHandler.sendToAllAround(new TeleportArrivalPacket(destination.x, destination.y, destination.z), world.getDimensionKey(), new BlockPos(destination), 64.0D);
         
         if (!world.isRemote && player instanceof ServerPlayerEntity) {
             ServerPlayerEntity spe = (ServerPlayerEntity)player;
@@ -201,9 +201,9 @@ public class EntityUtils {
      * @author Daedalus4096
      */
     protected static class EntityDistanceComparator implements Comparator<Entity> {
-        protected final Vec3d center;
+        protected final Vector3d center;
         
-        public EntityDistanceComparator(@Nonnull Vec3d center) {
+        public EntityDistanceComparator(@Nonnull Vector3d center) {
             this.center = center;
         }
         

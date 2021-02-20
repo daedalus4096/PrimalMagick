@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
@@ -10,17 +11,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,7 +32,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem}
  */
-@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class ArcanometerISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation MRL0 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_0"), "");
@@ -38,18 +39,17 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation MRL2 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_2"), "");
     private static final ModelResourceLocation MRL3 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_3"), "");
     private static final ModelResourceLocation MRL4 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_4"), "");
-    private static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "scan_state");
     private static boolean isRenderingScreen = false;
 
     @Override
-    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         if (itemStack.getItem() instanceof ArcanometerItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
 
             // Render the base model
             IBakedModel model = mc.getModelManager().getModel(this.getModelResourceLocation(itemStack));
-            itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, buffer.getBuffer(RenderType.solid()));
+            itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, buffer.getBuffer(RenderType.getSolid()));
             
             if (!isRenderingScreen) {
                 // We might be asked to show another arcanometer on screen; don't recurse in that case
@@ -82,7 +82,7 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
     protected ModelResourceLocation getModelResourceLocation(ItemStack stack) {
         // Determine which model to use based on the scan state of the arcanometer item stack
         Minecraft mc = Minecraft.getInstance();
-        IItemPropertyGetter propGetter = stack.getItem().getPropertyGetter(SCAN_STATE_PROPERTY);
+        IItemPropertyGetter propGetter = ItemModelsProperties.func_239417_a_(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY);
         if (propGetter != null) {
             float value = propGetter.call(stack, mc.world, mc.player);
             if (value <= 0.0F) {

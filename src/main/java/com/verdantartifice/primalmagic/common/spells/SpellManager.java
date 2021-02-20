@@ -26,9 +26,10 @@ import com.verdantartifice.primalmagic.common.wands.IWand;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -177,9 +178,9 @@ public class SpellManager {
             if (player != null) {
                 SpellPackage spell = wand.getActiveSpell(wandStack);
                 if (spell == null) {
-                    player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell.none"));
+                    player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell.none"), Util.DUMMY_UUID);
                 } else {
-                    player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell", spell.getName()));
+                    player.sendMessage(new TranslationTextComponent("event.primalmagic.cycle_spell", spell.getName()), Util.DUMMY_UUID);
                 }
             }
         }
@@ -188,7 +189,7 @@ public class SpellManager {
     public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull PlayerEntity caster, @Nonnull ItemStack spellSource, boolean allowMine) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (!world.isRemote && spell.getPayload() != null) {
-            Vec3d hitVec = result.getHitVec();
+            Vector3d hitVec = result.getHitVec();
             BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
             MineSpellMod mineMod = spell.getMod(MineSpellMod.class, "duration");
             
@@ -196,7 +197,7 @@ public class SpellManager {
             int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue("radius");
             PacketHandler.sendToAllAround(
                     new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
-                    world.getDimension().getType(), 
+                    world.getDimensionKey(), 
                     new BlockPos(hitVec), 
                     64.0D);
             

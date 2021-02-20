@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets;
 import java.awt.Color;
 import java.util.Collections;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -27,13 +28,13 @@ public abstract class AbstractSourceWidget extends Widget {
     protected int amount;
 
     public AbstractSourceWidget(Source source, int amount, int xIn, int yIn) {
-        super(xIn, yIn, 16, 16, "");
+        super(xIn, yIn, 16, 16, StringTextComponent.EMPTY);
         this.source = source;
         this.amount = amount;
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         boolean discovered = this.source.isDiscovered(mc.player);
         
@@ -49,26 +50,26 @@ public abstract class AbstractSourceWidget extends Widget {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.translatef(this.x, this.y, 0.0F);
         RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
-        this.blit(0, 0, 0, 0, 255, 255);
+        this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         RenderSystem.popMatrix();
         
         // Draw the amount string
         RenderSystem.pushMatrix();
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.amount));
-        int width = mc.fontRenderer.getStringWidth(amountText.getFormattedText());
+        int width = mc.fontRenderer.getStringWidth(amountText.getString());
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
         RenderSystem.scaled(0.5D, 0.5D, 0.5D);
-        mc.fontRenderer.drawStringWithShadow(amountText.getFormattedText(), 0.0F, 0.0F, Color.WHITE.getRGB());
+        mc.fontRenderer.drawStringWithShadow(matrixStack, amountText.getString(), 0.0F, 0.0F, Color.WHITE.getRGB());
         RenderSystem.popMatrix();
         
         // Draw the tooltip if applicable
         if (this.isHovered()) {
             ITextComponent sourceText = discovered ? 
-                    new TranslationTextComponent(this.source.getNameTranslationKey()).applyTextStyle(this.source.getChatColor()) :
+                    new TranslationTextComponent(this.source.getNameTranslationKey()).mergeStyle(this.source.getChatColor()) :
                     new TranslationTextComponent(Source.getUnknownTranslationKey());
             ITextComponent labelText = new TranslationTextComponent(this.getTooltipTranslationKey(), this.amount, sourceText);
-            GuiUtils.renderCustomTooltip(Collections.singletonList(labelText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);
         }
     }
     

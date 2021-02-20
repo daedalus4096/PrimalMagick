@@ -7,16 +7,12 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 
@@ -74,25 +70,5 @@ public abstract class AbstractPhasingPillarBlock extends PillarBlock {
             state = state.with(PHASE, newPhase);
         }
         return state;
-    }
-    
-    @Override
-    public float getBlockHardness(BlockState blockState, IBlockReader worldIn, BlockPos pos) {
-        if (blockState.get(PHASE) == TimePhase.FULL) {
-            // If the block is fully phased in, use its default hardness as those aren't all the same
-            return this.blockHardness;
-        } else {
-            return blockState.get(PHASE).getHardness();
-        }
-    }
-    
-    @Override
-    public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, Entity exploder, Explosion explosion) {
-        if (state.get(PHASE) == TimePhase.FULL) {
-            // If the block is fully phased in, use its default resistance as those aren't all the same
-            return this.blockResistance;
-        } else {
-            return state.get(PHASE).getResistance();
-        }
     }
 }

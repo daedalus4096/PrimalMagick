@@ -43,7 +43,7 @@ public class SunlampBlock extends Block {
     protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/sunlamp_hanging_base"));
     
     public SunlampBlock() {
-        super(Block.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.LANTERN).lightValue(15).notSolid());
+        super(Block.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.LANTERN).setLightLevel((state) -> { return 15; }).notSolid());
         this.setDefaultState(this.getDefaultState().with(ATTACHMENT, Direction.DOWN));
     }
     

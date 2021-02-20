@@ -42,7 +42,8 @@ public class RemovePropMarkerPacket implements IMessageToClient {
         public static void onMessage(RemovePropMarkerPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                World world = Minecraft.getInstance().world;
+            	Minecraft mc = Minecraft.getInstance();
+                World world = mc.world;
                 // Only process positions that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
                 if (world != null && world.isBlockLoaded(message.pos)) {

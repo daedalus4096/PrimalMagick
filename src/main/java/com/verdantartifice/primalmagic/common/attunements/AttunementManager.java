@@ -14,8 +14,8 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
@@ -55,7 +55,7 @@ public class AttunementManager {
         }
     }
     
-    public static void registerAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull IAttribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+    public static void registerAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Attribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
         MODIFIERS.add(new AttunementAttributeModifier(source, threshold, attribute, uuidStr, modValue, modOperation));
     }
     
@@ -139,7 +139,7 @@ public class AttunementManager {
                 // Determine if any thresholds were passed, either up or down
                 for (AttunementThreshold threshold : AttunementThreshold.values()) {
                     int thresholdValue = threshold.getValue();
-                    ITextComponent sourceText = new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor());
+                    ITextComponent sourceText = new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor());
                     if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
                         // If gaining a threshold, send a message to the player
                         if (source.isDiscovered(player)) {

@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntit
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -17,6 +16,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -34,7 +34,7 @@ public class RitualAltarTER extends TileEntityRenderer<RitualAltarTileEntity> {
     }
     
     protected void addVertex(IVertexBuilder renderer, MatrixStack stack, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
-        renderer.pos(stack.getLast().getPositionMatrix(), x, y, z)
+        renderer.pos(stack.getLast().getMatrix(), x, y, z)
                 .color(r, g, b, a)
                 .tex(u, v)
                 .lightmap(0, 240)
@@ -87,6 +87,7 @@ public class RitualAltarTER extends TileEntityRenderer<RitualAltarTileEntity> {
         }
 
         // Render the held item stack above the altar
+        Minecraft mc = Minecraft.getInstance();
         ItemStack stack = tileEntityIn.getSyncedStackInSlot(0).copy();
         if (!stack.isEmpty()) {
             int rot = (int)(this.renderDispatcher.world.getWorldInfo().getGameTime() % 360);
@@ -107,8 +108,8 @@ public class RitualAltarTER extends TileEntityRenderer<RitualAltarTileEntity> {
             float ds = 0.1875F;
             float ticks = (float)tileEntityIn.getActiveCount() + partialTicks;
 
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(AncientManaFontTER.TEXTURE);
-            IVertexBuilder builder = buffer.getBuffer(RenderType.translucent());
+            TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(AncientManaFontTER.TEXTURE);
+            IVertexBuilder builder = buffer.getBuffer(RenderType.getTranslucent());
             
             matrixStack.push();
             matrixStack.translate(0.5D, 2.5D, 0.5D);

@@ -34,9 +34,10 @@ import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.Set
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -101,7 +102,7 @@ public class PacketHandler {
         INSTANCE.sendTo(message, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
     }
     
-    public static void sendToAllAround(IMessageToClient message, DimensionType dimension, BlockPos center, double radius) {
+    public static void sendToAllAround(IMessageToClient message, RegistryKey<World> dimension, BlockPos center, double radius) {
         // Send a message to the clients of all players within a given distance of the given world position
         INSTANCE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, radius, dimension)), message);
     }

@@ -23,8 +23,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector2f;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -115,8 +115,8 @@ public class EntitySwapper implements INBTSerializable<CompoundNBT> {
                 }
                 
                 EntityType<?> oldType = livingTarget.getType();
-                Vec3d targetPos = livingTarget.getPositionVec();
-                Vec2f targetRots = livingTarget.getPitchYaw();
+                Vector3d targetPos = livingTarget.getPositionVec();
+                Vector2f targetRots = livingTarget.getPitchYaw();
                 ITextComponent customName = livingTarget.getCustomName();
                 double healthPercentage = (double)livingTarget.getHealth() / (double)livingTarget.getMaxHealth();
                 Collection<EffectInstance> activeEffects = livingTarget.getActivePotionEffects();
@@ -130,11 +130,11 @@ public class EntitySwapper implements INBTSerializable<CompoundNBT> {
                 
                 // Send an FX packet to all nearby player clients
                 PacketHandler.sendToAllAround(new WandPoofPacket(targetPos.x, targetPos.y, targetPos.z, Color.WHITE.getRGB(), true, null), 
-                        world.dimension.getType(), new BlockPos(targetPos), 32.0D);
+                        world.getDimensionKey(), new BlockPos(targetPos), 32.0D);
                 
                 // Remove the target entity and spawn a new one of the target type into the world
                 livingTarget.remove();
-                Entity newEntity = this.entityType.create(world, data, customName, null, new BlockPos(targetPos), SpawnReason.MOB_SUMMONED, false, false);
+                Entity newEntity = this.entityType.create(serverWorld, data, customName, null, new BlockPos(targetPos), SpawnReason.MOB_SUMMONED, false, false);
                 world.addEntity(newEntity);
                 newEntity.setPositionAndRotation(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
                 

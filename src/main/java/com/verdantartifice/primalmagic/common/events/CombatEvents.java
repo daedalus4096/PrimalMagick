@@ -79,7 +79,7 @@ public class CombatEvents {
                     LivingEntity target = targets.get(0);
                     target.attackEntityFrom(DamageSourcesPM.causeHellishChainDamage(attacker), event.getAmount() / 2.0F);
                     PacketHandler.sendToAllAround(new SpellBoltPacket(event.getEntityLiving().getEyePosition(1.0F), target.getEyePosition(1.0F), Source.INFERNAL.getColor()), 
-                            attacker.world.dimension.getType(), event.getEntityLiving().getPosition(), 64.0D);
+                            attacker.world.getDimensionKey(), event.getEntityLiving().getPosition(), 64.0D);
                     attacker.world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(attacker.world.rand.nextGaussian() * 0.05D));
                 }
             }

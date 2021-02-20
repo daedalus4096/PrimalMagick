@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -14,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -30,12 +32,12 @@ public class ManaCostSummaryWidget extends Widget {
     protected SourceList manaCosts;
     
     public ManaCostSummaryWidget(SourceList manaCosts, int x, int y) {
-        super(x, y, 16, 16, "");
+        super(x, y, 16, 16, StringTextComponent.EMPTY);
         this.manaCosts = manaCosts;
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Render the base widget
         Minecraft mc = Minecraft.getInstance();
         RenderSystem.enableBlend();
@@ -45,7 +47,7 @@ public class ManaCostSummaryWidget extends Widget {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.translatef(this.x, this.y, 0.0F);
         RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
-        this.blit(0, 0, 0, 0, 255, 255);
+        this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         RenderSystem.popMatrix();
 
         // Render tooltip if hovered over
@@ -58,12 +60,12 @@ public class ManaCostSummaryWidget extends Widget {
                 for (Source source : this.manaCosts.getSourcesSorted()) {
                     boolean discovered = source.isDiscovered(mc.player);
                     ITextComponent sourceText = discovered ? 
-                            new TranslationTextComponent(source.getNameTranslationKey()).applyTextStyle(source.getChatColor()) :
+                            new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor()) :
                             new TranslationTextComponent(Source.getUnknownTranslationKey());
                     tooltip.add(new TranslationTextComponent("primalmagic.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
                 }
             }
-            GuiUtils.renderCustomTooltip(tooltip, this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
         }
     }
     

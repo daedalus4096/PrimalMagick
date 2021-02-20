@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.util.VectorUtils;
 
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 /**
  * Definition of the Fork spell mod.  This mod causes the spell package to execute multiple instances
@@ -66,10 +66,10 @@ public class ForkSpellMod extends AbstractSpellMod {
     }
     
     @Nonnull
-    public List<Vec3d> getDirectionUnitVectors(@Nonnull Vec3d dir, @Nonnull Random rng) {
+    public List<Vector3d> getDirectionUnitVectors(@Nonnull Vector3d dir, @Nonnull Random rng) {
         // Determine the direction vectors on which to execute the spell forks
-        List<Vec3d> retVal = new ArrayList<>();
-        Vec3d normDir = dir.normalize();
+        List<Vector3d> retVal = new ArrayList<>();
+        Vector3d normDir = dir.normalize();
         int forks = this.getPropertyValue("forks");
         int precision = this.getPropertyValue("precision");
         int degrees = 10 + (15 * (5 - precision));  // 85, 70, 55, 40, 25, 10 degrees max from the given direction
@@ -77,7 +77,7 @@ public class ForkSpellMod extends AbstractSpellMod {
         
         for (int index = 0; index < forks; index++) {
             // Scale the offest vector to provide a degree displacement *up to* the computed degree value
-            Vec3d offset = VectorUtils.getRandomOrthogonalUnitVector(normDir, rng).scale(offsetMagnitude * rng.nextDouble());
+        	Vector3d offset = VectorUtils.getRandomOrthogonalUnitVector(normDir, rng).scale(offsetMagnitude * rng.nextDouble());
             retVal.add(normDir.add(offset));
         }
         

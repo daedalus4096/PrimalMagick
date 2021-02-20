@@ -6,10 +6,7 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.LogBlock;
 import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItemUseContext;
@@ -22,10 +19,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
@@ -35,13 +29,13 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractPhasingLogBlock extends LogBlock {
+public abstract class AbstractPhasingLogBlock extends RotatedPillarBlock {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
     
     protected final Block strippedVersion;
     
-    public AbstractPhasingLogBlock(Block stripped, MaterialColor color, Block.Properties properties) {
-        super(color, properties);
+    public AbstractPhasingLogBlock(Block stripped, Block.Properties properties) {
+        super(properties);
         this.setDefaultState(this.getDefaultState().with(PHASE, TimePhase.FULL));
         this.strippedVersion = stripped;
     }
@@ -88,26 +82,6 @@ public abstract class AbstractPhasingLogBlock extends LogBlock {
             state = state.with(PHASE, newPhase);
         }
         return state;
-    }
-    
-    @Override
-    public float getBlockHardness(BlockState blockState, IBlockReader worldIn, BlockPos pos) {
-        if (blockState.get(PHASE) == TimePhase.FULL) {
-            // If the block is fully phased in, use its default hardness as those aren't all the same
-            return this.blockHardness;
-        } else {
-            return blockState.get(PHASE).getHardness();
-        }
-    }
-    
-    @Override
-    public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, Entity exploder, Explosion explosion) {
-        if (state.get(PHASE) == TimePhase.FULL) {
-            // If the block is fully phased in, use its default resistance as those aren't all the same
-            return this.blockResistance;
-        } else {
-            return state.get(PHASE).getResistance();
-        }
     }
     
     @Override

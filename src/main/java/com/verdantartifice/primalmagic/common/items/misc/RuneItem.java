@@ -54,7 +54,7 @@ public class RuneItem extends Item {
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (stack != null && stack.getItem() instanceof RuneItem) {
             String key = ((RuneItem)stack.getItem()).rune.getTooltipTranslationKey();
-            tooltip.add(new TranslationTextComponent(key).applyTextStyles(TextFormatting.ITALIC, TextFormatting.GRAY));
+            tooltip.add(new TranslationTextComponent(key).mergeStyle(TextFormatting.ITALIC, TextFormatting.GRAY));
         }
     }
     

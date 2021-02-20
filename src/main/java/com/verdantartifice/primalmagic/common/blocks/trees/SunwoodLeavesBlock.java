@@ -14,7 +14,13 @@ import net.minecraft.world.IWorld;
  */
 public class SunwoodLeavesBlock extends AbstractPhasingLeavesBlock {
     public SunwoodLeavesBlock() {
-        super(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().notSolid().sound(SoundType.PLANT));
+        super(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().notSolid().sound(SoundType.PLANT).setLightLevel((state) -> {
+            return state.get(PHASE).getLightLevel();
+        }).setSuffocates((state, blockReader, pos) -> {
+        	return false;
+        }).setBlocksVision((state, blockReader, pos) -> {
+        	return false;
+        }).setAllowsSpawn(AbstractPhasingLeavesBlock::allowsSpawnOnLeaves));
     }
 
     @Override

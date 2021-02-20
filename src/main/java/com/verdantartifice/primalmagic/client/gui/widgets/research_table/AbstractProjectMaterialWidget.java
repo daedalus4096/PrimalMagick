@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 import java.util.Collections;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -12,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -28,20 +30,21 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
     protected boolean consumed;
     
     public AbstractProjectMaterialWidget(AbstractProjectMaterial material, int x, int y) {
-        super(x, y, 16, 16, "");
+        super(x, y, 16, 16, StringTextComponent.EMPTY);
+        Minecraft mc = Minecraft.getInstance();
         this.consumed = material.isConsumed();
-        this.complete = material.isSatisfied(Minecraft.getInstance().player);
+        this.complete = material.isSatisfied(mc.player);
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
         if (this.complete) {
             // Render completion checkmark if appropriate
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x + 8, this.y, 200.0F);
-            this.blit(0, 0, 162, 0, 10, 10);
+            this.blit(matrixStack, 0, 0, 162, 0, 10, 10);
             RenderSystem.popMatrix();
         }
         if (this.consumed) {
@@ -49,13 +52,13 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x - 3, this.y, 200.0F);
-            this.blit(0, 0, 172, 0, 10, 10);
+            this.blit(matrixStack, 0, 0, 172, 0, 10, 10);
             RenderSystem.popMatrix();
         }
         if (this.isHovered()) {
             // Render tooltip
             List<ITextComponent> textList = Collections.singletonList(this.getHoverText());
-            GuiUtils.renderCustomTooltip(textList, this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
         }
     }
     

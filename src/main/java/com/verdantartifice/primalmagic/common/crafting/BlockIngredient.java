@@ -18,7 +18,8 @@ import com.google.gson.JsonSyntaxException;
 import net.minecraft.block.Block;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -107,7 +108,7 @@ public class BlockIngredient implements Predicate<Block> {
         }));
     }
     
-    public static BlockIngredient fromTag(Tag<Block> tag) {
+    public static BlockIngredient fromTag(ITag<Block> tag) {
         return fromBlockListStream(Stream.of(new BlockIngredient.TagList(tag)));
     }
     
@@ -132,7 +133,7 @@ public class BlockIngredient implements Predicate<Block> {
             }
         } else if (json.has("tag")) {
             ResourceLocation loc = new ResourceLocation(JSONUtils.getString(json, "tag"));
-            Tag<Block> tag = BlockTags.getCollection().get(loc);
+            ITag<Block> tag = BlockTags.getCollection().get(loc);
             if (tag == null) {
                 throw new JsonSyntaxException("Unknown block tag '" + loc.toString() + "'");
             } else {
@@ -190,9 +191,9 @@ public class BlockIngredient implements Predicate<Block> {
     }
     
     protected static class TagList implements BlockIngredient.IBlockList {
-        private final Tag<Block> tag;
+        private final ITag<Block> tag;
         
-        public TagList(Tag<Block> tag) {
+        public TagList(ITag<Block> tag) {
             this.tag = tag;
         }
         
@@ -204,7 +205,7 @@ public class BlockIngredient implements Predicate<Block> {
         @Override
         public JsonObject serialize() {
             JsonObject json = new JsonObject();
-            json.addProperty("tag", this.tag.getId().toString());
+            json.addProperty("tag", TagCollectionManager.getManager().getBlockTags().getValidatedIdFromTag(this.tag).toString());
             return json;
         }
     }

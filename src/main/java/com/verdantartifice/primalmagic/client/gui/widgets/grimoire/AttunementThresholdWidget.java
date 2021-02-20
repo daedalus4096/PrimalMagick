@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -20,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -43,7 +45,7 @@ public class AttunementThresholdWidget extends Widget {
     protected final ITextComponent tooltipText;
     
     public AttunementThresholdWidget(@Nonnull Source source, @Nonnull AttunementThreshold threshold, int x, int y) {
-        super(x, y, 18, 18, "");
+        super(x, y, 18, 18, StringTextComponent.EMPTY);
         this.source = source;
         this.threshold = threshold;
         this.texture = new ResourceLocation(PrimalMagic.MODID, "textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
@@ -51,7 +53,7 @@ public class AttunementThresholdWidget extends Widget {
     }
     
     @Override
-    public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -65,13 +67,13 @@ public class AttunementThresholdWidget extends Widget {
             mc.getTextureManager().bindTexture(this.texture);
             RenderSystem.translatef(this.x, this.y, 0.0F);
             RenderSystem.scaled(0.0703125D, 0.0703125D, 0.0703125D);
-            this.blit(0, 0, 0, 0, 255, 255);
+            this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
             RenderSystem.popMatrix();
         }
         
         if (this.isHovered()) {
             // Render tooltip
-            GuiUtils.renderCustomTooltip(Collections.singletonList(this.tooltipText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltipText), this.x, this.y);
         }
     }
     

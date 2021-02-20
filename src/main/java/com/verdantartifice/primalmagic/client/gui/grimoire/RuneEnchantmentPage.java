@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
@@ -62,7 +63,7 @@ public class RuneEnchantmentPage extends AbstractPage {
     }
     
     @Override
-    public void render(int side, int x, int y, int mouseX, int mouseY) {
+    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         int startY = y;
         int indent = 84;
         int overlayWidth = 13;
@@ -70,14 +71,14 @@ public class RuneEnchantmentPage extends AbstractPage {
         
         // Draw title page and overlay background if applicable
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(side, x, y, mouseX, mouseY, null);
+            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
             y += 77;
             
             Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
             RenderSystem.pushMatrix();
             RenderSystem.translatef(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
-            this.blit(0, 0, 0, 51, overlayWidth, overlayHeight);
-            this.blit(32, 0, 0, 51, overlayWidth, overlayHeight);
+            this.blit(matrixStack, 0, 0, 0, 51, overlayWidth, overlayHeight);
+            this.blit(matrixStack, 32, 0, 0, 51, overlayWidth, overlayHeight);
             RenderSystem.popMatrix();
         } else {
             y += 25;
@@ -85,7 +86,7 @@ public class RuneEnchantmentPage extends AbstractPage {
         
         // Render page contents
         for (IPageElement content : this.contents) {
-            content.render(side, x, y);
+            content.render(matrixStack, side, x, y);
             y = content.getNextY(y);
         }
     }

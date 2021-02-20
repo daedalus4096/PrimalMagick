@@ -97,13 +97,13 @@ public class PillarBlock extends Block {
         }
 
         @Override
-        public String getName() {
+        public String getString() {
             return this.name;
         }
         
         @Override
         public String toString() {
-            return this.name;
+            return this.getString();
         }
     }
 }

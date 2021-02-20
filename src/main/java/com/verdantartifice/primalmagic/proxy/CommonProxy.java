@@ -24,11 +24,11 @@ import com.verdantartifice.primalmagic.common.init.InitResearch;
 import com.verdantartifice.primalmagic.common.init.InitRunes;
 import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
-import com.verdantartifice.primalmagic.common.init.InitWorldGen;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagic.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
 import net.minecraft.command.arguments.ArgumentSerializer;
@@ -61,15 +61,19 @@ public class CommonProxy implements IProxyPM {
     @Override
     public void commonSetup(FMLCommonSetupEvent event) {
         PacketHandler.registerMessages();
+        
         InitRecipes.initRecipeTypes();
         InitRecipes.initWandTransforms();
         InitCapabilities.initCapabilities();
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();
-        InitWorldGen.initWorldGen();
         InitSpells.initSpells();
         InitStats.initStats();
         InitRunes.initRuneEnchantments();
+        
+        FeaturesPM.setupFeatures();
+        FeaturesPM.setupStructures();
+        ConfiguredFeaturesPM.registerConfiguredStructures();
 
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "research")).toString(), ResearchArgument.class, new ArgumentSerializer<>(ResearchArgument::research));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "discipline")).toString(), DisciplineArgument.class, new ArgumentSerializer<>(DisciplineArgument::discipline));
@@ -86,7 +90,7 @@ public class CommonProxy implements IProxyPM {
 
     @Override
     public void serverStarting(FMLServerStartingEvent event) {
-        PrimalMagicCommand.register(event.getCommandDispatcher());
+        PrimalMagicCommand.register(event.getServer().getCommandManager().getDispatcher());
         InitAffinities.initAffinities(event.getServer());
     }
     

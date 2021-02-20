@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.util;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -10,14 +12,13 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -99,7 +100,7 @@ public class InventoryUtils {
         if (tagName == null) {
             return true;
         }
-        Tag<Item> tag = ItemTags.getCollection().getOrCreate(tagName);
+        ITag<Item> tag = ItemTags.getCollection().get(tagName);
         for (ItemStack searchStack : player.inventory.mainInventory) {
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
@@ -198,7 +199,7 @@ public class InventoryUtils {
             // If the player is not carrying enough of the given items, return false immediately
             return false;
         }
-        Tag<Item> tag = ItemTags.getCollection().getOrCreate(tagName);
+        ITag<Item> tag = ItemTags.getCollection().get(tagName);
         for (int index = 0; index < player.inventory.mainInventory.size(); index++) {
             ItemStack searchStack = player.inventory.mainInventory.get(index);
             // Only the items need match, not the NBT data
@@ -231,7 +232,7 @@ public class InventoryUtils {
      */
     @Nullable
     public static IItemHandler getItemHandler(@Nonnull World world, @Nonnull BlockPos pos, @Nullable Direction side) {
-        LazyOptional<Pair<IItemHandler, Object>> optional = VanillaInventoryCodeHooks.getItemHandler(world, pos.getX(), pos.getY(), pos.getZ(), side);
+        Optional<Pair<IItemHandler, Object>> optional = VanillaInventoryCodeHooks.getItemHandler(world, pos.getX(), pos.getY(), pos.getZ(), side);
         Pair<IItemHandler, Object> pair = optional.orElse(null);
         if (pair != null && pair.getLeft() != null) {
             // If the tile entity directly provides an item handler capability, return that
