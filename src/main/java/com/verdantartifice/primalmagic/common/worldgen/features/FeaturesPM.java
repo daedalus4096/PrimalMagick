@@ -78,7 +78,7 @@ public class FeaturesPM {
     }
     
     public static void setupStructures() {
-    	setupSpacingAndLand(SHRINE.get(), new StructureSeparationSettings(10, 5, 11893192), true);
+    	setupSpacingAndLand(SHRINE.get(), new StructureSeparationSettings(20, 10, 11893192), true);
     }
     
     private static <S extends Structure<?>> void setupSpacingAndLand(S structure, StructureSeparationSettings settings, boolean transformSurroundingLand) {
