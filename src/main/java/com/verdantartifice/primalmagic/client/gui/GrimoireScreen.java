@@ -215,6 +215,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
 
     @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+        // Do nothing; we don't want to draw title text for the grimoire
+    }
+
+    @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render the grimoire background
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
