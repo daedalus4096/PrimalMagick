@@ -844,13 +844,6 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     @Override
-    public void onClose() {
-        // Clear the topic history when closing the screen
-        HISTORY.clear();
-        super.onClose();
-    }
-    
-    @Override
     public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
         // Clear the topic history when closing the screen
         if (p_keyPressed_1_ == GLFW.GLFW_KEY_ESCAPE) {
