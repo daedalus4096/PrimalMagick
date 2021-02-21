@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#primalmagic:storage_blocks/primalite",
+    "#primalmagic:storage_blocks/hexium",
+    "#primalmagic:storage_blocks/hallowsteel"
+  ]
+}
