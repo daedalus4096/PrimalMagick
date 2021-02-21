@@ -14,8 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -65,7 +64,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
 
     @Nonnull
     protected ItemStack getStackToDisplay() {
-        ITag<Item> itemTag = ItemTags.getCollection().get(this.material.getTagName());
+        ITag<Item> itemTag = TagCollectionManager.getManager().getItemTags().get(this.material.getTagName());
         Collection<Item> tagContents = itemTag.getAllElements();
         if (tagContents != null && !tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time

@@ -34,8 +34,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -81,7 +80,7 @@ public class AffinityManager {
         if (sources == null) {
             sources = new SourceList();
         }
-        for (Item item : ItemTags.getCollection().get(tag).getAllElements()) {
+        for (Item item : TagCollectionManager.getManager().getItemTags().get(tag).getAllElements()) {
             // Register affinities for each item in the tag
             registerAffinities(new ItemStack(item, 1), sources);
         }
@@ -94,7 +93,7 @@ public class AffinityManager {
         if (sources == null) {
             sources = new SourceList();
         }
-        for (Block block : BlockTags.getCollection().get(tag).getAllElements()) {
+        for (Block block : TagCollectionManager.getManager().getBlockTags().get(tag).getAllElements()) {
             // Register affinities for each block in the tag
             registerAffinities(new ItemStack(block, 1), sources);
         }

@@ -13,7 +13,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -100,7 +100,7 @@ public class InventoryUtils {
         if (tagName == null) {
             return true;
         }
-        ITag<Item> tag = ItemTags.getCollection().get(tagName);
+        ITag<Item> tag = TagCollectionManager.getManager().getItemTags().get(tagName);
         for (ItemStack searchStack : player.inventory.mainInventory) {
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
@@ -199,7 +199,7 @@ public class InventoryUtils {
             // If the player is not carrying enough of the given items, return false immediately
             return false;
         }
-        ITag<Item> tag = ItemTags.getCollection().get(tagName);
+        ITag<Item> tag = TagCollectionManager.getManager().getItemTags().get(tagName);
         for (int index = 0; index < player.inventory.mainInventory.size(); index++) {
             ItemStack searchStack = player.inventory.mainInventory.get(index);
             // Only the items need match, not the NBT data

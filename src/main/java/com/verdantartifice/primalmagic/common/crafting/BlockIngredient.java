@@ -17,7 +17,6 @@ import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.block.Block;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.JSONUtils;
@@ -133,7 +132,7 @@ public class BlockIngredient implements Predicate<Block> {
             }
         } else if (json.has("tag")) {
             ResourceLocation loc = new ResourceLocation(JSONUtils.getString(json, "tag"));
-            ITag<Block> tag = BlockTags.getCollection().get(loc);
+            ITag<Block> tag = TagCollectionManager.getManager().getBlockTags().get(loc);
             if (tag == null) {
                 throw new JsonSyntaxException("Unknown block tag '" + loc.toString() + "'");
             } else {
