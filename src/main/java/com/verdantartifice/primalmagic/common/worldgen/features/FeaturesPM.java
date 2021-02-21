@@ -19,11 +19,14 @@ import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureSpread;
+import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.TwoLayerFeature;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
+import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
@@ -58,6 +61,9 @@ public class FeaturesPM {
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TREE_MOONWOOD_WAXING;
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TREE_MOONWOOD_WANING;
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TREE_MOONWOOD_FADED;
+    
+    public static ConfiguredFeature<?, ?> TREE_SUNWOOD_FULL_SPACED;
+    public static ConfiguredFeature<?, ?> TREE_MOONWOOD_FULL_SPACED;
 
     public static final RegistryObject<Structure<ShrineConfig>> SHRINE = STRUCTURES.register("shrine", () -> new ShrineStructure(ShrineConfig.CODEC));
     
@@ -75,6 +81,9 @@ public class FeaturesPM {
         TREE_MOONWOOD_WAXING = registerFeature("tree_moonwood_waxing", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LOG_WAXING), new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LEAVES_WAXING), new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(0), 3), new StraightTrunkPlacer(5, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()));
         TREE_MOONWOOD_WANING = registerFeature("tree_moonwood_waning", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LOG_WANING), new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LEAVES_WANING), new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(0), 3), new StraightTrunkPlacer(5, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()));
         TREE_MOONWOOD_FADED = registerFeature("tree_moonwood_faded", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LOG_FADED), new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LEAVES_FADED), new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(0), 3), new StraightTrunkPlacer(5, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()));
+        
+        TREE_SUNWOOD_FULL_SPACED = registerFeature("tree_sunwood_full_spaced", TREE_SUNWOOD_FULL.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.05F, 1))));
+        TREE_MOONWOOD_FULL_SPACED = registerFeature("tree_moonwood_full_spaced", TREE_MOONWOOD_FULL.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.05F, 1))));
     }
     
     public static void setupStructures() {
