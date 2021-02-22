@@ -268,7 +268,7 @@
             "key": "FORBIDDEN_MAGIC",
             "name": "primalmagic.research.forbidden_magic.title",
             "discipline": "BASICS",
-            "parents": [ "TERRESTRIAL_MAGIC" ],
+            "parents": [ "TERRESTRIAL_MAGIC", "t_discover_forbidden" ],
             "stages": [
                 {
                     "text": "primalmagic.research.forbidden_magic.text.stage.1"
@@ -280,7 +280,7 @@
             "key": "SOURCE_BLOOD",
             "name": "primalmagic.research.source_blood.title",
             "discipline": "BASICS",
-            "parents": [ "FORBIDDEN_MAGIC" ],
+            "parents": [ "FORBIDDEN_MAGIC", "t_discover_blood" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_blood.text.stage.1",
@@ -301,7 +301,7 @@
             "key": "SOURCE_INFERNAL",
             "name": "primalmagic.research.source_infernal.title",
             "discipline": "BASICS",
-            "parents": [ "FORBIDDEN_MAGIC" ],
+            "parents": [ "FORBIDDEN_MAGIC", "t_discover_infernal" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_infernal.text.stage.1",
@@ -322,7 +322,7 @@
             "key": "SOURCE_VOID",
             "name": "primalmagic.research.source_void.title",
             "discipline": "BASICS",
-            "parents": [ "FORBIDDEN_MAGIC" ],
+            "parents": [ "FORBIDDEN_MAGIC", "t_discover_void" ],
             "stages": [
                 {
                     "text": "primalmagic.research.source_void.text.stage.1",
@@ -343,7 +343,7 @@
             "key": "HEAVENLY_MAGIC",
             "name": "primalmagic.research.heavenly_magic.title",
             "discipline": "BASICS",
-            "parents": [ "FORBIDDEN_MAGIC" ],
+            "parents": [ "FORBIDDEN_MAGIC", "t_discover_hallowed" ],
             "stages": [
                 {
                     "text": "primalmagic.research.heavenly_magic.text.stage.1"
