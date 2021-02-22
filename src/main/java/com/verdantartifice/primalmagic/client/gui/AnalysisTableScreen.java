@@ -6,6 +6,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.AffinityWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActionPacket;
@@ -87,6 +89,9 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
         this.addButton(new ImageButton(this.guiLeft + 78, this.guiTop + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
             PacketHandler.sendToServer(new AnalysisActionPacket(this.container.windowId));
         }));
+        
+        // Render observation tracker widget
+        this.addButton(new KnowledgeTotalWidget(this.guiLeft + 8, this.guiTop + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));
         
         // Show affinity widgets, if the last scanned stack has affinities
         ItemStack lastScannedStack = this.container.getLastScannedStack();
