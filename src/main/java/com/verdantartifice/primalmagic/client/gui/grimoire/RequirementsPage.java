@@ -50,8 +50,9 @@ public class RequirementsPage extends AbstractPage {
     }
     
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-        y += 27;    // Make room for page title
         int startX = x;
+        int startY = y;
+        y += 27;    // Make room for page title
         Minecraft mc = Minecraft.getInstance();
         
         // Init obtain requirement widgets
@@ -119,7 +120,7 @@ public class RequirementsPage extends AbstractPage {
         }
         
         // Init progress button if applicable
-        y = screen.height - 59;
+        y = startY + 141;
         if (screen.isProgressing()) {
             ITextComponent text = new TranslationTextComponent("primalmagic.grimoire.completing_text");
             screen.addWidgetToScreen(new ProgressingWidget(startX + 16 + (side * 136), y, text));
