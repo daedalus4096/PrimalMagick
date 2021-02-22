@@ -611,7 +611,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 } else {
                     // Otherwise, join them as the last line of the block
                     String joiner = String.join("", Collections.nCopies(remainingWidth / dotWidth, "."));
-                    statTextSegments.set(statTextSegments.size() - 1, ITextProperties.func_240652_a_(lastStatTextSegment + joiner + statFormattedValueStr + "~B")); // Include a section break at the end
+                    statTextSegments.set(statTextSegments.size() - 1, ITextProperties.func_240652_a_(lastStatTextSegment.getString() + joiner + statFormattedValueStr + "~B")); // Include a section break at the end
                 }
                 
                 // Calculate the total height of the stat block, including spacer, and determine if it will fit on the current page
