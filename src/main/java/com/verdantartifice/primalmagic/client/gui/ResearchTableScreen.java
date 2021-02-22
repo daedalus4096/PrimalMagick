@@ -101,8 +101,6 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
         
-        super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
-        
         if (this.isProjectReady()) {
             int y = 11;
             
