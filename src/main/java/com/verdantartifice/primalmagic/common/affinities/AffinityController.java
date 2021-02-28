@@ -59,7 +59,7 @@ public class AffinityController extends JsonReloadListener {
     
     private Map<AffinityType, Map<ResourceLocation, IAffinity>> affinities = new HashMap<>();
 
-    public AffinityController() {
+    protected AffinityController() {
         super(GSON, "affinities");
     }
 

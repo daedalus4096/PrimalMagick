@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagic.common.affinities;
 
+import java.util.function.BiFunction;
+
+import javax.annotation.Nonnull;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
@@ -9,27 +13,22 @@ import com.verdantartifice.primalmagic.common.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ItemAffinity implements IAffinity {
+public class ItemAffinity extends AbstractAffinity {
     public static final Serializer SERIALIZER = new Serializer();
 
-    protected ResourceLocation targetId;
     protected ResourceLocation baseEntryId;
+    protected IAffinity baseEntry;
     protected SourceList setValues;
     protected SourceList addValues;
     protected SourceList removeValues;
     
-    protected ItemAffinity(ResourceLocation target) {
-        this.targetId = target;
+    protected ItemAffinity(@Nonnull ResourceLocation target, @Nonnull BiFunction<AffinityType, ResourceLocation, IAffinity> lookupFunc) {
+        super(target, lookupFunc);
     }
     
-    public ItemAffinity(ResourceLocation target, SourceList values) {
-        this(target);
+    public ItemAffinity(@Nonnull ResourceLocation target, @Nonnull SourceList values) {
+        super(target, AbstractAffinity.DUMMY);
         this.setValues = values;
-    }
-
-    @Override
-    public ResourceLocation getTarget() {
-        return this.targetId;
     }
 
     @Override
@@ -43,9 +42,26 @@ public class ItemAffinity implements IAffinity {
     }
 
     @Override
-    public SourceList getTotal() {
-        // TODO Auto-generated method stub
-        return null;
+    protected SourceList calculateTotal() {
+        if (this.setValues != null) {
+            return this.setValues;
+        } else if (this.baseEntryId != null) {
+            if (this.baseEntry == null) {
+                this.baseEntry = this.lookupFunc.apply(this.getType(), this.baseEntryId);
+            }
+            SourceList retVal = this.baseEntry.getTotal();
+            if (retVal != null) {
+                if (this.addValues != null) {
+                    retVal = retVal.add(this.addValues);
+                }
+                if (this.removeValues != null) {
+                    retVal = retVal.remove(this.removeValues);
+                }
+            }
+            return retVal;
+        } else {
+            throw new IllegalStateException("Item affinity has neither set values nor a base entry");
+        }
     }
     
     public static class Serializer implements IAffinitySerializer<ItemAffinity> {
@@ -61,7 +77,7 @@ public class ItemAffinity implements IAffinity {
                 throw new JsonSyntaxException("Unknown target item " + target + " in affinity JSON for " + affinityId.toString());
             }
             
-            ItemAffinity entry = new ItemAffinity(targetId);
+            ItemAffinity entry = new ItemAffinity(targetId, AffinityController.getInstance()::getAffinity);
             if (json.has("set") && json.has("base")) {
                 throw new JsonParseException("Affinity entry may not have both set and base attributes");
             } else if (json.has("set")) {
