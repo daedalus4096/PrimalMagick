@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagic.common.sources;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +9,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.affinities.AffinityEntry;
-import com.verdantartifice.primalmagic.common.affinities.AffinityEntryFactory;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.FakeContainer;
@@ -58,9 +47,6 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class AffinityManager {
-    // List of affinity definition file locations
-    protected static final List<ResourceLocation> DATA_LOCATIONS = new ArrayList<>();
-    
     // Map of block/item hash code to affinity source list
     protected static final Map<Integer, SourceList> REGISTRY = new ConcurrentHashMap<>();
     
@@ -74,37 +60,6 @@ public class AffinityManager {
     protected static final int HISTORY_LIMIT = 100;
     
     public static final int MAX_SCAN_COUNT = 108;   // Enough to scan a 9x12 inventory
-    
-    public static void registerAffinityLocation(@Nonnull ResourceLocation location) {
-        DATA_LOCATIONS.add(location);
-    }
-    
-    public static void parseAllAffinities(@Nonnull RecipeManager recipeManager) {
-        JsonParser parser = new JsonParser();
-        for (ResourceLocation dir : DATA_LOCATIONS) {
-            Path dirPath = FileSystems.getDefault().getPath("data", dir.getNamespace(), dir.getPath());
-            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dirPath, ".json")) {
-                int index = 0;
-                for (Path filePath : dirStream) {
-                    InputStream fileStream = Files.newInputStream(filePath);
-                    if (fileStream != null) {
-                        try {
-                            // Get the definition file contents as a JSON object
-                            JsonObject obj = parser.parse(new InputStreamReader(fileStream)).getAsJsonObject();
-                            AffinityEntry entry = AffinityEntryFactory.create(obj);
-                        } catch (Exception e) {
-                            PrimalMagic.LOGGER.warn("Invalid affinity file: {}", filePath.toString());
-                        }
-                    } else {
-                        PrimalMagic.LOGGER.warn("Affinity file not found: {}", filePath.toString());
-                    }
-                }
-                PrimalMagic.LOGGER.info("Loaded {} affinity entries from {}", index, dirPath.toString());
-            } catch (Exception e) {
-                PrimalMagic.LOGGER.warn("Failed to parse affinity location {}", dirPath.toString());
-            }
-        }
-    }
     
     public static void registerAffinities(@Nullable ItemStack stack, @Nullable SourceList sources) {
         if (stack == null || stack.isEmpty()) {
