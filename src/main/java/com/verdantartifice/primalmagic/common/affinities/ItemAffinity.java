@@ -12,21 +12,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ItemAffinity implements IAffinity {
     public static final Serializer SERIALIZER = new Serializer();
 
-    protected ResourceLocation id;
     protected ResourceLocation targetId;
     protected ResourceLocation baseEntryId;
     protected SourceList setValues;
     protected SourceList addValues;
     protected SourceList removeValues;
     
-    protected ItemAffinity(ResourceLocation affinityId, ResourceLocation target) {
-        this.id = affinityId;
+    protected ItemAffinity(ResourceLocation target) {
         this.targetId = target;
     }
-
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
+    
+    public ItemAffinity(ResourceLocation target, SourceList values) {
+        this(target);
+        this.setValues = values;
     }
 
     @Override
@@ -63,7 +61,7 @@ public class ItemAffinity implements IAffinity {
                 throw new JsonSyntaxException("Unknown target item " + target + " in affinity JSON for " + affinityId.toString());
             }
             
-            ItemAffinity entry = new ItemAffinity(affinityId, targetId);
+            ItemAffinity entry = new ItemAffinity(targetId);
             if (json.has("set") && json.has("base")) {
                 throw new JsonParseException("Affinity entry may not have both set and base attributes");
             } else if (json.has("set")) {

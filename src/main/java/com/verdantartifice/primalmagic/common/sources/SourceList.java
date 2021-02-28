@@ -150,6 +150,17 @@ public class SourceList implements INBTSerializable<CompoundNBT> {
     }
     
     @Nonnull
+    public SourceList multiply(int multiplier) {
+        // Scale each value in the source list by the given multiplier
+        if (multiplier != 1) {
+            for (Source source : this.getSources()) {
+                this.sources.put(source, Integer.valueOf(multiplier * this.getAmount(source)));
+            }
+        }
+        return this;
+    }
+    
+    @Nonnull
     public Set<Source> getSources() {
         // Get the sources in this list in arbitrary order
         return Collections.unmodifiableSet(this.sources.keySet());

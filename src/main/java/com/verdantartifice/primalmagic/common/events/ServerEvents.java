@@ -4,13 +4,11 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.affinities.AffinityController;
 import com.verdantartifice.primalmagic.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagic.common.misc.BlockSwapper;
 import com.verdantartifice.primalmagic.common.misc.EntitySwapper;
 
 import net.minecraft.world.World;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -23,11 +21,6 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class ServerEvents {
-    @SubscribeEvent
-    public static void onResourceReload(AddReloadListenerEvent event) {
-        event.addListener(new AffinityController());
-    }
-    
     @SubscribeEvent
     public static void serverWorldTick(TickEvent.WorldTickEvent event) {
         if (event.side == LogicalSide.CLIENT) {

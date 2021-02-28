@@ -10,8 +10,6 @@ import net.minecraft.util.ResourceLocation;
  * @author Daedalus4096
  */
 public interface IAffinity {
-    ResourceLocation getId();
-    
     ResourceLocation getTarget();
     
     AffinityType getType();
