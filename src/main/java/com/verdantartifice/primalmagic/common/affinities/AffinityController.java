@@ -98,7 +98,8 @@ public class AffinityController extends JsonReloadListener {
                 PrimalMagic.LOGGER.error("Parsing error loading affinity {}", location, e);
             }
         }
-        PrimalMagic.LOGGER.info("Loaded {} affinity definitions", this.affinities.size());
+        int size = this.affinities.entrySet().stream().mapToInt((m) -> m.getValue().size()).sum();
+        PrimalMagic.LOGGER.info("Loaded {} affinity definitions", size);
     }
     
     protected IAffinity deserializeAffinity(ResourceLocation id, JsonObject json) {
