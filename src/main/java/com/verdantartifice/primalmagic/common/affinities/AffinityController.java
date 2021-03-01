@@ -54,6 +54,7 @@ public class AffinityController extends JsonReloadListener {
     protected static final Map<AffinityType, IAffinitySerializer<?>> SERIALIZERS = new ImmutableMap.Builder<AffinityType, IAffinitySerializer<?>>()
             .put(AffinityType.ITEM, ItemAffinity.SERIALIZER)
             .put(AffinityType.POTION_BONUS, PotionBonusAffinity.SERIALIZER)
+            .put(AffinityType.ENCHANTMENT_BONUS, EnchantmentBonusAffinity.SERIALIZER)
             .build();
 
     private static AffinityController INSTANCE;

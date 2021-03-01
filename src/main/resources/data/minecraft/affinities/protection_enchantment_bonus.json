@@ -1,0 +1,7 @@
+{
+    "type": "enchantment_bonus",
+    "target": "minecraft:protection",
+    "multiplier": {
+        "earth": 1
+    }
+}
