@@ -4,11 +4,11 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagic.common.affinities.AffinityController;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
-import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -81,7 +81,7 @@ public class ScanPositionPacket implements IMessageToServer {
                             chestStack = handler.getStackInSlot(slot);
                             if (chestStack != null && !chestStack.isEmpty()) {
                                 // Limit how much of an inventory can be scanned
-                                if (scanCount >= AffinityManager.MAX_SCAN_COUNT) {
+                                if (scanCount >= AffinityController.MAX_SCAN_COUNT) {
                                     player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.toobig").mergeStyle(TextFormatting.RED), true);
                                     break;
                                 }

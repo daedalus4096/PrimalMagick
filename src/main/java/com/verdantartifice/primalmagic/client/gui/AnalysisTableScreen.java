@@ -7,11 +7,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
+import com.verdantartifice.primalmagic.common.affinities.AffinityController;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActionPacket;
-import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
@@ -67,7 +67,7 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
         if (lastScannedStack == null || lastScannedStack.isEmpty()) {
             text = new TranslationTextComponent("primalmagic.analysis.no_item");
         } else {
-            SourceList sources = AffinityManager.getAffinities(lastScannedStack, this.world);
+            SourceList sources = AffinityController.getInstance().getAffinityValues(lastScannedStack, this.world);
             if (sources == null || sources.isEmpty()) {
                 text = new TranslationTextComponent("primalmagic.analysis.no_affinities");
             }
@@ -96,7 +96,7 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
         // Show affinity widgets, if the last scanned stack has affinities
         ItemStack lastScannedStack = this.container.getLastScannedStack();
         if (lastScannedStack != null && !lastScannedStack.isEmpty()) {
-            SourceList sources = AffinityManager.getAffinities(lastScannedStack, this.world);
+            SourceList sources = AffinityController.getInstance().getAffinityValues(lastScannedStack, this.world);
             if (!sources.isEmpty()) {
                 int widgetSetWidth = sources.getSourcesSorted().size() * 18;
                 int x = this.guiLeft + 1 + (this.getXSize() - widgetSetWidth) / 2;

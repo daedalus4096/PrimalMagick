@@ -57,6 +57,8 @@ public class AffinityController extends JsonReloadListener {
 
     private static AffinityController INSTANCE;
     
+    public static final int MAX_SCAN_COUNT = 108;   // Enough to scan a 9x12 inventory
+    
     private Map<AffinityType, Map<ResourceLocation, IAffinity>> affinities = new HashMap<>();
 
     protected AffinityController() {

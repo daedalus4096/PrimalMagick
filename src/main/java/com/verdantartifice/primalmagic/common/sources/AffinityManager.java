@@ -185,7 +185,7 @@ public class AffinityManager {
         stackCopy.setCount(1);
         
         // If the stack is already registered, just return that
-        if (AffinityManager.isRegistered(stackCopy)) {
+        if (isRegistered(stackCopy)) {
             return getAffinities(stackCopy, recipeManager, history);
         }
         
