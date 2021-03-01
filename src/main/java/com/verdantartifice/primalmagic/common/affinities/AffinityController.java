@@ -53,6 +53,7 @@ public class AffinityController extends JsonReloadListener {
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     protected static final Map<AffinityType, IAffinitySerializer<?>> SERIALIZERS = new ImmutableMap.Builder<AffinityType, IAffinitySerializer<?>>()
             .put(AffinityType.ITEM, ItemAffinity.SERIALIZER)
+            .put(AffinityType.POTION_BONUS, PotionBonusAffinity.SERIALIZER)
             .build();
 
     private static AffinityController INSTANCE;

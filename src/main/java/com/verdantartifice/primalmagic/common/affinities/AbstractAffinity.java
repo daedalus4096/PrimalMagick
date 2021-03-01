@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class AbstractAffinity implements IAffinity {
-    protected static final BiFunction<AffinityType, ResourceLocation, IAffinity> DUMMY = (type, loc) -> {
+    protected static final BiFunction<AffinityType, ResourceLocation, IAffinity> DUMMY_LOOKUP = (type, loc) -> {
         return null;
     };
     
@@ -30,7 +30,7 @@ public abstract class AbstractAffinity implements IAffinity {
         if (this.totalCache == null) {
             this.totalCache = this.calculateTotal();
         }
-        return this.totalCache;
+        return this.totalCache.copy();
     }
     
     protected abstract SourceList calculateTotal();

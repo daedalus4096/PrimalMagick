@@ -27,7 +27,7 @@ public class ItemAffinity extends AbstractAffinity {
     }
     
     public ItemAffinity(@Nonnull ResourceLocation target, @Nonnull SourceList values) {
-        super(target, AbstractAffinity.DUMMY);
+        super(target, AbstractAffinity.DUMMY_LOOKUP);
         this.setValues = values;
     }
 
@@ -49,7 +49,7 @@ public class ItemAffinity extends AbstractAffinity {
             if (this.baseEntry == null) {
                 this.baseEntry = this.lookupFunc.apply(this.getType(), this.baseEntryId);
             }
-            SourceList retVal = this.baseEntry.getTotal().copy();
+            SourceList retVal = this.baseEntry.getTotal();
             if (retVal != null) {
                 if (this.addValues != null) {
                     retVal = retVal.add(this.addValues);
