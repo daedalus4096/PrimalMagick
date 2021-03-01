@@ -49,7 +49,7 @@ public class ItemAffinity extends AbstractAffinity {
             if (this.baseEntry == null) {
                 this.baseEntry = this.lookupFunc.apply(this.getType(), this.baseEntryId);
             }
-            SourceList retVal = this.baseEntry.getTotal();
+            SourceList retVal = this.baseEntry.getTotal().copy();
             if (retVal != null) {
                 if (this.addValues != null) {
                     retVal = retVal.add(this.addValues);
