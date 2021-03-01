@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.AnalysisResultSlot;
-import com.verdantartifice.primalmagic.common.sources.AffinityManager;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -111,8 +111,8 @@ public class AnalysisTableContainer extends Container {
             if (!stack.isEmpty()) {
                 this.analysisInventory.setInventorySlotContents(0, ItemStack.EMPTY);
                 this.analysisInventory.setInventorySlotContents(1, stack);
-                if (!AffinityManager.isScanned(stack, this.player)) {
-                    AffinityManager.setScanned(stack, (ServerPlayerEntity)this.player);
+                if (!ResearchManager.isScanned(stack, this.player)) {
+                    ResearchManager.setScanned(stack, (ServerPlayerEntity)this.player);
                 }
             }
         }

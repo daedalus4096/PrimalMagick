@@ -28,7 +28,6 @@ import com.verdantartifice.primalmagic.common.commands.arguments.StatValueArgume
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.Stat;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
@@ -335,7 +334,7 @@ public class PrimalMagicCommand {
             return 0;
         }
         // Scan the given item for the target player and grant them its research
-        if (AffinityManager.setScanned(stack, target)) {
+        if (ResearchManager.setScanned(stack, target)) {
             source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant.success", target.getName(), item.getItem().getRegistryName().toString()), true);
             target.sendMessage(new TranslationTextComponent("commands.primalmagic.scans.grant.target", source.getName(), item.getItem().getRegistryName().toString()), Util.DUMMY_UUID);
         } else {
@@ -346,7 +345,7 @@ public class PrimalMagicCommand {
     
     private static int grantAllScanResearch(CommandSource source, ServerPlayerEntity target) {
         // Scan all possible items for the target player and grant them their research
-        int count = AffinityManager.setAllScanned(target);
+        int count = ResearchManager.setAllScanned(target);
         source.sendFeedback(new TranslationTextComponent("commands.primalmagic.scans.grant_all", count, target.getName()), true);
         target.sendMessage(new TranslationTextComponent("commands.primalmagic.scans.grant_all.target", count, source.getName()), Util.DUMMY_UUID);
         return 0;

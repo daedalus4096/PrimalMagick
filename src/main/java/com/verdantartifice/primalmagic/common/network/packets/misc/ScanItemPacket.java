@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.common.network.packets.misc;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
-import com.verdantartifice.primalmagic.common.sources.AffinityManager;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -45,9 +45,9 @@ public class ScanItemPacket implements IMessageToServer {
             ctx.get().enqueueWork(() -> {
                 if (message.stack != null && !message.stack.isEmpty()) {
                     ServerPlayerEntity player = ctx.get().getSender();
-                    if (AffinityManager.isScanned(message.stack, player)) {
+                    if (ResearchManager.isScanned(message.stack, player)) {
                         player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").mergeStyle(TextFormatting.RED), true);
-                    } else if (AffinityManager.setScanned(message.stack, player)) {
+                    } else if (ResearchManager.setScanned(message.stack, player)) {
                         player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").mergeStyle(TextFormatting.GREEN), true);
                     } else {
                         player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.fail").mergeStyle(TextFormatting.RED), true);

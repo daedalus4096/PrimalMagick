@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
@@ -66,9 +67,9 @@ public class ScanPositionPacket implements IMessageToServer {
                     // Scan the block
                     boolean found = false;
                     ItemStack posStack = new ItemStack(world.getBlockState(message.pos).getBlock());
-                    if (!AffinityManager.isScanned(posStack, player)) {
+                    if (!ResearchManager.isScanned(posStack, player)) {
                         // Delay syncing until scan is done
-                        found = AffinityManager.setScanned(posStack, player, false);
+                        found = ResearchManager.setScanned(posStack, player, false);
                     }
                     
                     // If the given block has an inventory, scan its contents too
@@ -84,7 +85,7 @@ public class ScanPositionPacket implements IMessageToServer {
                                     player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.toobig").mergeStyle(TextFormatting.RED), true);
                                     break;
                                 }
-                                if (AffinityManager.setScanned(chestStack, player, false)) {
+                                if (ResearchManager.setScanned(chestStack, player, false)) {
                                     // Delay syncing until scan is done
                                     found = true;
                                 }

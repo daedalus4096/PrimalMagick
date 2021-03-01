@@ -7,8 +7,8 @@ import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerIST
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
-import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
@@ -83,12 +83,12 @@ public class ArcanometerItem extends Item {
         } else if (result.getType() == RayTraceResult.Type.ENTITY) {
             // If the current mouseover is an entity, try to get its corresponding item and scan that if it has one
             ItemStack stack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
-            return !stack.isEmpty() && !AffinityManager.isScanned(stack, player);
+            return !stack.isEmpty() && !ResearchManager.isScanned(stack, player);
         } else if (result.getType() == RayTraceResult.Type.BLOCK) {
             // If the current mouseover is a block, try to get its corresponding block item and scan that
             BlockPos pos = ((BlockRayTraceResult)result).getPos();
             ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock());
-            return !stack.isEmpty() && !AffinityManager.isScanned(stack, player);
+            return !stack.isEmpty() && !ResearchManager.isScanned(stack, player);
         } else {
             return false;
         }

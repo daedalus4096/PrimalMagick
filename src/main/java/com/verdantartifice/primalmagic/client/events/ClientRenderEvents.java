@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.config.Config;
 import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
 import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -54,7 +55,7 @@ public class ClientRenderEvents {
             SourceList sources = AffinityManager.getAffinities(event.getItemStack(), mc.world);
             if (sources == null || sources.isEmpty()) {
                 event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.none"));
-            } else if (!AffinityManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
+            } else if (!ResearchManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
                 event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.unknown"));
             } else {
                 int width = 0;

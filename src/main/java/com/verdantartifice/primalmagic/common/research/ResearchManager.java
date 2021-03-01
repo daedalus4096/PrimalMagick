@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
@@ -21,16 +22,22 @@ import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.sources.AffinityManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Primary access point for research-related methods.
@@ -382,5 +389,113 @@ public class ResearchManager {
                 trigger.onMatch(player, itemProvider);
             }
         }
+    }
+
+    public static boolean isScanned(@Nullable ItemStack stack, @Nullable PlayerEntity player) {
+        if (stack == null || stack.isEmpty() || player == null) {
+            return false;
+        }
+        SourceList affinities = AffinityManager.getAffinities(stack, player.world);
+        if (affinities == null || affinities.isEmpty()) {
+            // If the given itemstack has no affinities, consider it already scanned
+            return true;
+        }
+        SimpleResearchKey key = SimpleResearchKey.parseScan(stack);
+        return (key != null && key.isKnownByStrict(player));
+    }
+
+    public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayerEntity player) {
+        // Scan the given itemstack and sync the data to the player's client
+        return setScanned(stack, player, true);
+    }
+
+    public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayerEntity player, boolean sync) {
+        if (stack == null || stack.isEmpty() || player == null) {
+            return false;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        }
+        
+        // Generate a research key for the itemstack and add that research to the player
+        SimpleResearchKey key = SimpleResearchKey.parseScan(stack);
+        if (key != null && knowledge.addResearch(key)) {
+            // Determine how many observation points the itemstack is worth and add those to the player's knowledge
+            int obsPoints = getObservationPoints(stack, player.getEntityWorld());
+            if (obsPoints > 0) {
+                knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
+            }
+            
+            // Check to see if any scan triggers need to be run for the item
+            checkScanTriggers(player, stack.getItem());
+            
+            // Sync the research/knowledge changes to the player's client if requested
+            if (sync) {
+                knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static int setAllScanned(@Nullable ServerPlayerEntity player) {
+        if (player == null) {
+            return 0;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return 0;
+        }
+        int count = 0;
+        SimpleResearchKey key;
+        ItemStack stack;
+        
+        // Iterate over all registered items in the game
+        for (Item item : ForgeRegistries.ITEMS) {
+            // Generate a research key for the itemstack and add that research to the player
+            stack = new ItemStack(item);
+            key = SimpleResearchKey.parseScan(stack);
+            if (key != null && knowledge.addResearch(key)) {
+                count++;
+    
+                // Determine how many observation points the itemstack is worth and add those to the player's knowledge
+                int obsPoints = getObservationPoints(stack, player.getEntityWorld());
+                if (obsPoints > 0) {
+                    knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
+                }
+                
+                // Check to see if any scan triggers need to be run for the item
+                checkScanTriggers(player, item);
+            }
+        }
+        
+        // If any items were successfully scanned, sync the research/knowledge changes to the player's client
+        if (count > 0) {
+            knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
+        }
+        
+        // Return the number of items successfully scanned
+        return count;
+    }
+
+    protected static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull World world) {
+        // Calculate observation points for the itemstack based on its affinities
+        SourceList sources = AffinityManager.getAffinities(stack, world);
+        if (sources == null || sources.isEmpty()) {
+            return 0;
+        }
+        double total = 0.0D;
+        for (Source source : sources.getSources()) {
+            // Not all sources are worth the same amount of observation points
+            total += (sources.getAmount(source) * source.getObservationMultiplier());
+        }
+        if (total > 0.0D) {
+            total = Math.sqrt(total);
+        }
+        
+        // Round up to ensure that any item with affinities generates at least one observation point
+        return MathHelper.ceil(total);
     }
 }
