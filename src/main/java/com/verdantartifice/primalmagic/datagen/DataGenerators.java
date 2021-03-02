@@ -22,5 +22,6 @@ public class DataGenerators {
         generator.addProvider(new BlockLootTables(generator));
         generator.addProvider(new BlockTagsProvider(generator));
         generator.addProvider(new ItemTagsProvider(generator));
+        generator.addProvider(new AffinityProvider(generator));
     }
 }

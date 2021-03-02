@@ -13,4 +13,9 @@ public interface IAffinitySerializer<T extends IAffinity> {
      * Read an affinity entry object from JSON
      */
     T read(ResourceLocation affinityId, JsonObject json);
+    
+    /**
+     * Write a JSON object from an affinity
+     */
+    JsonObject write(IAffinity affinity);
 }
