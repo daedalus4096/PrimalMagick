@@ -21,7 +21,9 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
 
 public class AffinityProvider implements IDataProvider {
@@ -73,6 +75,12 @@ public class AffinityProvider implements IDataProvider {
         // Define mod affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_RAW.get()).set(Source.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED.get()).base(ItemsPM.MARBLE_RAW.get()).add(auraUnit.copy()).build(consumer);
+        
+        // Define potion bonuses
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Source.SUN, 2).build(consumer);
+        
+        // Define enchantment bonuses
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.PROTECTION).multiplier(Source.EARTH).build(consumer);
     }
 
     @Override
