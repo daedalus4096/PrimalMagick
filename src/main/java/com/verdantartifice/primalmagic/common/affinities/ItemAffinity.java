@@ -99,11 +99,5 @@ public class ItemAffinity extends AbstractAffinity {
 
             return entry;
         }
-
-        @Override
-        public JsonObject write(IAffinity affinity) {
-            // TODO Auto-generated method stub
-            return null;
-        }
     }
 }

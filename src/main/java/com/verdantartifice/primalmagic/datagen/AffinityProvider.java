@@ -14,7 +14,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.affinities.IAffinity;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -32,15 +31,15 @@ public class AffinityProvider implements IDataProvider {
     @Override
     public void act(DirectoryCache cache) throws IOException {
         Path path = this.generator.getOutputFolder();
-        Map<ResourceLocation, IAffinity> map = new HashMap<>();
+        Map<ResourceLocation, IFinishedAffinity> map = new HashMap<>();
         this.registerAffinities((affinity) -> {
-            if (map.put(affinity.getTarget(), affinity) != null) {
-                PrimalMagic.LOGGER.debug("Duplicate affinity in data generation: " + affinity.getTarget().toString());
+            if (map.put(affinity.getId(), affinity) != null) {
+                PrimalMagic.LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
             }
         });
-        for (Map.Entry<ResourceLocation, IAffinity> entry : map.entrySet()) {
-            IAffinity affinity = entry.getValue();
-            this.saveAffinity(cache, affinity.getSerializer().write(affinity), path.resolve("data/" + affinity.getTarget().getNamespace() + "/affinities/" + affinity.getTarget().getPath() + ".json"));
+        for (Map.Entry<ResourceLocation, IFinishedAffinity> entry : map.entrySet()) {
+            IFinishedAffinity affinity = entry.getValue();
+            this.saveAffinity(cache, affinity.getAffinityJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/affinities/" + entry.getKey().getPath() + ".json"));
         }
     }
     
@@ -60,7 +59,7 @@ public class AffinityProvider implements IDataProvider {
         }
     }
     
-    protected void registerAffinities(Consumer<IAffinity> consumer) {
+    protected void registerAffinities(Consumer<IFinishedAffinity> consumer) {
         // TODO Method stub
     }
 
