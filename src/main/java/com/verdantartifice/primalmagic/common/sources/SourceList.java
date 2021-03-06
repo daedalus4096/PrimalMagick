@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.gson.JsonObject;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.common.util.Constants;
@@ -223,5 +225,17 @@ public class SourceList implements INBTSerializable<CompoundNBT> {
                 this.add(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
             }
         }
+    }
+    
+    @Nonnull
+    public JsonObject serializeJson() {
+        JsonObject json = new JsonObject();
+        for (Source source : Source.SORTED_SOURCES) {
+            int value = this.getAmount(source);
+            if (value > 0) {
+                json.addProperty(source.getTag(), value);
+            }
+        }
+        return json;
     }
 }

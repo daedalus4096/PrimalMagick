@@ -1,7 +1,7 @@
 {
-    "type": "item",
-    "target": "primalmagic:marble_raw",
-    "set": {
-        "earth": 5
-    }
+  "type": "item",
+  "target": "primalmagic:marble_raw",
+  "set": {
+    "earth": 5
+  }
 }
