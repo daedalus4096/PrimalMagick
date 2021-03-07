@@ -85,6 +85,8 @@ public class ItemAffinityBuilder {
             throw new IllegalStateException("Both base and set-values defined for affinity " + id.toString());
         } else if (this.baseId != null && !ForgeRegistries.ITEMS.containsKey(this.baseId)) {
             throw new IllegalStateException("Unknown base item " + this.baseId.toString() + " for affinity " + id.toString());
+        } else if (this.baseId != null && this.targetId.equals(this.baseId)) {
+            throw new IllegalStateException("Target defines itself as a base for affinity " + id.toString());
         } else if (this.baseId == null && this.setValues == null) {
             throw new IllegalStateException("Neither base nor set-values defined for affinity " + id.toString());
         }
