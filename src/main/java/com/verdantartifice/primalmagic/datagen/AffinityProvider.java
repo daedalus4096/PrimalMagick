@@ -387,9 +387,56 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.BLACK_DYE).base(Items.WHITE_DYE).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BONE_MEAL).set(Source.MOON, 1).set(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BONE).set(Source.MOON, 5).set(Source.BLOOD, 10).build(consumer);
-        
+        ItemAffinityBuilder.itemAffinity(Items.WHITE_BED).set(Source.EARTH, 4).set(Source.SUN, 4).set(Source.BLOOD, 11).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.ORANGE_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MAGENTA_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.LIGHT_BLUE_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.YELLOW_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.LIME_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PINK_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.GRAY_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.LIGHT_GRAY_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.CYAN_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PURPLE_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BLUE_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BROWN_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.GREEN_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.RED_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BLACK_BED).base(Items.WHITE_BED).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.FILLED_MAP).base(Items.MAP).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MELON_SLICE).set(Source.EARTH, 2).set(Source.SUN, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.DRIED_KELP).base(Items.KELP).remove(Source.SEA, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PUMPKIN_SEEDS).set(Source.EARTH, 2).set(Source.SUN, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MELON_SEEDS).set(Source.EARTH, 2).set(Source.SUN, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BEEF).set(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.CHICKEN).set(Source.SKY, 2).set(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.ROTTEN_FLESH).set(Source.MOON, 5).set(Source.BLOOD, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.ENDER_PEARL).set(Source.VOID, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BLAZE_ROD).set(Source.INFERNAL, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.GHAST_TEAR).set(Source.SKY, 5).set(Source.BLOOD, 5).set(Source.INFERNAL, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.NETHER_WART).set(Source.EARTH, 5).set(Source.MOON, 5).set(Source.INFERNAL, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.POTION).set(Source.SEA, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SPIDER_EYE).set(Source.MOON, 5).set(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.EXPERIENCE_BOTTLE).set(auraUnit.copy().multiply(5)).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.WRITTEN_BOOK).base(Items.WRITABLE_BOOK).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.EMERALD).set(Source.EARTH, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.FLOWER_POT).set(Source.EARTH, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.CARROT).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.POTATO).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.POISONOUS_POTATO).base(Items.POTATO).add(Source.MOON, 5).add(Source.VOID, 2).remove(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SKELETON_SKULL).set(Source.MOON, 5).set(Source.BLOOD, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.WITHER_SKELETON_SKULL).base(Items.SKELETON_SKULL).add(Source.INFERNAL, 10).remove(Source.MOON, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PLAYER_HEAD).set(Source.BLOOD, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.ZOMBIE_HEAD).set(Source.MOON, 5).set(Source.BLOOD, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.CREEPER_HEAD).set(Source.BLOOD, 20).set(Source.INFERNAL, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.DRAGON_HEAD).set(Source.BLOOD, 20).set(Source.VOID, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.NETHER_STAR).set(Source.EARTH, 25).set(Source.SEA, 25).set(Source.SKY, 25).set(Source.SUN, 25).set(Source.MOON, 25).set(Source.BLOOD, 25).set(Source.INFERNAL, 25).set(Source.VOID, 25).set(Source.HALLOWED, 25).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.FIREWORK_ROCKET).set(Source.EARTH, 5).set(Source.SKY, 5).set(Source.SUN, 15).set(Source.INFERNAL, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.FIREWORK_STAR).base(Items.GUNPOWDER).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ENCHANTED_BOOK).set(auraUnit.copy().multiply(5)).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.NETHER_BRICK).base(Items.BRICK).add(Source.INFERNAL, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.QUARTZ).set(Source.EARTH, 10).set(Source.INFERNAL, 5).build(consumer);
+        
         
         // Define mod affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_RAW.get()).set(Source.EARTH, 5).build(consumer);
