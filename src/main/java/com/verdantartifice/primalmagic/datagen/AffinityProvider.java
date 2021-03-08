@@ -436,7 +436,44 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.ENCHANTED_BOOK).set(auraUnit.copy().multiply(5)).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.NETHER_BRICK).base(Items.BRICK).add(Source.INFERNAL, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.QUARTZ).set(Source.EARTH, 10).set(Source.INFERNAL, 5).build(consumer);
-        
+        ItemAffinityBuilder.itemAffinity(Items.PRISMARINE_SHARD).set(Source.EARTH, 2).set(Source.SEA, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PRISMARINE_CRYSTALS).set(Source.EARTH, 5).set(Source.SEA, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.RABBIT).set(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.RABBIT_FOOT).set(Source.MOON, 20).set(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.RABBIT_HIDE).set(Source.BLOOD, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.IRON_HORSE_ARMOR).set(Source.EARTH, 52).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.GOLDEN_HORSE_ARMOR).set(Source.EARTH, 52).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.DIAMOND_HORSE_ARMOR).set(Source.EARTH, 105).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MUTTON).set(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.CHORUS_FRUIT).set(Source.EARTH, 5).set(Source.MOON, 5).set(Source.VOID, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BEETROOT).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BEETROOT_SEEDS).set(Source.EARTH, 2).set(Source.SUN, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.DRAGON_BREATH).set(Source.SKY, 10).set(Source.VOID, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SPLASH_POTION).base(Items.POTION).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.TIPPED_ARROW).base(Items.ARROW).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.LINGERING_POTION).base(Items.POTION).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.ELYTRA).set(Source.SKY, 25).set(Source.VOID, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.TOTEM_OF_UNDYING).set(Source.HALLOWED, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SHULKER_SHELL).set(Source.BLOOD, 5).set(Source.VOID, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.TRIDENT).set(Source.EARTH, 15).set(Source.SEA, 15).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PHANTOM_MEMBRANE).set(Source.SKY, 10).set(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.NAUTILUS_SHELL).set(Source.SEA, 10).set(Source.BLOOD, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.HEART_OF_THE_SEA).set(Source.SEA, 25).build(consumer);
+        // TODO Define suspicious stew
+        ItemAffinityBuilder.itemAffinity(Items.GLOBE_BANNER_PATTERN).base(Items.PAPER).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PIGLIN_BANNER_PATTERN).base(Items.PAPER).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BELL).set(Source.EARTH, 10).build(consumer);
+        // TODO Append 15 sun to Lantern
+        // TODO Append 15 sun to Soul Lantern
+        ItemAffinityBuilder.itemAffinity(Items.SWEET_BERRIES).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SHROOMLIGHT).set(Source.EARTH, 5).set(Source.SUN, 15).set(Source.MOON, 10).set(Source.INFERNAL, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.HONEYCOMB).set(Source.SEA, 5).set(Source.BLOOD, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BEE_NEST).base(Items.BEEHIVE).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.HONEY_BOTTLE).base(Items.GLASS_BOTTLE).add(Source.SEA, 5).add(Source.BLOOD, 1).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.ANCIENT_DEBRIS).base(Items.NETHERRACK).add(Source.EARTH, 5).add(Source.INFERNAL, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.CRYING_OBSIDIAN).base(Items.OBSIDIAN).add(Source.SUN, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BLACKSTONE).base(Items.COBBLESTONE).add(Source.INFERNAL, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.GILDED_BLACKSTONE).base(Items.BLACKSTONE).add(Source.EARTH, 10).build(consumer);
         
         // Define mod affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_RAW.get()).set(Source.EARTH, 5).build(consumer);
