@@ -477,7 +477,35 @@ public class AffinityProvider implements IDataProvider {
         
         // Define mod affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_RAW.get()).set(Source.EARTH, 5).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED.get()).base(ItemsPM.MARBLE_RAW.get()).add(auraUnit.copy()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED.get()).base(ItemsPM.MARBLE_RAW.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_SLAB.get()).base(ItemsPM.MARBLE_SLAB.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_STAIRS.get()).base(ItemsPM.MARBLE_STAIRS.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_WALL.get()).base(ItemsPM.MARBLE_WALL.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_BRICKS.get()).base(ItemsPM.MARBLE_BRICKS.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_BRICK_SLAB.get()).base(ItemsPM.MARBLE_BRICK_SLAB.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_BRICK_STAIRS.get()).base(ItemsPM.MARBLE_BRICK_STAIRS.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_BRICK_WALL.get()).base(ItemsPM.MARBLE_BRICK_WALL.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_PILLAR.get()).base(ItemsPM.MARBLE_PILLAR.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_CHISELED.get()).base(ItemsPM.MARBLE_CHISELED.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_RUNED.get()).base(ItemsPM.MARBLE_RUNED.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_SMOKED.get()).base(ItemsPM.MARBLE_RAW.get()).add(Source.MOON, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_LOG.get()).base(Items.OAK_LOG).add(Source.MOON, 20).remove(Source.SUN, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.STRIPPED_MOONWOOD_LOG.get()).base(ItemsPM.MOONWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_WOOD.get()).base(ItemsPM.MOONWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.STRIPPED_MOONWOOD_WOOD.get()).base(ItemsPM.MOONWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_LEAVES.get()).base(Items.OAK_LEAVES).add(Source.MOON, 10).remove(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_SAPLING.get()).base(Items.OAK_SAPLING).add(Source.MOON, 20).remove(Source.SUN, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_PLANKS.get()).base(Items.OAK_PLANKS).add(Source.MOON, 4).remove(Source.SUN, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_SLAB.get()).base(Items.OAK_SLAB).add(Source.MOON, 2).remove(Source.SUN, 1).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_LOG.get()).base(Items.OAK_LOG).add(Source.SUN, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.STRIPPED_SUNWOOD_LOG.get()).base(ItemsPM.SUNWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_WOOD.get()).base(ItemsPM.SUNWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.STRIPPED_SUNWOOD_WOOD.get()).base(ItemsPM.SUNWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_LEAVES.get()).base(Items.OAK_LEAVES).add(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_SAPLING.get()).base(Items.OAK_SAPLING).add(Source.SUN, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_PLANKS.get()).base(Items.OAK_PLANKS).add(Source.SUN, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_SLAB.get()).base(Items.OAK_SLAB).add(Source.SUN, 1).build(consumer);
+        
         
         // Define potion bonuses
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Source.SUN, 2).build(consumer);
