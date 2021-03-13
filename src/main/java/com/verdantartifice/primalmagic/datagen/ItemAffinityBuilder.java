@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.affinities.AffinityType;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
@@ -27,6 +28,10 @@ public class ItemAffinityBuilder {
     
     public static ItemAffinityBuilder itemAffinity(@Nonnull IItemProvider item) {
         return new ItemAffinityBuilder(item);
+    }
+    
+    public static ItemAffinityBuilder essenceAffinity(@Nonnull EssenceItem essence) {
+        return itemAffinity(essence).set(essence.getSource(), essence.getEssenceType().getAffinity());
     }
     
     public ItemAffinityBuilder base(@Nonnull IItemProvider baseItem) {

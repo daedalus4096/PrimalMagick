@@ -554,7 +554,42 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).base(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).base(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).add(auraUnit.copy().multiply(2)).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()).base(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).add(auraUnit.copy().multiply(2)).build(consumer);
-        
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_EARTH.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_SEA.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_SKY.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_SUN.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_MOON.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_BLOOD.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_INFERNAL.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_VOID.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_DUST_HALLOWED.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_EARTH.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_SEA.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_SKY.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_SUN.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_MOON.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_BLOOD.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_INFERNAL.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_VOID.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_SHARD_HALLOWED.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_EARTH.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_SEA.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_SKY.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_SUN.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_MOON.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_VOID.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_EARTH.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_SEA.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_SKY.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_SUN.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_MOON.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_BLOOD.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_INFERNAL.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_VOID.get()).build(consumer);
+        ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get()).build(consumer);
         
         // Define potion bonuses
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Source.SUN, 2).build(consumer);
