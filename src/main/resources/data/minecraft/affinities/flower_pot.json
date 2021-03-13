@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:flower_pot",
+  "set": {
+    "earth": 5
+  }
+}

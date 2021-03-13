@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:sweet_berries",
+  "set": {
+    "earth": 5,
+    "sun": 5
+  }
+}

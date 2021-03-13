@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "primalmagic:beeswax",
+  "set": {
+    "sea": 2,
+    "blood": 2
+  }
+}

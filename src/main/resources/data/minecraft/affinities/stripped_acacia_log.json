@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:stripped_acacia_log",
+  "base": "minecraft:acacia_log"
+}

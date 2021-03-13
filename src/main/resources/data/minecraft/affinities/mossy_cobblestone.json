@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:mossy_cobblestone",
+  "base": "minecraft:cobblestone",
+  "add": {
+    "moon": 5
+  }
+}

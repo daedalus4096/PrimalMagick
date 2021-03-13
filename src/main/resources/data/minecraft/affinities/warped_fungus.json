@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:warped_fungus",
+  "base": "minecraft:crimson_fungus"
+}

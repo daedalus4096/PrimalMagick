@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:soul_soil",
+  "base": "minecraft:soul_sand"
+}

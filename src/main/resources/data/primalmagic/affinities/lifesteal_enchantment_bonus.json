@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "target": "primalmagic:lifesteal",
+  "multiplier": {
+    "blood": 1
+  }
+}

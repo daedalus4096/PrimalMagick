@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:basalt",
+  "base": "minecraft:stone",
+  "add": {
+    "infernal": 5
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:pufferfish_bucket",
+  "base": "minecraft:bucket",
+  "add": {
+    "sea": 5,
+    "blood": 5
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:mycelium",
+  "set": {
+    "earth": 5,
+    "moon": 10
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "target": "primalmagic:moonwood_sapling",
+  "base": "minecraft:oak_sapling",
+  "add": {
+    "moon": 20
+  },
+  "remove": {
+    "sun": 10
+  }
+}

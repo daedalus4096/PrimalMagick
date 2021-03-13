@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:phantom_membrane",
+  "set": {
+    "sky": 10,
+    "blood": 5
+  }
+}

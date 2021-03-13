@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:jungle_planks",
+  "base": "minecraft:oak_planks"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "target": "minecraft:infinity",
+  "multiplier": {
+    "void": 1
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:brain_coral_fan",
+  "base": "minecraft:brain_coral"
+}

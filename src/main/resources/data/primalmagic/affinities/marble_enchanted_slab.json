@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "primalmagic:marble_enchanted_slab",
+  "base": "primalmagic:marble_slab",
+  "add": {
+    "earth": 1,
+    "sea": 1,
+    "sky": 1,
+    "sun": 1,
+    "moon": 1
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:infested_chiseled_stone_bricks",
+  "base": "minecraft:chiseled_stone_bricks",
+  "add": {
+    "blood": 2
+  }
+}

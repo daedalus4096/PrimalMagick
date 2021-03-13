@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "target": "minecraft:wet_sponge",
+  "base": "minecraft:sponge",
+  "add": {
+    "sea": 10
+  },
+  "remove": {
+    "void": 10
+  }
+}

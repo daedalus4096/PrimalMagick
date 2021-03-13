@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:chainmail_boots",
+  "base": "minecraft:iron_boots"
+}

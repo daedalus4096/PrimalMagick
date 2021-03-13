@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "primalmagic:essence_cluster_void",
+  "set": {
+    "void": 100
+  }
+}

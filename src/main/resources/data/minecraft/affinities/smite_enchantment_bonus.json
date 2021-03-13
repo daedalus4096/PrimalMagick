@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "target": "minecraft:smite",
+  "multiplier": {
+    "hallowed": 1
+  }
+}

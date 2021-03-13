@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:stripped_birch_log",
+  "base": "minecraft:birch_log"
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:netherrack",
+  "set": {
+    "earth": 5,
+    "infernal": 5
+  }
+}

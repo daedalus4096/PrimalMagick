@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:warped_nylium",
+  "base": "minecraft:netherrack",
+  "add": {
+    "moon": 2
+  }
+}

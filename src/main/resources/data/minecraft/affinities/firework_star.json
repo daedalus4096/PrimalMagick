@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:firework_star",
+  "base": "minecraft:gunpowder"
+}

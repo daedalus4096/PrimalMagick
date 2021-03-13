@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:spruce_wood",
+  "base": "minecraft:spruce_log"
+}

@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:yellow_wool",
+  "base": "minecraft:white_wool"
+}

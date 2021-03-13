@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:birch_log",
+  "base": "minecraft:oak_log"
+}

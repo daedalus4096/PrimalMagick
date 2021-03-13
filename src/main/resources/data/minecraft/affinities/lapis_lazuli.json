@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:lapis_lazuli",
+  "set": {
+    "earth": 10
+  }
+}

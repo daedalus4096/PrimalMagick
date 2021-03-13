@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:brown_mushroom_block",
+  "base": "minecraft:mushroom_stem"
+}

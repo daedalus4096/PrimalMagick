@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:melon_slice",
+  "set": {
+    "earth": 2,
+    "sun": 2
+  }
+}

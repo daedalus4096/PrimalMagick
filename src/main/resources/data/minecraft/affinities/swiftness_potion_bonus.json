@@ -1,0 +1,7 @@
+{
+  "type": "potion_bonus",
+  "target": "minecraft:swiftness",
+  "bonus": {
+    "sky": 2
+  }
+}

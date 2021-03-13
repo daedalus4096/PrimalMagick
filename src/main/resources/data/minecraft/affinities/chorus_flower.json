@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:chorus_flower",
+  "base": "minecraft:chorus_plant"
+}

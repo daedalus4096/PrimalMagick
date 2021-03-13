@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:seagrass",
+  "base": "minecraft:grass",
+  "add": {
+    "sea": 2
+  }
+}

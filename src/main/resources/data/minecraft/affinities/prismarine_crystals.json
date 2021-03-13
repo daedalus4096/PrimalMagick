@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:prismarine_crystals",
+  "set": {
+    "earth": 5,
+    "sea": 10
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:end_portal_frame",
+  "set": {
+    "earth": 5,
+    "void": 20
+  }
+}

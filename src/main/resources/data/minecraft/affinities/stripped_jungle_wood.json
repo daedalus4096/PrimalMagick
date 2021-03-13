@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:stripped_jungle_wood",
+  "base": "minecraft:jungle_wood"
+}

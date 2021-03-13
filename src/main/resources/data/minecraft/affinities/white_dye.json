@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:white_dye",
+  "set": {
+    "sea": 1,
+    "sun": 1
+  }
+}

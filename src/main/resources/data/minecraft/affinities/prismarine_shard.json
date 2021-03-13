@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:prismarine_shard",
+  "set": {
+    "earth": 2,
+    "sea": 5
+  }
+}

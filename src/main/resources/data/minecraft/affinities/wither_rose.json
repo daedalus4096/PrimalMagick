@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "target": "minecraft:wither_rose",
+  "base": "minecraft:dandelion",
+  "add": {
+    "infernal": 5
+  },
+  "remove": {
+    "sun": 5
+  }
+}

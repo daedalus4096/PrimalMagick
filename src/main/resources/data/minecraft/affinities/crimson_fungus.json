@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:crimson_fungus",
+  "base": "minecraft:brown_mushroom",
+  "add": {
+    "infernal": 5
+  }
+}

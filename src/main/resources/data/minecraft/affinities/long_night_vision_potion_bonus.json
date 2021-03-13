@@ -1,0 +1,7 @@
+{
+  "type": "potion_bonus",
+  "target": "minecraft:long_night_vision",
+  "bonus": {
+    "sun": 5
+  }
+}

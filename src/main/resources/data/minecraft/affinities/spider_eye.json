@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:spider_eye",
+  "set": {
+    "moon": 5,
+    "blood": 5
+  }
+}

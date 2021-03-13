@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:chipped_anvil",
+  "base": "minecraft:anvil"
+}

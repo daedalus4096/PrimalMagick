@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:grass_block",
+  "base": "minecraft:dirt",
+  "add": {
+    "sun": 2
+  }
+}

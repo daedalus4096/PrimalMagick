@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:ghast_tear",
+  "set": {
+    "sky": 5,
+    "blood": 5,
+    "infernal": 10
+  }
+}

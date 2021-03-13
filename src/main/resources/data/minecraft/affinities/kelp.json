@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:kelp",
+  "set": {
+    "earth": 5,
+    "sea": 5,
+    "sun": 5
+  }
+}

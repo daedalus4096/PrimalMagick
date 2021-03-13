@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "primalmagic:essence_dust_blood",
+  "set": {
+    "blood": 5
+  }
+}

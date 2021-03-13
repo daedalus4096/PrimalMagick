@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:dead_fire_coral",
+  "base": "minecraft:dead_tube_coral"
+}

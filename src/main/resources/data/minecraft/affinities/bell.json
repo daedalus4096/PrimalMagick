@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:bell",
+  "set": {
+    "earth": 10
+  }
+}

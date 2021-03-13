@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:totem_of_undying",
+  "set": {
+    "hallowed": 10
+  }
+}

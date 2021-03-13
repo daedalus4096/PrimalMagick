@@ -1,0 +1,10 @@
+{
+  "type": "item",
+  "target": "minecraft:firework_rocket",
+  "set": {
+    "earth": 5,
+    "sky": 5,
+    "sun": 15,
+    "infernal": 5
+  }
+}

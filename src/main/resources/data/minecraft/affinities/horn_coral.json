@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:horn_coral",
+  "base": "minecraft:dead_horn_coral",
+  "add": {
+    "sun": 5
+  }
+}

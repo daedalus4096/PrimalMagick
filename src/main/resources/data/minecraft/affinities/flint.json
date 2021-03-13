@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:flint",
+  "set": {
+    "earth": 5
+  }
+}

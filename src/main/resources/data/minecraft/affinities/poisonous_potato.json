@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "minecraft:poisonous_potato",
+  "base": "minecraft:potato",
+  "add": {
+    "moon": 5,
+    "void": 2
+  },
+  "remove": {
+    "sun": 5
+  }
+}

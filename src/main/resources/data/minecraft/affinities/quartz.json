@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:quartz",
+  "set": {
+    "earth": 10,
+    "infernal": 5
+  }
+}

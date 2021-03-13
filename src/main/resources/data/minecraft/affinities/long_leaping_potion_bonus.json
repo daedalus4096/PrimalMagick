@@ -1,0 +1,7 @@
+{
+  "type": "potion_bonus",
+  "target": "minecraft:long_leaping",
+  "bonus": {
+    "sky": 5
+  }
+}

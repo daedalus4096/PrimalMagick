@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "minecraft:crimson_stem",
+  "base": "minecraft:oak_log",
+  "add": {
+    "moon": 10,
+    "infernal": 10
+  },
+  "remove": {
+    "sun": 10
+  }
+}

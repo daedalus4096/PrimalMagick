@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:stripped_jungle_log",
+  "base": "minecraft:jungle_log"
+}

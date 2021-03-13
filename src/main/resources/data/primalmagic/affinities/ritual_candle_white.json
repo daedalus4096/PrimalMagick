@@ -1,0 +1,10 @@
+{
+  "type": "item",
+  "target": "primalmagic:ritual_candle_white",
+  "set": {
+    "sea": 3,
+    "sky": 3,
+    "sun": 1,
+    "blood": 4
+  }
+}

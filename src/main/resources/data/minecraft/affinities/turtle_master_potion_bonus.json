@@ -1,0 +1,7 @@
+{
+  "type": "potion_bonus",
+  "target": "minecraft:turtle_master",
+  "bonus": {
+    "sea": 2
+  }
+}

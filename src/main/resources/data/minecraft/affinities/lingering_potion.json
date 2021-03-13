@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:lingering_potion",
+  "base": "minecraft:potion"
+}

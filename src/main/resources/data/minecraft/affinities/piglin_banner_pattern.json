@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:piglin_banner_pattern",
+  "base": "minecraft:paper"
+}

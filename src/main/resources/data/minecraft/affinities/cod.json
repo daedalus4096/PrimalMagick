@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:cod",
+  "set": {
+    "sea": 5,
+    "blood": 5
+  }
+}

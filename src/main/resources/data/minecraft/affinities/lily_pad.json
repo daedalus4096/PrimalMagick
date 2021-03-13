@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:lily_pad",
+  "set": {
+    "earth": 2,
+    "sea": 5,
+    "sun": 5
+  }
+}

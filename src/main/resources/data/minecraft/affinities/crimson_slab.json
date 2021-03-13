@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "minecraft:crimson_slab",
+  "base": "minecraft:oak_slab",
+  "add": {
+    "moon": 1,
+    "infernal": 1
+  },
+  "remove": {
+    "sun": 1
+  }
+}

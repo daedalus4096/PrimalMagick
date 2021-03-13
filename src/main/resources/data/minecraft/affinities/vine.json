@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:vine",
+  "set": {
+    "earth": 5,
+    "sun": 5
+  }
+}

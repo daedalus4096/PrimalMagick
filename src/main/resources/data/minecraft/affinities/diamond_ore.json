@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:diamond_ore",
+  "base": "minecraft:stone",
+  "add": {
+    "earth": 20
+  }
+}

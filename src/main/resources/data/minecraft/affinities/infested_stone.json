@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:infested_stone",
+  "base": "minecraft:stone",
+  "add": {
+    "blood": 2
+  }
+}

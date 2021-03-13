@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:magma_block",
+  "set": {
+    "infernal": 10
+  }
+}

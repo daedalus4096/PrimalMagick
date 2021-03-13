@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:oak_planks",
+  "set": {
+    "earth": 2,
+    "sun": 2
+  }
+}

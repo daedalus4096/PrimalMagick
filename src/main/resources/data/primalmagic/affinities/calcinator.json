@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "primalmagic:calcinator",
+  "base": "minecraft:furnace"
+}

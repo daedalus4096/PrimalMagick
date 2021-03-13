@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:chiseled_stone_bricks",
+  "base": "minecraft:stone_bricks"
+}

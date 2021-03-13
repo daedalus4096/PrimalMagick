@@ -1,0 +1,7 @@
+{
+  "type": "potion_bonus",
+  "target": "minecraft:fire_resistance",
+  "bonus": {
+    "infernal": 2
+  }
+}

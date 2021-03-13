@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:feather",
+  "set": {
+    "sky": 10,
+    "blood": 5
+  }
+}

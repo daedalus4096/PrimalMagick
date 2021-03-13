@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:tube_coral",
+  "base": "minecraft:dead_tube_coral",
+  "add": {
+    "sun": 5
+  }
+}

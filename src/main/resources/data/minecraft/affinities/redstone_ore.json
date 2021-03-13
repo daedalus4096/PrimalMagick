@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:redstone_ore",
+  "base": "minecraft:stone",
+  "add": {
+    "earth": 5
+  }
+}

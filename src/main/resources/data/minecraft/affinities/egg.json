@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:egg",
+  "set": {
+    "sky": 2,
+    "blood": 5
+  }
+}

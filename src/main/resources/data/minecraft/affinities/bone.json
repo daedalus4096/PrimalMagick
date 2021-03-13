@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:bone",
+  "set": {
+    "moon": 5,
+    "blood": 10
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:oak_sapling",
+  "set": {
+    "earth": 10,
+    "sun": 10
+  }
+}

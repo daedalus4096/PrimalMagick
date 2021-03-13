@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "target": "minecraft:soul_torch",
+  "base": "minecraft:torch",
+  "add": {
+    "infernal": 5
+  },
+  "remove": {
+    "sun": 5
+  }
+}

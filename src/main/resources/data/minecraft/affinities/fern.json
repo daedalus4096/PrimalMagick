@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:fern",
+  "base": "minecraft:grass"
+}

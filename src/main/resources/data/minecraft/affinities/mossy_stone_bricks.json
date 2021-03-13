@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:mossy_stone_bricks",
+  "base": "minecraft:stone_bricks",
+  "add": {
+    "moon": 3
+  }
+}

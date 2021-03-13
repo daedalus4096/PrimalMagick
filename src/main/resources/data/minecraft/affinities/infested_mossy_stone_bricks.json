@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:infested_mossy_stone_bricks",
+  "base": "minecraft:mossy_stone_bricks",
+  "add": {
+    "blood": 2
+  }
+}

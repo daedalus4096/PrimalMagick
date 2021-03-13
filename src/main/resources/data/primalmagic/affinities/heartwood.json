@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "target": "primalmagic:heartwood",
+  "set": {
+    "earth": 15,
+    "sea": 5,
+    "sky": 5,
+    "sun": 15,
+    "moon": 5
+  }
+}

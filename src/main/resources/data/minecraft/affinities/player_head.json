@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:player_head",
+  "set": {
+    "blood": 20
+  }
+}

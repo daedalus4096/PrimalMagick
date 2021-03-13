@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:fire_coral",
+  "base": "minecraft:dead_fire_coral",
+  "add": {
+    "sun": 5
+  }
+}

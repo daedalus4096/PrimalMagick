@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:jungle_wood",
+  "base": "minecraft:jungle_log"
+}

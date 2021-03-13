@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:heart_of_the_sea",
+  "set": {
+    "sea": 25
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:white_wool",
+  "set": {
+    "blood": 5
+  }
+}

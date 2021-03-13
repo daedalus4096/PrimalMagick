@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:purple_dye",
+  "base": "minecraft:white_dye"
+}

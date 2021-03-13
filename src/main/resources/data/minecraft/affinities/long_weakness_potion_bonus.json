@@ -1,0 +1,8 @@
+{
+  "type": "potion_bonus",
+  "target": "minecraft:long_weakness",
+  "bonus": {
+    "earth": 2,
+    "void": 2
+  }
+}

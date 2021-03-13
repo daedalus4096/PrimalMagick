@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:gray_bed",
+  "base": "minecraft:white_bed"
+}

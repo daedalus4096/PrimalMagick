@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:dark_oak_slab",
+  "base": "minecraft:oak_slab"
+}

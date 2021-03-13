@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:bamboo",
+  "set": {
+    "earth": 5,
+    "sky": 5,
+    "sun": 5
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:written_book",
+  "base": "minecraft:writable_book"
+}

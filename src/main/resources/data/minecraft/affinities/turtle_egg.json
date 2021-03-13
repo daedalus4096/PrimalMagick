@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:turtle_egg",
+  "set": {
+    "sea": 5,
+    "blood": 5
+  }
+}

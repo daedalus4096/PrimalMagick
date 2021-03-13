@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:rabbit_foot",
+  "set": {
+    "moon": 20,
+    "blood": 5
+  }
+}

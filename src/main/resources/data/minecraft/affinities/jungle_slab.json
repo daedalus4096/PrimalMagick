@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:jungle_slab",
+  "base": "minecraft:oak_slab"
+}

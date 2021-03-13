@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:netherite_scrap",
+  "set": {
+    "earth": 5,
+    "infernal": 10
+  }
+}

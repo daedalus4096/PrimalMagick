@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:beetroot_seeds",
+  "set": {
+    "earth": 2,
+    "sun": 2
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "minecraft:crimson_planks",
+  "base": "minecraft:oak_planks",
+  "add": {
+    "moon": 2,
+    "infernal": 2
+  },
+  "remove": {
+    "sun": 2
+  }
+}

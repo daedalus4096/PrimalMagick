@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "primalmagic:adept_wand_gem_item",
+  "base": "primalmagic:apprentice_wand_gem_item",
+  "add": {
+    "earth": 1,
+    "sea": 1,
+    "sky": 1,
+    "sun": 1,
+    "moon": 1
+  }
+}

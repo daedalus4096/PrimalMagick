@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:dried_kelp",
+  "base": "minecraft:kelp",
+  "remove": {
+    "sea": 5
+  }
+}

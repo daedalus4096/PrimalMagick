@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:warped_roots",
+  "base": "minecraft:crimson_roots"
+}

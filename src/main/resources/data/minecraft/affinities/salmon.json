@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:salmon",
+  "set": {
+    "sea": 5,
+    "blood": 5
+  }
+}
