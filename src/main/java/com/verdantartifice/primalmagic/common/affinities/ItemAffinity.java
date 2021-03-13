@@ -48,6 +48,9 @@ public class ItemAffinity extends AbstractAffinity {
         } else if (this.baseEntryId != null) {
             if (this.baseEntry == null) {
                 this.baseEntry = this.lookupFunc.apply(this.getType(), this.baseEntryId);
+                if (this.baseEntry == null) {
+                    throw new IllegalStateException("Failed to look up base " + this.baseEntryId.toString() + " for affinity calculation for " + this.targetId.toString());
+                }
             }
             SourceList retVal = this.baseEntry.getTotal();
             if (retVal != null) {
