@@ -593,6 +593,43 @@ public class AffinityProvider implements IDataProvider {
         
         // Define potion bonuses
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Source.SUN, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_NIGHT_VISION).bonus(Source.SUN, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.INVISIBILITY).bonus(Source.MOON, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_INVISIBILITY).bonus(Source.MOON, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LEAPING).bonus(Source.SKY, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_LEAPING).bonus(Source.SKY, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_LEAPING).bonus(Source.SKY, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.FIRE_RESISTANCE).bonus(Source.INFERNAL, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_FIRE_RESISTANCE).bonus(Source.INFERNAL, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.SWIFTNESS).bonus(Source.SKY, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_SWIFTNESS).bonus(Source.SKY, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_SWIFTNESS).bonus(Source.SKY, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.SLOWNESS).bonus(Source.SKY, 1).bonus(Source.VOID, 1).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_SLOWNESS).bonus(Source.SKY, 2).bonus(Source.VOID, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_SLOWNESS).bonus(Source.SKY, 2).bonus(Source.VOID, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.TURTLE_MASTER).bonus(Source.SEA, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_TURTLE_MASTER).bonus(Source.SEA, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_TURTLE_MASTER).bonus(Source.SEA, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.WATER_BREATHING).bonus(Source.SEA, 1).bonus(Source.SKY, 1).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_WATER_BREATHING).bonus(Source.SEA, 2).bonus(Source.SKY, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.HEALING).bonus(Source.SUN, 1).bonus(Source.BLOOD, 1).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_HEALING).bonus(Source.SUN, 2).bonus(Source.BLOOD, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.HARMING).bonus(Source.BLOOD, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_HARMING).bonus(Source.BLOOD, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.POISON).bonus(Source.EARTH, 1).bonus(Source.BLOOD, 1).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_POISON).bonus(Source.EARTH, 2).bonus(Source.BLOOD, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_POISON).bonus(Source.EARTH, 2).bonus(Source.BLOOD, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.REGENERATION).bonus(Source.SUN, 1).bonus(Source.BLOOD, 1).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_REGENERATION).bonus(Source.SUN, 2).bonus(Source.BLOOD, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_REGENERATION).bonus(Source.SUN, 2).bonus(Source.BLOOD, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRENGTH).bonus(Source.EARTH, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_STRENGTH).bonus(Source.EARTH, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.STRONG_STRENGTH).bonus(Source.EARTH, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.WEAKNESS).bonus(Source.EARTH, 1).bonus(Source.VOID, 1).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_WEAKNESS).bonus(Source.EARTH, 2).bonus(Source.VOID, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LUCK).bonus(Source.MOON, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.SLOW_FALLING).bonus(Source.SKY, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_SLOW_FALLING).bonus(Source.SKY, 5).build(consumer);
         
         // Define enchantment bonuses
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.PROTECTION).multiplier(Source.EARTH).build(consumer);
