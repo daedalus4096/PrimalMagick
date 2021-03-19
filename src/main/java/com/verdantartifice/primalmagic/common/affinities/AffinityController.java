@@ -123,12 +123,14 @@ public class AffinityController extends JsonReloadListener {
     
     @Nullable
     public IAffinity getOrGenerateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager) {
-        PrimalMagic.LOGGER.info("Calling getOrGenerateItemAffinity for " + id.toString());
-        return this.affinities.computeIfAbsent(AffinityType.ITEM, (affinityType) -> {
+        Map<ResourceLocation, IAffinity> map = this.affinities.computeIfAbsent(AffinityType.ITEM, (affinityType) -> {
             return new ConcurrentHashMap<>();
-        }).computeIfAbsent(id, (affinityId) -> {
-            return this.generateItemAffinity(affinityId, recipeManager, new ArrayList<>());
         });
+        if (map.containsKey(id)) {
+            return map.get(id);
+        } else {
+            return this.generateItemAffinity(id, recipeManager, new ArrayList<>());
+        }
     }
     
     protected void registerAffinity(@Nullable IAffinity affinity) {
