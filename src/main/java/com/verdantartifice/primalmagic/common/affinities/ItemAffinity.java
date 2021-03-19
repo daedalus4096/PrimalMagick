@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagic.common.affinities;
 
-import java.util.function.BiFunction;
-
 import javax.annotation.Nonnull;
 
 import com.google.gson.JsonObject;
@@ -10,6 +8,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -22,12 +21,12 @@ public class ItemAffinity extends AbstractAffinity {
     protected SourceList addValues;
     protected SourceList removeValues;
     
-    protected ItemAffinity(@Nonnull ResourceLocation target, @Nonnull BiFunction<AffinityType, ResourceLocation, IAffinity> lookupFunc) {
-        super(target, lookupFunc);
+    protected ItemAffinity(@Nonnull ResourceLocation target) {
+        super(target);
     }
     
     public ItemAffinity(@Nonnull ResourceLocation target, @Nonnull SourceList values) {
-        super(target, AbstractAffinity.DUMMY_LOOKUP);
+        super(target);
         this.setValues = values;
     }
 
@@ -42,17 +41,17 @@ public class ItemAffinity extends AbstractAffinity {
     }
 
     @Override
-    protected SourceList calculateTotal() {
+    protected SourceList calculateTotal(@Nonnull RecipeManager recipeManager) {
         if (this.setValues != null) {
             return this.setValues;
         } else if (this.baseEntryId != null) {
             if (this.baseEntry == null) {
-                this.baseEntry = this.lookupFunc.apply(this.getType(), this.baseEntryId);
+                this.baseEntry = AffinityController.getInstance().getOrGenerateItemAffinity(this.baseEntryId, recipeManager);
                 if (this.baseEntry == null) {
                     throw new IllegalStateException("Failed to look up base " + this.baseEntryId.toString() + " for affinity calculation for " + this.targetId.toString());
                 }
             }
-            SourceList retVal = this.baseEntry.getTotal();
+            SourceList retVal = this.baseEntry.getTotal(recipeManager);
             if (retVal != null) {
                 if (this.addValues != null) {
                     retVal = retVal.add(this.addValues);
@@ -80,7 +79,7 @@ public class ItemAffinity extends AbstractAffinity {
                 throw new JsonSyntaxException("Unknown target item " + target + " in affinity JSON for " + affinityId.toString());
             }
             
-            ItemAffinity entry = new ItemAffinity(targetId, AffinityController.getInstance()::getAffinity);
+            ItemAffinity entry = new ItemAffinity(targetId);
             if (json.has("set") && json.has("base")) {
                 throw new JsonParseException("Affinity entry may not have both set and base attributes");
             } else if (json.has("set")) {

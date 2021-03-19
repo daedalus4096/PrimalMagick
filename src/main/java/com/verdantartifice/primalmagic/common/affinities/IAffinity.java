@@ -1,7 +1,10 @@
 package com.verdantartifice.primalmagic.common.affinities;
 
+import javax.annotation.Nonnull;
+
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -16,5 +19,5 @@ public interface IAffinity {
     
     IAffinitySerializer<?> getSerializer();
     
-    SourceList getTotal();
+    SourceList getTotal(@Nonnull RecipeManager recipeManager);
 }

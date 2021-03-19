@@ -1,23 +1,18 @@
 package com.verdantartifice.primalmagic.common.affinities;
 
-import java.util.function.BiFunction;
+import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class AbstractAffinity implements IAffinity {
-    protected static final BiFunction<AffinityType, ResourceLocation, IAffinity> DUMMY_LOOKUP = (type, loc) -> {
-        return null;
-    };
-    
     protected ResourceLocation targetId;
-    protected BiFunction<AffinityType, ResourceLocation, IAffinity> lookupFunc;
     protected SourceList totalCache;
 
-    protected AbstractAffinity(ResourceLocation target, BiFunction<AffinityType, ResourceLocation, IAffinity> lookupFunc) {
+    protected AbstractAffinity(ResourceLocation target) {
         this.targetId = target;
-        this.lookupFunc = lookupFunc;
     }
     
     @Override
@@ -26,12 +21,12 @@ public abstract class AbstractAffinity implements IAffinity {
     }
 
     @Override
-    public SourceList getTotal() {
+    public SourceList getTotal(@Nonnull RecipeManager recipeManager) {
         if (this.totalCache == null) {
-            this.totalCache = this.calculateTotal();
+            this.totalCache = this.calculateTotal(recipeManager);
         }
         return this.totalCache.copy();
     }
     
-    protected abstract SourceList calculateTotal();
+    protected abstract SourceList calculateTotal(@Nonnull RecipeManager recipeManager);
 }
