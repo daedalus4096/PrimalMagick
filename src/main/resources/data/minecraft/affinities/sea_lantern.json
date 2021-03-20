@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:sea_lantern",
+  "set": {
+    "earth": 24,
+    "sea": 52,
+    "sun": 15
+  }
+}

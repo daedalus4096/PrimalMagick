@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:suspicious_stew",
+  "set": {
+    "earth": 12,
+    "sun": 4,
+    "moon": 7
+  }
+}

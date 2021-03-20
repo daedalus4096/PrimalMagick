@@ -213,7 +213,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.SPAWNER).set(Source.BLOOD, 20).set(Source.INFERNAL, 10).set(Source.VOID, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DIAMOND_ORE).base(Items.STONE).add(Source.EARTH, 20).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.FARMLAND).base(Items.DIRT).add(Source.SEA, 2).add(Source.SUN, 5).build(consumer);
-        // TODO Append 5 infernal to Furnace
+        ItemAffinityBuilder.itemAffinity(Items.FURNACE).set(Source.EARTH, 30).set(Source.INFERNAL, 5).build(consumer);  // Add burning affinity
         ItemAffinityBuilder.itemAffinity(Items.REDSTONE_ORE).base(Items.STONE).add(Source.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SNOW).set(Source.SEA, 2).set(Source.SKY, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ICE).set(Source.SEA, 5).build(consumer);
@@ -258,7 +258,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.PEONY).base(Items.SUNFLOWER).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.TALL_GRASS).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.LARGE_FERN).base(Items.TALL_GRASS).build(consumer);
-        // TODO Append 15 sun to Sea Lantern
+        ItemAffinityBuilder.itemAffinity(Items.SEA_LANTERN).set(Source.EARTH, 24).set(Source.SEA, 52).set(Source.SUN, 15).build(consumer);  // Add lighting affinity
         ItemAffinityBuilder.itemAffinity(Items.RED_SANDSTONE).base(Items.SANDSTONE).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MAGMA_BLOCK).set(Source.INFERNAL, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BONE_BLOCK).set(Source.MOON, 5).set(Source.BLOOD, 10).build(consumer);
@@ -326,7 +326,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.DEAD_BUBBLE_CORAL_FAN).base(Items.DEAD_BUBBLE_CORAL).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DEAD_FIRE_CORAL_FAN).base(Items.DEAD_FIRE_CORAL).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DEAD_HORN_CORAL_FAN).base(Items.DEAD_HORN_CORAL).build(consumer);
-        // TODO Append 15 sun to Conduit
+        ItemAffinityBuilder.itemAffinity(Items.CONDUIT).set(Source.SEA, 78).set(Source.SUN, 15).set(Source.BLOOD, 12).build(consumer);  // Add lighting affinity
         ItemAffinityBuilder.itemAffinity(Items.SCUTE).set(Source.SEA, 2).set(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.APPLE).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.COAL).set(Source.EARTH, 5).set(Source.INFERNAL, 5).build(consumer);
@@ -472,12 +472,12 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.PHANTOM_MEMBRANE).set(Source.SKY, 10).set(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.NAUTILUS_SHELL).set(Source.SEA, 10).set(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.HEART_OF_THE_SEA).set(Source.SEA, 25).build(consumer);
-        // TODO Define suspicious stew
+        ItemAffinityBuilder.itemAffinity(Items.SUSPICIOUS_STEW).set(Source.EARTH, 12).set(Source.SUN, 4).set(Source.MOON, 7).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.GLOBE_BANNER_PATTERN).base(Items.PAPER).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.PIGLIN_BANNER_PATTERN).base(Items.PAPER).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BELL).set(Source.EARTH, 10).build(consumer);
-        // TODO Append 15 sun to Lantern
-        // TODO Append 15 sun to Soul Lantern
+        ItemAffinityBuilder.itemAffinity(Items.LANTERN).set(Source.EARTH, 7).set(Source.SUN, 22).build(consumer);   // Add lighting affinity
+        ItemAffinityBuilder.itemAffinity(Items.SOUL_LANTERN).set(Source.EARTH, 7).set(Source.SUN, 18).set(Source.INFERNAL, 3).build(consumer);  // Add lighting affinity
         ItemAffinityBuilder.itemAffinity(Items.SWEET_BERRIES).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SHROOMLIGHT).set(Source.EARTH, 5).set(Source.SUN, 15).set(Source.MOON, 10).set(Source.INFERNAL, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.HONEYCOMB).set(Source.SEA, 5).set(Source.BLOOD, 2).build(consumer);

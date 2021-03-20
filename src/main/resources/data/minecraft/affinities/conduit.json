@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:conduit",
+  "set": {
+    "sea": 78,
+    "sun": 15,
+    "blood": 12
+  }
+}
