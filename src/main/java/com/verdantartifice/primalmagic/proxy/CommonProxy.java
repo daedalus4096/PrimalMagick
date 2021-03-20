@@ -16,7 +16,6 @@ import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagic.common.init.InitAffinities;
 import com.verdantartifice.primalmagic.common.init.InitAttunements;
 import com.verdantartifice.primalmagic.common.init.InitCapabilities;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
