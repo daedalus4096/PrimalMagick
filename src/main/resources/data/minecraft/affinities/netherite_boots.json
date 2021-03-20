@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:netherite_boots",
+  "set": {
+    "earth": 78,
+    "infernal": 22
+  }
+}

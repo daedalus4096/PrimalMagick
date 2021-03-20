@@ -1,11 +1,5 @@
 {
   "type": "item",
   "target": "primalmagic:mundane_wand",
-  "set": {
-    "earth": 1,
-    "sea": 1,
-    "sky": 1,
-    "sun": 1,
-    "moon": 1
-  }
+  "set": {}
 }

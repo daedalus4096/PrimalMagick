@@ -335,6 +335,11 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.IRON_INGOT).set(Source.EARTH, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.GOLD_INGOT).set(Source.EARTH, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.NETHERITE_SCRAP).set(Source.EARTH, 5).set(Source.INFERNAL, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_SWORD).set(Source.EARTH, 56).set(Source.INFERNAL, 22).build(consumer);     // Smithing recipes can't be auto-scanned
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_SHOVEL).set(Source.EARTH, 45).set(Source.INFERNAL, 22).build(consumer);    // Smithing recipes can't be auto-scanned
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_PICKAXE).set(Source.EARTH, 68).set(Source.INFERNAL, 22).build(consumer);   // Smithing recipes can't be auto-scanned
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_AXE).set(Source.EARTH, 68).set(Source.INFERNAL, 22).build(consumer);       // Smithing recipes can't be auto-scanned
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_HOE).set(Source.EARTH, 57).set(Source.INFERNAL, 22).build(consumer);       // Smithing recipes can't be auto-scanned
         ItemAffinityBuilder.itemAffinity(Items.STICK).set(Source.EARTH, 1).set(Source.SUN, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRING).set(Source.SKY, 5).set(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.FEATHER).set(Source.SKY, 10).set(Source.BLOOD, 5).build(consumer);
@@ -345,6 +350,10 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.CHAINMAIL_CHESTPLATE).base(Items.IRON_CHESTPLATE).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CHAINMAIL_LEGGINGS).base(Items.IRON_LEGGINGS).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CHAINMAIL_BOOTS).base(Items.IRON_BOOTS).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_HELMET).set(Source.EARTH, 90).set(Source.INFERNAL, 22).build(consumer);        // Smithing recipes can't be auto-scanned
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_CHESTPLATE).set(Source.EARTH, 123).set(Source.INFERNAL, 22).build(consumer);   // Smithing recipes can't be auto-scanned
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_LEGGINGS).set(Source.EARTH, 112).set(Source.INFERNAL, 22).build(consumer);     // Smithing recipes can't be auto-scanned
+        ItemAffinityBuilder.itemAffinity(Items.NETHERITE_BOOTS).set(Source.EARTH, 78).set(Source.INFERNAL, 22).build(consumer);         // Smithing recipes can't be auto-scanned
         ItemAffinityBuilder.itemAffinity(Items.FLINT).set(Source.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.PORKCHOP).set(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ENCHANTED_GOLDEN_APPLE).base(Items.GOLDEN_APPLE).add(Source.HALLOWED, 5).build(consumer);
@@ -426,6 +435,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.CARROT).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.POTATO).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.POISONOUS_POTATO).base(Items.POTATO).add(Source.MOON, 5).add(Source.VOID, 2).remove(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MAP).set(Source.EARTH, 42).set(Source.SKY, 18).set(Source.SUN, 18).build(consumer);  // Recipe recurses
         ItemAffinityBuilder.itemAffinity(Items.SKELETON_SKULL).set(Source.MOON, 5).set(Source.BLOOD, 20).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WITHER_SKELETON_SKULL).base(Items.SKELETON_SKULL).add(Source.INFERNAL, 10).remove(Source.MOON, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.PLAYER_HEAD).set(Source.BLOOD, 20).build(consumer);
@@ -446,6 +456,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(Items.IRON_HORSE_ARMOR).set(Source.EARTH, 52).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.GOLDEN_HORSE_ARMOR).set(Source.EARTH, 52).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DIAMOND_HORSE_ARMOR).set(Source.EARTH, 105).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.NAME_TAG).set(Source.MOON, 10).set(Source.BLOOD, 10).set(Source.INFERNAL, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUTTON).set(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CHORUS_FRUIT).set(Source.EARTH, 5).set(Source.MOON, 5).set(Source.VOID, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BEETROOT).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
@@ -538,7 +549,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_RED.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_BLACK.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.GRIMOIRE.get()).base(Items.ENCHANTED_BOOK).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.MUNDANE_WAND.get()).set(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MUNDANE_WAND.get()).set(new SourceList()).build(consumer); // Wands have no affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.BLOODY_FLESH.get()).set(Source.BLOOD, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWED_ORB.get()).set(Source.HALLOWED, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ENCHANTED_INK.get()).set(Source.SEA, 3).set(Source.MOON, 3).build(consumer);

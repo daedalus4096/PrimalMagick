@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:netherite_chestplate",
+  "set": {
+    "earth": 123,
+    "infernal": 22
+  }
+}

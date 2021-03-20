@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:netherite_leggings",
+  "set": {
+    "earth": 112,
+    "infernal": 22
+  }
+}
