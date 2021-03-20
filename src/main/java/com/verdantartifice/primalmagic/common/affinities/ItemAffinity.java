@@ -46,7 +46,7 @@ public class ItemAffinity extends AbstractAffinity {
             return this.setValues;
         } else if (this.baseEntryId != null) {
             if (this.baseEntry == null) {
-                this.baseEntry = AffinityController.getInstance().getOrGenerateItemAffinity(this.baseEntryId, recipeManager);
+                this.baseEntry = AffinityManager.getInstance().getOrGenerateItemAffinity(this.baseEntryId, recipeManager);
                 if (this.baseEntry == null) {
                     throw new IllegalStateException("Failed to look up base " + this.baseEntryId.toString() + " for affinity calculation for " + this.targetId.toString());
                 }

@@ -46,7 +46,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
-public class AffinityController extends JsonReloadListener {
+public class AffinityManager extends JsonReloadListener {
     protected static final int MAX_AFFINITY = 100;
     protected static final int HISTORY_LIMIT = 100;
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
@@ -56,23 +56,23 @@ public class AffinityController extends JsonReloadListener {
             .put(AffinityType.ENCHANTMENT_BONUS, EnchantmentBonusAffinity.SERIALIZER)
             .build();
 
-    private static AffinityController INSTANCE;
+    private static AffinityManager INSTANCE;
     
     public static final int MAX_SCAN_COUNT = 108;   // Enough to scan a 9x12 inventory
     
     private Map<AffinityType, Map<ResourceLocation, IAffinity>> affinities = new ConcurrentHashMap<>();
 
-    protected AffinityController() {
+    protected AffinityManager() {
         super(GSON, "affinities");
     }
 
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
-        INSTANCE = new AffinityController();
+        INSTANCE = new AffinityManager();
         event.addListener(INSTANCE);
     }
     
-    public static AffinityController getInstance() {
+    public static AffinityManager getInstance() {
         if (INSTANCE == null) {
             throw new IllegalStateException("Cannot retrieve AffinityController until resources are loaded at least once");
         } else {

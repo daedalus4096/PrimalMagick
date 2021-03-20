@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagic.common.affinities.AffinityController;
+import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
 import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
@@ -222,7 +222,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
 
     protected boolean canCalcinate(ItemStack inputStack) {
         if (inputStack != null && !inputStack.isEmpty()) {
-            SourceList sources = AffinityController.getInstance().getAffinityValues(inputStack, this.world);
+            SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.world);
             if (sources == null || sources.isEmpty()) {
                 // An item without affinities cannot be melted
                 return false;
@@ -241,7 +241,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
     @Nonnull
     protected List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs) {
         List<ItemStack> output = new ArrayList<>();
-        SourceList sources = AffinityController.getInstance().getAffinityValues(inputStack, this.world);
+        SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.world);
         if (sources != null && !sources.isEmpty()) {
             for (Source source : Source.SORTED_SOURCES) {
                 int amount = sources.getAmount(source);

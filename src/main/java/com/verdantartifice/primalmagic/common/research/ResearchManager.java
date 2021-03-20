@@ -18,7 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.affinities.AffinityController;
+import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
@@ -395,7 +395,7 @@ public class ResearchManager {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
-        SourceList affinities = AffinityController.getInstance().getAffinityValues(stack, player.world);
+        SourceList affinities = AffinityManager.getInstance().getAffinityValues(stack, player.world);
         if (affinities == null || affinities.isEmpty()) {
             // If the given itemstack has no affinities, consider it already scanned
             return true;
@@ -482,7 +482,7 @@ public class ResearchManager {
 
     protected static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull World world) {
         // Calculate observation points for the itemstack based on its affinities
-        SourceList sources = AffinityController.getInstance().getAffinityValues(stack, world);
+        SourceList sources = AffinityManager.getInstance().getAffinityValues(stack, world);
         if (sources == null || sources.isEmpty()) {
             return 0;
         }

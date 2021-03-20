@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
-import com.verdantartifice.primalmagic.common.affinities.AffinityController;
+import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.config.Config;
 import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
@@ -52,7 +52,7 @@ public class ClientRenderEvents {
         
         // Make the tooltip changes for showing primal affinities on an itemstack
         if (gui instanceof ContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHelper.isMouseGrabbed() && event.getItemStack() != null) {
-            SourceList sources = AffinityController.getInstance().getAffinityValues(event.getItemStack(), mc.world);
+            SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getItemStack(), mc.world);
             if (sources == null || sources.isEmpty()) {
                 event.getToolTip().add(new TranslationTextComponent("primalmagic.affinities.none"));
             } else if (!ResearchManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
@@ -92,7 +92,7 @@ public class ClientRenderEvents {
                     if (event.getLines().get(index) != null && !event.getLines().get(index).getString().contains("     ")) {
                         bottom -= 10;
                     } else if (index > 0 && event.getLines().get(index - 1) != null && event.getLines().get(index - 1).getString().contains("     ")) {
-                        SourceList sources = AffinityController.getInstance().getAffinityValues(event.getStack(), mc.world);
+                        SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getStack(), mc.world);
                         GuiUtils.renderSourcesForPlayer(event.getMatrixStack(), sources, mc.player, event.getX(), event.getY() + bottom - 16);
                         break;
                     }
