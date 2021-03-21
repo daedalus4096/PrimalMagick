@@ -162,7 +162,7 @@ public class CombatEvents {
         }
         
         // If the entity is afflicted with Drain Soul, drop some soul gems
-        if (entity.isNonBoss() && entity.isPotionActive(EffectsPM.DRAIN_SOUL.get()) && !event.isCanceled()) {
+        if (entity.isPotionActive(EffectsPM.DRAIN_SOUL.get()) && !event.isCanceled()) {
             float gems = entity.getType().getClassification().getPeacefulCreature() ? 
                     MathHelper.sqrt(entity.getMaxHealth()) / 20.0F : 
                     entity.getMaxHealth() / 20.0F;
