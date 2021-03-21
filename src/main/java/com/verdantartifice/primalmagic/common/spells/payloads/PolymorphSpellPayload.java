@@ -8,11 +8,10 @@ import com.verdantartifice.primalmagic.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -63,7 +62,7 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
     public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
         if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
             EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
-            if (this.canBePolymorphed(entityTarget.getEntity())) {
+            if (SpellManager.canPolymorph(entityTarget.getEntity().getType())) {
                 // Create and enqueue an entity swapper for the target entity
                 UUID entityId = entityTarget.getEntity().getUniqueID();
                 CompoundNBT originalData = entityTarget.getEntity().writeWithoutTypeId(new CompoundNBT());
@@ -73,18 +72,6 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
         }
     }
     
-    protected boolean canBePolymorphed(Entity entity) {
-        // TODO Replace with something more configurable for other mods to be able to blacklist
-        EntityType<?> type = entity.getType();
-        if (type == null) {
-            return false;
-        }
-        if (type.equals(EntityType.WOLF) || type.equals(EntityType.ENDER_DRAGON) || type.equals(EntityType.WITHER)) {
-            return false;
-        }
-        return !type.getClassification().equals(EntityClassification.MISC);
-    }
-
     @Override
     public Source getSource() {
         return Source.MOON;

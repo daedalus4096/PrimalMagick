@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.spells;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,8 @@ import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -53,6 +56,10 @@ public class SpellManager {
     protected static final Map<String, Supplier<CompoundResearchKey>> VEHICLE_RESEARCH_SUPPLIERS = new HashMap<>();
     protected static final Map<String, Supplier<CompoundResearchKey>> PAYLOAD_RESEARCH_SUPPLIERS = new HashMap<>();
     protected static final Map<String, Supplier<CompoundResearchKey>> MOD_RESEARCH_SUPPLIERS = new HashMap<>();
+    
+    // Allow and ban lists for polymorphing entity types
+    protected static final Set<EntityType<?>> POLYMORPH_ALLOW = new HashSet<>();
+    protected static final Set<EntityType<?>> POLYMORPH_BAN = new HashSet<>();
     
     @Nonnull
     protected static List<String> getFilteredTypes(@Nullable PlayerEntity player, @Nonnull List<String> types, @Nonnull Map<String, Supplier<CompoundResearchKey>> suppliers) {
@@ -216,6 +223,25 @@ public class SpellManager {
                 // Otherwise, just execute the payload on the given target
                 spell.getPayload().execute(result, null, spell, world, caster, spellSource);
             }
+        }
+    }
+    
+    public static void setPolymorphAllowed(@Nonnull EntityType<?> entityType) {
+        POLYMORPH_ALLOW.add(entityType);
+    }
+    
+    public static void setPolymorphBanned(@Nonnull EntityType<?> entityType) {
+        POLYMORPH_BAN.add(entityType);
+    }
+    
+    public static boolean canPolymorph(@Nonnull EntityType<?> entityType) {
+        if (POLYMORPH_ALLOW.contains(entityType)) {
+            return true;
+        } else if (POLYMORPH_BAN.contains(entityType)) {
+            return false;
+        } else {
+            // Don't allow misc entities like arrows and fishing bobbers unless explicitly allow-listed
+            return !entityType.getClassification().equals(EntityClassification.MISC);
         }
     }
 }
