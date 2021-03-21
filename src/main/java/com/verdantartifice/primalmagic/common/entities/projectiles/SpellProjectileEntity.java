@@ -93,8 +93,8 @@ public class SpellProjectileEntity extends ThrowableEntity {
                 // Don't collide with other spell projectiles
                 return;
             }
-            if (this.spell != null && this.spell.getPayload() != null && this.func_234616_v_() instanceof PlayerEntity) {
-                SpellManager.executeSpellPayload(this.spell, result, this.world, (PlayerEntity)this.func_234616_v_(), this.spellSource, true);
+            if (this.spell != null && this.spell.getPayload() != null && this.getShooter() instanceof PlayerEntity) {
+                SpellManager.executeSpellPayload(this.spell, result, this.world, (PlayerEntity)this.getShooter(), this.spellSource, true);
             }
             this.remove();
         }

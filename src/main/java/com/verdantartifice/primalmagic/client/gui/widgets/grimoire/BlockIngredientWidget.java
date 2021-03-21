@@ -35,7 +35,7 @@ public class BlockIngredientWidget extends Widget {
     }
 
     @Override
-    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (this.ingredient != null) {
             Block[] matching = this.ingredient.getMatchingBlocks();
             if (matching != null && matching.length > 0) {

@@ -212,7 +212,7 @@ public class RitualBellBlock extends Block implements IRitualPropBlock {
     
     @Override
     public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit, ProjectileEntity projectile) {
-        Entity entity = projectile.func_234616_v_();
+        Entity entity = projectile.getShooter();
         PlayerEntity playerentity = entity instanceof PlayerEntity ? (PlayerEntity)entity : null;
         this.tryRing(worldIn, state, hit, playerentity);
     }

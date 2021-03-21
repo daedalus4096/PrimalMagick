@@ -30,7 +30,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
         // If the shooter has the Enderport enchantment, teleport to the hit location
-        Entity shooter = event.getArrow().func_234616_v_();
+        Entity shooter = event.getArrow().getShooter();
         if (shooter instanceof PlayerEntity && EnchantmentHelperPM.hasEnderport((PlayerEntity)shooter)) {
             EntityUtils.teleportPlayer((PlayerEntity)shooter, event.getArrow().world, event.getRayTraceResult().getHitVec());
         }

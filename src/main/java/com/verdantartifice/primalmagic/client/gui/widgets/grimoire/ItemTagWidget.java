@@ -41,7 +41,7 @@ public class ItemTagWidget extends Widget {
     }
     
     @Override
-    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         ITag<Item> itemTag = TagCollectionManager.getManager().getItemTags().get(this.tag);
         Collection<Item> tagContents = itemTag.getAllElements();
         if (tagContents != null && !tagContents.isEmpty()) {

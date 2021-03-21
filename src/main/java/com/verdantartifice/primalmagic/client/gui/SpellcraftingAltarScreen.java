@@ -224,7 +224,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         String str;
         int strWidth;
         for (Map.Entry<Vector3i, ITextComponent> entry : this.texts.entrySet()) {
-            str = this.font.func_238412_a_(entry.getValue().getString(), entry.getKey().getZ());    // trim string to width
+            str = this.font.trimStringToWidth(entry.getValue().getString(), entry.getKey().getZ());
             strWidth = this.font.getStringWidth(str);
             this.font.drawString(matrixStack, str, entry.getKey().getX() - this.guiLeft + ((entry.getKey().getZ() - strWidth) / 2), entry.getKey().getY() - this.guiTop, color);
         }
@@ -321,7 +321,7 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
         }
         
         @Override
-        public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
             Minecraft mc = Minecraft.getInstance();
             mc.getTextureManager().bindTexture(TEXTURE);
             this.blit(matrixStack, this.x, this.y, this.isIncrement ? 230 : 237, this.isHovered() ? 11 : 0, this.width, this.height);
