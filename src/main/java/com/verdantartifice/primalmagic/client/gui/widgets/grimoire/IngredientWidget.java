@@ -32,7 +32,7 @@ public class IngredientWidget extends Widget {
     }
 
     @Override
-    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (this.ingredient != null) {
             ItemStack[] matching = this.ingredient.getMatchingStacks();
             if (matching != null && matching.length > 0) {

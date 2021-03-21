@@ -35,7 +35,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
     }
     
     @Override
-    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw time-selected stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
         ItemStack toDisplay = this.getStackToDisplay();
@@ -54,7 +54,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
         }
         
         // Draw base class stuff
-        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderWidget(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     @Override

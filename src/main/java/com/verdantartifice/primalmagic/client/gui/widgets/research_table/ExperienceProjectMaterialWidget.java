@@ -31,7 +31,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
     }
     
     @Override
-    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw experience orb
@@ -64,7 +64,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         }
 
         // Draw base class stuff
-        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderWidget(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     protected int getTextureIndexByXP(int xpValue) {

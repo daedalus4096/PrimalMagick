@@ -37,7 +37,7 @@ public class ManaCostSummaryWidget extends Widget {
     }
     
     @Override
-    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Render the base widget
         Minecraft mc = Minecraft.getInstance();
         RenderSystem.enableBlend();

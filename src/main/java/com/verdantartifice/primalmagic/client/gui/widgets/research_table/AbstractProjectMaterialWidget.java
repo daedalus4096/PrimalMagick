@@ -37,7 +37,7 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
     }
     
     @Override
-    public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
         if (this.complete) {
             // Render completion checkmark if appropriate
