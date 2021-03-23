@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.affinities;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -60,7 +60,7 @@ public class AffinityManager extends JsonReloadListener {
     
     public static final int MAX_SCAN_COUNT = 108;   // Enough to scan a 9x12 inventory
     
-    private Map<AffinityType, Map<ResourceLocation, IAffinity>> affinities = new ConcurrentHashMap<>();
+    private Map<AffinityType, Map<ResourceLocation, IAffinity>> affinities = new HashMap<>();
 
     protected AffinityManager() {
         super(GSON, "affinities");
@@ -124,7 +124,7 @@ public class AffinityManager extends JsonReloadListener {
     @Nullable
     public IAffinity getOrGenerateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager) {
         Map<ResourceLocation, IAffinity> map = this.affinities.computeIfAbsent(AffinityType.ITEM, (affinityType) -> {
-            return new ConcurrentHashMap<>();
+            return new HashMap<>();
         });
         if (map.containsKey(id)) {
             return map.get(id);
@@ -135,7 +135,7 @@ public class AffinityManager extends JsonReloadListener {
     
     protected void registerAffinity(@Nullable IAffinity affinity) {
         this.affinities.computeIfAbsent(affinity.getType(), (affinityType) -> {
-            return new ConcurrentHashMap<>();
+            return new HashMap<>();
         }).put(affinity.getTarget(), affinity);
     }
     
