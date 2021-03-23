@@ -82,4 +82,8 @@ public class ResearchDiscipline {
             return true;
         }
     }
+    
+    void clearEntries() {
+        this.entries.clear();
+    }
 }

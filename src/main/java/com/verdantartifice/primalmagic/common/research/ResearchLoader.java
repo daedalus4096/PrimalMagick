@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,6 +42,8 @@ public class ResearchLoader extends JsonReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, IResourceManager resourceManagerIn, IProfiler profilerIn) {
+        ResearchManager.clearCraftingReferences();
+        ResearchDisciplines.clearAllResearch();
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {
             ResourceLocation location = entry.getKey();
             if (location.getPath().startsWith("_")) {
@@ -48,7 +51,20 @@ public class ResearchLoader extends JsonReloadListener {
                 continue;
             }
 
-            PrimalMagic.LOGGER.info("Loading research entry {}", location);
+            try {
+                ResearchEntry researchEntry = ResearchEntry.parse(JSONUtils.getJsonObject(entry.getValue(), "top member"));
+                ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(researchEntry.getDisciplineKey());
+                if (discipline == null || !discipline.addEntry(researchEntry)) {
+                    PrimalMagic.LOGGER.error("Could not add invalid entry: {}", location);
+                }
+            } catch (Exception e) {
+                PrimalMagic.LOGGER.error("Parsing error loading research entry {}", location, e);
+            }
+        }
+        for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
+            if (!discipline.getEntries().isEmpty()) {
+                PrimalMagic.LOGGER.info("Loaded {} research entries for discipline {}", discipline.getEntries().size(), discipline.getKey().toLowerCase());
+            }
         }
     }
 }

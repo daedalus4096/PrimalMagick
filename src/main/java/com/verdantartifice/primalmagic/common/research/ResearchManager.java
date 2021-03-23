@@ -62,6 +62,10 @@ public class ResearchManager {
         return CRAFTING_REFERENCES.add(Integer.valueOf(reference));
     }
     
+    static void clearCraftingReferences() {
+        CRAFTING_REFERENCES.clear();
+    }
+    
     public static boolean isSyncScheduled(@Nullable PlayerEntity player) {
         if (player == null) {
             return false;

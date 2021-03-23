@@ -55,4 +55,10 @@ public class ResearchDisciplines {
             DATA_FILES.put(location.toString(), location);
         }
     }
+    
+    static void clearAllResearch() {
+        for (ResearchDiscipline discipline : DISCIPLINES.values()) {
+            discipline.clearEntries();
+        }
+    }
 }

@@ -40,7 +40,7 @@ public class InitResearch {
     public static void initResearch() {
         initDisciplines();
         initResearchFiles();
-        ResearchManager.parseAllResearch();
+//        ResearchManager.parseAllResearch();
         initScanResearch();
         initResearchProjects();
     }
