@@ -6,7 +6,9 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
@@ -26,15 +28,33 @@ public class ResearchEntryBuilder {
         this.disciplineName = discipline;
     }
     
-    public ResearchEntryBuilder entry(@Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline) {
+    public static ResearchEntryBuilder entry(@Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline) {
         return new ResearchEntryBuilder(key, name, discipline);
     }
     
-    public ResearchEntryBuilder entry(@Nonnull String keyStr, @Nonnull String name, @Nonnull String discipline) {
+    public static ResearchEntryBuilder entry(@Nonnull String keyStr, @Nonnull String name, @Nonnull String discipline) {
         return new ResearchEntryBuilder(SimpleResearchKey.parse(keyStr), name, discipline);
     }
     
-    // TODO Builder methods
+    public ResearchEntryBuilder parent(SimpleResearchKey parent) {
+        this.parents.add(parent);
+        return this;
+    }
+    
+    public ResearchEntryBuilder parent(String parentStr) {
+        this.parents.add(SimpleResearchKey.parse(parentStr));
+        return this;
+    }
+    
+    public ResearchEntryBuilder stage(IFinishedResearchStage stage) {
+        this.stages.add(stage);
+        return this;
+    }
+    
+    public ResearchEntryBuilder addendum(IFinishedResearchAddendum addendum) {
+        this.addenda.add(addendum);
+        return this;
+    }
     
     private void validate(ResourceLocation id) {
         if (this.key == null) {
@@ -51,9 +71,17 @@ public class ResearchEntryBuilder {
         }
     }
     
+    public void build(Consumer<IFinishedResearchEntry> consumer) {
+        this.build(consumer, new ResourceLocation(PrimalMagic.MODID, this.key.toString().toLowerCase()));
+    }
+    
+    public void build(Consumer<IFinishedResearchEntry> consumer, String name) {
+        this.build(consumer, new ResourceLocation(name));
+    }
+    
     public void build(Consumer<IFinishedResearchEntry> consumer, ResourceLocation id) {
         this.validate(id);
-        // TODO accept consumer with result
+        consumer.accept(new ResearchEntryBuilder.Result(id, this.key, this.nameTranslationKey, this.disciplineName, this.parents, this.stages, this.addenda));
     }
     
     public static class Result implements IFinishedResearchEntry {
@@ -82,8 +110,27 @@ public class ResearchEntryBuilder {
 
         @Override
         public void serialize(JsonObject json) {
-            // TODO Auto-generated method stub
+            json.addProperty("key", this.key.toString());
+            json.addProperty("name", this.name);
+            json.addProperty("discipline", this.discipline);
             
+            JsonArray parentsArray = new JsonArray();
+            for (SimpleResearchKey parent : this.parents) {
+                parentsArray.add(parent.toString());
+            }
+            json.add("parents", parentsArray);
+            
+            JsonArray stagesArray = new JsonArray();
+            for (IFinishedResearchStage stage : this.stages) {
+                stagesArray.add(stage.getStageJson());
+            }
+            json.add("stages", stagesArray);
+            
+            JsonArray addendaArray = new JsonArray();
+            for (IFinishedResearchAddendum addendum : this.addenda) {
+                addendaArray.add(addendum.getAddendumJson());
+            }
+            json.add("addenda", addendaArray);
         }
     }
 }
