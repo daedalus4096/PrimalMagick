@@ -63,7 +63,7 @@ public class ResearchEntryBuilder {
         if (this.nameTranslationKey == null) {
             throw new IllegalStateException("No name translation key for research entry " + id.toString());
         }
-        if (this.disciplineName == null || ResearchDisciplines.getDiscipline(this.disciplineName) == null) {
+        if (this.disciplineName == null) {
             throw new IllegalStateException("Invalid discipline for research entry " + id.toString());
         }
         if (this.stages.isEmpty()) {

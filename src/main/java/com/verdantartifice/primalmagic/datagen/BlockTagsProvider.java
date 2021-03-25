@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.datagen;
 
 import java.nio.file.Path;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 
@@ -13,6 +14,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 /**
  * Data provider for all of the mod's block tags, both original tags and modifications to vanilla tags.
@@ -21,8 +23,8 @@ import net.minecraftforge.common.Tags;
  */
 public class BlockTagsProvider extends TagsProvider<Block> {
     @SuppressWarnings("deprecation")
-    public BlockTagsProvider(DataGenerator generator) {
-        super(generator, Registry.BLOCK);
+    public BlockTagsProvider(DataGenerator generator, ExistingFileHelper helper) {
+        super(generator, Registry.BLOCK, PrimalMagic.MODID, helper);
     }
 
     @Override

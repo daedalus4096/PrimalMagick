@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.datagen;
 
 import java.nio.file.Path;
 
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
@@ -14,6 +15,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 /**
  * Data provider for all of the mod's item tags, both original tags and modifications to vanilla tags.
@@ -22,8 +24,8 @@ import net.minecraftforge.common.Tags;
  */
 public class ItemTagsProvider extends TagsProvider<Item> {
     @SuppressWarnings("deprecation")
-    public ItemTagsProvider(DataGenerator generator) {
-        super(generator, Registry.ITEM);
+    public ItemTagsProvider(DataGenerator generator, ExistingFileHelper helper) {
+        super(generator, Registry.ITEM, PrimalMagic.MODID, helper);
     }
 
     @Override
