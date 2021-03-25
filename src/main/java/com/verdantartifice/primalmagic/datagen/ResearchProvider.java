@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -66,6 +67,10 @@ public class ResearchProvider implements IDataProvider {
     
     protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
         // TODO Implement method stub
+        ResearchEntryBuilder.entry("FIRST_STEPS", "primalmagic.research.first_steps.title", "BASICS")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.first_steps.text.stage.1").requiredCraftStack(ItemsPM.ARCANE_WORKBENCH.get()).recipe("mundane_wand").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.first_steps.text.stage.2").recipe("mundane_wand").recipe("marble_enchanted").build())
+            .build(consumer);
     }
     
     @Override

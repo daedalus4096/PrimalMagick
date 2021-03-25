@@ -23,5 +23,6 @@ public class DataGenerators {
         generator.addProvider(new BlockTagsProvider(generator));
         generator.addProvider(new ItemTagsProvider(generator));
         generator.addProvider(new AffinityProvider(generator));
+        generator.addProvider(new ResearchProvider(generator));
     }
 }
