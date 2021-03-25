@@ -1,18 +1,25 @@
 {
-    "key": "FIRST_STEPS",
-    "name": "primalmagic.research.first_steps.title",
-    "discipline": "BASICS",
-    "parents": [],
-    "stages": [
-        {
-            "text": "primalmagic.research.first_steps.text.stage.1",
-            "required_craft": ["primalmagic:arcane_workbench"],
-            "recipes": ["primalmagic:mundane_wand"]
-        },
-        {
-            "text": "primalmagic.research.first_steps.text.stage.2",
-            "recipes": ["primalmagic:mundane_wand", "primalmagic:marble_enchanted"]
-        }
-    ],
-    "addenda": []
+  "key": "FIRST_STEPS",
+  "name": "primalmagic.research.first_steps.title",
+  "discipline": "BASICS",
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagic.research.first_steps.text.stage.1",
+      "required_craft": [
+        "primalmagic:arcane_workbench"
+      ],
+      "recipes": [
+        "primalmagic:mundane_wand"
+      ]
+    },
+    {
+      "text": "primalmagic.research.first_steps.text.stage.2",
+      "recipes": [
+        "primalmagic:mundane_wand",
+        "primalmagic:marble_enchanted"
+      ]
+    }
+  ],
+  "addenda": []
 }
