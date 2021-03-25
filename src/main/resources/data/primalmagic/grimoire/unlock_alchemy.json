@@ -1,0 +1,14 @@
+{
+  "key": "UNLOCK_ALCHEMY",
+  "name": "primalmagic.research.unlock_alchemy.title",
+  "discipline": "BASICS",
+  "parents": [
+    "UNLOCK_MANAWEAVING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.unlock_alchemy.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

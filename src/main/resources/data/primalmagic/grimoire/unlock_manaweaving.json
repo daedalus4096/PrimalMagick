@@ -1,0 +1,14 @@
+{
+  "key": "UNLOCK_MANAWEAVING",
+  "name": "primalmagic.research.unlock_manaweaving.title",
+  "discipline": "BASICS",
+  "parents": [
+    "FIRST_STEPS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.unlock_manaweaving.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

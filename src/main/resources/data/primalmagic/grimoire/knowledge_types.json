@@ -1,0 +1,14 @@
+{
+  "key": "KNOWLEDGE_TYPES",
+  "name": "primalmagic.research.knowledge_types.title",
+  "discipline": "BASICS",
+  "parents": [
+    "FIRST_STEPS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.knowledge_types.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

@@ -48,6 +48,10 @@ public class ResearchStageBuilder {
         return this;
     }
     
+    public ResearchStageBuilder requiredItemTag(@Nonnull String namespace, @Nonnull String path) {
+        return requiredItemTag(new ResourceLocation(namespace, path));
+    }
+    
     public ResearchStageBuilder requiredItemTag(@Nonnull ResourceLocation tagLoc) {
         this.requiredItems.add("tag:" + tagLoc.toString());
         return this;
@@ -117,6 +121,10 @@ public class ResearchStageBuilder {
     
     public ResearchStageBuilder recipe(@Nonnull String modId, @Nonnull String name) {
         return recipe(new ResourceLocation(modId, name));
+    }
+    
+    public ResearchStageBuilder recipe(@Nonnull IItemProvider item) {
+        return recipe(item.asItem().getRegistryName());
     }
     
     public ResearchStageBuilder recipe(@Nonnull ResourceLocation loc) {

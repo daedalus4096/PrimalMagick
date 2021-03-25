@@ -1,0 +1,14 @@
+{
+  "key": "UNLOCK_MAGITECH",
+  "name": "primalmagic.research.unlock_magitech.title",
+  "discipline": "BASICS",
+  "parents": [
+    "UNLOCK_RITUAL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.unlock_magitech.text.stage.1"
+    }
+  ],
+  "addenda": []
+}
