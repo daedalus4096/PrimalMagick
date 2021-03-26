@@ -1,0 +1,14 @@
+{
+  "key": "RAW_MARBLE",
+  "name": "primalmagic.research.raw_marble.title",
+  "discipline": "SCANS",
+  "parents": [
+    "UNLOCK_SCANS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.raw_marble.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

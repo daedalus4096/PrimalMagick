@@ -1,0 +1,31 @@
+{
+  "key": "SOURCE_BLOOD",
+  "name": "primalmagic.research.source_blood.title",
+  "discipline": "BASICS",
+  "parents": [
+    "FORBIDDEN_MAGIC",
+    "t_discover_blood"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.source_blood.text.stage.1",
+      "required_item": [
+        "tag:forge:bones",
+        "primalmagic:bloody_flesh"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ],
+      "required_research": [
+        "t_mana_spent_blood_expert"
+      ]
+    },
+    {
+      "text": "primalmagic.research.source_blood.text.stage.2",
+      "attunements": {
+        "blood": 5
+      }
+    }
+  ],
+  "addenda": []
+}

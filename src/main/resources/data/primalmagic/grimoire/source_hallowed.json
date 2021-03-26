@@ -1,0 +1,29 @@
+{
+  "key": "SOURCE_HALLOWED",
+  "name": "primalmagic.research.source_hallowed.title",
+  "discipline": "BASICS",
+  "parents": [
+    "HEAVENLY_MAGIC"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.source_hallowed.text.stage.1",
+      "required_item": [
+        "tag:forge:nether_stars"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ],
+      "required_research": [
+        "t_mana_spent_hallowed_expert"
+      ]
+    },
+    {
+      "text": "primalmagic.research.source_hallowed.text.stage.2",
+      "attunements": {
+        "hallowed": 5
+      }
+    }
+  ],
+  "addenda": []
+}

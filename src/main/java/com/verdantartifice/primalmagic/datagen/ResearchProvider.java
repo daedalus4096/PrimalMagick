@@ -64,10 +64,15 @@ public class ResearchProvider implements IDataProvider {
     }
     
     protected void registerEntries(Consumer<IFinishedResearchEntry> consumer) {
-        // TODO Implement method stub
         this.registerBasicsEntries(consumer);
+        this.registerAlchemyEntries(consumer);
+        this.registerSorceryEntries(consumer);
+        this.registerRuneworkingEntries(consumer);
+        this.registerRitualEntries(consumer);
+        this.registerMagitechEntries(consumer);
+        this.registerScanEntries(consumer);
     }
-    
+
     protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
         ResearchEntryBuilder.entry("FIRST_STEPS", "primalmagic.research.first_steps.title", "BASICS")
             .stage(ResearchStageBuilder.stage("primalmagic.research.first_steps.text.stage.1").requiredCraftStack(ItemsPM.ARCANE_WORKBENCH.get()).recipe("mundane_wand").build())
@@ -115,7 +120,107 @@ public class ResearchProvider implements IDataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage("primalmagic.research.source_earth.text.stage.2").attunement(Source.EARTH, 5).build())
             .build(consumer);
-        // TODO Remaining research entries
+        ResearchEntryBuilder.entry("SOURCE_SEA", "primalmagic.research.source_sea.title", "BASICS").parent("TERRESTRIAL_MAGIC")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_sea.text.stage.1")
+                    .requiredItemTag(PrimalMagic.MODID, "coral_blocks").requiredItemStack(Items.ICE)
+                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
+                    .requiredResearch("m_found_shrine_sea").requiredResearch("m_env_sea").requiredResearch("t_mana_spent_sea_expert")
+                    .build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_sea.text.stage.2").attunement(Source.SEA, 5).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SOURCE_SKY", "primalmagic.research.source_sky.title", "BASICS").parent("TERRESTRIAL_MAGIC")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_sky.text.stage.1")
+                    .requiredItemStack(Items.BAMBOO).requiredItemTag("minecraft", "leaves")
+                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
+                    .requiredResearch("m_found_shrine_sky").requiredResearch("m_env_sky").requiredResearch("t_mana_spent_sky_expert")
+                    .build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_sky.text.stage.2").attunement(Source.SKY, 5).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SOURCE_SUN", "primalmagic.research.source_sun.title", "BASICS").parent("TERRESTRIAL_MAGIC")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_sun.text.stage.1")
+                    .requiredItemTag(PrimalMagic.MODID, "sunwood_logs").requiredItemTag("forge", "sandstone")
+                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
+                    .requiredResearch("m_found_shrine_sun").requiredResearch("m_env_sun").requiredResearch("t_mana_spent_sun_expert")
+                    .build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_sun.text.stage.2").attunement(Source.SUN, 5).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SOURCE_MOON", "primalmagic.research.source_moon.title", "BASICS").parent("TERRESTRIAL_MAGIC")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_moon.text.stage.1")
+                    .requiredItemTag(PrimalMagic.MODID, "moonwood_logs").requiredItemTag("forge", "mushrooms")
+                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
+                    .requiredResearch("m_found_shrine_moon").requiredResearch("m_env_moon").requiredResearch("t_mana_spent_moon_expert")
+                    .build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_moon.text.stage.2").attunement(Source.MOON, 5).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("FORBIDDEN_MAGIC", "primalmagic.research.forbidden_magic.title", "BASICS").parent("TERRESTRIAL_MAGIC").parent("t_discover_forbidden")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.forbidden_magic.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SOURCE_BLOOD", "primalmagic.research.source_blood.title", "BASICS").parent("FORBIDDEN_MAGIC").parent("t_discover_blood")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_blood.text.stage.1")
+                    .requiredItemTag("forge", "bones").requiredItemStack(ItemsPM.BLOODY_FLESH.get())
+                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
+                    .requiredResearch("t_mana_spent_blood_expert")
+                    .build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_blood.text.stage.2").attunement(Source.BLOOD, 5).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SOURCE_INFERNAL", "primalmagic.research.source_infernal.title", "BASICS").parent("FORBIDDEN_MAGIC").parent("t_discover_infernal")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_infernal.text.stage.1")
+                    .requiredItemTag("forge", "rods/blaze").requiredItemStack(Items.SOUL_SAND)
+                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
+                    .requiredResearch("t_mana_spent_infernal_expert")
+                    .build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_infernal.text.stage.2").attunement(Source.INFERNAL, 5).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SOURCE_VOID", "primalmagic.research.source_void.title", "BASICS").parent("FORBIDDEN_MAGIC").parent("t_discover_void")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_void.text.stage.1")
+                    .requiredItemTag("forge", "end_stones").requiredItemTag("forge", "ender_pearls")
+                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
+                    .requiredResearch("t_mana_spent_void_expert")
+                    .build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_void.text.stage.2").attunement(Source.VOID, 5).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("HEAVENLY_MAGIC", "primalmagic.research.heavenly_magic.title", "BASICS").parent("FORBIDDEN_MAGIC").parent("t_discover_hallowed")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.heavenly_magic.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SOURCE_HALLOWED", "primalmagic.research.source_hallowed.title", "BASICS").parent("HEAVENLY_MAGIC")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_hallowed.text.stage.1")
+                    .requiredItemTag("forge", "nether_stars")
+                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
+                    .requiredResearch("t_mana_spent_hallowed_expert")
+                    .build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.source_hallowed.text.stage.2").attunement(Source.HALLOWED, 5).build())
+            .build(consumer);
+    }
+    
+    protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    protected void registerRuneworkingEntries(Consumer<IFinishedResearchEntry> consumer) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    protected void registerRitualEntries(Consumer<IFinishedResearchEntry> consumer) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
+        ResearchEntryBuilder.entry("RAW_MARBLE", "primalmagic.research.raw_marble.title", "SCANS").parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.raw_marble.text.stage.1").build())
+            .build(consumer);
     }
     
     @Override
