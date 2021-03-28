@@ -1,0 +1,15 @@
+{
+  "key": "SPELL_MOD_BURST",
+  "name": "primalmagic.research.spell_mod_burst.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "MASTER_SORCERY",
+    "SPELL_MOD_MINE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_mod_burst.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

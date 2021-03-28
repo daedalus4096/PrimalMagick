@@ -1,0 +1,18 @@
+{
+  "key": "SPELL_PAYLOAD_CONSECRATE",
+  "name": "primalmagic.research.spell_payload_consecrate.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "SUPREME_SORCERY",
+    "SPELL_PAYLOAD_HOLY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_payload_consecrate.text.stage.1",
+      "attunements": {
+        "hallowed": 3
+      }
+    }
+  ],
+  "addenda": []
+}

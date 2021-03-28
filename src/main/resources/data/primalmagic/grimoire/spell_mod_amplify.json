@@ -1,0 +1,14 @@
+{
+  "key": "SPELL_MOD_AMPLIFY",
+  "name": "primalmagic.research.spell_mod_amplify.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "EXPERT_SORCERY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_mod_amplify.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

@@ -355,7 +355,6 @@ public class ResearchProvider implements IDataProvider {
     }
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {
-        // TODO Auto-generated method stub
         ResearchEntryBuilder.entry("BASIC_SORCERY", "primalmagic.research.basic_sorcery.title", "SORCERY").parent("UNLOCK_SORCERY")
             .stage(ResearchStageBuilder.stage("primalmagic.research.basic_sorcery.text.stage.1").attunement(Source.EARTH, 1)
                     .recipe(ItemsPM.SPELL_SCROLL_BLANK.get()).recipe(ItemsPM.SPELLCRAFTING_ALTAR.get()).build())
@@ -406,7 +405,52 @@ public class ResearchProvider implements IDataProvider {
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_HOLY", "primalmagic.research.spell_payload_holy.title", "SORCERY").parent("MASTER_SORCERY").parent("t_discover_hallowed")
             .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_holy.text.stage.1").attunement(Source.HALLOWED, 1).build())
             .build(consumer);
-        
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_BREAK", "primalmagic.research.spell_payload_break.title", "SORCERY").parent("EXPERT_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_break.text.stage.1").attunement(Source.EARTH, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_WATER", "primalmagic.research.spell_payload_conjure_water.title", "SORCERY").parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_FROST")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_conjure_water.text.stage.1").attunement(Source.SEA, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLIGHT", "primalmagic.research.spell_payload_flight.title", "SORCERY").parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_LIGHTNING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_flight.text.stage.1").attunement(Source.SKY, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_HEALING", "primalmagic.research.spell_payload_healing.title", "SORCERY").parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_SOLAR")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_healing.text.stage.1").attunement(Source.SUN, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH", "primalmagic.research.spell_payload_polymorph.title", "SORCERY").parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_LUNAR")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_polymorph.text.stage.1").attunement(Source.MOON, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_ANIMAL", "primalmagic.research.spell_payload_conjure_animal.title", "SORCERY").parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_BLOOD")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_conjure_animal.text.stage.1").attunement(Source.BLOOD, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_LAVA", "primalmagic.research.spell_payload_conjure_lava.title", "SORCERY").parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_CONJURE_WATER")
+            .parent("SPELL_PAYLOAD_FLAME")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_conjure_lava.text.stage.1").attunement(Source.INFERNAL, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_DRAIN_SOUL", "primalmagic.research.spell_payload_drain_soul.title", "SORCERY").parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_FLAME")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_drain_soul.text.stage.1").attunement(Source.INFERNAL, 3).recipe(ItemsPM.SOUL_GEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_TELEPORT", "primalmagic.research.spell_payload_teleport.title", "SORCERY").parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_VOID")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_teleport.text.stage.1").attunement(Source.VOID, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONSECRATE", "primalmagic.research.spell_payload_consecrate.title", "SORCERY").parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_HOLY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_consecrate.text.stage.1").attunement(Source.HALLOWED, 3).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_MOD_AMPLIFY", "primalmagic.research.spell_mod_amplify.title", "SORCERY").parent("EXPERT_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_mod_amplify.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_MOD_MINE", "primalmagic.research.spell_mod_mine.title", "SORCERY").parent("EXPERT_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_mod_mine.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_MOD_QUICKEN", "primalmagic.research.spell_mod_quicken.title", "SORCERY").parent("MASTER_SORCERY").parent("SPELL_MOD_AMPLIFY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_mod_quicken.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_MOD_BURST", "primalmagic.research.spell_mod_burst.title", "SORCERY").parent("MASTER_SORCERY").parent("SPELL_MOD_MINE")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_mod_burst.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_MOD_FORK", "primalmagic.research.spell_mod_fork.title", "SORCERY").parent("SUPREME_SORCERY").parent("SPELL_MOD_QUICKEN").parent("SPELL_MOD_BURST")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_mod_fork.text.stage.1").build())
+            .build(consumer);
     }
 
     protected void registerRuneworkingEntries(Consumer<IFinishedResearchEntry> consumer) {

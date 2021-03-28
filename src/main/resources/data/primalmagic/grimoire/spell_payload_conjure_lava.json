@@ -1,0 +1,19 @@
+{
+  "key": "SPELL_PAYLOAD_CONJURE_LAVA",
+  "name": "primalmagic.research.spell_payload_conjure_lava.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "MASTER_SORCERY",
+    "SPELL_PAYLOAD_CONJURE_WATER",
+    "SPELL_PAYLOAD_FLAME"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_payload_conjure_lava.text.stage.1",
+      "attunements": {
+        "infernal": 3
+      }
+    }
+  ],
+  "addenda": []
+}

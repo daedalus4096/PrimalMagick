@@ -1,0 +1,18 @@
+{
+  "key": "SPELL_PAYLOAD_CONJURE_WATER",
+  "name": "primalmagic.research.spell_payload_conjure_water.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "EXPERT_SORCERY",
+    "SPELL_PAYLOAD_FROST"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_payload_conjure_water.text.stage.1",
+      "attunements": {
+        "sea": 3
+      }
+    }
+  ],
+  "addenda": []
+}

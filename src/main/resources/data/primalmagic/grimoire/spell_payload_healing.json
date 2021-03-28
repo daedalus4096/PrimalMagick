@@ -1,0 +1,18 @@
+{
+  "key": "SPELL_PAYLOAD_HEALING",
+  "name": "primalmagic.research.spell_payload_healing.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "EXPERT_SORCERY",
+    "SPELL_PAYLOAD_SOLAR"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_payload_healing.text.stage.1",
+      "attunements": {
+        "sun": 3
+      }
+    }
+  ],
+  "addenda": []
+}

@@ -1,0 +1,14 @@
+{
+  "key": "SPELL_MOD_MINE",
+  "name": "primalmagic.research.spell_mod_mine.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "EXPERT_SORCERY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_mod_mine.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

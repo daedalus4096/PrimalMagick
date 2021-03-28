@@ -1,0 +1,18 @@
+{
+  "key": "SPELL_PAYLOAD_CONJURE_ANIMAL",
+  "name": "primalmagic.research.spell_payload_conjure_animal.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "MASTER_SORCERY",
+    "SPELL_PAYLOAD_BLOOD"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_payload_conjure_animal.text.stage.1",
+      "attunements": {
+        "blood": 3
+      }
+    }
+  ],
+  "addenda": []
+}
