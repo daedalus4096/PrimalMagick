@@ -193,7 +193,6 @@ public class ResearchProvider implements IDataProvider {
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
-        // TODO Auto-generated method stub
         ResearchEntryBuilder.entry("BASIC_ALCHEMY", "primalmagic.research.basic_alchemy.title", "ALCHEMY").parent("UNLOCK_ALCHEMY")
             .stage(ResearchStageBuilder.stage("primalmagic.research.basic_alchemy.text.stage.1").build())
             .build(consumer);
@@ -314,6 +313,44 @@ public class ResearchProvider implements IDataProvider {
                     .recipe(ItemsPM.HEXIUM_INGOT.get()).recipe(ItemsPM.HEXIUM_SWORD.get()).recipe(ItemsPM.HEXIUM_SHOVEL.get()).recipe(ItemsPM.HEXIUM_PICKAXE.get())
                     .recipe(ItemsPM.HEXIUM_AXE.get()).recipe(ItemsPM.HEXIUM_HOE.get()).recipe(ItemsPM.HEXIUM_HEAD.get()).recipe(ItemsPM.HEXIUM_CHEST.get()).recipe(ItemsPM.HEXIUM_LEGS.get())
                     .recipe(ItemsPM.HEXIUM_FEET.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("CLUSTER_SYNTHESIS", "primalmagic.research.cluster_synthesis.title", "ALCHEMY").parent("SUPREME_ALCHEMY").parent("CRYSTAL_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.cluster_synthesis.text.stage.1")
+                    .attunement(Source.EARTH, 3).attunement(Source.SEA, 3).attunement(Source.SKY, 3).attunement(Source.SUN, 3).attunement(Source.MOON, 3)
+                    .recipe(PrimalMagic.MODID, "essence_cluster_earth_from_crystal").recipe(PrimalMagic.MODID, "essence_cluster_sea_from_crystal")
+                    .recipe(PrimalMagic.MODID, "essence_cluster_sky_from_crystal").recipe(PrimalMagic.MODID, "essence_cluster_sun_from_crystal")
+                    .recipe(PrimalMagic.MODID, "essence_cluster_moon_from_crystal").build())
+            .addendum(ResearchAddendumBuilder.addendum("primalmagic.research.cluster_synthesis.text.addenda.1").requiredResearch("t_discover_blood").attunement(Source.BLOOD, 3)
+                    .recipe(PrimalMagic.MODID, "essence_cluster_blood_from_crystal").build())
+            .addendum(ResearchAddendumBuilder.addendum("primalmagic.research.cluster_synthesis.text.addenda.2").requiredResearch("t_discover_infernal").attunement(Source.INFERNAL, 3)
+                    .recipe(PrimalMagic.MODID, "essence_cluster_infernal_from_crystal").build())
+            .addendum(ResearchAddendumBuilder.addendum("primalmagic.research.cluster_synthesis.text.addenda.3").requiredResearch("t_discover_void").attunement(Source.VOID, 3)
+                    .recipe(PrimalMagic.MODID, "essence_cluster_void_from_crystal").build())
+            .addendum(ResearchAddendumBuilder.addendum("primalmagic.research.cluster_synthesis.text.addenda.4").requiredResearch("t_discover_hallowed").attunement(Source.HALLOWED, 3)
+                    .recipe(PrimalMagic.MODID, "essence_cluster_hallowed_from_crystal").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("CLUSTER_DESYNTHESIS", "primalmagic.research.cluster_desynthesis.title", "ALCHEMY").parent("CLUSTER_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.cluster_desynthesis.text.stage.1")
+                    .attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
+                    .recipe(PrimalMagic.MODID, "essence_crystal_earth_from_cluster").recipe(PrimalMagic.MODID, "essence_crystal_sea_from_cluster")
+                    .recipe(PrimalMagic.MODID, "essence_crystal_sky_from_cluster").recipe(PrimalMagic.MODID, "essence_crystal_sun_from_cluster")
+                    .recipe(PrimalMagic.MODID, "essence_crystal_moon_from_cluster").build())
+            .addendum(ResearchAddendumBuilder.addendum("primalmagic.research.cluster_desynthesis.text.addenda.1").requiredResearch("t_discover_blood").attunement(Source.BLOOD, 1)
+                    .recipe(PrimalMagic.MODID, "essence_crystal_blood_from_cluster").build())
+            .addendum(ResearchAddendumBuilder.addendum("primalmagic.research.cluster_desynthesis.text.addenda.2").requiredResearch("t_discover_infernal").attunement(Source.INFERNAL, 1)
+                    .recipe(PrimalMagic.MODID, "essence_crystal_infernal_from_cluster").build())
+            .addendum(ResearchAddendumBuilder.addendum("primalmagic.research.cluster_desynthesis.text.addenda.3").requiredResearch("t_discover_void").attunement(Source.VOID, 1)
+                    .recipe(PrimalMagic.MODID, "essence_crystal_void_from_cluster").build())
+            .addendum(ResearchAddendumBuilder.addendum("primalmagic.research.cluster_desynthesis.text.addenda.4").requiredResearch("t_discover_hallowed").attunement(Source.HALLOWED, 1)
+                    .recipe(PrimalMagic.MODID, "essence_crystal_hallowed_from_cluster").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("HALLOWSTEEL", "primalmagic.research.hallowsteel.title", "ALCHEMY").parent("SUPREME_ALCHEMY").parent("HEXIUM").parent("CRYSTAL_SYNTHESIS").parent("t_discover_hallowed")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.hallowsteel.text.stage.1").requiredItemStack(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get()).requiredCraftStack(ItemsPM.HEXIUM_INGOT.get())
+                    .requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.hallowsteel.text.stage.2").attunement(Source.HALLOWED, 3).recipe(ItemsPM.HALLOWSTEEL_INGOT.get())
+                    .recipe(ItemsPM.HALLOWSTEEL_SWORD.get()).recipe(ItemsPM.HALLOWSTEEL_SHOVEL.get()).recipe(ItemsPM.HALLOWSTEEL_PICKAXE.get()).recipe(ItemsPM.HALLOWSTEEL_AXE.get())
+                    .recipe(ItemsPM.HALLOWSTEEL_HOE.get()).recipe(ItemsPM.HALLOWSTEEL_HEAD.get()).recipe(ItemsPM.HALLOWSTEEL_CHEST.get()).recipe(ItemsPM.HALLOWSTEEL_LEGS.get())
+                    .recipe(ItemsPM.HALLOWSTEEL_FEET.get()).build())
             .build(consumer);
     }
 
