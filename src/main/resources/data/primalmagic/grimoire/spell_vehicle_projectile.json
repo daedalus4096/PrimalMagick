@@ -1,0 +1,14 @@
+{
+  "key": "SPELL_VEHICLE_PROJECTILE",
+  "name": "primalmagic.research.spell_vehicle_projectile.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "EXPERT_SORCERY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_vehicle_projectile.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

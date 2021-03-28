@@ -1,0 +1,21 @@
+{
+  "key": "MASTER_SORCERY",
+  "name": "primalmagic.research.master_sorcery.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "EXPERT_SORCERY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.master_sorcery.text.stage.1",
+      "required_research": [
+        "t_spells_cast_master",
+        "t_spell_cost_master"
+      ]
+    },
+    {
+      "text": "primalmagic.research.master_sorcery.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

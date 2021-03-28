@@ -356,6 +356,56 @@ public class ResearchProvider implements IDataProvider {
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {
         // TODO Auto-generated method stub
+        ResearchEntryBuilder.entry("BASIC_SORCERY", "primalmagic.research.basic_sorcery.title", "SORCERY").parent("UNLOCK_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.basic_sorcery.text.stage.1").attunement(Source.EARTH, 1)
+                    .recipe(ItemsPM.SPELL_SCROLL_BLANK.get()).recipe(ItemsPM.SPELLCRAFTING_ALTAR.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("EXPERT_SORCERY", "primalmagic.research.expert_sorcery.title", "SORCERY").parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.expert_sorcery.text.stage.1").requiredResearch("t_spells_crafted_expert").requiredResearch("t_spells_cast_expert").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.expert_sorcery.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MASTER_SORCERY", "primalmagic.research.master_sorcery.title", "SORCERY").parent("EXPERT_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.master_sorcery.text.stage.1").requiredResearch("t_spells_cast_master").requiredResearch("t_spell_cost_master").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.master_sorcery.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUPREME_SORCERY", "primalmagic.research.supreme_sorcery.title", "SORCERY").parent("MASTER_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.supreme_sorcery.text.stage.1").requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.supreme_sorcery.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_INSCRIPTION", "primalmagic.research.wand_inscription.title", "SORCERY").parent("BASIC_SORCERY").parent("ADVANCED_WANDMAKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.wand_inscription.text.stage.1").requiredResearch("t_spells_crafted_expert").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.wand_inscription.text.stage.2").recipe(ItemsPM.WAND_INSCRIPTION_TABLE.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_VEHICLE_PROJECTILE", "primalmagic.research.spell_vehicle_projectile.title", "SORCERY").parent("EXPERT_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_vehicle_projectile.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_VEHICLE_BOLT", "primalmagic.research.spell_vehicle_bolt.title", "SORCERY").parent("MASTER_SORCERY").parent("SPELL_VEHICLE_PROJECTILE")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_vehicle_bolt.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_FROST", "primalmagic.research.spell_payload_frost.title", "SORCERY").parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_frost.text.stage.1").attunement(Source.SEA, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_LIGHTNING", "primalmagic.research.spell_payload_lightning.title", "SORCERY").parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_lightning.text.stage.1").attunement(Source.SKY, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_SOLAR", "primalmagic.research.spell_payload_solar.title", "SORCERY").parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_solar.text.stage.1").attunement(Source.SUN, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_LUNAR", "primalmagic.research.spell_payload_lunar.title", "SORCERY").parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_lunar.text.stage.1").attunement(Source.MOON, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_BLOOD", "primalmagic.research.spell_payload_blood.title", "SORCERY").parent("EXPERT_SORCERY").parent("t_discover_blood")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_blood.text.stage.1").attunement(Source.BLOOD, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLAME", "primalmagic.research.spell_payload_flame.title", "SORCERY").parent("EXPERT_SORCERY").parent("t_discover_infernal")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_flame.text.stage.1").attunement(Source.INFERNAL, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_VOID", "primalmagic.research.spell_payload_void.title", "SORCERY").parent("EXPERT_SORCERY").parent("t_discover_void")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_void.text.stage.1").attunement(Source.VOID, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_HOLY", "primalmagic.research.spell_payload_holy.title", "SORCERY").parent("MASTER_SORCERY").parent("t_discover_hallowed")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.spell_payload_holy.text.stage.1").attunement(Source.HALLOWED, 1).build())
+            .build(consumer);
         
     }
 

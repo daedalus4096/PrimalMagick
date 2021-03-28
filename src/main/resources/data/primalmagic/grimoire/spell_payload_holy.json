@@ -1,0 +1,18 @@
+{
+  "key": "SPELL_PAYLOAD_HOLY",
+  "name": "primalmagic.research.spell_payload_holy.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "MASTER_SORCERY",
+    "t_discover_hallowed"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_payload_holy.text.stage.1",
+      "attunements": {
+        "hallowed": 1
+      }
+    }
+  ],
+  "addenda": []
+}

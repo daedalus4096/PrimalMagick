@@ -1,0 +1,18 @@
+{
+  "key": "SPELL_PAYLOAD_FLAME",
+  "name": "primalmagic.research.spell_payload_flame.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "EXPERT_SORCERY",
+    "t_discover_infernal"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_payload_flame.text.stage.1",
+      "attunements": {
+        "infernal": 1
+      }
+    }
+  ],
+  "addenda": []
+}

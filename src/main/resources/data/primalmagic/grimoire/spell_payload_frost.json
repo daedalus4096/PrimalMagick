@@ -1,0 +1,17 @@
+{
+  "key": "SPELL_PAYLOAD_FROST",
+  "name": "primalmagic.research.spell_payload_frost.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "BASIC_SORCERY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_payload_frost.text.stage.1",
+      "attunements": {
+        "sea": 1
+      }
+    }
+  ],
+  "addenda": []
+}

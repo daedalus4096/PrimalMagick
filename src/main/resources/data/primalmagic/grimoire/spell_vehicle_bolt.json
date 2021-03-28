@@ -1,0 +1,15 @@
+{
+  "key": "SPELL_VEHICLE_BOLT",
+  "name": "primalmagic.research.spell_vehicle_bolt.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "MASTER_SORCERY",
+    "SPELL_VEHICLE_PROJECTILE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.spell_vehicle_bolt.text.stage.1"
+    }
+  ],
+  "addenda": []
+}
