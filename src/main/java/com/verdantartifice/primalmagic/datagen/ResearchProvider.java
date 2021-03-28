@@ -194,7 +194,49 @@ public class ResearchProvider implements IDataProvider {
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
         // TODO Auto-generated method stub
-        
+        ResearchEntryBuilder.entry("BASIC_ALCHEMY", "primalmagic.research.basic_alchemy.title", "ALCHEMY").parent("UNLOCK_ALCHEMY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.basic_alchemy.text.stage.1").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("EXPERT_ALCHEMY", "primalmagic.research.expert_alchemy.title", "ALCHEMY").parent("BASIC_ALCHEMY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.expert_alchemy.text.stage.1").requiredResearch("b_crafted_alchemy_expert").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.expert_alchemy.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MASTER_ALCHEMY", "primalmagic.research.master_alchemy.title", "ALCHEMY").parent("EXPERT_ALCHEMY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.master_alchemy.text.stage.1").requiredResearch("b_crafted_alchemy_master").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.master_alchemy.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUPREME_ALCHEMY", "primalmagic.research.supreme_alchemy.title", "ALCHEMY").parent("MASTER_ALCHEMY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.supreme_alchemy.text.stage.1").requiredResearch("b_crafted_alchemy_supreme").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.supreme_alchemy.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("STONEMELDING", "primalmagic.research.stonemelding.title", "ALCHEMY").parent("BASIC_ALCHEMY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.stonemelding.text.stage.1").recipe(PrimalMagic.MODID, "stone_from_stonemelding").attunement(Source.EARTH, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SKYGLASS", "primalmagic.research.skyglass.title", "ALCHEMY").parent("BASIC_ALCHEMY")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.skyglass.text.stage.1").attunement(Source.SKY, 1)
+                    .recipe(ItemsPM.SKYGLASS.get()).recipe(ItemsPM.SKYGLASS_PANE.get())
+                    .recipe(ItemsPM.STAINED_SKYGLASS_BLACK.get()).recipe(ItemsPM.STAINED_SKYGLASS_BLUE.get()).recipe(ItemsPM.STAINED_SKYGLASS_BROWN.get()).recipe(ItemsPM.STAINED_SKYGLASS_CYAN.get())
+                    .recipe(ItemsPM.STAINED_SKYGLASS_GRAY.get()).recipe(ItemsPM.STAINED_SKYGLASS_GREEN.get()).recipe(ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get()).recipe(ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get())
+                    .recipe(ItemsPM.STAINED_SKYGLASS_LIME.get()).recipe(ItemsPM.STAINED_SKYGLASS_MAGENTA.get()).recipe(ItemsPM.STAINED_SKYGLASS_ORANGE.get()).recipe(ItemsPM.STAINED_SKYGLASS_PINK.get())
+                    .recipe(ItemsPM.STAINED_SKYGLASS_PURPLE.get()).recipe(ItemsPM.STAINED_SKYGLASS_RED.get()).recipe(ItemsPM.STAINED_SKYGLASS_WHITE.get()).recipe(ItemsPM.STAINED_SKYGLASS_YELLOW.get())
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_black_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_black_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_blue_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_blue_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_brown_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_brown_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_cyan_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_cyan_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_gray_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_gray_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_green_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_green_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_light_blue_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_light_blue_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_light_gray_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_light_gray_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_lime_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_lime_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_magenta_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_magenta_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_orange_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_orange_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_pink_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_pink_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_purple_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_purple_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_red_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_red_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_white_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_white_from_panes")
+                    .recipe(PrimalMagic.MODID, "stained_skyglass_pane_yellow_from_blocks").recipe(PrimalMagic.MODID, "stained_skyglass_pane_yellow_from_panes")
+                    .build())
+            .build(consumer);
     }
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {

@@ -1,0 +1,20 @@
+{
+  "key": "SUPREME_ALCHEMY",
+  "name": "primalmagic.research.supreme_alchemy.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "MASTER_ALCHEMY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.supreme_alchemy.text.stage.1",
+      "required_research": [
+        "b_crafted_alchemy_supreme"
+      ]
+    },
+    {
+      "text": "primalmagic.research.supreme_alchemy.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

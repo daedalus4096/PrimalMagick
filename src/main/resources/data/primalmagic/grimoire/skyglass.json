@@ -1,0 +1,69 @@
+{
+  "key": "SKYGLASS",
+  "name": "primalmagic.research.skyglass.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "BASIC_ALCHEMY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.skyglass.text.stage.1",
+      "attunements": {
+        "sky": 1
+      },
+      "recipes": [
+        "primalmagic:skyglass",
+        "primalmagic:skyglass_pane",
+        "primalmagic:stained_skyglass_black",
+        "primalmagic:stained_skyglass_blue",
+        "primalmagic:stained_skyglass_brown",
+        "primalmagic:stained_skyglass_cyan",
+        "primalmagic:stained_skyglass_gray",
+        "primalmagic:stained_skyglass_green",
+        "primalmagic:stained_skyglass_light_blue",
+        "primalmagic:stained_skyglass_light_gray",
+        "primalmagic:stained_skyglass_lime",
+        "primalmagic:stained_skyglass_magenta",
+        "primalmagic:stained_skyglass_orange",
+        "primalmagic:stained_skyglass_pink",
+        "primalmagic:stained_skyglass_purple",
+        "primalmagic:stained_skyglass_red",
+        "primalmagic:stained_skyglass_white",
+        "primalmagic:stained_skyglass_yellow",
+        "primalmagic:stained_skyglass_pane_black_from_blocks",
+        "primalmagic:stained_skyglass_pane_black_from_panes",
+        "primalmagic:stained_skyglass_pane_blue_from_blocks",
+        "primalmagic:stained_skyglass_pane_blue_from_panes",
+        "primalmagic:stained_skyglass_pane_brown_from_blocks",
+        "primalmagic:stained_skyglass_pane_brown_from_panes",
+        "primalmagic:stained_skyglass_pane_cyan_from_blocks",
+        "primalmagic:stained_skyglass_pane_cyan_from_panes",
+        "primalmagic:stained_skyglass_pane_gray_from_blocks",
+        "primalmagic:stained_skyglass_pane_gray_from_panes",
+        "primalmagic:stained_skyglass_pane_green_from_blocks",
+        "primalmagic:stained_skyglass_pane_green_from_panes",
+        "primalmagic:stained_skyglass_pane_light_blue_from_blocks",
+        "primalmagic:stained_skyglass_pane_light_blue_from_panes",
+        "primalmagic:stained_skyglass_pane_light_gray_from_blocks",
+        "primalmagic:stained_skyglass_pane_light_gray_from_panes",
+        "primalmagic:stained_skyglass_pane_lime_from_blocks",
+        "primalmagic:stained_skyglass_pane_lime_from_panes",
+        "primalmagic:stained_skyglass_pane_magenta_from_blocks",
+        "primalmagic:stained_skyglass_pane_magenta_from_panes",
+        "primalmagic:stained_skyglass_pane_orange_from_blocks",
+        "primalmagic:stained_skyglass_pane_orange_from_panes",
+        "primalmagic:stained_skyglass_pane_pink_from_blocks",
+        "primalmagic:stained_skyglass_pane_pink_from_panes",
+        "primalmagic:stained_skyglass_pane_purple_from_blocks",
+        "primalmagic:stained_skyglass_pane_purple_from_panes",
+        "primalmagic:stained_skyglass_pane_red_from_blocks",
+        "primalmagic:stained_skyglass_pane_red_from_panes",
+        "primalmagic:stained_skyglass_pane_white_from_blocks",
+        "primalmagic:stained_skyglass_pane_white_from_panes",
+        "primalmagic:stained_skyglass_pane_yellow_from_blocks",
+        "primalmagic:stained_skyglass_pane_yellow_from_panes"
+      ]
+    }
+  ],
+  "addenda": []
+}

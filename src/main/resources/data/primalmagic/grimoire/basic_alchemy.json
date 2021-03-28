@@ -1,0 +1,14 @@
+{
+  "key": "BASIC_ALCHEMY",
+  "name": "primalmagic.research.basic_alchemy.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "UNLOCK_ALCHEMY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.basic_alchemy.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

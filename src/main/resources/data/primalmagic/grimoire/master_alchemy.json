@@ -1,0 +1,20 @@
+{
+  "key": "MASTER_ALCHEMY",
+  "name": "primalmagic.research.master_alchemy.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "EXPERT_ALCHEMY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.master_alchemy.text.stage.1",
+      "required_research": [
+        "b_crafted_alchemy_master"
+      ]
+    },
+    {
+      "text": "primalmagic.research.master_alchemy.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

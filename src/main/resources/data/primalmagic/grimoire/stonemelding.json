@@ -1,0 +1,20 @@
+{
+  "key": "STONEMELDING",
+  "name": "primalmagic.research.stonemelding.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "BASIC_ALCHEMY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.stonemelding.text.stage.1",
+      "attunements": {
+        "earth": 1
+      },
+      "recipes": [
+        "primalmagic:stone_from_stonemelding"
+      ]
+    }
+  ],
+  "addenda": []
+}
