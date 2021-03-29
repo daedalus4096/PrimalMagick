@@ -1,0 +1,27 @@
+{
+  "key": "RUNE_POWER",
+  "name": "primalmagic.research.rune_power.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "MASTER_RUNEWORKING",
+    "CRYSTAL_SYNTHESIS",
+    "t_discover_blood",
+    "t_discover_infernal",
+    "t_discover_void"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.rune_power.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagic.research.rune_power.text.stage.2",
+      "recipes": [
+        "primalmagic:rune_power"
+      ]
+    }
+  ],
+  "addenda": []
+}

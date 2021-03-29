@@ -521,7 +521,38 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 1).recipe(ItemsPM.RUNE_VOID.get()).build())
             .build(consumer);
-        
+        ResearchEntryBuilder.entry("RUNE_ABSORB", discipline).parent("EXPERT_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_ABSORB.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_DISPEL", discipline).parent("EXPERT_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_DISPEL.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_SUMMON", discipline).parent("EXPERT_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_SUMMON.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_AREA", discipline).parent("EXPERT_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_AREA.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_CREATURE", discipline).parent("EXPERT_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_CREATURE.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_HALLOWED", discipline).parent("MASTER_RUNEWORKING").parent("t_discover_hallowed")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_HALLOWED.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_POWER", discipline).parent("MASTER_RUNEWORKING").parent("CRYSTAL_SYNTHESIS").parent("t_discover_blood").parent("t_discover_infernal").parent("t_discover_void")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_POWER.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNIC_GRINDSTONE", discipline).parent("RUNE_DISPEL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNIC_GRINDSTONE.get()).build())
+            .build(consumer);
     }
 
     protected void registerRitualEntries(Consumer<IFinishedResearchEntry> consumer) {

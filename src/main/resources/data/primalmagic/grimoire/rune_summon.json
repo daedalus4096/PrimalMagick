@@ -1,0 +1,23 @@
+{
+  "key": "RUNE_SUMMON",
+  "name": "primalmagic.research.rune_summon.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "EXPERT_RUNEWORKING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.rune_summon.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.rune_summon.text.stage.2",
+      "recipes": [
+        "primalmagic:rune_summon"
+      ]
+    }
+  ],
+  "addenda": []
+}
