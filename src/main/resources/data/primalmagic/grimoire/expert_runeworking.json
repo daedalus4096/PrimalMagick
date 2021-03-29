@@ -1,0 +1,21 @@
+{
+  "key": "EXPERT_RUNEWORKING",
+  "name": "primalmagic.research.expert_runeworking.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "BASIC_RUNEWORKING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.expert_runeworking.text.stage.1",
+      "required_research": [
+        "b_crafted_runeworking_expert",
+        "t_items_runescribed_expert"
+      ]
+    },
+    {
+      "text": "primalmagic.research.expert_runeworking.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

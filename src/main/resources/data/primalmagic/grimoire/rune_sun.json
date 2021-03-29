@@ -1,0 +1,26 @@
+{
+  "key": "RUNE_SUN",
+  "name": "primalmagic.research.rune_sun.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "BASIC_RUNEWORKING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.rune_sun.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.rune_sun.text.stage.2",
+      "attunements": {
+        "sun": 1
+      },
+      "recipes": [
+        "primalmagic:rune_sun"
+      ]
+    }
+  ],
+  "addenda": []
+}

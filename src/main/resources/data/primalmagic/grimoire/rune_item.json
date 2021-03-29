@@ -1,0 +1,23 @@
+{
+  "key": "RUNE_ITEM",
+  "name": "primalmagic.research.rune_item.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "BASIC_RUNEWORKING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.rune_item.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.rune_item.text.stage.2",
+      "recipes": [
+        "primalmagic:rune_item"
+      ]
+    }
+  ],
+  "addenda": []
+}

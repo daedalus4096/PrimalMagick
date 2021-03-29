@@ -1,0 +1,27 @@
+{
+  "key": "RUNE_BLOOD",
+  "name": "primalmagic.research.rune_blood.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "EXPERT_RUNEWORKING",
+    "t_discover_blood"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.rune_blood.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.rune_blood.text.stage.2",
+      "attunements": {
+        "blood": 1
+      },
+      "recipes": [
+        "primalmagic:rune_blood"
+      ]
+    }
+  ],
+  "addenda": []
+}

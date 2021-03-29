@@ -1,0 +1,26 @@
+{
+  "key": "RUNE_SKY",
+  "name": "primalmagic.research.rune_sky.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "BASIC_RUNEWORKING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.rune_sky.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.rune_sky.text.stage.2",
+      "attunements": {
+        "sky": 1
+      },
+      "recipes": [
+        "primalmagic:rune_sky"
+      ]
+    }
+  ],
+  "addenda": []
+}

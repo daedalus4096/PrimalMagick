@@ -455,6 +455,69 @@ public class ResearchProvider implements IDataProvider {
 
     protected void registerRuneworkingEntries(Consumer<IFinishedResearchEntry> consumer) {
         // TODO Auto-generated method stub
+        ResearchEntryBuilder.entry("BASIC_RUNEWORKING", "primalmagic.research.basic_runeworking.title", "RUNEWORKING").parent("UNLOCK_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.basic_runeworking.text.stage.1").recipe(ItemsPM.RUNE_UNATTUNED.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("EXPERT_RUNEWORKING", "primalmagic.research.expert_runeworking.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.expert_runeworking.text.stage.1").requiredResearch("b_crafted_runeworking_expert").requiredResearch("t_items_runescribed_expert").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.expert_runeworking.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MASTER_RUNEWORKING", "primalmagic.research.master_runeworking.title", "RUNEWORKING").parent("EXPERT_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.master_runeworking.text.stage.1").requiredResearch("b_crafted_runeworking_master").requiredResearch("t_items_runescribed_master").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.master_runeworking.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", "primalmagic.research.supreme_runeworking.title", "RUNEWORKING").parent("MASTER_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.supreme_runeworking.text.stage.1").requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme").build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.supreme_runeworking.text.stage.2").build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_EARTH", "primalmagic.research.rune_earth.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_earth.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_earth.text.stage.2").attunement(Source.EARTH, 1).recipe(ItemsPM.RUNE_EARTH.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_SEA", "primalmagic.research.rune_sea.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_sea.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_sea.text.stage.2").attunement(Source.SEA, 1).recipe(ItemsPM.RUNE_SEA.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_SKY", "primalmagic.research.rune_sky.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_sky.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_sky.text.stage.2").attunement(Source.SKY, 1).recipe(ItemsPM.RUNE_SKY.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_SUN", "primalmagic.research.rune_sun.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_sun.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_sun.text.stage.2").attunement(Source.SUN, 1).recipe(ItemsPM.RUNE_SUN.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_MOON", "primalmagic.research.rune_moon.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_moon.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_moon.text.stage.2").attunement(Source.MOON, 1).recipe(ItemsPM.RUNE_MOON.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_PROJECT", "primalmagic.research.rune_project.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_project.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_project.text.stage.2").recipe(ItemsPM.RUNE_PROJECT.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_PROTECT", "primalmagic.research.rune_protect.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_protect.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_protect.text.stage.2").recipe(ItemsPM.RUNE_PROTECT.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_ITEM", "primalmagic.research.rune_item.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_item.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_item.text.stage.2").recipe(ItemsPM.RUNE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_SELF", "primalmagic.research.rune_self.title", "RUNEWORKING").parent("BASIC_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_self.text.stage.1").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_self.text.stage.2").recipe(ItemsPM.RUNE_SELF.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_BLOOD", "primalmagic.research.rune_blood.title", "RUNEWORKING").parent("EXPERT_RUNEWORKING").parent("t_discover_blood")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_blood.text.stage.1").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_blood.text.stage.2").attunement(Source.BLOOD, 1).recipe(ItemsPM.RUNE_BLOOD.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_INFERNAL", "primalmagic.research.rune_infernal.title", "RUNEWORKING").parent("EXPERT_RUNEWORKING").parent("t_discover_infernal")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_infernal.text.stage.1").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_infernal.text.stage.2").attunement(Source.INFERNAL, 1).recipe(ItemsPM.RUNE_INFERNAL.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_VOID", "primalmagic.research.rune_void.title", "RUNEWORKING").parent("EXPERT_RUNEWORKING").parent("t_discover_void")
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_void.text.stage.1").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage("primalmagic.research.rune_void.text.stage.2").attunement(Source.VOID, 1).recipe(ItemsPM.RUNE_VOID.get()).build())
+            .build(consumer);
         
     }
 
