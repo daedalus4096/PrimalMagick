@@ -19,7 +19,7 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchStageBuilder {
-    protected final String textTranslationKey;
+    protected final String modId;
     protected final List<String> requiredItems = new ArrayList<>();
     protected final List<String> requiredCrafts = new ArrayList<>();
     protected final List<String> requiredKnowledge = new ArrayList<>();
@@ -27,12 +27,16 @@ public class ResearchStageBuilder {
     protected final List<ResourceLocation> recipes = new ArrayList<>();
     protected SourceList attunements;
     
-    protected ResearchStageBuilder(@Nonnull String text) {
-        this.textTranslationKey = text;
+    protected ResearchStageBuilder(@Nonnull String modId) {
+        this.modId = modId;
     }
     
-    public static ResearchStageBuilder stage(@Nonnull String text) {
-        return new ResearchStageBuilder(text);
+    public static ResearchStageBuilder stage(@Nonnull String modId) {
+        return new ResearchStageBuilder(modId);
+    }
+    
+    public static ResearchStageBuilder stage() {
+        return new ResearchStageBuilder(PrimalMagic.MODID);
     }
     
     public ResearchStageBuilder requiredItemStack(@Nonnull IItemProvider item) {
@@ -133,27 +137,29 @@ public class ResearchStageBuilder {
     }
     
     private void validate() {
-        if (this.textTranslationKey == null) {
-            throw new IllegalStateException("No text for research stage");
+        if (this.modId == null) {
+            throw new IllegalStateException("No mod ID for research stage");
         }
     }
     
     public IFinishedResearchStage build() {
         this.validate();
-        return new ResearchStageBuilder.Result(this.textTranslationKey, this.requiredItems, this.requiredCrafts, this.requiredKnowledge, this.requiredResearch, this.recipes, this.attunements);
+        return new ResearchStageBuilder.Result(this.modId, this.requiredItems, this.requiredCrafts, this.requiredKnowledge, this.requiredResearch, this.recipes, this.attunements);
     }
     
     public static class Result implements IFinishedResearchStage {
-        protected final String textTranslationKey;
+        protected final String modId;
         protected final List<String> requiredItems;
         protected final List<String> requiredCrafts;
         protected final List<String> requiredKnowledge;
         protected final List<SimpleResearchKey> requiredResearch;
         protected final List<ResourceLocation> recipes;
         protected final SourceList attunements;
+        protected String entryKey;
+        protected int stageIndex;
         
-        public Result(@Nonnull String text, @Nonnull List<String> requiredItems, @Nonnull List<String> requiredCrafts, @Nonnull List<String> requiredKnowledge, @Nonnull List<SimpleResearchKey> requiredResearch, @Nonnull List<ResourceLocation> recipes, @Nullable SourceList attunements) {
-            this.textTranslationKey = text;
+        public Result(@Nonnull String modId, @Nonnull List<String> requiredItems, @Nonnull List<String> requiredCrafts, @Nonnull List<String> requiredKnowledge, @Nonnull List<SimpleResearchKey> requiredResearch, @Nonnull List<ResourceLocation> recipes, @Nullable SourceList attunements) {
+            this.modId = modId;
             this.requiredItems = requiredItems;
             this.requiredCrafts = requiredCrafts;
             this.requiredKnowledge = requiredKnowledge;
@@ -163,8 +169,24 @@ public class ResearchStageBuilder {
         }
 
         @Override
+        public IFinishedResearchStage setEntryKey(String key) {
+            this.entryKey = key;
+            return this;
+        }
+        
+        @Override
+        public IFinishedResearchStage setStageIndex(int index) {
+            this.stageIndex = index;
+            return this;
+        }
+
+        private String getTextTranslationKey() {
+            return this.modId.toLowerCase() + ".research." + this.entryKey.toLowerCase() + ".text.stage." + this.stageIndex;
+        }
+
+        @Override
         public void serialize(JsonObject json) {
-            json.addProperty("text", this.textTranslationKey);
+            json.addProperty("text", this.getTextTranslationKey());
             
             if (!this.requiredItems.isEmpty()) {
                 JsonArray itemArray = new JsonArray();

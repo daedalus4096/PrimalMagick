@@ -9,7 +9,6 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.util.ResourceLocation;
@@ -22,18 +21,22 @@ public class ResearchEntryBuilder {
     protected final List<IFinishedResearchStage> stages = new ArrayList<>();
     protected final List<IFinishedResearchAddendum> addenda = new ArrayList<>();
     
-    protected ResearchEntryBuilder(@Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline) {
+    protected ResearchEntryBuilder(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
         this.key = key.stripStage();
-        this.nameTranslationKey = name;
+        this.nameTranslationKey = modId.toLowerCase() + ".research." + this.key.getRootKey().toLowerCase() + ".title";
         this.disciplineName = discipline;
     }
     
-    public static ResearchEntryBuilder entry(@Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline) {
-        return new ResearchEntryBuilder(key, name, discipline);
+    public static ResearchEntryBuilder entry(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
+        return new ResearchEntryBuilder(modId, key, discipline);
     }
     
-    public static ResearchEntryBuilder entry(@Nonnull String keyStr, @Nonnull String name, @Nonnull String discipline) {
-        return new ResearchEntryBuilder(SimpleResearchKey.parse(keyStr), name, discipline);
+    public static ResearchEntryBuilder entry(@Nonnull SimpleResearchKey key, @Nonnull String discipline) {
+        return new ResearchEntryBuilder(PrimalMagic.MODID, key, discipline);
+    }
+    
+    public static ResearchEntryBuilder entry(@Nonnull String keyStr, @Nonnull String discipline) {
+        return new ResearchEntryBuilder(PrimalMagic.MODID, SimpleResearchKey.parse(keyStr), discipline);
     }
     
     public ResearchEntryBuilder parent(SimpleResearchKey parent) {
@@ -47,12 +50,14 @@ public class ResearchEntryBuilder {
     }
     
     public ResearchEntryBuilder stage(IFinishedResearchStage stage) {
-        this.stages.add(stage);
+        int index = this.stages.size() + 1;
+        this.stages.add(stage.setEntryKey(this.key.getRootKey()).setStageIndex(index));
         return this;
     }
     
     public ResearchEntryBuilder addendum(IFinishedResearchAddendum addendum) {
-        this.addenda.add(addendum);
+        int index = this.addenda.size() + 1;
+        this.addenda.add(addendum.setEntryKey(this.key.getRootKey()).setAddendumIndex(index));
         return this;
     }
     

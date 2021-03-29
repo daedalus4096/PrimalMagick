@@ -16,17 +16,21 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchAddendumBuilder {
-    protected final String textTranslationKey;
+    protected final String modId;
     protected final List<SimpleResearchKey> requiredResearch = new ArrayList<>();
     protected final List<ResourceLocation> recipes = new ArrayList<>();
     protected SourceList attunements;
 
-    protected ResearchAddendumBuilder(@Nonnull String text) {
-        this.textTranslationKey = text;
+    protected ResearchAddendumBuilder(@Nonnull String modId) {
+        this.modId = modId;
     }
     
-    public static ResearchAddendumBuilder addendum(@Nonnull String text) {
-        return new ResearchAddendumBuilder(text);
+    public static ResearchAddendumBuilder addendum(@Nonnull String modId) {
+        return new ResearchAddendumBuilder(modId);
+    }
+    
+    public static ResearchAddendumBuilder addendum() {
+        return new ResearchAddendumBuilder(PrimalMagic.MODID);
     }
     
     public ResearchAddendumBuilder requiredResearch(@Nonnull String keyStr) {
@@ -65,32 +69,50 @@ public class ResearchAddendumBuilder {
     }
     
     private void validate() {
-        if (this.textTranslationKey == null) {
-            throw new IllegalStateException("No text for research addendum");
+        if (this.modId == null) {
+            throw new IllegalStateException("No mod ID for research addendum");
         }
     }
     
     public IFinishedResearchAddendum build() {
         this.validate();
-        return new ResearchAddendumBuilder.Result(this.textTranslationKey, this.requiredResearch, this.recipes, this.attunements);
+        return new ResearchAddendumBuilder.Result(this.modId, this.requiredResearch, this.recipes, this.attunements);
     }
     
     public static class Result implements IFinishedResearchAddendum {
-        protected final String textTranslationKey;
+        protected final String modId;
         protected final List<SimpleResearchKey> requiredResearch;
         protected final List<ResourceLocation> recipes;
         protected final SourceList attunements;
+        protected String entryKey;
+        protected int stageIndex;
 
-        public Result(@Nonnull String text, @Nonnull List<SimpleResearchKey> requiredResearch, @Nonnull List<ResourceLocation> recipes, @Nullable SourceList attunements) {
-            this.textTranslationKey = text;
+        public Result(@Nonnull String modId, @Nonnull List<SimpleResearchKey> requiredResearch, @Nonnull List<ResourceLocation> recipes, @Nullable SourceList attunements) {
+            this.modId = modId;
             this.requiredResearch = requiredResearch;
             this.recipes = recipes;
             this.attunements = attunements;
         }
 
         @Override
+        public IFinishedResearchAddendum setEntryKey(String key) {
+            this.entryKey = key;
+            return this;
+        }
+        
+        @Override
+        public IFinishedResearchAddendum setAddendumIndex(int index) {
+            this.stageIndex = index;
+            return this;
+        }
+
+        private String getTextTranslationKey() {
+            return this.modId.toLowerCase() + ".research." + this.entryKey.toLowerCase() + ".text.addenda." + this.stageIndex;
+        }
+
+        @Override
         public void serialize(JsonObject json) {
-            json.addProperty("text", this.textTranslationKey);
+            json.addProperty("text", this.getTextTranslationKey());
             
             if (!this.requiredResearch.isEmpty()) {
                 JsonArray researchArray = new JsonArray();
