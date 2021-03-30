@@ -65,6 +65,7 @@ public class ResearchProvider implements IDataProvider {
     
     protected void registerEntries(Consumer<IFinishedResearchEntry> consumer) {
         this.registerBasicsEntries(consumer);
+        this.registerManaweavingEntries(consumer);
         this.registerAlchemyEntries(consumer);
         this.registerSorceryEntries(consumer);
         this.registerRuneworkingEntries(consumer);
@@ -191,6 +192,11 @@ public class ResearchProvider implements IDataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 5).build())
             .build(consumer);
+    }
+    
+    protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
+        // TODO Auto-generated method stub
+
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
@@ -555,7 +561,6 @@ public class ResearchProvider implements IDataProvider {
     }
 
     protected void registerRitualEntries(Consumer<IFinishedResearchEntry> consumer) {
-        // TODO Auto-generated method stub
         String discipline = "RITUAL";
         ResearchEntryBuilder.entry("BASIC_RITUAL", discipline).parent("UNLOCK_RITUAL")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RITUAL_ALTAR.get()).recipe(ItemsPM.OFFERING_PEDESTAL.get()).build())
@@ -572,16 +577,71 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("t_rituals_completed_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("MANAFRUIT", discipline).parent("BASIC_RITUAL").parent("MANA_SALTS")
+        ResearchEntryBuilder.entry("MANAFRUIT", discipline).parent("BASIC_RITUAL").parent("MANA_SALTS").parent("RITUAL_CANDLES")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANAFRUIT.get()).build())
             .build(consumer);
-
+        ResearchEntryBuilder.entry("RITUAL_CANDLES", discipline).parent("BASIC_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 1).recipe(ItemsPM.TALLOW.get()).recipe(PrimalMagic.MODID, "ritual_candle_white_from_tallow")
+                    .recipe(PrimalMagic.MODID, "ritual_candle_white_from_beeswax").recipe(ItemsPM.RITUAL_CANDLE_BLACK.get()).recipe(ItemsPM.RITUAL_CANDLE_BLUE.get())
+                    .recipe(ItemsPM.RITUAL_CANDLE_BROWN.get()).recipe(ItemsPM.RITUAL_CANDLE_CYAN.get()).recipe(ItemsPM.RITUAL_CANDLE_GRAY.get()).recipe(ItemsPM.RITUAL_CANDLE_GREEN.get())
+                    .recipe(ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get()).recipe(ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get()).recipe(ItemsPM.RITUAL_CANDLE_LIME.get()).recipe(ItemsPM.RITUAL_CANDLE_MAGENTA.get())
+                    .recipe(ItemsPM.RITUAL_CANDLE_ORANGE.get()).recipe(ItemsPM.RITUAL_CANDLE_PINK.get()).recipe(ItemsPM.RITUAL_CANDLE_PURPLE.get()).recipe(ItemsPM.RITUAL_CANDLE_RED.get())
+                    .recipe(ItemsPM.RITUAL_CANDLE_WHITE.get()).recipe(ItemsPM.RITUAL_CANDLE_WHITE.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("INCENSE_BRAZIER", discipline).parent("BASIC_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 1).recipe(ItemsPM.INCENSE_BRAZIER.get()).recipe(ItemsPM.INCENSE_STICK.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RITUAL_LECTERN", discipline).parent("EXPERT_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 1).recipe(ItemsPM.RITUAL_LECTERN.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RITUAL_BELL", discipline).parent("EXPERT_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 1).recipe(ItemsPM.RITUAL_BELL.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("BLOODLETTER", discipline).parent("MASTER_RITUAL").parent("t_discover_blood")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 1).recipe(ItemsPM.BLOODLETTER.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SOUL_ANVIL", discipline).parent("MASTER_RITUAL").parent("HEXIUM").parent("SPELL_PAYLOAD_DRAIN_SOUL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 1).recipe(ItemsPM.SOUL_ANVIL.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_PRIMAL", discipline).parent("EXPERT_RITUAL").parent("WAND_CORE_OBSIDIAN").parent("WAND_CORE_CORAL").parent("WAND_CORE_BAMBOO").parent("WAND_CORE_SUNWOOD")
+            .parent("WAND_CORE_MOONWOOD").parent("MANA_SALTS").parent("RITUAL_CANDLES").parent("RITUAL_LECTERN").parent("RITUAL_BELL")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).attunement(Source.SEA, 3).attunement(Source.SKY, 3).attunement(Source.SUN, 3).attunement(Source.MOON, 3)
+                    .recipe(ItemsPM.PRIMAL_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.PRIMAL_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_DARK_PRIMAL", discipline).parent("MASTER_RITUAL").parent("WAND_CORE_PRIMAL").parent("WAND_CORE_BONE").parent("WAND_CORE_BLAZE_ROD")
+            .parent("WAND_CORE_PURPUR").parent("BLOODLETTER").parent("SOUL_ANVIL")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 4).attunement(Source.INFERNAL, 4).attunement(Source.VOID, 4).recipe(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
-        // TODO Auto-generated method stub
-        
+        String discipline = "MAGITECH";
+        ResearchEntryBuilder.entry("BASIC_MAGITECH", discipline).parent("UNLOCK_MAGITECH")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("EXPERT_MAGITECH", discipline).parent("BASIC_MAGITECH")
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MASTER_MAGITECH", discipline).parent("EXPERT_MAGITECH")
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_master").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).parent("MASTER_MAGITECH")
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_supreme").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {

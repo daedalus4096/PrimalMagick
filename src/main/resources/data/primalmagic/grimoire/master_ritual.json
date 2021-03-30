@@ -1,0 +1,20 @@
+{
+  "key": "MASTER_RITUAL",
+  "name": "primalmagic.research.master_ritual.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "EXPERT_RITUAL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.master_ritual.text.stage.1",
+      "required_research": [
+        "t_rituals_completed_master"
+      ]
+    },
+    {
+      "text": "primalmagic.research.master_ritual.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

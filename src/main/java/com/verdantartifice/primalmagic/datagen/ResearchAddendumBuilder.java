@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchAddendumBuilder {
@@ -61,6 +62,10 @@ public class ResearchAddendumBuilder {
     
     public ResearchAddendumBuilder recipe(@Nonnull String modId, @Nonnull String name) {
         return recipe(new ResourceLocation(modId, name));
+    }
+    
+    public ResearchAddendumBuilder recipe(@Nonnull IItemProvider item) {
+        return recipe(item.asItem().getRegistryName());
     }
     
     public ResearchAddendumBuilder recipe(@Nonnull ResourceLocation loc) {
