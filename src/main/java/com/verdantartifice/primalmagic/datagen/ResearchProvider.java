@@ -456,7 +456,6 @@ public class ResearchProvider implements IDataProvider {
     }
 
     protected void registerRuneworkingEntries(Consumer<IFinishedResearchEntry> consumer) {
-        // TODO Auto-generated method stub
         String discipline = "RUNEWORKING";
         ResearchEntryBuilder.entry("BASIC_RUNEWORKING", discipline).parent("UNLOCK_RUNEWORKING")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_UNATTUNED.get()).build())
@@ -557,7 +556,27 @@ public class ResearchProvider implements IDataProvider {
 
     protected void registerRitualEntries(Consumer<IFinishedResearchEntry> consumer) {
         // TODO Auto-generated method stub
-        
+        String discipline = "RITUAL";
+        ResearchEntryBuilder.entry("BASIC_RITUAL", discipline).parent("UNLOCK_RITUAL")
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RITUAL_ALTAR.get()).recipe(ItemsPM.OFFERING_PEDESTAL.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("EXPERT_RITUAL", discipline).parent("BASIC_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_rituals_completed_expert").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MASTER_RITUAL", discipline).parent("EXPERT_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_rituals_completed_master").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).parent("MASTER_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_rituals_completed_supreme").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MANAFRUIT", discipline).parent("BASIC_RITUAL").parent("MANA_SALTS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANAFRUIT.get()).build())
+            .build(consumer);
+
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
