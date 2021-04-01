@@ -1,0 +1,20 @@
+{
+  "key": "SUPREME_MANAWEAVING",
+  "name": "primalmagic.research.supreme_manaweaving.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "MASTER_MANAWEAVING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.supreme_manaweaving.text.stage.1",
+      "required_research": [
+        "b_crafted_manaweaving_supreme"
+      ]
+    },
+    {
+      "text": "primalmagic.research.supreme_manaweaving.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

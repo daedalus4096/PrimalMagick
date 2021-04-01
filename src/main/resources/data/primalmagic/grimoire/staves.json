@@ -1,0 +1,21 @@
+{
+  "key": "STAVES",
+  "name": "primalmagic.research.staves.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "EXPERT_MANAWEAVING",
+    "ADVANCED_WANDMAKING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.staves.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.staves.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

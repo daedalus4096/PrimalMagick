@@ -196,7 +196,61 @@ public class ResearchProvider implements IDataProvider {
     
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
         // TODO Auto-generated method stub
-
+        String discipline = "MANAWEAVING";
+        ResearchEntryBuilder.entry("BASIC_MANAWEAVING", discipline).parent("UNLOCK_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_PRISM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("EXPERT_MANAWEAVING", discipline).parent("BASIC_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_manaweaving_expert").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MASTER_MANAWEAVING", discipline).parent("EXPERT_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_manaweaving_master").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUPREME_MANAWEAVING", discipline).parent("MASTER_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_manaweaving_supreme").build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CHARGER", discipline).parent("BASIC_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "essences/terrestrial_dusts").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_CHARGER.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MANA_SALTS", discipline).parent("BASIC_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredItemStack(ItemsPM.ESSENCE_DUST_SEA.get()).requiredItemStack(ItemsPM.ESSENCE_DUST_SKY.get())
+                    .requiredItemStack(ItemsPM.ESSENCE_DUST_SUN.get()).requiredItemStack(ItemsPM.ESSENCE_DUST_MOON.get()).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_SALTS.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("ADVANCED_WANDMAKING", discipline).parent("BASIC_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_ASSEMBLY_TABLE.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("STAVES", discipline).parent("EXPERT_MANAWEAVING").parent("ADVANCED_WANDMAKING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_HEARTWOOD", discipline).parent("ADVANCED_WANDMAKING")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.HEARTWOOD.get()).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CAP_IRON", discipline).parent("ADVANCED_WANDMAKING")
+            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "ingots/iron").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.IRON_WAND_CAP_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_GEM_APPRENTICE", discipline).parent("ADVANCED_WANDMAKING")
+            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "gems/diamond").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("EARTHSHATTER_HAMMER", discipline).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "ores/iron").requiredItemTag("forge", "ores/gold").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.EARTHSHATTER_HAMMER.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUNLAMP", discipline).parent("EXPERT_MANAWEAVING").parent("PRIMALITE")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.LANTERN).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 2).recipe(ItemsPM.SUNLAMP.get()).build())
+            .build(consumer);
+        
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {

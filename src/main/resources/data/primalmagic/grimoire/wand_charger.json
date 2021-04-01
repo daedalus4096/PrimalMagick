@@ -1,0 +1,26 @@
+{
+  "key": "WAND_CHARGER",
+  "name": "primalmagic.research.wand_charger.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "BASIC_MANAWEAVING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.wand_charger.text.stage.1",
+      "required_item": [
+        "tag:primalmagic:essences/terrestrial_dusts"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.wand_charger.text.stage.2",
+      "recipes": [
+        "primalmagic:wand_charger"
+      ]
+    }
+  ],
+  "addenda": []
+}

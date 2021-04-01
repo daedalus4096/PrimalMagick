@@ -1,0 +1,23 @@
+{
+  "key": "ADVANCED_WANDMAKING",
+  "name": "primalmagic.research.advanced_wandmaking.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "BASIC_MANAWEAVING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.advanced_wandmaking.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.advanced_wandmaking.text.stage.2",
+      "recipes": [
+        "primalmagic:wand_assembly_table"
+      ]
+    }
+  ],
+  "addenda": []
+}

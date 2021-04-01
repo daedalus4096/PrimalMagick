@@ -1,0 +1,26 @@
+{
+  "key": "WAND_GEM_APPRENTICE",
+  "name": "primalmagic.research.wand_gem_apprentice.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "ADVANCED_WANDMAKING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.wand_gem_apprentice.text.stage.1",
+      "required_item": [
+        "tag:forge:gems/diamond"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.wand_gem_apprentice.text.stage.2",
+      "recipes": [
+        "primalmagic:apprentice_wand_gem_item"
+      ]
+    }
+  ],
+  "addenda": []
+}

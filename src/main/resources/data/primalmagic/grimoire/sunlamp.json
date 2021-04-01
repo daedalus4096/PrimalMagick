@@ -1,0 +1,30 @@
+{
+  "key": "SUNLAMP",
+  "name": "primalmagic.research.sunlamp.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "EXPERT_MANAWEAVING",
+    "PRIMALITE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.sunlamp.text.stage.1",
+      "required_item": [
+        "minecraft:lantern"
+      ],
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.sunlamp.text.stage.2",
+      "attunements": {
+        "sun": 2
+      },
+      "recipes": [
+        "primalmagic:sunlamp"
+      ]
+    }
+  ],
+  "addenda": []
+}
