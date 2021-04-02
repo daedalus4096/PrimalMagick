@@ -1,0 +1,41 @@
+{
+  "key": "WAND_CORE_PURPUR",
+  "name": "primalmagic.research.wand_core_purpur.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "MASTER_MANAWEAVING",
+    "WAND_CORE_HEARTWOOD",
+    "t_discover_void"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.wand_core_purpur.text.stage.1",
+      "required_item": [
+        "minecraft:purpur_block"
+      ],
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagic.research.wand_core_purpur.text.stage.2",
+      "attunements": {
+        "void": 3
+      },
+      "recipes": [
+        "primalmagic:purpur_wand_core_item"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.wand_core_purpur.text.addenda.1",
+      "required_research": [
+        "STAVES"
+      ],
+      "recipes": [
+        "primalmagic:purpur_staff_core_item"
+      ]
+    }
+  ]
+}

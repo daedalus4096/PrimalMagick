@@ -195,7 +195,6 @@ public class ResearchProvider implements IDataProvider {
     }
     
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
-        // TODO Auto-generated method stub
         String discipline = "MANAWEAVING";
         ResearchEntryBuilder.entry("BASIC_MANAWEAVING", discipline).parent("UNLOCK_MANAWEAVING")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_PRISM.get()).build())
@@ -283,7 +282,41 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
-        
+        ResearchEntryBuilder.entry("WAND_CORE_CORAL", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "coral_blocks").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 2).recipe(ItemsPM.CORAL_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.CORAL_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_BAMBOO", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.BAMBOO).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 2).recipe(ItemsPM.BAMBOO_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BAMBOO_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_SUNWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.SUNWOOD_LOG.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 2).recipe(ItemsPM.SUNWOOD_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.SUNWOOD_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_MOONWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.MOONWOOD_LOG.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 2).recipe(ItemsPM.MOONWOOD_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.MOONWOOD_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_BONE", discipline).parent("MASTER_MANAWEAVING").parent("WAND_CORE_HEARTWOOD").parent("t_discover_blood")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.BONE).requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 3).recipe(ItemsPM.BONE_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BONE_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_BLAZE_ROD", discipline).parent("MASTER_MANAWEAVING").parent("WAND_CORE_HEARTWOOD").parent("t_discover_infernal")
+            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "rods/blaze").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).recipe(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BLAZE_ROD_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_PURPUR", discipline).parent("MASTER_MANAWEAVING").parent("WAND_CORE_HEARTWOOD").parent("t_discover_void")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.PURPUR_BLOCK).requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 3).recipe(ItemsPM.PURPUR_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.PURPUR_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
