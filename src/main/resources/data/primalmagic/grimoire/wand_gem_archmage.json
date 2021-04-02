@@ -1,0 +1,27 @@
+{
+  "key": "WAND_GEM_ARCHMAGE",
+  "name": "primalmagic.research.wand_gem_archmage.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "SUPREME_MANAWEAVING",
+    "WAND_GEM_WIZARD"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.wand_gem_archmage.text.stage.1",
+      "required_item": [
+        "tag:primalmagic:gems/diamond"
+      ],
+      "required_knowledge": [
+        "THEORY;3"
+      ]
+    },
+    {
+      "text": "primalmagic.research.wand_gem_archmage.text.stage.2",
+      "recipes": [
+        "primalmagic:archmage_wand_gem_item"
+      ]
+    }
+  ],
+  "addenda": []
+}

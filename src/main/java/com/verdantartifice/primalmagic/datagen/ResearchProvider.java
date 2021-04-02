@@ -250,6 +250,39 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.LANTERN).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 2).recipe(ItemsPM.SUNLAMP.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("WAND_GEM_ADEPT", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_GEM_APPRENTICE")
+            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_GEM_WIZARD", discipline).parent("MASTER_MANAWEAVING").parent("WAND_GEM_ADEPT")
+            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_GEM_ARCHMAGE", discipline).parent("SUPREME_MANAWEAVING").parent("WAND_GEM_WIZARD")
+            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CAP_GOLD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CAP_IRON")
+            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "ingots/gold").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.GOLD_WAND_CAP_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CAP_PRIMALITE", discipline).parent("WAND_CAP_GOLD").parent("PRIMALITE")
+            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "ingots/primalite").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMALITE_WAND_CAP_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CAP_HEXIUM", discipline).parent("MASTER_MANAWEAVING").parent("WAND_CAP_PRIMALITE").parent("HEXIUM")
+            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "ingots/hexium").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEXIUM_WAND_CAP_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CAP_HALLOWSTEEL", discipline).parent("SUPREME_MANAWEAVING").parent("WAND_CAP_HEXIUM").parent("HALLOWSTEEL")
+            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "ingots/hallowsteel").requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWSTEEL_WAND_CAP_ITEM.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_OBSIDIAN", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "obsidian").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
         
     }
     
