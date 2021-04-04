@@ -1,7 +1,12 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Definition of a project material that requires experience levels, which are always consumed as part
@@ -67,36 +72,51 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
         ExperienceProjectMaterial retVal = new ExperienceProjectMaterial();
         retVal.levels = this.levels;
         retVal.selected = this.selected;
+        retVal.weight = this.weight;
+        if (this.requiredResearch != null) {
+            retVal.requiredResearch = this.requiredResearch.copy();
+        }
         return retVal;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + this.levels;
-        result = prime * result + (this.selected ? 1231 : 1237);
+        int result = super.hashCode();
+        result = prime * result + levels;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (!super.equals(obj))
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
         ExperienceProjectMaterial other = (ExperienceProjectMaterial) obj;
-        if (this.levels != other.levels) {
+        if (levels != other.levels)
             return false;
-        }
-        if (this.selected != other.selected) {
-            return false;
-        }
         return true;
+    }
+
+    public static class Serializer implements IProjectMaterialSerializer<ExperienceProjectMaterial> {
+        @Override
+        public ExperienceProjectMaterial read(ResourceLocation projectId, JsonObject json) {
+            int levels = json.getAsJsonPrimitive("levels").getAsInt();
+            if (levels <= 0) {
+                throw new JsonSyntaxException("Invalid experience levels in material JSON for project " + projectId.toString());
+            }
+            
+            ExperienceProjectMaterial retVal = new ExperienceProjectMaterial(levels);
+            
+            retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
+            if (json.has("required_research")) {
+                retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
+            }
+            
+            return retVal;
+        }
     }
 }

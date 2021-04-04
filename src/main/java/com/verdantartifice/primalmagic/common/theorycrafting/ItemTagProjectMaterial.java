@@ -3,6 +3,9 @@ package com.verdantartifice.primalmagic.common.theorycrafting;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -103,13 +106,18 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
         material.tagName = new ResourceLocation(this.tagName.toString());
         material.quantity = this.quantity;
         material.consumed = this.consumed;
+        material.selected = this.selected;
+        material.weight = this.weight;
+        if (this.requiredResearch != null) {
+            material.requiredResearch = this.requiredResearch.copy();
+        }
         return material;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
+        int result = super.hashCode();
         result = prime * result + (consumed ? 1231 : 1237);
         result = prime * result + quantity;
         result = prime * result + ((tagName == null) ? 0 : tagName.hashCode());
@@ -118,29 +126,45 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (!super.equals(obj))
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
         ItemTagProjectMaterial other = (ItemTagProjectMaterial) obj;
-        if (consumed != other.consumed) {
+        if (consumed != other.consumed)
             return false;
-        }
-        if (quantity != other.quantity) {
+        if (quantity != other.quantity)
             return false;
-        }
         if (tagName == null) {
-            if (other.tagName != null) {
+            if (other.tagName != null)
                 return false;
-            }
-        } else if (!tagName.equals(other.tagName)) {
+        } else if (!tagName.equals(other.tagName))
             return false;
-        }
         return true;
+    }
+    
+    public static class Serializer implements IProjectMaterialSerializer<ItemTagProjectMaterial> {
+        @Override
+        public ItemTagProjectMaterial read(ResourceLocation projectId, JsonObject json) {
+            String nameStr = json.getAsJsonPrimitive("name").getAsString();
+            if (nameStr == null) {
+                throw new JsonSyntaxException("Illegal tag name in material JSON for project " + projectId.toString());
+            }
+            ResourceLocation tagName = new ResourceLocation(nameStr);
+            
+            boolean consumed = json.getAsJsonPrimitive("consumed").getAsBoolean();
+            int quantity = json.getAsJsonPrimitive("quantity").getAsInt();
+            
+            ItemTagProjectMaterial retVal = new ItemTagProjectMaterial(tagName, quantity, consumed);
+            
+            retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
+            if (json.has("required_research")) {
+                retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
+            }
+
+            return retVal;
+        }
     }
 }

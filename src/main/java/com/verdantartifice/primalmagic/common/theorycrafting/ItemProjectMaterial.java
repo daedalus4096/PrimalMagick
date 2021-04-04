@@ -2,12 +2,17 @@ package com.verdantartifice.primalmagic.common.theorycrafting;
 
 import javax.annotation.Nonnull;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
+import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Definition of a project material that requires a specific item stack, which may or may not be
@@ -100,50 +105,65 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         ItemProjectMaterial material = new ItemProjectMaterial();
         material.stack = this.stack.copy();
         material.consumed = this.consumed;
-        material.selected = this.selected;
         material.matchNBT = this.matchNBT;
+        material.selected = this.selected;
+        material.weight = this.weight;
+        if (this.requiredResearch != null) {
+            material.requiredResearch = this.requiredResearch.copy();
+        }
         return material;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + (this.consumed ? 1231 : 1237);
-        result = prime * result + (this.selected ? 1231 : 1237);
-        result = prime * result + (this.matchNBT ? 1231 : 1237);
-        result = prime * result + ((this.stack == null) ? 0 : this.stack.hashCode());
+        int result = super.hashCode();
+        result = prime * result + (consumed ? 1231 : 1237);
+        result = prime * result + (matchNBT ? 1231 : 1237);
+        result = prime * result + ((stack == null) ? 0 : stack.hashCode());
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (!super.equals(obj))
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
         ItemProjectMaterial other = (ItemProjectMaterial) obj;
-        if (this.consumed != other.consumed) {
+        if (consumed != other.consumed)
             return false;
-        }
-        if (this.selected != other.selected) {
+        if (matchNBT != other.matchNBT)
             return false;
-        }
-        if (this.matchNBT != other.matchNBT) {
-            return false;
-        }
-        if (this.stack == null) {
-            if (other.stack != null) {
+        if (stack == null) {
+            if (other.stack != null)
                 return false;
-            }
-        } else if (!ItemStack.areItemStacksEqual(this.stack, other.stack)) {
+        } else if (!ItemStack.areItemStacksEqual(this.stack, other.stack))
             return false;
-        }
         return true;
+    }
+
+    public static class Serializer implements IProjectMaterialSerializer<ItemProjectMaterial> {
+        @Override
+        public ItemProjectMaterial read(ResourceLocation projectId, JsonObject json) {
+            ItemStack stack = ItemUtils.parseItemStack(json.getAsJsonPrimitive("stack").getAsString());
+            if (stack == null || stack.isEmpty()) {
+                throw new JsonSyntaxException("Invalid item stack for material in project " + projectId.toString());
+            }
+            
+            boolean consumed = json.getAsJsonPrimitive("consumed").getAsBoolean();
+            boolean matchNbt = json.has("match_nbt") ? json.getAsJsonPrimitive("match_nbt").getAsBoolean() : false;
+            
+            ItemProjectMaterial retVal = new ItemProjectMaterial(stack, consumed, matchNbt);
+            
+            retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
+            if (json.has("required_research")) {
+                retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
+            }
+            
+            return retVal;
+        }
     }
 }
