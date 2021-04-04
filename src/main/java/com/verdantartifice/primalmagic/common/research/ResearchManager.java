@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagic.common.research;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,13 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
@@ -33,7 +24,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -47,8 +37,6 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ResearchManager {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     // Hash codes of items that must be crafted to complete one or more research stages
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
     
@@ -341,47 +329,6 @@ public class ResearchManager {
         }
         scheduleSync(player);
         return true;
-    }
-    
-    public static void parseAllResearch() {
-        // Parse all research definition files and populate the mod's research data
-        CRAFTING_REFERENCES.clear();
-        JsonParser parser = new JsonParser();
-        for (ResourceLocation location : ResearchDisciplines.getAllDataFileLocations()) {
-            String locStr = "/data/" + location.getNamespace() + "/" + location.getPath();
-            if (!locStr.endsWith(".json")) {
-                locStr += ".json";
-            }
-            InputStream stream = ResearchManager.class.getResourceAsStream(locStr);
-            if (stream != null) {
-                try {
-                    // Get the definition file contents as a JSON object
-                    JsonObject obj = parser.parse(new InputStreamReader(stream)).getAsJsonObject();
-                    JsonArray entries = obj.get("entries").getAsJsonArray();
-                    int index = 0;
-                    for (JsonElement element : entries) {
-                        try {
-                            // Parse each defined entry and add it to its respective discipline
-                            ResearchEntry entry = ResearchEntry.parse(element.getAsJsonObject());
-                            ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
-                            if (discipline == null || !discipline.addEntry(entry)) {
-                                LOGGER.warn("Could not add invalid entry: {}", entry.getKey());
-                            } else {
-                                index++;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            LOGGER.warn("Invalid research entry #{} found in {}", index, location.toString());
-                        }
-                    }
-                    LOGGER.info("Loaded {} research entries from {}", index, location.toString());
-                } catch (Exception e) {
-                    LOGGER.warn("Invalid research file: {}", location.toString());
-                }
-            } else {
-                LOGGER.warn("Research file not found: {}", location.toString());
-            }
-        }
     }
     
     public static boolean registerScanTrigger(@Nullable IScanTrigger trigger) {

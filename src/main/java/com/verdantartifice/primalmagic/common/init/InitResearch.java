@@ -39,8 +39,6 @@ import net.minecraft.util.ResourceLocation;
 public class InitResearch {
     public static void initResearch() {
         initDisciplines();
-        initResearchFiles();
-//        ResearchManager.parseAllResearch();
         initScanResearch();
         initResearchProjects();
     }
@@ -54,17 +52,6 @@ public class InitResearch {
         ResearchDisciplines.registerDiscipline("RITUAL", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RITUAL")), new ResourceLocation(PrimalMagic.MODID, "textures/research/discipline_ritual.png"), StatsPM.CRAFTED_RITUAL);
         ResearchDisciplines.registerDiscipline("MAGITECH", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_MAGITECH")), new ResourceLocation(PrimalMagic.MODID, "textures/research/discipline_magitech.png"), StatsPM.CRAFTED_MAGITECH);
         ResearchDisciplines.registerDiscipline("SCANS", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_SCANS")), new ResourceLocation(PrimalMagic.MODID, "textures/item/magnifying_glass.png"), null);
-    }
-    
-    private static void initResearchFiles() {
-        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/basics"));
-        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/alchemy"));
-        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/sorcery"));
-        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/manaweaving"));
-        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/runeworking"));
-        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/ritual"));
-        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/magitech"));
-        ResearchDisciplines.registerResearchLocation(new ResourceLocation(PrimalMagic.MODID, "research/scans"));
     }
     
     private static void initScanResearch() {
