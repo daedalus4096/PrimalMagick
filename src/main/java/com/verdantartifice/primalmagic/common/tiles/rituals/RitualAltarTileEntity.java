@@ -16,8 +16,10 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.collect.ImmutableSet;
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.blocks.rituals.OfferingPedestalBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
@@ -89,6 +91,7 @@ import net.minecraftforge.common.util.Constants;
 public class RitualAltarTileEntity extends TileInventoryPM implements ITickableTileEntity, IInteractWithWand {
     protected static final float MIN_STABILITY = -100.0F;
     protected static final float MAX_STABILITY = 25.0F;
+    private static final Logger LOGGER = LogManager.getLogger();
     
     protected final WeightedRandomBag<Mishap> mishaps;
     
@@ -565,7 +568,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     protected boolean doStep(@Nonnull RitualStep step) {
         IRitualRecipe recipe = this.getActiveRecipe();
         if (recipe == null) {
-            PrimalMagic.LOGGER.warn("No recipe found when trying to do ritual step");
+            LOGGER.warn("No recipe found when trying to do ritual step");
             return false;
         }
         
@@ -574,7 +577,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         } else if (step.getType() == RitualStepType.PROP) {
             return this.doPropStep(recipe, step.getIndex());
         } else {
-            PrimalMagic.LOGGER.warn("Invalid ritual step type {}", step.getType());
+            LOGGER.warn("Invalid ritual step type {}", step.getType());
             return false;
         }
     }

@@ -10,9 +10,11 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -23,6 +25,8 @@ import net.minecraft.entity.player.PlayerEntity;
  * @author Daedalus4096
  */
 public class CompoundResearchKey {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected List<SimpleResearchKey> keys = new ArrayList<>();
     protected boolean requireAll;
     
@@ -41,7 +45,7 @@ public class CompoundResearchKey {
             return null;
         } else if (keyStr.contains("&&")) {
             if (keyStr.contains("||")) {
-                PrimalMagic.LOGGER.error("Research key may contain && or || but not both: {}", keyStr);
+                LOGGER.error("Research key may contain && or || but not both: {}", keyStr);
                 return null;
             }
             

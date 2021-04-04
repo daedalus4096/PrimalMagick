@@ -9,11 +9,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -29,6 +31,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class AffinityProvider implements IDataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
+    private static final Logger LOGGER = LogManager.getLogger();
     protected final DataGenerator generator;
     
     public AffinityProvider(DataGenerator generator) {
@@ -41,7 +44,7 @@ public class AffinityProvider implements IDataProvider {
         Map<ResourceLocation, IFinishedAffinity> map = new HashMap<>();
         this.registerAffinities((affinity) -> {
             if (map.put(affinity.getId(), affinity) != null) {
-                PrimalMagic.LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
+                LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
             }
         });
         for (Map.Entry<ResourceLocation, IFinishedAffinity> entry : map.entrySet()) {
@@ -62,7 +65,7 @@ public class AffinityProvider implements IDataProvider {
             }
             cache.recordHash(path, hash);
         } catch (IOException e) {
-            PrimalMagic.LOGGER.error("Couldn't save affinity {}", path, e);
+            LOGGER.error("Couldn't save affinity {}", path, e);
         }
     }
     

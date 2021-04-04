@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -26,6 +29,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ResearchProvider implements IDataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
+    private static final Logger LOGGER = LogManager.getLogger();
     protected final DataGenerator generator;
     
     public ResearchProvider(DataGenerator generator) {
@@ -38,7 +42,7 @@ public class ResearchProvider implements IDataProvider {
         Map<ResourceLocation, IFinishedResearchEntry> map = new HashMap<>();
         this.registerEntries((research) -> {
             if (map.put(research.getId(), research) != null) {
-                PrimalMagic.LOGGER.debug("Duplicate research entry in data generation: " + research.getId().toString());
+                LOGGER.debug("Duplicate research entry in data generation: " + research.getId().toString());
             }
         });
         for (Map.Entry<ResourceLocation, IFinishedResearchEntry> entry : map.entrySet()) {
@@ -59,7 +63,7 @@ public class ResearchProvider implements IDataProvider {
             }
             cache.recordHash(path, hash);
         } catch (IOException e) {
-            PrimalMagic.LOGGER.error("Couldn't save research entry {}", path, e);
+            LOGGER.error("Couldn't save research entry {}", path, e);
         }
     }
     

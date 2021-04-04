@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagic.common.network.packets.spellcrafting;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.spells.SpellComponent;
@@ -17,6 +19,8 @@ import net.minecraftforge.fml.network.NetworkEvent;
  * @author Daedalus4096
  */
 public class SetSpellComponentPropertyPacket implements IMessageToServer {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected int windowId;
     protected SpellComponent attr;
     protected String name;
@@ -50,7 +54,7 @@ public class SetSpellComponentPropertyPacket implements IMessageToServer {
         try {
             message.attr = SpellComponent.valueOf(attrStr);
         } catch (Exception e) {
-            PrimalMagic.LOGGER.warn("Received SetSpellComponentPropertyPacket with unexpected attr value {}", attrStr);
+            LOGGER.warn("Received SetSpellComponentPropertyPacket with unexpected attr value {}", attrStr);
             message.attr = null;
         }
         message.name = buf.readString();

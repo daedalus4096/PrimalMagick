@@ -8,11 +8,13 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.Direction;
@@ -28,7 +30,8 @@ import net.minecraft.util.math.shapes.VoxelShapes;
  */
 public class VoxelShapeUtils {
     private static final int HISTORY_LIMIT = 100;
-    
+    private static final Logger LOGGER = LogManager.getLogger();
+
     /**
      * Calculate a VoxelShape defined by the specified model file.
      * 
@@ -55,12 +58,12 @@ public class VoxelShapeUtils {
         
         // Prevent cycles in model search
         if (history.contains(location)) {
-            PrimalMagic.LOGGER.warn("Cycle detected while getting VoxelShape from model file: {}", location.toString());
+            LOGGER.warn("Cycle detected while getting VoxelShape from model file: {}", location.toString());
             return VoxelShapes.empty();
         }
         history.add(location);
         if (history.size() >= HISTORY_LIMIT) {
-            PrimalMagic.LOGGER.warn("History limit exceeded while getting VoxelShape from model file: {}", location.toString());
+            LOGGER.warn("History limit exceeded while getting VoxelShape from model file: {}", location.toString());
             return VoxelShapes.empty();
         }
         
@@ -95,15 +98,15 @@ public class VoxelShapeUtils {
                     // Attempt to load and parse the parent model file
                     return fromModel(new ResourceLocation(obj.getAsJsonPrimitive("parent").getAsString()), history);
                 } else {
-                    PrimalMagic.LOGGER.warn("No elements or parent found in VoxelShape model file: {}", location.toString());
+                    LOGGER.warn("No elements or parent found in VoxelShape model file: {}", location.toString());
                     return VoxelShapes.empty();
                 }
             } catch (Exception e) {
-                PrimalMagic.LOGGER.warn("Invalid VoxelShape model file: {}", location.toString());
+                LOGGER.warn("Invalid VoxelShape model file: {}", location.toString());
                 return VoxelShapes.empty();
             }
         } else {
-            PrimalMagic.LOGGER.warn("VoxelShape model file not found: {}", location.toString());
+            LOGGER.warn("VoxelShape model file not found: {}", location.toString());
             return VoxelShapes.empty();
         }
     }
@@ -129,7 +132,7 @@ public class VoxelShapeUtils {
                 toArray.get(2).getAsDouble()
             );
         } catch (Exception e) {
-            PrimalMagic.LOGGER.warn("Invalid element in VoxelShape model file: {}", location.toString());
+            LOGGER.warn("Invalid element in VoxelShape model file: {}", location.toString());
             return VoxelShapes.empty();
         }
     }

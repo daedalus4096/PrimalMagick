@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagic.common.network.packets.data;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
@@ -26,6 +28,8 @@ import net.minecraftforge.fml.network.NetworkEvent;
  * @author Daedalus4096
  */
 public class SyncProgressPacket implements IMessageToServer {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected SimpleResearchKey key;
     protected boolean firstSync;
     protected boolean runChecks;
@@ -73,7 +77,7 @@ public class SyncProgressPacket implements IMessageToServer {
                             return;
                         }
                         // Do the actual progression
-                        PrimalMagic.LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
+                        LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
                         ResearchManager.progressResearch(player, message.key, true, !message.noFlags);
                     }
                 }

@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -26,8 +29,6 @@ import net.minecraft.data.LootTableProvider;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.state.properties.SlabType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;
 import net.minecraft.loot.LootEntry;
@@ -44,6 +45,8 @@ import net.minecraft.loot.conditions.TableBonus;
 import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.ExplosionDecay;
 import net.minecraft.loot.functions.SetCount;
+import net.minecraft.state.properties.SlabType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -54,7 +57,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public abstract class BlockLootTableProvider extends LootTableProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected final Map<Block, LootTable.Builder> lootTables = new HashMap<>();
     protected final Set<ResourceLocation> registeredBlocks = new HashSet<>();
     
@@ -158,7 +162,7 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
             try {
                 IDataProvider.save(GSON, cache, LootTableManager.toJson(lootTable), path);
             } catch (IOException e) {
-                PrimalMagic.LOGGER.error("Couldn't write loot table {}", path, e);
+                LOGGER.error("Couldn't write loot table {}", path, e);
             }
         });
     }
@@ -169,6 +173,6 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
         
         // Warn for each mod block that didn't have a loot table registered
         blocks.removeAll(this.registeredBlocks);
-        blocks.forEach(key -> PrimalMagic.LOGGER.warn("Missing block loot table for {}", key.toString()));
+        blocks.forEach(key -> LOGGER.warn("Missing block loot table for {}", key.toString()));
     }
 }

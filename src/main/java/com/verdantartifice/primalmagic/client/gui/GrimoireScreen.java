@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -71,6 +73,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagic:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
@@ -573,7 +576,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                     this.pages.add(page);
                 }
             } else {
-                PrimalMagic.LOGGER.warn("Unable to find recipe definition for {}", recipeLoc.toString());
+                LOGGER.warn("Unable to find recipe definition for {}", recipeLoc.toString());
             }
         }
     }

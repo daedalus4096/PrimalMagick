@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -55,6 +58,7 @@ public class AffinityManager extends JsonReloadListener {
             .put(AffinityType.POTION_BONUS, PotionBonusAffinity.SERIALIZER)
             .put(AffinityType.ENCHANTMENT_BONUS, EnchantmentBonusAffinity.SERIALIZER)
             .build();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static AffinityManager INSTANCE;
     
@@ -93,16 +97,16 @@ public class AffinityManager extends JsonReloadListener {
             try {
                 IAffinity aff = this.deserializeAffinity(location, JSONUtils.getJsonObject(entry.getValue(), "top member"));
                 if (aff == null) {
-                    PrimalMagic.LOGGER.info("Skipping loading affinity {} as its serializer returned null", location);
+                    LOGGER.info("Skipping loading affinity {} as its serializer returned null", location);
                     continue;
                 }
                 this.registerAffinity(aff);
             } catch (IllegalArgumentException | JsonParseException e) {
-                PrimalMagic.LOGGER.error("Parsing error loading affinity {}", location, e);
+                LOGGER.error("Parsing error loading affinity {}", location, e);
             }
         }
         int size = this.affinities.entrySet().stream().mapToInt((m) -> m.getValue().size()).sum();
-        PrimalMagic.LOGGER.info("Loaded {} affinity definitions", size);
+        LOGGER.info("Loaded {} affinity definitions", size);
     }
     
     protected IAffinity deserializeAffinity(ResourceLocation id, JsonObject json) {

@@ -13,11 +13,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
@@ -45,6 +47,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ResearchManager {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     // Hash codes of items that must be crafted to complete one or more research stages
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
     
@@ -361,21 +365,21 @@ public class ResearchManager {
                             ResearchEntry entry = ResearchEntry.parse(element.getAsJsonObject());
                             ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
                             if (discipline == null || !discipline.addEntry(entry)) {
-                                PrimalMagic.LOGGER.warn("Could not add invalid entry: {}", entry.getKey());
+                                LOGGER.warn("Could not add invalid entry: {}", entry.getKey());
                             } else {
                                 index++;
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            PrimalMagic.LOGGER.warn("Invalid research entry #{} found in {}", index, location.toString());
+                            LOGGER.warn("Invalid research entry #{} found in {}", index, location.toString());
                         }
                     }
-                    PrimalMagic.LOGGER.info("Loaded {} research entries from {}", index, location.toString());
+                    LOGGER.info("Loaded {} research entries from {}", index, location.toString());
                 } catch (Exception e) {
-                    PrimalMagic.LOGGER.warn("Invalid research file: {}", location.toString());
+                    LOGGER.warn("Invalid research file: {}", location.toString());
                 }
             } else {
-                PrimalMagic.LOGGER.warn("Research file not found: {}", location.toString());
+                LOGGER.warn("Research file not found: {}", location.toString());
             }
         }
     }

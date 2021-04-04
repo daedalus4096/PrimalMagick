@@ -3,6 +3,9 @@ package com.verdantartifice.primalmagic.common.events;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
@@ -64,7 +67,8 @@ import net.minecraftforge.fml.common.Mod;
 public class PlayerEvents {
     private static final Map<Integer, Float> PREV_STEP_HEIGHTS = new HashMap<>();
     private static final Map<Integer, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
-    
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
         if (!event.getEntity().world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
@@ -327,28 +331,28 @@ public class PlayerEvents {
                 CompoundNBT nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getKnowledge(event.getPlayer()).deserializeNBT(nbtKnowledge);
             } catch (Exception e) {
-                PrimalMagic.LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
+                LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
             }
             
             try {
                 CompoundNBT nbtCooldowns = PrimalMagicCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getCooldowns(event.getPlayer()).deserializeNBT(nbtCooldowns);
             } catch (Exception e) {
-                PrimalMagic.LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
+                LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
             }
             
             try {
                 CompoundNBT nbtStats = PrimalMagicCapabilities.getStats(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
             } catch (Exception e) {
-                PrimalMagic.LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
+                LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
             }
             
             try {
                 CompoundNBT nbtAttunements = PrimalMagicCapabilities.getAttunements(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
             } catch (Exception e) {
-                PrimalMagic.LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
+                LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
             }
         }
     }

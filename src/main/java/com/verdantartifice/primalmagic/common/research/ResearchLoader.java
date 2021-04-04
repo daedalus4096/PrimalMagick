@@ -2,6 +2,9 @@ package com.verdantartifice.primalmagic.common.research;
 
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -19,7 +22,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class ResearchLoader extends JsonReloadListener {
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-    
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private static ResearchLoader INSTANCE;
     
     protected ResearchLoader() {
@@ -55,15 +59,15 @@ public class ResearchLoader extends JsonReloadListener {
                 ResearchEntry researchEntry = ResearchEntry.parse(JSONUtils.getJsonObject(entry.getValue(), "top member"));
                 ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(researchEntry.getDisciplineKey());
                 if (discipline == null || !discipline.addEntry(researchEntry)) {
-                    PrimalMagic.LOGGER.error("Could not add invalid entry: {}", location);
+                    LOGGER.error("Could not add invalid entry: {}", location);
                 }
             } catch (Exception e) {
-                PrimalMagic.LOGGER.error("Parsing error loading research entry {}", location, e);
+                LOGGER.error("Parsing error loading research entry {}", location, e);
             }
         }
         for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
             if (!discipline.getEntries().isEmpty()) {
-                PrimalMagic.LOGGER.info("Loaded {} research entries for discipline {}", discipline.getEntries().size(), discipline.getKey().toLowerCase());
+                LOGGER.info("Loaded {} research entries for discipline {}", discipline.getEntries().size(), discipline.getKey().toLowerCase());
             }
         }
     }
