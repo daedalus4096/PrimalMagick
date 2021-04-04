@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.datagen;
+package com.verdantartifice.primalmagic.datagen.tags;
 
 import java.nio.file.Path;
 

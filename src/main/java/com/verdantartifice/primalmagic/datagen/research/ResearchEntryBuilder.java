@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.datagen;
+package com.verdantartifice.primalmagic.datagen.research;
 
 import java.util.ArrayList;
 import java.util.List;

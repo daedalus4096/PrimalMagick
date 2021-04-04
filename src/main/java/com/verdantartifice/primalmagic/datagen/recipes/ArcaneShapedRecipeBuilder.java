@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.datagen;
+package com.verdantartifice.primalmagic.datagen.recipes;
 
 import java.util.ArrayList;
 import java.util.HashSet;

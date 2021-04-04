@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.datagen;
+package com.verdantartifice.primalmagic.datagen.research;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

@@ -1,6 +1,12 @@
 package com.verdantartifice.primalmagic.datagen;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.datagen.affinities.AffinityProvider;
+import com.verdantartifice.primalmagic.datagen.loot_tables.BlockLootTables;
+import com.verdantartifice.primalmagic.datagen.recipes.Recipes;
+import com.verdantartifice.primalmagic.datagen.research.ResearchProvider;
+import com.verdantartifice.primalmagic.datagen.tags.BlockTagsProvider;
+import com.verdantartifice.primalmagic.datagen.tags.ItemTagsProvider;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

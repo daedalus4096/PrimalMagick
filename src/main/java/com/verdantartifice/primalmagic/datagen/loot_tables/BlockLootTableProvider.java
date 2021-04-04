@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.datagen;
+package com.verdantartifice.primalmagic.datagen.loot_tables;
 
 import java.io.IOException;
 import java.nio.file.Path;

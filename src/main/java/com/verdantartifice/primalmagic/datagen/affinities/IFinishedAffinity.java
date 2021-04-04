@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.datagen;
+package com.verdantartifice.primalmagic.datagen.affinities;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.affinities.AffinityType;
