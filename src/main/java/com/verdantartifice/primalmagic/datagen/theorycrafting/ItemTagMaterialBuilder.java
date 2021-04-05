@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -85,6 +86,7 @@ public class ItemTagMaterialBuilder {
 
         @Override
         public void serialize(JsonObject json) {
+            json.addProperty("type", ItemTagProjectMaterial.TYPE);
             json.addProperty("name", this.tagName.toString());
             json.addProperty("quantity", this.quantity);
             json.addProperty("consumed", this.consumed);

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.datagen.recipes.Recipes;
 import com.verdantartifice.primalmagic.datagen.research.ResearchProvider;
 import com.verdantartifice.primalmagic.datagen.tags.BlockTagsProvider;
 import com.verdantartifice.primalmagic.datagen.tags.ItemTagsProvider;
+import com.verdantartifice.primalmagic.datagen.theorycrafting.ProjectProvider;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,5 +31,6 @@ public class DataGenerators {
         generator.addProvider(new ItemTagsProvider(generator, event.getExistingFileHelper()));
         generator.addProvider(new AffinityProvider(generator));
         generator.addProvider(new ResearchProvider(generator));
+        generator.addProvider(new ProjectProvider(generator));
     }
 }

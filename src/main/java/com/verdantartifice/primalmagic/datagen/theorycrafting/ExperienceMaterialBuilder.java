@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.theorycrafting.ExperienceProjectMaterial;
 
 public class ExperienceMaterialBuilder {
     protected final int levels;
@@ -63,6 +64,7 @@ public class ExperienceMaterialBuilder {
 
         @Override
         public void serialize(JsonObject json) {
+            json.addProperty("type", ExperienceProjectMaterial.TYPE);
             json.addProperty("levels", this.levels);
             json.addProperty("consumed", this.consumed);
             json.addProperty("weight", this.weight);

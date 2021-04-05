@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
 
 public class ObservationMaterialBuilder {
     protected final int count;
@@ -63,6 +64,7 @@ public class ObservationMaterialBuilder {
 
         @Override
         public void serialize(JsonObject json) {
+            json.addProperty("type", ObservationProjectMaterial.TYPE);
             json.addProperty("count", this.count);
             json.addProperty("consumed", this.consumed);
             json.addProperty("weight", this.weight);

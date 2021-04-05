@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.item.ItemStack;
@@ -89,6 +90,7 @@ public class ItemMaterialBuilder {
 
         @Override
         public void serialize(JsonObject json) {
+            json.addProperty("type", ItemProjectMaterial.TYPE);
             json.addProperty("stack", ItemUtils.serializeItemStack(this.stack));
             json.addProperty("consumed", this.consumed);
             json.addProperty("match_nbt", this.matchNBT);
