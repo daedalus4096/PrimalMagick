@@ -16,8 +16,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
@@ -67,7 +71,54 @@ public class ProjectProvider implements IDataProvider {
     }
     
     protected void registerProjects(Consumer<IFinishedProject> consumer) {
-        // TODO Method stub
+        SimpleResearchKey shardSynthesis = SimpleResearchKey.parse("SHARD_SYNTHESIS");
+        
+        ProjectBuilder.project("advanced_essence_analysis").requiredResearch("CRYSTAL_SYNTHESIS").rewardMultiplier(0.5D)
+            .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_EARTH.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_SEA.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_SKY.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_SUN.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_MOON.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_BLOOD.get(), true).requiredResearch(Source.BLOOD.getDiscoverKey()).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_INFERNAL.get(), true).requiredResearch(Source.INFERNAL.getDiscoverKey()).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_VOID.get(), true).requiredResearch(Source.VOID.getDiscoverKey()).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_HALLOWED.get(), true).requiredResearch(Source.HALLOWED.getDiscoverKey()).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_EARTH.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_SEA.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_SKY.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_SUN.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_MOON.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get(), true).requiredResearch(Source.BLOOD.getDiscoverKey()).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get(), true).requiredResearch(Source.INFERNAL.getDiscoverKey()).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_VOID.get(), true).requiredResearch(Source.VOID.getDiscoverKey()).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get(), true).requiredResearch(Source.HALLOWED.getDiscoverKey()).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("beacon_emanations").aid(Blocks.BEACON).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .material(ItemTagMaterialBuilder.tag("forge", "beacon_payment", true).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("brewing_experiments").requiredResearch(Source.INFERNAL.getDiscoverKey())
+            .material(ItemMaterialBuilder.item(Items.BREWING_STAND, false).weight(3).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "crops/nether_wart", true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.FERMENTED_SPIDER_EYE, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "dusts/glowstone", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "dusts/redstone", true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.SUGAR, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.RABBIT_FOOT, true).weight(0.5D).build())
+            .material(ItemMaterialBuilder.item(Items.BLAZE_POWDER, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.GLISTERING_MELON_SLICE, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.SPIDER_EYE, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.GHAST_TEAR, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.MAGMA_CREAM, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.PUFFERFISH, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.GOLDEN_CARROT, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.TURTLE_HELMET, true).weight(0.5D).build())
+            .material(ItemMaterialBuilder.item(Items.PHANTOM_MEMBRANE, true).weight(0.5D).build())
+            .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
+            .build(consumer);
+        ProjectBuilder.project("draconic_energies").aid(Blocks.DRAGON_EGG).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .material(ItemTagMaterialBuilder.tag("forge", "ender_pearls", true).weight(1).build())
+            .build(consumer);
         ProjectBuilder.project("enchanting_studies").requiredResearch("BASIC_MANAWEAVING")
             .material(ItemMaterialBuilder.item(Items.ENCHANTING_TABLE, false).weight(5).build())
             .material(ItemTagMaterialBuilder.tag("forge", "gems/lapis", true).weight(5).build())
@@ -84,6 +135,55 @@ public class ProjectProvider implements IDataProvider {
             .material(ItemMaterialBuilder.item(Items.GOLDEN_BOOTS, false).weight(1).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
             .build(consumer);
+        ProjectBuilder.project("essence_analysis").requiredResearch("BASIC_ALCHEMY")
+            .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_EARTH.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_SEA.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_SKY.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_SUN.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_MOON.get(), true).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_BLOOD.get(), true).requiredResearch(Source.BLOOD.getDiscoverKey()).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_INFERNAL.get(), true).requiredResearch(Source.INFERNAL.getDiscoverKey()).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_VOID.get(), true).requiredResearch(Source.VOID.getDiscoverKey()).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_HALLOWED.get(), true).requiredResearch(Source.HALLOWED.getDiscoverKey()).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_EARTH.get(), true).requiredResearch(shardSynthesis).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_SEA.get(), true).requiredResearch(shardSynthesis).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_SKY.get(), true).requiredResearch(shardSynthesis).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_SUN.get(), true).requiredResearch(shardSynthesis).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_MOON.get(), true).requiredResearch(shardSynthesis).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_BLOOD.get(), true).requiredResearch(CompoundResearchKey.from(true, shardSynthesis, Source.BLOOD.getDiscoverKey())).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_INFERNAL.get(), true).requiredResearch(CompoundResearchKey.from(true, shardSynthesis, Source.INFERNAL.getDiscoverKey())).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_VOID.get(), true).requiredResearch(CompoundResearchKey.from(true, shardSynthesis, Source.VOID.getDiscoverKey())).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_HALLOWED.get(), true).requiredResearch(CompoundResearchKey.from(true, shardSynthesis, Source.HALLOWED.getDiscoverKey())).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("expedition")
+            .material(ItemMaterialBuilder.item(Items.IRON_SWORD, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.BOW, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.ARROW, 4, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.IRON_CHESTPLATE, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.MAP, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.COMPASS, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.CLOCK, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.CARTOGRAPHY_TABLE, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.CAMPFIRE, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.TORCH, 4, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.BREAD, true).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("hit_the_books").aid(Blocks.BOOKSHELF).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("mundane_tinkering")
+            .material(ItemMaterialBuilder.item(Items.CRAFTING_TABLE, false).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("minecraft", "anvil", false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.FURNACE, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.BLAST_FURNACE, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.LOOM, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.SMOKER, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.SMITHING_TABLE, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.STONECUTTER, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.GRINDSTONE, false).weight(1).build())
+            .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
+            .build(consumer);
         ProjectBuilder.project("nether_expedition").requiredResearch(Source.INFERNAL.getDiscoverKey())
             .material(ItemMaterialBuilder.item(Items.DIAMOND_SWORD, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.CROSSBOW, false).weight(1).build())
@@ -98,6 +198,13 @@ public class ProjectProvider implements IDataProvider {
             .material(ItemTagMaterialBuilder.tag("forge", "obsidian", 10, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.FLINT_AND_STEEL, false).weight(1).build())
             .build(consumer);
+        // TODO Observation analysis
+        // TODO Portal detritus
+        // TODO Recuperation
+        // TODO Redstone tinkering
+        // TODO Spellwork
+        // TODO Trade
+        // TODO Wand tinkering
     }
 
     @Override

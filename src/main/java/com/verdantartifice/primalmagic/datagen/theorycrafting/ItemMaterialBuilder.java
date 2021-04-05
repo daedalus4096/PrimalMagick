@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
@@ -53,6 +54,10 @@ public class ItemMaterialBuilder {
     public ItemMaterialBuilder requiredResearch(@Nullable CompoundResearchKey key) {
         this.requiredResearch = key.copy();
         return this;
+    }
+    
+    public ItemMaterialBuilder requiredResearch(@Nullable SimpleResearchKey key) {
+        return requiredResearch(CompoundResearchKey.from(key));
     }
     
     public ItemMaterialBuilder requiredResearch(@Nullable String keyStr) {

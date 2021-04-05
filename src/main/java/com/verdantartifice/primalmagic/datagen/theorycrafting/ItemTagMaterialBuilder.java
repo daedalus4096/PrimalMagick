@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 
 import net.minecraft.util.ResourceLocation;
@@ -46,6 +47,10 @@ public class ItemTagMaterialBuilder {
     public ItemTagMaterialBuilder requiredResearch(@Nullable CompoundResearchKey key) {
         this.requiredResearch = key;
         return this;
+    }
+    
+    public ItemTagMaterialBuilder requiredResearch(@Nullable SimpleResearchKey key) {
+        return requiredResearch(CompoundResearchKey.from(key));
     }
     
     public ItemTagMaterialBuilder requiredResearch(@Nullable String keyStr) {

@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.theorycrafting.ExperienceProjectMaterial;
 
 public class ExperienceMaterialBuilder {
@@ -29,6 +30,10 @@ public class ExperienceMaterialBuilder {
     public ExperienceMaterialBuilder requiredResearch(@Nullable CompoundResearchKey key) {
         this.requiredResearch = key;
         return this;
+    }
+    
+    public ExperienceMaterialBuilder requiredResearch(@Nullable SimpleResearchKey key) {
+        return requiredResearch(CompoundResearchKey.from(key));
     }
     
     public ExperienceMaterialBuilder requiredResearch(@Nullable String keyStr) {
