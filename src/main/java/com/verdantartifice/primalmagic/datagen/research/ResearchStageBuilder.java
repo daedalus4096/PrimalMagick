@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IItemProvider;
@@ -48,7 +49,7 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder requiredItemStack(@Nonnull ItemStack stack) {
-        this.requiredItems.add(this.serializeItemStack(stack));
+        this.requiredItems.add(ItemUtils.serializeItemStack(stack));
         return this;
     }
     
@@ -70,26 +71,13 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder requiredCraftStack(@Nonnull ItemStack stack) {
-        this.requiredCrafts.add(this.serializeItemStack(stack));
+        this.requiredCrafts.add(ItemUtils.serializeItemStack(stack));
         return this;
     }
     
     public ResearchStageBuilder requiredCraftTag(@Nonnull ResourceLocation tagLoc) {
         this.requiredCrafts.add("tag:" + tagLoc.toString());
         return this;
-    }
-    
-    protected String serializeItemStack(@Nonnull ItemStack stack) {
-        StringBuilder sb = new StringBuilder(stack.getItem().getRegistryName().toString());
-        if (stack.getCount() > 1 || stack.hasTag()) {
-            sb.append(';');
-            sb.append(stack.getCount());
-        }
-        if (stack.hasTag()) {
-            sb.append(';');
-            sb.append(stack.getTag().toString().replaceAll("\"", "'"));
-        }
-        return sb.toString();
     }
     
     public ResearchStageBuilder requiredKnowledge(@Nonnull IPlayerKnowledge.KnowledgeType type, int count) {

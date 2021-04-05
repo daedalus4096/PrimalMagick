@@ -98,6 +98,27 @@ public class ItemUtils {
     }
     
     /**
+     * Serialize an item stack into the string representation used in research and theorycrafting data
+     * definition files.
+     * 
+     * @param stack the item stack to be serialized
+     * @return a string representation of the item stack
+     */
+    @Nonnull
+    public static String serializeItemStack(@Nonnull ItemStack stack) {
+        StringBuilder sb = new StringBuilder(stack.getItem().getRegistryName().toString());
+        if (stack.getCount() > 1 || stack.hasTag()) {
+            sb.append(';');
+            sb.append(stack.getCount());
+        }
+        if (stack.hasTag()) {
+            sb.append(';');
+            sb.append(stack.getTag().toString().replaceAll("\"", "'"));
+        }
+        return sb.toString();
+    }
+    
+    /**
      * Perform a deep copy of the given itemstack list.
      * 
      * @param list the itemstack list to be copied

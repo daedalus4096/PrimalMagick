@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Definition of a project material that requires experience levels, which are always consumed as part
+ * Definition of a project material that requires experience levels, which may or may not be consumed as part
  * of the research project.
  * 
  * @author Daedalus4096
@@ -18,15 +18,20 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     public static final String TYPE = "experience";
     
     protected int levels;
+    protected boolean consumed;
     
     public ExperienceProjectMaterial() {
-        super();
-        this.levels = 0;
+        this(0, true);
     }
     
     public ExperienceProjectMaterial(int levels) {
+        this(levels, true);
+    }
+    
+    public ExperienceProjectMaterial(int levels, boolean consumed) {
         super();
         this.levels = levels;
+        this.consumed = consumed;
     }
     
     @Override
@@ -64,13 +69,14 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isConsumed() {
-        return true;
+        return this.consumed;
     }
 
     @Override
     public AbstractProjectMaterial copy() {
         ExperienceProjectMaterial retVal = new ExperienceProjectMaterial();
         retVal.levels = this.levels;
+        retVal.consumed = this.consumed;
         retVal.selected = this.selected;
         retVal.weight = this.weight;
         if (this.requiredResearch != null) {
@@ -83,6 +89,7 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
+        result = prime * result + (consumed ? 1231 : 1237);
         result = prime * result + levels;
         return result;
     }
@@ -96,6 +103,8 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
         if (getClass() != obj.getClass())
             return false;
         ExperienceProjectMaterial other = (ExperienceProjectMaterial) obj;
+        if (consumed != other.consumed)
+            return false;
         if (levels != other.levels)
             return false;
         return true;
@@ -109,7 +118,9 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
                 throw new JsonSyntaxException("Invalid experience levels in material JSON for project " + projectId.toString());
             }
             
-            ExperienceProjectMaterial retVal = new ExperienceProjectMaterial(levels);
+            boolean consumed = json.getAsJsonPrimitive("consumed").getAsBoolean();
+            
+            ExperienceProjectMaterial retVal = new ExperienceProjectMaterial(levels, consumed);
             
             retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
             if (json.has("required_research")) {

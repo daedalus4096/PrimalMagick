@@ -96,6 +96,18 @@ public class CompoundResearchKey {
         return (compound.keys.size() > 0) ? compound : null;
     }
     
+    @Nullable
+    public static CompoundResearchKey from(boolean requireAll, String... keyStrs) {
+        CompoundResearchKey compound = new CompoundResearchKey(requireAll);
+        for (String keyStr : keyStrs) {
+            SimpleResearchKey key = SimpleResearchKey.parse(keyStr);
+            if (key != null) {
+                compound.keys.add(key);
+            }
+        }
+        return (compound.keys.size() > 0) ? compound : null;
+    }
+    
     @Nonnull
     public CompoundResearchKey copy() {
         // Make a deep copy of the compound research key
