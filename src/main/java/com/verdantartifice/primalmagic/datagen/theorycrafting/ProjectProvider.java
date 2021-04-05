@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -198,13 +200,78 @@ public class ProjectProvider implements IDataProvider {
             .material(ItemTagMaterialBuilder.tag("forge", "obsidian", 10, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.FLINT_AND_STEEL, false).weight(1).build())
             .build(consumer);
-        // TODO Observation analysis
-        // TODO Portal detritus
-        // TODO Recuperation
-        // TODO Redstone tinkering
-        // TODO Spellwork
-        // TODO Trade
-        // TODO Wand tinkering
+        ProjectBuilder.project("observation_analysis").aid(BlocksPM.ANALYSIS_TABLE.get()).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .material(ObservationMaterialBuilder.observation(1, true).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("portal_detritus").aid(Blocks.NETHER_PORTAL).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .material(ItemMaterialBuilder.item(ItemsPM.MAGNIFYING_GLASS.get(), false).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("recuperation")
+            .material(ItemTagMaterialBuilder.tag("minecraft", "beds", false).weight(2).build())
+            .material(ItemMaterialBuilder.item(Items.JUKEBOX, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(2).build())
+            .material(ItemMaterialBuilder.item(Items.COOKED_BEEF, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.BAKED_POTATO, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.MILK_BUCKET, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.CAKE, true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.ROSE_BUSH, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.TNT, true).weight(0.5D).build())
+            .build(consumer);
+        ProjectBuilder.project("redstone_tinkering").requiredResearch("BASIC_MAGITECH")
+            .material(ItemMaterialBuilder.item(Items.DETECTOR_RAIL, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.ACTIVATOR_RAIL, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.DISPENSER, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.DROPPER, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.DAYLIGHT_DETECTOR, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.PISTON, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.HOPPER, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.REDSTONE_LAMP, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.STICKY_PISTON, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.COMPARATOR, false).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "dusts/redstone", 4, true).weight(3).build())
+            .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
+            .build(consumer);
+        ProjectBuilder.project("spellwork").requiredResearch("BASIC_SORCERY")
+            .material(ItemMaterialBuilder.item(ItemsPM.SPELLCRAFTING_ALTAR.get(), false).weight(5).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.WAND_INSCRIPTION_TABLE.get(), false).requiredResearch("WAND_INSCRIPTION").weight(2).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.WAND_CHARGER.get(), false).requiredResearch("WAND_CHARGER").weight(2).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.MUNDANE_WAND.get(), false).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.SPELL_SCROLL_BLANK.get(), true).weight(5).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_EARTH.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_SEA.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_SKY.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_SUN.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_MOON.get(), true).weight(1).build())
+            .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
+            .build(consumer);
+        ProjectBuilder.project("trade")
+            .material(ItemTagMaterialBuilder.tag("forge", "gems/emerald", true).weight(10).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "gems/diamond", true).weight(2).build())
+            .material(ItemMaterialBuilder.item(Items.COAL, true).weight(2).build())
+            .material(ItemMaterialBuilder.item(Items.COMPASS, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "ingots/gold", true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.PUMPKIN, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "string", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "leather", true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.BOOK, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "gems/quartz", true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.WHITE_WOOL, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "ingots/iron", true).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("wand_tinkering").requiredResearch("BASIC_SORCERY")
+            .material(ItemMaterialBuilder.item(ItemsPM.WAND_ASSEMBLY_TABLE.get(), false).requiredResearch("ADVANCED_WANDMAKING").weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.HEARTWOOD.get(), true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "obsidian", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(PrimalMagic.MODID, "coral_blocks", true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.BAMBOO, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(PrimalMagic.MODID, "sunwood_logs", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(PrimalMagic.MODID, "moonwood_logs", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "ingots/iron", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "ingots/gold", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("forge", "gems/diamond", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(PrimalMagic.MODID, "essences/terrestrial_dusts", true).weight(1).build())
+            .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
+            .build(consumer);
     }
 
     @Override
