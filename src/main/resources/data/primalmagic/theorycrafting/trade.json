@@ -1,0 +1,90 @@
+{
+  "key": "primalmagic:trade",
+  "reward_multiplier": 0.25,
+  "material_options": [
+    {
+      "type": "tag",
+      "name": "forge:gems/emerald",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 10.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:gems/diamond",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:coal",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:compass",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:ingots/gold",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:pumpkin",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:string",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:leather",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:book",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:gems/quartz",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:white_wool",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:ingots/iron",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    }
+  ]
+}

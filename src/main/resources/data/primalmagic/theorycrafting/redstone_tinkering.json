@@ -1,0 +1,90 @@
+{
+  "key": "primalmagic:redstone_tinkering",
+  "required_research": "BASIC_MAGITECH",
+  "reward_multiplier": 0.25,
+  "material_options": [
+    {
+      "type": "item",
+      "stack": "minecraft:detector_rail",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:activator_rail",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:dispenser",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:dropper",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:daylight_detector",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:piston",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:hopper",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:redstone_lamp",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:sticky_piston",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:comparator",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:dusts/redstone",
+      "quantity": 4,
+      "consumed": true,
+      "weight": 3.0
+    },
+    {
+      "type": "observation",
+      "count": 1,
+      "consumed": true,
+      "weight": 5.0
+    }
+  ]
+}

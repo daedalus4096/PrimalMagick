@@ -1,0 +1,147 @@
+{
+  "key": "primalmagic:advanced_essence_analysis",
+  "required_research": "CRYSTAL_SYNTHESIS",
+  "reward_multiplier": 0.5,
+  "material_options": [
+    {
+      "type": "observation",
+      "count": 1,
+      "consumed": true,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_earth",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_sea",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_sky",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_sun",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_moon",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_blood",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0,
+      "required_research": "t_discover_blood"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_infernal",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0,
+      "required_research": "t_discover_infernal"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_void",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0,
+      "required_research": "t_discover_void"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_shard_hallowed",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 3.0,
+      "required_research": "t_discover_hallowed"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_earth",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_sea",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_sky",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_sun",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_moon",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_blood",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0,
+      "required_research": "t_discover_blood"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_infernal",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0,
+      "required_research": "t_discover_infernal"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_void",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0,
+      "required_research": "t_discover_void"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:essence_crystal_hallowed",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0,
+      "required_research": "t_discover_hallowed"
+    }
+  ]
+}

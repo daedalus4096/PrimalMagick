@@ -1,0 +1,91 @@
+{
+  "key": "primalmagic:wand_tinkering",
+  "required_research": "BASIC_SORCERY",
+  "reward_multiplier": 0.25,
+  "material_options": [
+    {
+      "type": "item",
+      "stack": "primalmagic:wand_assembly_table",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 3.0,
+      "required_research": "ADVANCED_WANDMAKING"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagic:heartwood",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:obsidian",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "primalmagic:coral_blocks",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:bamboo",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "primalmagic:sunwood_logs",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "primalmagic:moonwood_logs",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:ingots/iron",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:ingots/gold",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:gems/diamond",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "primalmagic:essences/terrestrial_dusts",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "observation",
+      "count": 1,
+      "consumed": true,
+      "weight": 5.0
+    }
+  ]
+}

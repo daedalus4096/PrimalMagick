@@ -1,0 +1,16 @@
+{
+  "key": "primalmagic:portal_detritus",
+  "required_material_count_override": 1,
+  "base_success_chance_override": 0.5,
+  "reward_multiplier": 0.5,
+  "aid_block": "minecraft:air",
+  "material_options": [
+    {
+      "type": "item",
+      "stack": "primalmagic:magnifying_glass",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    }
+  ]
+}

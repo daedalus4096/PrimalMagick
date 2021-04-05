@@ -1,0 +1,15 @@
+{
+  "key": "primalmagic:observation_analysis",
+  "required_material_count_override": 1,
+  "base_success_chance_override": 0.5,
+  "reward_multiplier": 0.5,
+  "aid_block": "primalmagic:analysis_table",
+  "material_options": [
+    {
+      "type": "observation",
+      "count": 1,
+      "consumed": true,
+      "weight": 1.0
+    }
+  ]
+}
