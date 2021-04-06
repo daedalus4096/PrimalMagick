@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 /**
@@ -23,6 +25,7 @@ import net.minecraft.util.math.BlockPos;
  * @author Daedalus4096
  */
 public class TheorycraftManager {
+    public static final IProjectTemplateSerializer TEMPLATE_SERIALIZER = new ProjectTemplate.Serializer();
     protected static final Map<String, Supplier<AbstractProject>> PROJECT_SUPPLIERS = new HashMap<>();
     protected static final Map<String, IProjectMaterialSerializer<?>> MATERIAL_SERIALIZERS = new ImmutableMap.Builder<String, IProjectMaterialSerializer<?>>()
             .put(ItemProjectMaterial.TYPE, ItemProjectMaterial.SERIALIZER)
@@ -30,6 +33,7 @@ public class TheorycraftManager {
             .put(ExperienceProjectMaterial.TYPE, ExperienceProjectMaterial.SERIALIZER)
             .put(ObservationProjectMaterial.TYPE, ObservationProjectMaterial.SERIALIZER)
             .build();
+    protected static final Map<ResourceLocation, ProjectTemplate> TEMPLATES = new HashMap<>();
     
     public static void registerProjectType(@Nullable String type, @Nullable Supplier<AbstractProject> supplier) {
         // Don't allow null or empty data in the project registry
@@ -46,6 +50,23 @@ public class TheorycraftManager {
     @Nullable
     public static IProjectMaterialSerializer<?> getMaterialSerializer(@Nullable String type) {
         return MATERIAL_SERIALIZERS.get(type);
+    }
+    
+    public static void clearAllTemplates() {
+        TEMPLATES.clear();
+    }
+    
+    public static Map<ResourceLocation, ProjectTemplate> getAllTemplates() {
+        return Collections.unmodifiableMap(TEMPLATES);
+    }
+    
+    public static boolean registerTemplate(ResourceLocation templateKey, ProjectTemplate template) {
+        if (TEMPLATES.containsKey(templateKey)) {
+            return false;
+        } else {
+            TEMPLATES.put(templateKey, template);
+            return true;
+        }
     }
     
     @Nonnull

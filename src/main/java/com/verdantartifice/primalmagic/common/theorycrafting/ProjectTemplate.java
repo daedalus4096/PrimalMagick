@@ -145,14 +145,14 @@ public class ProjectTemplate {
             for (JsonElement materialElement : materialsArray) {
                 try {
                     JsonObject materialObj = materialElement.getAsJsonObject();
-                    // TODO deserialize material
+                    IProjectMaterialSerializer<?> materialSerializer = TheorycraftManager.getMaterialSerializer(materialObj.getAsJsonPrimitive("type").getAsString());
+                    materials.add(materialSerializer.read(templateId, materialObj));
                 }
                 catch (Exception e) {
-                    throw new JsonSyntaxException("Invalid material in project template JSON for " + templateId.toString());
+                    throw new JsonSyntaxException("Invalid material in project template JSON for " + templateId.toString(), e);
                 }
             }
             
-            // TODO return constructed template
             return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlock);
         }
     }
