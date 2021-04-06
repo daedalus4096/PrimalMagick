@@ -22,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class ItemProjectMaterial extends AbstractProjectMaterial {
     public static final String TYPE = "item";
+    public static final IProjectMaterialSerializer<ItemProjectMaterial> SERIALIZER = new ItemProjectMaterial.Serializer();
     
     protected ItemStack stack;
     protected boolean consumed;

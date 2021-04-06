@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.block.Block;
@@ -23,6 +24,12 @@ import net.minecraft.util.math.BlockPos;
  */
 public class TheorycraftManager {
     protected static final Map<String, Supplier<AbstractProject>> PROJECT_SUPPLIERS = new HashMap<>();
+    protected static final Map<String, IProjectMaterialSerializer<?>> MATERIAL_SERIALIZERS = new ImmutableMap.Builder<String, IProjectMaterialSerializer<?>>()
+            .put(ItemProjectMaterial.TYPE, ItemProjectMaterial.SERIALIZER)
+            .put(ItemTagProjectMaterial.TYPE, ItemTagProjectMaterial.SERIALIZER)
+            .put(ExperienceProjectMaterial.TYPE, ExperienceProjectMaterial.SERIALIZER)
+            .put(ObservationProjectMaterial.TYPE, ObservationProjectMaterial.SERIALIZER)
+            .build();
     
     public static void registerProjectType(@Nullable String type, @Nullable Supplier<AbstractProject> supplier) {
         // Don't allow null or empty data in the project registry
@@ -34,6 +41,11 @@ public class TheorycraftManager {
     @Nullable
     public static Supplier<AbstractProject> getProjectSupplier(@Nullable String type) {
         return PROJECT_SUPPLIERS.get(type);
+    }
+    
+    @Nullable
+    public static IProjectMaterialSerializer<?> getMaterialSerializer(@Nullable String type) {
+        return MATERIAL_SERIALIZERS.get(type);
     }
     
     @Nonnull

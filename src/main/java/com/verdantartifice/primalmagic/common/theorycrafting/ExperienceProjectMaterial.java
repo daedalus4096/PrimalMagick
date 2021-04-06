@@ -16,7 +16,8 @@ import net.minecraft.util.ResourceLocation;
  */
 public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     public static final String TYPE = "experience";
-    
+    public static final IProjectMaterialSerializer<ExperienceProjectMaterial> SERIALIZER = new ExperienceProjectMaterial.Serializer();
+
     protected int levels;
     protected boolean consumed;
     

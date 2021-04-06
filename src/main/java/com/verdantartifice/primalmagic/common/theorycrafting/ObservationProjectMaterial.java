@@ -18,7 +18,8 @@ import net.minecraft.util.ResourceLocation;
  */
 public class ObservationProjectMaterial extends AbstractProjectMaterial {
     public static final String TYPE = "observation";
-    
+    public static final IProjectMaterialSerializer<ObservationProjectMaterial> SERIALIZER = new ObservationProjectMaterial.Serializer();
+
     protected int count;
     protected boolean consumed;
 

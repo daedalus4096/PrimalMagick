@@ -20,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     public static final String TYPE = "tag";
+    public static final IProjectMaterialSerializer<ItemTagProjectMaterial> SERIALIZER = new ItemTagProjectMaterial.Serializer();
     
     protected ResourceLocation tagName;
     protected int quantity;
