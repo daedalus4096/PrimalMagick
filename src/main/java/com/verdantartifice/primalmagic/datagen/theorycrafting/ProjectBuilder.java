@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.util.IItemProvider;
+import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -77,8 +77,8 @@ public class ProjectBuilder {
         return this;
     }
     
-    public ProjectBuilder aid(@Nullable IItemProvider block) {
-        this.aidBlock = block == null ? null : block.asItem().getRegistryName();
+    public ProjectBuilder aid(@Nullable Block block) {
+        this.aidBlock = block == null ? null : block.getRegistryName();
         return this;
     }
     
