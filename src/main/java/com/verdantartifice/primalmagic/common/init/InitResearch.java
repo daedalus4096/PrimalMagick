@@ -10,24 +10,6 @@ import com.verdantartifice.primalmagic.common.research.ScanSourceUnlockTrigger;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
-import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.AdvancedEssenceAnalysisProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.BeaconEmanationsProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.BrewingExperimentsProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.DraconicEnergiesProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.EnchantingStudiesProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.EssenceAnalysisProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.ExpeditionProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.HitTheBooksProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.MundaneTinkeringProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.NetherExpeditionProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.ObservationAnalysisProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.PortalDetritusProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.RecuperationProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.RedstoneTinkeringProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.SpellworkProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.TradeProject;
-import com.verdantartifice.primalmagic.common.theorycrafting.projects.WandTinkeringProject;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -40,7 +22,6 @@ public class InitResearch {
     public static void initResearch() {
         initDisciplines();
         initScanResearch();
-//        initResearchProjects();
     }
     
     private static void initDisciplines() {
@@ -57,25 +38,5 @@ public class InitResearch {
     private static void initScanResearch() {
         ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Source.HALLOWED));
         ResearchManager.registerScanTrigger(new ScanResearchTrigger(ItemsPM.MARBLE_RAW.get(), SimpleResearchKey.parse("RAW_MARBLE")));
-    }
-    
-    private static void initResearchProjects() {
-        TheorycraftManager.registerProjectType(TradeProject.TYPE, TradeProject::new);
-        TheorycraftManager.registerProjectType(MundaneTinkeringProject.TYPE, MundaneTinkeringProject::new);
-        TheorycraftManager.registerProjectType(RedstoneTinkeringProject.TYPE, RedstoneTinkeringProject::new);
-        TheorycraftManager.registerProjectType(ExpeditionProject.TYPE, ExpeditionProject::new);
-        TheorycraftManager.registerProjectType(NetherExpeditionProject.TYPE, NetherExpeditionProject::new);
-        TheorycraftManager.registerProjectType(RecuperationProject.TYPE, RecuperationProject::new);
-        TheorycraftManager.registerProjectType(EssenceAnalysisProject.TYPE, EssenceAnalysisProject::new);
-        TheorycraftManager.registerProjectType(BrewingExperimentsProject.TYPE, BrewingExperimentsProject::new);
-        TheorycraftManager.registerProjectType(WandTinkeringProject.TYPE, WandTinkeringProject::new);
-        TheorycraftManager.registerProjectType(SpellworkProject.TYPE, SpellworkProject::new);
-        TheorycraftManager.registerProjectType(AdvancedEssenceAnalysisProject.TYPE, AdvancedEssenceAnalysisProject::new);
-        TheorycraftManager.registerProjectType(EnchantingStudiesProject.TYPE, EnchantingStudiesProject::new);
-        TheorycraftManager.registerProjectType(ObservationAnalysisProject.TYPE, ObservationAnalysisProject::new);
-        TheorycraftManager.registerProjectType(HitTheBooksProject.TYPE, HitTheBooksProject::new);
-        TheorycraftManager.registerProjectType(BeaconEmanationsProject.TYPE, BeaconEmanationsProject::new);
-        TheorycraftManager.registerProjectType(PortalDetritusProject.TYPE, PortalDetritusProject::new);
-        TheorycraftManager.registerProjectType(DraconicEnergiesProject.TYPE, DraconicEnergiesProject::new);
     }
 }
