@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -35,6 +36,21 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
         super();
         this.count = count;
         this.consumed = consumed;
+    }
+
+    @Override
+    public CompoundNBT serializeNBT() {
+        CompoundNBT tag = super.serializeNBT();
+        tag.putInt("Count", this.count);
+        tag.putBoolean("Consumed", this.consumed);
+        return tag;
+    }
+    
+    @Override
+    public void deserializeNBT(CompoundNBT nbt) {
+        super.deserializeNBT(nbt);
+        this.count = nbt.getInt("Count");
+        this.consumed = nbt.getBoolean("Consumed");
     }
 
     @Override

@@ -39,6 +39,7 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     public CompoundNBT serializeNBT() {
         CompoundNBT tag = super.serializeNBT();
         tag.putInt("Levels", this.levels);
+        tag.putBoolean("Consumed", this.consumed);
         return tag;
     }
     
@@ -46,6 +47,7 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     public void deserializeNBT(CompoundNBT nbt) {
         super.deserializeNBT(nbt);
         this.levels = nbt.getInt("Levels");
+        this.consumed = nbt.getBoolean("Consumed");
     }
 
     @Override
