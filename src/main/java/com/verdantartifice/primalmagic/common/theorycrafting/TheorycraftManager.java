@@ -70,10 +70,10 @@ public class TheorycraftManager {
     }
     
     @Nonnull
-    public static AbstractProject createRandomProject(@Nonnull PlayerEntity player, @Nonnull BlockPos tablePos) {
-        WeightedRandomBag<String> typeBag = new WeightedRandomBag<>();
-        for (String typeStr : PROJECT_SUPPLIERS.keySet()) {
-            typeBag.add(typeStr, 1);
+    public static Project createRandomProject(@Nonnull PlayerEntity player, @Nonnull BlockPos tablePos) {
+        WeightedRandomBag<ProjectTemplate> templateBag = new WeightedRandomBag<>();
+        for (ProjectTemplate template : TEMPLATES.values()) {
+            templateBag.add(template, 1);
         }
         
         // Determine what blocks are nearby so that aid blocks can be checked
@@ -85,15 +85,15 @@ public class TheorycraftManager {
             }
         }
         
-        AbstractProject retVal = null;
+        Project retVal = null;
         int attempts = 0;   // Don't allow an infinite loop
         while (retVal == null && attempts < 1000) {
             attempts++;
-            String selectedType = typeBag.getRandom(player.getRNG());
-            AbstractProject tempProject = ProjectFactory.getProjectFromType(selectedType);
+            ProjectTemplate selectedTemplate = templateBag.getRandom(player.getRNG());
+            Project initializedProject = selectedTemplate.initialize(player);
             // Only select the project if it initializes successfully and any required aid blocks are nearby
-            if (tempProject != null && tempProject.initialize(player) && (tempProject.getAidBlock() == null || nearby.contains(tempProject.getAidBlock()))) {
-                retVal = tempProject;
+            if (initializedProject != null && (initializedProject.getAidBlock() == null || nearby.contains(initializedProject.getAidBlock()))) {
+                retVal = initializedProject;
             }
         }
         return retVal;

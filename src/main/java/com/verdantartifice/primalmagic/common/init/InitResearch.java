@@ -40,7 +40,7 @@ public class InitResearch {
     public static void initResearch() {
         initDisciplines();
         initScanResearch();
-        initResearchProjects();
+//        initResearchProjects();
     }
     
     private static void initDisciplines() {

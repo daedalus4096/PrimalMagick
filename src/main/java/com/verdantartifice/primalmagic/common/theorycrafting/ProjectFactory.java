@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
-import java.util.function.Supplier;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -13,19 +11,10 @@ import net.minecraft.nbt.CompoundNBT;
  */
 public class ProjectFactory {
     @Nullable
-    public static AbstractProject getProjectFromType(@Nullable String type) {
-        // Create a default research project instance using the given type's registered supplier
-        Supplier<AbstractProject> factory = TheorycraftManager.getProjectSupplier(type);
-        return (factory == null) ? null : factory.get();
-    }
-    
-    @Nullable
-    public static AbstractProject getProjectFromNBT(@Nullable CompoundNBT tag) {
+    public static Project getProjectFromNBT(@Nullable CompoundNBT tag) {
         // Deserialize a research project instance from the given NBT data
-        AbstractProject retVal = (tag == null) ? null : getProjectFromType(tag.getString("ProjectType"));
-        if (retVal != null) {
-            retVal.deserializeNBT(tag);
-        }
+        Project retVal = new Project();
+        retVal.deserializeNBT(tag);
         return retVal;
     }
     

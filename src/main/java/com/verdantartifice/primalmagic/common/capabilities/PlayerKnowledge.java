@@ -19,7 +19,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledge
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.Project;
 import com.verdantartifice.primalmagic.common.theorycrafting.ProjectFactory;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -44,7 +44,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>(); // Map of research keys to attached flag sets
     private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
     
-    private AbstractProject project = null;     // Currently active research project
+    private Project project = null;     // Currently active research project
 
     @Override
     @Nonnull
@@ -339,12 +339,12 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public AbstractProject getActiveResearchProject() {
+    public Project getActiveResearchProject() {
         return this.project;
     }
     
     @Override
-    public void setActiveResearchProject(AbstractProject project) {
+    public void setActiveResearchProject(Project project) {
         this.project = project;
     }
 

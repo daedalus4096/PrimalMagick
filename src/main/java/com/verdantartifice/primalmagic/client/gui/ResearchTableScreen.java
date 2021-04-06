@@ -18,8 +18,8 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.CompleteProjectPacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
-import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
+import com.verdantartifice.primalmagic.common.theorycrafting.Project;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -52,8 +52,8 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     protected boolean writingReady = false;
     protected boolean lastWritingReady = false;
     protected IPlayerKnowledge knowledge;
-    protected AbstractProject project = null;
-    protected AbstractProject lastProject = null;
+    protected Project project = null;
+    protected Project lastProject = null;
     protected Button completeProjectButton = null;
 
     public ResearchTableScreen(ResearchTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -187,7 +187,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             } else {
                 // Render complete project button
                 PlayerEntity player = this.minecraft.player;
-                double chance = 100.0D * this.project.getSuccessChance(player);
+                double chance = 100.0D * this.project.getSuccessChance();
                 ITextComponent text = new TranslationTextComponent("primalmagic.research_table.complete", FORMATTER.format(chance));
                 this.completeProjectButton = this.addButton(new CompleteProjectButton(this.guiLeft + 38, this.guiTop + 111, text, this));
                 this.completeProjectButton.active = this.project.isSatisfied(player);

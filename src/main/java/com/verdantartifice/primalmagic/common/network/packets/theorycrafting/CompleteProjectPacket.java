@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.Project;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -60,10 +61,10 @@ public class CompleteProjectPacket implements IMessageToServer {
                 }
 
                 // Determine if current project is a success
-                AbstractProject project = knowledge.getActiveResearchProject();
+                Project project = knowledge.getActiveResearchProject();
                 Random rand = player.getRNG();
                 if (project != null && project.isSatisfied(player) && project.consumeSelectedMaterials(player)) {
-                    if (rand.nextDouble() < project.getSuccessChance(player)) {
+                    if (rand.nextDouble() < project.getSuccessChance()) {
                         ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());
                         StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);

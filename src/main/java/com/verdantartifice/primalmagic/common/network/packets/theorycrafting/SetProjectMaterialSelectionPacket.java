@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
-import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProject;
+import com.verdantartifice.primalmagic.common.theorycrafting.Project;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -49,7 +49,7 @@ public class SetProjectMaterialSelectionPacket implements IMessageToServer {
                 ServerPlayerEntity player = ctx.get().getSender();
                 IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                 if (knowledge != null) {
-                    AbstractProject project = knowledge.getActiveResearchProject();
+                    Project project = knowledge.getActiveResearchProject();
                     if (project != null && message.index >= 0 && message.index < project.getMaterials().size()) {
                         project.getMaterials().get(message.index).setSelected(message.selected);    // No need to sync because the screen updated its end
                     }
