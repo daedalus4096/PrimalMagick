@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:calcinator"
+          "name": "primalmagic:essence_furnace"
         }
       ],
       "conditions": [

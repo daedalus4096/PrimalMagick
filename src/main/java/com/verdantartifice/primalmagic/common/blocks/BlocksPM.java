@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.common.blocks;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.base.SaplingBlockPM;
 import com.verdantartifice.primalmagic.common.blocks.crafting.ArcaneWorkbenchBlock;
-import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
+import com.verdantartifice.primalmagic.common.blocks.crafting.EssenceFurnaceBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.RunecarvingTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.RunicGrindstoneBlock;
@@ -216,7 +216,7 @@ public class BlocksPM {
     public static final RegistryObject<WandAssemblyTableBlock> WAND_ASSEMBLY_TABLE = BLOCKS.register("wand_assembly_table", WandAssemblyTableBlock::new);
     public static final RegistryObject<WoodTableBlock> WOOD_TABLE = BLOCKS.register("wood_table", WoodTableBlock::new);
     public static final RegistryObject<AnalysisTableBlock> ANALYSIS_TABLE = BLOCKS.register("analysis_table", AnalysisTableBlock::new);
-    public static final RegistryObject<CalcinatorBlock> CALCINATOR = BLOCKS.register("calcinator", CalcinatorBlock::new);
+    public static final RegistryObject<EssenceFurnaceBlock> ESSENCE_FURNACE = BLOCKS.register("essence_furnace", EssenceFurnaceBlock::new);
     public static final RegistryObject<WandInscriptionTableBlock> WAND_INSCRIPTION_TABLE = BLOCKS.register("wand_inscription_table", WandInscriptionTableBlock::new);
     public static final RegistryObject<SpellcraftingAltarBlock> SPELLCRAFTING_ALTAR = BLOCKS.register("spellcrafting_altar", SpellcraftingAltarBlock::new);
     public static final RegistryObject<WandChargerBlock> WAND_CHARGER = BLOCKS.register("wand_charger", WandChargerBlock::new);

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import com.verdantartifice.primalmagic.common.containers.slots.CalcinatorFuelSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.CalcinatorResultSlot;
-import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -71,7 +71,7 @@ public class CalcinatorContainer extends Container {
     }
 
     public boolean isFuel(ItemStack stack) {
-        return CalcinatorTileEntity.isFuel(stack);
+        return AbstractCalcinatorTileEntity.isFuel(stack);
     }
 
     @Override

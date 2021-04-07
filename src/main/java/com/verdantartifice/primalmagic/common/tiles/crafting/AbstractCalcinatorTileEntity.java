@@ -7,7 +7,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
-import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
+import com.verdantartifice.primalmagic.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
@@ -41,10 +41,10 @@ import net.minecraftforge.common.util.Constants;
  * block.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock}
+ * @see {@link com.verdantartifice.primalmagic.common.blocks.crafting.AbstractCalcinatorBlock}
  * @see {@link net.minecraft.tileentity.FurnaceTileEntity}
  */
-public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IOwnedTileEntity {
+public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IOwnedTileEntity {
     protected static final int OUTPUT_CAPACITY = 9;
     
     protected int burnTime;
@@ -60,13 +60,13 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         public int get(int index) {
             switch (index) {
             case 0:
-                return CalcinatorTileEntity.this.burnTime;
+                return AbstractCalcinatorTileEntity.this.burnTime;
             case 1:
-                return CalcinatorTileEntity.this.burnTimeTotal;
+                return AbstractCalcinatorTileEntity.this.burnTimeTotal;
             case 2:
-                return CalcinatorTileEntity.this.cookTime;
+                return AbstractCalcinatorTileEntity.this.cookTime;
             case 3:
-                return CalcinatorTileEntity.this.cookTimeTotal;
+                return AbstractCalcinatorTileEntity.this.cookTimeTotal;
             default:
                 return 0;
             }
@@ -76,16 +76,16 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         public void set(int index, int value) {
             switch (index) {
             case 0:
-                CalcinatorTileEntity.this.burnTime = value;
+                AbstractCalcinatorTileEntity.this.burnTime = value;
                 break;
             case 1:
-                CalcinatorTileEntity.this.burnTimeTotal = value;
+                AbstractCalcinatorTileEntity.this.burnTimeTotal = value;
                 break;
             case 2:
-                CalcinatorTileEntity.this.cookTime = value;
+                AbstractCalcinatorTileEntity.this.cookTime = value;
                 break;
             case 3:
-                CalcinatorTileEntity.this.cookTimeTotal = value;
+                AbstractCalcinatorTileEntity.this.cookTimeTotal = value;
                 break;
             }
         }
@@ -96,8 +96,8 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         }
     };
     
-    public CalcinatorTileEntity() {
-        super(TileEntityTypesPM.CALCINATOR.get(), OUTPUT_CAPACITY + 2);
+    public AbstractCalcinatorTileEntity() {
+        super(TileEntityTypesPM.ESSENCE_FURNACE.get(), OUTPUT_CAPACITY + 2);
     }
     
     protected boolean isBurning() {
@@ -186,7 +186,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
             if (burningAtStart != this.isBurning()) {
                 // Update the tile's block state if the calcinator was lit up or went out this tick
                 shouldMarkDirty = true;
-                this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(CalcinatorBlock.LIT, Boolean.valueOf(this.isBurning())), Constants.BlockFlags.DEFAULT);
+                this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(AbstractCalcinatorBlock.LIT, Boolean.valueOf(this.isBurning())), Constants.BlockFlags.DEFAULT);
             }
         }
         if (shouldMarkDirty) {
@@ -212,9 +212,7 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         }
     }
 
-    protected int getCookTimeTotal() {
-        return 200;
-    }
+    protected abstract int getCookTimeTotal();
 
     public static boolean isFuel(ItemStack stack) {
         return ForgeHooks.getBurnTime(stack) > 0;
@@ -237,6 +235,8 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
             return false;
         }
     }
+    
+    protected abstract boolean canGenerateDregs();
 
     @Nonnull
     protected List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs) {
@@ -247,13 +247,12 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
                 int amount = sources.getAmount(source);
                 if (amount >= EssenceType.DUST.getAffinity()) {
                     // Generate output for each affinity multiple in the input stack
-                    int count = amount / EssenceType.DUST.getAffinity();
-                    amount = amount % EssenceType.DUST.getAffinity();
+                    int count = this.getOutputEssenceCount(amount, EssenceType.DUST);
                     ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, count);
                     if (!stack.isEmpty()) {
                         output.add(stack);
                     }
-                } else if (amount > 0 && (alwaysGenerateDregs || this.world.rand.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
+                } else if (amount > 0 && this.canGenerateDregs() && (alwaysGenerateDregs || this.world.rand.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
                     // If the item's affinity is too low for guaranteed dust, give a random chance of generating one anyway
                     ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, 1);
                     if (!stack.isEmpty()) {
@@ -264,6 +263,8 @@ public class CalcinatorTileEntity extends TileInventoryPM implements ITickableTi
         }
         return output;
     }
+    
+    protected abstract int getOutputEssenceCount(int affinityAmount, EssenceType type);
     
     @Nonnull
     protected ItemStack getOutputEssence(EssenceType type, Source source, int count) {
