@@ -14,7 +14,6 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
-import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
@@ -28,6 +27,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -37,7 +37,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants;
 
 /**
- * Definition of a calcinator tile entity.  Provides the melting functionality for the corresponding
+ * Base definition of a calcinator tile entity.  Provides the melting functionality for the corresponding
  * block.
  * 
  * @author Daedalus4096
@@ -96,8 +96,8 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         }
     };
     
-    public AbstractCalcinatorTileEntity() {
-        super(TileEntityTypesPM.ESSENCE_FURNACE.get(), OUTPUT_CAPACITY + 2);
+    public AbstractCalcinatorTileEntity(TileEntityType<? extends AbstractCalcinatorTileEntity> tileEntityType) {
+        super(tileEntityType, OUTPUT_CAPACITY + 2);
     }
     
     protected boolean isBurning() {
