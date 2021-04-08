@@ -484,6 +484,11 @@ public class ResearchProvider implements IDataProvider {
                     .recipe(ItemsPM.HALLOWSTEEL_HOE.get()).recipe(ItemsPM.HALLOWSTEEL_HEAD.get()).recipe(ItemsPM.HALLOWSTEEL_CHEST.get()).recipe(ItemsPM.HALLOWSTEEL_LEGS.get())
                     .recipe(ItemsPM.HALLOWSTEEL_FEET.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("CALCINATOR_BASIC", discipline).parent("BASIC_ALCHEMY")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).requiredCraftStack(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredCraftStack(ItemsPM.ESSENCE_DUST_SEA.get())
+                    .requiredCraftStack(ItemsPM.ESSENCE_DUST_SKY.get()).requiredCraftStack(ItemsPM.ESSENCE_DUST_SUN.get()).requiredCraftStack(ItemsPM.ESSENCE_DUST_MOON.get()).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_BASIC.get()).build())
+            .build(consumer);
     }
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {

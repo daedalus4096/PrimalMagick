@@ -535,6 +535,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.QUARTZ_ORE.get()).base(Items.STONE).add(Source.EARTH, 10).add(Source.INFERNAL, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ARCANE_WORKBENCH.get()).base(Items.CRAFTING_TABLE).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ESSENCE_FURNACE.get()).base(Items.FURNACE).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.CALCINATOR_BASIC.get()).set(auraUnit.copy().multiply(5)).set(Source.EARTH, 41).set(Source.INFERNAL, 3).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_WHITE.get()).set(Source.SEA, 3).set(Source.SKY, 3).set(Source.SUN, 1).set(Source.BLOOD, 4).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_ORANGE.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_MAGENTA.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);

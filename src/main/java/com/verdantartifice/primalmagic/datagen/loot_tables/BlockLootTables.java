@@ -37,6 +37,7 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerBasicTable(BlocksPM.WOOD_TABLE.get());
         this.registerBasicTable(BlocksPM.ANALYSIS_TABLE.get());
         this.registerBasicTable(BlocksPM.ESSENCE_FURNACE.get());
+        this.registerBasicTable(BlocksPM.CALCINATOR_BASIC.get());
         this.registerBasicTable(BlocksPM.WAND_INSCRIPTION_TABLE.get());
         this.registerBasicTable(BlocksPM.SPELLCRAFTING_ALTAR.get());
         this.registerBasicTable(BlocksPM.WAND_CHARGER.get());

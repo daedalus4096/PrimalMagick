@@ -279,6 +279,16 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNIC_GRINDSTONE")))
             .manaCost(new SourceList().add(Source.EARTH, 25))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CALCINATOR_BASIC.get())
+            .patternLine("MMM")
+            .patternLine("MFM")
+            .patternLine("EEE")
+            .key('M', ItemsPM.MARBLE_RAW.get())
+            .key('F', ItemsPM.ESSENCE_FURNACE.get())
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_BASIC")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
 
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
