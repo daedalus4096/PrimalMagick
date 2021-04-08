@@ -359,13 +359,21 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onCrafting(PlayerEvent.ItemCraftedEvent event) {
-        if (event.getPlayer() != null && !event.getPlayer().world.isRemote) {
-            ItemStack stack = event.getCrafting().copy();
+        registerItemCrafted(event.getPlayer(), event.getCrafting().copy());
+    }
+    
+    @SubscribeEvent
+    public static void onSmelting(PlayerEvent.ItemSmeltedEvent event) {
+        registerItemCrafted(event.getPlayer(), event.getSmelting().copy());
+    }
+    
+    protected static void registerItemCrafted(PlayerEntity player, ItemStack stack) {
+        if (player != null && !player.world.isRemote) {
             int stackHash = ItemUtils.getHashCode(stack);
             
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
             if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(stackHash))) {
-                ResearchManager.completeResearch(event.getPlayer(), SimpleResearchKey.parseCrafted(stackHash));
+                ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(stackHash));
             }
             
             // If a research entry requires crafting the a tag containing the item that was just crafted, grant the appropriate research
@@ -373,7 +381,7 @@ public class PlayerEvents {
                 if (tag != null) {
                     int tagHash = ("tag:" + tag.toString()).hashCode();
                     if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(tagHash))) {
-                        ResearchManager.completeResearch(event.getPlayer(), SimpleResearchKey.parseCrafted(tagHash));
+                        ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(tagHash));
                     }
                 }
             }

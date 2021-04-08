@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.hooks.BasicEventHooks;
 
 /**
  * Custom GUI slot for calcinator outputs.
@@ -49,5 +50,6 @@ public class CalcinatorResultSlot extends Slot {
     protected void onCrafting(ItemStack stack) {
         stack.onCrafting(this.player.world, this.player, this.removeCount);
         this.removeCount = 0;
+        BasicEventHooks.firePlayerSmeltedEvent(this.player, stack);
     }
 }
