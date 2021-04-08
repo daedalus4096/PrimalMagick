@@ -1,0 +1,154 @@
+{
+  "key": "primalmagic:piglin_barter",
+  "required_research": "t_discover_infernal",
+  "reward_multiplier": 0.5,
+  "material_options": [
+    {
+      "type": "item",
+      "stack": "minecraft:bell",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 0.5
+    },
+    {
+      "type": "tag",
+      "name": "forge:storage_blocks/gold",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 0.5
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:clock",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:gilded_blackstone",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:glistering_melon_slice",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 2.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:ingots/gold",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 5.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:ores/gold",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_apple",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_axe;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_boots;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_carrot",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_chestplate;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_helmet;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_hoe;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_horse_armor",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 0.5
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_leggings;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_pickaxe;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_shovel;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_sword;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:light_weighted_pressure_plate",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:nether_gold_ore",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 2.0
+    }
+  ]
+}

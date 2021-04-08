@@ -1,11 +1,11 @@
 {
-  "key": "primalmagic:nether_expedition",
-  "required_research": "t_discover_infernal",
-  "reward_multiplier": 0.5,
+  "key": "primalmagic:end_expedition",
+  "required_research": "t_discover_void",
+  "reward_multiplier": 1.0,
   "material_options": [
     {
       "type": "item",
-      "stack": "minecraft:diamond_sword;1;{Damage:0}",
+      "stack": "minecraft:netherite_sword;1;{Damage:0}",
       "consumed": false,
       "match_nbt": true,
       "weight": 1.0
@@ -19,14 +19,14 @@
     },
     {
       "type": "item",
-      "stack": "minecraft:arrow;16",
+      "stack": "minecraft:arrow;32",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:diamond_chestplate;1;{Damage:0}",
+      "stack": "minecraft:netherite_chestplate;1;{Damage:0}",
       "consumed": false,
       "match_nbt": true,
       "weight": 1.0
@@ -47,44 +47,37 @@
     },
     {
       "type": "item",
-      "stack": "minecraft:torch;16",
+      "stack": "minecraft:torch;32",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:bread;4",
+      "stack": "minecraft:bread;8",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:potion;1;{Potion:\u0027minecraft:fire_resistance\u0027}",
+      "stack": "minecraft:potion;1;{Potion:\u0027minecraft:slow_falling\u0027}",
       "consumed": true,
       "match_nbt": true,
-      "weight": 4.0
-    },
-    {
-      "type": "item",
-      "stack": "minecraft:milk_bucket",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "tag",
-      "name": "forge:obsidian",
-      "quantity": 10,
-      "consumed": false,
-      "weight": 1.0
+      "name": "forge:ender_pearls",
+      "quantity": 4,
+      "consumed": true,
+      "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "minecraft:flint_and_steel;1;{Damage:0}",
-      "consumed": false,
-      "match_nbt": true,
+      "stack": "minecraft:ender_eye",
+      "consumed": true,
+      "match_nbt": false,
       "weight": 1.0
     }
   ]

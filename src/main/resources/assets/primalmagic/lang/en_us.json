@@ -1334,6 +1334,10 @@
     "primalmagic.research_project.name.beacon_emanations": "Beacon Emanations",
     "primalmagic.research_project.name.portal_detritus": "Portal Detritus",
     "primalmagic.research_project.name.draconic_energies": "Draconic Energies",
+    "primalmagic.research_project.name.piglin_barter": "Piglin Bartering",
+    "primalmagic.research_project.name.apiamancy": "Apiamancy",
+    "primalmagic.research_project.name.end_expedition": "End Expedition",
+    "primalmagic.research_project.name.master_essence_analysis": "Master Essence Analysis",
     
     "primalmagic.research_project.text.trade": "Perhaps some nearby villagers have magical knowledge to trade.  You assemble some goods they'll find valuable.",
     "primalmagic.research_project.text.mundane_tinkering": "You spend some time working with your tools, creating paraphernalia to help with your magical pursuits.",
@@ -1352,6 +1356,10 @@
     "primalmagic.research_project.text.beacon_emanations": "While they're not of the wizardly arts, Beacons are clearly more than just mundane objects.  Studying their emanations could be valuable.",
     "primalmagic.research_project.text.portal_detritus": "Strange things sometimes come back through Nether portals.  You could learn much by studying them.",
     "primalmagic.research_project.text.draconic_energies": "This egg seems to harmonize with ender pearls, releasing intriguing energies.  Is this really such a good idea, though?",
+    "primalmagic.research_project.text.piglin_barter": "The piglins of the Nether must surely know secrets about that infernal place.  Exploit their craving for gold.",
+    "primalmagic.research_project.text.apiamancy": "Some say you can see the future in the movement of bees.  It's probably overstated, but you might still learn something.",
+    "primalmagic.research_project.text.end_expedition": "The cities of The End reek of secrets.  You prepare an expedition to brave their dangers and bring some home.",
+    "primalmagic.research_project.text.master_essence_analysis": "Study of magical essence has been profitable for you.  It's time to learn what the purest samples have to teach.",
     
     "primalmagic.ritual.instability": "%1$s: %2$s",
     "primalmagic.ritual.instability.header": "Instability",
