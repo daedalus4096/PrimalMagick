@@ -101,6 +101,9 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> MARBLE_SMOKED_PILLAR = ITEMS.register("marble_smoked_pillar", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_PILLAR.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> MARBLE_SMOKED_CHISELED = ITEMS.register("marble_smoked_chiseled", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_CHISELED.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> MARBLE_SMOKED_RUNED = ITEMS.register("marble_smoked_runed", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_RUNED.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    
+    // Register hallowed marble block items
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED = ITEMS.register("marble_hallowed", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 
     // Register sunwood block items
     public static final RegistryObject<BlockItem> SUNWOOD_LOG = ITEMS.register("sunwood_log", () -> new BlockItem(BlocksPM.SUNWOOD_LOG.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

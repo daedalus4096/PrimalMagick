@@ -48,6 +48,7 @@ public class Recipes extends RecipeProvider {
         this.registerMarbleRecipes(consumer);
         this.registerEnchantedMarbleRecipes(consumer);
         this.registerSmokedMarbleRecipes(consumer);
+        this.registerHallowedMarbleRecipes(consumer);
         this.registerSunwoodRecipes(consumer);
         this.registerMoonwoodRecipes(consumer);
         this.registerEssenceUpgradeRecipes(consumer);
@@ -677,6 +678,19 @@ public class Recipes extends RecipeProvider {
         SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_SMOKED.get()), BlocksPM.MARBLE_SMOKED_WALL.get())
             .addCriterion("has_marble_smoked", hasItem(BlocksPM.MARBLE_SMOKED.get()))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_smoked_wall_from_marble_smoked_stonecutting"));
+    }
+    
+    protected void registerHallowedMarbleRecipes(Consumer<IFinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED.get(), 8)
+            .patternLine("MMM")
+            .patternLine("MDM")
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_RAW.get())
+            .key('D', ItemsPM.ESSENCE_DUST_HALLOWED.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_raw", hasItem(BlocksPM.MARBLE_RAW.get()))
+            .addCriterion("has_hallowed_dust", hasItem(ItemsPM.ESSENCE_DUST_HALLOWED.get()))
+            .build(consumer);
     }
 
     protected void registerSunwoodRecipes(Consumer<IFinishedRecipe> consumer) {

@@ -25,6 +25,7 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerMarbleLootTables();
         this.registerEnchantedMarbleLootTables();
         this.registerSmokedMarbleLootTables();
+        this.registerHallowedMarbleLootTables();
         this.registerSunwoodLootTables();
         this.registerMoonwoodLootTables();
         this.registerInfusedStoneLootTables();
@@ -114,6 +115,10 @@ public class BlockLootTables extends BlockLootTableProvider {
         this.registerSlabTable(BlocksPM.MARBLE_SMOKED_SLAB.get());
         this.registerBasicTable(BlocksPM.MARBLE_SMOKED_STAIRS.get());
         this.registerBasicTable(BlocksPM.MARBLE_SMOKED_WALL.get());
+    }
+    
+    private void registerHallowedMarbleLootTables() {
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED.get());
     }
     
     private void registerSunwoodLootTables() {

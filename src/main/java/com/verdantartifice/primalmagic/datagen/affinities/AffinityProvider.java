@@ -505,6 +505,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_CHISELED.get()).base(ItemsPM.MARBLE_CHISELED.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_RUNED.get()).base(ItemsPM.MARBLE_RUNED.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_SMOKED.get()).base(ItemsPM.MARBLE_RAW.get()).add(Source.MOON, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_HALLOWED.get()).base(ItemsPM.MARBLE_RAW.get()).add(Source.HALLOWED, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_LOG.get()).base(Items.OAK_LOG).add(Source.MOON, 20).remove(Source.SUN, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STRIPPED_MOONWOOD_LOG.get()).base(ItemsPM.MOONWOOD_LOG.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_WOOD.get()).base(ItemsPM.MOONWOOD_LOG.get()).build(consumer);
