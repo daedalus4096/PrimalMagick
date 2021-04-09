@@ -64,6 +64,7 @@
     "block.primalmagic.essence_furnace": "Essence Furnace",
     "block.primalmagic.calcinator_basic": "Basic Calcinator",
     "block.primalmagic.calcinator_enchanted": "Enchanted Calcinator",
+    "block.primalmagic.calcinator_forbidden": "Forbidden Calcinator",
     "block.primalmagic.wand_inscription_table": "Wand Inscription Table",
     "block.primalmagic.spellcrafting_altar": "Spellcrafting Altar",
     "block.primalmagic.wand_charger": "Wand Charger",
@@ -614,6 +615,10 @@
     "primalmagic.research.calcinator_enchanted.title": "Enchanted Calcinator",
     "primalmagic.research.calcinator_enchanted.text.stage.1": "Enchanted calcinator: lorem ipsum",
     "primalmagic.research.calcinator_enchanted.text.stage.2": "Enchanted calcinator research complete!",
+    
+    "primalmagic.research.calcinator_forbidden.title": "Forbidden Calcinator",
+    "primalmagic.research.calcinator_forbidden.text.stage.1": "Forbidden calcinator: lorem ipsum",
+    "primalmagic.research.calcinator_forbidden.text.stage.2": "Forbidden calcinator research complete!",
     
     "primalmagic.research.basic_sorcery.title": "Basic Sorcery",
     "primalmagic.research.basic_sorcery.text.stage.1": "Basic sorcery: Lorem ipsum",

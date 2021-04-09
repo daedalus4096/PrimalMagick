@@ -493,6 +493,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_ENCHANTED.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("CALCINATOR_FORBIDDEN", discipline).parent("MASTER_ALCHEMY").parent("CRYSTAL_SYNTHESIS").parent(Source.BLOOD.getDiscoverKey()).parent(Source.INFERNAL.getDiscoverKey())
+            .parent(Source.VOID.getDiscoverKey())
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_FORBIDDEN.get()).build())
+            .build(consumer);
     }
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {

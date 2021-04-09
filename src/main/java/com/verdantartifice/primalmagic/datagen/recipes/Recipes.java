@@ -299,6 +299,18 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_ENCHANTED")))
             .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CALCINATOR_FORBIDDEN.get())
+            .patternLine("MMM")
+            .patternLine("MCM")
+            .patternLine("BIV")
+            .key('M', ItemsPM.MARBLE_SMOKED.get())
+            .key('C', ItemsPM.CALCINATOR_ENCHANTED.get())
+            .key('B', ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
+            .key('I', ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
+            .key('V', ItemsPM.ESSENCE_CRYSTAL_VOID.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_FORBIDDEN")))
+            .manaCost(new SourceList().add(Source.EARTH, 50).add(Source.SEA, 50).add(Source.SKY, 50).add(Source.SUN, 50).add(Source.MOON, 50))
+            .build(consumer);
 
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");

@@ -1,0 +1,36 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "CALCINATOR_FORBIDDEN",
+  "mana": {
+    "earth": 50,
+    "sea": 50,
+    "sky": 50,
+    "sun": 50,
+    "moon": 50
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "BIV"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_smoked"
+    },
+    "C": {
+      "item": "primalmagic:calcinator_enchanted"
+    },
+    "B": {
+      "item": "primalmagic:essence_crystal_blood"
+    },
+    "I": {
+      "item": "primalmagic:essence_crystal_infernal"
+    },
+    "V": {
+      "item": "primalmagic:essence_crystal_void"
+    }
+  },
+  "result": {
+    "item": "primalmagic:calcinator_forbidden"
+  }
+}
