@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.tiles.crafting;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -236,35 +235,8 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         }
     }
     
-    protected abstract boolean canGenerateDregs();
-
     @Nonnull
-    protected List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs) {
-        List<ItemStack> output = new ArrayList<>();
-        SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.world);
-        if (sources != null && !sources.isEmpty()) {
-            for (Source source : Source.SORTED_SOURCES) {
-                int amount = sources.getAmount(source);
-                if (amount >= EssenceType.DUST.getAffinity()) {
-                    // Generate output for each affinity multiple in the input stack
-                    int count = this.getOutputEssenceCount(amount, EssenceType.DUST);
-                    ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, count);
-                    if (!stack.isEmpty()) {
-                        output.add(stack);
-                    }
-                } else if (amount > 0 && this.canGenerateDregs() && (alwaysGenerateDregs || this.world.rand.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
-                    // If the item's affinity is too low for guaranteed dust, give a random chance of generating one anyway
-                    ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, 1);
-                    if (!stack.isEmpty()) {
-                        output.add(stack);
-                    }
-                }
-            }
-        }
-        return output;
-    }
-    
-    protected abstract int getOutputEssenceCount(int affinityAmount, EssenceType type);
+    protected abstract List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs);
     
     @Nonnull
     protected ItemStack getOutputEssence(EssenceType type, Source source, int count) {

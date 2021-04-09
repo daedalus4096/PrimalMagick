@@ -1,0 +1,30 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "CALCINATOR_ENCHANTED",
+  "mana": {
+    "earth": 20,
+    "sea": 20,
+    "sky": 20,
+    "sun": 20,
+    "moon": 20
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "EEE"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_enchanted"
+    },
+    "C": {
+      "item": "primalmagic:calcinator_basic"
+    },
+    "E": {
+      "tag": "primalmagic:essences/terrestrial_shards"
+    }
+  },
+  "result": {
+    "item": "primalmagic:calcinator_enchanted"
+  }
+}

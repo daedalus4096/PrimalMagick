@@ -219,6 +219,7 @@ public class BlocksPM {
     public static final RegistryObject<AnalysisTableBlock> ANALYSIS_TABLE = BLOCKS.register("analysis_table", AnalysisTableBlock::new);
     public static final RegistryObject<EssenceFurnaceBlock> ESSENCE_FURNACE = BLOCKS.register("essence_furnace", EssenceFurnaceBlock::new);
     public static final RegistryObject<CalcinatorBlock> CALCINATOR_BASIC = BLOCKS.register("calcinator_basic", () -> new CalcinatorBlock(DeviceTier.BASIC));
+    public static final RegistryObject<CalcinatorBlock> CALCINATOR_ENCHANTED = BLOCKS.register("calcinator_enchanted", () -> new CalcinatorBlock(DeviceTier.ENCHANTED));
     public static final RegistryObject<WandInscriptionTableBlock> WAND_INSCRIPTION_TABLE = BLOCKS.register("wand_inscription_table", WandInscriptionTableBlock::new);
     public static final RegistryObject<SpellcraftingAltarBlock> SPELLCRAFTING_ALTAR = BLOCKS.register("spellcrafting_altar", SpellcraftingAltarBlock::new);
     public static final RegistryObject<WandChargerBlock> WAND_CHARGER = BLOCKS.register("wand_charger", WandChargerBlock::new);
