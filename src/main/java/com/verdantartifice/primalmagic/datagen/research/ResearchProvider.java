@@ -489,14 +489,18 @@ public class ResearchProvider implements IDataProvider {
                     .requiredCraftStack(ItemsPM.ESSENCE_DUST_SKY.get()).requiredCraftStack(ItemsPM.ESSENCE_DUST_SUN.get()).requiredCraftStack(ItemsPM.ESSENCE_DUST_MOON.get()).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_BASIC.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("CALCINATOR_ENCHANTED", discipline).parent("EXPERT_ALCHEMY").parent("SHARD_SYNTHESIS")
+        ResearchEntryBuilder.entry("CALCINATOR_ENCHANTED", discipline).parent("EXPERT_ALCHEMY").parent("SHARD_SYNTHESIS").parent("CALCINATOR_BASIC")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_ENCHANTED.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("CALCINATOR_FORBIDDEN", discipline).parent("MASTER_ALCHEMY").parent("CRYSTAL_SYNTHESIS").parent(Source.BLOOD.getDiscoverKey()).parent(Source.INFERNAL.getDiscoverKey())
-            .parent(Source.VOID.getDiscoverKey())
+        ResearchEntryBuilder.entry("CALCINATOR_FORBIDDEN", discipline).parent("MASTER_ALCHEMY").parent("CRYSTAL_SYNTHESIS").parent("CALCINATOR_ENCHANTED").parent(Source.BLOOD.getDiscoverKey())
+            .parent(Source.INFERNAL.getDiscoverKey()).parent(Source.VOID.getDiscoverKey())
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_FORBIDDEN.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("CALCINATOR_HEAVENLY", discipline).parent("SUPREME_ALCHEMY").parent("CLUSTER_SYNTHESIS").parent("CALCINATOR_FORBIDDEN").parent(Source.HALLOWED.getDiscoverKey())
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_HEAVENLY.get()).build())
             .build(consumer);
     }
 

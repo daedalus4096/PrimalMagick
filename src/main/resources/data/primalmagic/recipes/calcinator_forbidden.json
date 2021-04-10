@@ -2,11 +2,9 @@
   "type": "primalmagic:arcane_crafting_shaped",
   "research": "CALCINATOR_FORBIDDEN",
   "mana": {
-    "earth": 50,
-    "sea": 50,
-    "sky": 50,
-    "sun": 50,
-    "moon": 50
+    "blood": 50,
+    "infernal": 50,
+    "void": 50
   },
   "pattern": [
     "MMM",

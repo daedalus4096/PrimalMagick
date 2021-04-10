@@ -4,7 +4,8 @@
   "discipline": "ALCHEMY",
   "parents": [
     "EXPERT_ALCHEMY",
-    "SHARD_SYNTHESIS"
+    "SHARD_SYNTHESIS",
+    "CALCINATOR_BASIC"
   ],
   "stages": [
     {

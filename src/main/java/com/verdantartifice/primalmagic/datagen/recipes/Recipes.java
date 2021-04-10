@@ -310,7 +310,17 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .key('V', ItemsPM.ESSENCE_CRYSTAL_VOID.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_FORBIDDEN")))
-            .manaCost(new SourceList().add(Source.EARTH, 50).add(Source.SEA, 50).add(Source.SKY, 50).add(Source.SUN, 50).add(Source.MOON, 50))
+            .manaCost(new SourceList().add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CALCINATOR_HEAVENLY.get())
+            .patternLine("MMM")
+            .patternLine("MCM")
+            .patternLine("EEE")
+            .key('M', ItemsPM.MARBLE_HALLOWED.get())
+            .key('C', ItemsPM.CALCINATOR_FORBIDDEN.get())
+            .key('E', ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_HEAVENLY")))
+            .manaCost(new SourceList().add(Source.HALLOWED, 100))
             .build(consumer);
 
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
