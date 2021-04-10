@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "marble_hallowed",
+  "pattern": [
+    " M ",
+    "MCM",
+    " M "
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_hallowed"
+    },
+    "C": {
+      "item": "primalmagic:marble_hallowed_chiseled"
+    }
+  },
+  "result": {
+    "item": "primalmagic:marble_hallowed_runed",
+    "count": 5
+  }
+}

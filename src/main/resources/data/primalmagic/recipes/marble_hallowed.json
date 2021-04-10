@@ -1,6 +1,9 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "marble_hallowed",
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "t_discover_hallowed",
+  "mana": {
+    "hallowed": 5
+  },
   "pattern": [
     "MMM",
     "MDM",

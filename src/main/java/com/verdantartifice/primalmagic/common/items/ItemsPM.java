@@ -104,6 +104,16 @@ public class ItemsPM {
     
     // Register hallowed marble block items
     public static final RegistryObject<BlockItem> MARBLE_HALLOWED = ITEMS.register("marble_hallowed", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_SLAB = ITEMS.register("marble_hallowed_slab", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_SLAB.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_STAIRS = ITEMS.register("marble_hallowed_stairs", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_STAIRS.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_WALL = ITEMS.register("marble_hallowed_wall", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_WALL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_BRICKS = ITEMS.register("marble_hallowed_bricks", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BRICKS.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_BRICK_SLAB = ITEMS.register("marble_hallowed_brick_slab", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_BRICK_STAIRS = ITEMS.register("marble_hallowed_brick_stairs", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_BRICK_WALL = ITEMS.register("marble_hallowed_brick_wall", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_PILLAR = ITEMS.register("marble_hallowed_pillar", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_PILLAR.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_CHISELED = ITEMS.register("marble_hallowed_chiseled", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_RUNED = ITEMS.register("marble_hallowed_runed", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 
     // Register sunwood block items
     public static final RegistryObject<BlockItem> SUNWOOD_LOG = ITEMS.register("sunwood_log", () -> new BlockItem(BlocksPM.SUNWOOD_LOG.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

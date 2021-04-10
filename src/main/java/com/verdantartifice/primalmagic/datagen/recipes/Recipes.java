@@ -681,16 +681,126 @@ public class Recipes extends RecipeProvider {
     }
     
     protected void registerHallowedMarbleRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED.get(), 8)
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED.get(), 8)
             .patternLine("MMM")
             .patternLine("MDM")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_RAW.get())
             .key('D', ItemsPM.ESSENCE_DUST_HALLOWED.get())
-            .setGroup("marble_hallowed")
-            .addCriterion("has_marble_raw", hasItem(BlocksPM.MARBLE_RAW.get()))
-            .addCriterion("has_hallowed_dust", hasItem(ItemsPM.ESSENCE_DUST_HALLOWED.get()))
+            .research(CompoundResearchKey.from(Source.HALLOWED.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.HALLOWED, 5))
             .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 6)
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 2)
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_brick_slab_from_marble_hallowed_stonecutting"));
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 2)
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_brick_slab_from_marble_hallowed_bricks_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), 4)
+            .patternLine("M  ")
+            .patternLine("MM ")
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_HALLOWED_BRICKS.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_brick_stairs_from_marble_hallowed_stonecutting"));
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_brick_stairs_from_marble_hallowed_bricks_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), 6)
+            .patternLine("MMM")
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_HALLOWED_BRICKS.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_brick_wall_from_marble_hallowed_stonecutting"));
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_brick_wall_from_marble_hallowed_bricks_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICKS.get(), 4)
+            .patternLine("MM")
+            .patternLine("MM")
+            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_BRICKS.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_bricks_from_marble_hallowed_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_CHISELED.get())
+            .patternLine("M")
+            .patternLine("M")
+            .key('M', BlocksPM.MARBLE_HALLOWED_SLAB.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_CHISELED.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_chiseled_from_marble_hallowed_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_PILLAR.get(), 2)
+            .patternLine("M")
+            .patternLine("M")
+            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_PILLAR.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_pillar_from_marble_hallowed_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_RUNED.get(), 5)
+            .patternLine(" M ")
+            .patternLine("MCM")
+            .patternLine(" M ")
+            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .key('C', BlocksPM.MARBLE_HALLOWED_CHISELED.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_RUNED.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_runed_from_marble_hallowed_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_SLAB.get(), 6)
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_SLAB.get(), 2)
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_slab_from_marble_hallowed_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_STAIRS.get(), 4)
+            .patternLine("M  ")
+            .patternLine("MM ")
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_STAIRS.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_stairs_from_marble_hallowed_stonecutting"));
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.MARBLE_HALLOWED_WALL.get(), 6)
+            .patternLine("MMM")
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .setGroup("marble_hallowed")
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer);
+        SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_WALL.get())
+            .addCriterion("has_marble_hallowed", hasItem(BlocksPM.MARBLE_HALLOWED.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "marble_hallowed_wall_from_marble_hallowed_stonecutting"));
     }
 
     protected void registerSunwoodRecipes(Consumer<IFinishedRecipe> consumer) {

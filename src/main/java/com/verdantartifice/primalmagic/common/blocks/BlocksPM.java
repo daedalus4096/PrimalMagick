@@ -120,6 +120,16 @@ public class BlocksPM {
     
     // Register hallowed marble blocks
     public static final RegistryObject<Block> MARBLE_HALLOWED = BLOCKS.register("marble_hallowed", () -> new Block(Block.Properties.create(Material.ROCK, MaterialColor.GOLD).hardnessAndResistance(3.0F, 12.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_SLAB  = BLOCKS.register("marble_hallowed_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<StairsBlock> MARBLE_HALLOWED_STAIRS = BLOCKS.register("marble_hallowed_stairs", () -> new StairsBlock(MARBLE_HALLOWED.get()::getDefaultState, Block.Properties.from(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<WallBlock> MARBLE_HALLOWED_WALL = BLOCKS.register("marble_hallowed_wall", () -> new WallBlock(Block.Properties.from(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<Block> MARBLE_HALLOWED_BRICKS = BLOCKS.register("marble_hallowed_bricks", () -> new Block(Block.Properties.from(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_BRICK_SLAB = BLOCKS.register("marble_hallowed_brick_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_HALLOWED_BRICKS.get())));
+    public static final RegistryObject<StairsBlock> MARBLE_HALLOWED_BRICK_STAIRS = BLOCKS.register("marble_hallowed_brick_stairs", () -> new StairsBlock(MARBLE_HALLOWED_BRICKS.get()::getDefaultState, Block.Properties.from(MARBLE_HALLOWED_BRICKS.get())));
+    public static final RegistryObject<WallBlock> MARBLE_HALLOWED_BRICK_WALL = BLOCKS.register("marble_hallowed_brick_wall", () -> new WallBlock(Block.Properties.from(MARBLE_HALLOWED_BRICKS.get())));
+    public static final RegistryObject<PillarBlock> MARBLE_HALLOWED_PILLAR = BLOCKS.register("marble_hallowed_pillar", () -> new PillarBlock(Block.Properties.from(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<Block> MARBLE_HALLOWED_CHISELED = BLOCKS.register("marble_hallowed_chiseled", () -> new Block(Block.Properties.from(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<Block> MARBLE_HALLOWED_RUNED = BLOCKS.register("marble_hallowed_runed", () -> new Block(Block.Properties.from(MARBLE_HALLOWED.get())));
     
     // Register sunwood blocks
     public static final RegistryObject<SunwoodLogBlock> STRIPPED_SUNWOOD_LOG = BLOCKS.register("stripped_sunwood_log", () -> new SunwoodLogBlock(null));

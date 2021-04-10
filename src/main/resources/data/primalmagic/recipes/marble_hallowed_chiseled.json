@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "marble_hallowed",
+  "pattern": [
+    "M",
+    "M"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_hallowed_slab"
+    }
+  },
+  "result": {
+    "item": "primalmagic:marble_hallowed_chiseled"
+  }
+}

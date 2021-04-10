@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "marble_hallowed",
+  "pattern": [
+    "M",
+    "M"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagic:marble_hallowed"
+    }
+  },
+  "result": {
+    "item": "primalmagic:marble_hallowed_pillar",
+    "count": 2
+  }
+}

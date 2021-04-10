@@ -119,6 +119,16 @@ public class BlockLootTables extends BlockLootTableProvider {
     
     private void registerHallowedMarbleLootTables() {
         this.registerBasicTable(BlocksPM.MARBLE_HALLOWED.get());
+        this.registerSlabTable(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_BRICKS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_CHISELED.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_PILLAR.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_RUNED.get());
+        this.registerSlabTable(BlocksPM.MARBLE_HALLOWED_SLAB.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_STAIRS.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_WALL.get());
     }
     
     private void registerSunwoodLootTables() {
