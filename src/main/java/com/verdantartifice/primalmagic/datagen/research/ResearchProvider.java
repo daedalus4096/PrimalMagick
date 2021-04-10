@@ -502,6 +502,10 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_HEAVENLY.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("CRYOTREATMENT", discipline).parent("BASIC_ALCHEMY")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 1).recipe(PrimalMagic.MODID, "ice_from_cryotreatment").recipe(PrimalMagic.MODID, "obsidian_from_cryotreatment").build())
+            .build(consumer);
     }
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {

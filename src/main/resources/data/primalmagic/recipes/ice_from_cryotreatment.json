@@ -1,0 +1,15 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "CRYOTREATMENT",
+  "ingredients": [
+    {
+      "item": "minecraft:water_bucket"
+    },
+    {
+      "item": "primalmagic:essence_dust_sea"
+    }
+  ],
+  "result": {
+    "item": "minecraft:ice"
+  }
+}

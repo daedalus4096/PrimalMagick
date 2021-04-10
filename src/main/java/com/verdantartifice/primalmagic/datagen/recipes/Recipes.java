@@ -322,6 +322,16 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_HEAVENLY")))
             .manaCost(new SourceList().add(Source.HALLOWED, 100))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.ICE)
+            .addIngredient(Items.WATER_BUCKET)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CRYOTREATMENT")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "ice_from_cryotreatment"));
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.OBSIDIAN)
+            .addIngredient(Items.LAVA_BUCKET)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CRYOTREATMENT")))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "obsidian_from_cryotreatment"));
 
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
