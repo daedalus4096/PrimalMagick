@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/orientable",
+    "textures": {
+        "top": "primalmagic:block/base_wood_grain",
+        "front": "primalmagic:block/honey_extractor",
+        "side": "primalmagic:block/honey_extractor"
+    }
+}

@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.blocks.crafting.SpellcraftingAltar
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandAssemblyTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandInscriptionTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.AnalysisTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.devices.HoneyExtractorBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
@@ -253,6 +254,7 @@ public class BlocksPM {
     public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_HEAVENLY = BLOCKS.register("runescribing_altar_heavenly", () -> new RunescribingAltarBlock(DeviceTier.HEAVENLY));
     public static final RegistryObject<RunecarvingTableBlock> RUNECARVING_TABLE = BLOCKS.register("runecarving_table", RunecarvingTableBlock::new);
     public static final RegistryObject<RunicGrindstoneBlock> RUNIC_GRINDSTONE = BLOCKS.register("runic_grindstone", RunicGrindstoneBlock::new);
+    public static final RegistryObject<HoneyExtractorBlock> HONEY_EXTRACTOR = BLOCKS.register("honey_extractor", HoneyExtractorBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
