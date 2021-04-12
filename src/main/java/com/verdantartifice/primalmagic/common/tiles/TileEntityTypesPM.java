@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.EssenceFurnaceTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
@@ -49,4 +50,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<TileEntityType<BloodletterTileEntity>> BLOODLETTER = TILE_ENTITIES.register("bloodletter", () -> TileEntityType.Builder.create(BloodletterTileEntity::new, BlocksPM.BLOODLETTER.get()).build(null));
     public static final RegistryObject<TileEntityType<SoulAnvilTileEntity>> SOUL_ANVIL = TILE_ENTITIES.register("soul_anvil", () -> TileEntityType.Builder.create(SoulAnvilTileEntity::new, BlocksPM.SOUL_ANVIL.get()).build(null));
     public static final RegistryObject<TileEntityType<RunescribingAltarTileEntity>> RUNESCRIBING_ALTAR = TILE_ENTITIES.register("runescribing_altar", () -> TileEntityType.Builder.create(RunescribingAltarTileEntity::new, BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build(null));
+    public static final RegistryObject<TileEntityType<HoneyExtractorTileEntity>> HONEY_EXTRACTOR = TILE_ENTITIES.register("honey_extractor", () -> TileEntityType.Builder.create(HoneyExtractorTileEntity::new, BlocksPM.HONEY_EXTRACTOR.get()).build(null));
 }

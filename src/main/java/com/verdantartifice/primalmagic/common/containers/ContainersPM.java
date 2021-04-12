@@ -63,4 +63,7 @@ public class ContainersPM {
     public static final RegistryObject<ContainerType<RunecarvingTableContainer>> RUNECARVING_TABLE = CONTAINERS.register("runecarving_table", () -> IForgeContainerType.create((windowId, inv, data) -> {
         return new RunecarvingTableContainer(windowId, inv);
     }));
+    public static final RegistryObject<ContainerType<HoneyExtractorContainer>> HONEY_EXTRACTOR = CONTAINERS.register("honey_extractor", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        return new HoneyExtractorContainer(windowId, inv);
+    }));
 }
