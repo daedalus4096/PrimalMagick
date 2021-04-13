@@ -155,4 +155,15 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
             bottleStack.shrink(1);
         }
     }
+
+    @Override
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        super.setInventorySlotContents(index, stack);
+        ItemStack slotStack = this.items.get(index);
+        if ((index == 0 || index == 1) && (stack.isEmpty() || !stack.isItemEqual(slotStack) || !ItemStack.areItemStackTagsEqual(stack, slotStack))) {
+            this.spinTimeTotal = this.getSpinTimeTotal();
+            this.spinTime = 0;
+            this.markDirty();
+        }
+    }
 }
