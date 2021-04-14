@@ -1,9 +1,12 @@
 package com.verdantartifice.primalmagic.common.tiles.devices;
 
+import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.containers.HoneyExtractorContainer;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +31,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider {
     protected int spinTime;
     protected int spinTimeTotal;
+    protected ManaStorage manaStorage;
     
     // Define a container-trackable representation of this tile's relevant data
     protected final IIntArray extractorData = new IIntArray() {
@@ -38,6 +42,10 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
                 return HoneyExtractorTileEntity.this.spinTime;
             case 1:
                 return HoneyExtractorTileEntity.this.spinTimeTotal;
+            case 2:
+                return HoneyExtractorTileEntity.this.manaStorage.getManaStored(Source.SKY);
+            case 3:
+                return HoneyExtractorTileEntity.this.manaStorage.getMaxManaStored(Source.SKY);
             default:
                 return 0;
             }
@@ -45,6 +53,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
 
         @Override
         public void set(int index, int value) {
+            // Don't set mana storage values
             switch (index) {
             case 0:
                 HoneyExtractorTileEntity.this.spinTime = value;
@@ -57,12 +66,13 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
 
         @Override
         public int size() {
-            return 2;
+            return 4;
         }
     };
     
     public HoneyExtractorTileEntity() {
         super(TileEntityTypesPM.HONEY_EXTRACTOR.get(), 5);
+        this.manaStorage = new ManaStorage(10000, 100, 100, Source.SKY);
     }
 
     @Override
@@ -70,12 +80,14 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
         super.read(state, compound);
         this.spinTime = compound.getInt("SpinTime");
         this.spinTimeTotal = compound.getInt("SpinTimeTotal");
+        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
     }
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.putInt("SpinTime", this.spinTime);
         compound.putInt("SpinTimeTotal", this.spinTimeTotal);
+        compound.put("ManaStorage", this.manaStorage.serializeNBT());
         return super.write(compound);
     }
 
@@ -98,6 +110,20 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
         boolean shouldMarkDirty = false;
 
         if (!this.world.isRemote) {
+            // Fill up internal mana storage with that from any inserted wands
+            ItemStack wandStack = this.items.get(4);
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
+                IWand wand = (IWand)wandStack.getItem();
+                int centimanaMissing = this.manaStorage.getMaxManaStored(Source.SKY) - this.manaStorage.getManaStored(Source.SKY);
+                int centimanaToTransfer = MathHelper.clamp(centimanaMissing, 0, 100);
+                if (wand.consumeMana(wandStack, null, Source.SKY, centimanaToTransfer)) {
+                    this.manaStorage.receiveMana(Source.SKY, centimanaToTransfer, false);
+                    shouldMarkDirty = true;
+                }
+            }
+            
+            // Process ingredients
+            // TODO require and consume sky mana per extraction
             ItemStack honeycombStack = this.items.get(0);
             ItemStack bottleStack = this.items.get(1);
             if (!honeycombStack.isEmpty() && !bottleStack.isEmpty()) {

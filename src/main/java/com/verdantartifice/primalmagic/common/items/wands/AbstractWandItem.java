@@ -137,22 +137,26 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean consumeRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
-        if (stack == null || player == null || source == null) {
+    public boolean consumeMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+        if (stack == null || source == null) {
             return false;
         }
-        if (this.containsRealMana(stack, player, source, amount)) {
+        if (this.containsMana(stack, player, source, amount)) {
             // If the wand stack contains enough mana, process the consumption and return success
             if (this.getMaxMana(stack) != -1) {
                 // Only actually consume something if the wand doesn't have infinite mana
-                this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * (amount * 100)));
+                this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * amount));
             }
             
-            // Record the spent mana statistic change with pre-discount mana
-            StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
-            
-            // Update temporary attunement value
-            AttunementManager.incrementAttunement(player, source, AttunementType.TEMPORARY, MathHelper.floor(Math.sqrt(amount)));
+            if (player != null) {
+                int realAmount = amount / 100;
+                
+                // Record the spent mana statistic change with pre-discount mana
+                StatsManager.incrementValue(player, source.getManaSpentStat(), realAmount);
+                
+                // Update temporary attunement value
+                AttunementManager.incrementAttunement(player, source, AttunementType.TEMPORARY, MathHelper.floor(Math.sqrt(realAmount)));
+            }
             
             return true;
         } else {
@@ -160,10 +164,10 @@ public abstract class AbstractWandItem extends Item implements IWand {
             return false;
         }
     }
-    
+
     @Override
-    public boolean consumeRealMana(ItemStack stack, PlayerEntity player, SourceList sources) {
-        if (stack == null || player == null || sources == null) {
+    public boolean consumeMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+        if (stack == null || sources == null) {
             return false;
         }
         if (this.containsRealMana(stack, player, sources)) {
@@ -172,18 +176,21 @@ public abstract class AbstractWandItem extends Item implements IWand {
             SourceList attunementDeltas = new SourceList();
             for (Source source : sources.getSources()) {
                 int amount = sources.getAmount(source);
+                int realAmount = amount / 100;
                 if (!isInfinite) {
                     // Only actually consume something if the wand doesn't have infinite mana
-                    this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * (amount * 100)));
+                    this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * amount));
                 }
                 
-                // Record the spent mana statistic change with pre-discount mana
-                StatsManager.incrementValue(player, source.getManaSpentStat(), amount);
+                if (player != null) {
+                    // Record the spent mana statistic change with pre-discount mana
+                    StatsManager.incrementValue(player, source.getManaSpentStat(), realAmount);
+                }
                 
                 // Compute the amount of temporary attunement to be added to the player
-                attunementDeltas.add(source, MathHelper.floor(Math.sqrt(amount)));
+                attunementDeltas.add(source, MathHelper.floor(Math.sqrt(realAmount)));
             }
-            if (!attunementDeltas.isEmpty()) {
+            if (player != null && !attunementDeltas.isEmpty()) {
                 // Update attunements in a batch
                 AttunementManager.incrementAttunement(player, AttunementType.TEMPORARY, attunementDeltas);
             }
@@ -193,21 +200,41 @@ public abstract class AbstractWandItem extends Item implements IWand {
             return false;
         }
     }
-    
+
     @Override
-    public boolean containsRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
-        // A wand stack with infinite mana always contains the requested amount of mana
-        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (this.getTotalCostModifier(stack, player, source) * (amount * 100));
+    public boolean consumeRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+        return this.consumeMana(stack, player, source, amount * 100);
     }
     
     @Override
-    public boolean containsRealMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+    public boolean consumeRealMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+        return this.consumeMana(stack, player, sources.copy().multiply(100));
+    }
+    
+    @Override
+    public boolean containsMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+        // A wand stack with infinite mana always contains the requested amount of mana
+        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (this.getTotalCostModifier(stack, player, source) * amount);
+    }
+
+    @Override
+    public boolean containsMana(ItemStack stack, PlayerEntity player, SourceList sources) {
         for (Source source : sources.getSources()) {
-            if (!this.containsRealMana(stack, player, source, sources.getAmount(source))) {
+            if (!this.containsMana(stack, player, source, sources.getAmount(source))) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean containsRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+        return this.containsMana(stack, player, source, amount * 100);
+    }
+    
+    @Override
+    public boolean containsRealMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+        return this.containsMana(stack, player, sources.copy().multiply(100));
     }
     
     @Override
@@ -215,38 +242,40 @@ public abstract class AbstractWandItem extends Item implements IWand {
         // Start with the base modifier, as determined by wand cap
         double modifier = this.getBaseCostModifier(stack);
         
-        // Subtract discounts from equipped player gear
-        int gearDiscount = 0;
-        for (ItemStack gearStack : player.getEquipmentAndArmor()) {
-            if (gearStack.getItem() instanceof IManaDiscountGear) {
-                gearDiscount += ((IManaDiscountGear)gearStack.getItem()).getManaDiscount(gearStack, player);
-            }
-        }
-        if (gearDiscount > 0) {
-            modifier -= (0.01D * gearDiscount);
-        }
-        
-        // Subtract discounts from attuned sources
-        if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
-            modifier -= 0.05D;
-        }
-        
         // Subtract discounts from wand enchantments
         int efficiencyLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.MANA_EFFICIENCY.get(), stack);
         if (efficiencyLevel > 0) {
             modifier -= (0.02D * efficiencyLevel);
         }
         
-        // Substract discounts from temporary conditions
-        if (player.isPotionActive(EffectsPM.MANAFRUIT.get())) {
-            // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
-            modifier -= (0.01D * ((2 * player.getActivePotionEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
-        }
-        
-        // Add penalties from temporary conditions
-        if (player.isPotionActive(EffectsPM.MANA_IMPEDANCE.get())) {
-            // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
-            modifier += (0.05D * (player.getActivePotionEffect(EffectsPM.MANA_IMPEDANCE.get()).getAmplifier() + 1));
+        if (player != null) {
+            // Subtract discounts from equipped player gear
+            int gearDiscount = 0;
+            for (ItemStack gearStack : player.getEquipmentAndArmor()) {
+                if (gearStack.getItem() instanceof IManaDiscountGear) {
+                    gearDiscount += ((IManaDiscountGear)gearStack.getItem()).getManaDiscount(gearStack, player);
+                }
+            }
+            if (gearDiscount > 0) {
+                modifier -= (0.01D * gearDiscount);
+            }
+            
+            // Subtract discounts from attuned sources
+            if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
+                modifier -= 0.05D;
+            }
+            
+            // Substract discounts from temporary conditions
+            if (player.isPotionActive(EffectsPM.MANAFRUIT.get())) {
+                // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
+                modifier -= (0.01D * ((2 * player.getActivePotionEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
+            }
+            
+            // Add penalties from temporary conditions
+            if (player.isPotionActive(EffectsPM.MANA_IMPEDANCE.get())) {
+                // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
+                modifier += (0.05D * (player.getActivePotionEffect(EffectsPM.MANA_IMPEDANCE.get()).getAmplifier() + 1));
+            }
         }
         
         return modifier;

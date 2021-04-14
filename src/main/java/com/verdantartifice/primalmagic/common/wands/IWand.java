@@ -61,11 +61,34 @@ public interface IWand {
     public int addRealMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
+     * Consume the given amount of the given type of centimana from the given wand stack for the given player.  Takes
+     * into account any cost modifiers.
+     * 
+     * @param stack the wand stack to be modified
+     * @param player the player doing the consuming, if applicable
+     * @param source the type of mana to be consumed
+     * @param amount the amount of centimana to be consumed
+     * @return true if sufficient centimana was present in the wand and successfully removed, false otherwise
+     */
+    public boolean consumeMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
+    
+    /**
+     * Consume the given amounts of centimana from the given wand stack for the given player.  Takes into account any
+     * cost modifiers.
+     * 
+     * @param stack the wand stack to be modified
+     * @param player the player doing the consuming, if applicable
+     * @param sources the amount of each type of centimana to be consumed
+     * @return true if sufficient centimana was present in the wand and successfully removed, false otherwise
+     */
+    public boolean consumeMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
+    
+    /**
      * Consume the given amount of the given type of mana from the given wand stack for the given player.  Takes
      * into account any cost modifiers.
      * 
      * @param stack the wand stack to be modified
-     * @param player the player doing the consuming
+     * @param player the player doing the consuming, if applicable
      * @param source the type of mana to be consumed
      * @param amount the amount of mana to be consumed
      * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
@@ -77,18 +100,41 @@ public interface IWand {
      * cost modifiers.
      * 
      * @param stack the wand stack to be modified
-     * @param player the player doing the consuming
+     * @param player the player doing the consuming, if applicable
      * @param sources the amount of each type of mana to be consumed
      * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
      */
     public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
     
     /**
+     * Determine if the given wand stack contains the given amount of the given type of centimana for the given player.  Takes
+     * into account any cost modifiers.
+     * 
+     * @param stack the wand stack to be queried
+     * @param player the player doing the check, if applicable
+     * @param source the type of mana being queried
+     * @param amount the amount of centimana required
+     * @return true if sufficient centimana is present, false otherwise
+     */
+    public boolean containsMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
+    
+    /**
+     * Determine if the given wand stack contains the given amounts of centimana for the given player.  Takes into account
+     * any cost modifiers.
+     * 
+     * @param stack the wand stack to be queried
+     * @param player the player doing the check, if applicable
+     * @param sources the amount of each type of centimana required
+     * @return true if sufficient centimana is present, false otherwise
+     */
+    public boolean containsMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
+    
+    /**
      * Determine if the given wand stack contains the given amount of the given type of mana for the given player.  Takes
      * into account any cost modifiers.
      * 
      * @param stack the wand stack to be queried
-     * @param player the player doing the check
+     * @param player the player doing the check, if applicable
      * @param source the type of mana being queried
      * @param amount the amount of mana required
      * @return true if sufficient mana is present, false otherwise
@@ -100,7 +146,7 @@ public interface IWand {
      * any cost modifiers.
      * 
      * @param stack the wand stack to be queried
-     * @param player the player doing the check
+     * @param player the player doing the check, if applicable
      * @param sources the amount of each type of mana required
      * @return true if sufficient mana is present, false otherwise
      */

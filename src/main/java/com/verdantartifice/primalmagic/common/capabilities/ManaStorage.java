@@ -15,7 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 
 /**
- * Default implementation of the tile mana storage capability.
+ * Default implementation of the mana storage capability.
  * 
  * @author Daedalus4096
  */
@@ -57,7 +57,7 @@ public class ManaStorage implements IManaStorage {
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         SourceList nbtMana = new SourceList();
-        nbtMana.deserializeNBT(nbt);
+        nbtMana.deserializeNBT(nbt.getCompound("Mana"));
         this.setMana(nbtMana);
     }
     

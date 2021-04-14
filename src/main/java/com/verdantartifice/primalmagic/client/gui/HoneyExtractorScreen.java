@@ -1,9 +1,12 @@
 package com.verdantartifice.primalmagic.client.gui;
 
+import java.awt.Color;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.HoneyExtractorContainer;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -47,5 +50,15 @@ public class HoneyExtractorScreen extends ContainerScreen<HoneyExtractorContaine
         // Animate spin progress indicator
         int cook = this.container.getSpinProgressionScaled();
         this.blit(matrixStack, this.guiLeft + 75, this.guiTop + 34, 176, 0, cook + 1, 16);
+        
+        // Render mana bar
+        int mana = this.container.getManaLevelScaled();
+        Color manaColor = new Color(Source.SKY.getColor());
+        RenderSystem.color4f(manaColor.getRed() / 255.0F, manaColor.getGreen() / 255.0F, manaColor.getBlue() / 255.0F, 1.0F);
+        this.blit(matrixStack, this.guiLeft + 11, this.guiTop + 7 + (50 - mana), 177, 18, 10, mana);
+
+        // Render mana bar markers
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        this.blit(matrixStack, this.guiLeft + 10, this.guiTop + 6, 188, 17, 12, 52);
     }
 }

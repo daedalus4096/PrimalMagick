@@ -30,13 +30,13 @@ public class HoneyExtractorContainer extends Container {
     protected final Slot wandSlot;
 
     public HoneyExtractorContainer(int id, PlayerInventory playerInv) {
-        this(id, playerInv, new Inventory(5), new IntArray(2));
+        this(id, playerInv, new Inventory(5), new IntArray(4));
     }
     
     public HoneyExtractorContainer(int id, PlayerInventory playerInv, IInventory extractorInv, IIntArray extractorData) {
         super(ContainersPM.HONEY_EXTRACTOR.get(), id);
         assertInventorySize(extractorInv, 5);
-        assertIntArraySize(extractorData, 2);
+        assertIntArraySize(extractorData, 4);
         this.extractorInv = extractorInv;
         this.extractorData = extractorData;
         
@@ -142,5 +142,13 @@ public class HoneyExtractorContainer extends Container {
         int i = this.extractorData.get(0);
         int j = this.extractorData.get(1);
         return j != 0 && i != 0 ? i * 24 / j : 0;
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    public int getManaLevelScaled() {
+        // Determine how much of the mana bar to show
+        int i = this.extractorData.get(2);
+        int j = this.extractorData.get(3);
+        return j != 0 && i != 0 ? i * 50 / j : 0;
     }
 }
