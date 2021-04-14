@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface ITileManaStorage extends INBTSerializable<CompoundNBT> {
+public interface IManaStorage extends INBTSerializable<CompoundNBT> {
     /**
      * Adds mana of the given source to the storage.  Returns quantity of mana that was accepted.
      * 

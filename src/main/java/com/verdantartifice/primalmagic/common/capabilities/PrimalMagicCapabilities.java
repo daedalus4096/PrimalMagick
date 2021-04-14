@@ -31,8 +31,8 @@ public class PrimalMagicCapabilities {
     @CapabilityInject(IWorldEntitySwappers.class)
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = null;
     
-    @CapabilityInject(ITileManaStorage.class)
-    public static final Capability<ITileManaStorage> MANA_STORAGE = null;
+    @CapabilityInject(IManaStorage.class)
+    public static final Capability<IManaStorage> MANA_STORAGE = null;
     
     @Nullable
     public static IPlayerKnowledge getKnowledge(@Nonnull PlayerEntity player) {
@@ -60,7 +60,7 @@ public class PrimalMagicCapabilities {
     }
     
     @Nullable
-    public static ITileManaStorage getManaStorage(@Nonnull TileEntity tile) {
+    public static IManaStorage getManaStorage(@Nonnull TileEntity tile) {
         return tile.getCapability(MANA_STORAGE, null).orElse(null);
     }
 }

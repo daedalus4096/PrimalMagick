@@ -19,26 +19,26 @@ import net.minecraftforge.common.capabilities.Capability;
  * 
  * @author Daedalus4096
  */
-public class TileManaStorage implements ITileManaStorage {
+public class ManaStorage implements IManaStorage {
     protected Set<Source> allowedSources;
     protected SourceList mana;
     protected int capacity;
     protected int maxReceive;
     protected int maxExtract;
     
-    public TileManaStorage(int capacity, Source... allowedSources) {
+    public ManaStorage(int capacity, Source... allowedSources) {
         this(capacity, capacity, capacity, new SourceList(), allowedSources);
     }
     
-    public TileManaStorage(int capacity, int maxTransfer, Source... allowedSources) {
+    public ManaStorage(int capacity, int maxTransfer, Source... allowedSources) {
         this(capacity, maxTransfer, maxTransfer, new SourceList(), allowedSources);
     }
     
-    public TileManaStorage(int capacity, int maxReceive, int maxExtract, Source... allowedSources) {
+    public ManaStorage(int capacity, int maxReceive, int maxExtract, Source... allowedSources) {
         this(capacity, maxReceive, maxExtract, new SourceList(), allowedSources);
     }
     
-    public TileManaStorage(int capacity, int maxReceive, int maxExtract, SourceList mana, Source... allowedSources) {
+    public ManaStorage(int capacity, int maxReceive, int maxExtract, SourceList mana, Source... allowedSources) {
         this.capacity = capacity;
         this.maxReceive = maxReceive;
         this.maxExtract = maxExtract;
@@ -126,15 +126,15 @@ public class TileManaStorage implements ITileManaStorage {
      * @author Daedalus4096
      * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
      */
-    public static class Storage implements Capability.IStorage<ITileManaStorage> {
+    public static class Storage implements Capability.IStorage<IManaStorage> {
         @Override
-        public INBT writeNBT(Capability<ITileManaStorage> capability, ITileManaStorage instance, Direction side) {
+        public INBT writeNBT(Capability<IManaStorage> capability, IManaStorage instance, Direction side) {
             // Use the instance's pre-defined serialization
             return instance.serializeNBT();
         }
 
         @Override
-        public void readNBT(Capability<ITileManaStorage> capability, ITileManaStorage instance, Direction side, INBT nbt) {
+        public void readNBT(Capability<IManaStorage> capability, IManaStorage instance, Direction side, INBT nbt) {
             // Use the instance's pre-defined deserialization
             instance.deserializeNBT((CompoundNBT)nbt);
         }
@@ -147,10 +147,10 @@ public class TileManaStorage implements ITileManaStorage {
      * @author Daedalus4096
      * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
      */
-    public static class Factory implements Callable<ITileManaStorage> {
+    public static class Factory implements Callable<IManaStorage> {
         @Override
-        public ITileManaStorage call() throws Exception {
-            return new TileManaStorage(0, new Source[0]);
+        public IManaStorage call() throws Exception {
+            return new ManaStorage(0, new Source[0]);
         }
     }
 }
