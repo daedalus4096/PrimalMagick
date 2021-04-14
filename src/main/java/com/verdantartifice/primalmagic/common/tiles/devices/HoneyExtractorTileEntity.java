@@ -104,6 +104,10 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     protected int getSpinTimeTotal() {
         return 200;
     }
+    
+    protected int getManaCost() {
+        return 10;
+    }
 
     @Override
     public void tick() {
@@ -123,10 +127,9 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
             }
             
             // Process ingredients
-            // TODO require and consume sky mana per extraction
             ItemStack honeycombStack = this.items.get(0);
             ItemStack bottleStack = this.items.get(1);
-            if (!honeycombStack.isEmpty() && !bottleStack.isEmpty()) {
+            if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && this.manaStorage.getManaStored(Source.SKY) >= this.getManaCost()) {
                 // If spinnable input is in place, process it
                 if (this.canSpin()) {
                     this.spinTime++;
@@ -162,7 +165,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     protected void doExtraction() {
         ItemStack honeycombStack = this.items.get(0);
         ItemStack bottleStack = this.items.get(1);
-        if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && this.canSpin()) {
+        if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && this.canSpin() && this.manaStorage.getManaStored(Source.SKY) >= this.getManaCost()) {
             ItemStack honeyStack = this.items.get(2);
             if (honeyStack.isEmpty()) {
                 this.items.set(2, new ItemStack(Items.HONEY_BOTTLE));
@@ -179,6 +182,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
             
             honeycombStack.shrink(1);
             bottleStack.shrink(1);
+            this.manaStorage.extractMana(Source.SKY, this.getManaCost(), false);
         }
     }
 

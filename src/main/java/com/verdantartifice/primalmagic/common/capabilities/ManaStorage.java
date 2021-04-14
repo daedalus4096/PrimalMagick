@@ -90,7 +90,7 @@ public class ManaStorage implements IManaStorage {
         }
         int manaExtracted = Math.min(this.mana.getAmount(source), Math.min(this.maxExtract, maxExtract));
         if (!simulate) {
-            this.mana.add(source, -manaExtracted);
+            this.mana.reduce(source, manaExtracted);
             this.onManaChanged();
         }
         return manaExtracted;
