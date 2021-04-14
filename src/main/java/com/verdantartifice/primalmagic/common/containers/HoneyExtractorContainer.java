@@ -145,10 +145,12 @@ public class HoneyExtractorContainer extends Container {
     }
     
     @OnlyIn(Dist.CLIENT)
-    public int getManaLevelScaled() {
-        // Determine how much of the mana bar to show
-        int i = this.extractorData.get(2);
-        int j = this.extractorData.get(3);
-        return j != 0 && i != 0 ? i * 50 / j : 0;
+    public int getCurrentMana() {
+        return this.extractorData.get(2);
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    public int getMaxMana() {
+        return this.extractorData.get(3);
     }
 }
