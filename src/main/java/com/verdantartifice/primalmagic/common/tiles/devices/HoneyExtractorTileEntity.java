@@ -158,8 +158,8 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        super.setInventorySlotContents(index, stack);
         ItemStack slotStack = this.items.get(index);
+        super.setInventorySlotContents(index, stack);
         if ((index == 0 || index == 1) && (stack.isEmpty() || !stack.isItemEqual(slotStack) || !ItemStack.areItemStackTagsEqual(stack, slotStack))) {
             this.spinTimeTotal = this.getSpinTimeTotal();
             this.spinTime = 0;
