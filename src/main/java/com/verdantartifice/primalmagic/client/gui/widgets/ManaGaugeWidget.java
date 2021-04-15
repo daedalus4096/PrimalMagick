@@ -24,7 +24,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class ManaGaugeWidget extends Widget {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/mana_gauge.png");
 
-    protected Source source;
+    protected final Source source;
     protected int maxAmount;
     protected int curAmount;
     
@@ -33,6 +33,14 @@ public class ManaGaugeWidget extends Widget {
         this.source = source;
         this.curAmount = curAmount;
         this.maxAmount = maxAmount;
+    }
+    
+    public void setCurrentMana(int amount) {
+        this.curAmount = amount;
+    }
+    
+    public void setMaxMana(int amount) {
+        this.maxAmount = amount;
     }
 
     @Override

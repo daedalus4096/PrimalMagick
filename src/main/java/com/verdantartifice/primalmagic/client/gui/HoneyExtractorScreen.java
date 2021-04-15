@@ -22,6 +22,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class HoneyExtractorScreen extends ContainerScreen<HoneyExtractorContainer> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/honey_extractor.png");
+    
+    protected ManaGaugeWidget manaGauge;
 
     public HoneyExtractorScreen(HoneyExtractorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
@@ -29,16 +31,17 @@ public class HoneyExtractorScreen extends ContainerScreen<HoneyExtractorContaine
 
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.initWidgets();
+        this.manaGauge.setCurrentMana(this.container.getCurrentMana());
+        this.manaGauge.setMaxMana(this.container.getMaxMana());
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
     
-    protected void initWidgets() {
-        this.buttons.clear();
-        this.children.clear();
-        this.addButton(new ManaGaugeWidget(this.guiLeft + 10, this.guiTop + 6, Source.SKY, this.container.getCurrentMana(), this.container.getMaxMana()));
+    @Override
+    protected void init() {
+        super.init();
+        this.manaGauge = this.addButton(new ManaGaugeWidget(this.guiLeft + 10, this.guiTop + 6, Source.SKY, this.container.getCurrentMana(), this.container.getMaxMana()));
     }
 
     @Override
