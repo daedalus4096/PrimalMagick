@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.common.tiles.devices;
 
+import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.HoneyExtractorContainer;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -17,10 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 
 /**
  * Definition of a honey extractor tile entity.  Performs the extraction for the corresponding block.
@@ -32,6 +37,8 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     protected int spinTime;
     protected int spinTimeTotal;
     protected ManaStorage manaStorage;
+    
+    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final IIntArray extractorData = new IIntArray() {
@@ -195,5 +202,19 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
             this.spinTime = 0;
             this.markDirty();
         }
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (!this.removed && cap == PrimalMagicCapabilities.MANA_STORAGE) {
+            return this.manaStorageOpt.cast();
+        }
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    protected void invalidateCaps() {
+        super.invalidateCaps();
+        this.manaStorageOpt.invalidate();
     }
 }
