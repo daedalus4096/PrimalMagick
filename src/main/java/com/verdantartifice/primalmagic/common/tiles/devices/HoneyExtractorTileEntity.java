@@ -5,7 +5,9 @@ import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.HoneyExtractorContainer;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
@@ -33,7 +35,7 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.HoneyExtractorBlock}
  * @author Daedalus4096
  */
-public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider {
+public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IManaContainer {
     protected int spinTime;
     protected int spinTimeTotal;
     protected ManaStorage manaStorage;
@@ -216,5 +218,35 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     protected void invalidateCaps() {
         super.invalidateCaps();
         this.manaStorageOpt.invalidate();
+    }
+
+    @Override
+    public int getMana(Source source) {
+        return this.manaStorage.getManaStored(source);
+    }
+
+    @Override
+    public SourceList getAllMana() {
+        SourceList mana = new SourceList();
+        for (Source source : Source.SORTED_SOURCES) {
+            int amount = this.manaStorage.getManaStored(source);
+            if (amount > 0) {
+                mana.add(source, amount);
+            }
+        }
+        return mana;
+    }
+
+    @Override
+    public int getMaxMana() {
+        // TODO Fix up
+        return this.manaStorage.getMaxManaStored(Source.SKY);
+    }
+
+    @Override
+    public void setMana(Source source, int amount) {
+        this.manaStorage.setMana(source, amount);
+        this.markDirty();
+        this.syncTile(true);
     }
 }

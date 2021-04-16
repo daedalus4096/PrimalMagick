@@ -61,12 +61,16 @@ public class ManaStorage implements IManaStorage {
         this.setMana(nbtMana);
     }
     
-    protected void setMana(SourceList mana) {
+    public void setMana(SourceList mana) {
         this.mana.clear();
         for (Source source : mana.getSources()) {
-            if (this.allowedSources.contains(source)) {
-                this.mana.set(source, MathHelper.clamp(mana.getAmount(source), 0, this.capacity));
-            }
+            this.setMana(source, mana.getAmount(source));
+        }
+    }
+    
+    public void setMana(Source source, int amount) {
+        if (this.allowedSources.contains(source)) {
+            this.mana.set(source, MathHelper.clamp(amount, 0, this.capacity));
         }
     }
 

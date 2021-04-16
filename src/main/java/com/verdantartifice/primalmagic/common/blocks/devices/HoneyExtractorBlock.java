@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagic.common.blocks.devices;
 
+import java.util.List;
+
+import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.devices.HoneyExtractorTileEntity;
 
 import net.minecraft.block.Block;
@@ -7,10 +11,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
@@ -21,6 +29,9 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -101,6 +112,52 @@ public class HoneyExtractorBlock extends Block {
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
             super.onReplaced(state, worldIn, pos, newState, isMoving);
+        }
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        // TODO Fix up and abstract
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        CompoundNBT nbt = stack.getChildTag("ManaContainerTag");
+        if (nbt != null) {
+            SourceList mana = new SourceList();
+            mana.deserializeNBT(nbt);
+            int count = 0;
+            for (Source source : Source.SORTED_SOURCES) {
+                int amount = mana.getAmount(source);
+                if (amount > 0) {
+                    ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor());
+                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_gauge_tooltip", nameComp.getString(), amount / 100.0D, "100");
+                    tooltip.add(line);
+                    count++;
+                }
+            }
+            if (count == 0) {
+                tooltip.add(new StringTextComponent("Empty mana container"));
+            }
+        } else {
+            tooltip.add(new StringTextComponent("No mana contained"));
+        }
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        // TODO Fix up and abstract
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if (tile instanceof HoneyExtractorTileEntity) {
+            CompoundNBT nbt = stack.getChildTag("ManaContainerTag");
+            if (nbt != null) {
+                SourceList mana = new SourceList();
+                mana.deserializeNBT(nbt);
+                for (Source source : Source.SORTED_SOURCES) {
+                    int amount = mana.getAmount(source);
+                    if (amount > 0) {
+                        ((HoneyExtractorTileEntity)tile).setMana(source, amount);
+                    }
+                }
+            }
         }
     }
 }
