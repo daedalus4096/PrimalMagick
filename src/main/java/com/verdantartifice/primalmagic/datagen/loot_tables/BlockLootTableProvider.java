@@ -43,6 +43,7 @@ import net.minecraft.loot.conditions.MatchTool;
 import net.minecraft.loot.conditions.SurvivesExplosion;
 import net.minecraft.loot.conditions.TableBonus;
 import net.minecraft.loot.functions.ApplyBonus;
+import net.minecraft.loot.functions.CopyNbt;
 import net.minecraft.loot.functions.ExplosionDecay;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.state.properties.SlabType;
@@ -135,6 +136,13 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
         LootEntry.Builder<?> gemEntryBuilder = ItemLootEntry.builder(gemItem).acceptFunction(SetCount.builder(RandomValueRange.of(minGems, maxGems))).acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE)).acceptFunction(ExplosionDecay.builder());
         LootTable.Builder tableBuilder = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(oreBlock).acceptCondition(silkTouch).alternatively(gemEntryBuilder)));
         this.registerLootTableBuiler(oreBlock, tableBuilder);
+    }
+    
+    protected void registerManaBearingDeviceTable(Block block) {
+        LootPool.Builder poolBuilder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block).acceptFunction(CopyNbt.builder(CopyNbt.Source.BLOCK_ENTITY).replaceOperation("ManaStorage.Mana.Sources", "ManaContainerTag.Sources")))
+                .acceptCondition(SurvivesExplosion.builder());
+        LootTable.Builder tableBuilder = LootTable.builder().addLootPool(poolBuilder);
+        this.registerLootTableBuiler(block, tableBuilder);
     }
     
     @Override
