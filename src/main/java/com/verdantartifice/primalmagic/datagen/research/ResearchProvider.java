@@ -112,7 +112,7 @@ public class ResearchProvider implements IDataProvider {
         ResearchEntryBuilder.entry("UNLOCK_RITUAL", discipline).parent("UNLOCK_RUNEWORKING")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("UNLOCK_MAGITECH", discipline).parent("UNLOCK_RITUAL")
+        ResearchEntryBuilder.entry("UNLOCK_MAGITECH", discipline).parent("UNLOCK_RITUAL").parent("MANA_SALTS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("TERRESTRIAL_MAGIC", discipline).parent("FIRST_STEPS")
@@ -774,7 +774,7 @@ public class ResearchProvider implements IDataProvider {
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "MAGITECH";
         ResearchEntryBuilder.entry("BASIC_MAGITECH", discipline).parent("UNLOCK_MAGITECH")
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.getId()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("EXPERT_MAGITECH", discipline).parent("BASIC_MAGITECH")
             .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").build())

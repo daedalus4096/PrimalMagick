@@ -3,7 +3,8 @@
   "name": "primalmagic.research.unlock_magitech.title",
   "discipline": "BASICS",
   "parents": [
-    "UNLOCK_RITUAL"
+    "UNLOCK_RITUAL",
+    "MANA_SALTS"
   ],
   "stages": [
     {

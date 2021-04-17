@@ -332,6 +332,16 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CRYOTREATMENT")))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "obsidian_from_cryotreatment"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MAGITECH_PARTS_BASIC.get())
+            .patternLine("SIS")
+            .patternLine("IRI")
+            .patternLine("SIS")
+            .key('S', ItemsPM.MANA_SALTS.get())
+            .key('I', Tags.Items.INGOTS_IRON)
+            .key('R', Tags.Items.DUSTS_REDSTONE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_MAGITECH")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
 
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
