@@ -788,6 +788,10 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
+        ResearchEntryBuilder.entry("HONEY_EXTRACTOR", discipline).parent("BASIC_MAGITECH")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.HONEYCOMB).requiredItemStack(Items.HONEY_BOTTLE).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HONEY_EXTRACTOR.getId()).build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
