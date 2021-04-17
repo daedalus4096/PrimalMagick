@@ -13,7 +13,10 @@
       ]
     },
     {
-      "text": "primalmagic.research.supreme_magitech.text.stage.2"
+      "text": "primalmagic.research.supreme_magitech.text.stage.2",
+      "recipes": [
+        "primalmagic:magitech_parts_heavenly"
+      ]
     }
   ],
   "addenda": []

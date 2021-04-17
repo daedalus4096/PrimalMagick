@@ -342,7 +342,10 @@ public class ItemsPM {
     public static final RegistryObject<Item> SPELLCLOTH = ITEMS.register("spellcloth", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> HEXWEAVE = ITEMS.register("hexweave", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> SAINTSWOOL = ITEMS.register("saintswool", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<Item> MAGITECH_PARTS_BASIC = ITEMS.register("magitech_parts_basic", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> MAGITECH_PARTS_BASIC = ITEMS.register("magitech_parts_basic", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> MAGITECH_PARTS_ENCHANTED = ITEMS.register("magitech_parts_enchanted", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> MAGITECH_PARTS_FORBIDDEN = ITEMS.register("magitech_parts_forbidden", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> MAGITECH_PARTS_HEAVENLY = ITEMS.register("magitech_parts_heavenly", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

@@ -1,0 +1,30 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "EXPERT_MAGITECH",
+  "mana": {
+    "earth": 20,
+    "sea": 20,
+    "sky": 20,
+    "sun": 20,
+    "moon": 20
+  },
+  "pattern": [
+    "SIS",
+    "IPI",
+    "SIS"
+  ],
+  "key": {
+    "S": {
+      "item": "primalmagic:mana_salts"
+    },
+    "I": {
+      "tag": "primalmagic:ingots/primalite"
+    },
+    "P": {
+      "item": "primalmagic:magitech_parts_basic"
+    }
+  },
+  "result": {
+    "item": "primalmagic:magitech_parts_enchanted"
+  }
+}
