@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.blocks.devices;
 
 import java.util.List;
 
+import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.devices.HoneyExtractorTileEntity;
@@ -30,7 +31,6 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -117,46 +117,32 @@ public class HoneyExtractorBlock extends Block {
 
     @Override
     public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        // TODO Fix up and abstract
         super.addInformation(stack, worldIn, tooltip, flagIn);
         CompoundNBT nbt = stack.getChildTag("ManaContainerTag");
         if (nbt != null) {
             SourceList mana = new SourceList();
             mana.deserializeNBT(nbt);
-            int count = 0;
             for (Source source : Source.SORTED_SOURCES) {
                 int amount = mana.getAmount(source);
                 if (amount > 0) {
                     ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor());
-                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_gauge_tooltip", nameComp.getString(), amount / 100.0D, "100");
+                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_container_tooltip", nameComp.getString(), (amount / 100.0D));
                     tooltip.add(line);
-                    count++;
                 }
             }
-            if (count == 0) {
-                tooltip.add(new StringTextComponent("Empty mana container"));
-            }
-        } else {
-            tooltip.add(new StringTextComponent("No mana contained"));
         }
     }
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        // TODO Fix up and abstract
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         TileEntity tile = worldIn.getTileEntity(pos);
-        if (tile instanceof HoneyExtractorTileEntity) {
+        if (tile instanceof IManaContainer) {
             CompoundNBT nbt = stack.getChildTag("ManaContainerTag");
             if (nbt != null) {
                 SourceList mana = new SourceList();
                 mana.deserializeNBT(nbt);
-                for (Source source : Source.SORTED_SOURCES) {
-                    int amount = mana.getAmount(source);
-                    if (amount > 0) {
-                        ((HoneyExtractorTileEntity)tile).setMana(source, amount);
-                    }
-                }
+                ((IManaContainer)tile).setMana(mana);
             }
         }
     }

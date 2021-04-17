@@ -44,4 +44,11 @@ public interface IManaContainer {
      * @param amount the new amount of centimana to store
      */
     public void setMana(@Nonnull Source source, int amount);
+    
+    /**
+     * Set the current amount of centimana stored in this object for all sources.
+     * 
+     * @param mana the new amounts of centimana to store
+     */
+    public void setMana(@Nonnull SourceList mana);
 }

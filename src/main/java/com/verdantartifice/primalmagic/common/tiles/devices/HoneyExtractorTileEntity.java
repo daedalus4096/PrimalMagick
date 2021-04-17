@@ -249,4 +249,11 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
         this.markDirty();
         this.syncTile(true);
     }
+
+    @Override
+    public void setMana(SourceList mana) {
+        this.manaStorage.setMana(mana);
+        this.markDirty();
+        this.syncTile(true);
+    }
 }
