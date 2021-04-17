@@ -310,31 +310,29 @@ public abstract class AbstractWandItem extends Item implements IWand {
             } else {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
-                    StringBuilder sb = new StringBuilder("  ");
-                    if (index == activeIndex) {
-                        // Prefix the active spell name with an asterisk to distinguish it
-                        sb.append("*");
-                    }
-                    sb.append(spell.getName().getString());
-                    tooltip.add(new StringTextComponent(sb.toString()));
+                    ITextComponent nameText = (index == activeIndex) ?
+                        new TranslationTextComponent("primalmagic.spells.name_selected", spell.getName()) :
+                        new TranslationTextComponent("primalmagic.spells.name_unselected", spell.getName());
+                    tooltip.add(nameText);
                 }
             }
         } else {
             // Add mana summary
-            StringBuilder sb = new StringBuilder();
             boolean first = true;
+            ITextComponent summaryText = new StringTextComponent("");
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the summary if it's been discovered
                 if (source.isDiscovered(player)) {
-                    if (!first) {
-                        sb.append("/");
+                    ITextComponent manaText = this.getManaText(stack, source).mergeStyle(source.getChatColor());
+                    if (first) {
+                        summaryText = manaText;
+                    } else {
+                        summaryText = new TranslationTextComponent("primalmagic.source.mana_summary_fragment", summaryText, manaText);
                     }
-                    ITextComponent manaStr = this.getManaText(stack, source).mergeStyle(source.getChatColor());
-                    sb.append(manaStr.getString());
                     first = false;
                 }
             }
-            tooltip.add(new StringTextComponent(sb.toString()));
+            tooltip.add(summaryText);
             
             // Add active spell
             SpellPackage activeSpell = this.getActiveSpell(stack);

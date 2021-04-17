@@ -440,6 +440,7 @@
     "primalmagic.source.mana_tooltip": "%1$s: %2$d / %3$d (%4$d%% mana cost)",
     "primalmagic.source.mana_gauge_tooltip": "%1$s mana: %2$d / %3$d",
     "primalmagic.source.mana_container_tooltip": "%1$s mana: %2$d",
+    "primalmagic.source.mana_summary_fragment": "%1$s/%2$s",
     
     "primalmagic.attunement_gain.0": "None",
     "primalmagic.attunement_gain.1": "Trivial",
@@ -466,6 +467,8 @@
     
     "primalmagic.spells.wand_header": "Inscribed Spells (Capacity %1$s):",
     "primalmagic.spells.none": "   None",
+    "primalmagic.spells.name_unselected": "   %1$s",
+    "primalmagic.spells.name_selected": "  *%1$s",
     "primalmagic.spells.short_wand_header": "Active Spell: %1$s",
     "primalmagic.spells.capacity": "%1$d",
     "primalmagic.spells.capacity_with_bonus": "%1$d + 1 %2$s",
