@@ -27,10 +27,9 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.ITextProperties;
-import net.minecraft.util.text.Style;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -113,17 +112,17 @@ public class GuiUtils {
         }
         
         // Break up each line of the tooltip to fit in the available X-space
-        List<ITextProperties> parsedList = new ArrayList<>();
+        List<IReorderingProcessor> parsedList = new ArrayList<>();
         for (ITextComponent text : textList)  {
-            List<ITextProperties> strList = mc.fontRenderer.getCharacterManager().func_238362_b_(text, max, Style.EMPTY);   // list formatted string to width
+            List<IReorderingProcessor> strList = mc.fontRenderer.trimStringToWidth(text, max);
             parsedList.addAll(strList);
         }
         
         // Determine the total dimensions of the tooltip text
         int totalHeight = -2;
         int widestLineWidth = 0;
-        for (ITextProperties str : parsedList) {
-            int lineWidth = mc.fontRenderer.getStringPropertyWidth(str);
+        for (IReorderingProcessor str : parsedList) {
+            int lineWidth = mc.fontRenderer.func_243245_a(str); // get string width
             if (lineWidth > widestLineWidth) {
                 widestLineWidth = lineWidth;
             }
@@ -164,12 +163,12 @@ public class GuiUtils {
             RenderSystem.pushMatrix();
             RenderSystem.translatef(sX, sY, 0.0F);
             
-            ITextProperties str = parsedList.get(i);
+            IReorderingProcessor str = parsedList.get(i);
             
             RenderSystem.pushMatrix();
             sY += mc.fontRenderer.FONT_HEIGHT;
             RenderSystem.translatef(0.0F, 0.0F, 301.0F);
-            mc.fontRenderer.drawStringWithShadow(matrixStack, str.getString(), 0.0F, 0.0F, -1);
+            mc.fontRenderer.drawTextWithShadow(matrixStack, str, 0.0F, 0.0F, -1);
             RenderSystem.popMatrix();
             if (i == 0) {
                 sY += 2;
