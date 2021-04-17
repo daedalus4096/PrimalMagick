@@ -33,14 +33,14 @@ public class SectionHeaderWidget extends Widget {
         int strWidth = mc.fontRenderer.getStringWidth(this.getMessage().getString());
         int dy = (this.height - mc.fontRenderer.FONT_HEIGHT) / 2;
         if (strWidth <= this.width) {
-            mc.fontRenderer.drawString(matrixStack, this.getMessage().getString(), this.x + this.width / 2 - strWidth / 2, this.y + (this.height - 8) / 2, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, this.getMessage(), this.x + this.width / 2 - strWidth / 2, this.y + (this.height - 8) / 2, Color.BLACK.getRGB());
         } else {
             // Scale the string down to fit on one line, if need be
             float scale = (float)this.width / (float)strWidth;
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x, this.y + dy + (1.0F * scale), 0.0F);
             RenderSystem.scalef(scale, scale, scale);
-            mc.fontRenderer.drawString(matrixStack, this.getMessage().getString(), 0, 0, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, this.getMessage(), 0, 0, Color.BLACK.getRGB());
             RenderSystem.popMatrix();
         }
         RenderSystem.popMatrix();

@@ -146,7 +146,7 @@ public class RequirementsPage extends AbstractPage {
         // Render obtain requirement section
         if (!this.stage.getMustObtain().isEmpty()) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_obtain_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for obtain widgets
         }
@@ -154,7 +154,7 @@ public class RequirementsPage extends AbstractPage {
         // Render craft requirement section
         if (!this.stage.getMustCraft().isEmpty()) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_craft_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for craft widgets
         }
@@ -162,7 +162,7 @@ public class RequirementsPage extends AbstractPage {
         // Render knowledge requirement section
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_knowledge_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for knowledge widgets
         }
@@ -170,7 +170,7 @@ public class RequirementsPage extends AbstractPage {
         // Render research requirement section
         if (this.stage.getRequiredResearch() != null) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_research_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18;    // Make room for research widgets
         }

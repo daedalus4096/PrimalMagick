@@ -39,22 +39,21 @@ public class ResearchToast implements IToast {
         
         // Render the toast title text
         ITextComponent titleText = new TranslationTextComponent("primalmagic.toast.title");
-        mc.fontRenderer.drawString(matrixStack, titleText.getString(), 6, 7, 0x551A8B);
+        mc.fontRenderer.drawText(matrixStack, titleText, 6, 7, 0x551A8B);
         
         // Render the description of the completed research
         ITextComponent descText = new TranslationTextComponent(this.entry.getNameTranslationKey());
-        String descStr = descText.getString();
-        float width = mc.fontRenderer.getStringWidth(descStr);
+        float width = mc.fontRenderer.getStringWidth(descText.getString());
         if (width > 148.0F) {
             // Scale down the research description to make it fit, if needed
             float scale = (148.0F / width);
             RenderSystem.pushMatrix();
             RenderSystem.translatef(6.0F, 18.0F, 0.0F);
             RenderSystem.scalef(scale, scale, scale);
-            mc.fontRenderer.drawString(matrixStack, descStr, 0, 0, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, descText, 0, 0, Color.BLACK.getRGB());
             RenderSystem.popMatrix();
         } else {
-        	mc.fontRenderer.drawString(matrixStack, descStr, 6, 18, Color.BLACK.getRGB());
+        	mc.fontRenderer.drawText(matrixStack, descText, 6, 18, Color.BLACK.getRGB());
         }
         
         // If the toast has been open long enough, hide it

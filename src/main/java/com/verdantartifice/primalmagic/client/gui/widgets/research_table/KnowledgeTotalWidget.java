@@ -63,12 +63,12 @@ public class KnowledgeTotalWidget extends Widget {
             // Draw amount str
             int levels = this.knowledge.getKnowledge(this.type);
             ITextComponent amountText = new StringTextComponent(Integer.toString(levels));
-            int width = mc.fontRenderer.getStringWidth(amountText.getString());
+            int width = mc.fontRenderer.getStringPropertyWidth(amountText);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
             RenderSystem.scaled(0.5D, 0.5D, 0.5D);
-            mc.fontRenderer.drawStringWithShadow(matrixStack, amountText.getString(), 0.0F, 0.0F, Color.WHITE.getRGB());
+            mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
             RenderSystem.popMatrix();
             
             // Draw progress bar foreground

@@ -126,7 +126,7 @@ public class HoneyExtractorBlock extends Block {
                 int amount = mana.getAmount(source);
                 if (amount > 0) {
                     ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor());
-                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_container_tooltip", nameComp.getString(), (amount / 100.0D));
+                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_container_tooltip", nameComp, (amount / 100.0D));
                     tooltip.add(line);
                 }
             }

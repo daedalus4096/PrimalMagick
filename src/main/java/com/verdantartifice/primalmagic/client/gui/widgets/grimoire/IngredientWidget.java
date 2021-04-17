@@ -42,8 +42,7 @@ public class IngredientWidget extends Widget {
                 GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
                 if (this.isHovered()) {
                     // If hovered, show a tooltip with the display name of the current matching itemstack
-                	StringTextComponent name = new StringTextComponent(toDisplay.getDisplayName().getString());
-                    List<ITextComponent> textList = Collections.singletonList(name.mergeStyle(toDisplay.getItem().getRarity(toDisplay).color));
+                    List<ITextComponent> textList = Collections.singletonList(toDisplay.getDisplayName().deepCopy().mergeStyle(toDisplay.getItem().getRarity(toDisplay).color));
                     GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
                 }
             }

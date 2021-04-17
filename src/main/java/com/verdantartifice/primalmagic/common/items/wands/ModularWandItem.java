@@ -232,19 +232,19 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public ITextComponent getSpellCapacityText(ItemStack stack) {
         if (stack == null) {
-            return new StringTextComponent("0");
+            return new TranslationTextComponent("primalmagic.spells.capacity", 0);
         } else {
             WandCore core = this.getWandCore(stack);
             if (core == null) {
-                return new StringTextComponent("0");
+                return new TranslationTextComponent("primalmagic.spells.capacity", 0);
             } else {
                 int baseSlots = this.getCoreSpellSlotCount(core);
                 Source bonusSlot = core.getBonusSlot();
                 if (bonusSlot == null) {
-                    return new StringTextComponent(Integer.toString(baseSlots));
+                    return new TranslationTextComponent("primalmagic.spells.capacity", baseSlots);
                 } else {
                     ITextComponent bonusText = new TranslationTextComponent(bonusSlot.getNameTranslationKey());
-                    return new StringTextComponent(String.format("%1$d + 1 %2$s", baseSlots, bonusText.getString()));
+                    return new TranslationTextComponent("primalmagic.spells.capacity_with_bonus", baseSlots, bonusText);
                 }
             }
         }

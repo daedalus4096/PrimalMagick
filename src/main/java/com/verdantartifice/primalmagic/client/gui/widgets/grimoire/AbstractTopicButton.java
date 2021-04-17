@@ -49,14 +49,14 @@ public abstract class AbstractTopicButton extends Button {
         int strWidth = mc.fontRenderer.getStringWidth(this.getMessage().getString());
         int dy = (this.height - mc.fontRenderer.FONT_HEIGHT) / 2;
         if (strWidth <= this.width) {
-            mc.fontRenderer.drawString(matrixStack, this.getMessage().getString(), this.x, this.y + dy, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, this.getMessage(), this.x, this.y + dy, Color.BLACK.getRGB());
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)this.width / (float)strWidth;
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x, this.y + dy + (1.0F * scale), 0.0F);
             RenderSystem.scalef(scale, scale, scale);
-            mc.fontRenderer.drawString(matrixStack, this.getMessage().getString(), 0, 0, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, this.getMessage(), 0, 0, Color.BLACK.getRGB());
             RenderSystem.popMatrix();
         }
         RenderSystem.popMatrix();

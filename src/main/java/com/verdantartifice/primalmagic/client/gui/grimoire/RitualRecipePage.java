@@ -109,7 +109,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         // Render ingredients section header
         if (!this.recipe.getIngredients().isEmpty()) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.ritual_offerings_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18 * MathHelper.ceil((double)this.recipe.getIngredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
             y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66F);
@@ -118,7 +118,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         // Render props section header
         if (!this.recipe.getProps().isEmpty()) {
             ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.ritual_props_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawString(matrixStack, leadComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
             y += 18 * MathHelper.ceil((double)this.recipe.getProps().size() / (double)ITEMS_PER_ROW);       // Make room for prop widgets
             y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66F);
@@ -129,7 +129,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         int rating = MathHelper.clamp(this.recipe.getInstability() / 2, 0, 5);
         ITextComponent valueComponent = new TranslationTextComponent("primalmagic.ritual.instability.rating." + rating);
         ITextComponent lineComponent = new TranslationTextComponent("primalmagic.ritual.instability", headerComponent, valueComponent);
-        mc.fontRenderer.drawString(matrixStack, lineComponent.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+        mc.fontRenderer.drawText(matrixStack, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
         y += mc.fontRenderer.FONT_HEIGHT;
 
         RenderSystem.popMatrix();

@@ -51,7 +51,7 @@ public class ItemStackWidget extends Widget {
             RenderSystem.pushMatrix();
             RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
             RenderSystem.scaled(0.5D, 0.5D, 0.5D);
-            mc.fontRenderer.drawStringWithShadow(matrixStack, amountText.getString(), 0.0F, 0.0F, Color.WHITE.getRGB());
+            mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
             RenderSystem.popMatrix();
         }
         
@@ -66,8 +66,7 @@ public class ItemStackWidget extends Widget {
         }
         if (this.isHovered()) {
             // Render tooltip
-        	StringTextComponent name = new StringTextComponent(this.stack.getDisplayName().getString());
-            List<ITextComponent> textList = Collections.singletonList(name.mergeStyle(this.stack.getItem().getRarity(this.stack).color));
+            List<ITextComponent> textList = Collections.singletonList(this.stack.getDisplayName().deepCopy().mergeStyle(this.stack.getItem().getRarity(this.stack).color));
             GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
         }
     }

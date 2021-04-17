@@ -49,7 +49,7 @@ public class AttunementGainPage extends AbstractPage {
                     new TranslationTextComponent(Source.getUnknownTranslationKey());
             ITextComponent amountText = new TranslationTextComponent("primalmagic.attunement_gain." + Integer.toString(amount));
             ITextComponent fullText = new TranslationTextComponent("primalmagic.attunement_gain.text", labelText, amountText);
-            mc.fontRenderer.drawString(matrixStack, fullText.getString(), x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, fullText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.fontRenderer.FONT_HEIGHT;
         }
     }

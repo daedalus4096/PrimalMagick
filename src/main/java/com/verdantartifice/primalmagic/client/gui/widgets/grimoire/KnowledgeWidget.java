@@ -58,7 +58,7 @@ public class KnowledgeWidget extends Widget {
         RenderSystem.pushMatrix();
         RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
         RenderSystem.scaled(0.5D, 0.5D, 0.5D);
-        mc.fontRenderer.drawStringWithShadow(matrixStack, amountText.getString(), 0.0F, 0.0F, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
+        mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
         RenderSystem.popMatrix();
         
         if (this.isComplete) {

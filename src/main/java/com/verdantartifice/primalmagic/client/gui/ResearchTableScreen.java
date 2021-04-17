@@ -107,7 +107,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             // Render title text
             ITextComponent titleText = new TranslationTextComponent(this.project.getNameTranslationKey()).mergeStyle(TextFormatting.BOLD);
             int titleWidth = mc.fontRenderer.getStringWidth(titleText.getString());
-            mc.fontRenderer.drawString(matrixStack, titleText.getString(), 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
             y += (int)(mc.fontRenderer.FONT_HEIGHT * 1.66D);
             
             // Render description text
@@ -121,12 +121,12 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             // Render missing writing materials text
             ITextComponent text = new TranslationTextComponent("primalmagic.research_table.missing_writing_supplies");
             int width = mc.fontRenderer.getStringWidth(text.getString());
-            mc.fontRenderer.drawString(matrixStack, text.getString(), 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
         } else {
             // Render ready to start text
             ITextComponent text = new TranslationTextComponent("primalmagic.research_table.ready");
             int width = mc.fontRenderer.getStringWidth(text.getString());
-            mc.fontRenderer.drawString(matrixStack, text.getString(), 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.fontRenderer.FONT_HEIGHT) / 2), Color.BLACK.getRGB());
         }
     }
 

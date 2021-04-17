@@ -57,7 +57,7 @@ public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContai
             int width = this.font.getStringWidth(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
             int y = 10 + (16 - this.font.FONT_HEIGHT) / 2;
-            this.font.drawString(matrixStack, text.getString(), x, y, Color.BLACK.getRGB());
+            this.font.drawText(matrixStack, text, x, y, Color.BLACK.getRGB());
         }
     }
 

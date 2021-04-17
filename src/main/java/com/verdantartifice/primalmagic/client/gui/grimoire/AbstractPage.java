@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -66,11 +67,11 @@ public abstract class AbstractPage extends AbstractGui {
             this.blit(matrixStack, x + 10 + (side * 140), y + 18, 24, 184, 96, 5);   // Render the separator bar above the title text
         }
         this.blit(matrixStack, x + 10 + (side * 140), y + 35, 24, 184, 96, 5);   // Render the separator bar below the title text
-        String headerText = new TranslationTextComponent(this.getTitleTranslationKey()).getString();
-        int width = mc.fontRenderer.getStringWidth(headerText);
+        ITextComponent headerText = new TranslationTextComponent(this.getTitleTranslationKey());
+        int width = mc.fontRenderer.getStringWidth(headerText.getString());
         int indent = 124;
         if (width <= 124) {
-            mc.fontRenderer.drawString(matrixStack, headerText, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, headerText, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB());
             if (icon != null) {
                 RenderSystem.pushMatrix();
                 RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21, 0.0F);
@@ -85,7 +86,7 @@ public abstract class AbstractPage extends AbstractGui {
             RenderSystem.pushMatrix();
             RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
             RenderSystem.scalef(scale, scale, scale);
-            mc.fontRenderer.drawString(matrixStack, headerText, 0, 0, Color.BLACK.getRGB());
+            mc.fontRenderer.drawText(matrixStack, headerText, 0, 0, Color.BLACK.getRGB());
             if (icon != null) {
                 RenderSystem.pushMatrix();
                 RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21, 0.0F);

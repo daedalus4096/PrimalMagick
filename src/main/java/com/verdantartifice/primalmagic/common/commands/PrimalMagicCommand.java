@@ -301,7 +301,7 @@ public class PrimalMagicCommand {
             // Get the current levels and points for the given knowledge type for the target player
             int levels = knowledge.getKnowledge(type);
             int points = knowledge.getKnowledgeRaw(type);
-            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.get", target.getName().getString(), levels, type.name(), points), true);
+            source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.get", target.getName(), levels, type.name(), points), true);
         }
         return 0;
     }
@@ -316,10 +316,10 @@ public class PrimalMagicCommand {
         } else {
             // Add the given number of points to the given knowledge type for the target player
             if (ResearchManager.addKnowledge(target, type, points)) {
-                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.success", points, type.name(), target.getName().getString()), true);
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.success", points, type.name(), target.getName()), true);
                 target.sendMessage(new TranslationTextComponent("commands.primalmagic.knowledge.add.target", points, type.name(), source.getName()), Util.DUMMY_UUID);
             } else {
-                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.failure", target.getName().getString()), true);
+                source.sendFeedback(new TranslationTextComponent("commands.primalmagic.knowledge.add.failure", target.getName()), true);
             }
         }
         return 0;

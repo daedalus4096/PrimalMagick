@@ -296,7 +296,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 if (source.isDiscovered(player)) {
                     ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor());
                     int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source));
-                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp.getString(), this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
+                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }
             }
@@ -304,7 +304,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add inscribed spell listing
             List<SpellPackage> spells = this.getSpells(stack);
             int activeIndex = this.getActiveSpellIndex(stack);
-            tooltip.add(new TranslationTextComponent("primalmagic.spells.wand_header", this.getSpellCapacityText(stack).getString()));
+            tooltip.add(new TranslationTextComponent("primalmagic.spells.wand_header", this.getSpellCapacityText(stack)));
             if (spells.isEmpty()) {
                 tooltip.add(new TranslationTextComponent("primalmagic.spells.none"));
             } else {
