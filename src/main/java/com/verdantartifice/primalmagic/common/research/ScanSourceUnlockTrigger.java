@@ -17,7 +17,7 @@ public class ScanSourceUnlockTrigger extends ScanResearchTrigger {
     protected final Source source;
     
     public ScanSourceUnlockTrigger(IItemProvider target, Source source) {
-        super(target, source.getDiscoverKey());
+        super(target, source.getDiscoverKey(), false);
         this.source = source;
     }
     
@@ -25,10 +25,5 @@ public class ScanSourceUnlockTrigger extends ScanResearchTrigger {
     public void onMatch(ServerPlayerEntity player, IItemProvider itemProvider) {
         super.onMatch(player, itemProvider);
         player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source." + this.source.getTag()).mergeStyle(TextFormatting.GREEN), false);
-    }
-    
-    @Override
-    protected boolean shouldUnlockScansPage() {
-        return false;
     }
 }

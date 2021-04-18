@@ -777,15 +777,15 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("EXPERT_MAGITECH", discipline).parent("BASIC_MAGITECH")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").requiredResearch("b_scan_primalite").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_MAGITECH", discipline).parent("EXPERT_MAGITECH")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_master").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_master").requiredResearch("b_scan_hexium").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).parent("MASTER_MAGITECH")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_supreme").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("HONEY_EXTRACTOR", discipline).parent("BASIC_MAGITECH")

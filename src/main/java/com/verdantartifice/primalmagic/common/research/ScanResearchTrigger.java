@@ -8,31 +8,20 @@ import net.minecraft.util.IItemProvider;
  * 
  * @author Daedalus4096
  */
-public class ScanResearchTrigger implements IScanTrigger {
-    protected static final SimpleResearchKey SCANS_KEY = SimpleResearchKey.parse("UNLOCK_SCANS");
-    
+public class ScanResearchTrigger extends AbstractScanResearchTrigger {
     protected final IItemProvider target;
-    protected final SimpleResearchKey toUnlock;
     
     public ScanResearchTrigger(IItemProvider target, SimpleResearchKey toUnlock) {
+        this(target, toUnlock, true);
+    }
+    
+    public ScanResearchTrigger(IItemProvider target, SimpleResearchKey toUnlock, boolean unlockScansPage) {
+        super(toUnlock, unlockScansPage);
         this.target = target;
-        this.toUnlock = toUnlock;
     }
 
     @Override
     public boolean matches(ServerPlayerEntity player, IItemProvider itemProvider) {
         return target.asItem().equals(itemProvider.asItem());
-    }
-
-    @Override
-    public void onMatch(ServerPlayerEntity player, IItemProvider itemProvider) {
-        if (this.shouldUnlockScansPage()) {
-            ResearchManager.completeResearch(player, SCANS_KEY);
-        }
-        ResearchManager.completeResearch(player, this.toUnlock);
-    }
-    
-    protected boolean shouldUnlockScansPage() {
-        return true;
     }
 }

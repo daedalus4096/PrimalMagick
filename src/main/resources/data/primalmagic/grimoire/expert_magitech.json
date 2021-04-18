@@ -9,7 +9,8 @@
     {
       "text": "primalmagic.research.expert_magitech.text.stage.1",
       "required_research": [
-        "b_crafted_magitech_expert"
+        "b_crafted_magitech_expert",
+        "b_scan_primalite"
       ]
     },
     {

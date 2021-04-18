@@ -1341,6 +1341,9 @@
     "primalmagic.research.t_items_runescribed_supreme.text": "Runescribe 50 items",
     "primalmagic.research.t_research_projects_completed.text": "Complete 10 research projects at a research table",
     "primalmagic.research.t_items_analyzed.text": "Analyze 25 distinct items",
+    "primalmagic.research.b_scan_primalite.text": "Analyze a magical metal",
+    "primalmagic.research.b_scan_hexium.text": "Analyze a more potent magical metal",
+    "primalmagic.research.b_scan_hallowsteel.text": "Analyze the most potent of magical metals",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
