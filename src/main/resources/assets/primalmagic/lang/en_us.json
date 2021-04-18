@@ -1038,6 +1038,10 @@
     "primalmagic.research.seascribe_pen.text.stage.1": "Seascribe pen: Lorem ipsum",
     "primalmagic.research.seascribe_pen.text.stage.2": "Seascribe pen research complete!",
     
+    "primalmagic.research.arcanometer.title": "Arcanometer",
+    "primalmagic.research.arcanometer.text.stage.1": "Arcanometer: Lorem ipsum",
+    "primalmagic.research.arcanometer.text.stage.2": "Arcanometer research complete!",
+    
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble: lorem ipsum",
     
@@ -1336,11 +1340,13 @@
     "primalmagic.research.t_items_runescribed_master.text": "Runescribe 10 items",
     "primalmagic.research.t_items_runescribed_supreme.text": "Runescribe 50 items",
     "primalmagic.research.t_research_projects_completed.text": "Complete 10 research projects at a research table",
+    "primalmagic.research.t_items_analyzed.text": "Analyze 25 distinct items",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
     
     "stat.primalmagic.grimoire_read": "Times Grimoire consulted",
+    "stat.primalmagic.items_analyzed": "Items analyzed",
     "stat.primalmagic.crafted_manaweaving": "Manaweaving recipes crafted",
     "stat.primalmagic.crafted_alchemy": "Alchemy recipes crafted",
     "stat.primalmagic.crafted_sorcery": "Sorcery recipes crafted",

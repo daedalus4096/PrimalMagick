@@ -18,6 +18,8 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -381,6 +383,9 @@ public class ResearchManager {
             if (obsPoints > 0) {
                 knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
             }
+            
+            // Increment the items analyzed stat
+            StatsManager.incrementValue(player, StatsPM.ITEMS_ANALYZED);
             
             // Check to see if any scan triggers need to be run for the item
             checkScanTriggers(player, stack.getItem());

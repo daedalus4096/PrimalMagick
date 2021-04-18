@@ -1,0 +1,33 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "ARCANOMETER",
+  "mana": {
+    "earth": 20,
+    "sea": 20,
+    "sky": 20,
+    "sun": 20,
+    "moon": 20
+  },
+  "pattern": [
+    "EGE",
+    "GPG",
+    " S "
+  ],
+  "key": {
+    "E": {
+      "tag": "forge:ender_pearls"
+    },
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "P": {
+      "item": "primalmagic:magitech_parts_enchanted"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "primalmagic:arcanometer"
+  }
+}

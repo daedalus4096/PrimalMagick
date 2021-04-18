@@ -10,6 +10,7 @@ import net.minecraft.stats.IStatFormatter;
  */
 public class StatsPM {
     public static final Stat GRIMOIRE_READ = Stat.create("grimoire_read", IStatFormatter.DEFAULT, false);
+    public static final Stat ITEMS_ANALYZED = Stat.create("items_analyzed", IStatFormatter.DEFAULT, false);
     public static final Stat CRAFTED_MANAWEAVING = Stat.create("crafted_manaweaving", IStatFormatter.DEFAULT, false);
     public static final Stat CRAFTED_ALCHEMY = Stat.create("crafted_alchemy", IStatFormatter.DEFAULT, false);
     public static final Stat CRAFTED_SORCERY = Stat.create("crafted_sorcery", IStatFormatter.DEFAULT, false);

@@ -774,7 +774,7 @@ public class ResearchProvider implements IDataProvider {
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "MAGITECH";
         ResearchEntryBuilder.entry("BASIC_MAGITECH", discipline).parent("UNLOCK_MAGITECH")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.getId()).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("EXPERT_MAGITECH", discipline).parent("BASIC_MAGITECH")
             .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").build())
@@ -790,11 +790,15 @@ public class ResearchProvider implements IDataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("HONEY_EXTRACTOR", discipline).parent("BASIC_MAGITECH")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.HONEYCOMB).requiredItemStack(Items.HONEY_BOTTLE).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HONEY_EXTRACTOR.getId()).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HONEY_EXTRACTOR.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SEASCRIBE_PEN", discipline).parent("BASIC_MAGITECH").parent("THEORYCRAFTING")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ENCHANTED_INK.get()).requiredResearch("t_research_projects_completed").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SEASCRIBE_PEN.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("ARCANOMETER", discipline).parent("EXPERT_MAGITECH")
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_items_analyzed").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARCANOMETER.get()).build())
             .build(consumer);
     }
 

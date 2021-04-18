@@ -394,6 +394,17 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HONEY_EXTRACTOR")))
             .manaCost(new SourceList().add(Source.SKY, 10))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARCANOMETER.get())
+            .patternLine("EGE")
+            .patternLine("GPG")
+            .patternLine(" S ")
+            .key('E', Tags.Items.ENDER_PEARLS)
+            .key('G', Tags.Items.INGOTS_GOLD)
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARCANOMETER")))
+            .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
+            .build(consumer);
 
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
