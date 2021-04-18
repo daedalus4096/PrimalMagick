@@ -307,6 +307,7 @@
     "item.primalmagic.magitech_parts_enchanted": "Enchanted Magitech Parts",
     "item.primalmagic.magitech_parts_forbidden": "Forbidden Magitech Parts",
     "item.primalmagic.magitech_parts_heavenly": "Heavenly Magitech Parts",
+    "item.primalmagic.seascribe_pen": "Seascribe Pen",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",
@@ -1033,6 +1034,10 @@
     "primalmagic.research.honey_extractor.text.stage.1": "Honey extractor: Lorem ipsum",
     "primalmagic.research.honey_extractor.text.stage.2": "Honey extractor research complete!",
     
+    "primalmagic.research.seascribe_pen.title": "Seascribe Pen",
+    "primalmagic.research.seascribe_pen.text.stage.1": "Seascribe pen: Lorem ipsum",
+    "primalmagic.research.seascribe_pen.text.stage.2": "Seascribe pen research complete!",
+    
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble: lorem ipsum",
     
@@ -1330,6 +1335,7 @@
     "primalmagic.research.t_items_runescribed_expert.text": "Runescribe 2 items",
     "primalmagic.research.t_items_runescribed_master.text": "Runescribe 10 items",
     "primalmagic.research.t_items_runescribed_supreme.text": "Runescribe 50 items",
+    "primalmagic.research.t_research_projects_completed.text": "Complete 10 research projects at a research table",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",

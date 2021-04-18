@@ -120,6 +120,17 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.FEATHERS)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SEASCRIBE_PEN.get())
+            .patternLine(" GP")
+            .patternLine("GIG")
+            .patternLine("NG ")
+            .key('G', Tags.Items.INGOTS_GOLD)
+            .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
+            .key('I', ItemsPM.ENCHANTED_INK.get())
+            .key('N', Tags.Items.NUGGETS_IRON)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SEASCRIBE_PEN")))
+            .manaCost(new SourceList().add(Source.SEA, 10))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.STONE, 8)
             .patternLine("SSS")
             .patternLine("SDS")

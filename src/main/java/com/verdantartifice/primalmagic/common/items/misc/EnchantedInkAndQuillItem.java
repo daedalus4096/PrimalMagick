@@ -10,8 +10,8 @@ import net.minecraft.item.Item;
  * 
  * @author Daedalus4096
  */
-public class EnchantedInkAndQuill extends Item implements IWritingImplement {
-    public EnchantedInkAndQuill() {
+public class EnchantedInkAndQuillItem extends Item implements IWritingImplement {
+    public EnchantedInkAndQuillItem() {
         super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxDamage(63));
     }
 

@@ -1,0 +1,30 @@
+{
+  "key": "SEASCRIBE_PEN",
+  "name": "primalmagic.research.seascribe_pen.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "BASIC_MAGITECH",
+    "THEORYCRAFTING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.seascribe_pen.text.stage.1",
+      "required_item": [
+        "primalmagic:enchanted_ink"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ],
+      "required_research": [
+        "t_research_projects_completed"
+      ]
+    },
+    {
+      "text": "primalmagic.research.seascribe_pen.text.stage.2",
+      "recipes": [
+        "primalmagic:seascribe_pen"
+      ]
+    }
+  ],
+  "addenda": []
+}
