@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassPaneBlo
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -25,7 +26,7 @@ import net.minecraftforge.fml.common.Mod;
  */
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
-public class BlockColorEvents {
+public class ColorEvents {
     @SubscribeEvent
     public static void onBlockColorInit(ColorHandlerEvent.Block event) {
         event.getBlockColors().register((state, lightReader, pos, dummy) -> {
@@ -85,5 +86,11 @@ public class BlockColorEvents {
             }
             return DyeColor.WHITE.getColorValue();
         }, ItemsPM.RITUAL_CANDLE_BLACK.get(), ItemsPM.RITUAL_CANDLE_BLUE.get(), ItemsPM.RITUAL_CANDLE_BROWN.get(), ItemsPM.RITUAL_CANDLE_CYAN.get(), ItemsPM.RITUAL_CANDLE_GRAY.get(), ItemsPM.RITUAL_CANDLE_GREEN.get(), ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get(), ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get(), ItemsPM.RITUAL_CANDLE_LIME.get(), ItemsPM.RITUAL_CANDLE_MAGENTA.get(), ItemsPM.RITUAL_CANDLE_ORANGE.get(), ItemsPM.RITUAL_CANDLE_PINK.get(), ItemsPM.RITUAL_CANDLE_PURPLE.get(), ItemsPM.RITUAL_CANDLE_RED.get(), ItemsPM.RITUAL_CANDLE_WHITE.get(), ItemsPM.RITUAL_CANDLE_YELLOW.get());
+        
+        for (LazySpawnEggItem egg : LazySpawnEggItem.getEggs()) {
+            event.getItemColors().register((stack, color) -> {
+                return egg.getColor(color);
+            }, egg);
+        }
     }
 }

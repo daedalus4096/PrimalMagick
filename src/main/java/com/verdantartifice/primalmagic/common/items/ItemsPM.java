@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.client.renderers.itemstack.AncientManaFon
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularStaffISTER;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagic.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
@@ -16,6 +17,7 @@ import com.verdantartifice.primalmagic.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagic.common.items.misc.EnchantedInkAndQuillItem;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
+import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 import com.verdantartifice.primalmagic.common.items.misc.ManafruitItem;
 import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagic.common.items.misc.SeascribePenItem;
@@ -455,4 +457,7 @@ public class ItemsPM {
     public static final RegistryObject<StaffCoreItem> PRIMAL_STAFF_CORE_ITEM = ITEMS.register("primal_staff_core_item", () -> new StaffCoreItem(WandCore.PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<StaffCoreItem> DARK_PRIMAL_STAFF_CORE_ITEM = ITEMS.register("dark_primal_staff_core_item", () -> new StaffCoreItem(WandCore.DARK_PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<StaffCoreItem> PURE_PRIMAL_STAFF_CORE_ITEM = ITEMS.register("pure_primal_staff_core_item", () -> new StaffCoreItem(WandCore.PURE_PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    
+    // Register spawn egg items
+    public static final RegistryObject<LazySpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = ITEMS.register("primalite_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.PRIMALITE_GOLEM.get(), 0x27E1C7, 0x026278, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 }
