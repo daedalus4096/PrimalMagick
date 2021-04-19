@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 
 import net.minecraft.entity.EntityType;
@@ -32,6 +33,7 @@ public class ModLifecycleEvents {
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityType.IRON_GOLEM);
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityType.SNOW_GOLEM);
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityType.VILLAGER);
+        InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityTypesPM.PRIMALITE_GOLEM.get());
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.ENDER_DRAGON);
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.WITHER);
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.WOLF);

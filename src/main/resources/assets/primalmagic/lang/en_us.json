@@ -348,6 +348,8 @@
     "item.primalmagic.dark_primal_staff_core_item": "Dark Primal Staff Core",
     "item.primalmagic.pure_primal_staff_core_item": "Pure Primal Staff Core",
     
+    "entity.primalmagic.primalite_golem": "Primalite Golem",
+    
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",
     "tooltip.primalmagic.hallowed_orb.1": "A sense of peace washes over",
