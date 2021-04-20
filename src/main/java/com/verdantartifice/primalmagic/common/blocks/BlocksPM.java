@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagic.common.blocks.devices.AnalysisTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.HoneyExtractorBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.SunlampBlock;
+import com.verdantartifice.primalmagic.common.blocks.golems.PrimaliteGolemControllerBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagic.common.blocks.minerals.QuartzOreBlock;
@@ -255,6 +256,7 @@ public class BlocksPM {
     public static final RegistryObject<RunecarvingTableBlock> RUNECARVING_TABLE = BLOCKS.register("runecarving_table", RunecarvingTableBlock::new);
     public static final RegistryObject<RunicGrindstoneBlock> RUNIC_GRINDSTONE = BLOCKS.register("runic_grindstone", RunicGrindstoneBlock::new);
     public static final RegistryObject<HoneyExtractorBlock> HONEY_EXTRACTOR = BLOCKS.register("honey_extractor", HoneyExtractorBlock::new);
+    public static final RegistryObject<PrimaliteGolemControllerBlock> PRIMALITE_GOLEM_CONTROLLER = BLOCKS.register("primalite_golem_controller", () -> new PrimaliteGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)));
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

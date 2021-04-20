@@ -241,6 +241,7 @@ public class ItemsPM {
     public static final RegistryObject<BurnableBlockItem> RUNECARVING_TABLE = ITEMS.register("runecarving_table", () -> new BurnableBlockItem(BlocksPM.RUNECARVING_TABLE.get(), 300, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> RUNIC_GRINDSTONE = ITEMS.register("runic_grindstone", () -> new BlockItem(BlocksPM.RUNIC_GRINDSTONE.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> HONEY_EXTRACTOR = ITEMS.register("honey_extractor", () -> new BlockItem(BlocksPM.HONEY_EXTRACTOR.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> PRIMALITE_GOLEM_CONTROLLER = ITEMS.register("primalite_golem_controller", () -> new BlockItem(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
 
     // Register miscellaneous block items
     public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
