@@ -12,7 +12,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.world.IEntityReader;
 import net.minecraft.world.World;
 
 /**
@@ -81,10 +80,10 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
      * @return this companion entity's owner entity
      */
     @Nullable
-    public PlayerEntity getCompanionOwner(IEntityReader world) {
+    public PlayerEntity getCompanionOwner() {
         try {
             UUID ownerId = this.getCompanionOwnerId();
-            return ownerId == null ? null : world.getPlayerByUuid(ownerId);
+            return ownerId == null ? null : this.world.getPlayerByUuid(ownerId);
         } catch (IllegalArgumentException e) {
             return null;
         }
