@@ -99,6 +99,16 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
     }
     
     /**
+     * Return whether the given player is this entity's companion owner.
+     * 
+     * @param player the player to test
+     * @return whether the given player is this entity's companion owner
+     */
+    public boolean isCompanionOwner(PlayerEntity player) {
+        return player == this.getCompanionOwner();
+    }
+    
+    /**
      * Get whether this companion entity has been ordered to stay put.
      * 
      * @return whether this companion entity has been ordered to stay put

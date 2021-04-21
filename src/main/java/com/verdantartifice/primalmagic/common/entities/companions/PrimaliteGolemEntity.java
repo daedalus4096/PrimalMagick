@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.entities.companions;
 
 import java.util.UUID;
 
+import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionStayGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.FollowCompanionOwnerGoal;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
@@ -40,9 +41,11 @@ import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.TickRangeConverter;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -61,6 +64,7 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
 
     protected int attackTimer;
     protected UUID angerTarget;
+    protected long lastStayChangeTime;
 
     public PrimaliteGolemEntity(EntityType<? extends PrimaliteGolemEntity> type, World worldIn) {
         super(type, worldIn);
@@ -69,8 +73,9 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
+        this.goalSelector.addGoal(1, new CompanionStayGoal(this));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
         this.goalSelector.addGoal(6, new FollowCompanionOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
@@ -249,6 +254,22 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
         ItemStack itemstack = playerIn.getHeldItem(hand);
         Item item = itemstack.getItem();
         if (!item.isIn(this.getRepairMaterialTag())) {
+            ActionResultType actionResult = super.getEntityInteractionResult(playerIn, hand);
+            if (!actionResult.isSuccessOrConsume() && this.isCompanionOwner(playerIn)) {
+                long time = playerIn.world.getGameTime();
+                if (this.lastStayChangeTime != time) {
+                    this.setCompanionStaying(!this.isCompanionStaying());
+                    if (this.isCompanionStaying()) {
+                        playerIn.sendMessage(new TranslationTextComponent("event.primalmagic.golem.stay"), Util.DUMMY_UUID);
+                    } else {
+                        playerIn.sendMessage(new TranslationTextComponent("event.primalmagic.golem.follow"), Util.DUMMY_UUID);
+                    }
+                    this.lastStayChangeTime = time;
+                }
+                this.navigator.clearPath();
+                this.setAttackTarget(null);
+                return ActionResultType.SUCCESS;
+            }
             return ActionResultType.PASS;
         } else {
             float healthBefore = this.getHealth();
