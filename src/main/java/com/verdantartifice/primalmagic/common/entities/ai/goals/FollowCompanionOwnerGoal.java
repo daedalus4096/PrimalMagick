@@ -4,12 +4,16 @@ import java.util.EnumSet;
 
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.pathfinding.WalkNodeProcessor;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 
 /**
@@ -88,8 +92,59 @@ public class FollowCompanionOwnerGoal extends Goal {
 
     @Override
     public void tick() {
-        // TODO Auto-generated method stub
-        super.tick();
+        this.entity.getLookController().setLookPositionWithEntity(this.owner, 10.0F, (float)this.entity.getVerticalFaceSpeed());
+        if (--this.timeToRecalcPath <= 0) {
+            this.timeToRecalcPath = 10;
+            if (!this.entity.getLeashed() && !this.entity.isPassenger()) {
+                if (this.entity.getDistanceSq(this.owner) >= 144.0D) {
+                    this.tryToTeleportNearEntity();
+                } else {
+                    this.navigator.tryMoveToEntityLiving(this.owner, this.followSpeed);
+                }
+            }
+        }
     }
 
+    protected void tryToTeleportNearEntity() {
+        BlockPos pos = this.owner.getPosition();
+        for (int attempts = 0; attempts < 10; attempts++) {
+            int dx = this.getRandomNumber(-3, 3);
+            int dy = this.getRandomNumber(-1, 1);
+            int dz = this.getRandomNumber(-3, 3);
+            if (this.tryToTeleportToLocation(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz)) {
+                return;
+            }
+        }
+    }
+    
+    protected boolean tryToTeleportToLocation(int x, int y, int z) {
+        if (Math.abs((double)x - this.owner.getPosX()) < 2.0D && Math.abs((double)z - this.owner.getPosZ()) < 2.0D) {
+            return false;
+        } else if (!this.isTeleportFriendlyBlock(new BlockPos(x, y, z))) {
+            return false;
+        } else {
+            this.entity.setLocationAndAngles((double)x + 0.5D, (double)y, (double)z + 0.5D, this.entity.rotationYaw, this.entity.rotationPitch);
+            this.navigator.clearPath();
+            return true;
+        }
+    }
+    
+    protected boolean isTeleportFriendlyBlock(BlockPos pos) {
+        PathNodeType type = WalkNodeProcessor.getFloorNodeType(this.world, pos.toMutable());
+        if (type != PathNodeType.WALKABLE) {
+            return false;
+        } else {
+            BlockState blockstate = this.world.getBlockState(pos.down());
+            if (!this.teleportToLeaves && blockstate.getBlock() instanceof LeavesBlock) {
+                return false;
+            } else {
+                BlockPos blockpos = pos.subtract(this.entity.getPosition());
+                return this.world.hasNoCollisions(this.entity, this.entity.getBoundingBox().offset(blockpos));
+            }
+        }
+    }
+    
+    protected int getRandomNumber(int min, int max) {
+        return this.entity.getRNG().nextInt(max - min + 1) + min;
+    }
 }
