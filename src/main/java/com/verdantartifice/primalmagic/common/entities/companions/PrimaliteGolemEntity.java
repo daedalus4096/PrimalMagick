@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.common.entities.companions;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
@@ -22,7 +21,6 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
@@ -56,14 +54,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-public class PrimaliteGolemEntity extends GolemEntity implements IAngerable, ICompanion {
+public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAngerable {
     protected static final DataParameter<Integer> ANGER_TIME = EntityDataManager.createKey(PrimaliteGolemEntity.class, DataSerializers.VARINT);
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(PrimaliteGolemEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
     protected static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.convertRange(20, 39);
 
     protected int attackTimer;
     protected UUID angerTarget;
-    protected boolean staying;
 
     public PrimaliteGolemEntity(EntityType<? extends PrimaliteGolemEntity> type, World worldIn) {
         super(type, worldIn);
@@ -88,7 +84,6 @@ public class PrimaliteGolemEntity extends GolemEntity implements IAngerable, ICo
     protected void registerData() {
         super.registerData();
         this.dataManager.register(ANGER_TIME, 0);
-        this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
     }
 
     public static AttributeModifierMap.MutableAttribute getAttributeModifiers() {
@@ -99,6 +94,21 @@ public class PrimaliteGolemEntity extends GolemEntity implements IAngerable, ICo
     protected int decreaseAirSupply(int air) {
         // Golems don't have to breathe
         return air;
+    }
+
+    @Override
+    public boolean onLivingFall(float distance, float damageMultiplier) {
+        return false;
+    }
+
+    @Override
+    public int getTalkInterval() {
+        return 120;
+    }
+
+    @Override
+    public boolean canDespawn(double distanceToClosestPlayer) {
+        return false;
     }
 
     @Override
@@ -145,13 +155,11 @@ public class PrimaliteGolemEntity extends GolemEntity implements IAngerable, ICo
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         this.writeAngerNBT(compound);
-        this.writeCompanionNBT(compound);
     }
 
     @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
-        this.readCompanionNBT(compound);
         if (!this.world.isRemote) {
             this.readAngerNBT((ServerWorld)this.world, compound);
         }
@@ -283,30 +291,5 @@ public class PrimaliteGolemEntity extends GolemEntity implements IAngerable, ICo
     @Override
     public Vector3d getLeashStartPosition() {
         return new Vector3d(0.0D, (double)(0.875F * this.getEyeHeight()), (double)(this.getWidth() * 0.4F));
-    }
-
-    @Override
-    public UUID getCompanionId() {
-        return this.getUniqueID();
-    }
-
-    @Override
-    public UUID getCompanionOwnerId() {
-        return this.dataManager.get(OWNER_UNIQUE_ID).orElse(null);
-    }
-
-    @Override
-    public void setCompanionOwnerId(UUID ownerId) {
-        this.dataManager.set(OWNER_UNIQUE_ID, Optional.ofNullable(ownerId));
-    }
-
-    @Override
-    public boolean isCompanionStaying() {
-        return this.staying;
-    }
-
-    @Override
-    public void setCompanionStaying(boolean stay) {
-        this.staying = stay;
     }
 }
