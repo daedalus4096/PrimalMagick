@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.entities.companions;
 
 import java.util.UUID;
 
+import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtByTargetGoal;
+import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionStayGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.FollowCompanionOwnerGoal;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
@@ -79,12 +81,11 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
         this.goalSelector.addGoal(6, new FollowCompanionOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::func_233680_b_));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, 5, false, false, (p_234199_0_) -> {
-            return p_234199_0_ instanceof IMob && !(p_234199_0_ instanceof CreeperEntity);
-        }));
-        this.targetSelector.addGoal(4, new ResetAngerGoal<>(this, false));
+        this.targetSelector.addGoal(1, new CompanionOwnerHurtByTargetGoal(this));
+        this.targetSelector.addGoal(2, new CompanionOwnerHurtTargetGoal(this));
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::func_233680_b_));
+        this.targetSelector.addGoal(5, new ResetAngerGoal<>(this, false));
     }
 
     @Override
@@ -154,8 +155,17 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
     }
 
     @Override
-    public boolean canAttack(EntityType<?> typeIn) {
-        return typeIn == EntityType.CREEPER ? false : super.canAttack(typeIn);
+    public boolean canAttack(LivingEntity target) {
+        return this.isCompanionOwner(target) ? false : super.canAttack(target);
+    }
+
+    @Override
+    public boolean shouldAttackEntity(LivingEntity target, PlayerEntity owner) {
+        if (target instanceof CreeperEntity) {
+            return false;
+        } else {
+            return super.shouldAttackEntity(target, owner);
+        }
     }
 
     @Override

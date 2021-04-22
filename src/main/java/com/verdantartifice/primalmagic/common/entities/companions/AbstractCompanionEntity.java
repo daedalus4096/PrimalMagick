@@ -7,6 +7,9 @@ import javax.annotation.Nullable;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -101,11 +104,11 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
     /**
      * Return whether the given player is this entity's companion owner.
      * 
-     * @param player the player to test
+     * @param entity the entity to test
      * @return whether the given player is this entity's companion owner
      */
-    public boolean isCompanionOwner(PlayerEntity player) {
-        return player == this.getCompanionOwner();
+    public boolean isCompanionOwner(LivingEntity entity) {
+        return entity instanceof PlayerEntity && ((PlayerEntity)entity) == this.getCompanionOwner();
     }
     
     /**
@@ -124,5 +127,25 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
      */
     public void setCompanionStaying(boolean stay) {
         this.staying = stay;
+    }
+    
+    /**
+     * Get whether this companion entity should target the given target entity when a target goal triggers for it.
+     * 
+     * @param target the entity to be targeted
+     * @param owner the companion's owner
+     * @return whether this companion entity should target the given target entity
+     */
+    public boolean shouldAttackEntity(LivingEntity target, PlayerEntity owner) {
+        if (target instanceof AbstractCompanionEntity) {
+            AbstractCompanionEntity otherCompanion = (AbstractCompanionEntity)target;
+            return !otherCompanion.hasCompanionOwner() || otherCompanion.getCompanionOwner() != owner;
+        } else if (target instanceof PlayerEntity && !owner.canAttackPlayer((PlayerEntity)target)) {
+            return false;
+        } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity)target).isTame()) {
+            return false;
+        } else {
+            return !(target instanceof TameableEntity) || !((TameableEntity)target).isTamed();
+        }
     }
 }
