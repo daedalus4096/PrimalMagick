@@ -215,7 +215,7 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
         float damage = ((int)rawDamage > 0) ? (rawDamage / 2.0F) + (float)this.rand.nextInt((int)rawDamage) : rawDamage;
         boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), damage);
         if (flag) {
-            entityIn.setMotion(entityIn.getMotion().add(0.0D, (double)0.4F, 0.0D));
+            entityIn.setMotion(entityIn.getMotion().add(0.0D, 0.4D, 0.0D));
             this.applyEnchantments(this, entityIn);
         }
         this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
@@ -265,7 +265,7 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
         Item item = itemstack.getItem();
         if (!item.isIn(this.getRepairMaterialTag())) {
             ActionResultType actionResult = super.getEntityInteractionResult(playerIn, hand);
-            if (!actionResult.isSuccessOrConsume() && this.isCompanionOwner(playerIn)) {
+            if (!actionResult.isSuccessOrConsume() && this.isCompanionOwner(playerIn) && !this.world.isRemote) {
                 long time = playerIn.world.getGameTime();
                 if (this.lastStayChangeTime != time) {
                     this.setCompanionStaying(!this.isCompanionStaying());
