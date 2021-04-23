@@ -1,7 +1,11 @@
 package com.verdantartifice.primalmagic.common.entities.companions;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtByTargetGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
@@ -209,6 +213,16 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
     }
 
     @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        PrimaliteGolemEntity.Cracks cracksBefore = this.getCrackLevel();
+        boolean success = super.attackEntityFrom(source, amount);
+        if (success && cracksBefore != this.getCrackLevel()) {
+            this.playSound(SoundEvents.ENTITY_IRON_GOLEM_DAMAGE, 1.0F, 1.0F);
+        }
+        return success;
+    }
+
+    @Override
     public boolean attackEntityAsMob(Entity entityIn) {
         this.attackTimer = 10;
         this.world.setEntityState(this, (byte)4);
@@ -330,5 +344,35 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
     @Override
     public CompanionType getCompanionType() {
         return CompanionType.GOLEM;
+    }
+    
+    public PrimaliteGolemEntity.Cracks getCrackLevel() {
+        return PrimaliteGolemEntity.Cracks.getForHealthPercentage(this.getHealth() / this.getMaxHealth());
+    }
+    
+    public static enum Cracks {
+        NONE(1.0F),
+        LOW(0.75F),
+        MEDIUM(0.5F),
+        HIGH(0.25F);
+        
+        private static final List<PrimaliteGolemEntity.Cracks> SORTED_VALUES = Stream.of(values()).sorted(Comparator.comparingDouble((c) -> {
+            return (double)c.healthPercentage;
+        })).collect(ImmutableList.toImmutableList());
+        
+        private final float healthPercentage;
+        
+        private Cracks(float healthPercentage) {
+            this.healthPercentage = healthPercentage;
+        }
+        
+        public static PrimaliteGolemEntity.Cracks getForHealthPercentage(float percentage) {
+            for (PrimaliteGolemEntity.Cracks cracks : SORTED_VALUES) {
+                if (percentage < cracks.healthPercentage) {
+                    return cracks;
+                }
+            }
+            return NONE;
+        }
     }
 }

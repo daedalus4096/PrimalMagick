@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.renderers.entity.layers.PrimaliteGolemCracksLayer;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.PrimaliteGolemModel;
 import com.verdantartifice.primalmagic.common.entities.companions.PrimaliteGolemEntity;
 
@@ -23,6 +24,7 @@ public class PrimaliteGolemRenderer extends MobRenderer<PrimaliteGolemEntity, Pr
     
     public PrimaliteGolemRenderer(EntityRendererManager rendererManager) {
         super(rendererManager, new PrimaliteGolemModel<>(), 0.7F);
+        this.addLayer(new PrimaliteGolemCracksLayer(this));
     }
 
     @Override
