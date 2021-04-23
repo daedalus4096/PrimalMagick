@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
+
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -147,5 +149,20 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
         } else {
             return !(target instanceof TameableEntity) || !((TameableEntity)target).isTamed();
         }
+    }
+
+    /**
+     * Get the type of companion represented by this entity.
+     * 
+     * @return this entity's companion type
+     */
+    public abstract CompanionType getCompanionType();
+
+    @Override
+    public void remove() {
+        if (this.hasCompanionOwner()) {
+            CompanionManager.removeCompanion(this.getCompanionOwner(), this);
+        }
+        super.remove();
     }
 }

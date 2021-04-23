@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagic.common.entities.companions.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
@@ -92,7 +93,7 @@ public class PrimaliteGolemControllerBlock extends Block implements IInteractWit
                 
                 BlockPos blockpos = helper.translateOffset(1, 2, 0).getPos();
                 PrimaliteGolemEntity golem = EntityTypesPM.PRIMALITE_GOLEM.get().create(world);
-                golem.setCompanionOwnerId(player.getUniqueID());
+                CompanionManager.addCompanion(player, golem);
                 golem.setLocationAndAngles((double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.05D, (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
                 world.addEntity(golem);
 

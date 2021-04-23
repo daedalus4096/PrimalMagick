@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncAttunementsPacket;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncCompanionsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncCooldownsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncProgressPacket;
@@ -90,6 +91,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, OfferingChannelPacket.class, OfferingChannelPacket::encode, OfferingChannelPacket::decode, OfferingChannelPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, PropMarkerPacket.class, PropMarkerPacket::encode, PropMarkerPacket::decode, PropMarkerPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, RemovePropMarkerPacket.class, RemovePropMarkerPacket::encode, RemovePropMarkerPacket::decode, RemovePropMarkerPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SyncCompanionsPacket.class, SyncCompanionsPacket::encode, SyncCompanionsPacket::decode, SyncCompanionsPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

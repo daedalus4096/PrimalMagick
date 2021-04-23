@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
@@ -19,6 +20,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
+import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
@@ -148,6 +150,12 @@ public class PlayerEvents {
             IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
             if (attunements != null) {
                 attunements.sync(player);
+            }
+        }
+        if (immediate || CompanionManager.isSyncScheduled(player)) {
+            IPlayerCompanions companions = PrimalMagicCapabilities.getCompanions(player);
+            if (companions != null) {
+                companions.sync(player);
             }
         }
         if (immediate) {
@@ -353,6 +361,13 @@ public class PlayerEvents {
                 PrimalMagicCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
             } catch (Exception e) {
                 LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
+            }
+            
+            try {
+                CompoundNBT nbtCompanions = PrimalMagicCapabilities.getCompanions(event.getOriginal()).serializeNBT();
+                PrimalMagicCapabilities.getCompanions(event.getPlayer()).deserializeNBT(nbtCompanions);
+            } catch (Exception e) {
+                LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
             }
         }
     }

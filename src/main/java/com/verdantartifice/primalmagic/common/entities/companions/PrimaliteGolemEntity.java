@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.entities.companions;
 
 import java.util.UUID;
 
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtByTargetGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionStayGoal;
@@ -324,5 +325,10 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
     @Override
     public Vector3d getLeashStartPosition() {
         return new Vector3d(0.0D, (double)(0.875F * this.getEyeHeight()), (double)(this.getWidth() * 0.4F));
+    }
+
+    @Override
+    public CompanionType getCompanionType() {
+        return CompanionType.GOLEM;
     }
 }
