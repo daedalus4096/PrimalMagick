@@ -40,6 +40,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
@@ -346,6 +348,11 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
         return CompanionType.GOLEM;
     }
     
+    @Override
+    public boolean isPotionApplicable(EffectInstance potioneffectIn) {
+        return potioneffectIn.getPotion() == Effects.POISON ? false : super.isPotionApplicable(potioneffectIn);
+    }
+
     public PrimaliteGolemEntity.Cracks getCrackLevel() {
         return PrimaliteGolemEntity.Cracks.getForHealthPercentage(this.getHealth() / this.getMaxHealth());
     }
