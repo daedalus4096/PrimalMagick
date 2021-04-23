@@ -79,8 +79,7 @@ public class PrimaliteGolemControllerBlock extends Block implements IInteractWit
     
     @Override
     public ActionResultType onWandRightClick(ItemStack wandStack, World world, PlayerEntity player, BlockPos pos, Direction direction) {
-        // TODO check wanding player's research completion
-        if (!world.isRemote && wandStack.getItem() instanceof IWand) {
+        if (!world.isRemote && wandStack.getItem() instanceof IWand && this.getRequiredResearch().isKnownByStrict(player)) {
             BlockPattern.PatternHelper helper = this.getGolemPattern().match(world, pos);
             if (helper != null) {
                 for (int i = 0; i < this.getGolemPattern().getPalmLength(); i++) {
