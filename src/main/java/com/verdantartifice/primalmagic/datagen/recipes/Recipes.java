@@ -64,6 +64,7 @@ public class Recipes extends RecipeProvider {
         this.registerWandComponentRecipes(consumer);
         this.registerRitualCandleRecipes(consumer);
         this.registerRuneRecipes(consumer);
+        this.registerGolemControllerRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -2321,6 +2322,19 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_VOID.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_POWER")))
+            .build(consumer);
+    }
+
+    protected void registerGolemControllerRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get())
+            .patternLine("PIP")
+            .patternLine("IRI")
+            .patternLine("PIP")
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE_GOLEM")))
+            .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
     }
 }

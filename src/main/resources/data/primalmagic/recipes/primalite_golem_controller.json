@@ -1,0 +1,30 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "PRIMALITE_GOLEM",
+  "mana": {
+    "earth": 20,
+    "sea": 20,
+    "sky": 20,
+    "sun": 20,
+    "moon": 20
+  },
+  "pattern": [
+    "PIP",
+    "IRI",
+    "PIP"
+  ],
+  "key": {
+    "P": {
+      "item": "primalmagic:magitech_parts_enchanted"
+    },
+    "I": {
+      "tag": "primalmagic:ingots/primalite"
+    },
+    "R": {
+      "tag": "forge:storage_blocks/redstone"
+    }
+  },
+  "result": {
+    "item": "primalmagic:primalite_golem_controller"
+  }
+}
