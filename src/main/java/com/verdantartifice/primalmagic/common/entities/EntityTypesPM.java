@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.entities;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
@@ -37,4 +38,9 @@ public class EntityTypesPM {
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new PrimaliteGolemEntity(EntityTypesPM.PRIMALITE_GOLEM.get(), world))
             .build(PrimalMagic.MODID + ":primalite_golem"));
+    public static final RegistryObject<EntityType<HexiumGolemEntity>> HEXIUM_GOLEM = ENTITY_TYPES.register("hexium_golem", () -> EntityType.Builder.<HexiumGolemEntity>create(HexiumGolemEntity::new, EntityClassification.MISC)
+            .size(1.4F, 2.7F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new HexiumGolemEntity(EntityTypesPM.HEXIUM_GOLEM.get(), world))
+            .build(PrimalMagic.MODID + ":hexium_golem"));
 }

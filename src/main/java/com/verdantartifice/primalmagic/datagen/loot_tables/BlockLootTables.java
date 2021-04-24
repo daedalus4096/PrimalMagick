@@ -56,6 +56,8 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.SOUL_ANVIL.get());
         this.registerBasicTable(BlocksPM.RUNIC_GRINDSTONE.get());
         this.registerManaBearingDeviceTable(BlocksPM.HONEY_EXTRACTOR.get());
+        this.registerBasicTable(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get());
+        this.registerBasicTable(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get());
 
         // Register misc loot tables
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());

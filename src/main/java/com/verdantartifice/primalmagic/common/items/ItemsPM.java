@@ -242,6 +242,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> RUNIC_GRINDSTONE = ITEMS.register("runic_grindstone", () -> new BlockItem(BlocksPM.RUNIC_GRINDSTONE.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> HONEY_EXTRACTOR = ITEMS.register("honey_extractor", () -> new BlockItem(BlocksPM.HONEY_EXTRACTOR.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> PRIMALITE_GOLEM_CONTROLLER = ITEMS.register("primalite_golem_controller", () -> new BlockItem(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<BlockItem> HEXIUM_GOLEM_CONTROLLER = ITEMS.register("hexium_golem_controller", () -> new BlockItem(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
 
     // Register miscellaneous block items
     public static final RegistryObject<BlockNamedItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new BlockNamedItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
@@ -461,4 +462,5 @@ public class ItemsPM {
     
     // Register spawn egg items
     public static final RegistryObject<LazySpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = ITEMS.register("primalite_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.PRIMALITE_GOLEM.get(), 0x27E1C7, 0x026278, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<LazySpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = ITEMS.register("hexium_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.HEXIUM_GOLEM.get(), 0x791E29, 0x100736, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
 }

@@ -2336,5 +2336,15 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE_GOLEM")))
             .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get())
+            .patternLine("PIP")
+            .patternLine("IRI")
+            .patternLine("PIP")
+            .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM_GOLEM")))
+            .manaCost(new SourceList().add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
+            .build(consumer);
     }
 }

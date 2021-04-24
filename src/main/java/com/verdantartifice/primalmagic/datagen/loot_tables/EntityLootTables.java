@@ -108,5 +108,6 @@ public class EntityLootTables implements IDataProvider {
         this.registerEmptyLootTable(EntityTypesPM.SPELL_MINE.get());
         this.registerEmptyLootTable(EntityTypesPM.SPELL_PROJECTILE.get());
         this.registerLootTable(EntityTypesPM.PRIMALITE_GOLEM.get(), LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.PRIMALITE_INGOT.get()).acceptFunction(SetCount.builder(RandomValueRange.of(3.0F, 5.0F))))));
+        this.registerLootTable(EntityTypesPM.HEXIUM_GOLEM.get(), LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.HEXIUM_INGOT.get()).acceptFunction(SetCount.builder(RandomValueRange.of(3.0F, 5.0F))))));
     }
 }

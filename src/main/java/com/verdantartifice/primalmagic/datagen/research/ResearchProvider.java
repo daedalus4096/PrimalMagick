@@ -804,6 +804,10 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("HEXIUM_GOLEM", discipline).parent("MASTER_MAGITECH").parent("PRIMALITE_GOLEM")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get()).build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
