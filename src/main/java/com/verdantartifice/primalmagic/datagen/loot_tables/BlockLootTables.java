@@ -11,7 +11,7 @@ import net.minecraft.item.Items;
  * 
  * @author Daedalus4096
  */
-public class BlockLootTables extends BlockLootTableProvider {
+public class BlockLootTables extends AbstractBlockLootTableProvider {
     public BlockLootTables(DataGenerator dataGeneratorIn) {
         super(dataGeneratorIn);
     }

@@ -25,7 +25,6 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
-import net.minecraft.data.LootTableProvider;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -56,7 +55,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public abstract class BlockLootTableProvider extends LootTableProvider {
+public abstract class AbstractBlockLootTableProvider implements IDataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -65,8 +64,7 @@ public abstract class BlockLootTableProvider extends LootTableProvider {
     
     private final DataGenerator generator;
 
-    public BlockLootTableProvider(DataGenerator dataGeneratorIn) {
-        super(dataGeneratorIn);
+    public AbstractBlockLootTableProvider(DataGenerator dataGeneratorIn) {
         this.generator = dataGeneratorIn;
     }
 
