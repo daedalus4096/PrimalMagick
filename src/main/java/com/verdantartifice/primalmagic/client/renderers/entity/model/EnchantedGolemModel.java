@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.entity.model;
 
 import com.google.common.collect.ImmutableList;
-import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.golems.AbstractEnchantedGolemEntity;
 
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class PrimaliteGolemModel<T extends PrimaliteGolemEntity> extends SegmentedModel<T> {
+public class EnchantedGolemModel<T extends AbstractEnchantedGolemEntity> extends SegmentedModel<T> {
     protected final ModelRenderer golemHead;
     protected final ModelRenderer golemBody;
     protected final ModelRenderer golemRightArm;
@@ -23,7 +23,7 @@ public class PrimaliteGolemModel<T extends PrimaliteGolemEntity> extends Segment
     protected final ModelRenderer golemLeftLeg;
     protected final ModelRenderer golemRightLeg;
     
-    public PrimaliteGolemModel() {
+    public EnchantedGolemModel() {
         this.golemHead = (new ModelRenderer(this)).setTextureSize(128, 128);
         this.golemHead.setRotationPoint(0.0F, -7.0F, -2.0F);
         this.golemHead.setTextureOffset(0, 0).addBox(-4.0F, -12.0F, -5.5F, 8.0F, 10.0F, 8.0F, 0.0F);
