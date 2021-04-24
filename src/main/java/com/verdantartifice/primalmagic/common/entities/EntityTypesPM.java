@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.entities;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.entities.companions.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 

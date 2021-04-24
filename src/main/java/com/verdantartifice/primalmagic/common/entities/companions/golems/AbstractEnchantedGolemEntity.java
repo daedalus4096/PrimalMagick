@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.entities.companions;
+package com.verdantartifice.primalmagic.common.entities.companions.golems;
 
 import java.util.Comparator;
 import java.util.List;
@@ -11,15 +11,13 @@ import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHu
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionStayGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.FollowCompanionOwnerGoal;
-import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
@@ -63,21 +61,36 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
- * Definition for a primalite golem entity.  Like an iron golem, but tougher and follows the player as a companion.
+ * Base definition for an enchanted golem entity.  Like an iron golem, but follows the player as a
+ * companion.  Can be made from a variety of magical metals.
  * 
  * @author Daedalus4096
  */
-public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAngerable {
-    protected static final DataParameter<Integer> ANGER_TIME = EntityDataManager.createKey(PrimaliteGolemEntity.class, DataSerializers.VARINT);
+public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEntity implements IAngerable {
+    protected static final DataParameter<Integer> ANGER_TIME = EntityDataManager.createKey(AbstractEnchantedGolemEntity.class, DataSerializers.VARINT);
     protected static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.convertRange(20, 39);
 
     protected int attackTimer;
     protected UUID angerTarget;
     protected long lastStayChangeTime;
 
-    public PrimaliteGolemEntity(EntityType<? extends PrimaliteGolemEntity> type, World worldIn) {
+    public AbstractEnchantedGolemEntity(EntityType<? extends AbstractEnchantedGolemEntity> type, World worldIn) {
         super(type, worldIn);
         this.stepHeight = 1.0F;
+    }
+
+    @Override
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
+        this.writeAngerNBT(compound);
+    }
+
+    @Override
+    public void readAdditional(CompoundNBT compound) {
+        super.readAdditional(compound);
+        if (!this.world.isRemote) {
+            this.readAngerNBT((ServerWorld)this.world, compound);
+        }
     }
 
     @Override
@@ -99,10 +112,6 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
     protected void registerData() {
         super.registerData();
         this.dataManager.register(ANGER_TIME, 0);
-    }
-
-    public static AttributeModifierMap.MutableAttribute getAttributeModifiers() {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 100.0D).createMutableAttribute(Attributes.ARMOR, 2.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D).createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1.0D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 15.0D);
     }
 
     @Override
@@ -176,20 +185,6 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
-        this.writeAngerNBT(compound);
-    }
-
-    @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
-        if (!this.world.isRemote) {
-            this.readAngerNBT((ServerWorld)this.world, compound);
-        }
-    }
-
-    @Override
     public int getAngerTime() {
         return this.dataManager.get(ANGER_TIME);
     }
@@ -215,8 +210,17 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
     }
 
     @Override
+    public CompanionType getCompanionType() {
+        return CompanionType.GOLEM;
+    }
+
+    public AbstractEnchantedGolemEntity.Cracks getCrackLevel() {
+        return AbstractEnchantedGolemEntity.Cracks.getForHealthPercentage(this.getHealth() / this.getMaxHealth());
+    }
+    
+    @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        PrimaliteGolemEntity.Cracks cracksBefore = this.getCrackLevel();
+        AbstractEnchantedGolemEntity.Cracks cracksBefore = this.getCrackLevel();
         boolean success = super.attackEntityFrom(source, amount);
         if (success && cracksBefore != this.getCrackLevel()) {
             this.playSound(SoundEvents.ENTITY_IRON_GOLEM_DAMAGE, 1.0F, 1.0F);
@@ -268,13 +272,9 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
         return SoundEvents.ENTITY_IRON_GOLEM_DEATH;
     }
     
-    protected ITag<Item> getRepairMaterialTag() {
-        return ItemTagsPM.INGOTS_PRIMALITE;
-    }
+    protected abstract ITag<Item> getRepairMaterialTag();
     
-    protected float getRepairHealAmount() {
-        return 25.0F;
-    }
+    protected abstract float getRepairHealAmount();
 
     @Override
     protected ActionResultType getEntityInteractionResult(PlayerEntity playerIn, Hand hand) {
@@ -344,26 +344,17 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
     }
 
     @Override
-    public CompanionType getCompanionType() {
-        return CompanionType.GOLEM;
-    }
-    
-    @Override
     public boolean isPotionApplicable(EffectInstance potioneffectIn) {
         return potioneffectIn.getPotion() == Effects.POISON ? false : super.isPotionApplicable(potioneffectIn);
     }
 
-    public PrimaliteGolemEntity.Cracks getCrackLevel() {
-        return PrimaliteGolemEntity.Cracks.getForHealthPercentage(this.getHealth() / this.getMaxHealth());
-    }
-    
     public static enum Cracks {
         NONE(1.0F),
         LOW(0.75F),
         MEDIUM(0.5F),
         HIGH(0.25F);
         
-        private static final List<PrimaliteGolemEntity.Cracks> SORTED_VALUES = Stream.of(values()).sorted(Comparator.comparingDouble((c) -> {
+        private static final List<AbstractEnchantedGolemEntity.Cracks> SORTED_VALUES = Stream.of(values()).sorted(Comparator.comparingDouble((c) -> {
             return (double)c.healthPercentage;
         })).collect(ImmutableList.toImmutableList());
         
@@ -373,8 +364,8 @@ public class PrimaliteGolemEntity extends AbstractCompanionEntity implements IAn
             this.healthPercentage = healthPercentage;
         }
         
-        public static PrimaliteGolemEntity.Cracks getForHealthPercentage(float percentage) {
-            for (PrimaliteGolemEntity.Cracks cracks : SORTED_VALUES) {
+        public static AbstractEnchantedGolemEntity.Cracks getForHealthPercentage(float percentage) {
+            for (AbstractEnchantedGolemEntity.Cracks cracks : SORTED_VALUES) {
                 if (percentage < cracks.healthPercentage) {
                     return cracks;
                 }

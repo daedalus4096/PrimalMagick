@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.entity.layers.PrimaliteGolemCracksLayer;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.PrimaliteGolemModel;
-import com.verdantartifice.primalmagic.common.entities.companions.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.entity.model;
 
 import com.google.common.collect.ImmutableList;
-import com.verdantartifice.primalmagic.common.entities.companions.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;

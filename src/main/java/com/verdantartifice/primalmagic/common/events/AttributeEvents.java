@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagic.common.entities.companions.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
