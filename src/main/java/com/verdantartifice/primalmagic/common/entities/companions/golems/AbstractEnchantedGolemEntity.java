@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
+import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtByTargetGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionStayGoal;
@@ -38,6 +39,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.ITag;
@@ -345,7 +347,8 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
 
     @Override
     public boolean isPotionApplicable(EffectInstance potioneffectIn) {
-        return potioneffectIn.getPotion() == Effects.POISON ? false : super.isPotionApplicable(potioneffectIn);
+        Effect effect = potioneffectIn.getPotion();
+        return (effect == Effects.POISON || effect == EffectsPM.BLEEDING.get()) ? false : super.isPotionApplicable(potioneffectIn);
     }
 
     public static enum Cracks {
