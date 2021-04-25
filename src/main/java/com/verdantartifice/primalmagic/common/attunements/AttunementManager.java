@@ -32,10 +32,6 @@ import net.minecraft.util.text.TranslationTextComponent;
  * @see {@link com.verdantartifice.primalmagic.common.attunements.AttunementType}
  */
 public class AttunementManager {
-    public static final int THRESHOLD_MINOR = 30;
-    public static final int THRESHOLD_LESSER = 60;
-    public static final int THRESHOLD_GREATER = 90;
-    
     protected static final List<AttunementAttributeModifier> MODIFIERS = new ArrayList<>();
     
     // Set of unique IDs of players that need their research synced to their client
