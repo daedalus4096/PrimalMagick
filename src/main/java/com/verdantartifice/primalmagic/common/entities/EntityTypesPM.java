@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HallowsteelGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
@@ -51,4 +52,9 @@ public class EntityTypesPM {
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new HallowsteelGolemEntity(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), world))
             .build(PrimalMagic.MODID + ":hallowsteel_golem"));
+    public static final RegistryObject<EntityType<BasicEarthPixieEntity>> BASIC_EARTH_PIXIE = ENTITY_TYPES.register("pixie_basic_earth", () -> EntityType.Builder.<BasicEarthPixieEntity>create(BasicEarthPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.9F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new BasicEarthPixieEntity(EntityTypesPM.BASIC_EARTH_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_basic_earth"));
 }

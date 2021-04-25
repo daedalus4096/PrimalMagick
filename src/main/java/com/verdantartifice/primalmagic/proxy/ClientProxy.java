@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagic.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagic.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagic.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
+import com.verdantartifice.primalmagic.client.renderers.entity.BasicEarthPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HexiumGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteGolemRenderer;
@@ -109,6 +110,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_EARTH_PIXIE.get(), BasicEarthPixieRenderer::new);
     }
     
     private void registerItemProperties(FMLClientSetupEvent event) {

@@ -67,7 +67,8 @@ public interface IPlayerCompanions extends INBTSerializable<CompoundNBT> {
     public void sync(@Nullable ServerPlayerEntity player);
     
     public enum CompanionType implements IStringSerializable {
-        GOLEM("golem", 1);
+        GOLEM("golem", 1),
+        PIXIE("pixie", 3);
         
         private String name;
         private int limit;
