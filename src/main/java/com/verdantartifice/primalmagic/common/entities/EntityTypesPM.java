@@ -53,7 +53,7 @@ public class EntityTypesPM {
             .setCustomClientFactory((spawnEntity, world) -> new HallowsteelGolemEntity(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), world))
             .build(PrimalMagic.MODID + ":hallowsteel_golem"));
     public static final RegistryObject<EntityType<BasicEarthPixieEntity>> BASIC_EARTH_PIXIE = ENTITY_TYPES.register("pixie_basic_earth", () -> EntityType.Builder.<BasicEarthPixieEntity>create(BasicEarthPixieEntity::new, EntityClassification.CREATURE)
-            .size(0.5F, 0.9F)
+            .size(0.5F, 0.5F)
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new BasicEarthPixieEntity(EntityTypesPM.BASIC_EARTH_PIXIE.get(), world))
             .build(PrimalMagic.MODID + ":pixie_basic_earth"));

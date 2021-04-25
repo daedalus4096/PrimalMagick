@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.BasicEarthPixieModel;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
 
@@ -15,8 +16,7 @@ import net.minecraft.util.math.MathHelper;
  * @author Daedalus4096
  */
 public class BasicEarthPixieRenderer extends MobRenderer<BasicEarthPixieEntity, BasicEarthPixieModel> {
-    // TODO Create custom renderer
-    private static final ResourceLocation BAT_TEXTURES = new ResourceLocation("textures/entity/bat.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/pixie.png");
 
     public BasicEarthPixieRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new BasicEarthPixieModel(), 0.25F);
@@ -24,12 +24,12 @@ public class BasicEarthPixieRenderer extends MobRenderer<BasicEarthPixieEntity, 
 
     @Override
     public ResourceLocation getEntityTexture(BasicEarthPixieEntity entity) {
-        return BAT_TEXTURES;
+        return TEXTURE;
     }
 
     @Override
     protected void preRenderCallback(BasicEarthPixieEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
-        matrixStackIn.scale(0.35F, 0.35F, 0.35F);
+        matrixStackIn.scale(0.25F, 0.25F, 0.25F);
     }
 
     @Override
