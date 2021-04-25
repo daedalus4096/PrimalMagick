@@ -40,6 +40,7 @@ public class EntityTypesPM {
             .build(PrimalMagic.MODID + ":primalite_golem"));
     public static final RegistryObject<EntityType<HexiumGolemEntity>> HEXIUM_GOLEM = ENTITY_TYPES.register("hexium_golem", () -> EntityType.Builder.<HexiumGolemEntity>create(HexiumGolemEntity::new, EntityClassification.MISC)
             .size(1.4F, 2.7F)
+            .immuneToFire()
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new HexiumGolemEntity(EntityTypesPM.HEXIUM_GOLEM.get(), world))
             .build(PrimalMagic.MODID + ":hexium_golem"));
