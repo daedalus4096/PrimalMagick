@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.entities;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.entities.companions.golems.HallowsteelGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
@@ -44,4 +45,10 @@ public class EntityTypesPM {
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new HexiumGolemEntity(EntityTypesPM.HEXIUM_GOLEM.get(), world))
             .build(PrimalMagic.MODID + ":hexium_golem"));
+    public static final RegistryObject<EntityType<HallowsteelGolemEntity>> HALLOWSTEEL_GOLEM = ENTITY_TYPES.register("hallowsteel_golem", () -> EntityType.Builder.<HallowsteelGolemEntity>create(HallowsteelGolemEntity::new, EntityClassification.MISC)
+            .size(1.4F, 2.7F)
+            .immuneToFire()
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new HallowsteelGolemEntity(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), world))
+            .build(PrimalMagic.MODID + ":hallowsteel_golem"));
 }

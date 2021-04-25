@@ -35,6 +35,7 @@ public class ModLifecycleEvents {
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityType.VILLAGER);
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityTypesPM.PRIMALITE_GOLEM.get());
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityTypesPM.HEXIUM_GOLEM.get());
+        InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityTypesPM.HALLOWSTEEL_GOLEM.get());
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.ENDER_DRAGON);
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.WITHER);
         InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.WOLF);

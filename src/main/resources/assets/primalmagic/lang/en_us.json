@@ -161,6 +161,7 @@
     "block.primalmagic.honey_extractor": "Honey Extractor",
     "block.primalmagic.primalite_golem_controller": "Primalite Golem Controller",
     "block.primalmagic.hexium_golem_controller": "Hexium Golem Controller",
+    "block.primalmagic.hallowsteel_golem_controller": "Hallowsteel Golem Controller",
     "block.primalmagic.pyramid": "Debug Pyramid",
     
     "item.primalmagic.grimoire": "Grimoire",
@@ -351,9 +352,11 @@
     "item.primalmagic.pure_primal_staff_core_item": "Pure Primal Staff Core",
     "item.primalmagic.primalite_golem_spawn_egg": "Primalite Golem Spawn Egg",
     "item.primalmagic.hexium_golem_spawn_egg": "Hexium Golem Spawn Egg",
+    "item.primalmagic.hallowsteel_golem_spawn_egg": "Hallowsteel Golem Spawn Egg",
     
     "entity.primalmagic.primalite_golem": "Primalite Golem",
     "entity.primalmagic.hexium_golem": "Hexium Golem",
+    "entity.primalmagic.hallowsteel_golem": "Hallowsteel Golem",
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",
@@ -1056,6 +1059,10 @@
     "primalmagic.research.hexium_golem.title": "Hexium Golem",
     "primalmagic.research.hexium_golem.text.stage.1": "Hexium golem: Lorem ipsum",
     "primalmagic.research.hexium_golem.text.stage.2": "Hexium golem research complete!",
+    
+    "primalmagic.research.hallowsteel_golem.title": "Hallowsteel Golem",
+    "primalmagic.research.hallowsteel_golem.text.stage.1": "Hallowsteel golem: Lorem ipsum",
+    "primalmagic.research.hallowsteel_golem.text.stage.2": "Hallowsteel golem research complete!",
     
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble: lorem ipsum",
