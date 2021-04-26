@@ -2,8 +2,10 @@ package com.verdantartifice.primalmagic.common.entities.companions.pixies;
 
 import java.util.UUID;
 
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -50,6 +52,10 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
 
     public static AttributeModifierMap.MutableAttribute getAttributeModifiers() {
         return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 6.0D);
+    }
+    
+    protected Source getPixieSource() {
+        return Source.EARTH;
     }
 
     @Override
@@ -118,6 +124,9 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
         
         if (!this.world.isRemote) {
             this.func_241359_a_((ServerWorld)this.world, true);
+            if (this.isAlive()) {
+                this.world.setEntityState(this, (byte)15);
+            }
         }
     }
 
@@ -125,6 +134,19 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
     public void tick() {
         super.tick();
         this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
+    }
+
+    /**
+     * Handler for {@link World#setEntityState}
+     */
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void handleStatusUpdate(byte id) {
+        if (id == 15) {
+            FxDispatcher.INSTANCE.pixieDust(this.getPosX() + (this.rand.nextGaussian() * 0.25D), this.getPosY() + 0.25D, this.getPosZ() + (this.rand.nextGaussian() * 0.25D), this.getPixieSource().getColor());
+        } else {
+            super.handleStatusUpdate(id);
+        }
     }
 
     @Override
