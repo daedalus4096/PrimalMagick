@@ -466,5 +466,5 @@ public class ItemsPM {
     public static final RegistryObject<LazySpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = ITEMS.register("primalite_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.PRIMALITE_GOLEM.get(), 0x27E1C7, 0x026278, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<LazySpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = ITEMS.register("hexium_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.HEXIUM_GOLEM.get(), 0x791E29, 0x100736, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<LazySpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = ITEMS.register("hallowsteel_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.HALLOWSTEEL_GOLEM.get(), 0xFDFFE0, 0xEDE1A2, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<PixieItem> BASIC_EARTH_PIXIE = ITEMS.register("pixie_basic_earth", () -> new PixieItem(() -> EntityTypesPM.BASIC_EARTH_PIXIE.get(), Source.EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<PixieItem> BASIC_EARTH_PIXIE = ITEMS.register("pixie_basic_earth", () -> new PixieItem(() -> EntityTypesPM.BASIC_EARTH_PIXIE.get(), Source.EARTH, new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(16)));
 }
