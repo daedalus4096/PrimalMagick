@@ -8,6 +8,9 @@ import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.FollowCompanionOwnerGoal;
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.block.BlockState;
@@ -25,6 +28,7 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -68,6 +72,10 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
     
     protected Source getPixieSource() {
         return Source.EARTH;
+    }
+    
+    protected PixieItem getSpawnItem() {
+        return ItemsPM.BASIC_EARTH_PIXIE.get();
     }
 
     @Override
@@ -224,8 +232,24 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
 
     @Override
     protected ActionResultType getEntityInteractionResult(PlayerEntity playerIn, Hand hand) {
-        // TODO Auto-generated method stub
-        return super.getEntityInteractionResult(playerIn, hand);
+        ActionResultType actionResult = super.getEntityInteractionResult(playerIn, hand);
+        if (!actionResult.isSuccessOrConsume() && !this.world.isRemote && this.isCompanionOwner(playerIn)) {
+            ItemStack held = playerIn.getHeldItem(hand);
+            ItemStack stack = new ItemStack(this.getSpawnItem());
+            if (held.isItemEqual(stack)) {
+                held.grow(1);
+            } else if (held.isEmpty()) {
+                playerIn.setHeldItem(hand, stack);
+            } else {
+                return ActionResultType.FAIL;
+            }
+            CompanionManager.removeCompanion(this.getCompanionOwner(), this);
+            this.playSound(this.getHurtSound(null), 1.0F, 1.0F);
+            this.remove();
+            return ActionResultType.SUCCESS;
+        } else {
+            return actionResult;
+        }
     }
 
     @Override
