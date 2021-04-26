@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.entities.companions.pixies;
 
+import java.util.EnumSet;
+import java.util.Random;
 import java.util.UUID;
 
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
@@ -17,6 +19,8 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
+import net.minecraft.entity.ai.controller.MovementController;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.passive.IFlyingAnimal;
@@ -83,6 +87,7 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(2, new FollowCompanionOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
+        this.goalSelector.addGoal(3, new BasicEarthPixieEntity.RandomFlyGoal(this, 16.0F));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
@@ -249,5 +254,55 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
         nav.setCanOpenDoors(false);
         nav.setCanEnterDoors(true);
         return nav;
+    }
+    
+    protected static class RandomFlyGoal extends Goal {
+        protected final BasicEarthPixieEntity pixie;
+        protected final PathNavigator navigator;
+        protected final float wanderDistance;
+        protected int timeToRecalcPath;
+        
+        public RandomFlyGoal(BasicEarthPixieEntity pixie, float wanderDistance) {
+            this.pixie = pixie;
+            this.navigator = this.pixie.getNavigator();
+            this.wanderDistance = wanderDistance;
+            this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+        }
+
+        @Override
+        public boolean shouldExecute() {
+            MovementController movementcontroller = this.pixie.getMoveHelper();
+            if (!movementcontroller.isUpdating()) {
+                return true;
+            } else {
+                double dx = movementcontroller.getX() - this.pixie.getPosX();
+                double dy = movementcontroller.getY() - this.pixie.getPosY();
+                double dz = movementcontroller.getZ() - this.pixie.getPosZ();
+                double dist = dx * dx + dy * dy + dz * dz;
+                return dist < 1.0D || dist > 3600.0D;
+            }
+        }
+
+        @Override
+        public boolean shouldContinueExecuting() {
+            return this.timeToRecalcPath > 0;
+        }
+
+        @Override
+        public void startExecuting() {
+            this.timeToRecalcPath = 0;
+        }
+
+        @Override
+        public void tick() {
+            if (--this.timeToRecalcPath <= 0) {
+                this.timeToRecalcPath = 40;
+                Random random = this.pixie.getRNG();
+                double d0 = this.pixie.getPosX() + (double)((random.nextFloat() * 2.0F - 1.0F) * this.wanderDistance);
+                double d1 = this.pixie.getPosY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+                double d2 = this.pixie.getPosZ() + (double)((random.nextFloat() * 2.0F - 1.0F) * this.wanderDistance);
+                this.navigator.tryMoveToXYZ(d0, d1, d2, 1.0D);
+            }
+        }
     }
 }
