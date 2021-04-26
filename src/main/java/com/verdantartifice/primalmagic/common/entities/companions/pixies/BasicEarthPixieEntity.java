@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
+import com.verdantartifice.primalmagic.common.entities.ai.goals.FollowCompanionOwnerGoal;
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -15,11 +16,17 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.controller.FlyingMovementController;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.FlyingPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -39,7 +46,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IAngerable {
+public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IAngerable, IFlyingAnimal {
     protected static final DataParameter<Integer> ANGER_TIME = EntityDataManager.createKey(BasicEarthPixieEntity.class, DataSerializers.VARINT);
     protected static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.convertRange(20, 39);
 
@@ -48,10 +55,11 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
 
     public BasicEarthPixieEntity(EntityType<? extends BasicEarthPixieEntity> type, World worldIn) {
         super(type, worldIn);
+        this.moveController = new FlyingMovementController(this, 20, false);
     }
 
     public static AttributeModifierMap.MutableAttribute getAttributeModifiers() {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 6.0D);
+        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 6.0D).createMutableAttribute(Attributes.FLYING_SPEED, 0.6D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D);
     }
     
     protected Source getPixieSource() {
@@ -74,7 +82,9 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
 
     @Override
     protected void registerGoals() {
-        // TODO Auto-generated method stub
+        this.goalSelector.addGoal(2, new FollowCompanionOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
+        this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
+        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
     @Override
@@ -231,5 +241,13 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
     @Override
     public boolean canBeLeashedTo(PlayerEntity player) {
         return false;
+    }
+
+    @Override
+    protected PathNavigator createNavigator(World worldIn) {
+        FlyingPathNavigator nav = new FlyingPathNavigator(this, worldIn);
+        nav.setCanOpenDoors(false);
+        nav.setCanEnterDoors(true);
+        return nav;
     }
 }
