@@ -254,12 +254,6 @@ public class BasicEarthPixieEntity extends AbstractCompanionEntity implements IA
         return CompanionType.PIXIE;
     }
 
-    @Override
-    public boolean attackEntityAsMob(Entity entityIn) {
-        // TODO Auto-generated method stub
-        return super.attackEntityAsMob(entityIn);
-    }
-
     @OnlyIn(Dist.CLIENT)
     public int getAttackTimer() {
         return this.attackTimer;
