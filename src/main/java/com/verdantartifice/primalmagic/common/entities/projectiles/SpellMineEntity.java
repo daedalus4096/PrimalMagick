@@ -12,8 +12,6 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -43,7 +41,7 @@ public class SpellMineEntity extends Entity {
     protected static final int ARMING_TIME = 60;        // Number of ticks before switching to an armed state
     
     protected SpellPackage spell;
-    protected PlayerEntity caster;
+    protected LivingEntity caster;
     protected UUID casterId;
     protected ItemStack spellSource;
     protected int currentLife = 0;
@@ -53,7 +51,7 @@ public class SpellMineEntity extends Entity {
         this.spell = null;
     }
     
-    public SpellMineEntity(World world, Vector3d pos, PlayerEntity caster, SpellPackage spell, ItemStack spellSource, int duration) {
+    public SpellMineEntity(World world, Vector3d pos, LivingEntity caster, SpellPackage spell, ItemStack spellSource, int duration) {
         super(EntityTypesPM.SPELL_MINE.get(), world);
         this.setPosition(pos.x, pos.y, pos.z);
         this.spell = spell;
@@ -97,12 +95,12 @@ public class SpellMineEntity extends Entity {
     }
     
     @Nullable
-    public PlayerEntity getCaster() {
+    public LivingEntity getCaster() {
         if (this.caster == null && this.casterId != null && this.world instanceof ServerWorld) {
             // If the caster cache is empty, find the entity matching the caster's unique ID
-            ServerPlayerEntity player = ((ServerWorld)this.world).getServer().getPlayerList().getPlayerByUUID(this.casterId);
-            if (player != null) {
-                this.caster = player;
+            Entity entity = ((ServerWorld)this.world).getEntityByUuid(this.casterId);
+            if (entity != null && entity instanceof LivingEntity) {
+                this.caster = (LivingEntity)entity;
             } else {
                 this.casterId = null;
             }

@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 /**
  * Definition for a block breaking spell.  Breaks the target block over time without further interaction
  * from the player, with the time required increasing with the block's hardness.  Has no effect on
- * entities.
+ * entities.  Has no effect when cast by non-players.
  * 
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.misc.BlockBreaker}
@@ -53,14 +54,14 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
-        if (target != null && target.getType() == RayTraceResult.Type.BLOCK) {
+    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
+        if (target != null && target.getType() == RayTraceResult.Type.BLOCK && caster instanceof PlayerEntity) {
             // Create and enqueue a block breaker for the target block
             BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
             BlockPos pos = blockTarget.getPos();
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
-            BlockBreaker.enqueue(world, new BlockBreaker(this.getModdedPropertyValue("power", spell, spellSource), pos, state, durability, durability, caster));
+            BlockBreaker.enqueue(world, new BlockBreaker(this.getModdedPropertyValue("power", spell, spellSource), pos, state, durability, durability, (PlayerEntity)caster));
         }
     }
 

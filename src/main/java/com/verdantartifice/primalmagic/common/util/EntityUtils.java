@@ -12,9 +12,9 @@ import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrival
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -177,13 +177,13 @@ public class EntityUtils {
      * @param world the world in which to teleport
      * @param destination the point to which to teleport
      */
-    public static void teleportPlayer(PlayerEntity player, World world, Vector3d destination) {
+    public static void teleportEntity(LivingEntity player, World world, Vector3d destination) {
         // Show a teleport particle effect at the destination
         PacketHandler.sendToAllAround(new TeleportArrivalPacket(destination.x, destination.y, destination.z), world.getDimensionKey(), new BlockPos(destination), 64.0D);
         
         if (!world.isRemote && player instanceof ServerPlayerEntity) {
-            ServerPlayerEntity spe = (ServerPlayerEntity)player;
-            if (spe.connection.getNetworkManager().isChannelOpen() && spe.world == world && !spe.isSleeping()) {
+            boolean isPlayer = (player instanceof ServerPlayerEntity);
+            if ((!isPlayer || ((ServerPlayerEntity)player).connection.getNetworkManager().isChannelOpen()) && player.world == world && !player.isSleeping()) {
                 if (player.isPassenger()) {
                     player.stopRiding();
                 }

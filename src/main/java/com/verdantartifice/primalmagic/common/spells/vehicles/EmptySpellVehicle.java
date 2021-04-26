@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.common.spells.vehicles;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -18,7 +18,7 @@ public class EmptySpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "none";
 
     @Override
-    public void execute(SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
+    public void execute(SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
         // Do nothing
     }
     

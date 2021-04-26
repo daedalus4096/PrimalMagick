@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -193,7 +194,7 @@ public class SpellManager {
         }
     }
     
-    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull PlayerEntity caster, @Nonnull ItemStack spellSource, boolean allowMine) {
+    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull LivingEntity caster, @Nonnull ItemStack spellSource, boolean allowMine) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (!world.isRemote && spell.getPayload() != null) {
             Vector3d hitVec = result.getHitVec();

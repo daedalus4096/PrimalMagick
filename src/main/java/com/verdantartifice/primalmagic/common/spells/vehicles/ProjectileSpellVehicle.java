@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.mods.ForkSpellMod;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -34,7 +34,7 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     }
 
     @Override
-    public void execute(SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
+    public void execute(SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
         if (spell.getPayload() != null) {
             ForkSpellMod forkMod = spell.getMod(ForkSpellMod.class, "forks");
             Vector3d baseLookVector = caster.getLook(1.0F);

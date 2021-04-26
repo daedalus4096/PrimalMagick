@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ILiquidContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
@@ -26,7 +27,7 @@ import net.minecraftforge.common.util.Constants;
 
 /**
  * Base class for a fluid conjuration spell.  Creates a source block of fluid at the designated point.
- * Works similarly to placing fluid from a bucket.
+ * Works similarly to placing fluid from a bucket.  Has no effect when cast by non-players.
  * 
  * @author Daedalus4096
  */
@@ -39,7 +40,12 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
     }
     
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
+    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
+        if (!(caster instanceof PlayerEntity)) {
+            return;
+        }
+        
+        PlayerEntity player = (PlayerEntity)caster;
         if (target != null) {
             ItemStack stack = this.getSimulatedItemStack(this.fluid);
             if (target.getType() == RayTraceResult.Type.BLOCK) {
@@ -47,18 +53,18 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
                 // or at the adjacent block position if it's not.
                 BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
                 BlockPos targetPos = blockTarget.getPos();
-                if (world.isBlockModifiable(caster, targetPos) && caster.canPlayerEdit(targetPos, blockTarget.getFace(), stack)) {
+                if (world.isBlockModifiable(player, targetPos) && player.canPlayerEdit(targetPos, blockTarget.getFace(), stack)) {
                     // Only place if the caster is allowed to modify the target location
                     BlockState state = world.getBlockState(targetPos);
                     BlockPos placePos = (state.getBlock() instanceof ILiquidContainer && this.fluid == Fluids.WATER) ? targetPos : targetPos.offset(blockTarget.getFace());
-                    this.placeFluid(caster, world, placePos, blockTarget);
+                    this.placeFluid(player, world, placePos, blockTarget);
                 }
             } else if (target.getType() == RayTraceResult.Type.ENTITY) {
                 // If the target is an entity, place the fluid at the entity's position
                 BlockRayTraceResult blockTarget = RayTraceUtils.getBlockResultFromEntityResult((EntityRayTraceResult)target);
-                if (world.isBlockModifiable(caster, blockTarget.getPos()) && caster.canPlayerEdit(blockTarget.getPos(), blockTarget.getFace(), stack)) {
+                if (world.isBlockModifiable(player, blockTarget.getPos()) && player.canPlayerEdit(blockTarget.getPos(), blockTarget.getFace(), stack)) {
                     // Only place if the caster is allowed to modify the target location
-                    this.placeFluid(caster, world, blockTarget.getPos(), blockTarget);
+                    this.placeFluid(player, world, blockTarget.getPos(), blockTarget);
                 }
             }
         }

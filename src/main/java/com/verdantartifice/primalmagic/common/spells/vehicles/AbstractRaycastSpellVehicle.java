@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.mods.ForkSpellMod;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -30,17 +30,17 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
     /**
      * Determine how far out the spell vehicle should look for a target along its direction vector.
      * 
-     * @param caster the player that originally casted the spell
+     * @param caster the entity that originally casted the spell
      * @return the distance, in blocks, that the spell vehicle should search
      */
-    protected abstract double getReachDistance(@Nonnull PlayerEntity caster);
+    protected abstract double getReachDistance(@Nonnull LivingEntity caster);
     
     protected void drawFx(@Nonnull World world, @Nonnull SpellPackage spell, Vector3d source, Vector3d target) {
         // Do nothing by default
     }
     
     @Override
-    public void execute(SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
+    public void execute(SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
         if (spell.getPayload() != null) {
             ForkSpellMod forkMod = spell.getMod(ForkSpellMod.class, "forks");
             Vector3d baseLookVector = caster.getLook(1.0F);

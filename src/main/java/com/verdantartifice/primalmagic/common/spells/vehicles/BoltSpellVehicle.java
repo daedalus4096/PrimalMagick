@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -29,7 +29,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     }
 
     @Override
-    protected double getReachDistance(PlayerEntity caster) {
+    protected double getReachDistance(LivingEntity caster) {
         return 6.0D + (2.0D * this.getPropertyValue("range"));
     }
 

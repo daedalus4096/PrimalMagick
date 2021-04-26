@@ -12,7 +12,8 @@ import net.minecraft.world.World;
 
 /**
  * Definition for a water conjuration spell.  Creates a source block of water at the designated point.
- * Works similarly to placing water from a bucket.  Most of the work is done in the base class.
+ * Works similarly to placing water from a bucket.  Most of the work is done in the base class.  Has 
+ * no effect when cast by non-players.
  * 
  * @author Daedalus4096
  */

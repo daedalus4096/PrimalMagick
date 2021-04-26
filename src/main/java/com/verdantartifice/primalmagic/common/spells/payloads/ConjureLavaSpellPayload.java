@@ -12,7 +12,8 @@ import net.minecraft.world.World;
 
 /**
  * Definition for a lava conjuration spell.  Creates a source block of lava at the designated point.
- * Works similarly to placing lava from a bucket.  Most of the work is done in the base class.
+ * Works similarly to placing lava from a bucket.  Most of the work is done in the base class.  Has
+ * no effect when cast by non-players.
  * 
  * @author Daedalus4096
  */

@@ -9,8 +9,8 @@ import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.FluidTags;
@@ -68,7 +68,7 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, PlayerEntity caster, ItemStack spellSource) {
+    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
         if (burstPoint != null) {
             // Do nothing if this is a burst spell
             return;

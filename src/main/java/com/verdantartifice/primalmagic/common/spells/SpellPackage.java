@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -177,12 +178,14 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
         return new SourceList().add(source, (baseManaCost + baseModifier) * multiplier);
     }
     
-    public void cast(World world, PlayerEntity caster, ItemStack spellSource) {
+    public void cast(World world, LivingEntity caster, ItemStack spellSource) {
         if (this.payload != null) {
             this.payload.playSounds(world, caster.getPosition());
         }
         if (this.vehicle != null) {
-            StatsManager.incrementValue(caster, StatsPM.SPELLS_CAST);
+            if (caster instanceof PlayerEntity) {
+                StatsManager.incrementValue((PlayerEntity)caster, StatsPM.SPELLS_CAST);
+            }
             this.vehicle.execute(this, world, caster, spellSource);
         }
     }

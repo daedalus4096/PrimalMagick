@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,8 +31,8 @@ public class EntityEvents {
     public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
         // If the shooter has the Enderport enchantment, teleport to the hit location
         Entity shooter = event.getArrow().getShooter();
-        if (shooter instanceof PlayerEntity && EnchantmentHelperPM.hasEnderport((PlayerEntity)shooter)) {
-            EntityUtils.teleportPlayer((PlayerEntity)shooter, event.getArrow().world, event.getRayTraceResult().getHitVec());
+        if (shooter instanceof LivingEntity && EnchantmentHelperPM.hasEnderport((LivingEntity)shooter)) {
+            EntityUtils.teleportEntity((LivingEntity)shooter, event.getArrow().world, event.getRayTraceResult().getHitVec());
         }
     }
 }
