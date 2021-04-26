@@ -38,36 +38,39 @@ public class BasicEarthPixieModel extends SegmentedModel<BasicEarthPixieEntity> 
         this.body.setTextureOffset(0, 13).addBox(-3.0F, 0.0F, -2.0F, 6.0F, 11.0F, 4.0F, 0.0F, true);
 
         this.rightWing = new ModelRenderer(this);
-        this.rightWing.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.rightWing.setRotationPoint(0.0F, -4.0F, 0.0F);
+        this.body.addChild(this.rightWing);
         this.rightWing.setTextureOffset(22, 15).addBox(2.0F, -10.0F, 2.5F, 18.0F, 35.0F, 1.0F, 0.0F, true);
 
         this.leftWing = new ModelRenderer(this);
-        this.leftWing.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.leftWing.setRotationPoint(0.0F, -4.0F, 0.0F);
+        this.body.addChild(this.leftWing);
         this.leftWing.setTextureOffset(22, 15).addBox(-20.0F, -10.0F, 2.5F, 18.0F, 35.0F, 1.0F, 0.0F, false);
 
         this.leftArm = new ModelRenderer(this);
-        this.leftArm.setRotationPoint(-4.0F, 4.0F, 0.0F);
+        this.leftArm.setRotationPoint(-4.0F, 0.0F, 0.0F);
+        this.body.addChild(this.leftArm);
         this.leftArm.setTextureOffset(25, 0).addBox(-2.0F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F, 0.0F, false);
 
         this.rightArm = new ModelRenderer(this);
-        this.rightArm.setRotationPoint(4.0F, 4.0F, 0.0F);
+        this.rightArm.setRotationPoint(4.0F, 0.0F, 0.0F);
+        this.body.addChild(this.rightArm);
         this.rightArm.setTextureOffset(25, 0).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F, 0.0F, true);
 
         this.leftLeg = new ModelRenderer(this);
-        this.leftLeg.setRotationPoint(-2.0F, 15.0F, 0.0F);
+        this.leftLeg.setRotationPoint(-2.0F, 11.0F, 0.0F);
+        this.body.addChild(this.leftLeg);
         this.leftLeg.setTextureOffset(38, 0).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 9.0F, 3.0F, 0.0F, false);
 
         this.rightLeg = new ModelRenderer(this);
-        this.rightLeg.setRotationPoint(2.0F, 15.0F, 0.0F);
+        this.rightLeg.setRotationPoint(2.0F, 11.0F, 0.0F);
+        this.body.addChild(this.rightLeg);
         this.rightLeg.setTextureOffset(38, 0).addBox(-2.0F, 0.0F, -1.5F, 3.0F, 9.0F, 3.0F, 0.0F, true);
-        
-        this.body.addChild(this.rightWing);
-        this.body.addChild(this.leftWing);
     }
 
     @Override
     public Iterable<ModelRenderer> getParts() {
-        return ImmutableList.of(this.head, this.body, this.leftArm, this.rightArm, this.leftLeg, this.rightLeg);
+        return ImmutableList.of(this.head, this.body);
     }
 
     @Override
@@ -76,6 +79,9 @@ public class BasicEarthPixieModel extends SegmentedModel<BasicEarthPixieEntity> 
         this.head.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
         this.head.rotateAngleZ = 0.0F;
         this.head.setRotationPoint(0.0F, 0.0F, 0.0F);
+        if (entityIn.getMotion().lengthSquared() > 0.0F) {
+            this.body.rotateAngleX = ((float)Math.PI / 8F);
+        }
         this.body.rotateAngleY = 0.0F;
         this.rightWing.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.leftWing.setRotationPoint(0.0F, 0.0F, 0.0F);
