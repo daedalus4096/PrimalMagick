@@ -8,10 +8,13 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Iterables;
+import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -84,8 +87,12 @@ public class LazySpawnEggItem extends Item {
             
             BlockPos spawnPos = blockState.getCollisionShapeUncached(world, blockPos).isEmpty() ? blockPos : blockPos.offset(direction);
             EntityType<?> entitytype = this.getType(itemStack.getTag());
-            if (entitytype.spawn((ServerWorld)world, itemStack, context.getPlayer(), spawnPos, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockPos, spawnPos) && direction == Direction.UP) != null) {
+            Entity entity = entitytype.spawn((ServerWorld)world, itemStack, context.getPlayer(), spawnPos, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockPos, spawnPos) && direction == Direction.UP);
+            if (entity != null) {
                 itemStack.shrink(1);
+            }
+            if (entity instanceof AbstractCompanionEntity) {
+                CompanionManager.addCompanion(context.getPlayer(), (AbstractCompanionEntity)entity);
             }
             
             return ActionResultType.CONSUME;
