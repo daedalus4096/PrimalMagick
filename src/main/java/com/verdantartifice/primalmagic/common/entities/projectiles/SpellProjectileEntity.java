@@ -40,7 +40,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
         this.spellSource = null;
     }
     
-    public SpellProjectileEntity(World world, LivingEntity thrower, SpellPackage spell, ItemStack spellSource) {
+    public SpellProjectileEntity(World world, LivingEntity thrower, SpellPackage spell, @Nullable ItemStack spellSource) {
         super(EntityTypesPM.SPELL_PROJECTILE.get(), thrower, world);
         this.spell = spell;
         this.spellSource = spellSource.copy();
@@ -50,7 +50,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
         }
     }
     
-    public SpellProjectileEntity(World world, double x, double y, double z, SpellPackage spell, ItemStack spellSource) {
+    public SpellProjectileEntity(World world, double x, double y, double z, SpellPackage spell, @Nullable ItemStack spellSource) {
         super(EntityTypesPM.SPELL_PROJECTILE.get(), x, y, z, world);
         this.spell = spell;
         this.spellSource = spellSource.copy();

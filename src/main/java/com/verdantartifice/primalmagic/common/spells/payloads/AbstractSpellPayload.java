@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
@@ -80,7 +81,7 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
         return this.properties.containsKey(name) ? this.properties.get(name).getValue() : 0;
     }
     
-    public int getModdedPropertyValue(String name, SpellPackage spell, ItemStack spellSource) {
+    public int getModdedPropertyValue(@Nonnull String name, @Nonnull SpellPackage spell, @Nullable ItemStack spellSource) {
         int retVal = this.getPropertyValue(name);
         if (retVal > 0 && ("power".equals(name) || "duration".equals(name))) {
             // For power or duration properties greater than zero, increase the total result by

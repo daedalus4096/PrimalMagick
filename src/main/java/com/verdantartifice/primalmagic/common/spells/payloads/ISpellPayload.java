@@ -38,7 +38,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundNBT> {
      * @param caster the player that originally casted the spell
      * @param spellSource the wand or scroll containing the spell package
      */
-    public void execute(@Nullable RayTraceResult target, @Nullable Vector3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nonnull ItemStack spellSource);
+    public void execute(@Nullable RayTraceResult target, @Nullable Vector3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource);
     
     /**
      * Determine whether this payload has an effect that should be executed.  Should be true for all but

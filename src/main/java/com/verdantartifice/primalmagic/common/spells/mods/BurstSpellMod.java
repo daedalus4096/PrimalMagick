@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -77,7 +78,7 @@ public class BurstSpellMod extends AbstractSpellMod {
     }
 
     @Nonnull
-    public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, ItemStack spellSource, World world) {
+    public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, @Nullable ItemStack spellSource, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();
         Set<BlockPos> affectedBlocks = new HashSet<>();
         Vector3d hitVec = origin.getHitVec();

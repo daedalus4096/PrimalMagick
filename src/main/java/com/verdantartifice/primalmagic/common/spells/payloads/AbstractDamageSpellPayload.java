@@ -49,7 +49,7 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
      * @param spellSource the wand or scroll containing the spell package
      * @return the total amount of damage to be done
      */
-    protected abstract float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource);
+    protected abstract float getTotalDamage(Entity target, SpellPackage spell, @Nullable ItemStack spellSource);
     
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
         return DamageSource.causeThrownDamage(target, source);
@@ -69,7 +69,7 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         this.applySecondaryEffects(target, burstPoint, spell, world, caster, spellSource);
     }
     
-    protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nullable Vector3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nonnull ItemStack spellSource) {
+    protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nullable Vector3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource) {
         // Do nothing by default
     }
 }

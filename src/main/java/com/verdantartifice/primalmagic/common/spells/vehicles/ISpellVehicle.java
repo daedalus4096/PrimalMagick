@@ -33,7 +33,7 @@ public interface ISpellVehicle extends INBTSerializable<CompoundNBT> {
      * @param caster the entity that originally casted the spell
      * @param spellSource the wand or scroll that originally contained the spell
      */
-    public void execute(@Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nonnull ItemStack spellSource);
+    public void execute(@Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource);
 
     /**
      * Determine whether this vehicle has an effect that should be executed.  Should be true for all but

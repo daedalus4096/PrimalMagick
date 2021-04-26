@@ -194,7 +194,7 @@ public class SpellManager {
         }
     }
     
-    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull LivingEntity caster, @Nonnull ItemStack spellSource, boolean allowMine) {
+    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull RayTraceResult result, @Nonnull World world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, boolean allowMine) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (!world.isRemote && spell.getPayload() != null) {
             Vector3d hitVec = result.getHitVec();

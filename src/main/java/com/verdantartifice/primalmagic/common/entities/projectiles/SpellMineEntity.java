@@ -51,7 +51,7 @@ public class SpellMineEntity extends Entity {
         this.spell = null;
     }
     
-    public SpellMineEntity(World world, Vector3d pos, LivingEntity caster, SpellPackage spell, ItemStack spellSource, int duration) {
+    public SpellMineEntity(World world, Vector3d pos, LivingEntity caster, SpellPackage spell, @Nullable ItemStack spellSource, int duration) {
         super(EntityTypesPM.SPELL_MINE.get(), world);
         this.setPosition(pos.x, pos.y, pos.z);
         this.spell = spell;
