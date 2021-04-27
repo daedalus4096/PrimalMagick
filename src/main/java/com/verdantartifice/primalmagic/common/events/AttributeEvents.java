@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumG
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticEarthPixieEntity;
 
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,5 +27,6 @@ public class AttributeEvents {
         event.put(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemEntity.getAttributeModifiers().create());
         event.put(EntityTypesPM.BASIC_EARTH_PIXIE.get(), BasicEarthPixieEntity.getAttributeModifiers().create());
         event.put(EntityTypesPM.GRAND_EARTH_PIXIE.get(), GrandEarthPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), MajesticEarthPixieEntity.getAttributeModifiers().create());
     }
 }

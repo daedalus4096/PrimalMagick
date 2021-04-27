@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumG
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
@@ -63,4 +64,9 @@ public class EntityTypesPM {
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new GrandEarthPixieEntity(EntityTypesPM.GRAND_EARTH_PIXIE.get(), world))
             .build(PrimalMagic.MODID + ":pixie_grand_earth"));
+    public static final RegistryObject<EntityType<MajesticEarthPixieEntity>> MAJESTIC_EARTH_PIXIE = ENTITY_TYPES.register("pixie_majestic_earth", () -> EntityType.Builder.<MajesticEarthPixieEntity>create(MajesticEarthPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new MajesticEarthPixieEntity(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_majestic_earth"));
 }

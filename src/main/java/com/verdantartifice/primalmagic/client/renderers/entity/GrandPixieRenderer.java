@@ -16,7 +16,7 @@ public class GrandPixieRenderer extends AbstractPixieRenderer {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/pixie/grand_pixie.png");
     
     public GrandPixieRenderer(EntityRendererManager renderManagerIn) {
-        super(renderManagerIn, new PixieModel());
+        super(renderManagerIn, new PixieModel(false));
     }
 
     @Override

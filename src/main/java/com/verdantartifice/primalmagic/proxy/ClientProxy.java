@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagic.client.renderers.entity.BasicPixieRendere
 import com.verdantartifice.primalmagic.client.renderers.entity.GrandPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HexiumGolemRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.MajesticPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellMineRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
@@ -113,6 +114,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_EARTH_PIXIE.get(), BasicPixieRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_EARTH_PIXIE.get(), GrandPixieRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), MajesticPixieRenderer::new);
     }
     
     private void registerItemProperties(FMLClientSetupEvent event) {

@@ -25,13 +25,40 @@ public class PixieModel extends SegmentedModel<AbstractPixieEntity> {
     private final ModelRenderer leftLeg;
     private final ModelRenderer rightLeg;
 
-    public PixieModel() {
+    public PixieModel(boolean showCrown) {
         this.textureWidth = 64;
         this.textureHeight = 64;
 
         this.head = new ModelRenderer(this);
         this.head.setRotationPoint(0.0F, 1.0F, 0.0F);
         this.head.setTextureOffset(0, 0).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F, 0.0F, true);
+        
+        if (showCrown) {
+            ModelRenderer crown = new ModelRenderer(this);
+            crown.setRotationPoint(0.0F, 0.0F, 0.0F);
+            this.head.addChild(crown);
+            crown.setTextureOffset(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F, 0.0F, false);
+            crown.setTextureOffset(0, 32).addBox(-1.5F, -4.5F, -3.5F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+            crown.setTextureOffset(1, 29).addBox(-0.5F, -5.5F, -3.5F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+
+            ModelRenderer rim4 = new ModelRenderer(this);
+            rim4.setRotationPoint(0.0F, 0.0F, 0.0F);
+            crown.addChild(rim4);
+            rim4.rotateAngleY = -1.5708F;
+            rim4.setTextureOffset(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F, 0.0F, false);
+
+            ModelRenderer rim3 = new ModelRenderer(this);
+            rim3.setRotationPoint(0.0F, 0.0F, 0.0F);
+            crown.addChild(rim3);
+            rim3.rotateAngleY = 3.1416F;
+            rim3.setTextureOffset(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F, 0.0F, false);
+
+            ModelRenderer rim2 = new ModelRenderer(this);
+            rim2.setRotationPoint(0.0F, 0.0F, 0.0F);
+            crown.addChild(rim2);
+            rim2.rotateAngleY = 1.5708F;
+            rim2.setTextureOffset(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F, 0.0F, false);
+        }
 
         this.body = new ModelRenderer(this);
         this.body.setRotationPoint(0.0F, 4.0F, 0.0F);
