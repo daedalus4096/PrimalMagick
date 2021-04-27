@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.entity.model;
 
 import com.google.common.collect.ImmutableList;
-import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.AbstractPixieEntity;
 
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class BasicEarthPixieModel extends SegmentedModel<BasicEarthPixieEntity> {
+public class PixieModel extends SegmentedModel<AbstractPixieEntity> {
     private final ModelRenderer head;
     private final ModelRenderer body;
     private final ModelRenderer rightWing;
@@ -25,7 +25,7 @@ public class BasicEarthPixieModel extends SegmentedModel<BasicEarthPixieEntity> 
     private final ModelRenderer leftLeg;
     private final ModelRenderer rightLeg;
 
-    public BasicEarthPixieModel() {
+    public PixieModel() {
         this.textureWidth = 64;
         this.textureHeight = 64;
 
@@ -74,7 +74,7 @@ public class BasicEarthPixieModel extends SegmentedModel<BasicEarthPixieEntity> 
     }
 
     @Override
-    public void setRotationAngles(BasicEarthPixieEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(AbstractPixieEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
         this.head.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
         this.head.rotateAngleZ = 0.0F;
