@@ -8,14 +8,14 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Entity renderer for a basic pixie.
+ * Entity renderer for a grand pixie.
  * 
  * @author Daedalus4096
  */
-public class BasicPixieRenderer extends AbstractPixieRenderer {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/pixie/basic_pixie.png");
+public class GrandPixieRenderer extends AbstractPixieRenderer {
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/pixie/grand_pixie.png");
     
-    public BasicPixieRenderer(EntityRendererManager renderManagerIn) {
+    public GrandPixieRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new PixieModel());
     }
 
