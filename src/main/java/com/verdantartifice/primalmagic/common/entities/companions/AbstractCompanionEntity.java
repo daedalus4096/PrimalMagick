@@ -13,10 +13,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Util;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
 /**
@@ -164,5 +168,13 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
             CompanionManager.removeCompanion(this.getCompanionOwner(), this);
         }
         super.remove();
+    }
+
+    @Override
+    public void onDeath(DamageSource cause) {
+        if (!this.world.isRemote && this.world.getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES) && this.getCompanionOwner() instanceof ServerPlayerEntity) {
+            this.getCompanionOwner().sendMessage(this.getCombatTracker().getDeathMessage(), Util.DUMMY_UUID);
+        }
+        super.onDeath(cause);
     }
 }
