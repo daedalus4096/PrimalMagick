@@ -6,11 +6,20 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.Hallows
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSeaPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSkyPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSeaPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSkyPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSeaPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSkyPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSunPixieEntity;
 
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,11 +43,14 @@ public class AttributeEvents {
         event.put(EntityTypesPM.BASIC_SEA_PIXIE.get(), BasicSeaPixieEntity.getAttributeModifiers().create());
         event.put(EntityTypesPM.GRAND_SEA_PIXIE.get(), GrandSeaPixieEntity.getAttributeModifiers().create());
         event.put(EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), MajesticSeaPixieEntity.getAttributeModifiers().create());
-        event.put(EntityTypesPM.BASIC_SKY_PIXIE.get(), BasicSeaPixieEntity.getAttributeModifiers().create());
-        event.put(EntityTypesPM.GRAND_SKY_PIXIE.get(), GrandSeaPixieEntity.getAttributeModifiers().create());
-        event.put(EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), MajesticSeaPixieEntity.getAttributeModifiers().create());
-        event.put(EntityTypesPM.BASIC_SUN_PIXIE.get(), BasicSeaPixieEntity.getAttributeModifiers().create());
-        event.put(EntityTypesPM.GRAND_SUN_PIXIE.get(), GrandSeaPixieEntity.getAttributeModifiers().create());
-        event.put(EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), MajesticSeaPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.BASIC_SKY_PIXIE.get(), BasicSkyPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.GRAND_SKY_PIXIE.get(), GrandSkyPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), MajesticSkyPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.BASIC_SUN_PIXIE.get(), BasicSunPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.GRAND_SUN_PIXIE.get(), GrandSunPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), MajesticSunPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.BASIC_MOON_PIXIE.get(), BasicMoonPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.GRAND_MOON_PIXIE.get(), GrandMoonPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), MajesticMoonPixieEntity.getAttributeModifiers().create());
     }
 }
