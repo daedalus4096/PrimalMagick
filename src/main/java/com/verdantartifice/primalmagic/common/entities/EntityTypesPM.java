@@ -7,12 +7,15 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.Primali
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSkyPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSkyPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSkyPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
@@ -105,4 +108,19 @@ public class EntityTypesPM {
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new MajesticSkyPixieEntity(EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), world))
             .build(PrimalMagic.MODID + ":pixie_majestic_sky"));
+    public static final RegistryObject<EntityType<BasicSunPixieEntity>> BASIC_SUN_PIXIE = ENTITY_TYPES.register("pixie_basic_sun", () -> EntityType.Builder.<BasicSunPixieEntity>create(BasicSunPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new BasicSunPixieEntity(EntityTypesPM.BASIC_SUN_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_basic_sun"));
+    public static final RegistryObject<EntityType<GrandSunPixieEntity>> GRAND_SUN_PIXIE = ENTITY_TYPES.register("pixie_grand_sun", () -> EntityType.Builder.<GrandSunPixieEntity>create(GrandSunPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new GrandSunPixieEntity(EntityTypesPM.GRAND_SUN_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_grand_sun"));
+    public static final RegistryObject<EntityType<MajesticSunPixieEntity>> MAJESTIC_SUN_PIXIE = ENTITY_TYPES.register("pixie_majestic_sun", () -> EntityType.Builder.<MajesticSunPixieEntity>create(MajesticSunPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new MajesticSunPixieEntity(EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_majestic_sun"));
 }

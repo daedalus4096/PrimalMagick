@@ -362,6 +362,9 @@
     "item.primalmagic.pixie_basic_sky": "Sky Pixie",
     "item.primalmagic.pixie_grand_sky": "Grand Sky Pixie",
     "item.primalmagic.pixie_majestic_sky": "Majestic Sky Pixie",
+    "item.primalmagic.pixie_basic_sun": "Sun Pixie",
+    "item.primalmagic.pixie_grand_sun": "Grand Sun Pixie",
+    "item.primalmagic.pixie_majestic_sun": "Majestic Sun Pixie",
     
     "entity.primalmagic.primalite_golem": "Primalite Golem",
     "entity.primalmagic.hexium_golem": "Hexium Golem",
@@ -375,6 +378,9 @@
     "entity.primalmagic.pixie_basic_sky": "Sky Pixie",
     "entity.primalmagic.pixie_grand_sky": "Grand Sky Pixie",
     "entity.primalmagic.pixie_majestic_sky": "Majestic Sky Pixie",
+    "entity.primalmagic.pixie_basic_sun": "Sun Pixie",
+    "entity.primalmagic.pixie_grand_sun": "Grand Sun Pixie",
+    "entity.primalmagic.pixie_majestic_sun": "Majestic Sun Pixie",
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",
