@@ -6,18 +6,21 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumG
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicInfernalPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSkyPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandInfernalPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSkyPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticInfernalPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSkyPixieEntity;
@@ -158,5 +161,20 @@ public class EntityTypesPM {
             .size(0.5F, 0.5F)
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new MajesticBloodPixieEntity(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_majestic_blood"));
+    public static final RegistryObject<EntityType<BasicInfernalPixieEntity>> BASIC_INFERNAL_PIXIE = ENTITY_TYPES.register("pixie_basic_infernal", () -> EntityType.Builder.<BasicInfernalPixieEntity>create(BasicInfernalPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new BasicInfernalPixieEntity(EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_basic_infernal"));
+    public static final RegistryObject<EntityType<GrandInfernalPixieEntity>> GRAND_INFERNAL_PIXIE = ENTITY_TYPES.register("pixie_grand_infernal", () -> EntityType.Builder.<GrandInfernalPixieEntity>create(GrandInfernalPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new GrandInfernalPixieEntity(EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_grand_infernal"));
+    public static final RegistryObject<EntityType<MajesticInfernalPixieEntity>> MAJESTIC_INFERNAL_PIXIE = ENTITY_TYPES.register("pixie_majestic_infernal", () -> EntityType.Builder.<MajesticInfernalPixieEntity>create(MajesticInfernalPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new MajesticInfernalPixieEntity(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), world))
             .build(PrimalMagic.MODID + ":pixie_majestic_blood"));
 }
