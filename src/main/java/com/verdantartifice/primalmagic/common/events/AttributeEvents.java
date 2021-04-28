@@ -34,5 +34,8 @@ public class AttributeEvents {
         event.put(EntityTypesPM.BASIC_SEA_PIXIE.get(), BasicSeaPixieEntity.getAttributeModifiers().create());
         event.put(EntityTypesPM.GRAND_SEA_PIXIE.get(), GrandSeaPixieEntity.getAttributeModifiers().create());
         event.put(EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), MajesticSeaPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.BASIC_SKY_PIXIE.get(), BasicSeaPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.GRAND_SKY_PIXIE.get(), GrandSeaPixieEntity.getAttributeModifiers().create());
+        event.put(EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), MajesticSeaPixieEntity.getAttributeModifiers().create());
     }
 }
