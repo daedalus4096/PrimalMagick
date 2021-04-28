@@ -356,6 +356,9 @@
     "item.primalmagic.pixie_basic_earth": "Earth Pixie",
     "item.primalmagic.pixie_grand_earth": "Grand Earth Pixie",
     "item.primalmagic.pixie_majestic_earth": "Majestic Earth Pixie",
+    "item.primalmagic.pixie_basic_sea": "Sea Pixie",
+    "item.primalmagic.pixie_grand_sea": "Grand Sea Pixie",
+    "item.primalmagic.pixie_majestic_sea": "Majestic Sea Pixie",
     
     "entity.primalmagic.primalite_golem": "Primalite Golem",
     "entity.primalmagic.hexium_golem": "Hexium Golem",
@@ -363,6 +366,9 @@
     "entity.primalmagic.pixie_basic_earth": "Earth Pixie",
     "entity.primalmagic.pixie_grand_earth": "Grand Earth Pixie",
     "entity.primalmagic.pixie_majestic_earth": "Majestic Earth Pixie",
+    "entity.primalmagic.pixie_basic_sea": "Sea Pixie",
+    "entity.primalmagic.pixie_grand_sea": "Grand Sea Pixie",
+    "entity.primalmagic.pixie_majestic_sea": "Majestic Sea Pixie",
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",

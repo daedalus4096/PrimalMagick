@@ -5,8 +5,11 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.Hallows
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
@@ -69,4 +72,19 @@ public class EntityTypesPM {
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new MajesticEarthPixieEntity(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), world))
             .build(PrimalMagic.MODID + ":pixie_majestic_earth"));
+    public static final RegistryObject<EntityType<BasicSeaPixieEntity>> BASIC_SEA_PIXIE = ENTITY_TYPES.register("pixie_basic_sea", () -> EntityType.Builder.<BasicSeaPixieEntity>create(BasicSeaPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new BasicSeaPixieEntity(EntityTypesPM.BASIC_SEA_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_basic_sea"));
+    public static final RegistryObject<EntityType<GrandSeaPixieEntity>> GRAND_SEA_PIXIE = ENTITY_TYPES.register("pixie_grand_sea", () -> EntityType.Builder.<GrandSeaPixieEntity>create(GrandSeaPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new GrandSeaPixieEntity(EntityTypesPM.GRAND_SEA_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_grand_sea"));
+    public static final RegistryObject<EntityType<MajesticSeaPixieEntity>> MAJESTIC_SEA_PIXIE = ENTITY_TYPES.register("pixie_majestic_sea", () -> EntityType.Builder.<MajesticSeaPixieEntity>create(MajesticSeaPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new MajesticSeaPixieEntity(EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_majestic_sea"));
 }
