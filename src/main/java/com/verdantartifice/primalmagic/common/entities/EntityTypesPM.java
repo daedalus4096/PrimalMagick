@@ -4,16 +4,19 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HallowsteelGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSkyPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSunPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSeaPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSkyPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSunPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticEarthPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSeaPixieEntity;
@@ -141,4 +144,19 @@ public class EntityTypesPM {
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new MajesticMoonPixieEntity(EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), world))
             .build(PrimalMagic.MODID + ":pixie_majestic_moon"));
+    public static final RegistryObject<EntityType<BasicBloodPixieEntity>> BASIC_BLOOD_PIXIE = ENTITY_TYPES.register("pixie_basic_blood", () -> EntityType.Builder.<BasicBloodPixieEntity>create(BasicBloodPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new BasicBloodPixieEntity(EntityTypesPM.BASIC_BLOOD_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_basic_blood"));
+    public static final RegistryObject<EntityType<GrandBloodPixieEntity>> GRAND_BLOOD_PIXIE = ENTITY_TYPES.register("pixie_grand_blood", () -> EntityType.Builder.<GrandBloodPixieEntity>create(GrandBloodPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new GrandBloodPixieEntity(EntityTypesPM.GRAND_BLOOD_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_grand_blood"));
+    public static final RegistryObject<EntityType<MajesticBloodPixieEntity>> MAJESTIC_BLOOD_PIXIE = ENTITY_TYPES.register("pixie_majestic_blood", () -> EntityType.Builder.<MajesticBloodPixieEntity>create(MajesticBloodPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new MajesticBloodPixieEntity(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_majestic_blood"));
 }

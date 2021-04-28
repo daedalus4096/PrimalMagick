@@ -368,6 +368,9 @@
     "item.primalmagic.pixie_basic_moon": "Moon Pixie",
     "item.primalmagic.pixie_grand_moon": "Grand Moon Pixie",
     "item.primalmagic.pixie_majestic_moon": "Majestic Moon Pixie",
+    "item.primalmagic.pixie_basic_blood": "Blood Pixie",
+    "item.primalmagic.pixie_grand_blood": "Grand Blood Pixie",
+    "item.primalmagic.pixie_majestic_blood": "Majestic Blood Pixie",
     
     "entity.primalmagic.primalite_golem": "Primalite Golem",
     "entity.primalmagic.hexium_golem": "Hexium Golem",
@@ -387,6 +390,9 @@
     "entity.primalmagic.pixie_basic_moon": "Moon Pixie",
     "entity.primalmagic.pixie_grand_moon": "Grand Moon Pixie",
     "entity.primalmagic.pixie_majestic_moon": "Majestic Moon Pixie",
+    "entity.primalmagic.pixie_basic_blood": "Blood Pixie",
+    "entity.primalmagic.pixie_grand_blood": "Grand Blood Pixie",
+    "entity.primalmagic.pixie_majestic_blood": "Majestic Blood Pixie",
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",

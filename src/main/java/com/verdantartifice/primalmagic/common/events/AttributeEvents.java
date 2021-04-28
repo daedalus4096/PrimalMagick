@@ -40,5 +40,8 @@ public class AttributeEvents {
         event.put(EntityTypesPM.BASIC_MOON_PIXIE.get(), IBasicPixie.getAttributeModifiers().create());
         event.put(EntityTypesPM.GRAND_MOON_PIXIE.get(), IGrandPixie.getAttributeModifiers().create());
         event.put(EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), IMajesticPixie.getAttributeModifiers().create());
+        event.put(EntityTypesPM.BASIC_BLOOD_PIXIE.get(), IBasicPixie.getAttributeModifiers().create());
+        event.put(EntityTypesPM.GRAND_BLOOD_PIXIE.get(), IGrandPixie.getAttributeModifiers().create());
+        event.put(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), IMajesticPixie.getAttributeModifiers().create());
     }
 }
