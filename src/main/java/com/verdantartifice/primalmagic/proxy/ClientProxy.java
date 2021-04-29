@@ -136,6 +136,9 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_VOID_PIXIE.get(), BasicPixieRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_VOID_PIXIE.get(), GrandPixieRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), MajesticPixieRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), BasicPixieRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), GrandPixieRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), MajesticPixieRenderer::new);
     }
     
     private void registerItemProperties(FMLClientSetupEvent event) {

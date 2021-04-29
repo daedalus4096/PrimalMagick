@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumG
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicHallowedPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicInfernalPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSeaPixieEntity;
@@ -14,6 +15,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicSu
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.BasicVoidPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandHallowedPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandInfernalPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSeaPixieEntity;
@@ -22,6 +24,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandSu
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.GrandVoidPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticBloodPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticEarthPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticHallowedPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticInfernalPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticMoonPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSeaPixieEntity;
@@ -195,4 +198,19 @@ public class EntityTypesPM {
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new MajesticVoidPixieEntity(EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), world))
             .build(PrimalMagic.MODID + ":pixie_majestic_void"));
+    public static final RegistryObject<EntityType<BasicHallowedPixieEntity>> BASIC_HALLOWED_PIXIE = ENTITY_TYPES.register("pixie_basic_hallowed", () -> EntityType.Builder.<BasicHallowedPixieEntity>create(BasicHallowedPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new BasicHallowedPixieEntity(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_basic_hallowed"));
+    public static final RegistryObject<EntityType<GrandHallowedPixieEntity>> GRAND_HALLOWED_PIXIE = ENTITY_TYPES.register("pixie_grand_hallowed", () -> EntityType.Builder.<GrandHallowedPixieEntity>create(GrandHallowedPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new GrandHallowedPixieEntity(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_grand_hallowed"));
+    public static final RegistryObject<EntityType<MajesticHallowedPixieEntity>> MAJESTIC_HALLOWED_PIXIE = ENTITY_TYPES.register("pixie_majestic_hallowed", () -> EntityType.Builder.<MajesticHallowedPixieEntity>create(MajesticHallowedPixieEntity::new, EntityClassification.CREATURE)
+            .size(0.5F, 0.5F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new MajesticHallowedPixieEntity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), world))
+            .build(PrimalMagic.MODID + ":pixie_majestic_hallowed"));
 }
