@@ -374,6 +374,9 @@
     "item.primalmagic.pixie_basic_infernal": "Infernal Pixie",
     "item.primalmagic.pixie_grand_infernal": "Grand Infernal Pixie",
     "item.primalmagic.pixie_majestic_infernal": "Majestic Infernal Pixie",
+    "item.primalmagic.pixie_basic_void": "Void Pixie",
+    "item.primalmagic.pixie_grand_void": "Grand Void Pixie",
+    "item.primalmagic.pixie_majestic_void": "Majestic Void Pixie",
     
     "entity.primalmagic.primalite_golem": "Primalite Golem",
     "entity.primalmagic.hexium_golem": "Hexium Golem",
@@ -399,6 +402,9 @@
     "entity.primalmagic.pixie_basic_infernal": "Infernal Pixie",
     "entity.primalmagic.pixie_grand_infernal": "Grand Infernal Pixie",
     "entity.primalmagic.pixie_majestic_infernal": "Majestic Infernal Pixie",
+    "entity.primalmagic.pixie_basic_void": "Void Pixie",
+    "entity.primalmagic.pixie_grand_void": "Grand Void Pixie",
+    "entity.primalmagic.pixie_majestic_void": "Majestic Void Pixie",
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",

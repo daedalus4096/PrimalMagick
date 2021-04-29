@@ -46,5 +46,8 @@ public class AttributeEvents {
         event.put(EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), IBasicPixie.getAttributeModifiers().create());
         event.put(EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), IGrandPixie.getAttributeModifiers().create());
         event.put(EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get(), IMajesticPixie.getAttributeModifiers().create());
+        event.put(EntityTypesPM.BASIC_VOID_PIXIE.get(), IBasicPixie.getAttributeModifiers().create());
+        event.put(EntityTypesPM.GRAND_VOID_PIXIE.get(), IGrandPixie.getAttributeModifiers().create());
+        event.put(EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), IMajesticPixie.getAttributeModifiers().create());
     }
 }
