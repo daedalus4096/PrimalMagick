@@ -20,4 +20,9 @@ public class BasicInfernalPixieEntity extends AbstractInfernalPixieEntity implem
     protected PixieItem getSpawnItem() {
         return ItemsPM.BASIC_INFERNAL_PIXIE.get();
     }
+
+    @Override
+    public int getSpellPower() {
+        return 2;
+    }
 }

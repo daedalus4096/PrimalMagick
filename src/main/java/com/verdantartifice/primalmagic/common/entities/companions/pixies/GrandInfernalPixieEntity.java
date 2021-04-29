@@ -20,4 +20,9 @@ public class GrandInfernalPixieEntity extends AbstractInfernalPixieEntity implem
     protected PixieItem getSpawnItem() {
         return ItemsPM.GRAND_INFERNAL_PIXIE.get();
     }
+
+    @Override
+    public int getSpellPower() {
+        return 3;
+    }
 }

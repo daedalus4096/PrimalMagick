@@ -2,19 +2,20 @@ package com.verdantartifice.primalmagic.common.entities.companions.pixies;
 
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtByTargetGoal;
 import com.verdantartifice.primalmagic.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
+import com.verdantartifice.primalmagic.common.entities.ai.goals.ZoomAtTargetGoal;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.FlameDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.BoltSpellVehicle;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 
 /**
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity implements IRangedAttackMob {
+public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
     public AbstractInfernalPixieEntity(EntityType<? extends AbstractPixieEntity> type, World worldIn) {
         super(type, worldIn);
     }
@@ -49,8 +50,9 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity im
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0D, 20, 30, 16.0F));
-        this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(3, new ZoomAtTargetGoal(this, 2.0F, 8.0F, 0.4F));
+        this.goalSelector.addGoal(4, new MoveTowardsTargetGoal(this, 1.0D, 32.0F));
         this.targetSelector.addGoal(1, new CompanionOwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new CompanionOwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
@@ -58,7 +60,11 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity im
     }
     
     @Override
-    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-        this.getSpellPackage().cast(this.world, this, null);
+    public boolean attackEntityAsMob(Entity target) {
+        this.remove();
+        if (!this.world.isRemote) {
+            this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), (float)this.getSpellPower(), true, Mode.BREAK);
+        }
+        return true;
     }
 }
