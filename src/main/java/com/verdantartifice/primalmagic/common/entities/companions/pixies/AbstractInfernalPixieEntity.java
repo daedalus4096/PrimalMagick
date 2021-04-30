@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 /**
  * Base definition for an infernal pixie.  In addition to following the player as a companion, attacks with
- * flame damage spells.
+ * kamikaze explosive charges.
  * 
  * @author Daedalus4096
  */
