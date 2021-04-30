@@ -8,10 +8,10 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.FlameDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.BoltSpellVehicle;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,7 +50,7 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(2, new AbstractInfernalPixieEntity.ExplodeOnTargetGoal(this, 1.0F));
         this.goalSelector.addGoal(3, new ZoomAtTargetGoal(this, 2.0F, 8.0F, 0.4F));
         this.goalSelector.addGoal(4, new MoveTowardsTargetGoal(this, 1.0D, 32.0F));
         this.targetSelector.addGoal(1, new CompanionOwnerHurtByTargetGoal(this));
@@ -59,12 +59,32 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::func_233680_b_));
     }
     
-    @Override
-    public boolean attackEntityAsMob(Entity target) {
+    public void explode() {
+        this.dead = true;
         this.remove();
         if (!this.world.isRemote) {
             this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), (float)this.getSpellPower(), true, Mode.BREAK);
         }
-        return true;
+    }
+    
+    public static class ExplodeOnTargetGoal extends Goal {
+        protected final AbstractInfernalPixieEntity pixie;
+        protected final float maxRangeSq;
+        
+        public ExplodeOnTargetGoal(AbstractInfernalPixieEntity pixie, float maxRange) {
+            this.pixie = pixie;
+            this.maxRangeSq = maxRange * maxRange;
+        }
+        
+        @Override
+        public boolean shouldExecute() {
+            LivingEntity target = this.pixie.getAttackTarget();
+            return target != null && this.pixie.getDistanceSq(target) <= this.maxRangeSq;
+        }
+
+        @Override
+        public void startExecuting() {
+            this.pixie.explode();
+        }
     }
 }

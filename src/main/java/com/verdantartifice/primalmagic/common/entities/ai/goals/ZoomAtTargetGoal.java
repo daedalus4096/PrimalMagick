@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.entities.ai.goals;
 
+import java.util.EnumSet;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -17,6 +19,7 @@ public class ZoomAtTargetGoal extends Goal {
         this.minRangeSq = minRange * minRange;
         this.maxRangeSq = maxRange * maxRange;
         this.leapMotionY = leapMotionY;
+        this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
     }
 
     @Override
