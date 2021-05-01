@@ -1,0 +1,33 @@
+{
+  "type": "primalmagic:ritual",
+  "research": "PIXIES",
+  "mana": {
+    "sea": 40
+  },
+  "instability": 3,
+  "ingredients": [
+    {
+      "item": "primalmagic:mana_salts"
+    },
+    {
+      "item": "primalmagic:essence_shard_sea"
+    },
+    {
+      "item": "primalmagic:rune_summon"
+    },
+    {
+      "item": "primalmagic:rune_creature"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagic:incense_brazier"
+    },
+    {
+      "block": "primalmagic:ritual_bell"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:pixie_basic_sea"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "key": "MAJESTIC_PIXIES",
+  "name": "primalmagic.research.majestic_pixies.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "SUPREME_RITUAL",
+    "GRAND_PIXIES",
+    "CLUSTER_SYNTHESIS",
+    "SOUL_ANVIL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.majestic_pixies.text.stage.1",
+      "required_knowledge": [
+        "THEORY;3"
+      ]
+    },
+    {
+      "text": "primalmagic.research.majestic_pixies.text.stage.2",
+      "attunements": {
+        "earth": 4,
+        "sea": 4,
+        "sky": 4,
+        "sun": 4,
+        "moon": 4
+      },
+      "recipes": [
+        "primalmagic:pixie_majestic_earth",
+        "primalmagic:pixie_majestic_sea",
+        "primalmagic:pixie_majestic_sky",
+        "primalmagic:pixie_majestic_sun",
+        "primalmagic:pixie_majestic_moon"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.majestic_pixies.text.addenda.1",
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "attunements": {
+        "blood": 4
+      },
+      "recipes": [
+        "primalmagic:pixie_majestic_blood"
+      ]
+    },
+    {
+      "text": "primalmagic.research.majestic_pixies.text.addenda.2",
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "attunements": {
+        "infernal": 4
+      },
+      "recipes": [
+        "primalmagic:pixie_majestic_infernal"
+      ]
+    },
+    {
+      "text": "primalmagic.research.majestic_pixies.text.addenda.3",
+      "required_research": [
+        "t_discover_void"
+      ],
+      "attunements": {
+        "void": 4
+      },
+      "recipes": [
+        "primalmagic:pixie_majestic_void"
+      ]
+    },
+    {
+      "text": "primalmagic.research.majestic_pixies.text.addenda.4",
+      "required_research": [
+        "t_discover_hallowed"
+      ],
+      "attunements": {
+        "hallowed": 4
+      },
+      "recipes": [
+        "primalmagic:pixie_majestic_hallowed"
+      ]
+    }
+  ]
+}

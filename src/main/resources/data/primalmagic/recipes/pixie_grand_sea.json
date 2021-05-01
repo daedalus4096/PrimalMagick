@@ -1,0 +1,42 @@
+{
+  "type": "primalmagic:ritual",
+  "research": "GRAND_PIXIES",
+  "mana": {
+    "sea": 100
+  },
+  "instability": 5,
+  "ingredients": [
+    {
+      "item": "primalmagic:mana_salts"
+    },
+    {
+      "item": "primalmagic:essence_crystal_sea"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "item": "primalmagic:rune_summon"
+    },
+    {
+      "item": "primalmagic:rune_creature"
+    },
+    {
+      "item": "primalmagic:rune_power"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagic:incense_brazier"
+    },
+    {
+      "block": "primalmagic:ritual_bell"
+    },
+    {
+      "block": "primalmagic:bloodletter"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:pixie_grand_sea"
+  }
+}

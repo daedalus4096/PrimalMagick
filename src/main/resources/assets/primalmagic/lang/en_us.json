@@ -1079,6 +1079,30 @@
     "primalmagic.research.wand_core_dark_primal.text.stage.2": "Dark primal wand core research complete!",
     "primalmagic.research.wand_core_dark_primal.text.addenda.1": "Staff core",
     
+    "primalmagic.research.pixies.title": "Pixies",
+    "primalmagic.research.pixies.text.stage.1": "Pixies: Lorem ipsum",
+    "primalmagic.research.pixies.text.stage.2": "Pixies research complete!",
+    "primalmagic.research.pixies.text.addenda.1": "Blood pixies",
+    "primalmagic.research.pixies.text.addenda.2": "Infernal pixies",
+    "primalmagic.research.pixies.text.addenda.3": "Void pixies",
+    "primalmagic.research.pixies.text.addenda.4": "Hallowed pixies",
+    
+    "primalmagic.research.grand_pixies.title": "Grand Pixies",
+    "primalmagic.research.grand_pixies.text.stage.1": "Grand pixies: Lorem ipsum",
+    "primalmagic.research.grand_pixies.text.stage.2": "Grand pixies research complete!",
+    "primalmagic.research.grand_pixies.text.addenda.1": "Grand blood pixies",
+    "primalmagic.research.grand_pixies.text.addenda.2": "Grand infernal pixies",
+    "primalmagic.research.grand_pixies.text.addenda.3": "Grand void pixies",
+    "primalmagic.research.grand_pixies.text.addenda.4": "Grand hallowed pixies",
+    
+    "primalmagic.research.majestic_pixies.title": "Majestic Pixies",
+    "primalmagic.research.majestic_pixies.text.stage.1": "Majestic pixies: Lorem ipsum",
+    "primalmagic.research.majestic_pixies.text.stage.2": "Majestic pixies research complete!",
+    "primalmagic.research.majestic_pixies.text.addenda.1": "Majestic blood pixies",
+    "primalmagic.research.majestic_pixies.text.addenda.2": "Majestic infernal pixies",
+    "primalmagic.research.majestic_pixies.text.addenda.3": "Majestic void pixies",
+    "primalmagic.research.majestic_pixies.text.addenda.4": "Majestic hallowed pixies",
+    
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
     

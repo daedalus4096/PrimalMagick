@@ -769,6 +769,37 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 4).attunement(Source.INFERNAL, 4).attunement(Source.VOID, 4).recipe(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("PIXIES", discipline).parent("EXPERT_RITUAL").parent("MANA_SALTS").parent("SHARD_SYNTHESIS").parent("RUNE_SUMMON").parent("RUNE_CREATURE").parent("INCENSE_BRAZIER")
+            .parent("RITUAL_BELL")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_SUMMON.get()).requiredItemStack(ItemsPM.RUNE_CREATURE.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).attunement(Source.SEA, 2).attunement(Source.SKY, 2).attunement(Source.SUN, 2).attunement(Source.MOON, 2)
+                    .recipe(ItemsPM.BASIC_EARTH_PIXIE.get()).recipe(ItemsPM.BASIC_SEA_PIXIE.get()).recipe(ItemsPM.BASIC_SKY_PIXIE.get()).recipe(ItemsPM.BASIC_SUN_PIXIE.get())
+                    .recipe(ItemsPM.BASIC_MOON_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).attunement(Source.BLOOD, 2).recipe(ItemsPM.BASIC_BLOOD_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).attunement(Source.INFERNAL, 2).recipe(ItemsPM.BASIC_INFERNAL_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 2).recipe(ItemsPM.BASIC_VOID_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_PIXIE.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("GRAND_PIXIES", discipline).parent("MASTER_RITUAL").parent("PIXIES").parent("CRYSTAL_SYNTHESIS").parent("RUNE_POWER").parent("BLOODLETTER")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_POWER.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).attunement(Source.SEA, 3).attunement(Source.SKY, 3).attunement(Source.SUN, 3).attunement(Source.MOON, 3)
+                    .recipe(ItemsPM.GRAND_EARTH_PIXIE.get()).recipe(ItemsPM.GRAND_SEA_PIXIE.get()).recipe(ItemsPM.GRAND_SKY_PIXIE.get()).recipe(ItemsPM.GRAND_SUN_PIXIE.get())
+                    .recipe(ItemsPM.GRAND_MOON_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).attunement(Source.BLOOD, 3).recipe(ItemsPM.GRAND_BLOOD_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).attunement(Source.INFERNAL, 3).recipe(ItemsPM.GRAND_INFERNAL_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 3).recipe(ItemsPM.GRAND_VOID_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 3).recipe(ItemsPM.GRAND_HALLOWED_PIXIE.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MAJESTIC_PIXIES", discipline).parent("SUPREME_RITUAL").parent("GRAND_PIXIES").parent("CLUSTER_SYNTHESIS").parent("SOUL_ANVIL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 4).attunement(Source.SEA, 4).attunement(Source.SKY, 4).attunement(Source.SUN, 4).attunement(Source.MOON, 4)
+                    .recipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get()).recipe(ItemsPM.MAJESTIC_SEA_PIXIE.get()).recipe(ItemsPM.MAJESTIC_SKY_PIXIE.get()).recipe(ItemsPM.MAJESTIC_SUN_PIXIE.get())
+                    .recipe(ItemsPM.MAJESTIC_MOON_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).attunement(Source.BLOOD, 4).recipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).attunement(Source.INFERNAL, 4).recipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 4).recipe(ItemsPM.MAJESTIC_VOID_PIXIE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 4).recipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
