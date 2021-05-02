@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.entities.misc;
 import java.util.List;
 import java.util.UUID;
 
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
@@ -112,21 +113,13 @@ public class TreefolkEntity extends CreatureEntity implements IAngerable {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        // TODO Auto-generated method stub
-        return super.getAmbientSound();
-    }
-
-    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        // TODO Auto-generated method stub
-        return super.getHurtSound(damageSourceIn);
+        return SoundsPM.TREEFOLK_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        // TODO Auto-generated method stub
-        return super.getDeathSound();
+        return SoundsPM.TREEFOLK_DEATH.get();
     }
 
     @Override
