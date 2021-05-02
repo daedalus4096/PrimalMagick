@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class TreefolkRenderer extends BipedRenderer<TreefolkEntity, BipedModel<TreefolkEntity>> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/treefolk/treefolk.png");
+    protected static final ResourceLocation ANGRY_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/treefolk/treefolk_angry.png");
 
     public TreefolkRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new BipedModel<TreefolkEntity>(0.0F), 0.5F);
@@ -22,6 +23,6 @@ public class TreefolkRenderer extends BipedRenderer<TreefolkEntity, BipedModel<T
 
     @Override
     public ResourceLocation getEntityTexture(TreefolkEntity entity) {
-        return TEXTURE;
+        return entity.isAngry() ? ANGRY_TEXTURE : TEXTURE;
     }
 }
