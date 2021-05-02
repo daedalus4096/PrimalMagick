@@ -350,6 +350,7 @@
     "item.primalmagic.primal_staff_core_item": "Primal Staff Core",
     "item.primalmagic.dark_primal_staff_core_item": "Dark Primal Staff Core",
     "item.primalmagic.pure_primal_staff_core_item": "Pure Primal Staff Core",
+    "item.primalmagic.treefolk_spawn_egg": "Treefolk Spawn Egg",
     "item.primalmagic.primalite_golem_spawn_egg": "Primalite Golem Spawn Egg",
     "item.primalmagic.hexium_golem_spawn_egg": "Hexium Golem Spawn Egg",
     "item.primalmagic.hallowsteel_golem_spawn_egg": "Hallowsteel Golem Spawn Egg",
@@ -381,6 +382,7 @@
     "item.primalmagic.pixie_grand_hallowed": "Grand Hallowed Pixie",
     "item.primalmagic.pixie_majestic_hallowed": "Majestic Hallowed Pixie",
     
+    "entity.primalmagic.treefolk": "Treefolk",
     "entity.primalmagic.primalite_golem": "Primalite Golem",
     "entity.primalmagic.hexium_golem": "Hexium Golem",
     "entity.primalmagic.hallowsteel_golem": "Hallowsteel Golem",

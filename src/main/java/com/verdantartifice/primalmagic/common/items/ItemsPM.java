@@ -463,6 +463,7 @@ public class ItemsPM {
     public static final RegistryObject<StaffCoreItem> PURE_PRIMAL_STAFF_CORE_ITEM = ITEMS.register("pure_primal_staff_core_item", () -> new StaffCoreItem(WandCore.PURE_PRIMAL, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     
     // Register spawn egg items
+    public static final RegistryObject<LazySpawnEggItem> TREEFOLK_SPAWN_EGG = ITEMS.register("treefolk_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.TREEFOLK.get(), 0x76440F, 0x007302, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<LazySpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = ITEMS.register("primalite_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.PRIMALITE_GOLEM.get(), 0x27E1C7, 0x026278, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<LazySpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = ITEMS.register("hexium_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.HEXIUM_GOLEM.get(), 0x791E29, 0x100736, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<LazySpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = ITEMS.register("hallowsteel_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.HALLOWSTEEL_GOLEM.get(), 0xFDFFE0, 0xEDE1A2, new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

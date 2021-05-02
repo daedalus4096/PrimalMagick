@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.pixies.Majesti
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSkyPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticVoidPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
@@ -61,6 +62,11 @@ public class EntityTypesPM {
             .size(0.25F, 0.25F)
             .setCustomClientFactory((spawnEntity, world) -> new SpellMineEntity(EntityTypesPM.SPELL_MINE.get(), world))
             .build(PrimalMagic.MODID + ":spell_mine"));
+    public static final RegistryObject<EntityType<TreefolkEntity>> TREEFOLK = ENTITY_TYPES.register("treefolk", () -> EntityType.Builder.<TreefolkEntity>create(TreefolkEntity::new, EntityClassification.CREATURE)
+            .size(0.6F, 1.95F)
+            .trackingRange(8)
+            .setCustomClientFactory((spawnEntity, world) -> new TreefolkEntity(EntityTypesPM.TREEFOLK.get(), world))
+            .build(PrimalMagic.MODID + ":treefolk"));
     public static final RegistryObject<EntityType<PrimaliteGolemEntity>> PRIMALITE_GOLEM = ENTITY_TYPES.register("primalite_golem", () -> EntityType.Builder.<PrimaliteGolemEntity>create(PrimaliteGolemEntity::new, EntityClassification.MISC)
             .size(1.4F, 2.7F)
             .trackingRange(10)

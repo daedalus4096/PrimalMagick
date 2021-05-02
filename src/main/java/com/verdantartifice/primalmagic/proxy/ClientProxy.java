@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagic.client.renderers.entity.MajesticPixieRend
 import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellMineRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.TreefolkRenderer;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.OfferingPedestalTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualAltarTER;
@@ -109,6 +110,7 @@ public class ClientProxy extends CommonProxy {
         // Register renderers for each entity type
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemRenderer::new);
