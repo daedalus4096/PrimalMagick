@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.pixies.Majesti
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticVoidPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
@@ -62,6 +63,12 @@ public class EntityTypesPM {
             .size(0.25F, 0.25F)
             .setCustomClientFactory((spawnEntity, world) -> new SpellMineEntity(EntityTypesPM.SPELL_MINE.get(), world))
             .build(PrimalMagic.MODID + ":spell_mine"));
+    public static final RegistryObject<EntityType<AppleEntity>> APPLE = ENTITY_TYPES.register("apple", () -> EntityType.Builder.<AppleEntity>create(AppleEntity::new, EntityClassification.MISC)
+            .size(0.25F, 0.25F)
+            .trackingRange(4)
+            .updateInterval(10)
+            .setCustomClientFactory((spawnEntity, world) -> new AppleEntity(EntityTypesPM.APPLE.get(), world))
+            .build(PrimalMagic.MODID + ":apple"));
     public static final RegistryObject<EntityType<TreefolkEntity>> TREEFOLK = ENTITY_TYPES.register("treefolk", () -> EntityType.Builder.<TreefolkEntity>create(TreefolkEntity::new, EntityClassification.CREATURE)
             .size(0.6F, 1.95F)
             .trackingRange(8)

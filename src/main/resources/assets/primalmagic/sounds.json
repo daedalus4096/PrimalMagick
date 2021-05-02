@@ -110,7 +110,7 @@
         ]
     },
     "treefolk_hurt": {
-        "category": "hostile",
+        "category": "neutral",
         "sounds": [
             "primalmagic:treefolk_hurt1",
             "primalmagic:treefolk_hurt2",
@@ -118,7 +118,7 @@
         ]
     },
     "treefolk_death": {
-        "category": "hostile",
+        "category": "neutral",
         "sounds": [
             "primalmagic:treefolk_death1",
             "primalmagic:treefolk_death2"

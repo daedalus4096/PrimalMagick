@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.common.entities.misc;
 import java.util.List;
 import java.util.UUID;
 
+import com.verdantartifice.primalmagic.common.entities.ai.goals.LongDistanceRangedAttackGoal;
+import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
@@ -11,6 +13,8 @@ import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
+import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -23,6 +27,8 @@ import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -30,7 +36,9 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.TickRangeConverter;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -40,7 +48,7 @@ import net.minecraft.world.server.ServerWorld;
  * 
  * @author Daedalus4096
  */
-public class TreefolkEntity extends CreatureEntity implements IAngerable {
+public class TreefolkEntity extends CreatureEntity implements IAngerable, IRangedAttackMob {
     protected static final DataParameter<Integer> ANGER_TIME = EntityDataManager.createKey(TreefolkEntity.class, DataSerializers.VARINT);
     protected static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.convertRange(20, 39);
     protected static final String DREADED_NAME = "Verdus";
@@ -72,6 +80,7 @@ public class TreefolkEntity extends CreatureEntity implements IAngerable {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new SwimGoal(this));
+        this.goalSelector.addGoal(3, new LongDistanceRangedAttackGoal<>(this, 1.0D, 30, 4.0F, 16.0F, true));
         this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(10, new LookAtGoal(this, PlayerEntity.class, 8.0F));
@@ -144,5 +153,19 @@ public class TreefolkEntity extends CreatureEntity implements IAngerable {
                 StatsManager.incrementValue(player, StatsPM.TREANTS_NAMED);
             }
         }
+    }
+
+    @Override
+    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
+        AppleEntity missile = new AppleEntity(this.world, this);
+        missile.setItem(new ItemStack(Items.APPLE));
+        double d0 = target.getPosYEye() - (double)1.1F;
+        double d1 = target.getPosX() - this.getPosX();
+        double d2 = d0 - missile.getPosY();
+        double d3 = target.getPosZ() - this.getPosZ();
+        float f = MathHelper.sqrt(d1 * d1 + d3 * d3) * 0.2F;
+        missile.shoot(d1, d2 + (double)f, d3, 1.6F, (float)(14 - this.world.getDifficulty().getId() * 4));
+        this.playSound(SoundEvents.ENTITY_SNOWBALL_THROW, 1.0F, 0.4F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        this.world.addEntity(missile);
     }
 }

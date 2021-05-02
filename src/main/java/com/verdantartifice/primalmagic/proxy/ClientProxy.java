@@ -44,6 +44,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -67,7 +68,7 @@ public class ClientProxy extends CommonProxy {
         this.registerKeybinds();
         this.registerScreens();
         this.registerTERs();
-        this.registerEntityRenderers();
+        this.registerEntityRenderers(event);
         this.registerItemProperties(event);
         this.setRenderLayers();
     }
@@ -106,10 +107,13 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), dispatcher -> new RunescribingAltarTER(dispatcher));
     }
     
-    private void registerEntityRenderers() {
+    private void registerEntityRenderers(FMLClientSetupEvent event) {
         // Register renderers for each entity type
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.APPLE.get(), (renderManager) -> {
+            return new SpriteRenderer<>(renderManager, event.getMinecraftSupplier().get().getItemRenderer());
+        });
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemRenderer::new);
