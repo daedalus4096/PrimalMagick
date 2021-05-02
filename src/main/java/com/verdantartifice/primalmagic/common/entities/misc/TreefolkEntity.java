@@ -1,6 +1,11 @@
 package com.verdantartifice.primalmagic.common.entities.misc;
 
+import java.util.List;
 import java.util.UUID;
+
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -25,6 +30,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -36,6 +42,7 @@ import net.minecraft.world.server.ServerWorld;
 public class TreefolkEntity extends CreatureEntity implements IAngerable {
     protected static final DataParameter<Integer> ANGER_TIME = EntityDataManager.createKey(TreefolkEntity.class, DataSerializers.VARINT);
     protected static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.convertRange(20, 39);
+    protected static final String DREADED_NAME = "Verdus";
 
     protected UUID angerTarget;
 
@@ -124,11 +131,25 @@ public class TreefolkEntity extends CreatureEntity implements IAngerable {
 
     @Override
     public void livingTick() {
-        // TODO Auto-generated method stub
         super.livingTick();
+        
+        if (this.hasCustomName() && DREADED_NAME.equals(this.getCustomName().getString())) {
+            this.setFire(8);
+        }
         
         if (!this.world.isRemote) {
             this.func_241359_a_((ServerWorld)this.world, true);
+        }
+    }
+
+    @Override
+    public void setCustomName(ITextComponent name) {
+        super.setCustomName(name);
+        if (!this.world.isRemote && DREADED_NAME.equals(name.getString())) {
+            List<PlayerEntity> nearby = EntityUtils.getEntitiesInRange(this.world, this.getPositionVec(), null, PlayerEntity.class, 6.0D);
+            for (PlayerEntity player : nearby) {
+                StatsManager.incrementValue(player, StatsPM.TREANTS_NAMED);
+            }
         }
     }
 }
