@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerISTER;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
@@ -13,6 +14,7 @@ import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemPropertyGetter;
@@ -81,9 +83,14 @@ public class ArcanometerItem extends Item {
         if (result == null || world == null) {
             return false;
         } else if (result.getType() == RayTraceResult.Type.ENTITY) {
-            // If the current mouseover is an entity, try to get its corresponding item and scan that if it has one
-            ItemStack stack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
-            return !stack.isEmpty() && !ResearchManager.isScanned(stack, player);
+            // If the current mouseover is an entity, try to get its corresponding item and scan that if it has one, otherwise scan the entity itself
+            Entity entity = ((EntityRayTraceResult)result).getEntity();
+            ItemStack stack = EntityUtils.getEntityItemStack(entity);
+            if (!stack.isEmpty()) {
+                return !ResearchManager.isScanned(stack, player);
+            } else {
+                return !ResearchManager.isScanned(entity.getType(), player);
+            }
         } else if (result.getType() == RayTraceResult.Type.BLOCK) {
             // If the current mouseover is a block, try to get its corresponding block item and scan that
             BlockPos pos = ((BlockRayTraceResult)result).getPos();
@@ -102,8 +109,13 @@ public class ArcanometerItem extends Item {
                 // If something is being moused over, play the sound effect for the player and send a scan packet to the server
                 worldIn.playSound(playerIn, playerIn.getPosition(), SoundsPM.SCAN.get(), SoundCategory.MASTER, 1.0F, 1.0F);
                 if (result.getType() == RayTraceResult.Type.ENTITY) {
-                    ItemStack entityStack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
-                    PacketHandler.sendToServer(new ScanItemPacket(entityStack));
+                    Entity entity = ((EntityRayTraceResult)result).getEntity();
+                    ItemStack entityStack = EntityUtils.getEntityItemStack(entity);
+                    if (!entityStack.isEmpty()) {
+                        PacketHandler.sendToServer(new ScanItemPacket(entityStack));
+                    } else {
+                        PacketHandler.sendToServer(new ScanEntityPacket(entity.getType()));
+                    }
                 } else if (result.getType() == RayTraceResult.Type.BLOCK) {
                     BlockPos pos = ((BlockRayTraceResult)result).getPos();
                     PacketHandler.sendToServer(new ScanPositionPacket(pos));

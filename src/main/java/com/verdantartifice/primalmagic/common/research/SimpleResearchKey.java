@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
@@ -17,7 +18,8 @@ import net.minecraft.item.ItemStack;
  * @author Daedalus4096
  */
 public class SimpleResearchKey {
-    protected static final String SCAN_PREFIX = "!";
+    protected static final String ITEM_SCAN_PREFIX = "!";
+    protected static final String ENTITY_SCAN_PREFIX = "*";
     protected static final String CRAFTED_PREFIX = "[#]";
     protected static final String RUNE_ENCHANT_PREFIX = "&";
     
@@ -51,12 +53,21 @@ public class SimpleResearchKey {
     }
     
     @Nullable
-    public static SimpleResearchKey parseScan(@Nullable ItemStack stack) {
+    public static SimpleResearchKey parseItemScan(@Nullable ItemStack stack) {
         if (stack == null || stack.isEmpty()) {
             return null;
         } else {
             // Generate a research key based on the given itemstack's hash code after its NBT data has been stripped
-            return parse(SCAN_PREFIX + Integer.toString(ItemUtils.getHashCode(stack, true)));
+            return parse(ITEM_SCAN_PREFIX + Integer.toString(ItemUtils.getHashCode(stack, true)));
+        }
+    }
+    
+    @Nullable
+    public static SimpleResearchKey parseEntityScan(@Nullable EntityType<?> type) {
+        if (type == null) {
+            return null;
+        } else {
+            return parse(ENTITY_SCAN_PREFIX + type.getRegistryName().toString());
         }
     }
     

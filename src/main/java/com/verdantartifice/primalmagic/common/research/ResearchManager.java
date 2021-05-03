@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -357,7 +358,16 @@ public class ResearchManager {
             // If the given itemstack has no affinities, consider it already scanned
             return true;
         }
-        SimpleResearchKey key = SimpleResearchKey.parseScan(stack);
+        SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
+        return (key != null && key.isKnownByStrict(player));
+    }
+    
+    public static boolean isScanned(@Nullable EntityType<?> type, @Nullable PlayerEntity player) {
+        if (type == null || player == null) {
+            return false;
+        }
+        // TODO Check entity type affinities
+        SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
         return (key != null && key.isKnownByStrict(player));
     }
 
@@ -376,7 +386,7 @@ public class ResearchManager {
         }
         
         // Generate a research key for the itemstack and add that research to the player
-        SimpleResearchKey key = SimpleResearchKey.parseScan(stack);
+        SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
         if (key != null && knowledge.addResearch(key)) {
             // Determine how many observation points the itemstack is worth and add those to the player's knowledge
             int obsPoints = getObservationPoints(stack, player.getEntityWorld());
@@ -389,6 +399,36 @@ public class ResearchManager {
             
             // Check to see if any scan triggers need to be run for the item
             checkScanTriggers(player, stack.getItem());
+            
+            // Sync the research/knowledge changes to the player's client if requested
+            if (sync) {
+                knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public static boolean setScanned(@Nullable EntityType<?> type, @Nullable ServerPlayerEntity player) {
+        return setScanned(type, player, true);
+    }
+    
+    public static boolean setScanned(@Nullable EntityType<?> type, @Nullable ServerPlayerEntity player, boolean sync) {
+        if (type == null || player == null) {
+            return false;
+        }
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        if (knowledge == null) {
+            return false;
+        }
+        
+        // Generate a research key for the entity type and add that research to the player
+        SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
+        if (key != null && knowledge.addResearch(key)) {
+            // TODO Determine how many observation points the entity is worth and add those to the player's knowledge
+            // TODO Increment the entities analyzed stat
+            // TODO Check to see if any scan triggers need to be run for the entity
             
             // Sync the research/knowledge changes to the player's client if requested
             if (sync) {
@@ -416,7 +456,7 @@ public class ResearchManager {
         for (Item item : ForgeRegistries.ITEMS) {
             // Generate a research key for the itemstack and add that research to the player
             stack = new ItemStack(item);
-            key = SimpleResearchKey.parseScan(stack);
+            key = SimpleResearchKey.parseItemScan(stack);
             if (key != null && knowledge.addResearch(key)) {
                 count++;
     
