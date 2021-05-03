@@ -176,4 +176,9 @@ public class TreefolkEntity extends CreatureEntity implements IAngerable, IRange
         this.playSound(SoundEvents.ENTITY_SNOWBALL_THROW, 1.0F, 0.4F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
         this.world.addEntity(missile);
     }
+
+    @Override
+    public boolean canDespawn(double distanceToClosestPlayer) {
+        return false;
+    }
 }
