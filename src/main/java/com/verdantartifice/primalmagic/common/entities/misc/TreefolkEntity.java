@@ -61,6 +61,7 @@ public class TreefolkEntity extends CreatureEntity implements IAngerable, IRange
 
     public TreefolkEntity(EntityType<? extends TreefolkEntity> entityType, World world) {
         super(entityType, world);
+        this.experienceValue = 5;
     }
     
     public static AttributeModifierMap.MutableAttribute getAttributeModifiers() {
