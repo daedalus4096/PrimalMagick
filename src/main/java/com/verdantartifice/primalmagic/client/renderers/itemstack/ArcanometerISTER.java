@@ -11,10 +11,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
@@ -60,23 +62,47 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
                 RayTraceResult result = RayTraceUtils.getMouseOver();
                 if (result != null) {
                     if (result.getType() == RayTraceResult.Type.ENTITY) {
-                        screenStack = EntityUtils.getEntityItemStack(((EntityRayTraceResult)result).getEntity());
+                        Entity entity = ((EntityRayTraceResult)result).getEntity();
+                        if (entity != null) {
+                            screenStack = EntityUtils.getEntityItemStack(entity);
+                            if (!screenStack.isEmpty()) {
+                                this.renderScreenItem(itemRenderer, screenStack, matrixStack, buffer, combinedLight, combinedOverlay);
+                            } else {
+                                this.renderScreenEntity(mc.getRenderManager(), entity, matrixStack, buffer, combinedLight, combinedOverlay);
+                            }
+                        }
                     } else if (result.getType() == RayTraceResult.Type.BLOCK) {
                         screenStack = new ItemStack(mc.world.getBlockState(((BlockRayTraceResult)result).getPos()).getBlock());
+                        this.renderScreenItem(itemRenderer, screenStack, matrixStack, buffer, combinedLight, combinedOverlay);
                     }
                 }
-                
-                // Render the screen display
-                matrixStack.push();
-                matrixStack.translate(0.5D, 0.4375D, 0.405D);
-                matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F));
-                matrixStack.scale(0.2F, 0.2F, 0.0001F);
-                itemRenderer.renderItem(screenStack, ItemCameraTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer);
-                matrixStack.pop();
                 
                 isRenderingScreen = false;
             }
         }
+    }
+    
+    private void renderScreenItem(ItemRenderer itemRenderer, ItemStack screenStack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+        matrixStack.push();
+        matrixStack.translate(0.5D, 0.4375D, 0.405D);
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F));
+        matrixStack.scale(0.2F, 0.2F, 0.0001F);
+        itemRenderer.renderItem(screenStack, ItemCameraTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer);
+        matrixStack.pop();
+    }
+    
+    private void renderScreenEntity(EntityRendererManager erm, Entity entity, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+        float scale = 0.175F;
+        float size = Math.max(entity.getWidth(), entity.getHeight());
+        if ((double)size > 1.0D) {
+           scale /= size;
+        }
+        matrixStack.push();
+        matrixStack.translate(0.5D, 0.35D, 0.405D);
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F));
+        matrixStack.scale(scale, scale, 0.0001F);
+        erm.renderEntityStatic(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F, matrixStack, buffer, combinedLight);
+        matrixStack.pop();
     }
     
     protected ModelResourceLocation getModelResourceLocation(ItemStack stack) {
