@@ -17,18 +17,24 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
+import net.minecraft.advancements.criterion.EntityFlagsPredicate;
+import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameterSets;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTableManager;
 import net.minecraft.loot.RandomValueRange;
+import net.minecraft.loot.conditions.EntityHasProperty;
+import net.minecraft.loot.functions.LootingEnchantBonus;
 import net.minecraft.loot.functions.SetCount;
+import net.minecraft.loot.functions.Smelt;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -40,6 +46,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class EntityLootTables implements IDataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final EntityPredicate.Builder ON_FIRE = EntityPredicate.Builder.create().flags(EntityFlagsPredicate.Builder.create().onFire(true).build());
 
     protected final Map<EntityType<?>, LootTable.Builder> lootTables = new HashMap<>();
     protected final Set<ResourceLocation> registeredEntities = new HashSet<>();
@@ -107,6 +114,8 @@ public class EntityLootTables implements IDataProvider {
     protected void addTables() {
         this.registerEmptyLootTable(EntityTypesPM.SPELL_MINE.get());
         this.registerEmptyLootTable(EntityTypesPM.SPELL_PROJECTILE.get());
+        this.registerEmptyLootTable(EntityTypesPM.APPLE.get());
+        this.registerLootTable(EntityTypesPM.TREEFOLK.get(), LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.HEARTWOOD.get()).acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 1.0F))).acceptFunction(Smelt.func_215953_b().acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE))).acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F))))));
         this.registerLootTable(EntityTypesPM.PRIMALITE_GOLEM.get(), LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.PRIMALITE_INGOT.get()).acceptFunction(SetCount.builder(RandomValueRange.of(3.0F, 5.0F))))));
         this.registerLootTable(EntityTypesPM.HEXIUM_GOLEM.get(), LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.HEXIUM_INGOT.get()).acceptFunction(SetCount.builder(RandomValueRange.of(3.0F, 5.0F))))));
         this.registerLootTable(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.HALLOWSTEEL_INGOT.get()).acceptFunction(SetCount.builder(RandomValueRange.of(3.0F, 5.0F))))));

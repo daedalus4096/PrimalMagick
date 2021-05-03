@@ -407,6 +407,10 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARCANOMETER")))
             .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
+        
+        CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, IRecipeSerializer.SMELTING)
+            .addCriterion("has_heartwood", hasItem(ItemsPM.HEARTWOOD.get()))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "charcoal_from_smelting_heartwood"));
 
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .build(consumer, "primalmagic:wand_assembly");
