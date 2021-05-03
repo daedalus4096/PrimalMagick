@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.init.InitAttunements;
 import com.verdantartifice.primalmagic.common.init.InitCapabilities;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
@@ -32,7 +33,10 @@ import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
 import net.minecraft.command.arguments.ArgumentSerializer;
 import net.minecraft.command.arguments.ArgumentTypes;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
@@ -82,8 +86,16 @@ public class CommonProxy implements IProxyPM {
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "stat_value")).toString(), StatValueArgument.class, new ArgumentSerializer<>(StatValueArgument::value));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "attunement_type")).toString(), AttunementTypeArgument.class, new ArgumentSerializer<>(AttunementTypeArgument::attunementType));
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "attunement_value")).toString(), AttunementValueArgument.class, new ArgumentSerializer<>(AttunementValueArgument::value));
+        
+        this.registerEntityPlacements(event);
     }
     
+    private void registerEntityPlacements(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            EntitySpawnPlacementRegistry.register(EntityTypesPM.TREEFOLK.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TreefolkEntity::canSpawnOn);
+        });
+    }
+
     @Override
     public void clientSetup(FMLClientSetupEvent event) {}
 

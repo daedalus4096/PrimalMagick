@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.entities.misc;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import com.verdantartifice.primalmagic.common.entities.ai.goals.LongDistanceRangedAttackGoal;
@@ -16,6 +17,7 @@ import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -38,8 +40,10 @@ import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.TickRangeConverter;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -61,6 +65,10 @@ public class TreefolkEntity extends CreatureEntity implements IAngerable, IRange
     
     public static AttributeModifierMap.MutableAttribute getAttributeModifiers() {
         return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20.0D).createMutableAttribute(Attributes.ARMOR, 4.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 5.0D);
+    }
+
+    public static boolean canSpawnOn(EntityType<? extends MobEntity> typeIn, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
+        return MobEntity.canSpawnOn(typeIn, worldIn, reason, pos, randomIn);
     }
 
     @Override

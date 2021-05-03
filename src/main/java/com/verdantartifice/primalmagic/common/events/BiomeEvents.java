@@ -3,12 +3,15 @@ package com.verdantartifice.primalmagic.common.events;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -55,6 +58,7 @@ public class BiomeEvents {
 		
 		// Add moon shrines to forests
 		if (Biome.Category.FOREST.equals(cat)) {
+		    event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(EntityTypesPM.TREEFOLK.get(), 100, 1, 3));
 			// TODO Phase sunwood and moonwood trees appropriately
 		    event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_SUNWOOD_FULL_SPACED);
 		    event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_MOONWOOD_FULL_SPACED);
