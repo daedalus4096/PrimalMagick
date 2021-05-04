@@ -434,7 +434,11 @@ public class ResearchManager {
         // Generate a research key for the entity type and add that research to the player
         SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
         if (key != null && knowledge.addResearch(key)) {
-            // TODO Determine how many observation points the entity is worth and add those to the player's knowledge
+            // Determine how many observation points the entity is worth and add those to the player's knowledge
+            int obsPoints = getObservationPoints(type);
+            if (obsPoints > 0) {
+                knowledge.addKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints);
+            }
             
             // Increment the entities analyzed stat
             StatsManager.incrementValue(player, StatsPM.ENTITIES_ANALYZED);
@@ -492,16 +496,25 @@ public class ResearchManager {
         return count;
     }
 
-    protected static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull World world) {
+    private static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull World world) {
         // Calculate observation points for the itemstack based on its affinities
-        SourceList sources = AffinityManager.getInstance().getAffinityValues(stack, world);
-        if (sources == null || sources.isEmpty()) {
+        return getObservationPoints(AffinityManager.getInstance().getAffinityValues(stack, world));
+    }
+    
+    private static int getObservationPoints(@Nonnull EntityType<?> type) {
+        // TODO Get affinities from affinity manager for entity type
+        SourceList affinities = new SourceList();
+        return getObservationPoints(affinities);
+    }
+    
+    private static int getObservationPoints(@Nonnull SourceList affinities) {
+        if (affinities == null || affinities.isEmpty()) {
             return 0;
         }
         double total = 0.0D;
-        for (Source source : sources.getSources()) {
+        for (Source source : affinities.getSources()) {
             // Not all sources are worth the same amount of observation points
-            total += (sources.getAmount(source) * source.getObservationMultiplier());
+            total += (affinities.getAmount(source) * source.getObservationMultiplier());
         }
         if (total > 0.0D) {
             total = Math.sqrt(total);
