@@ -435,7 +435,9 @@ public class ResearchManager {
         SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
         if (key != null && knowledge.addResearch(key)) {
             // TODO Determine how many observation points the entity is worth and add those to the player's knowledge
-            // TODO Increment the entities analyzed stat
+            
+            // Increment the entities analyzed stat
+            StatsManager.incrementValue(player, StatsPM.ENTITIES_ANALYZED);
             
             // Check to see if any scan triggers need to be run for the entity
             checkScanTriggers(player, type);

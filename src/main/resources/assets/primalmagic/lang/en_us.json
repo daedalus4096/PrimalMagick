@@ -1453,7 +1453,8 @@
     "key.primalmagic.change_spell": "Cycle Active Spell",
     
     "stat.primalmagic.grimoire_read": "Times Grimoire consulted",
-    "stat.primalmagic.items_analyzed": "Items analyzed",
+    "stat.primalmagic.items_analyzed": "Item types analyzed",
+    "stat.primalmagic.entities_analyzed": "Creature types analyzed",
     "stat.primalmagic.crafted_manaweaving": "Manaweaving recipes crafted",
     "stat.primalmagic.crafted_alchemy": "Alchemy recipes crafted",
     "stat.primalmagic.crafted_sorcery": "Sorcery recipes crafted",
