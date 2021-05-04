@@ -5,9 +5,9 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
-import com.verdantartifice.primalmagic.common.research.ScanResearchTrigger;
+import com.verdantartifice.primalmagic.common.research.ScanItemResearchTrigger;
 import com.verdantartifice.primalmagic.common.research.ScanSourceUnlockTrigger;
-import com.verdantartifice.primalmagic.common.research.ScanTagResearchTrigger;
+import com.verdantartifice.primalmagic.common.research.ScanItemTagResearchTrigger;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
@@ -39,15 +39,15 @@ public class InitResearch {
     
     private static void initScanResearch() {
         ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Source.HALLOWED));
-        ResearchManager.registerScanTrigger(new ScanResearchTrigger(ItemsPM.MARBLE_RAW.get(), SimpleResearchKey.parse("RAW_MARBLE")));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.NUGGETS_PRIMALITE, SimpleResearchKey.parse("b_scan_primalite"), false));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.INGOTS_PRIMALITE, SimpleResearchKey.parse("b_scan_primalite"), false));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, SimpleResearchKey.parse("b_scan_primalite"), false));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.NUGGETS_HEXIUM, SimpleResearchKey.parse("b_scan_hexium"), false));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.INGOTS_HEXIUM, SimpleResearchKey.parse("b_scan_hexium"), false));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_HEXIUM, SimpleResearchKey.parse("b_scan_hexium"), false));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.NUGGETS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.INGOTS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
-        ResearchManager.registerScanTrigger(new ScanTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RAW.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.NUGGETS_PRIMALITE, SimpleResearchKey.parse("b_scan_primalite"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.INGOTS_PRIMALITE, SimpleResearchKey.parse("b_scan_primalite"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, SimpleResearchKey.parse("b_scan_primalite"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.NUGGETS_HEXIUM, SimpleResearchKey.parse("b_scan_hexium"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.INGOTS_HEXIUM, SimpleResearchKey.parse("b_scan_hexium"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_HEXIUM, SimpleResearchKey.parse("b_scan_hexium"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.NUGGETS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.INGOTS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
     }
 }

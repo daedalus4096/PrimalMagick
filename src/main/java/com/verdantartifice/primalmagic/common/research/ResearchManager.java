@@ -342,9 +342,17 @@ public class ResearchManager {
     }
     
     public static void checkScanTriggers(ServerPlayerEntity player, IItemProvider itemProvider) {
+        checkScanTriggersInner(player, itemProvider);
+    }
+    
+    public static void checkScanTriggers(ServerPlayerEntity player, EntityType<?> entityType) {
+        checkScanTriggersInner(player, entityType);
+    }
+    
+    private static void checkScanTriggersInner(ServerPlayerEntity player, Object obj) {
         for (IScanTrigger trigger : SCAN_TRIGGERS) {
-            if (trigger.matches(player, itemProvider)) {
-                trigger.onMatch(player, itemProvider);
+            if (trigger.matches(player, obj)) {
+                trigger.onMatch(player, obj);
             }
         }
     }
@@ -428,7 +436,9 @@ public class ResearchManager {
         if (key != null && knowledge.addResearch(key)) {
             // TODO Determine how many observation points the entity is worth and add those to the player's knowledge
             // TODO Increment the entities analyzed stat
-            // TODO Check to see if any scan triggers need to be run for the entity
+            
+            // Check to see if any scan triggers need to be run for the entity
+            checkScanTriggers(player, type);
             
             // Sync the research/knowledge changes to the player's client if requested
             if (sync) {

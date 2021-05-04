@@ -1,29 +1,28 @@
 package com.verdantartifice.primalmagic.common.research;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.IItemProvider;
 
 /**
- * Primary interface for behavior to be triggered upon the successful scan of a block/item in the
+ * Primary interface for behavior to be triggered upon the successful scan of an object in the
  * analysis table or with the arcanometer.
  * 
  * @author Daedalus4096
  */
 public interface IScanTrigger {
     /**
-     * Determine whether this trigger should be executed for the given block/item.
+     * Determine whether this trigger should be executed for the given object.
      * 
      * @param player the player performing the scan
-     * @param itemProvider the block/item being scanned
+     * @param obj the object being scanned
      * @return true if the trigger should be executed, false otherwise
      */
-    boolean matches(ServerPlayerEntity player, IItemProvider itemProvider);
+    boolean matches(ServerPlayerEntity player, Object obj);
     
     /**
      * Execute this trigger's behavior.
      * 
      * @param player the player performing the scan
-     * @param itemProvider the block/item being scanned
+     * @param obj the object being scanned
      */
-    void onMatch(ServerPlayerEntity player, IItemProvider itemProvider);
+    void onMatch(ServerPlayerEntity player, Object obj);
 }

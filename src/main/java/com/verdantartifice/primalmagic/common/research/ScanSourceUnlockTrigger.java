@@ -13,7 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent;
  * 
  * @author Daedalus4096
  */
-public class ScanSourceUnlockTrigger extends ScanResearchTrigger {
+public class ScanSourceUnlockTrigger extends ScanItemResearchTrigger {
     protected final Source source;
     
     public ScanSourceUnlockTrigger(IItemProvider target, Source source) {
@@ -22,8 +22,8 @@ public class ScanSourceUnlockTrigger extends ScanResearchTrigger {
     }
     
     @Override
-    public void onMatch(ServerPlayerEntity player, IItemProvider itemProvider) {
-        super.onMatch(player, itemProvider);
+    public void onMatch(ServerPlayerEntity player, Object obj) {
+        super.onMatch(player, obj);
         player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source." + this.source.getTag()).mergeStyle(TextFormatting.GREEN), false);
     }
 }
