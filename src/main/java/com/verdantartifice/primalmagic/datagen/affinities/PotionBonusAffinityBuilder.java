@@ -49,7 +49,7 @@ public class PotionBonusAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer) {
-        this.build(consumer, new ResourceLocation(this.targetId.getNamespace(), this.targetId.getPath() + "_potion_bonus"));
+        this.build(consumer, this.targetId);
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {

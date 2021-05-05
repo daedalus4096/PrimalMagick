@@ -8,19 +8,25 @@ import net.minecraft.util.IStringSerializable;
  * @author Daedalus4096
  */
 public enum AffinityType implements IStringSerializable {
-    ITEM("item"),
-    POTION_BONUS("potion_bonus"),
-    ENCHANTMENT_BONUS("enchantment_bonus");
+    ITEM("item", "items"),
+    POTION_BONUS("potion_bonus", "potions"),
+    ENCHANTMENT_BONUS("enchantment_bonus", "enchantments");
     
     private final String name;
+    private final String folder;
     
-    private AffinityType(String name) {
+    private AffinityType(String name, String folder) {
         this.name = name;
+        this.folder = folder;
     }
 
     @Override
     public String getString() {
         return this.name;
+    }
+    
+    public String getFolder() {
+        return this.folder;
     }
     
     public static AffinityType parse(String str) {

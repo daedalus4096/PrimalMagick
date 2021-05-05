@@ -53,7 +53,7 @@ public class EnchantmentBonusAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer) {
-        this.build(consumer, new ResourceLocation(this.targetId.getNamespace(), this.targetId.getPath() + "_enchantment_bonus"));
+        this.build(consumer, this.targetId);
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {

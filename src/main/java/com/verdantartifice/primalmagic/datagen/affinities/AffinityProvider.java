@@ -49,7 +49,7 @@ public class AffinityProvider implements IDataProvider {
         });
         for (Map.Entry<ResourceLocation, IFinishedAffinity> entry : map.entrySet()) {
             IFinishedAffinity affinity = entry.getValue();
-            this.saveAffinity(cache, affinity.getAffinityJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/affinities/" + entry.getKey().getPath() + ".json"));
+            this.saveAffinity(cache, affinity.getAffinityJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/affinities/" + affinity.getType().getFolder() + "/" + entry.getKey().getPath() + ".json"));
         }
     }
     
