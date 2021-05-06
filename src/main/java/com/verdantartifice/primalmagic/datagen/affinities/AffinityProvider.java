@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -682,7 +683,38 @@ public class AffinityProvider implements IDataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityType.ZOMBIE_VILLAGER).value(Source.MOON, 10).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.ZOMBIFIED_PIGLIN).value(Source.MOON, 10).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).build(consumer);
         
-        // TODO Define mod entity type affinities
+        // Define mod entity type affinities
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.TREEFOLK.get()).value(Source.EARTH, 10).value(Source.SUN, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.PRIMALITE_GOLEM.get()).value(Source.EARTH, 30).value(Source.SEA, 10).value(Source.SKY, 10).value(Source.SUN, 10).value(Source.MOON, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.HEXIUM_GOLEM.get()).value(Source.EARTH, 20).value(Source.BLOOD, 10).value(Source.INFERNAL, 10).value(Source.VOID, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.HALLOWSTEEL_GOLEM.get()).value(Source.EARTH, 20).value(Source.HALLOWED, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_EARTH_PIXIE.get()).value(Source.EARTH, 5).value(Source.SKY, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_EARTH_PIXIE.get()).value(Source.EARTH, 10).value(Source.SKY, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get()).value(Source.EARTH, 20).value(Source.SKY, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_SEA_PIXIE.get()).value(Source.SEA, 5).value(Source.SKY, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_SEA_PIXIE.get()).value(Source.SEA, 10).value(Source.SKY, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_SEA_PIXIE.get()).value(Source.SEA, 20).value(Source.SKY, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_SKY_PIXIE.get()).value(Source.SKY, 15).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_SKY_PIXIE.get()).value(Source.SKY, 20).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_SKY_PIXIE.get()).value(Source.SKY, 30).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_SUN_PIXIE.get()).value(Source.SKY, 10).value(Source.SUN, 5).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_SUN_PIXIE.get()).value(Source.SKY, 10).value(Source.SUN, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_SUN_PIXIE.get()).value(Source.SKY, 10).value(Source.SUN, 20).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_MOON_PIXIE.get()).value(Source.SKY, 10).value(Source.MOON, 5).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_MOON_PIXIE.get()).value(Source.SKY, 10).value(Source.MOON, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_MOON_PIXIE.get()).value(Source.SKY, 10).value(Source.MOON, 20).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_BLOOD_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_BLOOD_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 15).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 25).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_INFERNAL_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.INFERNAL, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_INFERNAL_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.INFERNAL, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.INFERNAL, 20).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_VOID_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.VOID, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_VOID_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.VOID, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_VOID_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.VOID, 20).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_HALLOWED_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.HALLOWED, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_HALLOWED_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.HALLOWED, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.HALLOWED, 20).build(consumer);
         
         // Define potion bonuses
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Source.SUN, 2).build(consumer);
