@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:squid",
+  "values": {
+    "sea": 10,
+    "blood": 10
+  }
+}

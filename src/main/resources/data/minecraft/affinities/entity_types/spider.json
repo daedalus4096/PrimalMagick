@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:spider",
+  "values": {
+    "moon": 5,
+    "blood": 10
+  }
+}

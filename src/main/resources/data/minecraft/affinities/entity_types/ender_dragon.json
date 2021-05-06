@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:ender_dragon",
+  "values": {
+    "sky": 20,
+    "blood": 50,
+    "void": 50
+  }
+}

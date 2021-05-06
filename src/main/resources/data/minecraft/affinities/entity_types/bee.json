@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:bee",
+  "values": {
+    "sky": 10,
+    "sun": 5,
+    "blood": 5
+  }
+}

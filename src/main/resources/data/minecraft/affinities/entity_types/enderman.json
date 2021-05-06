@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:enderman",
+  "values": {
+    "blood": 10,
+    "void": 20
+  }
+}

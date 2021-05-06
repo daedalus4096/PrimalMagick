@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagic.common.affinities.AffinityType;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
@@ -43,15 +44,17 @@ public class AffinityProvider implements IDataProvider {
     @Override
     public void act(DirectoryCache cache) throws IOException {
         Path path = this.generator.getOutputFolder();
-        Map<ResourceLocation, IFinishedAffinity> map = new HashMap<>();
+        Map<AffinityType, Map<ResourceLocation, IFinishedAffinity>> map = new HashMap<>();
         this.registerAffinities((affinity) -> {
-            if (map.put(affinity.getId(), affinity) != null) {
+            if (map.computeIfAbsent(affinity.getType(), (type) -> { return new HashMap<>(); }).put(affinity.getId(), affinity) != null) {
                 LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
             }
         });
-        for (Map.Entry<ResourceLocation, IFinishedAffinity> entry : map.entrySet()) {
-            IFinishedAffinity affinity = entry.getValue();
-            this.saveAffinity(cache, affinity.getAffinityJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/affinities/" + affinity.getType().getFolder() + "/" + entry.getKey().getPath() + ".json"));
+        for (Map.Entry<AffinityType, Map<ResourceLocation, IFinishedAffinity>> entry1 : map.entrySet()) {
+            for (Map.Entry<ResourceLocation, IFinishedAffinity> entry : entry1.getValue().entrySet()) {
+                IFinishedAffinity affinity = entry.getValue();
+                this.saveAffinity(cache, affinity.getAffinityJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/affinities/" + affinity.getType().getFolder() + "/" + entry.getKey().getPath() + ".json"));
+            }
         }
     }
     

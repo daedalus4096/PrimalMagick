@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:elder_guardian",
+  "values": {
+    "sea": 20,
+    "blood": 20
+  }
+}

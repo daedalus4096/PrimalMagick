@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:ghast",
+  "values": {
+    "sky": 10,
+    "blood": 10,
+    "infernal": 10
+  }
+}

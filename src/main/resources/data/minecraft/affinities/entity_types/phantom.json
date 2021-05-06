@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:phantom",
+  "values": {
+    "sky": 10,
+    "moon": 10,
+    "blood": 10
+  }
+}
