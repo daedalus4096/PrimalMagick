@@ -611,7 +611,7 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_VOID.get()).build(consumer);
         ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get()).build(consumer);
         
-        // TODO Define vanilla entity type affinities
+        // Define vanilla entity type affinities
         EntityTypeAffinityBuilder.entityAffinity(EntityType.BAT).value(Source.SKY, 10).value(Source.MOON, 10).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.BEE).value(Source.SKY, 10).value(Source.SUN, 5).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.BLAZE).value(Source.SKY, 10).value(Source.INFERNAL, 20).build(consumer);
@@ -643,6 +643,44 @@ public class AffinityProvider implements IDataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityType.MOOSHROOM).value(Source.MOON, 5).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.OCELOT).value(Source.MOON, 5).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.PANDA).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.PARROT).value(Source.SKY, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.PHANTOM).value(Source.SKY, 10).value(Source.MOON, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.PIG).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.PIGLIN).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.field_242287_aj).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).build(consumer); // Piglin brute
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.PILLAGER).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.POLAR_BEAR).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.PUFFERFISH).value(Source.SEA, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.RABBIT).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.RAVAGER).value(Source.BLOOD, 20).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SALMON).value(Source.SEA, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SHEEP).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SHULKER).value(Source.BLOOD, 10).value(Source.VOID, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SILVERFISH).value(Source.EARTH, 5).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SKELETON).value(Source.MOON, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SKELETON_HORSE).value(Source.MOON, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SLIME).value(Source.SEA, 20).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SNOW_GOLEM).value(Source.SEA, 20).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SPIDER).value(Source.MOON, 5).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.SQUID).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.STRAY).value(Source.SEA, 5).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.STRIDER).value(Source.BLOOD, 10).value(Source.INFERNAL, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.TRADER_LLAMA).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.TROPICAL_FISH).value(Source.SEA, 10).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.TURTLE).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.VEX).value(Source.SKY, 10).value(Source.VOID, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.VILLAGER).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.VINDICATOR).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.WANDERING_TRADER).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.WITCH).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).value(Source.VOID, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.WITHER).value(Source.SKY, 20).value(Source.INFERNAL, 50).value(Source.VOID, 50).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.WITHER_SKELETON).value(Source.BLOOD, 10).value(Source.INFERNAL, 10).value(Source.VOID, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.WOLF).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.ZOGLIN).value(Source.MOON, 10).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.ZOMBIE).value(Source.MOON, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.ZOMBIE_HORSE).value(Source.MOON, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.ZOMBIE_VILLAGER).value(Source.MOON, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.ZOMBIFIED_PIGLIN).value(Source.MOON, 10).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).build(consumer);
         
         // TODO Define mod entity type affinities
         
