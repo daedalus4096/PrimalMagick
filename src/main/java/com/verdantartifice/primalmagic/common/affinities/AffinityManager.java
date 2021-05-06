@@ -57,6 +57,7 @@ public class AffinityManager extends JsonReloadListener {
             .put(AffinityType.ITEM, ItemAffinity.SERIALIZER)
             .put(AffinityType.POTION_BONUS, PotionBonusAffinity.SERIALIZER)
             .put(AffinityType.ENCHANTMENT_BONUS, EnchantmentBonusAffinity.SERIALIZER)
+            .put(AffinityType.ENTITY_TYPE, EntityTypeAffinity.SERIALIZER)
             .build();
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -105,8 +106,9 @@ public class AffinityManager extends JsonReloadListener {
                 LOGGER.error("Parsing error loading affinity {}", location, e);
             }
         }
-        int size = this.affinities.entrySet().stream().mapToInt((m) -> m.getValue().size()).sum();
-        LOGGER.info("Loaded {} affinity definitions", size);
+        for (Map.Entry<AffinityType, Map<ResourceLocation, IAffinity>> entry : this.affinities.entrySet()) {
+            LOGGER.info("Loaded {} {} affinity definitions", entry.getValue().size(), entry.getKey().getString());
+        }
     }
     
     protected IAffinity deserializeAffinity(ResourceLocation id, JsonObject json) {
