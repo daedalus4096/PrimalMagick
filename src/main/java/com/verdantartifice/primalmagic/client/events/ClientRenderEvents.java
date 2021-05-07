@@ -135,13 +135,15 @@ public class ClientRenderEvents {
                 float rotYaw = 180.0F + (float)(MathHelper.atan2(dx, dz) * 180.0D / Math.PI);
                 float scale = 0.03F;
                 double shiftX = 0.0D;
+                double startDeltaX = ((16.0D * affinities.getSources().size()) / 2.0D) * scale;
                 
                 for (Source source : affinities.getSourcesSorted()) {
                     MatrixStack matrixStack = event.getMatrix();
                     matrixStack.push();
-                    matrixStack.translate(interpolatedEntityX - interpolatedPlayerX + shiftX, interpolatedEntityY - interpolatedPlayerY + entity.getHeight() - 0.5F, interpolatedEntityZ - interpolatedPlayerZ);
+                    matrixStack.translate(interpolatedEntityX - interpolatedPlayerX, interpolatedEntityY - interpolatedPlayerY + entity.getHeight() - 0.5F, interpolatedEntityZ - interpolatedPlayerZ);
                     matrixStack.rotate(Vector3f.YP.rotationDegrees(rotYaw));
                     matrixStack.rotate(Vector3f.ZP.rotationDegrees(180.0F));
+                    matrixStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
                     matrixStack.scale(scale, scale, scale);
                     
                     @SuppressWarnings("deprecation")
