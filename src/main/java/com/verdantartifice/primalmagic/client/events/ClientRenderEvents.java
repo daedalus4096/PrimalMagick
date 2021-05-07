@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.events;
 
+import java.awt.Color;
 import java.util.Collections;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +26,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
@@ -122,7 +124,7 @@ public class ClientRenderEvents {
         if (mc.player.getHeldItemMainhand().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getHeldItemOffhand().getItem() == ItemsPM.ARCANOMETER.get()) {
             Entity entity = event.getTarget().getEntity();
             SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
-            if (affinities != null && !affinities.isEmpty()) {  // FIXME Only show affinities if the entity has been scanned
+            if (ResearchManager.isScanned(entity.getType(), mc.player) && affinities != null && !affinities.isEmpty()) {
                 float partialTicks = event.getPartialTicks();
                 double interpolatedPlayerX = mc.player.prevPosX + (partialTicks * (mc.player.getPosX() - mc.player.prevPosX));
                 double interpolatedPlayerY = mc.player.prevPosY + (partialTicks * (mc.player.getPosY() - mc.player.prevPosY));
@@ -146,14 +148,24 @@ public class ClientRenderEvents {
                     matrixStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
                     matrixStack.scale(scale, scale, scale);
                     
+                    ResourceLocation texLoc = source.isDiscovered(mc.player) ? source.getAtlasLocation() : Source.getUnknownAtlasLocation();
                     @SuppressWarnings("deprecation")
-                    TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(source.getAtlasLocation());
+                    TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(texLoc);
                     IVertexBuilder builder = event.getBuffers().getBuffer(RenderType.getCutout());
                     Matrix4f matrix = matrixStack.getLast().getMatrix();
                     builder.pos(matrix, 0.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
                     builder.pos(matrix, 16.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
                     builder.pos(matrix, 16.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
                     builder.pos(matrix, 0.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                    
+                    int amount = affinities.getAmount(source);
+                    String amountStr = Integer.toString(amount);
+                    int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
+                    matrixStack.push();
+                    matrixStack.scale(0.5F, 0.5F, 0.5F);
+                    matrixStack.translate(32.0D - amountWidth, 32.0D - mc.fontRenderer.FONT_HEIGHT, 0.0D);
+                    mc.fontRenderer.drawStringWithShadow(matrixStack, amountStr, 0F, 0F, Color.WHITE.getRGB());
+                    matrixStack.pop();
 
                     matrixStack.pop();
                     shiftX += 16.0D * scale;
