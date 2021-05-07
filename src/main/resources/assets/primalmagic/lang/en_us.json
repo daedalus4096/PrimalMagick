@@ -1233,6 +1233,7 @@
     "primalmagic.analysis.affinity_tooltip": "%1$d %2$s affinity",
     "primalmagic.analysis.no_item": "No item analyzed",
     "primalmagic.analysis.no_affinities": "No affinities detected",
+    "primalmagic.analysis.affinity_report_header": "%1$s affinities:",
     
     "primalmagic.attunement.threshold_gain": "You feel more attuned to the %1$s",
     "primalmagic.attunement.threshold_loss": "You feel less attuned to the %1$s",

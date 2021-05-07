@@ -29,6 +29,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
@@ -150,6 +151,16 @@ public class AffinityManager extends JsonReloadListener {
             return false;
         } else {
             return this.affinities.getOrDefault(type, Collections.emptyMap()).containsKey(id);
+        }
+    }
+    
+    @Nullable
+    public SourceList getAffinityValues(@Nullable EntityType<?> type) {
+        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, type.getRegistryName());
+        if (entityAffinity == null) {
+            return null;
+        } else {
+            return this.capAffinities(entityAffinity.getTotal(null), MAX_AFFINITY);
         }
     }
     
