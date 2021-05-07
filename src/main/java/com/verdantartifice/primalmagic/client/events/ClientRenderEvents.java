@@ -2,10 +2,16 @@ package com.verdantartifice.primalmagic.client.events;
 
 import java.util.Collections;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.config.Config;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
@@ -15,12 +21,18 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.DrawHighlightEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,6 +46,8 @@ import net.minecraftforge.fml.common.Mod;
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT)
 public class ClientRenderEvents {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     @SubscribeEvent
     public static void renderTooltip(ItemTooltipEvent event) {
         Minecraft mc = Minecraft.getInstance();
@@ -97,6 +111,47 @@ public class ClientRenderEvents {
                         break;
                     }
                 }
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onHighlightEntity(DrawHighlightEvent.HighlightEntity event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player.getHeldItemMainhand().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getHeldItemOffhand().getItem() == ItemsPM.ARCANOMETER.get()) {
+            Entity entity = event.getTarget().getEntity();
+            SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
+            if (affinities != null && !affinities.isEmpty()) {  // FIXME Only show affinities if the entity has been scanned
+                Source source = affinities.getSourcesSorted().get(0);   // FIXME Iterate through all sources and adjust render positions accordingly
+                
+                float partialTicks = event.getPartialTicks();
+                double interpolatedPlayerX = mc.player.prevPosX + (partialTicks * (mc.player.getPosX() - mc.player.prevPosX));
+                double interpolatedPlayerY = mc.player.prevPosY + (partialTicks * (mc.player.getPosY() - mc.player.prevPosY));
+                double interpolatedPlayerZ = mc.player.prevPosZ + (partialTicks * (mc.player.getPosZ() - mc.player.prevPosZ));
+                double interpolatedEntityX = entity.prevPosX + (partialTicks * (entity.getPosX() - entity.prevPosX));
+                double interpolatedEntityY = entity.prevPosY + (partialTicks * (entity.getPosY() - entity.prevPosY));
+                double interpolatedEntityZ = entity.prevPosZ + (partialTicks * (entity.getPosZ() - entity.prevPosZ));
+                double dx = (interpolatedPlayerX - interpolatedEntityX + 0.5D);
+                double dz = (interpolatedPlayerZ - interpolatedEntityZ + 0.5D);
+                float rotYaw = 180.0F + (float)(MathHelper.atan2(dx, dz) * 180.0D / Math.PI);
+                float scale = 0.03F;
+                
+                MatrixStack matrix = event.getMatrix();
+                matrix.push();
+                matrix.translate(interpolatedEntityX - interpolatedPlayerX, interpolatedEntityY - interpolatedPlayerY + entity.getHeight() - 0.5F, interpolatedEntityZ - interpolatedPlayerZ);
+                matrix.rotate(Vector3f.YP.rotationDegrees(rotYaw));
+                matrix.rotate(Vector3f.ZP.rotationDegrees(180.0F));
+                matrix.scale(scale, scale, scale);
+                
+                @SuppressWarnings("deprecation")
+                TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(source.getAtlasLocation());
+                IVertexBuilder builder = event.getBuffers().getBuffer(RenderType.getCutout());
+                builder.pos(matrix.getLast().getMatrix(), 0.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                builder.pos(matrix.getLast().getMatrix(), 16.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                builder.pos(matrix.getLast().getMatrix(), 16.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                builder.pos(matrix.getLast().getMatrix(), 0.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+
+                matrix.pop();
             }
         }
     }
