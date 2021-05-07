@@ -26,6 +26,7 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -122,8 +123,6 @@ public class ClientRenderEvents {
             Entity entity = event.getTarget().getEntity();
             SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
             if (affinities != null && !affinities.isEmpty()) {  // FIXME Only show affinities if the entity has been scanned
-                Source source = affinities.getSourcesSorted().get(0);   // FIXME Iterate through all sources and adjust render positions accordingly
-                
                 float partialTicks = event.getPartialTicks();
                 double interpolatedPlayerX = mc.player.prevPosX + (partialTicks * (mc.player.getPosX() - mc.player.prevPosX));
                 double interpolatedPlayerY = mc.player.prevPosY + (partialTicks * (mc.player.getPosY() - mc.player.prevPosY));
@@ -135,23 +134,28 @@ public class ClientRenderEvents {
                 double dz = (interpolatedPlayerZ - interpolatedEntityZ + 0.5D);
                 float rotYaw = 180.0F + (float)(MathHelper.atan2(dx, dz) * 180.0D / Math.PI);
                 float scale = 0.03F;
+                double shiftX = 0.0D;
                 
-                MatrixStack matrix = event.getMatrix();
-                matrix.push();
-                matrix.translate(interpolatedEntityX - interpolatedPlayerX, interpolatedEntityY - interpolatedPlayerY + entity.getHeight() - 0.5F, interpolatedEntityZ - interpolatedPlayerZ);
-                matrix.rotate(Vector3f.YP.rotationDegrees(rotYaw));
-                matrix.rotate(Vector3f.ZP.rotationDegrees(180.0F));
-                matrix.scale(scale, scale, scale);
-                
-                @SuppressWarnings("deprecation")
-                TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(source.getAtlasLocation());
-                IVertexBuilder builder = event.getBuffers().getBuffer(RenderType.getCutout());
-                builder.pos(matrix.getLast().getMatrix(), 0.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                builder.pos(matrix.getLast().getMatrix(), 16.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                builder.pos(matrix.getLast().getMatrix(), 16.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                builder.pos(matrix.getLast().getMatrix(), 0.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                for (Source source : affinities.getSourcesSorted()) {
+                    MatrixStack matrixStack = event.getMatrix();
+                    matrixStack.push();
+                    matrixStack.translate(interpolatedEntityX - interpolatedPlayerX + shiftX, interpolatedEntityY - interpolatedPlayerY + entity.getHeight() - 0.5F, interpolatedEntityZ - interpolatedPlayerZ);
+                    matrixStack.rotate(Vector3f.YP.rotationDegrees(rotYaw));
+                    matrixStack.rotate(Vector3f.ZP.rotationDegrees(180.0F));
+                    matrixStack.scale(scale, scale, scale);
+                    
+                    @SuppressWarnings("deprecation")
+                    TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(source.getAtlasLocation());
+                    IVertexBuilder builder = event.getBuffers().getBuffer(RenderType.getCutout());
+                    Matrix4f matrix = matrixStack.getLast().getMatrix();
+                    builder.pos(matrix, 0.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                    builder.pos(matrix, 16.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                    builder.pos(matrix, 16.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                    builder.pos(matrix, 0.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
 
-                matrix.pop();
+                    matrixStack.pop();
+                    shiftX += 16.0D * scale;
+                }
             }
         }
     }
