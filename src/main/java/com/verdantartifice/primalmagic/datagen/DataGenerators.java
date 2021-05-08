@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.datagen.loot_tables.EntityLootTables;
 import com.verdantartifice.primalmagic.datagen.recipes.Recipes;
 import com.verdantartifice.primalmagic.datagen.research.ResearchProvider;
 import com.verdantartifice.primalmagic.datagen.tags.BlockTagsProvider;
+import com.verdantartifice.primalmagic.datagen.tags.EntityTypeTagsProvider;
 import com.verdantartifice.primalmagic.datagen.tags.ItemTagsProvider;
 import com.verdantartifice.primalmagic.datagen.theorycrafting.ProjectProvider;
 
@@ -31,6 +32,7 @@ public class DataGenerators {
         generator.addProvider(new EntityLootTables(generator));
         generator.addProvider(new BlockTagsProvider(generator, event.getExistingFileHelper()));
         generator.addProvider(new ItemTagsProvider(generator, event.getExistingFileHelper()));
+        generator.addProvider(new EntityTypeTagsProvider(generator, event.getExistingFileHelper()));
         generator.addProvider(new AffinityProvider(generator));
         generator.addProvider(new ResearchProvider(generator));
         generator.addProvider(new ProjectProvider(generator));
