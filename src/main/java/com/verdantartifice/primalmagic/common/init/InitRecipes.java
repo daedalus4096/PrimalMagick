@@ -4,10 +4,12 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.crafting.WandTransformBlock;
+import com.verdantartifice.primalmagic.common.crafting.WandTransformBlockTag;
 import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.tags.BlockTagsForgeExt;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
@@ -26,7 +28,7 @@ public class InitRecipes {
     }
     
     public static void initWandTransforms() {
-        WandTransforms.register(new WandTransformBlock(Blocks.BOOKSHELF, new ItemStack(ItemsPM.GRIMOIRE.get()), CompoundResearchKey.from(SimpleResearchKey.parse("t_got_dream"))));
+        WandTransforms.register(new WandTransformBlockTag(BlockTagsForgeExt.BOOKSHELVES, new ItemStack(ItemsPM.GRIMOIRE.get()), CompoundResearchKey.from(SimpleResearchKey.parse("t_got_dream"))));
         WandTransforms.register(new WandTransformBlock(Blocks.CRAFTING_TABLE, new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), CompoundResearchKey.from(SimpleResearchKey.parse("FIRST_STEPS@1"))));
         WandTransforms.register(new WandTransformBlock(Blocks.FURNACE, new ItemStack(BlocksPM.ESSENCE_FURNACE.get()), CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_ALCHEMY"))));
     }
