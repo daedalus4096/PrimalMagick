@@ -4,19 +4,15 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ArcanometerISTER;
-import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
-import com.verdantartifice.primalmagic.common.sources.Source;
-import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -29,13 +25,10 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -120,45 +113,15 @@ public class ArcanometerItem extends Item {
                     ItemStack entityStack = EntityUtils.getEntityItemStack(entity);
                     if (!entityStack.isEmpty()) {
                         PacketHandler.sendToServer(new ScanItemPacket(entityStack));
-                        this.reportItemAffinities(playerIn, entityStack, worldIn);
                     } else {
                         PacketHandler.sendToServer(new ScanEntityPacket(entity.getType()));
-                        this.reportEntityAffinities(playerIn, entity);
                     }
                 } else if (result.getType() == RayTraceResult.Type.BLOCK) {
                     BlockPos pos = ((BlockRayTraceResult)result).getPos();
                     PacketHandler.sendToServer(new ScanPositionPacket(pos));
-                    this.reportBlockAffinities(playerIn, worldIn.getBlockState(pos).getBlock(), worldIn);
                 }
             }
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
-    }
-    
-    protected void reportEntityAffinities(PlayerEntity player, Entity entity) {
-        this.reportAffinities(player, AffinityManager.getInstance().getAffinityValues(entity.getType()), entity.getDisplayName());
-    }
-    
-    protected void reportItemAffinities(PlayerEntity player, ItemStack stack, World world) {
-        this.reportAffinities(player, AffinityManager.getInstance().getAffinityValues(stack, world), stack.getDisplayName());
-    }
-    
-    protected void reportBlockAffinities(PlayerEntity player, Block block, World world) {
-        this.reportAffinities(player, AffinityManager.getInstance().getAffinityValues(new ItemStack(block.asItem()), world), block.getTranslatedName());
-    }
-    
-    protected void reportAffinities(PlayerEntity player, SourceList affinities, ITextComponent displayName) {
-        if (affinities != null && !affinities.isEmpty()) {
-            player.sendMessage(new TranslationTextComponent("primalmagic.analysis.affinity_report_header", displayName), Util.DUMMY_UUID);
-            for (Source source : affinities.getSourcesSorted()) {
-                int amount = affinities.getAmount(source);
-                if (amount > 0) {
-                    ITextComponent sourceText = source.isDiscovered(player) ? 
-                            new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor()) :
-                            new TranslationTextComponent(Source.getUnknownTranslationKey());
-                    player.sendMessage(new TranslationTextComponent("primalmagic.analysis.affinity_tooltip", amount, sourceText), Util.DUMMY_UUID);
-                }
-            }
-        }
     }
 }
