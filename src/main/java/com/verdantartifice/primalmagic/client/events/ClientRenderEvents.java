@@ -1,13 +1,7 @@
 package com.verdantartifice.primalmagic.client.events;
 
-import java.awt.Color;
 import java.util.Collections;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
@@ -22,14 +16,8 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -49,8 +37,6 @@ import net.minecraftforge.fml.common.Mod;
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT)
 public class ClientRenderEvents {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
     @SubscribeEvent
     public static void renderTooltip(ItemTooltipEvent event) {
         Minecraft mc = Minecraft.getInstance();
@@ -124,52 +110,13 @@ public class ClientRenderEvents {
         if (mc.player.getHeldItemMainhand().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getHeldItemOffhand().getItem() == ItemsPM.ARCANOMETER.get()) {
             Entity entity = event.getTarget().getEntity();
             SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
-            if (ResearchManager.isScanned(entity.getType(), mc.player) && affinities != null && !affinities.isEmpty()) {
+            boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);
+            if (isScanned && affinities != null && !affinities.isEmpty()) {
                 float partialTicks = event.getPartialTicks();
-                double interpolatedPlayerX = mc.player.prevPosX + (partialTicks * (mc.player.getPosX() - mc.player.prevPosX));
-                double interpolatedPlayerY = mc.player.prevPosY + (partialTicks * (mc.player.getPosY() - mc.player.prevPosY));
-                double interpolatedPlayerZ = mc.player.prevPosZ + (partialTicks * (mc.player.getPosZ() - mc.player.prevPosZ));
                 double interpolatedEntityX = entity.prevPosX + (partialTicks * (entity.getPosX() - entity.prevPosX));
                 double interpolatedEntityY = entity.prevPosY + (partialTicks * (entity.getPosY() - entity.prevPosY));
                 double interpolatedEntityZ = entity.prevPosZ + (partialTicks * (entity.getPosZ() - entity.prevPosZ));
-                double dx = (interpolatedPlayerX - interpolatedEntityX + 0.5D);
-                double dz = (interpolatedPlayerZ - interpolatedEntityZ + 0.5D);
-                float rotYaw = 180.0F + (float)(MathHelper.atan2(dx, dz) * 180.0D / Math.PI);
-                float scale = 0.03F;
-                double shiftX = 0.0D;
-                double startDeltaX = ((16.0D * affinities.getSources().size()) / 2.0D) * scale;
-                
-                for (Source source : affinities.getSourcesSorted()) {
-                    MatrixStack matrixStack = event.getMatrix();
-                    matrixStack.push();
-                    matrixStack.translate(interpolatedEntityX - interpolatedPlayerX, interpolatedEntityY - interpolatedPlayerY + entity.getHeight() - 0.5F, interpolatedEntityZ - interpolatedPlayerZ);
-                    matrixStack.rotate(Vector3f.YP.rotationDegrees(rotYaw));
-                    matrixStack.rotate(Vector3f.ZP.rotationDegrees(180.0F));
-                    matrixStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
-                    matrixStack.scale(scale, scale, scale);
-                    
-                    ResourceLocation texLoc = source.isDiscovered(mc.player) ? source.getAtlasLocation() : Source.getUnknownAtlasLocation();
-                    @SuppressWarnings("deprecation")
-                    TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(texLoc);
-                    IVertexBuilder builder = event.getBuffers().getBuffer(RenderType.getCutout());
-                    Matrix4f matrix = matrixStack.getLast().getMatrix();
-                    builder.pos(matrix, 0.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                    builder.pos(matrix, 16.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                    builder.pos(matrix, 16.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                    builder.pos(matrix, 0.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                    
-                    int amount = affinities.getAmount(source);
-                    String amountStr = Integer.toString(amount);
-                    int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
-                    matrixStack.push();
-                    matrixStack.scale(0.5F, 0.5F, 0.5F);
-                    matrixStack.translate(32.0D - amountWidth, 32.0D - mc.fontRenderer.FONT_HEIGHT, 0.0D);
-                    mc.fontRenderer.drawStringWithShadow(matrixStack, amountStr, 0F, 0F, Color.WHITE.getRGB());
-                    matrixStack.pop();
-
-                    matrixStack.pop();
-                    shiftX += 16.0D * scale;
-                }
+                GuiUtils.renderSourcesBillboard(event.getMatrix(), event.getBuffers(), interpolatedEntityX, interpolatedEntityY + entity.getHeight(), interpolatedEntityZ, affinities, partialTicks);
             }
         }
     }

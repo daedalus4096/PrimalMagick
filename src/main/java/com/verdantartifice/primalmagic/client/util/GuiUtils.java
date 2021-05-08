@@ -29,6 +29,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -312,5 +315,52 @@ public class GuiUtils {
             RenderSystem.enableLighting();
         }
         RenderSystem.popMatrix();
+    }
+    
+    public static void renderSourcesBillboard(MatrixStack matrixStack, IRenderTypeBuffer buffers, double x, double y, double z, SourceList sources, float partialTicks) {
+        Minecraft mc = Minecraft.getInstance();
+        
+        double interpolatedPlayerX = mc.player.prevPosX + (partialTicks * (mc.player.getPosX() - mc.player.prevPosX));
+        double interpolatedPlayerY = mc.player.prevPosY + (partialTicks * (mc.player.getPosY() - mc.player.prevPosY));
+        double interpolatedPlayerZ = mc.player.prevPosZ + (partialTicks * (mc.player.getPosZ() - mc.player.prevPosZ));
+        double dx = (interpolatedPlayerX - x + 0.5D);
+        double dz = (interpolatedPlayerZ - z + 0.5D);
+        float rotYaw = 180.0F + (float)(MathHelper.atan2(dx, dz) * 180.0D / Math.PI);
+        float scale = 0.03F;
+        double shiftX = 0.0D;
+        double startDeltaX = ((16.0D * sources.getSources().size()) / 2.0D) * scale;
+
+        for (Source source : sources.getSourcesSorted()) {
+            int amount = sources.getAmount(source);
+            if (amount > 0) {
+                matrixStack.push();
+                matrixStack.translate(x - interpolatedPlayerX, y - interpolatedPlayerY - 0.5F, z - interpolatedPlayerZ);
+                matrixStack.rotate(Vector3f.YP.rotationDegrees(rotYaw));
+                matrixStack.rotate(Vector3f.ZP.rotationDegrees(180.0F));
+                matrixStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
+                matrixStack.scale(scale, scale, scale);
+
+                ResourceLocation texLoc = source.isDiscovered(mc.player) ? source.getAtlasLocation() : Source.getUnknownAtlasLocation();
+                @SuppressWarnings("deprecation")
+                TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(texLoc);
+                IVertexBuilder builder = buffers.getBuffer(RenderType.getCutout());
+                Matrix4f matrix = matrixStack.getLast().getMatrix();
+                builder.pos(matrix, 0.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                builder.pos(matrix, 16.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                builder.pos(matrix, 16.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                builder.pos(matrix, 0.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+
+                String amountStr = Integer.toString(amount);
+                int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
+                matrixStack.push();
+                matrixStack.scale(0.5F, 0.5F, 0.5F);
+                matrixStack.translate(32.0D - amountWidth, 32.0D - mc.fontRenderer.FONT_HEIGHT, 0.0D);
+                mc.fontRenderer.drawStringWithShadow(matrixStack, amountStr, 0F, 0F, Color.WHITE.getRGB());
+                matrixStack.pop();
+
+                matrixStack.pop();
+                shiftX += 16.0D * scale;
+            }
+        }
     }
 }
