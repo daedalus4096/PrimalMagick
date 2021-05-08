@@ -5,12 +5,14 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.ScanEntityTagResearchTrigger;
 import com.verdantartifice.primalmagic.common.research.ScanItemResearchTrigger;
 import com.verdantartifice.primalmagic.common.research.ScanSourceUnlockTrigger;
 import com.verdantartifice.primalmagic.common.research.ScanItemTagResearchTrigger;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
+import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.util.ResourceLocation;
@@ -49,5 +51,7 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.NUGGETS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.INGOTS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
+        ResearchManager.registerScanTrigger(new ScanEntityTagResearchTrigger(EntityTypeTagsPM.FLYING_CREATURES, SimpleResearchKey.parse("t_flying_creature"), false));
+        ResearchManager.registerScanTrigger(new ScanEntityTagResearchTrigger(EntityTypeTagsPM.GOLEMS, SimpleResearchKey.parse("t_golem"), false));
     }
 }

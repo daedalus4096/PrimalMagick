@@ -10,6 +10,9 @@
       "text": "primalmagic.research.primalite_golem.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
+      ],
+      "required_research": [
+        "t_golem"
       ]
     },
     {

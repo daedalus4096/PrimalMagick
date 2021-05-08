@@ -16,6 +16,9 @@ import net.minecraftforge.common.Tags.IOptionalNamedTag;
 public class EntityTypeTagsPM {
     public static final IOptionalNamedTag<EntityType<?>> ENCHANTED_GOLEMS = tag("enchanted_golems");
     public static final IOptionalNamedTag<EntityType<?>> PIXIES = tag("pixies");
+    
+    public static final IOptionalNamedTag<EntityType<?>> FLYING_CREATURES = tag("flying_creatures");
+    public static final IOptionalNamedTag<EntityType<?>> GOLEMS = tag("golems");
 
     private static IOptionalNamedTag<EntityType<?>> tag(String name) {
         return EntityTypeTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));

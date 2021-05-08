@@ -1449,6 +1449,8 @@
     "primalmagic.research.b_scan_primalite.text": "Analyze a magical metal",
     "primalmagic.research.b_scan_hexium.text": "Analyze a more potent magical metal",
     "primalmagic.research.b_scan_hallowsteel.text": "Analyze the most potent of magical metals",
+    "primalmagic.research.t_flying_creature.text": "Scan a flying creature",
+    "primalmagic.research.t_golem.text": "Scan an animated construct",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
