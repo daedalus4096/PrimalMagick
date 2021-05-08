@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
@@ -41,7 +43,7 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
     private static final ModelResourceLocation MRL2 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_2"), "");
     private static final ModelResourceLocation MRL3 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_3"), "");
     private static final ModelResourceLocation MRL4 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_4"), "");
-    private static boolean isRenderingScreen = false;
+    private static AtomicBoolean isRenderingScreen = new AtomicBoolean(false);
 
     @Override
     public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
@@ -53,10 +55,8 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
             IBakedModel model = mc.getModelManager().getModel(this.getModelResourceLocation(itemStack));
             itemRenderer.renderModel(model, itemStack, combinedLight, combinedOverlay, matrixStack, buffer.getBuffer(RenderType.getSolid()));
             
-            if (!isRenderingScreen) {
-                // We might be asked to show another arcanometer on screen; don't recurse in that case
-                isRenderingScreen = true;
-                
+            // We might be asked to show another arcanometer on screen; don't recurse in that case
+            if (!isRenderingScreen.getAndSet(true)) {
                 // Determine what to show on the screen
                 ItemStack screenStack = ItemStack.EMPTY;
                 RayTraceResult result = RayTraceUtils.getMouseOver();
@@ -77,7 +77,7 @@ public class ArcanometerISTER extends ItemStackTileEntityRenderer {
                     }
                 }
                 
-                isRenderingScreen = false;
+                isRenderingScreen.set(false);
             }
         }
     }
