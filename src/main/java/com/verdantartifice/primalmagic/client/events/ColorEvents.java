@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassPaneBlo
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 
 import net.minecraft.block.Block;
@@ -91,6 +92,12 @@ public class ColorEvents {
             event.getItemColors().register((stack, color) -> {
                 return egg.getColor(color);
             }, egg);
+        }
+        
+        for (AmbrosiaItem ambrosia : AmbrosiaItem.getAmbrosias()) {
+            event.getItemColors().register((stack, color) -> {
+                return ambrosia.getColor(color);
+            }, ambrosia);
         }
     }
 }

@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagic.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.BloodyFleshItem;
 import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
@@ -420,6 +421,9 @@ public class ItemsPM {
     public static final RegistryObject<RuneItem> RUNE_ITEM = ITEMS.register("rune_item", () -> new RuneItem(Rune.ITEM));
     public static final RegistryObject<RuneItem> RUNE_SELF = ITEMS.register("rune_self", () -> new RuneItem(Rune.SELF));
     public static final RegistryObject<RuneItem> RUNE_POWER = ITEMS.register("rune_power", () -> new RuneItem(Rune.POWER));
+    
+    // Register ambrosia items
+    public static final RegistryObject<AmbrosiaItem> BASIC_EARTH_AMBROSIA = ITEMS.register("ambrosia_basic_earth", () -> new AmbrosiaItem(Source.EARTH, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
 
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
