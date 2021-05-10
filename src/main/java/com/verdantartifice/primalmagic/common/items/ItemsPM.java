@@ -424,6 +424,14 @@ public class ItemsPM {
     
     // Register ambrosia items
     public static final RegistryObject<AmbrosiaItem> BASIC_EARTH_AMBROSIA = ITEMS.register("ambrosia_basic_earth", () -> new AmbrosiaItem(Source.EARTH, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    public static final RegistryObject<AmbrosiaItem> BASIC_SEA_AMBROSIA = ITEMS.register("ambrosia_basic_sea", () -> new AmbrosiaItem(Source.SEA, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    public static final RegistryObject<AmbrosiaItem> BASIC_SKY_AMBROSIA = ITEMS.register("ambrosia_basic_sky", () -> new AmbrosiaItem(Source.SKY, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    public static final RegistryObject<AmbrosiaItem> BASIC_SUN_AMBROSIA = ITEMS.register("ambrosia_basic_sun", () -> new AmbrosiaItem(Source.SUN, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    public static final RegistryObject<AmbrosiaItem> BASIC_MOON_AMBROSIA = ITEMS.register("ambrosia_basic_moon", () -> new AmbrosiaItem(Source.MOON, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    public static final RegistryObject<AmbrosiaItem> BASIC_BLOOD_AMBROSIA = ITEMS.register("ambrosia_basic_blood", () -> new AmbrosiaItem(Source.BLOOD, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    public static final RegistryObject<AmbrosiaItem> BASIC_INFERNAL_AMBROSIA = ITEMS.register("ambrosia_basic_infernal", () -> new AmbrosiaItem(Source.INFERNAL, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    public static final RegistryObject<AmbrosiaItem> BASIC_VOID_AMBROSIA = ITEMS.register("ambrosia_basic_void", () -> new AmbrosiaItem(Source.VOID, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    public static final RegistryObject<AmbrosiaItem> BASIC_HALLOWED_AMBROSIA = ITEMS.register("ambrosia_basic_hallowed", () -> new AmbrosiaItem(Source.HALLOWED, 10, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
 
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
