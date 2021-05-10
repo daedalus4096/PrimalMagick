@@ -1247,6 +1247,9 @@
     "event.primalmagic.cycle_spell.none": "Active spell changed to: none",
     "event.primalmagic.golem.stay": "I will stay here, Master",
     "event.primalmagic.golem.follow": "I will follow you, Master",
+    "event.primalmagic.ambrosia.success": "You feel a tingling sensation as the magic courses through you",
+    "event.primalmagic.ambrosia.failure": "This item cannot help you attune further",
+    "event.primalmagic.ambrosia.not_wizard": "This stuff tastes funny. What is it?",
     
     "primalmagic.dream_journal.title": "Dream Journal",
     "primalmagic.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagic.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",
