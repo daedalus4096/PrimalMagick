@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.items.misc;
+package com.verdantartifice.primalmagic.common.items.food;
 
 import java.util.List;
 

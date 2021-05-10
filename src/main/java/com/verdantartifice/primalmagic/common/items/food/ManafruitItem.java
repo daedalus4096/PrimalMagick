@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.items.misc;
+package com.verdantartifice.primalmagic.common.items.food;
 
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 
