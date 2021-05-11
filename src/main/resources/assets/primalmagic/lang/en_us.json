@@ -1132,6 +1132,30 @@
     "primalmagic.research.majestic_pixies.text.addenda.3": "Majestic void pixies",
     "primalmagic.research.majestic_pixies.text.addenda.4": "Majestic hallowed pixies",
     
+    "primalmagic.research.ambrosia.title": "Ambrosia",
+    "primalmagic.research.ambrosia.text.stage.1": "Ambrosia: Lorem ipsum",
+    "primalmagic.research.ambrosia.text.stage.2": "Ambrosia research complete!",
+    "primalmagic.research.ambrosia.text.addenda.1": "Blood ambrosia",
+    "primalmagic.research.ambrosia.text.addenda.2": "Infernal ambrosia",
+    "primalmagic.research.ambrosia.text.addenda.3": "Void ambrosia",
+    "primalmagic.research.ambrosia.text.addenda.4": "Hallowed ambrosia",
+    
+    "primalmagic.research.greater_ambrosia.title": "Greater Ambrosia",
+    "primalmagic.research.greater_ambrosia.text.stage.1": "Greater ambrosia: Lorem ipsum",
+    "primalmagic.research.greater_ambrosia.text.stage.2": "Greater smbrosia research complete!",
+    "primalmagic.research.greater_ambrosia.text.addenda.1": "Greater blood ambrosia",
+    "primalmagic.research.greater_ambrosia.text.addenda.2": "Greater infernal ambrosia",
+    "primalmagic.research.greater_ambrosia.text.addenda.3": "Greater void ambrosia",
+    "primalmagic.research.greater_ambrosia.text.addenda.4": "Greater hallowed ambrosia",
+    
+    "primalmagic.research.supreme_ambrosia.title": "Supreme Ambrosia",
+    "primalmagic.research.supreme_ambrosia.text.stage.1": "Supreme ambrosia: Lorem ipsum",
+    "primalmagic.research.supreme_ambrosia.text.stage.2": "Supreme smbrosia research complete!",
+    "primalmagic.research.supreme_ambrosia.text.addenda.1": "Supreme blood ambrosia",
+    "primalmagic.research.supreme_ambrosia.text.addenda.2": "Supreme infernal ambrosia",
+    "primalmagic.research.supreme_ambrosia.text.addenda.3": "Supreme void ambrosia",
+    "primalmagic.research.supreme_ambrosia.text.addenda.4": "Supreme hallowed ambrosia",
+    
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
     

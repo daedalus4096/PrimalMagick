@@ -1,0 +1,39 @@
+{
+  "type": "primalmagic:ritual",
+  "research": "AMBROSIA",
+  "mana": {
+    "sun": 40
+  },
+  "instability": 4,
+  "ingredients": [
+    {
+      "item": "primalmagic:manafruit"
+    },
+    {
+      "item": "primalmagic:mana_prism"
+    },
+    {
+      "item": "primalmagic:essence_shard_sun"
+    },
+    {
+      "item": "primalmagic:rune_absorb"
+    },
+    {
+      "item": "primalmagic:rune_self"
+    }
+  ],
+  "props": [
+    {
+      "tag": "primalmagic:ritual_candles"
+    },
+    {
+      "tag": "primalmagic:ritual_candles"
+    },
+    {
+      "block": "primalmagic:ritual_lectern"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:ambrosia_basic_sun"
+  }
+}

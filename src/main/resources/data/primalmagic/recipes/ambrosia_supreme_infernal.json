@@ -1,0 +1,54 @@
+{
+  "type": "primalmagic:ritual",
+  "research": "SUPREME_AMBROSIA\u0026\u0026t_discover_infernal",
+  "mana": {
+    "infernal": 200
+  },
+  "instability": 8,
+  "ingredients": [
+    {
+      "item": "primalmagic:manafruit"
+    },
+    {
+      "item": "primalmagic:mana_prism"
+    },
+    {
+      "item": "primalmagic:essence_cluster_infernal"
+    },
+    {
+      "item": "primalmagic:rune_absorb"
+    },
+    {
+      "item": "primalmagic:rune_self"
+    },
+    {
+      "item": "primalmagic:rune_power"
+    },
+    {
+      "item": "primalmagic:rune_power"
+    }
+  ],
+  "props": [
+    {
+      "tag": "primalmagic:ritual_candles"
+    },
+    {
+      "tag": "primalmagic:ritual_candles"
+    },
+    {
+      "tag": "primalmagic:ritual_candles"
+    },
+    {
+      "block": "primalmagic:ritual_lectern"
+    },
+    {
+      "block": "primalmagic:bloodletter"
+    },
+    {
+      "block": "primalmagic:soul_anvil"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:ambrosia_supreme_infernal"
+  }
+}

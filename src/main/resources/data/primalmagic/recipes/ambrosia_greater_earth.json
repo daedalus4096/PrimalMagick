@@ -1,0 +1,45 @@
+{
+  "type": "primalmagic:ritual",
+  "research": "GREATER_AMBROSIA",
+  "mana": {
+    "earth": 100
+  },
+  "instability": 6,
+  "ingredients": [
+    {
+      "item": "primalmagic:manafruit"
+    },
+    {
+      "item": "primalmagic:mana_prism"
+    },
+    {
+      "item": "primalmagic:essence_crystal_earth"
+    },
+    {
+      "item": "primalmagic:rune_absorb"
+    },
+    {
+      "item": "primalmagic:rune_self"
+    },
+    {
+      "item": "primalmagic:rune_power"
+    }
+  ],
+  "props": [
+    {
+      "tag": "primalmagic:ritual_candles"
+    },
+    {
+      "tag": "primalmagic:ritual_candles"
+    },
+    {
+      "block": "primalmagic:ritual_lectern"
+    },
+    {
+      "block": "primalmagic:bloodletter"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:ambrosia_greater_earth"
+  }
+}

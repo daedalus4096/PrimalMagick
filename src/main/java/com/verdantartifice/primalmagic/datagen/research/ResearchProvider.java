@@ -800,6 +800,37 @@ public class ResearchProvider implements IDataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 4).recipe(ItemsPM.MAJESTIC_VOID_PIXIE.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 4).recipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("AMBROSIA", discipline).parent("EXPERT_RITUAL").parent("ATTUNEMENTS").parent("MANAFRUIT").parent("SHARD_SYNTHESIS").parent("RUNE_ABSORB").parent("RUNE_SELF")
+            .parent("RITUAL_LECTERN")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_ABSORB.get()).requiredItemStack(ItemsPM.RUNE_SELF.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).attunement(Source.SEA, 2).attunement(Source.SKY, 2).attunement(Source.SUN, 2).attunement(Source.MOON, 2)
+                    .recipe(ItemsPM.BASIC_EARTH_AMBROSIA.get()).recipe(ItemsPM.BASIC_SEA_AMBROSIA.get()).recipe(ItemsPM.BASIC_SKY_AMBROSIA.get()).recipe(ItemsPM.BASIC_SUN_AMBROSIA.get())
+                    .recipe(ItemsPM.BASIC_MOON_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).attunement(Source.BLOOD, 2).recipe(ItemsPM.BASIC_BLOOD_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).attunement(Source.INFERNAL, 2).recipe(ItemsPM.BASIC_INFERNAL_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 2).recipe(ItemsPM.BASIC_VOID_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_AMBROSIA.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("GREATER_AMBROSIA", discipline).parent("MASTER_RITUAL").parent("AMBROSIA").parent("CRYSTAL_SYNTHESIS").parent("RUNE_POWER").parent("BLOODLETTER")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_POWER.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).attunement(Source.SEA, 3).attunement(Source.SKY, 3).attunement(Source.SUN, 3).attunement(Source.MOON, 3)
+                    .recipe(ItemsPM.GREATER_EARTH_AMBROSIA.get()).recipe(ItemsPM.GREATER_SEA_AMBROSIA.get()).recipe(ItemsPM.GREATER_SKY_AMBROSIA.get()).recipe(ItemsPM.GREATER_SUN_AMBROSIA.get())
+                    .recipe(ItemsPM.GREATER_MOON_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).attunement(Source.BLOOD, 3).recipe(ItemsPM.GREATER_BLOOD_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).attunement(Source.INFERNAL, 3).recipe(ItemsPM.GREATER_INFERNAL_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 3).recipe(ItemsPM.GREATER_VOID_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 3).recipe(ItemsPM.GREATER_HALLOWED_AMBROSIA.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUPREME_AMBROSIA", discipline).parent("SUPREME_RITUAL").parent("GREATER_AMBROSIA").parent("CLUSTER_SYNTHESIS").parent("SOUL_ANVIL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 4).attunement(Source.SEA, 4).attunement(Source.SKY, 4).attunement(Source.SUN, 4).attunement(Source.MOON, 4)
+                    .recipe(ItemsPM.SUPREME_EARTH_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SEA_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SKY_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SUN_AMBROSIA.get())
+                    .recipe(ItemsPM.SUPREME_MOON_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).attunement(Source.BLOOD, 4).recipe(ItemsPM.SUPREME_BLOOD_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).attunement(Source.INFERNAL, 4).recipe(ItemsPM.SUPREME_INFERNAL_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 4).recipe(ItemsPM.SUPREME_VOID_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 4).recipe(ItemsPM.SUPREME_HALLOWED_AMBROSIA.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
