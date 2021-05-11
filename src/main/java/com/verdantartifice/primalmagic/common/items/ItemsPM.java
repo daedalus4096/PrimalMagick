@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagic.common.items.armor.RobeArmorItem;
+import com.verdantartifice.primalmagic.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
@@ -355,6 +356,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> MAGITECH_PARTS_ENCHANTED = ITEMS.register("magitech_parts_enchanted", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> MAGITECH_PARTS_FORBIDDEN = ITEMS.register("magitech_parts_forbidden", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> MAGITECH_PARTS_HEAVENLY = ITEMS.register("magitech_parts_heavenly", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> FLYING_CARPET = ITEMS.register("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

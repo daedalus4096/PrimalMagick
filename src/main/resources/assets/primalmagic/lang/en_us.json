@@ -338,6 +338,7 @@
     "item.primalmagic.ambrosia_supreme_infernal": "Supreme Infernal Ambrosia",
     "item.primalmagic.ambrosia_supreme_void": "Supreme Void Ambrosia",
     "item.primalmagic.ambrosia_supreme_hallowed": "Supreme Hallowed Ambrosia",
+    "item.primalmagic.flying_carpet": "Flying Carpet",
     "item.primalmagic.spell_scroll_blank": "Blank Spell Scroll",
     "item.primalmagic.spell_scroll_filled": "Scroll of %1$s",
     "item.primalmagic.mundane_wand": "Mundane Wand",
@@ -440,6 +441,7 @@
     "entity.primalmagic.pixie_basic_hallowed": "Hallowed Pixie",
     "entity.primalmagic.pixie_grand_hallowed": "Grand Hallowed Pixie",
     "entity.primalmagic.pixie_majestic_hallowed": "Majestic Hallowed Pixie",
+    "entity.primalmagic.flying_carpet": "Flying Carpet",
     
     "tooltip.primalmagic.bloody_flesh.1": "A dark hunger comes over you", 
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",

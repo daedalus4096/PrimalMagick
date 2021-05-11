@@ -37,6 +37,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
@@ -151,6 +152,7 @@ public class ClientProxy extends CommonProxy {
     	// Register properties for items on the main thread in a thread-safe fashion
     	event.enqueueWork(() -> {
     		ItemModelsProperties.registerProperty(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, ArcanometerItem.getScanStateProperty());
+    		ItemModelsProperties.registerProperty(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, FlyingCarpetItem.getColorProperty());
     	});
     }
     
