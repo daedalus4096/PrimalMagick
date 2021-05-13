@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.pixies.Majesti
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSkyPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticVoidPixieEntity;
+import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
@@ -63,6 +64,11 @@ public class EntityTypesPM {
             .size(0.25F, 0.25F)
             .setCustomClientFactory((spawnEntity, world) -> new SpellMineEntity(EntityTypesPM.SPELL_MINE.get(), world))
             .build(PrimalMagic.MODID + ":spell_mine"));
+    public static final RegistryObject<EntityType<FlyingCarpetEntity>> FLYING_CARPET = ENTITY_TYPES.register("flying_carpet", () -> EntityType.Builder.<FlyingCarpetEntity>create(FlyingCarpetEntity::new, EntityClassification.MISC)
+            .size(1.375F, 0.5625F)
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new FlyingCarpetEntity(EntityTypesPM.FLYING_CARPET.get(), world))
+            .build(PrimalMagic.MODID + ":flying_carpet"));
     public static final RegistryObject<EntityType<AppleEntity>> APPLE = ENTITY_TYPES.register("apple", () -> EntityType.Builder.<AppleEntity>create(AppleEntity::new, EntityClassification.MISC)
             .size(0.25F, 0.25F)
             .trackingRange(4)

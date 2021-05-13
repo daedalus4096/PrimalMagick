@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagic.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagic.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
 import com.verdantartifice.primalmagic.client.renderers.entity.BasicPixieRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.FlyingCarpetRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.GrandPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HexiumGolemRenderer;
@@ -115,6 +116,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.APPLE.get(), (renderManager) -> {
             return new SpriteRenderer<>(renderManager, event.getMinecraftSupplier().get().getItemRenderer());
         });
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.FLYING_CARPET.get(), FlyingCarpetRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemRenderer::new);
