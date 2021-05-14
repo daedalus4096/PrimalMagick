@@ -9,6 +9,7 @@ import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -54,6 +55,16 @@ public class FlyingCarpetItem extends Item {
                 return ((float)color.getId() / 16.0F);
             }
         };
+    }
+    
+    public static ItemStack dyeCarpet(ItemStack carpetStack, DyeItem dye) {
+        if (carpetStack.getItem() instanceof FlyingCarpetItem) {
+            ItemStack retVal = carpetStack.copy();
+            ((FlyingCarpetItem)retVal.getItem()).setDyeColor(retVal, dye.getDyeColor());
+            return retVal;
+        } else {
+            return ItemStack.EMPTY;
+        }
     }
 
     @Override

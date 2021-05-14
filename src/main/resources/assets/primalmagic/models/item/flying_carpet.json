@@ -18,7 +18,7 @@
         { "predicate": { "primalmagic:color": 0.6875 }, "model": "primalmagic:item/flying_carpet_blue" },
         { "predicate": { "primalmagic:color": 0.7500 }, "model": "primalmagic:item/flying_carpet_brown" },
         { "predicate": { "primalmagic:color": 0.8125 }, "model": "primalmagic:item/flying_carpet_green" },
-        { "predicate": { "primalmagic:color": 0.8750 }, "model": "primalmagic:item/flying_carpet" },
+        { "predicate": { "primalmagic:color": 0.8750 }, "model": "primalmagic:item/flying_carpet_red" },
         { "predicate": { "primalmagic:color": 0.9375 }, "model": "primalmagic:item/flying_carpet_black" }
     ]
 }

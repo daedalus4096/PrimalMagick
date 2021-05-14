@@ -414,11 +414,13 @@ public class Recipes extends RecipeProvider {
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "charcoal_from_smelting_heartwood"));
 
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
-            .build(consumer, "primalmagic:wand_assembly");
+            .build(consumer, PrimalMagic.MODID + ":wand_assembly");
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.WAND_INSCRIPTION_SPECIAL.get())
-            .build(consumer, "primalmagic:wand_inscription");
+            .build(consumer, PrimalMagic.MODID + ":wand_inscription");
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.SPELLCRAFTING_SPECIAL.get())
-            .build(consumer, "primalmagic:spellcrafting");
+            .build(consumer, PrimalMagic.MODID + ":spellcrafting");
+        CustomRecipeBuilder.customRecipe(RecipeSerializersPM.FLYING_CARPET_DYE.get())
+            .build(consumer, PrimalMagic.MODID + ":flying_carpet_dye");
     }
 
     protected void registerMarbleRecipes(Consumer<IFinishedRecipe> consumer) {
