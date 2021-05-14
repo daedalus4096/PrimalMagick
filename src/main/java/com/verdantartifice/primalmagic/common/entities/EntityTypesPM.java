@@ -65,7 +65,7 @@ public class EntityTypesPM {
             .setCustomClientFactory((spawnEntity, world) -> new SpellMineEntity(EntityTypesPM.SPELL_MINE.get(), world))
             .build(PrimalMagic.MODID + ":spell_mine"));
     public static final RegistryObject<EntityType<FlyingCarpetEntity>> FLYING_CARPET = ENTITY_TYPES.register("flying_carpet", () -> EntityType.Builder.<FlyingCarpetEntity>create(FlyingCarpetEntity::new, EntityClassification.MISC)
-            .size(1.375F, 0.5625F)
+            .size(1.0F, 0.0625F)
             .trackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new FlyingCarpetEntity(EntityTypesPM.FLYING_CARPET.get(), world))
             .build(PrimalMagic.MODID + ":flying_carpet"));

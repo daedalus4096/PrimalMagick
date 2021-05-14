@@ -1510,6 +1510,8 @@
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",
+    "key.primalmagic.carpet_forward": "Flying Carpet Forward",
+    "key.primalmagic.carpet_backward": "Flying Carpet Backward",
     
     "stat.primalmagic.grimoire_read": "Times Grimoire consulted",
     "stat.primalmagic.items_analyzed": "Item types analyzed",

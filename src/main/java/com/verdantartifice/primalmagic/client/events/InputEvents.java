@@ -4,9 +4,13 @@ import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.config.KeyBindings;
+import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.CycleActiveSpellPacket;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
@@ -26,6 +30,15 @@ public class InputEvents {
         if (KeyBindings.changeSpellKey.isPressed()) {
             boolean shift = (event.getModifiers() & GLFW.GLFW_MOD_SHIFT) != 0;  // Cycle spells in reverse if shift is pressed as well
             PacketHandler.sendToServer(new CycleActiveSpellPacket(shift));
+        }
+        
+        Minecraft mc = Minecraft.getInstance();
+        PlayerEntity player = mc.player;
+        if (player != null) {
+            Entity ridingEntity = player.getRidingEntity();
+            if (ridingEntity != null && ridingEntity instanceof FlyingCarpetEntity) {
+                ((FlyingCarpetEntity)ridingEntity).updateInputs(KeyBindings.carpetForwardKey.isKeyDown(), KeyBindings.carpetBackwardKey.isKeyDown());
+            }
         }
     }
 }
