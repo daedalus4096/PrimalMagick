@@ -408,6 +408,22 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARCANOMETER")))
             .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FLYING_CARPET.get())
+            .addIngredient(ItemTags.CARPETS)
+            .addIngredient(Items.SADDLE)
+            .addIngredient(Items.FEATHER)
+            .addIngredient(ItemsPM.MANA_SALTS.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get(), 2)
+            .addIngredient(ItemsPM.RUNE_PROJECT.get())
+            .addIngredient(ItemsPM.RUNE_ITEM.get())
+            .addIngredient(ItemsPM.RUNE_POWER.get())
+            .addProp(BlocksPM.INCENSE_BRAZIER.get(), 2)
+            .addProp(BlocksPM.RITUAL_BELL.get())
+            .addProp(BlocksPM.RITUAL_LECTERN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FLYING_CARPET")))
+            .manaCost(new SourceList().add(Source.SKY, 100))
+            .instability(6)
+            .build(consumer);
         
         CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, IRecipeSerializer.SMELTING)
             .addCriterion("has_heartwood", hasItem(ItemsPM.HEARTWOOD.get()))

@@ -831,6 +831,11 @@ public class ResearchProvider implements IDataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 4).recipe(ItemsPM.SUPREME_VOID_AMBROSIA.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 4).recipe(ItemsPM.SUPREME_HALLOWED_AMBROSIA.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("FLYING_CARPET", discipline).parent("MASTER_RITUAL").parent("CRYSTAL_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_PROJECT").parent("RUNE_ITEM").parent("RUNE_POWER")
+            .parent("INCENSE_BRAZIER").parent("RITUAL_LECTERN").parent("RITUAL_BELL")
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_flying_creature").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 3).recipe(ItemsPM.FLYING_CARPET.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
