@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 import com.verdantartifice.primalmagic.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagic.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagic.common.items.misc.SeascribePenItem;
 import com.verdantartifice.primalmagic.common.items.tools.ItemTierPM;
 import com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem;
@@ -39,6 +40,7 @@ import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.AxeItem;
@@ -453,6 +455,10 @@ public class ItemsPM {
     public static final RegistryObject<AmbrosiaItem> SUPREME_INFERNAL_AMBROSIA = ITEMS.register("ambrosia_supreme_infernal", () -> new AmbrosiaItem(Source.INFERNAL, 50, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
     public static final RegistryObject<AmbrosiaItem> SUPREME_VOID_AMBROSIA = ITEMS.register("ambrosia_supreme_void", () -> new AmbrosiaItem(Source.VOID, 50, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
     public static final RegistryObject<AmbrosiaItem> SUPREME_HALLOWED_AMBROSIA = ITEMS.register("ambrosia_supreme_hallowed", () -> new AmbrosiaItem(Source.HALLOWED, 50, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC).food(new Food.Builder().hunger(4).saturation(1.2F).build())));
+    
+    // Register sanguine core items
+    public static final RegistryObject<Item> SANGUINE_CORE_BLANK = ITEMS.register("sanguine_core_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<SanguineCoreItem> SANGUINE_CORE_BAT = ITEMS.register("sanguine_core_bat", () -> new SanguineCoreItem(() -> EntityType.BAT, 1, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).maxDamage(63)));
 
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

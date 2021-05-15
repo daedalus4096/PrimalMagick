@@ -410,6 +410,8 @@
     "item.primalmagic.pixie_basic_hallowed": "Hallowed Pixie",
     "item.primalmagic.pixie_grand_hallowed": "Grand Hallowed Pixie",
     "item.primalmagic.pixie_majestic_hallowed": "Majestic Hallowed Pixie",
+    "item.primalmagic.sanguine_core_blank": "Blank Sanguine Core",
+    "item.primalmagic.sanguine_core_bat": "Sanguine Core: Bat",
     
     "entity.primalmagic.treefolk": "Treefolk",
     "entity.primalmagic.primalite_golem": "Primalite Golem",
@@ -448,6 +450,8 @@
     "tooltip.primalmagic.bloody_flesh.2": "as you look at this...",
     "tooltip.primalmagic.hallowed_orb.1": "A sense of peace washes over",
     "tooltip.primalmagic.hallowed_orb.2": "you as you hold this",
+    "tooltip.primalmagic.sanguine_core.1": "Durability: %1$d",
+    "tooltip.primalmagic.sanguine_core.2": "Souls per spawn: %1$d",
     "tooltip.primalmagic.mana_discount": "Mana discount: %1$d%%",
     "tooltip.primalmagic.runescribed": "Runescribed",
     "tooltip.primalmagic.rune.earth": "\"Teq\"",
