@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagic.common.blocks.crafting.WandInscriptionTab
 import com.verdantartifice.primalmagic.common.blocks.devices.AnalysisTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.HoneyExtractorBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.ResearchTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.devices.SanguineCrucibleBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagic.common.blocks.golems.HallowsteelGolemControllerBlock;
 import com.verdantartifice.primalmagic.common.blocks.golems.HexiumGolemControllerBlock;
@@ -261,6 +262,7 @@ public class BlocksPM {
     public static final RegistryObject<PrimaliteGolemControllerBlock> PRIMALITE_GOLEM_CONTROLLER = BLOCKS.register("primalite_golem_controller", () -> new PrimaliteGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<HexiumGolemControllerBlock> HEXIUM_GOLEM_CONTROLLER = BLOCKS.register("hexium_golem_controller", () -> new HexiumGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<HallowsteelGolemControllerBlock> HALLOWSTEEL_GOLEM_CONTROLLER = BLOCKS.register("hallowsteel_golem_controller", () -> new HallowsteelGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistryObject<SanguineCrucibleBlock> SANGUINE_CRUCIBLE = BLOCKS.register("sanguine_crucible", SanguineCrucibleBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

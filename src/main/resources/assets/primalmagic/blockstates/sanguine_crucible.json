@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=north,lit=false": { "model": "primalmagic:block/sanguine_crucible" },
+        "facing=south,lit=false": { "model": "primalmagic:block/sanguine_crucible", "y": 180 },
+        "facing=west,lit=false":  { "model": "primalmagic:block/sanguine_crucible", "y": 270 },
+        "facing=east,lit=false":  { "model": "primalmagic:block/sanguine_crucible", "y": 90 },
+        "facing=north,lit=true": { "model": "primalmagic:block/sanguine_crucible_lit" },
+        "facing=south,lit=true": { "model": "primalmagic:block/sanguine_crucible_lit", "y": 180 },
+        "facing=west,lit=true":  { "model": "primalmagic:block/sanguine_crucible_lit", "y": 270 },
+        "facing=east,lit=true":  { "model": "primalmagic:block/sanguine_crucible_lit", "y": 90 }
+    }
+}
