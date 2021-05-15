@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.blocks.devices;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.tiles.devices.SanguineCrucibleTileEntity;
 
@@ -10,18 +11,23 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -29,6 +35,7 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for a sanguine crucible.  Uses blood cores and captured souls to summon creatures.
@@ -118,5 +125,28 @@ public class SanguineCrucibleBlock extends Block {
             }
         }
         super.onEntityCollision(state, worldIn, pos, entityIn);
+    }
+
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        ItemStack stack = player.getHeldItem(handIn);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if (!worldIn.isRemote && tile instanceof SanguineCrucibleTileEntity) {
+            SanguineCrucibleTileEntity crucibleTile = (SanguineCrucibleTileEntity)tile;
+            if (stack.getItem() instanceof SanguineCoreItem && !crucibleTile.hasCore()) {
+                crucibleTile.setInventorySlotContents(0, stack.copy());
+                stack.shrink(1);
+                worldIn.playSound(null, pos, SoundEvents.BLOCK_STONE_PRESSURE_PLATE_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.6F);
+                worldIn.setBlockState(pos, state.with(LIT, true), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                return ActionResultType.SUCCESS;
+            } else if (player.isSecondaryUseActive() && stack.isEmpty() && crucibleTile.hasCore()) {
+                spawnAsEntity(worldIn, pos.offset(hit.getFace()), crucibleTile.removeStackFromSlot(0));
+                worldIn.playSound(null, pos, SoundEvents.BLOCK_STONE_PRESSURE_PLATE_CLICK_OFF, SoundCategory.BLOCKS, 0.3F, 0.5F);
+                worldIn.setBlockState(pos, state.with(LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                return ActionResultType.SUCCESS;
+            }
+        }
+
+        return ActionResultType.PASS;
     }
 }

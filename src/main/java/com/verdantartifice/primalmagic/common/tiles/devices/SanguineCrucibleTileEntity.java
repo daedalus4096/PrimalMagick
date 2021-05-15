@@ -78,4 +78,8 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
     public int getCharge() {
         return this.charge;
     }
+    
+    public boolean hasCore() {
+        return !this.items.get(0).isEmpty();
+    }
 }
