@@ -29,6 +29,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SanguineCrucibleTER extends TileEntityRenderer<SanguineCrucibleTileEntity> {
     protected static final ResourceLocation WATER_TEXTURE = new ResourceLocation("block/water_still");
+    protected static final Color COLOR = new Color(Source.BLOOD.getColor()).brighter().brighter();
+    protected static final float R = COLOR.getRed() / 255.0F;
+    protected static final float G = COLOR.getGreen() / 255.0F;
+    protected static final float B = COLOR.getBlue() / 255.0F;
     
     public SanguineCrucibleTER(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
@@ -42,19 +46,14 @@ public class SanguineCrucibleTER extends TileEntityRenderer<SanguineCrucibleTile
         matrixStackIn.translate(0.0D, tileEntityIn.getFluidHeight(), 0.0D);
         matrixStackIn.rotate(Vector3f.XP.rotationDegrees(90.0F));
         
-        Color c = new Color(Source.BLOOD.getColor()).brighter().brighter();
-        float r = c.getRed() / 255.0F;
-        float g = c.getGreen() / 255.0F;
-        float b = c.getBlue() / 255.0F;
-        
         @SuppressWarnings("deprecation")
         TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(WATER_TEXTURE);
         IVertexBuilder builder = bufferIn.getBuffer(RenderType.getTranslucent());
         Matrix4f matrix = matrixStackIn.getLast().getMatrix();
-        builder.pos(matrix, 0.0F, 1.0F, 0.0F).color(r, g, b, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(matrix, 1.0F, 1.0F, 0.0F).color(r, g, b, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(matrix, 1.0F, 0.0F, 0.0F).color(r, g, b, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(matrix, 0.0F, 0.0F, 0.0F).color(r, g, b, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(matrix, 0.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(matrix, 1.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(matrix, 1.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        builder.pos(matrix, 0.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
         
         matrixStackIn.pop();
     }
