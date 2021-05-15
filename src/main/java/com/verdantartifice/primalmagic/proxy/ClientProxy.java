@@ -33,6 +33,7 @@ import com.verdantartifice.primalmagic.client.renderers.tile.RitualAltarTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualLecternTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RunescribingAltarTER;
+import com.verdantartifice.primalmagic.client.renderers.tile.SanguineCrucibleTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
@@ -107,6 +108,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RITUAL_LECTERN.get(), dispatcher -> new RitualLecternTER(dispatcher));
         ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RITUAL_BELL.get(), dispatcher -> new RitualBellTER(dispatcher));
         ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), dispatcher -> new RunescribingAltarTER(dispatcher));
+        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), dispatcher -> new SanguineCrucibleTER(dispatcher));
     }
     
     private void registerEntityRenderers(FMLClientSetupEvent event) {

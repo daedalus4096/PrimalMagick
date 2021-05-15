@@ -1,25 +1,33 @@
 package com.verdantartifice.primalmagic.common.blocks.devices;
 
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
+import com.verdantartifice.primalmagic.common.tiles.devices.SanguineCrucibleTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
 /**
@@ -71,5 +79,44 @@ public class SanguineCrucibleBlock extends Block {
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+    
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new SanguineCrucibleTileEntity();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
+        super.eventReceived(state, worldIn, pos, id, param);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        return (tile == null) ? false : tile.receiveClientEvent(id, param);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        if (!worldIn.isRemote) {
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if (tile instanceof SanguineCrucibleTileEntity) {
+                SanguineCrucibleTileEntity crucibleTile = (SanguineCrucibleTileEntity)tile;
+                if (entityIn instanceof ItemEntity) {
+                    ItemEntity itemEntity = (ItemEntity)entityIn;
+                    if (itemEntity.getItem().getItem() == ItemsPM.SOUL_GEM.get()) {
+                        crucibleTile.addSouls(itemEntity.getItem().getCount());
+                        entityIn.remove();
+                        worldIn.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    }
+                }
+            }
+        }
+        super.onEntityCollision(state, worldIn, pos, entityIn);
     }
 }
