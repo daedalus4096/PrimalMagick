@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.tiles.devices;
 
 import java.awt.Color;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -14,11 +15,16 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -29,8 +35,9 @@ import net.minecraftforge.common.util.Constants;
  */
 public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITickableTileEntity {
     protected static final int FLUID_CAPACITY = 1000;
-    protected static final int FLUID_DRAIN = 100;
+    protected static final int FLUID_DRAIN = 200;
     protected static final int CHARGE_MAX = 100;
+    protected static final int SPAWN_RANGE = 4;
     
     protected int souls;
     protected int fluidAmount;
@@ -42,7 +49,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
 
     @Override
     protected Set<Integer> getSyncedSlotIndices() {
-        // Sync the crucible's core stack for client use
+        // Sync the crucible's core stack for client-side use
         return ImmutableSet.of(Integer.valueOf(0));
     }
     
@@ -81,7 +88,13 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
                             this.getStackInSlot(0).shrink(1);
                             this.world.setBlockState(this.pos, this.world.getBlockState(pos).with(SanguineCrucibleBlock.LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
                         }
-                        this.doSpawn(core.getEntityType());
+                        
+                        int attempts = 0;
+                        boolean success = false;
+                        while (attempts++ < 50 && !success) {
+                            success = this.attemptSpawn(core.getEntityType());
+                        }
+                        
                         PacketHandler.sendToAllAround(new WandPoofPacket(this.pos.up(), Color.WHITE.getRGB(), true, Direction.UP), this.world.getDimensionKey(), this.pos, 32.0D);
                     }
                     
@@ -92,8 +105,33 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
         }
     }
     
-    protected void doSpawn(EntityType<?> entityType) {
-        // TODO stub
+    protected boolean attemptSpawn(EntityType<?> entityType) {
+        if (this.world.isRemote) {
+            return false;
+        }
+        
+        double x = (double)this.pos.getX() + (SPAWN_RANGE * (this.world.rand.nextDouble() - this.world.rand.nextDouble())) + 0.5D;
+        double y = (double)this.pos.getY() + this.world.rand.nextInt(3) - 1;
+        double z = (double)this.pos.getZ() + (SPAWN_RANGE * (this.world.rand.nextDouble() - this.world.rand.nextDouble())) + 0.5D;
+        BlockPos spawnPos = new BlockPos(x, y, z);
+        
+        if (this.world.hasNoCollisions(entityType.getBoundingBoxWithSizeApplied(x, y, z))) {
+            ServerWorld serverWorld = (ServerWorld)this.world;
+            Entity entity = entityType.spawn(serverWorld, null, null, spawnPos, SpawnReason.SPAWNER, true, !Objects.equals(this.pos, spawnPos));
+            if (entity == null) {
+                return false;
+            }
+            entity.setLocationAndAngles(entity.getPosX(), entity.getPosY(), entity.getPosZ(), this.world.rand.nextFloat() * 360.0F, 0.0F);
+            
+            if (entity instanceof MobEntity) {
+                ((MobEntity)entity).onInitialSpawn(serverWorld, this.world.getDifficultyForLocation(entity.getPosition()), SpawnReason.SPAWNER, null, null);
+            }
+            
+            PacketHandler.sendToAllAround(new WandPoofPacket(x, y, z, Color.WHITE.getRGB(), true, Direction.UP), this.world.getDimensionKey(), entity.getPosition(), 32.0D);
+            return true;
+        }
+        
+        return false;
     }
 
     @Override
