@@ -1,0 +1,30 @@
+{
+  "key": "SANGUINE_CORE_SAPIENTS",
+  "name": "primalmagic.research.sanguine_core_sapients.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "SANGUINE_CRUCIBLE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.sanguine_core_sapients.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.sanguine_core_sapients.text.stage.2",
+      "attunements": {
+        "blood": 2
+      },
+      "recipes": [
+        "primalmagic:sanguine_core_evoker",
+        "primalmagic:sanguine_core_pillager",
+        "primalmagic:sanguine_core_villager",
+        "primalmagic:sanguine_core_vindicator",
+        "primalmagic:sanguine_core_witch"
+      ]
+    }
+  ],
+  "addenda": []
+}

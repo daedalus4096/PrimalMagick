@@ -1,0 +1,18 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "SANGUINE_CORE_FLYING_CREATURES",
+  "ingredients": [
+    {
+      "item": "primalmagic:sanguine_core_blank"
+    },
+    {
+      "tag": "forge:feathers"
+    },
+    {
+      "tag": "forge:eggs"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:sanguine_core_chicken"
+  }
+}

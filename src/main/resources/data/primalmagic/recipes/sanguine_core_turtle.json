@@ -1,0 +1,18 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "SANGUINE_CORE_SEA_CREATURES",
+  "ingredients": [
+    {
+      "item": "primalmagic:sanguine_core_blank"
+    },
+    {
+      "item": "minecraft:scute"
+    },
+    {
+      "item": "minecraft:seagrass"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:sanguine_core_turtle"
+  }
+}

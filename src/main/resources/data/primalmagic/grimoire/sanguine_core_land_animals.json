@@ -1,0 +1,42 @@
+{
+  "key": "SANGUINE_CORE_LAND_ANIMALS",
+  "name": "primalmagic.research.sanguine_core_land_animals.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "SANGUINE_CRUCIBLE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.sanguine_core_land_animals.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.sanguine_core_land_animals.text.stage.2",
+      "attunements": {
+        "earth": 2
+      },
+      "recipes": [
+        "primalmagic:sanguine_core_cat",
+        "primalmagic:sanguine_core_cave_spider",
+        "primalmagic:sanguine_core_cow",
+        "primalmagic:sanguine_core_donkey",
+        "primalmagic:sanguine_core_fox",
+        "primalmagic:sanguine_core_horse",
+        "primalmagic:sanguine_core_llama",
+        "primalmagic:sanguine_core_ocelot",
+        "primalmagic:sanguine_core_panda",
+        "primalmagic:sanguine_core_pig",
+        "primalmagic:sanguine_core_rabbit",
+        "primalmagic:sanguine_core_ravager",
+        "primalmagic:sanguine_core_sheep",
+        "primalmagic:sanguine_core_silverfish",
+        "primalmagic:sanguine_core_slime",
+        "primalmagic:sanguine_core_spider",
+        "primalmagic:sanguine_core_wolf"
+      ]
+    }
+  ],
+  "addenda": []
+}

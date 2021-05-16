@@ -1,0 +1,18 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "SANGUINE_CORE_UNDEAD",
+  "ingredients": [
+    {
+      "item": "primalmagic:sanguine_core_blank"
+    },
+    {
+      "tag": "forge:bones"
+    },
+    {
+      "item": "minecraft:saddle"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:sanguine_core_skeleton_horse"
+  }
+}

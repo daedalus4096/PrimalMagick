@@ -1,0 +1,27 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "SANGUINE_CRUCIBLE",
+  "mana": {
+    "blood": 50,
+    "infernal": 50
+  },
+  "pattern": [
+    " H ",
+    "BIB",
+    "H H"
+  ],
+  "key": {
+    "H": {
+      "tag": "primalmagic:ingots/hexium"
+    },
+    "B": {
+      "item": "primalmagic:essence_shard_blood"
+    },
+    "I": {
+      "item": "primalmagic:essence_shard_infernal"
+    }
+  },
+  "result": {
+    "item": "primalmagic:sanguine_core_blank"
+  }
+}

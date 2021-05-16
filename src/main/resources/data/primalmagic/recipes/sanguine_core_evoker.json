@@ -1,0 +1,18 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "SANGUINE_CORE_SAPIENTS",
+  "ingredients": [
+    {
+      "item": "primalmagic:sanguine_core_blank"
+    },
+    {
+      "item": "primalmagic:bloody_flesh"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:sanguine_core_evoker"
+  }
+}

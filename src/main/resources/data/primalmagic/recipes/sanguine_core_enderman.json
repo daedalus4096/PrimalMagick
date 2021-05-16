@@ -1,0 +1,18 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "SANGUINE_CORE_ALIENS",
+  "ingredients": [
+    {
+      "item": "primalmagic:sanguine_core_blank"
+    },
+    {
+      "tag": "forge:ender_pearls"
+    },
+    {
+      "item": "primalmagic:essence_dust_void"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:sanguine_core_enderman"
+  }
+}
