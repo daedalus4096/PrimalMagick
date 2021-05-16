@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.blocks.devices;
 
+import java.util.Random;
+
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
@@ -12,6 +14,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -34,6 +37,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.Constants;
 
@@ -148,5 +153,27 @@ public class SanguineCrucibleBlock extends Block {
         }
 
         return ActionResultType.PASS;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Drop the tile entity's inventory into the world when the block is replaced
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if (tile instanceof SanguineCrucibleTileEntity) {
+                InventoryHelper.dropInventoryItems(worldIn, pos, (SanguineCrucibleTileEntity)tile);
+                worldIn.updateComparatorOutputLevel(pos, this);
+            }
+            super.onReplaced(state, worldIn, pos, newState, isMoving);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        if (rand.nextDouble() < 0.1D) {
+            worldIn.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.1F + (rand.nextFloat() * 0.1F), 0.8F + (rand.nextFloat() * 0.4F));
+        }
     }
 }

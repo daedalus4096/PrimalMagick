@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.tile;
 
 import java.awt.Color;
+import java.util.Random;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -14,9 +15,12 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -56,5 +60,15 @@ public class SanguineCrucibleTER extends TileEntityRenderer<SanguineCrucibleTile
         builder.pos(matrix, 0.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
         
         matrixStackIn.pop();
+        
+        World world = tileEntityIn.getWorld();
+        Random rand = world.rand;
+        BlockPos pos = tileEntityIn.getPos();
+        if (rand.nextDouble() < tileEntityIn.getSmokeChance()) {
+            double x = (double)pos.getX() + 0.1D + (rand.nextDouble() * 0.8D);
+            double y = (double)pos.getY() + 1.0D;
+            double z = (double)pos.getZ() + 0.1D + (rand.nextDouble() * 0.8D);
+            world.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.1D, 0.0D);
+        }
     }
 }
