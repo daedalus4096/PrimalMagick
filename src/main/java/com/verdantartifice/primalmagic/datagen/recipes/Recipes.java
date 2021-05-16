@@ -67,6 +67,7 @@ public class Recipes extends RecipeProvider {
         this.registerGolemControllerRecipes(consumer);
         this.registerPixieRecipes(consumer);
         this.registerAmbrosiaRecipes(consumer);
+        this.registerSanguineCrucibleRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -3114,6 +3115,251 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("SUPREME_AMBROSIA"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.HALLOWED, 200))
             .instability(8)
+            .build(consumer);
+    }
+    
+    protected void registerSanguineCrucibleRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SANGUINE_CRUCIBLE.get())
+            .patternLine("ICI")
+            .patternLine("IWI")
+            .patternLine("III")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('C', ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
+            .key('W', Items.WATER_BUCKET)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CRUCIBLE")))
+            .manaCost(new SourceList().add(Source.BLOOD, 100).add(Source.INFERNAL, 100))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .patternLine(" H ")
+            .patternLine("BIB")
+            .patternLine("H H")
+            .key('H', ItemTagsPM.INGOTS_HEXIUM)
+            .key('B', ItemsPM.ESSENCE_SHARD_BLOOD.get())
+            .key('I', ItemsPM.ESSENCE_SHARD_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CRUCIBLE")))
+            .manaCost(new SourceList().add(Source.BLOOD, 50).add(Source.INFERNAL, 50))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BAT.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.FEATHERS)
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BEE.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(ItemTags.SMALL_FLOWERS)
+            .addIngredient(Items.HONEYCOMB)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BLAZE.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.RODS_BLAZE)
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONIC")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAT.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(ItemTags.FISHES)
+            .addIngredient(Tags.Items.STRING)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAVE_SPIDER.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.SPIDER_EYE)
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CHICKEN.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.FEATHERS)
+            .addIngredient(Tags.Items.EGGS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_COD.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.COD)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_COW.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.BEEF)
+            .addIngredient(Tags.Items.LEATHER)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CREEPER.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.GUNPOWDER)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_PLANTS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DOLPHIN.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.COD)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DONKEY.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.SADDLE)
+            .addIngredient(Tags.Items.CHESTS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DROWNED.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.ROTTEN_FLESH)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ELDER_GUARDIAN.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.DUSTS_PRISMARINE)
+            .addIngredient(Items.SPONGE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ENDERMAN.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.ENDER_PEARLS)
+            .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_ALIEN")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ENDERMITE.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.ENDER_PEARLS)
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_ALIEN")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_EVOKER.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(ItemsPM.BLOODY_FLESH.get())
+            .addIngredient(Items.TOTEM_OF_UNDYING)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SAPIENTS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_FOX.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.LEATHER)
+            .addIngredient(Items.SWEET_BERRIES)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GHAST.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.GHAST_TEAR)
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONIC")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GUARDIAN.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.DUSTS_PRISMARINE)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HOGLIN.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.PORKCHOP)
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONIC")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HORSE.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.SADDLE)
+            .addIngredient(Items.APPLE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HUSK.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.ROTTEN_FLESH)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_LLAMA.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.LEATHER)
+            .addIngredient(ItemTags.CARPETS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_MAGMA_CUBE.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.MAGMA_CREAM)
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONIC")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_MOOSHROOM.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.BEEF)
+            .addIngredient(Tags.Items.MUSHROOMS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_PLANTS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_OCELOT.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(ItemTags.FISHES)
+            .addIngredient(Items.VINE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PANDA.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.BAMBOO)
+            .addIngredient(Items.VINE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PARROT.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.FEATHERS)
+            .addIngredient(Items.VINE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PHANTOM.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.PHANTOM_MEMBRANE)
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIG.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.PORKCHOP)
+            .addIngredient(Tags.Items.CROPS_CARROT)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIGLIN.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.GOLDEN_SWORD)
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONIC")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIGLIN_BRUTE.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.GOLDEN_AXE)
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONIC")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PILLAGER.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(ItemsPM.BLOODY_FLESH.get())
+            .addIngredient(Items.CROSSBOW)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SAPIENTS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_POLAR_BEAR.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.COD)
+            .addIngredient(Items.ICE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PUFFERFISH.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.PUFFERFISH)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_RABBIT.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.RABBIT)
+            .addIngredient(Items.RABBIT_HIDE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_RAVAGER.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.SADDLE)
+            .addIngredient(ItemsPM.BLOODY_FLESH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
     }
 }
