@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.pixies.Majesti
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticSunPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticVoidPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
+import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
@@ -80,6 +81,12 @@ public class EntityTypesPM {
             .trackingRange(8)
             .setCustomClientFactory((spawnEntity, world) -> new TreefolkEntity(EntityTypesPM.TREEFOLK.get(), world))
             .build(PrimalMagic.MODID + ":treefolk"));
+    public static final RegistryObject<EntityType<InnerDemonEntity>> INNER_DEMON = ENTITY_TYPES.register("inner_demon", () -> EntityType.Builder.<InnerDemonEntity>create(InnerDemonEntity::new, EntityClassification.MONSTER)
+            .size(1.2F, 3.9F)
+            .immuneToFire()
+            .trackingRange(10)
+            .setCustomClientFactory((spawnEntity, world) -> new InnerDemonEntity(EntityTypesPM.INNER_DEMON.get(), world))
+            .build(PrimalMagic.MODID + ":inner_demon"));
     public static final RegistryObject<EntityType<PrimaliteGolemEntity>> PRIMALITE_GOLEM = ENTITY_TYPES.register("primalite_golem", () -> EntityType.Builder.<PrimaliteGolemEntity>create(PrimaliteGolemEntity::new, EntityClassification.MISC)
             .size(1.4F, 2.7F)
             .trackingRange(10)
