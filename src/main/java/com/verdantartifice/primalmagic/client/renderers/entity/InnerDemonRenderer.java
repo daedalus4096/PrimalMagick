@@ -21,9 +21,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class InnerDemonRenderer extends BipedRenderer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
     protected static final float SCALE = 2.0F;
     
+    protected InnerDemonArmorLayer armorLayer;
+    protected boolean modelFinalized = false;
+    
     public InnerDemonRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new PlayerModel<InnerDemonEntity>(0.0F, false), 0.5F * SCALE);
-        this.addLayer(new InnerDemonArmorLayer(this));
+        this.armorLayer = new InnerDemonArmorLayer(this, false);
+        this.addLayer(this.armorLayer);
     }
 
     @Override
@@ -35,6 +39,19 @@ public class InnerDemonRenderer extends BipedRenderer<InnerDemonEntity, PlayerMo
 
     @Override
     protected void preRenderCallback(InnerDemonEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
+        if (!this.modelFinalized) {
+            // Can't get the player's skin type at renderer registration time, so monkey-patch it after we're already going
+            Minecraft mc = Minecraft.getInstance();
+            boolean slimModel = mc.player.getSkinType().equals("slim");
+            
+            this.entityModel = new PlayerModel<InnerDemonEntity>(0.0F, slimModel);
+            
+            this.layerRenderers.remove(this.armorLayer);
+            this.armorLayer = new InnerDemonArmorLayer(this, slimModel);
+            this.addLayer(this.armorLayer);
+            
+            this.modelFinalized = true;
+        }
         matrixStackIn.scale(SCALE, SCALE, SCALE);
     }
 }

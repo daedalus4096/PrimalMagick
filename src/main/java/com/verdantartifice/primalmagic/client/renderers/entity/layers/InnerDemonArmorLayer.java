@@ -19,10 +19,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class InnerDemonArmorLayer extends EnergyLayer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/inner_demon/inner_demon_armor.png");
-    protected final PlayerModel<InnerDemonEntity> model = new PlayerModel<InnerDemonEntity>(2.0F, false);
+    protected final PlayerModel<InnerDemonEntity> model;
 
-    public InnerDemonArmorLayer(IEntityRenderer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> renderer) {
+    public InnerDemonArmorLayer(IEntityRenderer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> renderer, boolean slimModel) {
         super(renderer);
+        this.model = new PlayerModel<InnerDemonEntity>(2.0F, slimModel);
     }
 
     @Override
