@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.verdantartifice.primalmagic.client.renderers.entity.layers.InnerDemonArmorLayer;
 import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
 
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ public class InnerDemonRenderer extends BipedRenderer<InnerDemonEntity, PlayerMo
     
     public InnerDemonRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new PlayerModel<InnerDemonEntity>(0.0F, false), 0.5F * SCALE);
+        this.addLayer(new InnerDemonArmorLayer(this));
     }
 
     @Override
