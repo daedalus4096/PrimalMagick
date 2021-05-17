@@ -1,6 +1,13 @@
 package com.verdantartifice.primalmagic.common.entities.misc;
 
+import javax.annotation.Nonnull;
+
+import com.verdantartifice.primalmagic.common.entities.ai.goals.LongDistanceRangedAttackGoal;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
+import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
+import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVehicle;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -12,6 +19,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
@@ -41,6 +49,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob, IChargeableMob {
     protected final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
     protected boolean isSuffocating = false;
+    protected SpellPackage spellCache;
 
     public InnerDemonEntity(EntityType<? extends InnerDemonEntity> type, World worldIn) {
         super(type, worldIn);
@@ -49,12 +58,14 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
     }
     
     public static AttributeModifierMap.MutableAttribute getAttributeModifiers() {
-        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MAX_HEALTH, 400.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23D).createMutableAttribute(Attributes.FOLLOW_RANGE, 40.0D).createMutableAttribute(Attributes.ARMOR, 4.0D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 15.0D);
+        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MAX_HEALTH, 400.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23D).createMutableAttribute(Attributes.FOLLOW_RANGE, 40.0D).createMutableAttribute(Attributes.ARMOR, 4.0D).createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.5D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 12.0D).createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 1.5D);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(3, new LongDistanceRangedAttackGoal<>(this, 1.0D, 30, 4.0F, 16.0F, true));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
@@ -75,11 +86,30 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
         super.setCustomName(name);
         this.bossInfo.setName(this.getDisplayName());
     }
+    
+    @Nonnull
+    protected SpellPackage createSpellPackage() {
+        SpellPackage spell = new SpellPackage("Blood Ball");
+        ProjectileSpellVehicle vehicle = new ProjectileSpellVehicle();
+        spell.setVehicle(vehicle);
+        BloodDamageSpellPayload payload = new BloodDamageSpellPayload();
+        payload.getProperty("power").setValue(4);
+        spell.setPayload(payload);
+        spell.setPrimaryMod(new BurstSpellMod(2, 2));
+        return spell;
+    }
+
+    @Nonnull
+    protected SpellPackage getSpellPackage() {
+        if (this.spellCache == null) {
+            this.spellCache = this.createSpellPackage();
+        }
+        return this.spellCache;
+    }
 
     @Override
     public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-        // TODO Auto-generated method stub
-
+        this.getSpellPackage().cast(this.world, this, null);
     }
 
     @Override
@@ -100,6 +130,13 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
             this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
         }
         super.updateAITasks();
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity entityIn) {
+        boolean retVal = super.attackEntityAsMob(entityIn);
+        entityIn.setFire(5);
+        return retVal;
     }
 
     @Override

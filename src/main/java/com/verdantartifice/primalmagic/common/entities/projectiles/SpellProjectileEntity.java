@@ -43,7 +43,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
     public SpellProjectileEntity(World world, LivingEntity thrower, SpellPackage spell, @Nullable ItemStack spellSource) {
         super(EntityTypesPM.SPELL_PROJECTILE.get(), thrower, world);
         this.spell = spell;
-        this.spellSource = spellSource.copy();
+        this.spellSource = spellSource == null ? null : spellSource.copy();
         if (spell != null && spell.getPayload() != null) {
             // Store the spell payload's color for use in rendering
             this.setColor(spell.getPayload().getSource().getColor());
@@ -53,7 +53,7 @@ public class SpellProjectileEntity extends ThrowableEntity {
     public SpellProjectileEntity(World world, double x, double y, double z, SpellPackage spell, @Nullable ItemStack spellSource) {
         super(EntityTypesPM.SPELL_PROJECTILE.get(), x, y, z, world);
         this.spell = spell;
-        this.spellSource = spellSource.copy();
+        this.spellSource = spellSource == null ? null : spellSource.copy();
         if (spell != null && spell.getPayload() != null) {
             // Store the spell payload's color for use in rendering
             this.setColor(spell.getPayload().getSource().getColor());
