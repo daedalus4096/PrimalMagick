@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
@@ -93,8 +92,9 @@ public class SpellProjectileEntity extends ThrowableEntity {
                 // Don't collide with other spell projectiles
                 return;
             }
-            if (this.spell != null && this.spell.getPayload() != null && this.getShooter() instanceof PlayerEntity) {
-                SpellManager.executeSpellPayload(this.spell, result, this.world, (PlayerEntity)this.getShooter(), this.spellSource, true);
+            if (this.spell != null && this.spell.getPayload() != null) {
+                LivingEntity shooter = (this.getShooter() instanceof LivingEntity) ? (LivingEntity)this.getShooter() : null;
+                SpellManager.executeSpellPayload(this.spell, result, this.world, shooter, this.spellSource, true);
             }
             this.remove();
         }
