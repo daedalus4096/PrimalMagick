@@ -33,6 +33,7 @@ import com.verdantartifice.primalmagic.common.entities.companions.pixies.Majesti
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.MajesticVoidPixieEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
+import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntity;
@@ -72,6 +73,12 @@ public class EntityTypesPM {
             .updateInterval(10)
             .setCustomClientFactory((spawnEntity, world) -> new SinCrashEntity(EntityTypesPM.SIN_CRASH.get(), world))
             .build(PrimalMagic.MODID + ":sin_crash"));
+    public static final RegistryObject<EntityType<SinCrystalEntity>> SIN_CRYSTAL = ENTITY_TYPES.register("sin_crystal", () -> EntityType.Builder.<SinCrystalEntity>create(SinCrystalEntity::new, EntityClassification.MISC)
+            .size(2.0F, 2.0F)
+            .trackingRange(16)
+            .updateInterval(Integer.MAX_VALUE)
+            .setCustomClientFactory((spawnEntity, world) -> new SinCrystalEntity(EntityTypesPM.SIN_CRYSTAL.get(), world))
+            .build(PrimalMagic.MODID + ":sin_crystal"));
     public static final RegistryObject<EntityType<FlyingCarpetEntity>> FLYING_CARPET = ENTITY_TYPES.register("flying_carpet", () -> EntityType.Builder.<FlyingCarpetEntity>create(FlyingCarpetEntity::new, EntityClassification.MISC)
             .size(1.0F, 0.0625F)
             .trackingRange(10)

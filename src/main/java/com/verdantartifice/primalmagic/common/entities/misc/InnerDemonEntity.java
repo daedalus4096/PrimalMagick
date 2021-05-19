@@ -68,7 +68,7 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));
-        this.goalSelector.addGoal(1, new InnerDemonEntity.SinCrashGoal(this, 100, 200));
+        this.goalSelector.addGoal(1, new InnerDemonEntity.SinCrashGoal(this, 100, 600));
         this.goalSelector.addGoal(3, new LongDistanceRangedAttackGoal<>(this, 1.0D, 30, 4.0F, 16.0F, true));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
@@ -215,7 +215,7 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
             int crashCount = difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 3 : 2);
             for (int index = 0; index < crashCount; index++) {
                 double dx = this.world.rand.nextGaussian() * 16.0D * (this.world.rand.nextBoolean() ? 1.0D : -1.0D);
-                double dy = (-1.0D * (double)this.getEyeHeight()) + this.world.rand.nextDouble();
+                double dy = -1.0D * (double)this.getEyeHeight();
                 double dz = this.world.rand.nextGaussian() * 16.0D * (this.world.rand.nextBoolean() ? 1.0D : -1.0D);
                 SinCrashEntity crash = new SinCrashEntity(this.world, this, dx, dy, dz);
                 crash.setLocationAndAngles(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);

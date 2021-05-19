@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.entities.projectiles;
 
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -12,7 +13,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -44,10 +45,12 @@ public class SinCrashEntity extends DamagingProjectileEntity {
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
-        super.onImpact(result);
+    protected void func_230299_a_(BlockRayTraceResult result) {
+        // Only impact when hitting a block
+        super.func_230299_a_(result);
         if (!this.world.isRemote) {
-            // TODO Spawn sin crystal
+            SinCrystalEntity crystal = new SinCrystalEntity(this.world, result.getHitVec().x, result.getHitVec().y, result.getHitVec().z);
+            this.world.addEntity(crystal);
             this.remove();
         }
     }

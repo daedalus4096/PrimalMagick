@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagic.client.renderers.entity.InnerDemonRendere
 import com.verdantartifice.primalmagic.client.renderers.entity.MajesticPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SinCrashRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.SinCrystalRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellMineRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.TreefolkRenderer;
@@ -118,6 +119,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SIN_CRASH.get(), SinCrashRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SIN_CRYSTAL.get(), SinCrystalRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.APPLE.get(), (renderManager) -> {
             return new SpriteRenderer<>(renderManager, event.getMinecraftSupplier().get().getItemRenderer());
         });
