@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
@@ -65,6 +66,12 @@ public class EntityTypesPM {
             .size(0.25F, 0.25F)
             .setCustomClientFactory((spawnEntity, world) -> new SpellMineEntity(EntityTypesPM.SPELL_MINE.get(), world))
             .build(PrimalMagic.MODID + ":spell_mine"));
+    public static final RegistryObject<EntityType<SinCrashEntity>> SIN_CRASH = ENTITY_TYPES.register("sin_crash", () -> EntityType.Builder.<SinCrashEntity>create(SinCrashEntity::new, EntityClassification.MISC)
+            .size(0.25F, 0.25F)
+            .trackingRange(4)
+            .updateInterval(10)
+            .setCustomClientFactory((spawnEntity, world) -> new SinCrashEntity(EntityTypesPM.SIN_CRASH.get(), world))
+            .build(PrimalMagic.MODID + ":sin_crash"));
     public static final RegistryObject<EntityType<FlyingCarpetEntity>> FLYING_CARPET = ENTITY_TYPES.register("flying_carpet", () -> EntityType.Builder.<FlyingCarpetEntity>create(FlyingCarpetEntity::new, EntityClassification.MISC)
             .size(1.0F, 0.0625F)
             .trackingRange(10)
