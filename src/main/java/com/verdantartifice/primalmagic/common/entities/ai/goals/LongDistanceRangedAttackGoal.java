@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.entities.ai.goals;
 
+import java.util.EnumSet;
+
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
@@ -37,6 +39,7 @@ public class LongDistanceRangedAttackGoal<T extends CreatureEntity & IRangedAtta
         this.maxDistanceSq = maxDistance * maxDistance;
         this.maxDistance = maxDistance;
         this.advanceToMelee = advanceToMelee;
+        this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override
