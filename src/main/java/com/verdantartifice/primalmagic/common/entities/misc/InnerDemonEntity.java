@@ -57,6 +57,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 @OnlyIn(value = Dist.CLIENT, _interface = IChargeableMob.class)
 public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob, IChargeableMob {
     public static final double HEAL_RANGE = 16.0D;
+    protected static final double SIN_CRASH_RANGE = 12.0D;
 
     protected final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
     protected boolean isSuffocating = false;
@@ -237,9 +238,9 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
             Difficulty difficulty = this.world.getDifficulty();
             int crashCount = difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 3 : 2);
             for (int index = 0; index < crashCount; index++) {
-                double dx = this.world.rand.nextGaussian() * 16.0D * (this.world.rand.nextBoolean() ? 1.0D : -1.0D);
+                double dx = this.world.rand.nextGaussian() * SIN_CRASH_RANGE * (this.world.rand.nextBoolean() ? 1.0D : -1.0D);
                 double dy = -1.0D * (double)this.getEyeHeight();
-                double dz = this.world.rand.nextGaussian() * 16.0D * (this.world.rand.nextBoolean() ? 1.0D : -1.0D);
+                double dz = this.world.rand.nextGaussian() * SIN_CRASH_RANGE * (this.world.rand.nextBoolean() ? 1.0D : -1.0D);
                 SinCrashEntity crash = new SinCrashEntity(this.world, this, dx, dy, dz);
                 crash.setLocationAndAngles(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
                 this.world.addEntity(crash);
