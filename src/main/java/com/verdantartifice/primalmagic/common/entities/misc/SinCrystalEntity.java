@@ -1,15 +1,18 @@
 package com.verdantartifice.primalmagic.common.entities.misc;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
@@ -21,6 +24,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -119,9 +123,19 @@ public class SinCrystalEntity extends Entity {
             return false;
         } else {
             if (this.isAlive() && !this.world.isRemote) {
+                // Cause backlash to any inner demons being healed by this crystal
+                List<InnerDemonEntity> demonsInRange = EntityUtils.getEntitiesInRange(this.world, this.getPositionVec(), null, InnerDemonEntity.class, InnerDemonEntity.HEAL_RANGE);
+                if (!demonsInRange.isEmpty()) {
+                    LivingEntity trueSource = source.getTrueSource() instanceof LivingEntity ? (LivingEntity)source.getTrueSource() : null;
+                    for (InnerDemonEntity demon : demonsInRange) {
+                        demon.attackEntityFrom(DamageSource.causeExplosionDamage(trueSource), 10.0F);
+                    }
+                }
+                
+                // Detonate when attacked
                 this.remove();
                 if (!source.isExplosion()) {
-                    // TODO Create explosion
+                    this.world.createExplosion(null, this.getPosX(), this.getPosY(), this.getPosZ(), 6.0F, Explosion.Mode.DESTROY);
                 }
             }
             return true;

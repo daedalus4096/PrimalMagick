@@ -56,7 +56,7 @@ import net.minecraftforge.event.ForgeEventFactory;
  */
 @OnlyIn(value = Dist.CLIENT, _interface = IChargeableMob.class)
 public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob, IChargeableMob {
-    protected static final double HEAL_RANGE = 16.0D;
+    public static final double HEAL_RANGE = 16.0D;
 
     protected final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
     protected boolean isSuffocating = false;
