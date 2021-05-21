@@ -135,7 +135,7 @@ public class SinCrystalEntity extends Entity {
                 // Detonate when attacked
                 this.remove();
                 if (!source.isExplosion()) {
-                    this.world.createExplosion(null, this.getPosX(), this.getPosY(), this.getPosZ(), 6.0F, Explosion.Mode.DESTROY);
+                    this.world.createExplosion(null, this.getPosX(), this.getPosY(), this.getPosZ(), 4.0F, Explosion.Mode.DESTROY);
                 }
             }
             return true;
