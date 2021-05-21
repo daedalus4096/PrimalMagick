@@ -3,12 +3,16 @@ package com.verdantartifice.primalmagic.client.renderers.entity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.client.renderers.entity.layers.InnerDemonArmorLayer;
 import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
+import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.BipedRenderer;
+import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -53,5 +57,20 @@ public class InnerDemonRenderer extends BipedRenderer<InnerDemonEntity, PlayerMo
             this.modelFinalized = true;
         }
         matrixStackIn.scale(SCALE, SCALE, SCALE);
+    }
+
+    @Override
+    public void render(InnerDemonEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+        super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        
+        // Render beams for each in-range sin crystal
+        for (SinCrystalEntity crystal : entityIn.getCrystalsInRange()) {
+            matrixStackIn.push();
+            float f6 = (float)(crystal.getPosX() - MathHelper.lerp((double)partialTicks, entityIn.prevPosX, entityIn.getPosX()));
+            float f8 = (float)(crystal.getPosY() - MathHelper.lerp((double)partialTicks, entityIn.prevPosY, entityIn.getPosY()));
+            float f9 = (float)(crystal.getPosZ() - MathHelper.lerp((double)partialTicks, entityIn.prevPosZ, entityIn.getPosZ()));
+            EnderDragonRenderer.func_229059_a_(f6, f8 + SinCrystalRenderer.getDeltaY(crystal, partialTicks), f9, partialTicks, entityIn.ticksExisted, matrixStackIn, bufferIn, packedLightIn);
+            matrixStackIn.pop();
+        }
     }
 }

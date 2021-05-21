@@ -45,7 +45,7 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
         return super.shouldRender(livingEntityIn, camera, camX, camY, camZ) || livingEntityIn.getBeamTarget() != null;
     }
 
-    public float getDeltaY(SinCrystalEntity entity, float partialTicks) {
+    public static float getDeltaY(SinCrystalEntity entity, float partialTicks) {
         float f = (float)entity.innerRotation + partialTicks;
         float f1 = MathHelper.sin(f * 0.2F) / 2.0F + 0.5F;
         f1 = (f1 * f1 + f1) * 0.4F;
@@ -55,7 +55,7 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
     @Override
     public void render(SinCrystalEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
         matrixStackIn.push();
-        float deltaY = this.getDeltaY(entityIn, partialTicks);
+        float deltaY = getDeltaY(entityIn, partialTicks);
         float f1 = ((float)entityIn.innerRotation + partialTicks) * 3.0F;
         IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RENDER_TYPE);
         matrixStackIn.push();

@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagic.common.entities.misc;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.entities.ai.goals.LongDistanceRangedAttackGoal;
@@ -10,6 +14,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVehicle;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -51,9 +56,12 @@ import net.minecraftforge.event.ForgeEventFactory;
  */
 @OnlyIn(value = Dist.CLIENT, _interface = IChargeableMob.class)
 public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob, IChargeableMob {
+    protected static final double HEAL_RANGE = 16.0D;
+
     protected final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
     protected boolean isSuffocating = false;
     protected SpellPackage spellCache;
+    protected List<SinCrystalEntity> crystalsInRange = new ArrayList<>();
 
     public InnerDemonEntity(EntityType<? extends InnerDemonEntity> type, World worldIn) {
         super(type, worldIn);
@@ -120,6 +128,16 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
     @Override
     public boolean isCharged() {
         return true;
+    }
+
+    @Override
+    public void livingTick() {
+        // Detect nearby sin crystals and heal for each
+        this.crystalsInRange = EntityUtils.getEntitiesInRange(this.world, this.getPositionVec(), null, SinCrystalEntity.class, HEAL_RANGE);
+        if (!this.crystalsInRange.isEmpty() && this.ticksExisted % 10 == 0 && !this.world.isRemote) {
+            this.heal((float)this.crystalsInRange.size());
+        }
+        super.livingTick();
     }
 
     @Override
@@ -204,6 +222,11 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
     @Override
     public boolean canChangeDimension() {
         return false;
+    }
+    
+    @Nonnull
+    public List<SinCrystalEntity> getCrystalsInRange() {
+        return Collections.unmodifiableList(this.crystalsInRange);
     }
     
     public void doSinCrash() {
