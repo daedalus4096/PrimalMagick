@@ -105,7 +105,7 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
             
             // Render title text
             ITextComponent titleText = new TranslationTextComponent(this.project.getNameTranslationKey()).mergeStyle(TextFormatting.BOLD);
-            int titleWidth = mc.fontRenderer.getStringWidth(titleText.getString());
+            int titleWidth = mc.fontRenderer.getStringPropertyWidth(titleText);
             mc.fontRenderer.drawText(matrixStack, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
             y += (int)(mc.fontRenderer.FONT_HEIGHT * 1.66D);
             
