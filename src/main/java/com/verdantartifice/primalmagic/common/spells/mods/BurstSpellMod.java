@@ -77,6 +77,7 @@ public class BurstSpellMod extends AbstractSpellMod {
         return TYPE;
     }
 
+    @SuppressWarnings("deprecation")
     @Nonnull
     public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, @Nullable ItemStack spellSource, World world) {
         Set<RayTraceResult> retVal = new HashSet<>();

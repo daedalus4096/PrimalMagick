@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -30,8 +29,6 @@ public class IngredientWidget extends Widget {
 
     @Override
     public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        Minecraft mc = Minecraft.getInstance();
-        
         if (this.ingredient != null) {
             ItemStack[] matching = this.ingredient.getMatchingStacks();
             if (matching != null && matching.length > 0) {
