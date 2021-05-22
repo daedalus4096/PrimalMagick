@@ -61,7 +61,6 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
 
     protected final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
     protected boolean isSuffocating = false;
-    protected SpellPackage spellCache;
     protected List<SinCrystalEntity> crystalsInRange = new ArrayList<>();
 
     public InnerDemonEntity(EntityType<? extends InnerDemonEntity> type, World worldIn) {
@@ -102,23 +101,15 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
     }
     
     @Nonnull
-    protected SpellPackage createSpellPackage() {
+    protected SpellPackage getSpellPackage() {
         SpellPackage spell = new SpellPackage("Blood Ball");
         ProjectileSpellVehicle vehicle = new ProjectileSpellVehicle();
         spell.setVehicle(vehicle);
         BloodDamageSpellPayload payload = new BloodDamageSpellPayload();
-        payload.getProperty("power").setValue(4);
+        Difficulty difficulty = this.world.getDifficulty();
+        payload.getProperty("power").setValue(difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 5 : 3));
         spell.setPayload(payload);
-        spell.setPrimaryMod(new BurstSpellMod(2, 2));
         return spell;
-    }
-
-    @Nonnull
-    protected SpellPackage getSpellPackage() {
-        if (this.spellCache == null) {
-            this.spellCache = this.createSpellPackage();
-        }
-        return this.spellCache;
     }
 
     @Override
