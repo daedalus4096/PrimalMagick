@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntit
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
-import com.verdantartifice.primalmagic.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVehicle;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
