@@ -194,4 +194,20 @@ public class FxDispatcher {
             p.setColor(r, g, b);
         }
     }
+    
+    public void crucibleBubble(double x, double y, double z, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.crucibleBubble(x, y, z, r, g, b);
+    }
+    
+    public void crucibleBubble(double x, double y, double z, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particles.addParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
 }

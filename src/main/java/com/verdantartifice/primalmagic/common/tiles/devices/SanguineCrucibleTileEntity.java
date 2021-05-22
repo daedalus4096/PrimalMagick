@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.tiles.devices;
 
 import java.awt.Color;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -42,6 +43,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
     protected int souls;
     protected int fluidAmount;
     protected int charge;
+    protected int counter = 0;
     
     public SanguineCrucibleTileEntity() {
         super(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), 1);
@@ -71,6 +73,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
 
     @Override
     public void tick() {
+        this.counter++;
         if (this.fluidAmount < FLUID_CAPACITY) {
             this.fluidAmount++;
         }
@@ -173,6 +176,10 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
     
     public boolean hasCore() {
         return !this.items.get(0).isEmpty();
+    }
+    
+    public boolean showBubble(Random rand) {
+        return rand.nextBoolean() && this.counter % 5 == 0;
     }
     
     @Nullable

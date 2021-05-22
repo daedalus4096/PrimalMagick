@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.tiles.devices.SanguineCrucibleTileEntity;
 
@@ -64,6 +65,12 @@ public class SanguineCrucibleTER extends TileEntityRenderer<SanguineCrucibleTile
         World world = tileEntityIn.getWorld();
         Random rand = world.rand;
         BlockPos pos = tileEntityIn.getPos();
+        if (tileEntityIn.showBubble(rand)) {
+            double x = (double)pos.getX() + 0.2D + (rand.nextDouble() * 0.6D);
+            double y = (double)pos.getY() + (double)tileEntityIn.getFluidHeight();
+            double z = (double)pos.getZ() + 0.2D + (rand.nextDouble() * 0.6D);
+            FxDispatcher.INSTANCE.crucibleBubble(x, y, z, R, G, B);
+        }
         if (rand.nextDouble() < tileEntityIn.getSmokeChance()) {
             double x = (double)pos.getX() + 0.1D + (rand.nextDouble() * 0.8D);
             double y = (double)pos.getY() + 1.0D;
