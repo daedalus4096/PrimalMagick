@@ -46,7 +46,7 @@ public class ItemTagWidget extends Widget {
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
             Item[] tagContentsArray = tagContents.toArray(new Item[tagContents.size()]);
             ItemStack toDisplay = new ItemStack(tagContentsArray[index], 1);
-            GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
                 RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);

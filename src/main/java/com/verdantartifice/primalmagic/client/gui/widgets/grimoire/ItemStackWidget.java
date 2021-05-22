@@ -39,7 +39,7 @@ public class ItemStackWidget extends Widget {
         Minecraft mc = Minecraft.getInstance();
         
         // Draw stack icon
-        GuiUtils.renderItemStack(this.stack, this.x, this.y, this.getMessage().getString(), false);
+        GuiUtils.renderItemStack(matrixStack, this.stack, this.x, this.y, this.getMessage().getString(), false);
         
         // Draw amount string if applicable
         if (this.stack.getCount() > 1) {

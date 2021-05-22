@@ -43,7 +43,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
         Minecraft mc = Minecraft.getInstance();
         ItemStack toDisplay = this.getStackToDisplay();
         if (!toDisplay.isEmpty()) {
-            GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
             if (this.material.getQuantity() > 1) {
                 ITextComponent amountText = new StringTextComponent(Integer.toString(this.material.getQuantity()));
                 int width = mc.fontRenderer.getStringPropertyWidth(amountText);

@@ -44,7 +44,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class GuiUtils {
-    public static boolean renderItemStack(ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
+    public static boolean renderItemStack(MatrixStack matrixStack, ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
         boolean retVal = false;
         if (stack != null && !stack.isEmpty()) {
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -55,8 +55,8 @@ public class GuiUtils {
             boolean isLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
             boolean isRescaleNormalEnabled = GL11.glIsEnabled(32826);
             
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
+            matrixStack.push();
+            matrixStack.translate(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.enableRescaleNormal();
             RenderSystem.enableLighting();
@@ -67,7 +67,7 @@ public class GuiUtils {
                 itemRenderer.renderItemOverlayIntoGUI(mc.fontRenderer, stack, x, y, text);
             }
             
-            RenderSystem.popMatrix();
+            matrixStack.pop();
             
             // Return the lighting and rescale-normal attributes to their previous values
             if (isRescaleNormalEnabled) {

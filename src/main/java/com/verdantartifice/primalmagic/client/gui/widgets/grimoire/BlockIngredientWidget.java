@@ -41,7 +41,7 @@ public class BlockIngredientWidget extends Widget {
                 ItemStack toDisplay = (block != null) ? 
                         new ItemStack(block) : 
                         new ItemStack(Blocks.BARRIER).setDisplayName(new TranslationTextComponent("primalmagic.grimoire.missing_block"));
-                GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
+                GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
                 if (this.isHovered()) {
                     // If hovered, show a tooltip with the display name of the current matching itemstack
                     GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);

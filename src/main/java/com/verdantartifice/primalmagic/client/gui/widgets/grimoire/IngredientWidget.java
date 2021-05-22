@@ -38,7 +38,7 @@ public class IngredientWidget extends Widget {
                 // Cycle through each matching stack of the ingredient and display them one at a time
                 int index = (int)((System.currentTimeMillis() / 1000L) % matching.length);
                 ItemStack toDisplay = matching[index];
-                GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
+                GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
                 if (this.isHovered()) {
                     // If hovered, show a tooltip with the display name of the current matching itemstack
                     GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
