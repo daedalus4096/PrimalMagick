@@ -93,7 +93,6 @@ public class SpellBoltParticle extends Particle {
 
         RenderSystem.pushMatrix();
         RenderSystem.translated(this.posX - entityIn.getProjectedView().x, this.posY - entityIn.getProjectedView().y, this.posZ - entityIn.getProjectedView().z);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
         IVertexBuilder lineBuilder = buffer.getBuffer(ThickLinesRenderType.THICK_LINES);
@@ -110,7 +109,6 @@ public class SpellBoltParticle extends Particle {
         }
         buffer.finish(ThickLinesRenderType.THICK_LINES);
         
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableCull();
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         RenderSystem.disableBlend();

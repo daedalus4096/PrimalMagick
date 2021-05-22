@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.client.gui;
 import java.awt.Color;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
@@ -34,7 +33,6 @@ public class ResearchToast implements IToast {
     	
         // Render the toast background
     	mc.getTextureManager().bindTexture(TEXTURE);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         toastGui.blit(matrixStack, 0, 0, 0, 224, 160, 32);
         
         // Render the toast title text

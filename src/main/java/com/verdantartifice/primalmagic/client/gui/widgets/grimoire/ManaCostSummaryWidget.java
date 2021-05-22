@@ -44,7 +44,6 @@ public class ManaCostSummaryWidget extends Widget {
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.push();
         mc.getTextureManager().bindTexture(TEXTURE);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);

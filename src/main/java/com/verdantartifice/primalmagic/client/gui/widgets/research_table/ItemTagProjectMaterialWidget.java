@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 
@@ -47,7 +46,6 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
             if (this.material.getQuantity() > 1) {
                 ITextComponent amountText = new StringTextComponent(Integer.toString(this.material.getQuantity()));
                 int width = mc.fontRenderer.getStringPropertyWidth(amountText);
-                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 matrixStack.push();
                 matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
                 matrixStack.scale(0.5F, 0.5F, 0.5F);

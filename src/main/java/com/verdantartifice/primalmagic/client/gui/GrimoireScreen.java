@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.AbstractRecipePage;
@@ -225,7 +224,6 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render the grimoire background
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
 
         int unscaledLeft = (this.width - this.xSize) / 2;

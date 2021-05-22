@@ -102,6 +102,7 @@ public class AttunementPage extends AbstractPage {
             this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - MathHelper.clamp(p + i + t, 0, 100)), 0, 10, 10, MathHelper.clamp(t, 0, 100 - p - i));
 
             // Render meter foreground
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.blit(matrixStack, x + 52 + (side * 140), y + 9, 27, 9, 15, 102);
         }
 

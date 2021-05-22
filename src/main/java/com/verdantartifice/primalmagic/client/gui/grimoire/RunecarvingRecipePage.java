@@ -55,7 +55,6 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         
         // Render overlay background
         matrixStack.push();
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.translate(x + 16 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 68, 0.0F);

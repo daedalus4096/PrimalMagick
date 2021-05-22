@@ -207,7 +207,6 @@ public class SpellcraftingAltarScreen extends ContainerScreen<SpellcraftingAltar
 
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         
         // Render the GUI background

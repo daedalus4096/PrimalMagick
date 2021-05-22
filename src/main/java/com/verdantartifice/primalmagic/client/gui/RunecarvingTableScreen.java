@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.client.gui;
 import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.containers.RunecarvingTableContainer;
@@ -55,7 +54,6 @@ public class RunecarvingTableScreen extends ContainerScreen<RunecarvingTableCont
 
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         int i = this.guiLeft;
         int j = this.guiTop;

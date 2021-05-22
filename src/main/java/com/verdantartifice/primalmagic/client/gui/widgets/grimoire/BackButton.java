@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
@@ -40,7 +39,6 @@ public class BackButton extends Button {
     public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(TEXTURE);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         if (this.isHovered()) {
             // When hovered, scale the button up and down to create a pulsing effect
             float scaleMod = MathHelper.sin(mc.player.ticksExisted / 3.0F) * 0.2F + 0.1F;

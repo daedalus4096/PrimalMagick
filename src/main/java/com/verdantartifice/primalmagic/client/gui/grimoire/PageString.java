@@ -33,7 +33,6 @@ public class PageString implements IPageElement {
     	Minecraft mc = Minecraft.getInstance();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         mc.fontRenderer.drawString(matrixStack, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB());
     }
 

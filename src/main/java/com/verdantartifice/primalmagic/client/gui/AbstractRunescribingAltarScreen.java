@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.client.gui;
 import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.common.containers.AbstractRunescribingAltarContainer;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -37,7 +36,6 @@ public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescri
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(this.getTextureLocation());
         this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }

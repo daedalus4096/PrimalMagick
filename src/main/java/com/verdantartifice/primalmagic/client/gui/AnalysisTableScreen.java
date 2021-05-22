@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.client.gui;
 import java.awt.Color;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
@@ -53,7 +52,6 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
 
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }

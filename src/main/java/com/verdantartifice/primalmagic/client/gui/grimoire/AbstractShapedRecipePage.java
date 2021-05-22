@@ -68,7 +68,6 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         
         // Render overlay background
         matrixStack.push();
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.translate(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);

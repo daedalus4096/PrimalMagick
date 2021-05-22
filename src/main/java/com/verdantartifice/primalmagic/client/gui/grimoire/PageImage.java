@@ -56,7 +56,6 @@ public class PageImage extends AbstractGui implements IPageElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.push();
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft.getInstance().getTextureManager().bindTexture(this.location);
         matrixStack.translate(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
         matrixStack.scale(this.scale, this.scale, this.scale);

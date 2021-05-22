@@ -47,7 +47,6 @@ public class GuiUtils {
     public static boolean renderItemStack(MatrixStack matrixStack, ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
         boolean retVal = false;
         if (stack != null && !stack.isEmpty()) {
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             
@@ -57,7 +56,6 @@ public class GuiUtils {
             
             matrixStack.push();
             matrixStack.translate(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.enableRescaleNormal();
             RenderSystem.enableLighting();
             
@@ -288,7 +286,6 @@ public class GuiUtils {
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
         matrixStack.push();
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         // Render the source's icon
         @SuppressWarnings("deprecation")
@@ -308,7 +305,6 @@ public class GuiUtils {
             matrixStack.push();
             matrixStack.translate(0.0D, 0.0D, z + 1.0D);
             matrixStack.scale(0.5F, 0.5F, 1.0F);
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
             mc.fontRenderer.drawString(matrixStack, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.fontRenderer.FONT_HEIGHT + (y * 2)), Color.WHITE.getRGB());
@@ -316,7 +312,6 @@ public class GuiUtils {
         }
         
         // Restore changed GL attributes
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         if (!isBlendOn) {
             RenderSystem.disableBlend();
         }

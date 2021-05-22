@@ -42,8 +42,6 @@ public class ResearchWidget extends Widget {
     
     @Override
     public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        
         // Pick the icon to show based on the prefix of the research key
         ResourceLocation loc;
         if (this.key.getRootKey().startsWith("m_")) {
@@ -68,7 +66,6 @@ public class ResearchWidget extends Widget {
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.push();
             matrixStack.translate(this.x + 8, this.y, 100.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);

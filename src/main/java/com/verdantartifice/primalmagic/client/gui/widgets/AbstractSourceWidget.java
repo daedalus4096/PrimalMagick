@@ -47,7 +47,6 @@ public abstract class AbstractSourceWidget extends Widget {
         } else {
             mc.getTextureManager().bindTexture(Source.getUnknownImage());
         }
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
@@ -57,7 +56,6 @@ public abstract class AbstractSourceWidget extends Widget {
         matrixStack.push();
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.amount));
         int width = mc.fontRenderer.getStringWidth(amountText.getString());
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
         matrixStack.scale(0.5F, 0.5F, 0.5F);
         mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());

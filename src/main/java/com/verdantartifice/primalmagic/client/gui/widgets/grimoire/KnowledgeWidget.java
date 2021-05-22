@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Collections;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.research.Knowledge;
@@ -40,7 +39,6 @@ public class KnowledgeWidget extends Widget {
     public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.push();
         
         // Draw knowledge type icon
@@ -54,7 +52,6 @@ public class KnowledgeWidget extends Widget {
         // Draw amount str
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.knowledge.getAmount()));
         int width = mc.fontRenderer.getStringWidth(amountText.getString());
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.push();
         matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
         matrixStack.scale(0.5F, 0.5F, 0.5F);
@@ -63,7 +60,6 @@ public class KnowledgeWidget extends Widget {
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.push();
             matrixStack.translate(this.x + 8, this.y, 100.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);

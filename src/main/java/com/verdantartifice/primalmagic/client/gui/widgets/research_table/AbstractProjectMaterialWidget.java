@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
@@ -40,7 +39,6 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
         Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
         if (this.complete) {
             // Render completion checkmark if appropriate
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.push();
             matrixStack.translate(this.x + 8, this.y, 200.0F);
             this.blit(matrixStack, 0, 0, 162, 0, 10, 10);
@@ -48,7 +46,6 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
         }
         if (this.consumed) {
             // Render consumption exclamation point if appropriate
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.push();
             matrixStack.translate(this.x - 3, this.y, 200.0F);
             this.blit(matrixStack, 0, 0, 172, 0, 10, 10);

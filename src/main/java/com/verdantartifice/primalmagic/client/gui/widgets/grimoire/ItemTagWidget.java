@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 import java.util.Collection;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
@@ -49,7 +48,6 @@ public class ItemTagWidget extends Widget {
             GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
-                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 matrixStack.push();
                 matrixStack.translate(this.x + 8, this.y, 200.0F);
                 Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
