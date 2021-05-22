@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.client.gui;
 
-import java.util.Collections;
 import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
