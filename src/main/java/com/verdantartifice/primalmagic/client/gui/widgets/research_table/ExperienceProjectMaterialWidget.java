@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
 import java.awt.Color;
+import java.util.Collections;
+import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -92,7 +94,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
     }
     
     @Override
-    protected ITextComponent getHoverText() {
-        return new TranslationTextComponent("argument.entity.options.level.description");
+    protected List<ITextComponent> getHoverText() {
+        return Collections.singletonList(new TranslationTextComponent("argument.entity.options.level.description"));
     }
 }

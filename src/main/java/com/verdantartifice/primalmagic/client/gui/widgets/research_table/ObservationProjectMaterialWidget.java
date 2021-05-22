@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
@@ -40,7 +43,7 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     }
     
     @Override
-    protected ITextComponent getHoverText() {
-        return new TranslationTextComponent(IPlayerKnowledge.KnowledgeType.OBSERVATION.getNameTranslationKey());
+    protected List<ITextComponent> getHoverText() {
+        return Collections.singletonList(new TranslationTextComponent(IPlayerKnowledge.KnowledgeType.OBSERVATION.getNameTranslationKey()));
     }
 }

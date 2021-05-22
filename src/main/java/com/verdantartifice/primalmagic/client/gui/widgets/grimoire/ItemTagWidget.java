@@ -61,8 +61,7 @@ public class ItemTagWidget extends Widget {
             }
             if (this.isHovered()) {
                 // If hovered, show a tooltip with the display name of the current matching itemstack
-                List<ITextComponent> textList = Collections.singletonList(toDisplay.getDisplayName().deepCopy().mergeStyle(toDisplay.getItem().getRarity(toDisplay).color));
-                GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
+                GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
             }
         }
     }

@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -13,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -48,8 +44,7 @@ public class BlockIngredientWidget extends Widget {
                 GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
                 if (this.isHovered()) {
                     // If hovered, show a tooltip with the display name of the current matching itemstack
-                    List<ITextComponent> textList = Collections.singletonList(toDisplay.getDisplayName().deepCopy().mergeStyle(toDisplay.getItem().getRarity(toDisplay).color));
-                    GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
+                    GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
                 }
             }
         }

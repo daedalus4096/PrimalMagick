@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.text.ITextComponent;
@@ -33,6 +36,8 @@ public class IngredientWidget extends Widget {
 
     @Override
     public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        Minecraft mc = Minecraft.getInstance();
+        
         if (this.ingredient != null) {
             ItemStack[] matching = this.ingredient.getMatchingStacks();
             if (matching != null && matching.length > 0) {
@@ -42,8 +47,7 @@ public class IngredientWidget extends Widget {
                 GuiUtils.renderItemStack(toDisplay, this.x, this.y, this.getMessage().getString(), false);
                 if (this.isHovered()) {
                     // If hovered, show a tooltip with the display name of the current matching itemstack
-                    List<ITextComponent> textList = Collections.singletonList(toDisplay.getDisplayName().deepCopy().mergeStyle(toDisplay.getItem().getRarity(toDisplay).color));
-                    GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
+                    GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
                 }
             }
         }

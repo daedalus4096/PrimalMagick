@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -11,6 +13,7 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ITag;
@@ -58,8 +61,13 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
     }
     
     @Override
-    protected ITextComponent getHoverText() {
-        return this.getStackToDisplay().getDisplayName();
+    protected List<ITextComponent> getHoverText() {
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack stack = this.getStackToDisplay();
+        List<ITextComponent> textList = new ArrayList<>();
+        textList.add(stack.getDisplayName().deepCopy().mergeStyle(stack.getItem().getRarity(stack).color));
+        stack.getItem().addInformation(stack, mc.world, textList, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+        return textList;
     }
 
     @Nonnull

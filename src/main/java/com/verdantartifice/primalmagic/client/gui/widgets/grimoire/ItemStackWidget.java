@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import java.awt.Color;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -66,8 +67,7 @@ public class ItemStackWidget extends Widget {
         }
         if (this.isHovered()) {
             // Render tooltip
-            List<ITextComponent> textList = Collections.singletonList(this.stack.getDisplayName().deepCopy().mergeStyle(this.stack.getItem().getRarity(this.stack).color));
-            GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
+            GuiUtils.renderItemTooltip(matrixStack, this.stack, this.x, this.y);
         }
     }
     

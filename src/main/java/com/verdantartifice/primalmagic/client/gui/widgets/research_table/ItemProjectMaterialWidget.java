@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -8,6 +10,8 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -48,7 +52,12 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget {
     }
     
     @Override
-    protected ITextComponent getHoverText() {
-        return this.material.getItemStack().getDisplayName();
+    protected List<ITextComponent> getHoverText() {
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack stack = this.material.getItemStack();
+        List<ITextComponent> textList = new ArrayList<>();
+        textList.add(stack.getDisplayName().deepCopy().mergeStyle(stack.getItem().getRarity(stack).color));
+        stack.getItem().addInformation(stack, mc.world, textList, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+        return textList;
     }
 }

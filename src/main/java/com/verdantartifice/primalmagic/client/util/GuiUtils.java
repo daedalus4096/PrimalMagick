@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IReorderingProcessor;
@@ -83,6 +84,14 @@ public class GuiUtils {
             retVal = true;
         }
         return retVal;
+    }
+    
+    public static void renderItemTooltip(MatrixStack matrixStack, ItemStack stack, int x, int y) {
+        Minecraft mc = Minecraft.getInstance();
+        List<ITextComponent> textList = new ArrayList<>();
+        textList.add(stack.getDisplayName().deepCopy().mergeStyle(stack.getItem().getRarity(stack).color));
+        stack.getItem().addInformation(stack, mc.world, textList, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+        GuiUtils.renderCustomTooltip(matrixStack, textList, x, y);
     }
     
     public static void renderCustomTooltip(MatrixStack matrixStack, List<ITextComponent> textList, int x, int y) {

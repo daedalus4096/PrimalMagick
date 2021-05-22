@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
-import java.util.Collections;
 import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -57,8 +56,7 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
         }
         if (this.isHovered()) {
             // Render tooltip
-            List<ITextComponent> textList = Collections.singletonList(this.getHoverText());
-            GuiUtils.renderCustomTooltip(matrixStack, textList, this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, this.getHoverText(), this.x, this.y);
         }
     }
     
@@ -67,7 +65,7 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
      * 
      * @return the text component to show in a tooltip
      */
-    protected abstract ITextComponent getHoverText();
+    protected abstract List<ITextComponent> getHoverText();
     
     @Override
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
