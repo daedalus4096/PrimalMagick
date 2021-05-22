@@ -25,12 +25,15 @@ import com.verdantartifice.primalmagic.common.init.InitRunes;
 import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
+import com.verdantartifice.primalmagic.common.misc.DispenseLazySpawnEggBehavior;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.command.arguments.ArgumentSerializer;
 import net.minecraft.command.arguments.ArgumentTypes;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -88,11 +91,21 @@ public class CommonProxy implements IProxyPM {
         ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "attunement_value")).toString(), AttunementValueArgument.class, new ArgumentSerializer<>(AttunementValueArgument::value));
         
         this.registerEntityPlacements(event);
+        this.registerDispenserBehaviors(event);
     }
     
     private void registerEntityPlacements(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             EntitySpawnPlacementRegistry.register(EntityTypesPM.TREEFOLK.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TreefolkEntity::canSpawnOn);
+        });
+    }
+    
+    private void registerDispenserBehaviors(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            DispenseLazySpawnEggBehavior eggBehavior = new DispenseLazySpawnEggBehavior();
+            for (LazySpawnEggItem egg : LazySpawnEggItem.getEggs()) {
+                DispenserBlock.registerDispenseBehavior(egg, eggBehavior);
+            }
         });
     }
 
