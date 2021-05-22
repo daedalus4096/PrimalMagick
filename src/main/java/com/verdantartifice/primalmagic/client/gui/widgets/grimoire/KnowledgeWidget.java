@@ -49,7 +49,7 @@ public class KnowledgeWidget extends Widget {
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         // Draw amount str
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.knowledge.getAmount()));
