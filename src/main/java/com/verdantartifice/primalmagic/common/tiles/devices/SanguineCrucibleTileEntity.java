@@ -84,7 +84,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
                     this.souls -= core.getSoulsPerSpawn();
                     
                     if (!this.world.isRemote) {
-                        if (this.getStackInSlot(0).attemptDamageItem(1, this.world.rand, null)) {
+                        if (!this.getStackInSlot(0).isDamageable() || this.getStackInSlot(0).attemptDamageItem(1, this.world.rand, null)) {
                             this.getStackInSlot(0).shrink(1);
                             this.world.setBlockState(this.pos, this.world.getBlockState(pos).with(SanguineCrucibleBlock.LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
                         }

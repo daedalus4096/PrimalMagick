@@ -888,6 +888,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("t_flying_creature").requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 3).recipe(ItemsPM.FLYING_CARPET.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("CLEANSING_RITE", discipline).parent("MASTER_RITUAL").parent("SANGUINE_CRUCIBLE").parent("RUNE_SUMMON").parent("RUNE_SELF").parent("RUNE_POWER").parent("RITUAL_CANDLES")
+            .parent("RITUAL_BELL").parent("RITUAL_LECTERN").parent("BLOODLETTER").parent("SOUL_ANVIL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {

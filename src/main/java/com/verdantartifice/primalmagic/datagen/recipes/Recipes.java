@@ -3511,5 +3511,23 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.APPLE)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_PLANTS")))
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.NETHER_STARS)
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_VOID.get())
+            .addIngredient(ItemsPM.RUNE_SUMMON.get())
+            .addIngredient(ItemsPM.RUNE_SELF.get())
+            .addIngredient(ItemsPM.RUNE_POWER.get(), 2)
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.RITUAL_BELL.get())
+            .addProp(BlocksPM.RITUAL_LECTERN.get())
+            .addProp(BlocksPM.BLOODLETTER.get())
+            .addProp(BlocksPM.SOUL_ANVIL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CLEANSING_RITE")))
+            .manaCost(new SourceList().add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100))
+            .instability(7)
+            .build(consumer);
     }
 }

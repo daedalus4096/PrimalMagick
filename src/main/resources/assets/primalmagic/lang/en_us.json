@@ -473,6 +473,7 @@
     "item.primalmagic.sanguine_core_zombie_villager": "Sanguine Core: Zombie Villager",
     "item.primalmagic.sanguine_core_zombified_piglin": "Sanguine Core: Zombified Piglin",
     "item.primalmagic.sanguine_core_treefolk": "Sanguine Core: Treefolk",
+    "item.primalmagic.sanguine_core_inner_demon": "Sanguine Core: Inner Demon",
     
     "entity.primalmagic.treefolk": "Treefolk",
     "entity.primalmagic.inner_demon": "Inner Demon",
@@ -1265,6 +1266,10 @@
     "primalmagic.research.flying_carpet.title": "Flying Carpet",
     "primalmagic.research.flying_carpet.text.stage.1": "Flying carpet: Lorem ipsum",
     "primalmagic.research.flying_carpet.text.stage.2": "Flying carpet research complete!",
+    
+    "primalmagic.research.cleansing_rite.title": "Cleansing Rite",
+    "primalmagic.research.cleansing_rite.text.stage.1": "Cleansing rite: Lorem ipsum",
+    "primalmagic.research.cleansing_rite.text.stage.2": "Cleansing rite research complete!",
     
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",

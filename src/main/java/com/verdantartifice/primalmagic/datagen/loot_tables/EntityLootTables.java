@@ -115,6 +115,8 @@ public class EntityLootTables implements IDataProvider {
         this.registerEmptyLootTable(EntityTypesPM.SPELL_MINE.get());
         this.registerEmptyLootTable(EntityTypesPM.SPELL_PROJECTILE.get());
         this.registerEmptyLootTable(EntityTypesPM.APPLE.get());
+        this.registerEmptyLootTable(EntityTypesPM.SIN_CRASH.get());
+        this.registerEmptyLootTable(EntityTypesPM.SIN_CRYSTAL.get());
         this.registerEmptyLootTable(EntityTypesPM.FLYING_CARPET.get());
         this.registerLootTable(EntityTypesPM.TREEFOLK.get(), LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(ItemsPM.HEARTWOOD.get()).acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 1.0F))).acceptFunction(Smelt.func_215953_b().acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE))).acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F))))));
         this.registerEmptyLootTable(EntityTypesPM.INNER_DEMON.get());   // Loot dropped by Inner Demons is special

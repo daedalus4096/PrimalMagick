@@ -1,0 +1,32 @@
+{
+  "key": "CLEANSING_RITE",
+  "name": "primalmagic.research.cleansing_rite.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "MASTER_RITUAL",
+    "SANGUINE_CRUCIBLE",
+    "RUNE_SUMMON",
+    "RUNE_SELF",
+    "RUNE_POWER",
+    "RITUAL_CANDLES",
+    "RITUAL_BELL",
+    "RITUAL_LECTERN",
+    "BLOODLETTER",
+    "SOUL_ANVIL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.cleansing_rite.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagic.research.cleansing_rite.text.stage.2",
+      "recipes": [
+        "primalmagic:sanguine_core_inner_demon"
+      ]
+    }
+  ],
+  "addenda": []
+}

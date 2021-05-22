@@ -520,6 +520,7 @@ public class ItemsPM {
     public static final RegistryObject<SanguineCoreItem> SANGUINE_CORE_ZOMBIE_VILLAGER = ITEMS.register("sanguine_core_zombie_villager", () -> new SanguineCoreItem(() -> EntityType.ZOMBIE_VILLAGER, 4, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).maxDamage(15)));
     public static final RegistryObject<SanguineCoreItem> SANGUINE_CORE_ZOMBIFIED_PIGLIN = ITEMS.register("sanguine_core_zombified_piglin", () -> new SanguineCoreItem(() -> EntityType.ZOMBIFIED_PIGLIN, 4, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).maxDamage(15)));
     public static final RegistryObject<SanguineCoreItem> SANGUINE_CORE_TREEFOLK = ITEMS.register("sanguine_core_treefolk", () -> new SanguineCoreItem(() -> EntityTypesPM.TREEFOLK.get(), 4, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).maxDamage(15)));
+    public static final RegistryObject<SanguineCoreItem> SANGUINE_CORE_INNER_DEMON = ITEMS.register("sanguine_core_inner_demon", () -> new SanguineCoreItem(() -> EntityTypesPM.INNER_DEMON.get(), 64, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).maxDamage(0).maxStackSize(1)));
 
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
