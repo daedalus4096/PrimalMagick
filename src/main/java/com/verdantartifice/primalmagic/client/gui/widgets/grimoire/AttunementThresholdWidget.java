@@ -63,12 +63,12 @@ public class AttunementThresholdWidget extends Widget {
             mc.getItemRenderer().renderItemIntoGUI(WAND_STACK, this.x + 1, this.y + 1);
         } else {
             // Render the icon appropriate for this widget's source and threshold
-            RenderSystem.pushMatrix();
+            matrixStack.push();
             mc.getTextureManager().bindTexture(this.texture);
-            RenderSystem.translatef(this.x, this.y, 0.0F);
-            RenderSystem.scaled(0.0703125D, 0.0703125D, 0.0703125D);
+            matrixStack.translate(this.x, this.y, 0.0F);
+            matrixStack.scale(0.0703125F, 0.0703125F, 0.0703125F);
             this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         
         if (this.isHovered()) {

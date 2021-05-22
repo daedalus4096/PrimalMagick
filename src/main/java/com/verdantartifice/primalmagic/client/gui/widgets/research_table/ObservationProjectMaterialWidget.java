@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
 
@@ -32,11 +31,11 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw observation icon
         Minecraft.getInstance().getTextureManager().bindTexture(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
-        RenderSystem.pushMatrix();
-        RenderSystem.translatef(this.x, this.y, 0.0F);
-        RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
+        matrixStack.push();
+        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         // Draw base class stuff
         super.renderWidget(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);

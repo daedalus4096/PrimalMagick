@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
@@ -75,11 +74,11 @@ public class RuneEnchantmentPage extends AbstractPage {
             y += 77;
             
             Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
+            matrixStack.push();
+            matrixStack.translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
             this.blit(matrixStack, 0, 0, 0, 51, overlayWidth, overlayHeight);
             this.blit(matrixStack, 32, 0, 0, 51, overlayWidth, overlayHeight);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         } else {
             y += 25;
         }

@@ -55,13 +55,13 @@ public class PageImage extends AbstractGui implements IPageElement {
         // Render the image at this element's resource location to the screen
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft.getInstance().getTextureManager().bindTexture(this.location);
-        RenderSystem.translatef(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
-        RenderSystem.scalef(this.scale, this.scale, this.scale);
+        matrixStack.translate(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
+        matrixStack.scale(this.scale, this.scale, this.scale);
         this.blit(matrixStack, 0, 0, this.x, this.y, this.width, this.height);
-        RenderSystem.popMatrix();
+        matrixStack.pop();
     }
 
     @Override

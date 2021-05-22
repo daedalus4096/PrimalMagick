@@ -40,11 +40,11 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget {
             ITextComponent amountText = new StringTextComponent(Integer.toString(this.material.getItemStack().getCount()));
             int width = mc.fontRenderer.getStringPropertyWidth(amountText);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 500.0F);
-            RenderSystem.scaled(0.5D, 0.5D, 0.5D);
+            matrixStack.push();
+            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
+            matrixStack.scale(0.5F, 0.5F, 0.5F);
             mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         
         // Draw base class stuff

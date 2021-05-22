@@ -136,10 +136,10 @@ public class RequirementsPage extends AbstractPage {
         this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
         y += 53;
         
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.translatef(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
+        matrixStack.translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft mc = Minecraft.getInstance();
         
@@ -175,6 +175,6 @@ public class RequirementsPage extends AbstractPage {
             y += 18;    // Make room for research widgets
         }
         
-        RenderSystem.popMatrix();
+        matrixStack.pop();
     }
 }

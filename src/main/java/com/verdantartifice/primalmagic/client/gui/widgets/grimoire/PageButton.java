@@ -50,13 +50,13 @@ public class PageButton extends Button {
         if (this.isHovered()) {
             // When hovered, scale the button up and down to create a pulsing effect
             float scaleMod = MathHelper.sin(mc.player.ticksExisted / 3.0F) * 0.2F + 0.1F;
-            RenderSystem.pushMatrix();
+            matrixStack.push();
             int dx = this.width / 2;
             int dy = this.height / 2;
-            RenderSystem.translatef(this.x + dx, this.y + dy, 0.0F);
-            RenderSystem.scalef(1.0F + scaleMod, 1.0F + scaleMod, 1.0F);
+            matrixStack.translate(this.x + dx, this.y + dy, 0.0F);
+            matrixStack.scale(1.0F + scaleMod, 1.0F + scaleMod, 1.0F);
             this.blit(matrixStack, -dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         } else {
             this.blit(matrixStack, this.x, this.y, this.isNext ? 12 : 0, 185, this.width, this.height);
         }

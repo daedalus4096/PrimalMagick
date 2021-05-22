@@ -99,10 +99,10 @@ public class RitualRecipePage extends AbstractRecipePage {
         super.render(matrixStack, side, x, y, mouseX, mouseY);
         y += 79;
         
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.translatef(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
+        matrixStack.translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft mc = Minecraft.getInstance();
 
@@ -132,6 +132,6 @@ public class RitualRecipePage extends AbstractRecipePage {
         mc.fontRenderer.drawText(matrixStack, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
         y += mc.fontRenderer.FONT_HEIGHT;
 
-        RenderSystem.popMatrix();
+        matrixStack.pop();
     }
 }

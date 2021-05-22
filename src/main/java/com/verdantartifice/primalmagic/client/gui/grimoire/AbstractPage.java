@@ -73,29 +73,29 @@ public abstract class AbstractPage extends AbstractGui {
         if (width <= 124) {
             mc.fontRenderer.drawText(matrixStack, headerText, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB());
             if (icon != null) {
-                RenderSystem.pushMatrix();
-                RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21, 0.0F);
-                RenderSystem.scalef(0.06F, 0.06F, 0.06F);
+                matrixStack.push();
+                matrixStack.translate(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21, 0.0F);
+                matrixStack.scale(0.06F, 0.06F, 0.06F);
                 mc.getTextureManager().bindTexture(icon);
                 this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-                RenderSystem.popMatrix();
+                matrixStack.pop();
             }
         } else {
             // Scale down the title text if necessary to make it fit on one line
             float scale = 124.0F / width;
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
-            RenderSystem.scalef(scale, scale, scale);
+            matrixStack.push();
+            matrixStack.translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
+            matrixStack.scale(scale, scale, scale);
             mc.fontRenderer.drawText(matrixStack, headerText, 0, 0, Color.BLACK.getRGB());
             if (icon != null) {
-                RenderSystem.pushMatrix();
-                RenderSystem.translatef(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21, 0.0F);
-                RenderSystem.scalef(0.06F, 0.06F, 0.06F);
+                matrixStack.push();
+                matrixStack.translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21, 0.0F);
+                matrixStack.scale(0.06F, 0.06F, 0.06F);
                 mc.getTextureManager().bindTexture(icon);
                 this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-                RenderSystem.popMatrix();
+                matrixStack.pop();
             }
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
     }
 }

@@ -45,19 +45,19 @@ public class KnowledgeTotalWidget extends Widget {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         // Draw knowledge type icon
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         mc.getTextureManager().bindTexture(this.type.getIconLocation());
-        RenderSystem.translatef(this.x, this.y, 0.0F);
-        RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
+        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);        
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         // Draw progress bar background
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         mc.getTextureManager().bindTexture(TEXTURE);
-        RenderSystem.translatef(this.x, this.y + 17, 0.0F);
+        matrixStack.translate(this.x, this.y + 17, 0.0F);
         this.blit(matrixStack, 0, 0, 182, 2, 16, 2);
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         if (this.knowledge != null) {
             // Draw amount str
@@ -65,21 +65,21 @@ public class KnowledgeTotalWidget extends Widget {
             ITextComponent amountText = new StringTextComponent(Integer.toString(levels));
             int width = mc.fontRenderer.getStringPropertyWidth(amountText);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
-            RenderSystem.scaled(0.5D, 0.5D, 0.5D);
+            matrixStack.push();
+            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
+            matrixStack.scale(0.5F, 0.5F, 0.5F);
             mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-            RenderSystem.popMatrix();
+            matrixStack.pop();
             
             // Draw progress bar foreground
             int rawPoints = this.knowledge.getKnowledgeRaw(this.type);
             int levelPoints = rawPoints % this.type.getProgression();
             int px = (int)(16.0D * ((double)levelPoints / (double)this.type.getProgression()));
-            RenderSystem.pushMatrix();
+            matrixStack.push();
             mc.getTextureManager().bindTexture(TEXTURE);
-            RenderSystem.translatef(this.x, this.y + 17, 1.0F);
+            matrixStack.translate(this.x, this.y + 17, 1.0F);
             this.blit(matrixStack, 0, 0, 182, 0, px, 2);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         
         if (this.isHovered()) {

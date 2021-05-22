@@ -233,11 +233,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         float scaledLeft = (this.width - this.xSize * SCALE) / 2.0F;
         float scaledTop = (this.height - this.ySize * SCALE) / 2.0F;
 
-        RenderSystem.pushMatrix();
-        RenderSystem.translatef(scaledLeft, scaledTop, 0.0F);
-        RenderSystem.scalef(SCALE, SCALE, 1.0F);
+        matrixStack.push();
+        matrixStack.translate(scaledLeft, scaledTop, 0.0F);
+        matrixStack.scale(SCALE, SCALE, 1.0F);
         this.blit(matrixStack, 0, 0, 0, 0, this.xSize, this.ySize);
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         // Render the two visible pages
         int current = 0;

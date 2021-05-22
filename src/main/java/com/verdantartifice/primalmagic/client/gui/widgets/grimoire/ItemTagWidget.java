@@ -50,11 +50,11 @@ public class ItemTagWidget extends Widget {
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
                 RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                RenderSystem.pushMatrix();
-                RenderSystem.translatef(this.x + 8, this.y, 200.0F);
+                matrixStack.push();
+                matrixStack.translate(this.x + 8, this.y, 200.0F);
                 Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
                 this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-                RenderSystem.popMatrix();
+                matrixStack.pop();
             }
             if (this.isHovered()) {
                 // If hovered, show a tooltip with the display name of the current matching itemstack

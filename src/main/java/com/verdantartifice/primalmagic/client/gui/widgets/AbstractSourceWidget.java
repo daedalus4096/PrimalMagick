@@ -41,27 +41,27 @@ public abstract class AbstractSourceWidget extends Widget {
         // Draw the colored source icon
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         if (discovered) {
             mc.getTextureManager().bindTexture(this.source.getImage());
         } else {
             mc.getTextureManager().bindTexture(Source.getUnknownImage());
         }
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.translatef(this.x, this.y, 0.0F);
-        RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
+        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         // Draw the amount string
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.amount));
         int width = mc.fontRenderer.getStringWidth(amountText.getString());
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
-        RenderSystem.scaled(0.5D, 0.5D, 0.5D);
+        matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
+        matrixStack.scale(0.5F, 0.5F, 0.5F);
         mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         // Draw the tooltip if applicable
         if (this.isHovered()) {

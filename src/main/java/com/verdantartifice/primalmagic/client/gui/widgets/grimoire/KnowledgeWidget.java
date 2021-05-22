@@ -41,12 +41,12 @@ public class KnowledgeWidget extends Widget {
         Minecraft mc = Minecraft.getInstance();
         
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         
         // Draw knowledge type icon
         mc.getTextureManager().bindTexture(this.knowledge.getType().getIconLocation());
-        RenderSystem.translatef(this.x, this.y, 0.0F);
-        RenderSystem.scaled(0.0625D, 0.0625D, 0.0625D);
+        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         
         RenderSystem.popMatrix();
@@ -55,20 +55,20 @@ public class KnowledgeWidget extends Widget {
         ITextComponent amountText = new StringTextComponent(Integer.toString(this.knowledge.getAmount()));
         int width = mc.fontRenderer.getStringWidth(amountText.getString());
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.pushMatrix();
-        RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
-        RenderSystem.scaled(0.5D, 0.5D, 0.5D);
+        matrixStack.push();
+        matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
+        matrixStack.scale(0.5F, 0.5F, 0.5F);
         mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x + 8, this.y, 100.0F);
+            matrixStack.push();
+            matrixStack.translate(this.x + 8, this.y, 100.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         
         if (this.isHovered()) {

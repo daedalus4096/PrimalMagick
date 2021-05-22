@@ -47,11 +47,11 @@ public class ResearchToast implements IToast {
         if (width > 148.0F) {
             // Scale down the research description to make it fit, if needed
             float scale = (148.0F / width);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(6.0F, 18.0F, 0.0F);
-            RenderSystem.scalef(scale, scale, scale);
+            matrixStack.push();
+            matrixStack.translate(6.0F, 18.0F, 0.0F);
+            matrixStack.scale(scale, scale, scale);
             mc.fontRenderer.drawText(matrixStack, descText, 0, 0, Color.BLACK.getRGB());
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         } else {
         	mc.fontRenderer.drawText(matrixStack, descText, 6, 18, Color.BLACK.getRGB());
         }

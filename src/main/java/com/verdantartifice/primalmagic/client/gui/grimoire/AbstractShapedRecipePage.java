@@ -67,13 +67,13 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
         
         // Render overlay background
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.translatef(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);
-        RenderSystem.scalef(2.0F, 2.0F, 1.0F);
+        matrixStack.translate(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);
+        matrixStack.scale(2.0F, 2.0F, 1.0F);
         this.blit(matrixStack, -(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight);
-        RenderSystem.popMatrix();
+        matrixStack.pop();
     }
 }

@@ -41,18 +41,18 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
         if (this.complete) {
             // Render completion checkmark if appropriate
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x + 8, this.y, 200.0F);
+            matrixStack.push();
+            matrixStack.translate(this.x + 8, this.y, 200.0F);
             this.blit(matrixStack, 0, 0, 162, 0, 10, 10);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         if (this.consumed) {
             // Render consumption exclamation point if appropriate
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x - 3, this.y, 200.0F);
+            matrixStack.push();
+            matrixStack.translate(this.x - 3, this.y, 200.0F);
             this.blit(matrixStack, 0, 0, 172, 0, 10, 10);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         if (this.isHovered()) {
             // Render tooltip

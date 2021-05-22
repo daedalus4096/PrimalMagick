@@ -47,7 +47,7 @@ public class GuiUtils {
     public static boolean renderItemStack(ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
         boolean retVal = false;
         if (stack != null && !stack.isEmpty()) {
-            RenderSystem.color3f(1.0F, 1.0F, 1.0F);
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             
@@ -172,21 +172,21 @@ public class GuiUtils {
 
         // Render the tooltip text
         for (int i = 0; i < parsedList.size(); i++) {
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(sX, sY, 0.0F);
+            matrixStack.push();
+            matrixStack.translate(sX, sY, 0.0F);
             
             IReorderingProcessor str = parsedList.get(i);
             
-            RenderSystem.pushMatrix();
+            matrixStack.push();
             sY += mc.fontRenderer.FONT_HEIGHT;
-            RenderSystem.translatef(0.0F, 0.0F, 301.0F);
+            matrixStack.translate(0.0F, 0.0F, 301.0F);
             mc.fontRenderer.drawTextWithShadow(matrixStack, str, 0.0F, 0.0F, -1);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
             if (i == 0) {
                 sY += 2;
             }
             
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
 
         // Restore changed attribute to their previous values
@@ -244,7 +244,7 @@ public class GuiUtils {
         if (sources == null || sources.isEmpty()) {
             return;
         }
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         int x = 0;
         int index = 0;
         
@@ -262,7 +262,7 @@ public class GuiUtils {
                 index++;
             }
         }
-        RenderSystem.popMatrix();
+        matrixStack.pop();
     }
     
     public static void renderSourceIcon(MatrixStack matrixStack, int x, int y, @Nullable Source source, int amount, double z) {
@@ -282,12 +282,12 @@ public class GuiUtils {
         
         Minecraft mc = Minecraft.getInstance();
         
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         RenderSystem.disableLighting();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         
         // Render the source's icon
@@ -301,18 +301,18 @@ public class GuiUtils {
         builder.pos(x + 0.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
         buffer.finish();
 
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         // Render an amount string for the source, if an amount has been given
         if (amount > 0) {
-            RenderSystem.pushMatrix();
-            RenderSystem.translated(0.0D, 0.0D, z + 1.0D);
-            RenderSystem.scaled(0.5D, 0.5D, 1.0D);
+            matrixStack.push();
+            matrixStack.translate(0.0D, 0.0D, z + 1.0D);
+            matrixStack.scale(0.5F, 0.5F, 1.0F);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.fontRenderer.getStringWidth(amountStr);
             mc.fontRenderer.drawString(matrixStack, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.fontRenderer.FONT_HEIGHT + (y * 2)), Color.WHITE.getRGB());
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         
         // Restore changed GL attributes
@@ -323,7 +323,7 @@ public class GuiUtils {
         if (isLightingEnabled) {
             RenderSystem.enableLighting();
         }
-        RenderSystem.popMatrix();
+        matrixStack.pop();
     }
     
     public static void renderSourcesBillboard(MatrixStack matrixStack, IRenderTypeBuffer buffers, double x, double y, double z, SourceList sources, float partialTicks) {

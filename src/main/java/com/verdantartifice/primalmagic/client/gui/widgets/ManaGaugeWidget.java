@@ -54,8 +54,8 @@ public class ManaGaugeWidget extends Widget {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(TEXTURE);
         
-        RenderSystem.pushMatrix();
-        RenderSystem.translatef(this.x, this.y, 0.0F);
+        matrixStack.push();
+        matrixStack.translate(this.x, this.y, 0.0F);
 
         // Render gauge background texture
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -71,7 +71,7 @@ public class ManaGaugeWidget extends Widget {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.blit(matrixStack, 0, 0, 24, 0, this.width, this.height);
 
-        RenderSystem.popMatrix();
+        matrixStack.pop();
         
         if (this.isHovered()) {
             ITextComponent sourceText = new TranslationTextComponent(this.source.getNameTranslationKey()).mergeStyle(this.source.getChatColor());

@@ -46,21 +46,21 @@ public class ItemStackWidget extends Widget {
             ITextComponent amountText = new StringTextComponent(Integer.toString(this.stack.getCount()));
             int width = mc.fontRenderer.getStringWidth(amountText.getString());
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x + 16 - width / 2, this.y + 12, 5.0F);
-            RenderSystem.scaled(0.5D, 0.5D, 0.5D);
+            matrixStack.push();
+            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
+            matrixStack.scale(0.5F, 0.5F, 0.5F);
             mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x + 8, this.y, 200.0F);
+            matrixStack.push();
+            matrixStack.translate(this.x + 8, this.y, 200.0F);
             Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
         if (this.isHovered()) {
             // Render tooltip

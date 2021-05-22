@@ -37,7 +37,7 @@ public abstract class AbstractTopicButton extends Button {
     @Override
     public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = this.screen.getMinecraft();
-        RenderSystem.pushMatrix();
+        matrixStack.push();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         if (this.isHovered()) {
@@ -53,13 +53,13 @@ public abstract class AbstractTopicButton extends Button {
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)this.width / (float)strWidth;
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(this.x, this.y + dy + (1.0F * scale), 0.0F);
-            RenderSystem.scalef(scale, scale, scale);
+            matrixStack.push();
+            matrixStack.translate(this.x, this.y + dy + (1.0F * scale), 0.0F);
+            matrixStack.scale(scale, scale, scale);
             mc.fontRenderer.drawText(matrixStack, this.getMessage(), 0, 0, Color.BLACK.getRGB());
-            RenderSystem.popMatrix();
+            matrixStack.pop();
         }
-        RenderSystem.popMatrix();
+        matrixStack.pop();
     }
     
     @Override
