@@ -526,7 +526,7 @@ public class ItemsPM {
 
     // Register concoction items
     public static final RegistryObject<SkyglassFlaskItem> SKYGLASS_FLASK = ITEMS.register("skyglass_flask", () -> new SkyglassFlaskItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<ConcoctionItem> CONCOCTION = ITEMS.register("concoction", () -> new ConcoctionItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ConcoctionItem> CONCOCTION = ITEMS.register("concoction", () -> new ConcoctionItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1)));
     
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

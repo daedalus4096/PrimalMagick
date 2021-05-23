@@ -6,12 +6,17 @@ import com.verdantartifice.primalmagic.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.UseAction;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
@@ -19,9 +24,13 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -43,6 +52,30 @@ public class ConcoctionItem extends Item {
     @Override
     public ItemStack getDefaultInstance() {
         return ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(super.getDefaultInstance(), Potions.WATER), ConcoctionType.WATER);
+    }
+
+    @Override
+    public ActionResultType onItemUse(ItemUseContext context) {
+        ItemStack stack = context.getItem();
+        World world = context.getWorld();
+        BlockPos pos = context.getPos();
+        BlockState blockState = world.getBlockState(pos);
+        if (blockState.getBlock() == Blocks.CAULDRON && PotionUtils.getPotionFromItem(stack) == Potions.WATER) {
+            int waterLevel = blockState.get(CauldronBlock.LEVEL);
+            if (waterLevel < 3 && !world.isRemote) {
+                PlayerEntity player = context.getPlayer();
+                if (!player.abilities.isCreativeMode) {
+                    player.setHeldItem(context.getHand(), new ItemStack(ItemsPM.SKYGLASS_FLASK.get()));
+                    if (player instanceof ServerPlayerEntity) {
+                        ((ServerPlayerEntity)player).sendContainerToPlayer(player.container);
+                    }
+                }
+                world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                ((CauldronBlock)Blocks.CAULDRON).setWaterLevel(world, pos, blockState, waterLevel + 1);
+            }
+            return ActionResultType.func_233537_a_(world.isRemote);
+        }
+        return super.onItemUse(context);
     }
 
     @Override
