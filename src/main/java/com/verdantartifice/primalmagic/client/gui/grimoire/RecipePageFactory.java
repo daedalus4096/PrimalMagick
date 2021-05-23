@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.crafting.ConcoctingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RitualRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
@@ -32,6 +33,8 @@ public class RecipePageFactory {
             return new RitualRecipePage((RitualRecipe)recipe);
         } else if (recipe instanceof RunecarvingRecipe) {
             return new RunecarvingRecipePage((RunecarvingRecipe)recipe);
+        } else if (recipe instanceof ConcoctingRecipe) {
+            return new ConcoctingRecipePage((ConcoctingRecipe)recipe);
         } else {
             return null;
         }

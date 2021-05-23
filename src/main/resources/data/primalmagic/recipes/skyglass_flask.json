@@ -1,0 +1,17 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "CONCOCTING_TINCTURES",
+  "pattern": [
+    "# #",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "primalmagic:skyglass"
+    }
+  },
+  "result": {
+    "item": "primalmagic:skyglass_flask",
+    "count": 3
+  }
+}

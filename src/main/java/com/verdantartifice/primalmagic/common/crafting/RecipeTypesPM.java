@@ -11,4 +11,5 @@ public class RecipeTypesPM {
     public static IRecipeType<IArcaneRecipe> ARCANE_CRAFTING;
     public static IRecipeType<IRitualRecipe> RITUAL;
     public static IRecipeType<IRunecarvingRecipe> RUNECARVING;
+    public static IRecipeType<IConcoctingRecipe> CONCOCTING;
 }

@@ -4,6 +4,8 @@ import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.concoctions.ConcoctionType;
+import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
@@ -29,6 +31,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -68,6 +72,7 @@ public class Recipes extends RecipeProvider {
         this.registerPixieRecipes(consumer);
         this.registerAmbrosiaRecipes(consumer);
         this.registerSanguineCrucibleRecipes(consumer);
+        this.registerConcoctionRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -3529,5 +3534,22 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100))
             .instability(7)
             .build(consumer);
+    }
+    
+    protected void registerConcoctionRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SKYGLASS_FLASK.get(), 3)
+            .patternLine("# #")
+            .patternLine(" # ")
+            .key('#', ItemsPM.SKYGLASS.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .build(consumer);
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), Potions.HEALING), ConcoctionType.TINCTURE))
+            .addIngredient(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), Potions.WATER), ConcoctionType.WATER))
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .addIngredient(Tags.Items.CROPS_NETHER_WART)
+            .addIngredient(Items.GLISTERING_MELON_SLICE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "healing_tincture"));
     }
 }

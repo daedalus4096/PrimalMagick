@@ -1,0 +1,26 @@
+{
+  "key": "CONCOCTING_TINCTURES",
+  "name": "primalmagic.research.concocting_tinctures.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "EXPERT_MAGITECH",
+    "SKYGLASS",
+    "t_discover_infernal"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.concocting_tinctures.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.concocting_tinctures.text.stage.2",
+      "recipes": [
+        "primalmagic:skyglass_flask",
+        "primalmagic:healing_tincture"
+      ]
+    }
+  ],
+  "addenda": []
+}

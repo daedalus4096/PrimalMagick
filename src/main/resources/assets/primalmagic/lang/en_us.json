@@ -1367,6 +1367,10 @@
     "primalmagic.research.hallowsteel_golem.text.stage.1": "Hallowsteel golem: Lorem ipsum",
     "primalmagic.research.hallowsteel_golem.text.stage.2": "Hallowsteel golem research complete!",
     
+    "primalmagic.research.concocting_tinctures.title": "Concocting: Tinctures",
+    "primalmagic.research.concocting_tinctures.text.stage.1": "Concocting tinctures: Lorem ipsum",
+    "primalmagic.research.concocting_tinctures.text.stage.2": "Concocting tinctures research complete!",
+    
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble: lorem ipsum",
     
@@ -1597,6 +1601,7 @@
     "primalmagic.grimoire.shaped_recipe_header": "Workbench",
     "primalmagic.grimoire.ritual_recipe_header": "Ritual Altar",
     "primalmagic.grimoire.runecarving_recipe_header": "Runecarving Table",
+    "primalmagic.grimoire.concocting_recipe_header": "Concocter (Shapeless)",
     "primalmagic.grimoire.must_obtain_header": "Will be consumed:",
     "primalmagic.grimoire.must_craft_header": "Must craft:",
     "primalmagic.grimoire.required_knowledge_header": "Required knowledge:",
