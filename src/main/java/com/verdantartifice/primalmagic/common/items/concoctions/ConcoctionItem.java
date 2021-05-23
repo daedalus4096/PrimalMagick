@@ -31,12 +31,12 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of an alchemical concoction.  Similar to a brewed potion, but a single vial contains
@@ -145,13 +145,14 @@ public class ConcoctionItem extends Item {
         return super.hasEffect(stack) || !PotionUtils.getEffectsFromStack(stack).isEmpty();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
         if (this.isInGroup(group)) {
             items.add(this.getDefaultInstance());   // Add basic water concoction separately
             for (ConcoctionType concoctionType : ConcoctionType.values()) {
                 if (concoctionType != ConcoctionType.WATER) {
-                    for (Potion potion : ForgeRegistries.POTION_TYPES.getValues()) {
+                    for (Potion potion : Registry.POTION) { // Use Vanilla registry to preserve item ordering
                         if (ConcoctionUtils.hasBeneficialEffect(potion)) {
                             items.add(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(this), potion), concoctionType));
                         }
