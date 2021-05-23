@@ -8,6 +8,8 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagic.common.items.armor.RobeArmorItem;
+import com.verdantartifice.primalmagic.common.items.concoctions.ConcoctionItem;
+import com.verdantartifice.primalmagic.common.items.concoctions.SkyglassFlaskItem;
 import com.verdantartifice.primalmagic.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
@@ -522,6 +524,10 @@ public class ItemsPM {
     public static final RegistryObject<SanguineCoreItem> SANGUINE_CORE_TREEFOLK = ITEMS.register("sanguine_core_treefolk", () -> new SanguineCoreItem(() -> EntityTypesPM.TREEFOLK.get(), 4, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).maxDamage(15)));
     public static final RegistryObject<SanguineCoreItem> SANGUINE_CORE_INNER_DEMON = ITEMS.register("sanguine_core_inner_demon", () -> new SanguineCoreItem(() -> EntityTypesPM.INNER_DEMON.get(), 64, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).maxDamage(0).maxStackSize(1)));
 
+    // Register concoction items
+    public static final RegistryObject<SkyglassFlaskItem> SKYGLASS_FLASK = ITEMS.register("skyglass_flask", () -> new SkyglassFlaskItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ConcoctionItem> CONCOCTION = ITEMS.register("concoction", () -> new ConcoctionItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<SpellScrollItem> SPELL_SCROLL_FILLED = ITEMS.register("spell_scroll_filled", SpellScrollItem::new);

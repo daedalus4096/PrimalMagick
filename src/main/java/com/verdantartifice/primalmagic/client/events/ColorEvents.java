@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -99,5 +100,9 @@ public class ColorEvents {
                 return ambrosia.getColor(color);
             }, ambrosia);
         }
+        
+        event.getItemColors().register((stack, color) -> {
+            return color > 0 ? -1 : PotionUtils.getColor(stack);
+        }, ItemsPM.CONCOCTION.get());
     }
 }
