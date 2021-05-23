@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.base.SaplingBlockPM;
 import com.verdantartifice.primalmagic.common.blocks.crafting.ArcaneWorkbenchBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.CalcinatorBlock;
+import com.verdantartifice.primalmagic.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.EssenceFurnaceBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.RunecarvingTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarBlock;
@@ -263,6 +264,7 @@ public class BlocksPM {
     public static final RegistryObject<HexiumGolemControllerBlock> HEXIUM_GOLEM_CONTROLLER = BLOCKS.register("hexium_golem_controller", () -> new HexiumGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<HallowsteelGolemControllerBlock> HALLOWSTEEL_GOLEM_CONTROLLER = BLOCKS.register("hallowsteel_golem_controller", () -> new HallowsteelGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<SanguineCrucibleBlock> SANGUINE_CRUCIBLE = BLOCKS.register("sanguine_crucible", SanguineCrucibleBlock::new);
+    public static final RegistryObject<ConcocterBlock> CONCOCTER = BLOCKS.register("concocter", ConcocterBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

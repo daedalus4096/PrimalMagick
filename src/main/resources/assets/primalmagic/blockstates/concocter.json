@@ -1,0 +1,35 @@
+{
+    "multipart": [
+        {
+            "apply": {
+                "model": "primalmagic:block/concocter"
+            }
+        },
+        {
+            "when": {
+                "has_bottle_0": "true"
+            },
+            "apply": {
+                "model": "primalmagic:block/concocter_bottle0"
+            }
+        },
+        {
+            "when": {
+                "has_bottle_0": "false"
+            },
+            "apply": {
+                "model": "primalmagic:block/concocter_empty0"
+            }
+        },
+        {
+            "apply": {
+                "model": "primalmagic:block/concocter_empty1"
+            }
+        },
+        {
+            "apply": {
+                "model": "primalmagic:block/concocter_empty2"
+            }
+        }
+    ]
+}
