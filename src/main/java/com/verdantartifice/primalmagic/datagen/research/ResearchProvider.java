@@ -938,7 +938,7 @@ public class ResearchProvider implements IDataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("CONCOCTING_TINCTURES", discipline).parent("EXPERT_MAGITECH").parent("SKYGLASS").parent(Source.INFERNAL.getDiscoverKey())
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SKYGLASS_FLASK.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "healing_tincture")).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SKYGLASS_FLASK.get()).recipe(ItemsPM.CONCOCTER.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "healing_tincture")).build())
             .build(consumer);
     }
 

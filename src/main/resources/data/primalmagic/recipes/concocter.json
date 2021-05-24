@@ -1,0 +1,26 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "CONCOCTING_TINCTURES",
+  "mana": {
+    "infernal": 40
+  },
+  "pattern": [
+    " P ",
+    "PBP",
+    "MMM"
+  ],
+  "key": {
+    "P": {
+      "item": "primalmagic:magitech_parts_enchanted"
+    },
+    "B": {
+      "item": "minecraft:brewing_stand"
+    },
+    "M": {
+      "item": "primalmagic:marble_enchanted"
+    }
+  },
+  "result": {
+    "item": "primalmagic:concocter"
+  }
+}

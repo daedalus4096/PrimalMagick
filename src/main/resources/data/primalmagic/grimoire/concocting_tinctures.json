@@ -18,6 +18,7 @@
       "text": "primalmagic.research.concocting_tinctures.text.stage.2",
       "recipes": [
         "primalmagic:skyglass_flask",
+        "primalmagic:concocter",
         "primalmagic:healing_tincture"
       ]
     }

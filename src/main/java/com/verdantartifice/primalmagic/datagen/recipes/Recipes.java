@@ -3543,6 +3543,16 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemsPM.SKYGLASS.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CONCOCTER.get())
+            .patternLine(" P ")
+            .patternLine("PBP")
+            .patternLine("MMM")
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .key('B', Items.BREWING_STAND)
+            .key('M', ItemsPM.MARBLE_ENCHANTED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 40))
+            .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), Potions.HEALING), ConcoctionType.TINCTURE))
             .addIngredient(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), Potions.WATER), ConcoctionType.WATER))
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
