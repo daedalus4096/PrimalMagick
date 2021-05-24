@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
@@ -36,6 +37,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class ConcocterTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IOwnedTileEntity, IManaContainer {
@@ -182,6 +184,8 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
             } else {
                 this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
             }
+            
+            this.world.setBlockState(this.getPos(), this.world.getBlockState(this.getPos()).with(ConcocterBlock.HAS_BOTTLE, this.showBottle()), Constants.BlockFlags.BLOCK_UPDATE);
         }
 
         if (shouldMarkDirty) {
@@ -234,6 +238,10 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
             }
             this.setMana(Source.INFERNAL, this.getMana(Source.INFERNAL) - (100 * recipe.getManaCosts().getAmount(Source.INFERNAL)));
         }
+    }
+    
+    protected boolean showBottle() {
+        return this.cookTime > 0 || !this.items.get(OUTPUT_SLOT_INDEX).isEmpty();
     }
     
     protected int getCookTimeTotal() {
