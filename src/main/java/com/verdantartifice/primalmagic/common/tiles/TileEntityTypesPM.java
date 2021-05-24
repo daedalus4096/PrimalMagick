@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.tiles;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.EssenceFurnaceTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.HoneyExtractorTileEntity;
@@ -53,4 +54,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<TileEntityType<RunescribingAltarTileEntity>> RUNESCRIBING_ALTAR = TILE_ENTITIES.register("runescribing_altar", () -> TileEntityType.Builder.create(RunescribingAltarTileEntity::new, BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build(null));
     public static final RegistryObject<TileEntityType<HoneyExtractorTileEntity>> HONEY_EXTRACTOR = TILE_ENTITIES.register("honey_extractor", () -> TileEntityType.Builder.create(HoneyExtractorTileEntity::new, BlocksPM.HONEY_EXTRACTOR.get()).build(null));
     public static final RegistryObject<TileEntityType<SanguineCrucibleTileEntity>> SANGUINE_CRUCIBLE = TILE_ENTITIES.register("sanguine_crucible", () -> TileEntityType.Builder.create(SanguineCrucibleTileEntity::new, BlocksPM.SANGUINE_CRUCIBLE.get()).build(null));
+    public static final RegistryObject<TileEntityType<ConcocterTileEntity>> CONCOCTER = TILE_ENTITIES.register("concocter", () -> TileEntityType.Builder.create(ConcocterTileEntity::new, BlocksPM.CONCOCTER.get()).build(null));
 }

@@ -66,4 +66,7 @@ public class ContainersPM {
     public static final RegistryObject<ContainerType<HoneyExtractorContainer>> HONEY_EXTRACTOR = CONTAINERS.register("honey_extractor", () -> IForgeContainerType.create((windowId, inv, data) -> {
         return new HoneyExtractorContainer(windowId, inv);
     }));
+    public static final RegistryObject<ContainerType<ConcocterContainer>> CONCOCTER = CONTAINERS.register("concocter", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        return new ConcocterContainer(windowId, inv);
+    }));
 }
