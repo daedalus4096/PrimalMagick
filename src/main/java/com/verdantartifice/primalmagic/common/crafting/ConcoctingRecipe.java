@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -49,7 +49,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inv, World worldIn) {
+    public boolean matches(IInventory inv, World worldIn) {
         RecipeItemHelper helper = new RecipeItemHelper();
         List<ItemStack> inputs = new ArrayList<>();
         int count = 0;
@@ -70,7 +70,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(CraftingInventory inv) {
+    public ItemStack getCraftingResult(IInventory inv) {
         return this.recipeOutput.copy();
     }
 

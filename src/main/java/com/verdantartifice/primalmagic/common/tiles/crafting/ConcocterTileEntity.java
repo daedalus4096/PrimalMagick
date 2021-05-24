@@ -2,27 +2,36 @@ package com.verdantartifice.primalmagic.common.tiles.crafting;
 
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ConcocterContainer;
+import com.verdantartifice.primalmagic.common.crafting.IConcoctingRecipe;
+import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
@@ -30,6 +39,10 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class ConcocterTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IOwnedTileEntity, IManaContainer {
+    protected static final int MAX_INPUT_ITEMS = 9;
+    protected static final int WAND_SLOT_INDEX = 9;
+    protected static final int OUTPUT_SLOT_INDEX = 10;
+    
     protected int cookTime;
     protected int cookTimeTotal;
     protected ManaStorage manaStorage;
@@ -76,7 +89,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
     };
     
     public ConcocterTileEntity() {
-        super(TileEntityTypesPM.CONCOCTER.get(), 11);
+        super(TileEntityTypesPM.CONCOCTER.get(), MAX_INPUT_ITEMS + 2);
         this.manaStorage = new ManaStorage(10000, 1000, 1000, Source.INFERNAL);
     }
     
@@ -138,8 +151,91 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
 
     @Override
     public void tick() {
-        // TODO Auto-generated method stub
+        boolean shouldMarkDirty = false;
+        
+        if (!this.world.isRemote) {
+            // Fill up internal mana storage with that from any inserted wands
+            ItemStack wandStack = this.items.get(WAND_SLOT_INDEX);
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
+                IWand wand = (IWand)wandStack.getItem();
+                int centimanaMissing = this.manaStorage.getMaxManaStored(Source.INFERNAL) - this.manaStorage.getManaStored(Source.INFERNAL);
+                int centimanaToTransfer = MathHelper.clamp(centimanaMissing, 0, 100);
+                if (wand.consumeMana(wandStack, null, Source.INFERNAL, centimanaToTransfer)) {
+                    this.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
+                    shouldMarkDirty = true;
+                }
+            }
 
+            Inventory tempInv = new Inventory(MAX_INPUT_ITEMS);
+            for (int index = 0; index < MAX_INPUT_ITEMS; index++) {
+                tempInv.setInventorySlotContents(index, this.items.get(index));
+            }
+            IConcoctingRecipe recipe = this.world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.CONCOCTING, tempInv, this.world).orElse(null);
+            if (this.canConcoct(tempInv, recipe)) {
+                this.cookTime++;
+                if (this.cookTime >= this.cookTimeTotal) {
+                    this.cookTime = 0;
+                    this.cookTimeTotal = this.getCookTimeTotal();
+                    this.doConcoction(tempInv, recipe);
+                    shouldMarkDirty = true;
+                }
+            } else {
+                this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
+            }
+        }
+
+        if (shouldMarkDirty) {
+            this.markDirty();
+            this.syncTile(true);
+        }
+    }
+    
+    protected boolean canConcoct(IInventory inputInv, @Nullable IConcoctingRecipe recipe) {
+        if (!inputInv.isEmpty() && recipe != null) {
+            ItemStack output = recipe.getRecipeOutput();
+            if (output.isEmpty()) {
+                return false;
+            } else if (this.getMana(Source.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Source.INFERNAL))) {
+                return false;
+            } else {
+                ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
+                if (currentOutput.isEmpty()) {
+                    return true;
+                } else if (!currentOutput.isItemEqual(output)) {
+                    return false;
+                } else if (currentOutput.getCount() + output.getCount() <= this.getInventoryStackLimit() && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
+                    return true;
+                } else {
+                    return currentOutput.getCount() + output.getCount() <= output.getMaxStackSize();
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    protected void doConcoction(IInventory inputInv, @Nullable IConcoctingRecipe recipe) {
+        if (recipe != null && this.canConcoct(inputInv, recipe)) {
+            ItemStack recipeOutput = recipe.getCraftingResult(inputInv);
+            ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
+            if (currentOutput.isEmpty()) {
+                this.items.set(OUTPUT_SLOT_INDEX, recipeOutput);
+            } else if (recipeOutput.getItem() == currentOutput.getItem() && ItemStack.areItemStackTagsEqual(recipeOutput, currentOutput)) {
+                currentOutput.grow(recipeOutput.getCount());
+            }
+            
+            for (int index = 0; index < inputInv.getSizeInventory(); index++) {
+                ItemStack stack = inputInv.getStackInSlot(index);
+                if (!stack.isEmpty()) {
+                    stack.shrink(1);
+                }
+            }
+            this.setMana(Source.INFERNAL, this.getMana(Source.INFERNAL) - (100 * recipe.getManaCosts().getAmount(Source.INFERNAL)));
+        }
+    }
+    
+    protected int getCookTimeTotal() {
+        return 200;
     }
 
     @Override
@@ -191,5 +287,17 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
         this.manaStorage.setMana(mana);
         this.markDirty();
         this.syncTile(true);
+    }
+
+    @Override
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        ItemStack slotStack = this.items.get(index);
+        super.setInventorySlotContents(index, stack);
+        boolean flag = !stack.isEmpty() && stack.isItemEqual(slotStack) && ItemStack.areItemStackTagsEqual(stack, slotStack);
+        if (index >= 0 && index < MAX_INPUT_ITEMS && !flag) {
+            this.cookTimeTotal = this.getCookTimeTotal();
+            this.cookTime = 0;
+            this.markDirty();
+        }
     }
 }

@@ -3,11 +3,12 @@ package com.verdantartifice.primalmagic.common.crafting;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 
-public interface IConcoctingRecipe extends ICraftingRecipe, IHasManaCost {
+public interface IConcoctingRecipe extends IRecipe<IInventory>, IHasManaCost {
     /**
      * Get the required research for the recipe.
      * 
