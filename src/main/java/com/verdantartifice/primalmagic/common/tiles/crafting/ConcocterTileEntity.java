@@ -197,6 +197,8 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
                 return false;
             } else if (this.getMana(Source.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Source.INFERNAL))) {
                 return false;
+            } else if (!recipe.getRequiredResearch().isKnownByStrict(this.getTileOwner())) {
+                return false;
             } else {
                 ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
                 if (currentOutput.isEmpty()) {
