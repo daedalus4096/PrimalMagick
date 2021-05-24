@@ -3,9 +3,12 @@ package com.verdantartifice.primalmagic.common.concoctions;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtils;
 
 /**
  * Helper methods for handling concoctions.
@@ -13,6 +16,10 @@ import net.minecraft.potion.Potion;
  * @author Daedalus4096
  */
 public class ConcoctionUtils {
+    public static ItemStack newStack(Potion potion, ConcoctionType type) {
+        return ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), potion), type);
+    }
+    
     @Nullable
     public static ConcoctionType getConcoctionType(@Nonnull ItemStack stack) {
         return ConcoctionType.fromName(stack.getOrCreateTag().getString("ConcoctionType"));

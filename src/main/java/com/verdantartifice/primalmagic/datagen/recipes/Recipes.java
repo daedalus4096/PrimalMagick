@@ -31,7 +31,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
@@ -3553,13 +3552,30 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 40))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), Potions.HEALING), ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), Potions.WATER), ConcoctionType.WATER))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newStack(Potions.NIGHT_VISION, ConcoctionType.TINCTURE))
+            .addIngredient(ConcoctionUtils.newStack(Potions.WATER, ConcoctionType.WATER))
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .addIngredient(Tags.Items.CROPS_NETHER_WART)
+            .addIngredient(Items.GOLDEN_CARROT)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 1))
+            .build(consumer);
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newStack(Potions.LONG_NIGHT_VISION, ConcoctionType.TINCTURE))
+            .addIngredient(ConcoctionUtils.newStack(Potions.WATER, ConcoctionType.WATER))
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .addIngredient(Tags.Items.CROPS_NETHER_WART)
+            .addIngredient(Items.GOLDEN_CARROT)
+            .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 1))
+            .build(consumer);
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newStack(Potions.HEALING, ConcoctionType.TINCTURE))
+            .addIngredient(ConcoctionUtils.newStack(Potions.WATER, ConcoctionType.WATER))
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
-            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "healing_tincture"));
+            .build(consumer);
     }
 }

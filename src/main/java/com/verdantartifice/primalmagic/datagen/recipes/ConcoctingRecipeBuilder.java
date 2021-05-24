@@ -6,6 +6,9 @@ import java.util.function.Consumer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.concoctions.ConcoctionType;
+import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.crafting.NBTIngredientPM;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
@@ -17,6 +20,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
@@ -92,6 +98,15 @@ public class ConcoctingRecipeBuilder {
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
         consumer.accept(new ConcoctingRecipeBuilder.Result(id, this.result, this.ingredients, this.research, this.manaCosts));
+    }
+    
+    public void build(Consumer<IFinishedRecipe> consumer) {
+        Potion potion = PotionUtils.getPotionFromItem(this.result);
+        ConcoctionType type = ConcoctionUtils.getConcoctionType(this.result);
+        if (type == null || potion == null || potion == Potions.EMPTY) {
+            throw new IllegalStateException("Output is not a concoction for concocting recipe with output " + this.result.getDisplayName().getString());
+        }
+        this.build(consumer, new ResourceLocation(PrimalMagic.MODID, potion.getRegistryName().getPath() + "_" + type.getString()));
     }
     
     public static class Result implements IFinishedRecipe {
