@@ -720,8 +720,8 @@ public class AffinityProvider implements IDataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get()).value(Source.SKY, 10).value(Source.BLOOD, 5).value(Source.HALLOWED, 20).build(consumer);
         
         // Define potion bonuses
-        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Source.SUN, 2).build(consumer);
-        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_NIGHT_VISION).bonus(Source.SUN, 5).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Source.MOON, 2).build(consumer);
+        PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_NIGHT_VISION).bonus(Source.MOON, 5).build(consumer);
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.INVISIBILITY).bonus(Source.MOON, 2).build(consumer);
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_INVISIBILITY).bonus(Source.MOON, 5).build(consumer);
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LEAPING).bonus(Source.SKY, 2).build(consumer);
