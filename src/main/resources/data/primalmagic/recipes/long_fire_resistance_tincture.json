@@ -1,6 +1,6 @@
 {
   "type": "primalmagic:concocting",
-  "research": "CONCOCTING_TINCTURES",
+  "research": "CONCOCTING_TINCTURES\u0026\u0026t_discover_infernal",
   "mana": {
     "infernal": 1
   },
