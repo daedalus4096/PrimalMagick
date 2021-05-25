@@ -12,21 +12,18 @@
       "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\",ConcoctionDoses:1}"
     },
     {
-      "item": "primalmagic:essence_dust_sun"
-    },
-    {
-      "item": "primalmagic:essence_dust_blood"
+      "item": "primalmagic:essence_dust_sky"
     },
     {
       "tag": "forge:crops/nether_wart"
     },
     {
-      "item": "minecraft:glistering_melon_slice"
+      "item": "minecraft:phantom_membrane"
     }
   ],
   "result": {
     "item": "primalmagic:concoction",
     "count": 1,
-    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:healing\",ConcoctionDoses:3}"
+    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:slow_falling\",ConcoctionDoses:3}"
   }
 }

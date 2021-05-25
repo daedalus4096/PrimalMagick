@@ -1,6 +1,6 @@
 {
   "type": "primalmagic:concocting",
-  "research": "CONCOCTING_TINCTURES\u0026\u0026t_discover_blood",
+  "research": "CONCOCTING_TINCTURES",
   "mana": {
     "infernal": 1
   },
@@ -12,21 +12,21 @@
       "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\",ConcoctionDoses:1}"
     },
     {
-      "item": "primalmagic:essence_dust_sun"
-    },
-    {
-      "item": "primalmagic:essence_dust_blood"
+      "item": "primalmagic:essence_dust_moon"
     },
     {
       "tag": "forge:crops/nether_wart"
     },
     {
-      "item": "minecraft:glistering_melon_slice"
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "minecraft:fermented_spider_eye"
     }
   ],
   "result": {
     "item": "primalmagic:concoction",
     "count": 1,
-    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:healing\",ConcoctionDoses:3}"
+    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:invisibility\",ConcoctionDoses:3}"
   }
 }

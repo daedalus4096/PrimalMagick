@@ -1371,6 +1371,8 @@
     "primalmagic.research.concocting_tinctures.title": "Concocting: Tinctures",
     "primalmagic.research.concocting_tinctures.text.stage.1": "Concocting tinctures: Lorem ipsum",
     "primalmagic.research.concocting_tinctures.text.stage.2": "Concocting tinctures research complete!",
+    "primalmagic.research.concocting_tinctures.text.addenda.1": "Blood-affinity tinctures",
+    "primalmagic.research.concocting_tinctures.text.addenda.2": "Infernal-affinity tinctures",
     
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble: lorem ipsum",

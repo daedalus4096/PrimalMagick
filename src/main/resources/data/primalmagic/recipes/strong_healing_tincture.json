@@ -22,11 +22,14 @@
     },
     {
       "item": "minecraft:glistering_melon_slice"
+    },
+    {
+      "tag": "forge:dusts/glowstone"
     }
   ],
   "result": {
     "item": "primalmagic:concoction",
     "count": 1,
-    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:healing\",ConcoctionDoses:3}"
+    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:strong_healing\",ConcoctionDoses:3}"
   }
 }

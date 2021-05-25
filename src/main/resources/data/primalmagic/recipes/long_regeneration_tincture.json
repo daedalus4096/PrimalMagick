@@ -21,12 +21,15 @@
       "tag": "forge:crops/nether_wart"
     },
     {
-      "item": "minecraft:glistering_melon_slice"
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "tag": "forge:dusts/redstone"
     }
   ],
   "result": {
     "item": "primalmagic:concoction",
     "count": 1,
-    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:healing\",ConcoctionDoses:3}"
+    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:long_regeneration\",ConcoctionDoses:3}"
   }
 }

@@ -938,7 +938,22 @@ public class ResearchProvider implements IDataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("CONCOCTING_TINCTURES", discipline).parent("EXPERT_MAGITECH").parent("SKYGLASS").parent(Source.INFERNAL.getDiscoverKey())
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SKYGLASS_FLASK.get()).recipe(ItemsPM.CONCOCTER.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "healing_tincture")).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SKYGLASS_FLASK.get()).recipe(ItemsPM.CONCOCTER.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "night_vision_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_night_vision_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "invisibility_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_invisibility_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "leaping_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_leaping_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "strong_leaping_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "swiftness_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "long_swiftness_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strong_swiftness_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "turtle_master_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_turtle_master_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "strong_turtle_master_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "water_breathing_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "long_water_breathing_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strength_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "long_strength_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strong_strength_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "slow_falling_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_slow_falling_tincture")).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "healing_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strong_healing_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "regeneration_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_regeneration_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "strong_regeneration_tincture")).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "fire_resistance_tincture"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_fire_resistance_tincture")).build())
             .build(consumer);
     }
 
