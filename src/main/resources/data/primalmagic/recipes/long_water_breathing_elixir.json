@@ -1,0 +1,35 @@
+{
+  "type": "primalmagic:concocting",
+  "research": "CONCOCTING_ELIXIRS",
+  "mana": {
+    "infernal": 9
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagic:concoction",
+      "count": 1,
+      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\",ConcoctionDoses:1}"
+    },
+    {
+      "item": "primalmagic:essence_crystal_sea"
+    },
+    {
+      "item": "primalmagic:essence_crystal_sky"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:pufferfish"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:concoction",
+    "count": 1,
+    "nbt": "{ConcoctionType:\"elixir\",Potion:\"minecraft:long_water_breathing\",ConcoctionDoses:9}"
+  }
+}

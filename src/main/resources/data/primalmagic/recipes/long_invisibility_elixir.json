@@ -1,0 +1,35 @@
+{
+  "type": "primalmagic:concocting",
+  "research": "CONCOCTING_ELIXIRS",
+  "mana": {
+    "infernal": 9
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagic:concoction",
+      "count": 1,
+      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\",ConcoctionDoses:1}"
+    },
+    {
+      "item": "primalmagic:essence_crystal_moon"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:concoction",
+    "count": 1,
+    "nbt": "{ConcoctionType:\"elixir\",Potion:\"minecraft:long_invisibility\",ConcoctionDoses:9}"
+  }
+}

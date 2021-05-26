@@ -1,0 +1,32 @@
+{
+  "type": "primalmagic:concocting",
+  "research": "CONCOCTING_PHILTERS",
+  "mana": {
+    "infernal": 3
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagic:concoction",
+      "count": 1,
+      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\",ConcoctionDoses:1}"
+    },
+    {
+      "item": "primalmagic:essence_shard_sky"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:rabbit_foot"
+    },
+    {
+      "tag": "forge:dusts/glowstone"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:concoction",
+    "count": 1,
+    "nbt": "{ConcoctionType:\"philter\",Potion:\"minecraft:strong_leaping\",ConcoctionDoses:6}"
+  }
+}
