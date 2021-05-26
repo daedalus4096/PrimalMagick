@@ -20,6 +20,7 @@ import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
@@ -28,6 +29,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -100,7 +102,10 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
     }
     
     private void detonate(@Nullable Entity struckEntity) {
-        // TODO Do explosion effects
+        // Do explosion effects
+        this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
+        this.world.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosX(), this.getPosY(), this.getPosZ(), 1.0D, 0.0D, 0.0D);
+        // TODO Add potion effect particles to blast (see HugeExplosionParticle and WorldRenderer#playEvent and PotionUtils#getColor)
         
         if (!this.world.isRemote) {
             ItemStack itemStack = this.getItem();
@@ -113,7 +118,6 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
                 this.applyPotionEffects(effects, struckEntity);
             }
 
-            this.world.playEvent(potion.hasInstantEffect() ? 2007 : 2002, this.getPosition(), PotionUtils.getColor(itemStack)); // TODO Remove when explosion effects are added
             this.remove();
         }
     }
