@@ -18,6 +18,9 @@ import net.minecraft.potion.Potions;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -41,8 +44,20 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        // TODO Auto-generated method stub
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        ItemStack stack = playerIn.getHeldItem(handIn);
+        if (playerIn.isSecondaryUseActive()) {
+            // Set bomb fuse
+            FuseType fuse = ConcoctionUtils.getFuseType(stack);
+            if (!worldIn.isRemote && fuse != null && fuse.getNext() != null) {
+                playerIn.setHeldItem(handIn, ConcoctionUtils.setFuseType(stack, fuse.getNext()));
+                ITextComponent fuseText = new TranslationTextComponent(fuse.getNext().getTranslationKey());
+                playerIn.sendMessage(new TranslationTextComponent("concoctions.primalmagic.fuse_set", fuseText), Util.DUMMY_UUID);
+            }
+        } else {
+            worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+            // TODO Throw bomb
+        }
+        return ActionResult.func_233538_a_(stack, worldIn.isRemote());
     }
 
     @Override

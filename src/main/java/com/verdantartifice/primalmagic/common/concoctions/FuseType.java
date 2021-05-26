@@ -36,6 +36,22 @@ public enum FuseType implements IStringSerializable {
         return this.fuseLength > 0;
     }
     
+    @Nullable
+    public FuseType getNext() {
+        switch(this) {
+        case IMPACT:
+            return SHORT;
+        case SHORT:
+            return MEDIUM;
+        case MEDIUM:
+            return LONG;
+        case LONG:
+            return IMPACT;
+        default:
+            return null;
+        }
+    }
+    
     public String getTranslationKey() {
         return "concoctions.primalmagic.fuse." + this.tag;
     }

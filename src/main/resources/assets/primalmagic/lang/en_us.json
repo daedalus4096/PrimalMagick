@@ -1869,6 +1869,7 @@
     "concoctions.primalmagic.fuse.short": "1s",
     "concoctions.primalmagic.fuse.medium": "3s",
     "concoctions.primalmagic.fuse.long": "5s",
+    "concoctions.primalmagic.fuse_set": "Bomb fuse set to %1$s",
     
     "death.attack.primalmagic.bleeding": "%1$s bled to death",
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",
