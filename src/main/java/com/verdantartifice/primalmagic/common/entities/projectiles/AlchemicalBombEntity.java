@@ -32,7 +32,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -81,19 +80,17 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
 
     @Override
     protected void func_230299_a_(BlockRayTraceResult result) {
-        if (!this.world.isRemote) {
-            FuseType fuse = ConcoctionUtils.getFuseType(this.getItem());
-            if (fuse == FuseType.IMPACT) {
-                this.detonate(null);
-            } else if (fuse != null) {
-                double mx = result.getFace().getXOffset() == 0 ? 1.0D : -1.0D;
-                double my = result.getFace().getYOffset() == 0 ? 1.0D : -1.0D;
-                double mz = result.getFace().getZOffset() == 0 ? 1.0D : -1.0D;
-                this.setMotion(this.getMotion().scale(0.6D).mul(mx, my, mz));
-                // TODO Play impact noise
-            }
-        }
         super.func_230299_a_(result);
+        FuseType fuse = ConcoctionUtils.getFuseType(this.getItem());
+        if (fuse == FuseType.IMPACT) {
+            this.detonate(null);
+        } else if (fuse != null) {
+            double mx = result.getFace().getXOffset() == 0 ? 1.0D : -1.0D;
+            double my = 0.9D * (result.getFace().getYOffset() == 0 ? 1.0D : -1.0D);
+            double mz = result.getFace().getZOffset() == 0 ? 1.0D : -1.0D;
+            this.setMotion(this.getMotion().scale(0.7D).mul(mx, my, mz));
+            // TODO Play impact noise
+        }
     }
 
     @Override
