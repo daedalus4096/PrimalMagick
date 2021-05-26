@@ -8,6 +8,8 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagic.common.items.armor.RobeArmorItem;
+import com.verdantartifice.primalmagic.common.items.concoctions.AlchemicalBombItem;
+import com.verdantartifice.primalmagic.common.items.concoctions.BombCasingItem;
 import com.verdantartifice.primalmagic.common.items.concoctions.ConcoctionItem;
 import com.verdantartifice.primalmagic.common.items.concoctions.SkyglassFlaskItem;
 import com.verdantartifice.primalmagic.common.items.entities.FlyingCarpetItem;
@@ -528,6 +530,8 @@ public class ItemsPM {
     // Register concoction items
     public static final RegistryObject<SkyglassFlaskItem> SKYGLASS_FLASK = ITEMS.register("skyglass_flask", () -> new SkyglassFlaskItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<ConcoctionItem> CONCOCTION = ITEMS.register("concoction", () -> new ConcoctionItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1)));
+    public static final RegistryObject<BombCasingItem> BOMB_CASING = ITEMS.register("bomb_casing", () -> new BombCasingItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<AlchemicalBombItem> ALCHEMICAL_BOMB = ITEMS.register("alchemical_bomb", () -> new AlchemicalBombItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1)));
     
     // Register caster/wand items
     public static final RegistryObject<Item> SPELL_SCROLL_BLANK = ITEMS.register("spell_scroll_blank", () -> new Item(new Item.Properties().group(PrimalMagic.ITEM_GROUP)));

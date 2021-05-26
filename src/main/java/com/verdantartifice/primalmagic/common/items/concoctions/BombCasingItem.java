@@ -6,17 +6,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
- * Definition of a skyglass flask.  Used as a base item for making tinctures, philters, or elixirs.
+ * Definition of a bomb casing.  Used as a base item for making alchemical bombs.
  * 
  * @author Daedalus4096
  */
-public class SkyglassFlaskItem extends AbstractConcoctionContainerItem {
-    public SkyglassFlaskItem(Item.Properties properties) {
+public class BombCasingItem extends AbstractConcoctionContainerItem {
+    public BombCasingItem(Item.Properties properties) {
         super(properties);
     }
 
     @Override
     protected ItemStack getConcoctionContainerItem() {
-        return ItemsPM.CONCOCTION.get().getDefaultInstance().copy();
+        return ItemsPM.ALCHEMICAL_BOMB.get().getDefaultInstance().copy();
     }
 }

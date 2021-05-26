@@ -151,7 +151,7 @@ public class ConcoctionItem extends Item {
         if (this.isInGroup(group)) {
             items.add(this.getDefaultInstance());   // Add basic water concoction separately
             for (ConcoctionType concoctionType : ConcoctionType.values()) {
-                if (concoctionType != ConcoctionType.WATER) {
+                if (concoctionType.hasDrinkablePotion()) {
                     for (Potion potion : Registry.POTION) { // Use Vanilla registry to preserve item ordering
                         if (ConcoctionUtils.hasBeneficialEffect(potion)) {
                             items.add(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(this), potion), concoctionType));

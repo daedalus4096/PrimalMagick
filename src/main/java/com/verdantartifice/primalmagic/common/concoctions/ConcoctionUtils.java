@@ -16,8 +16,12 @@ import net.minecraft.potion.PotionUtils;
  * @author Daedalus4096
  */
 public class ConcoctionUtils {
-    public static ItemStack newStack(Potion potion, ConcoctionType type) {
-        return ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), potion), type);
+    public static ItemStack newConcoction(Potion potion, ConcoctionType type) {
+        return setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), potion), type);
+    }
+    
+    public static ItemStack newBomb(Potion potion, FuseType fuse) {
+        return setFuseType(newConcoction(potion, ConcoctionType.BOMB), fuse);
     }
     
     @Nullable
@@ -42,6 +46,19 @@ public class ConcoctionUtils {
     public static ItemStack setCurrentDoses(@Nonnull ItemStack stack, int doses) {
         ConcoctionType type = getConcoctionType(stack);
         stack.getOrCreateTag().putInt("ConcoctionDoses", Math.min(type == null ? 1 : type.getMaxDoses(), doses));
+        return stack;
+    }
+    
+    @Nullable
+    public static FuseType getFuseType(@Nonnull ItemStack stack) {
+        return FuseType.fromName(stack.getOrCreateTag().getString("BombFuse"));
+    }
+    
+    @Nonnull
+    public static ItemStack setFuseType(@Nonnull ItemStack stack, @Nullable FuseType fuseType) {
+        if (fuseType != null) {
+            stack.getOrCreateTag().putString("BombFuse", fuseType.getString());
+        }
         return stack;
     }
     

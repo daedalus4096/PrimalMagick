@@ -13,7 +13,8 @@ public enum ConcoctionType implements IStringSerializable {
     WATER(1, "water"),
     TINCTURE(3, "tincture"),
     PHILTER(6, "philter"),
-    ELIXIR(9, "elixir");
+    ELIXIR(9, "elixir"),
+    BOMB(6, "bomb");
     
     private final int maxDoses;
     private final String tag;
@@ -30,6 +31,10 @@ public enum ConcoctionType implements IStringSerializable {
     @Override
     public String getString() {
         return this.tag;
+    }
+    
+    public boolean hasDrinkablePotion() {
+        return this == TINCTURE || this == PHILTER || this == ELIXIR;
     }
     
     @Nullable

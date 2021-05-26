@@ -103,6 +103,6 @@ public class ColorEvents {
         
         event.getItemColors().register((stack, color) -> {
             return color > 0 ? -1 : PotionUtils.getColor(stack);
-        }, ItemsPM.CONCOCTION.get());
+        }, ItemsPM.CONCOCTION.get(), ItemsPM.ALCHEMICAL_BOMB.get());
     }
 }
