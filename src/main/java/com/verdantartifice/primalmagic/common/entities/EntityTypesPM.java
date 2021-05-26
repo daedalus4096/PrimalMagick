@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.AlchemicalBombEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
@@ -90,6 +91,12 @@ public class EntityTypesPM {
             .updateInterval(10)
             .setCustomClientFactory((spawnEntity, world) -> new AppleEntity(EntityTypesPM.APPLE.get(), world))
             .build(PrimalMagic.MODID + ":apple"));
+    public static final RegistryObject<EntityType<AlchemicalBombEntity>> ALCHEMICAL_BOMB = ENTITY_TYPES.register("alchemical_bomb", () -> EntityType.Builder.<AlchemicalBombEntity>create(AlchemicalBombEntity::new, EntityClassification.MISC)
+            .size(0.25F, 0.25F)
+            .trackingRange(4)
+            .updateInterval(10)
+            .setCustomClientFactory((spawnEntity, world) -> new AlchemicalBombEntity(EntityTypesPM.ALCHEMICAL_BOMB.get(), world))
+            .build(PrimalMagic.MODID + ":alchemical_bomb"));
     public static final RegistryObject<EntityType<TreefolkEntity>> TREEFOLK = ENTITY_TYPES.register("treefolk", () -> EntityType.Builder.<TreefolkEntity>create(TreefolkEntity::new, EntityClassification.CREATURE)
             .size(0.6F, 1.95F)
             .trackingRange(8)

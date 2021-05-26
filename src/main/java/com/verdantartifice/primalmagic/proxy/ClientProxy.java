@@ -125,6 +125,9 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.APPLE.get(), (renderManager) -> {
             return new SpriteRenderer<>(renderManager, event.getMinecraftSupplier().get().getItemRenderer());
         });
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.ALCHEMICAL_BOMB.get(), (renderManager) -> {
+            return new SpriteRenderer<>(renderManager, event.getMinecraftSupplier().get().getItemRenderer());
+        });
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.FLYING_CARPET.get(), FlyingCarpetRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.INNER_DEMON.get(), InnerDemonRenderer::new);

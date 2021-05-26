@@ -5,6 +5,7 @@ import java.util.List;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.concoctions.FuseType;
+import com.verdantartifice.primalmagic.common.entities.projectiles.AlchemicalBombEntity;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -55,7 +56,14 @@ public class AlchemicalBombItem extends Item {
             }
         } else {
             worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
-            // TODO Throw bomb
+            
+            // Throw bomb entity
+            AlchemicalBombEntity entity = new AlchemicalBombEntity(worldIn, playerIn);
+            entity.setItem(stack);
+            entity.setDirectionAndMovement(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
+            worldIn.addEntity(entity);
+            
+            // TODO Deduct charge
         }
         return ActionResult.func_233538_a_(stack, worldIn.isRemote());
     }
