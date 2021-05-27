@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.OfferingParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
+import com.verdantartifice.primalmagic.client.fx.particles.PotionExplosionParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.PropMarkerParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellSparkleParticle;
@@ -40,6 +41,7 @@ public class ClientRegistrationEvents {
         mc.particles.registerFactory(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
         mc.particles.registerFactory(ParticleTypesPM.OFFERING.get(), OfferingParticle.Factory::new);
         mc.particles.registerFactory(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
+        mc.particles.registerFactory(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
     }
     
     /**

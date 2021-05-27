@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagic.common.entities.projectiles;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.concoctions.FuseType;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
@@ -12,6 +14,8 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRendersAsItem;
@@ -103,12 +107,21 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
     
     private void detonate(@Nullable Entity struckEntity) {
         // Do explosion effects
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack itemStack = this.getItem();
         this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
         this.world.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosX(), this.getPosY(), this.getPosZ(), 1.0D, 0.0D, 0.0D);
-        // TODO Add potion effect particles to blast (see HugeExplosionParticle and WorldRenderer#playEvent and PotionUtils#getColor)
+        // TODO Move to FxDispatcher
+        Particle p = mc.particles.addParticle(ParticleTypesPM.POTION_EXPLOSION.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 1.0D, 0.0D, 0.0D);
+        if (p != null) {
+            Color c = new Color(PotionUtils.getColor(itemStack));
+            float r = c.getRed() / 255.0F;
+            float g = c.getGreen() / 255.0F;
+            float b = c.getBlue() / 255.0F;
+            p.setColor(r, g, b);
+        }
         
         if (!this.world.isRemote) {
-            ItemStack itemStack = this.getItem();
             Potion potion = PotionUtils.getPotionFromItem(itemStack);
             List<EffectInstance> effects = PotionUtils.getEffectsFromStack(itemStack);
             

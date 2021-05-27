@@ -42,4 +42,5 @@ public class ParticleTypesPM {
         }
     });
     public static final RegistryObject<BasicParticleType> PROP_MARKER = PARTICLE_TYPES.register("prop_marker", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> POTION_EXPLOSION = PARTICLE_TYPES.register("potion_explosion", () -> new BasicParticleType(true));
 }
