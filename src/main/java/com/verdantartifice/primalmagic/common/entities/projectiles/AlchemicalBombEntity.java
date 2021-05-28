@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.PotionExplosionPacket;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
@@ -34,6 +35,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -91,7 +93,10 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
             double my = 0.9D * (result.getFace().getYOffset() == 0 ? 1.0D : -1.0D);
             double mz = result.getFace().getZOffset() == 0 ? 1.0D : -1.0D;
             this.setMotion(this.getMotion().scale(0.7D).mul(mx, my, mz));
-            // TODO Play impact noise
+            if (!this.world.isRemote) {
+                float volume = MathHelper.clamp((float)this.getMotion().length(), 0.0F, 1.0F);
+                this.playSound(SoundsPM.CLANK.get(), volume, 0.8F + (0.4F * this.world.rand.nextFloat()));
+            }
         }
     }
 

@@ -123,5 +123,13 @@
             "primalmagic:treefolk_death1",
             "primalmagic:treefolk_death2"
         ]
+    },
+    "clank": {
+        "category": "master",
+        "sounds": [
+            "primalmagic:clank1",
+            "primalmagic:clank2",
+            "primalmagic:clank3"
+        ]
     }
 }
