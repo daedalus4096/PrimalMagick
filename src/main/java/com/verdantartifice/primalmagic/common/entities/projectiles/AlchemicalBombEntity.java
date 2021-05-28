@@ -109,13 +109,13 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
     private void detonate(@Nullable Entity struckEntity) {
         if (!this.world.isRemote) {
             ItemStack itemStack = this.getItem();
-
-            // Do explosion effects
-            PacketHandler.sendToAllAround(new PotionExplosionPacket(this.getPositionVec(), PotionUtils.getColor(itemStack)), this.world.getDimensionKey(), this.getPosition(), 32.0D);
-
             Potion potion = PotionUtils.getPotionFromItem(itemStack);
             List<EffectInstance> effects = PotionUtils.getEffectsFromStack(itemStack);
-            
+
+            // Do explosion audio visual effects
+            PacketHandler.sendToAllAround(new PotionExplosionPacket(this.getPositionVec(), PotionUtils.getColor(itemStack), potion.hasInstantEffect()), this.world.getDimensionKey(), this.getPosition(), 32.0D);
+
+            // Apply potion effects
             if (potion == Potions.WATER && effects.isEmpty()) {
                 this.applyWater();
             } else if (!effects.isEmpty()) {

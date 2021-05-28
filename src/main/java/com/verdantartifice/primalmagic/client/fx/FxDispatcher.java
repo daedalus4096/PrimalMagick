@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
+import com.verdantartifice.primalmagic.client.fx.particles.PotionExplosionParticleData;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticleData;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
@@ -212,20 +213,20 @@ public class FxDispatcher {
         }
     }
     
-    public void potionExplosion(double x, double y, double z, int color) {
+    public void potionExplosion(double x, double y, double z, int color, boolean isInstant) {
         Color c = new Color(color);
         float r = c.getRed() / 255.0F;
         float g = c.getGreen() / 255.0F;
         float b = c.getBlue() / 255.0F;
-        this.potionExplosion(x, y, z, r, g, b);
+        this.potionExplosion(x, y, z, r, g, b, isInstant);
     }
     
-    public void potionExplosion(double x, double y, double z, float r, float g, float b) {
+    public void potionExplosion(double x, double y, double z, float r, float g, float b, boolean isInstant) {
         Minecraft mc = Minecraft.getInstance();
         World world = this.getWorld();
         world.playSound(x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F, false);
         world.addParticle(ParticleTypes.EXPLOSION_EMITTER, x, y, z, 1.0D, 0.0D, 0.0D);
-        Particle p = mc.particles.addParticle(ParticleTypesPM.POTION_EXPLOSION.get(), x, y, z, 1.0D, 0.0D, 0.0D);
+        Particle p = mc.particles.addParticle(new PotionExplosionParticleData(isInstant), x, y, z, 1.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
         }

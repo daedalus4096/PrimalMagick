@@ -5,7 +5,6 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.MetaParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -18,9 +17,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PotionExplosionParticle extends MetaParticle {
     protected int timeSinceStart;
     protected final int maximumTime = 8;
+    protected final boolean isInstant;
 
-    protected PotionExplosionParticle(ClientWorld world, double x, double y, double z) {
+    protected PotionExplosionParticle(ClientWorld world, double x, double y, double z, boolean isInstant) {
         super(world, x, y, z, 0.0D, 0.0D, 0.0D);
+        this.isInstant = isInstant;
     }
 
     @Override
@@ -30,8 +31,7 @@ public class PotionExplosionParticle extends MetaParticle {
             double x = this.posX + (this.rand.nextDouble() - this.rand.nextDouble()) * 4.0D;
             double y = this.posY + (this.rand.nextDouble() - this.rand.nextDouble()) * 4.0D;
             double z = this.posZ + (this.rand.nextDouble() - this.rand.nextDouble()) * 4.0D;
-            // TODO Determine between Effect or InstantEffect particle type
-            Particle p = mc.particles.addParticle(ParticleTypes.EFFECT, x, y, z, (double)this.timeSinceStart / (double)this.maximumTime, 0.0D, 0.0D);
+            Particle p = mc.particles.addParticle(this.isInstant ? ParticleTypes.INSTANT_EFFECT : ParticleTypes.EFFECT, x, y, z, (double)this.timeSinceStart / (double)this.maximumTime, 0.0D, 0.0D);
             if (p != null) {
                 p.setColor(this.particleRed, this.particleGreen, this.particleBlue);
             }
@@ -43,10 +43,10 @@ public class PotionExplosionParticle extends MetaParticle {
     }
     
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType> {
+    public static class Factory implements IParticleFactory<PotionExplosionParticleData> {
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new PotionExplosionParticle(worldIn, x, y, z);
+        public Particle makeParticle(PotionExplosionParticleData typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new PotionExplosionParticle(worldIn, x, y, z, typeIn.isInstant());
         }
     }
 }

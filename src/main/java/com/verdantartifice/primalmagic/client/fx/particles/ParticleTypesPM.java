@@ -42,5 +42,10 @@ public class ParticleTypesPM {
         }
     });
     public static final RegistryObject<BasicParticleType> PROP_MARKER = PARTICLE_TYPES.register("prop_marker", () -> new BasicParticleType(true));
-    public static final RegistryObject<BasicParticleType> POTION_EXPLOSION = PARTICLE_TYPES.register("potion_explosion", () -> new BasicParticleType(true));
+    public static final RegistryObject<ParticleType<PotionExplosionParticleData>> POTION_EXPLOSION = PARTICLE_TYPES.register("potion_explosion", () -> new ParticleType<PotionExplosionParticleData>(false, PotionExplosionParticleData.DESERIALIZER) {
+        @Override
+        public Codec<PotionExplosionParticleData> func_230522_e_() {
+            return PotionExplosionParticleData.CODEC;
+        }
+    });
 }
