@@ -64,7 +64,17 @@ public class AlchemicalBombItem extends Item {
             entity.setDirectionAndMovement(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
             worldIn.addEntity(entity);
             
-            // TODO Deduct charge
+            // TODO Increment stat?
+
+            // Deduct charge
+            if (!playerIn.abilities.isCreativeMode) {
+                int charges = ConcoctionUtils.getCurrentDoses(stack);
+                if (charges <= 1) {
+                    stack.shrink(1);
+                } else {
+                    ConcoctionUtils.setCurrentDoses(stack, charges - 1);
+                }
+            }
         }
         return ActionResult.func_233538_a_(stack, worldIn.isRemote());
     }
