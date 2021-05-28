@@ -21,7 +21,7 @@ public class ConcoctionUtils {
     }
     
     public static ItemStack newBomb(Potion potion, FuseType fuse) {
-        return setFuseType(newConcoction(potion, ConcoctionType.BOMB), fuse);
+        return setFuseType(setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.ALCHEMICAL_BOMB.get()), potion), ConcoctionType.BOMB), fuse);
     }
     
     @Nullable

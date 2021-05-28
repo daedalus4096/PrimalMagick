@@ -42,7 +42,7 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public ItemStack getDefaultInstance() {
-        return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(super.getDefaultInstance(), Potions.WATER), ConcoctionType.WATER), FuseType.MEDIUM);
+        return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(super.getDefaultInstance(), Potions.WATER), ConcoctionType.BOMB), FuseType.MEDIUM);
     }
 
     @Override

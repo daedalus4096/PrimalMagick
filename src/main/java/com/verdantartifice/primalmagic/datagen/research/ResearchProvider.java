@@ -993,6 +993,31 @@ public class ResearchProvider implements IDataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "fire_resistance_elixir"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "long_fire_resistance_elixir")).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("CONCOCTING_BOMBS", discipline).parent("MASTER_MAGITECH").parent("CONCOCTING_TINCTURES")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(new ResourceLocation(PrimalMagic.MODID, "night_vision_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_night_vision_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "invisibility_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_invisibility_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "leaping_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_leaping_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "strong_leaping_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "swiftness_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "long_swiftness_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strong_swiftness_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "turtle_master_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_turtle_master_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "strong_turtle_master_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "water_breathing_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "long_water_breathing_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strength_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "long_strength_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strong_strength_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "slow_falling_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_slow_falling_bomb")).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "healing_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strong_healing_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "regeneration_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_regeneration_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "strong_regeneration_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "harming_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "strong_harming_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "poison_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "long_poison_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "strong_poison_bomb")).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "fire_resistance_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_fire_resistance_bomb")).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "slowness_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "long_slowness_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "strong_slowness_bomb"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "weakness_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "long_weakness_bomb")).build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {

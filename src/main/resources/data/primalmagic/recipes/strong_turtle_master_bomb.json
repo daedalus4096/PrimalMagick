@@ -1,0 +1,32 @@
+{
+  "type": "primalmagic:concocting",
+  "research": "CONCOCTING_BOMBS",
+  "mana": {
+    "infernal": 3
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagic:alchemical_bomb",
+      "count": 1,
+      "nbt": "{ConcoctionType:\"bomb\",Potion:\"minecraft:water\",BombFuse:\"medium\",ConcoctionDoses:6}"
+    },
+    {
+      "item": "primalmagic:essence_shard_sea"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:turtle_helmet"
+    },
+    {
+      "tag": "forge:dusts/glowstone"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:alchemical_bomb",
+    "count": 1,
+    "nbt": "{BombFuse:\"medium\",ConcoctionType:\"bomb\",Potion:\"minecraft:strong_turtle_master\",ConcoctionDoses:6}"
+  }
+}

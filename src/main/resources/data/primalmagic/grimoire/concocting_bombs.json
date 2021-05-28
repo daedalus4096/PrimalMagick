@@ -1,0 +1,85 @@
+{
+  "key": "CONCOCTING_BOMBS",
+  "name": "primalmagic.research.concocting_bombs.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "MASTER_MAGITECH",
+    "CONCOCTING_TINCTURES"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.concocting_bombs.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagic.research.concocting_bombs.text.stage.2",
+      "recipes": [
+        "primalmagic:night_vision_bomb",
+        "primalmagic:long_night_vision_bomb",
+        "primalmagic:invisibility_bomb",
+        "primalmagic:long_invisibility_bomb",
+        "primalmagic:leaping_bomb",
+        "primalmagic:long_leaping_bomb",
+        "primalmagic:strong_leaping_bomb",
+        "primalmagic:swiftness_bomb",
+        "primalmagic:long_swiftness_bomb",
+        "primalmagic:strong_swiftness_bomb",
+        "primalmagic:turtle_master_bomb",
+        "primalmagic:long_turtle_master_bomb",
+        "primalmagic:strong_turtle_master_bomb",
+        "primalmagic:water_breathing_bomb",
+        "primalmagic:long_water_breathing_bomb",
+        "primalmagic:strength_bomb",
+        "primalmagic:long_strength_bomb",
+        "primalmagic:strong_strength_bomb",
+        "primalmagic:slow_falling_bomb",
+        "primalmagic:long_slow_falling_bomb"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.concocting_bombs.text.addenda.1",
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "recipes": [
+        "primalmagic:healing_bomb",
+        "primalmagic:strong_healing_bomb",
+        "primalmagic:regeneration_bomb",
+        "primalmagic:long_regeneration_bomb",
+        "primalmagic:strong_regeneration_bomb",
+        "primalmagic:harming_bomb",
+        "primalmagic:strong_harming_bomb",
+        "primalmagic:poison_bomb",
+        "primalmagic:long_poison_bomb",
+        "primalmagic:strong_poison_bomb"
+      ]
+    },
+    {
+      "text": "primalmagic.research.concocting_bombs.text.addenda.2",
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "recipes": [
+        "primalmagic:fire_resistance_bomb",
+        "primalmagic:long_fire_resistance_bomb"
+      ]
+    },
+    {
+      "text": "primalmagic.research.concocting_bombs.text.addenda.3",
+      "required_research": [
+        "t_discover_void"
+      ],
+      "recipes": [
+        "primalmagic:slowness_bomb",
+        "primalmagic:long_slowness_bomb",
+        "primalmagic:strong_slowness_bomb",
+        "primalmagic:weakness_bomb",
+        "primalmagic:long_weakness_bomb"
+      ]
+    }
+  ]
+}
