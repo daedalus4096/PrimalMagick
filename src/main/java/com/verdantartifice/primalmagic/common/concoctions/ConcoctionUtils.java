@@ -70,4 +70,8 @@ public class ConcoctionUtils {
         }
         return false;
     }
+    
+    public static boolean isBomb(@Nonnull ItemStack stack) {
+        return stack.getItem() == ItemsPM.ALCHEMICAL_BOMB.get();
+    }
 }

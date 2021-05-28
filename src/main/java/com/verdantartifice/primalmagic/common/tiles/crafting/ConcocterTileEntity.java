@@ -8,6 +8,8 @@ import com.verdantartifice.primalmagic.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
+import com.verdantartifice.primalmagic.common.concoctions.FuseType;
 import com.verdantartifice.primalmagic.common.containers.ConcocterContainer;
 import com.verdantartifice.primalmagic.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
@@ -168,17 +170,21 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
                 }
             }
 
-            Inventory tempInv = new Inventory(MAX_INPUT_ITEMS);
+            Inventory realInv = new Inventory(MAX_INPUT_ITEMS);
+            Inventory testInv = new Inventory(MAX_INPUT_ITEMS);
             for (int index = 0; index < MAX_INPUT_ITEMS; index++) {
-                tempInv.setInventorySlotContents(index, this.items.get(index));
+                ItemStack invStack = this.items.get(index);
+                realInv.setInventorySlotContents(index, invStack);
+                // Don't consider fuse length when testing item inputs for recipe determination
+                testInv.setInventorySlotContents(index, ConcoctionUtils.isBomb(invStack) ? ConcoctionUtils.setFuseType(invStack.copy(), FuseType.MEDIUM) : invStack);
             }
-            IConcoctingRecipe recipe = this.world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.CONCOCTING, tempInv, this.world).orElse(null);
-            if (this.canConcoct(tempInv, recipe)) {
+            IConcoctingRecipe recipe = this.world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.CONCOCTING, testInv, this.world).orElse(null);
+            if (this.canConcoct(realInv, recipe)) {
                 this.cookTime++;
                 if (this.cookTime >= this.cookTimeTotal) {
                     this.cookTime = 0;
                     this.cookTimeTotal = this.getCookTimeTotal();
-                    this.doConcoction(tempInv, recipe);
+                    this.doConcoction(realInv, recipe);
                     shouldMarkDirty = true;
                 }
             } else {
