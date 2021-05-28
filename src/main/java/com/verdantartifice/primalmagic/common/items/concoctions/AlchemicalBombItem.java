@@ -6,6 +6,8 @@ import com.verdantartifice.primalmagic.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.concoctions.FuseType;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AlchemicalBombEntity;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -64,7 +66,8 @@ public class AlchemicalBombItem extends Item {
             entity.setDirectionAndMovement(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
             worldIn.addEntity(entity);
             
-            // TODO Increment stat?
+            // Increment stat
+            StatsManager.incrementValue(playerIn, StatsPM.CONCOCTIONS_USED);
 
             // Deduct charge
             if (!playerIn.abilities.isCreativeMode) {

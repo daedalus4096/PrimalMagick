@@ -5,6 +5,8 @@ import java.util.List;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -93,7 +95,7 @@ public class ConcoctionItem extends Item {
         }
         
         if (player != null) {
-            // TODO Increment stat?
+            StatsManager.incrementValue(player, StatsPM.CONCOCTIONS_USED);
             if (!player.abilities.isCreativeMode) {
                 int doses = ConcoctionUtils.getCurrentDoses(stack);
                 if (doses <= 1) {
