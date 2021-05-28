@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerP
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSoundPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.PotionExplosionPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.PropMarkerPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.RemovePropMarkerPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
@@ -94,6 +95,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, RemovePropMarkerPacket.class, RemovePropMarkerPacket::encode, RemovePropMarkerPacket::decode, RemovePropMarkerPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncCompanionsPacket.class, SyncCompanionsPacket::encode, SyncCompanionsPacket::decode, SyncCompanionsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, ScanEntityPacket.class, ScanEntityPacket::encode, ScanEntityPacket::decode, ScanEntityPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, PotionExplosionPacket.class, PotionExplosionPacket::encode, PotionExplosionPacket::decode, PotionExplosionPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

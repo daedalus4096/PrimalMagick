@@ -1,21 +1,19 @@
 package com.verdantartifice.primalmagic.common.entities.projectiles;
 
-import java.awt.Color;
 import java.util.List;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.concoctions.FuseType;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.PotionExplosionPacket;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRendersAsItem;
@@ -24,7 +22,6 @@ import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
@@ -33,7 +30,6 @@ import net.minecraft.potion.Potions;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -106,22 +102,12 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
     }
     
     private void detonate(@Nullable Entity struckEntity) {
-        // Do explosion effects
-        Minecraft mc = Minecraft.getInstance();
-        ItemStack itemStack = this.getItem();
-        this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
-        this.world.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosX(), this.getPosY(), this.getPosZ(), 1.0D, 0.0D, 0.0D);
-        // TODO Move to FxDispatcher
-        Particle p = mc.particles.addParticle(ParticleTypesPM.POTION_EXPLOSION.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 1.0D, 0.0D, 0.0D);
-        if (p != null) {
-            Color c = new Color(PotionUtils.getColor(itemStack));
-            float r = c.getRed() / 255.0F;
-            float g = c.getGreen() / 255.0F;
-            float b = c.getBlue() / 255.0F;
-            p.setColor(r, g, b);
-        }
-        
         if (!this.world.isRemote) {
+            ItemStack itemStack = this.getItem();
+
+            // Do explosion effects
+            PacketHandler.sendToAllAround(new PotionExplosionPacket(this.getPositionVec(), PotionUtils.getColor(itemStack)), this.world.getDimensionKey(), this.getPosition(), 32.0D);
+
             Potion potion = PotionUtils.getPotionFromItem(itemStack);
             List<EffectInstance> effects = PotionUtils.getEffectsFromStack(itemStack);
             

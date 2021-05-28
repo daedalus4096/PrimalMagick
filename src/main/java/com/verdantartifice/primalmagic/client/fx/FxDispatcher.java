@@ -16,6 +16,7 @@ import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -51,7 +52,7 @@ public class FxDispatcher {
     	World world = this.getWorld();
         Random rng = world.rand;
         if (sound) {
-            getWorld().playSound(x, y, z, SoundsPM.POOF.get(), SoundCategory.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
+            this.getWorld().playSound(x, y, z, SoundsPM.POOF.get(), SoundCategory.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
         }
         for (int index = 0; index < 8 + rng.nextInt(3); index++) {
             double dx = (rng.nextFloat() * 0.05D) * (rng.nextBoolean() ? 1 : -1);
@@ -206,6 +207,25 @@ public class FxDispatcher {
     public void crucibleBubble(double x, double y, double z, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particles.addParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
+    
+    public void potionExplosion(double x, double y, double z, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.potionExplosion(x, y, z, r, g, b);
+    }
+    
+    public void potionExplosion(double x, double y, double z, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        World world = this.getWorld();
+        world.playSound(x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F, false);
+        world.addParticle(ParticleTypes.EXPLOSION_EMITTER, x, y, z, 1.0D, 0.0D, 0.0D);
+        Particle p = mc.particles.addParticle(ParticleTypesPM.POTION_EXPLOSION.get(), x, y, z, 1.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
         }
