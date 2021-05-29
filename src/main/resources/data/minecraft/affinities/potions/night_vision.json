@@ -2,6 +2,6 @@
   "type": "potion_bonus",
   "target": "minecraft:night_vision",
   "bonus": {
-    "sun": 2
+    "moon": 2
   }
 }
