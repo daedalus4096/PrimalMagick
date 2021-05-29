@@ -13,7 +13,20 @@
       ]
     },
     {
-      "text": "primalmagic.research.expert_manaweaving.text.stage.2"
+      "text": "primalmagic.research.expert_manaweaving.text.stage.2",
+      "recipes": [
+        "primalmagic:marble_enchanted",
+        "primalmagic:marble_enchanted_brick_slab",
+        "primalmagic:marble_enchanted_brick_stairs",
+        "primalmagic:marble_enchanted_brick_wall",
+        "primalmagic:marble_enchanted_bricks",
+        "primalmagic:marble_enchanted_chiseled",
+        "primalmagic:marble_enchanted_pillar",
+        "primalmagic:marble_enchanted_runed",
+        "primalmagic:marble_enchanted_slab",
+        "primalmagic:marble_enchanted_stairs",
+        "primalmagic:marble_enchanted_wall"
+      ]
     }
   ],
   "addenda": []

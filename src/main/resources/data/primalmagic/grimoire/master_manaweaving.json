@@ -14,7 +14,20 @@
       ]
     },
     {
-      "text": "primalmagic.research.master_manaweaving.text.stage.2"
+      "text": "primalmagic.research.master_manaweaving.text.stage.2",
+      "recipes": [
+        "primalmagic:marble_smoked",
+        "primalmagic:marble_smoked_brick_slab",
+        "primalmagic:marble_smoked_brick_stairs",
+        "primalmagic:marble_smoked_brick_wall",
+        "primalmagic:marble_smoked_bricks",
+        "primalmagic:marble_smoked_chiseled",
+        "primalmagic:marble_smoked_pillar",
+        "primalmagic:marble_smoked_runed",
+        "primalmagic:marble_smoked_slab",
+        "primalmagic:marble_smoked_stairs",
+        "primalmagic:marble_smoked_wall"
+      ]
     }
   ],
   "addenda": []

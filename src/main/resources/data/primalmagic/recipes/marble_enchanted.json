@@ -1,6 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
-  "research": "FIRST_STEPS",
+  "research": "EXPERT_MANAWEAVING",
   "mana": {
     "earth": 1,
     "sea": 1,

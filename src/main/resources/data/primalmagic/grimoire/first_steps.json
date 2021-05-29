@@ -16,8 +16,7 @@
     {
       "text": "primalmagic.research.first_steps.text.stage.2",
       "recipes": [
-        "primalmagic:mundane_wand",
-        "primalmagic:marble_enchanted"
+        "primalmagic:mundane_wand"
       ]
     }
   ],

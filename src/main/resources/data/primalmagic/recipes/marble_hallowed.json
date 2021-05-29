@@ -1,6 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
-  "research": "t_discover_hallowed",
+  "research": "SUPREME_MANAWEAVING",
   "mana": {
     "hallowed": 5
   },
