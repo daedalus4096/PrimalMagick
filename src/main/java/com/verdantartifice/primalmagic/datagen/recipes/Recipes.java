@@ -570,7 +570,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), 6)
             .patternLine("MMM")
-            .key('M', BlocksPM.MARBLE_ENCHANTED.get())
+            .key('M', BlocksPM.MARBLE_ENCHANTED_BRICKS.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_ENCHANTED.get()), BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), 2)
@@ -799,7 +799,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 6)
             .patternLine("MMM")
-            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .key('M', BlocksPM.MARBLE_HALLOWED_BRICKS.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(BlocksPM.MARBLE_HALLOWED.get()), BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 2)
