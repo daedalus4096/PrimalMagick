@@ -9,6 +9,7 @@
     {
       "text": "primalmagic.research.master_sorcery.text.stage.1",
       "required_research": [
+        "t_discover_forbidden",
         "t_spells_cast_master",
         "t_spell_cost_master"
       ]

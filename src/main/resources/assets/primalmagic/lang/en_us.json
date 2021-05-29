@@ -1674,6 +1674,8 @@
     "primalmagic.research.t_dummy.text": "Research Discovery",
     "primalmagic.research.b_dummy.text": "Item Discovery",
     "primalmagic.research.u_dummy.text": "Unknown Discovery",
+    "primalmagic.research.t_discover_forbidden.text": "Discover a source of forbidden magic",
+    "primalmagic.research.t_discover_hallowed.text": "Discover the secrets of the universe",
     "primalmagic.research.t_spells_cast_expert.text": "Cast 10 spells",
     "primalmagic.research.t_spells_cast_master.text": "Cast 50 spells",
     "primalmagic.research.t_spells_cast_supreme.text": "Cast 250 spells",

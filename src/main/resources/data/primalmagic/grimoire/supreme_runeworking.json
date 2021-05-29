@@ -9,6 +9,7 @@
     {
       "text": "primalmagic.research.supreme_runeworking.text.stage.1",
       "required_research": [
+        "t_discover_hallowed",
         "b_crafted_runeworking_supreme",
         "t_items_runescribed_supreme"
       ]

@@ -9,6 +9,7 @@
     {
       "text": "primalmagic.research.master_alchemy.text.stage.1",
       "required_research": [
+        "t_discover_forbidden",
         "b_crafted_alchemy_master"
       ]
     },

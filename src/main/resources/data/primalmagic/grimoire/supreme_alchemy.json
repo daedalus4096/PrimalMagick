@@ -9,6 +9,7 @@
     {
       "text": "primalmagic.research.supreme_alchemy.text.stage.1",
       "required_research": [
+        "t_discover_hallowed",
         "b_crafted_alchemy_supreme"
       ]
     },

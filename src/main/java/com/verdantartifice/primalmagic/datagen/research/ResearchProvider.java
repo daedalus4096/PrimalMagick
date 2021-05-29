@@ -208,11 +208,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_MANAWEAVING", discipline).parent("EXPERT_MANAWEAVING")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_manaweaving_master").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_manaweaving_master").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MANAWEAVING", discipline).parent("MASTER_MANAWEAVING")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_manaweaving_supreme").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_manaweaving_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CHARGER", discipline).parent("BASIC_MANAWEAVING")
@@ -333,11 +333,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_ALCHEMY", discipline).parent("EXPERT_ALCHEMY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_alchemy_master").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_alchemy_master").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_ALCHEMY", discipline).parent("MASTER_ALCHEMY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_alchemy_supreme").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_alchemy_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("STONEMELDING", discipline).parent("BASIC_ALCHEMY")
@@ -571,11 +571,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_SORCERY", discipline).parent("EXPERT_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_spells_cast_master").requiredResearch("t_spell_cost_master").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("t_spells_cast_master").requiredResearch("t_spell_cost_master").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_SORCERY", discipline).parent("MASTER_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_INSCRIPTION", discipline).parent("BASIC_SORCERY").parent("ADVANCED_WANDMAKING")
@@ -669,11 +669,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_RUNEWORKING", discipline).parent("EXPERT_RUNEWORKING")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_runeworking_master").requiredResearch("t_items_runescribed_master").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_runeworking_master").requiredResearch("t_items_runescribed_master").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", discipline).parent("MASTER_RUNEWORKING")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("RUNE_EARTH", discipline).parent("BASIC_RUNEWORKING")
@@ -768,11 +768,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_RITUAL", discipline).parent("EXPERT_RITUAL")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_rituals_completed_master").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("t_rituals_completed_master").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).parent("MASTER_RITUAL")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_rituals_completed_supreme").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_rituals_completed_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("MANAFRUIT", discipline).parent("BASIC_RITUAL").parent("MANA_SALTS").parent("RITUAL_CANDLES")
@@ -905,11 +905,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_MAGITECH", discipline).parent("EXPERT_MAGITECH")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_master").requiredResearch("b_scan_hexium").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_magitech_master").requiredResearch("b_scan_hexium").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).parent("MASTER_MAGITECH")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("HONEY_EXTRACTOR", discipline).parent("BASIC_MAGITECH")
