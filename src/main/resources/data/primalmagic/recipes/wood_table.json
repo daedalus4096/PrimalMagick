@@ -1,5 +1,6 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "FIRST_STEPS@2",
   "pattern": [
     "SSS",
     " P ",

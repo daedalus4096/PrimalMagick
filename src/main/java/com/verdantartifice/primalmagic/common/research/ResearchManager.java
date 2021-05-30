@@ -326,7 +326,13 @@ public class ResearchManager {
         }
         if (points > 0) {
             int levelsAfter = knowledge.getKnowledge(type);
-            for (int index = 0; index < (levelsAfter - levelsBefore); index++) {
+            int delta = levelsAfter - levelsBefore;
+            if (type == IPlayerKnowledge.KnowledgeType.OBSERVATION) {
+                StatsManager.incrementValue(player, StatsPM.OBSERVATIONS_MADE, delta);
+            } else if (type == IPlayerKnowledge.KnowledgeType.THEORY) {
+                StatsManager.incrementValue(player, StatsPM.THEORIES_FORMED, delta);
+            }
+            for (int index = 0; index < delta; index++) {
                 // TODO send knowledge gain packet to player to show client effects for each level gained
             }
         }

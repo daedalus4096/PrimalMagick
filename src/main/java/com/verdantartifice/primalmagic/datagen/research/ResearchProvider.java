@@ -81,13 +81,12 @@ public class ResearchProvider implements IDataProvider {
     protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "BASICS";
         ResearchEntryBuilder.entry("FIRST_STEPS", discipline)
-            .stage(ResearchStageBuilder.stage().requiredCraftStack(ItemsPM.ARCANE_WORKBENCH.get()).recipe("mundane_wand").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MUNDANE_WAND.get()).build())
+            .stage(ResearchStageBuilder.stage().requiredCraftStack(ItemsPM.ARCANE_WORKBENCH.get()).recipe(ItemsPM.MUNDANE_WAND.get()).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_observations_made_basics").recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get())
+                    .recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("KNOWLEDGE_TYPES", discipline).parent("FIRST_STEPS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("THEORYCRAFTING", discipline).parent("KNOWLEDGE_TYPES")
+        ResearchEntryBuilder.entry("THEORYCRAFTING", discipline).parent("FIRST_STEPS")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.STICK).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).build())
             .build(consumer);

@@ -1,5 +1,6 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "FIRST_STEPS@2",
   "ingredients": [
     {
       "item": "primalmagic:wood_table"

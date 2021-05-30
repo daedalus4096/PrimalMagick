@@ -12,6 +12,9 @@ public class StatsPM {
     public static final Stat GRIMOIRE_READ = Stat.create("grimoire_read", IStatFormatter.DEFAULT, false);
     public static final Stat ITEMS_ANALYZED = Stat.create("items_analyzed", IStatFormatter.DEFAULT, false);
     public static final Stat ENTITIES_ANALYZED = Stat.create("entities_analyzed", IStatFormatter.DEFAULT, false);
+    public static final Stat OBSERVATIONS_MADE = Stat.create("observations_made", IStatFormatter.DEFAULT, false);
+    public static final Stat RESEARCH_PROJECTS_COMPLETED = Stat.create("research_projects_completed", IStatFormatter.DEFAULT, false);
+    public static final Stat THEORIES_FORMED = Stat.create("theories_formed", IStatFormatter.DEFAULT, false);
     public static final Stat CRAFTED_MANAWEAVING = Stat.create("crafted_manaweaving", IStatFormatter.DEFAULT, false);
     public static final Stat CRAFTED_ALCHEMY = Stat.create("crafted_alchemy", IStatFormatter.DEFAULT, false);
     public static final Stat CRAFTED_SORCERY = Stat.create("crafted_sorcery", IStatFormatter.DEFAULT, false);
@@ -21,7 +24,6 @@ public class StatsPM {
     public static final Stat SPELLS_CAST = Stat.create("spells_cast", IStatFormatter.DEFAULT, false);
     public static final Stat SPELLS_CRAFTED = Stat.create("spells_crafted", IStatFormatter.DEFAULT, false);
     public static final Stat SPELLS_CRAFTED_MAX_COST = Stat.create("spells_crafted_max_cost", IStatFormatter.DEFAULT, false);
-    public static final Stat RESEARCH_PROJECTS_COMPLETED = Stat.create("research_projects_completed", IStatFormatter.DEFAULT, false);
     public static final Stat ITEMS_RUNESCRIBED = Stat.create("items_runescribed", IStatFormatter.DEFAULT, false);
     public static final Stat RITUALS_COMPLETED = Stat.create("rituals_completed", IStatFormatter.DEFAULT, false);
     public static final Stat CONCOCTIONS_USED = Stat.create("concoctions_used", IStatFormatter.DEFAULT, false);

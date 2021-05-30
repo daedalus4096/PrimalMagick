@@ -3,7 +3,7 @@
   "name": "primalmagic.research.theorycrafting.title",
   "discipline": "BASICS",
   "parents": [
-    "KNOWLEDGE_TYPES"
+    "FIRST_STEPS"
   ],
   "stages": [
     {

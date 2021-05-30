@@ -55,5 +55,6 @@ public class InitStats {
         StatTriggers.register(StatsPM.ITEMS_RUNESCRIBED, 50, SimpleResearchKey.parse("t_items_runescribed_supreme"));
         StatTriggers.register(StatsPM.RESEARCH_PROJECTS_COMPLETED, 10, SimpleResearchKey.parse("t_research_projects_completed"));
         StatTriggers.register(StatsPM.ITEMS_ANALYZED, 25, SimpleResearchKey.parse("t_items_analyzed"));
+        StatTriggers.register(StatsPM.OBSERVATIONS_MADE, 1, SimpleResearchKey.parse("t_observations_made_basics"));
     }
 }
