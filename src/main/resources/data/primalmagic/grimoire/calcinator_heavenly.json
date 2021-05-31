@@ -4,6 +4,7 @@
   "discipline": "ALCHEMY",
   "parents": [
     "SUPREME_ALCHEMY",
+    "SUPREME_MANAWEAVING",
     "CLUSTER_SYNTHESIS",
     "CALCINATOR_FORBIDDEN",
     "t_discover_hallowed"

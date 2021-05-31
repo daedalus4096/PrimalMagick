@@ -4,6 +4,7 @@
   "discipline": "ALCHEMY",
   "parents": [
     "MASTER_ALCHEMY",
+    "MASTER_MANAWEAVING",
     "CRYSTAL_SYNTHESIS",
     "CALCINATOR_ENCHANTED",
     "t_discover_blood",

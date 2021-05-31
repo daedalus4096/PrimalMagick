@@ -4,6 +4,7 @@
   "discipline": "ALCHEMY",
   "parents": [
     "EXPERT_ALCHEMY",
+    "EXPERT_MANAWEAVING",
     "SHARD_SYNTHESIS",
     "CALCINATOR_BASIC"
   ],
