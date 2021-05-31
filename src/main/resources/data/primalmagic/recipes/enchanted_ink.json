@@ -1,6 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
-  "research": "THEORYCRAFTING",
+  "research": "THEORYCRAFTING@2",
   "ingredients": [
     {
       "item": "minecraft:glass_bottle"

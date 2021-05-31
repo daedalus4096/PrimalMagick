@@ -117,18 +117,18 @@ public class Recipes extends RecipeProvider {
             .addIngredient(BlocksPM.WOOD_TABLE.get())
             .addIngredient(Items.BOOK)
             .addIngredient(Items.PAPER)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING@2")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENCHANTED_INK.get())
             .addIngredient(Items.GLASS_BOTTLE)
             .addIngredient(Tags.Items.DYES_BLACK)
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING@2")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get())
             .addIngredient(ItemsPM.ENCHANTED_INK.get())
             .addIngredient(Tags.Items.FEATHERS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING@2")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SEASCRIBE_PEN.get())
             .patternLine(" GP")

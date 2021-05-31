@@ -1,6 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
-  "research": "THEORYCRAFTING",
+  "research": "THEORYCRAFTING@2",
   "ingredients": [
     {
       "item": "primalmagic:enchanted_ink"

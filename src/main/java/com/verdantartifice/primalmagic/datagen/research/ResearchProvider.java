@@ -87,7 +87,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("THEORYCRAFTING", discipline).parent("FIRST_STEPS")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.STICK).build())
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredCraftStack(ItemsPM.RESEARCH_TABLE.get()).requiredCraftStack(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).recipe(ItemsPM.RESEARCH_TABLE.get())
+                    .recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_theories_formed_basics").recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get())
+                    .recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("ATTUNEMENTS", discipline).parent("FIRST_STEPS")
