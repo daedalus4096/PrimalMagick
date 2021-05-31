@@ -908,40 +908,40 @@
     "primalmagic.research.cryotreatment.text.stage.2": "Well, will you look at that.  It worked!<BR>Sprinkling a handful of sea dust into a bucket of water instantly freezes it into pure ice.  And doing the same with a bucket of lava hardens it into obsidian!<BR>Magic is so cool!",
     
     "primalmagic.research.sanguine_crucible.title": "Sanguine Crucible",
-    "primalmagic.research.sanguine_crucible.text.stage.1": "Sanguine crucible: lorem ipsum",
-    "primalmagic.research.sanguine_crucible.text.stage.2": "Sanguine crucible research complete!",
+    "primalmagic.research.sanguine_crucible.text.stage.1": "I've learned a spell to conjure random animal life, but that isn't good enough for me.  I want more control over the types of life I create.  And I need more than simple livestock!<BR>This will require a deep understanding of blood magic and alchemy, but I am confident in my abilities.",
+    "primalmagic.research.sanguine_crucible.text.stage.2": "It's alive!  It's alive!  Well, it will be shortly, thanks to my new Sanguine Crucible.<BR>The crucible is made of pure hexium, and infused with a startling amount of magic.  A lesser material would never be able to contain this kind of power.  Regardless, the crucible provides its own heat and slowly fills itself with... let's just call it fluid; it doesn't bear to give that too much thought.<BR>The crucible is capable of spawning almost any kind of life I can imagine, at a price.  Configuring the crucible so that it knows what to spawn requires a Sanguine Core; I know how to make a blank one now, but attuning one to a specific creature type will require more research.<BR>In addition, animating that spawned life requires souls in the form of soul gems.  Thankfully, I already know the spell to acquire those.<BR>Once I have an attuned Sanguine Core and the necessary amount of soul gems, I will need to use the core on the crucible to slot it in place, and then throw the gems into the bubbling fluid.  A few seconds later, I'll be face to face with a spawned creature to do with as I see fit.",
     
     "primalmagic.research.sanguine_core_land_animals.title": "Sanguine Cores: Land Animals",
-    "primalmagic.research.sanguine_core_land_animals.text.stage.1": "Sanguine cores - land animals: lorem ipsum",
-    "primalmagic.research.sanguine_core_land_animals.text.stage.2": "Sanguine cores - land animals research complete!",
+    "primalmagic.research.sanguine_core_land_animals.text.stage.1": "Most of the creatures that I can summon will be those of the land, simple animals.  But simple can still be valuable.",
+    "primalmagic.research.sanguine_core_land_animals.text.stage.2": "I now know how to attune a Sanguine Core to simple land animal life.",
     
     "primalmagic.research.sanguine_core_sea_creatures.title": "Sanguine Cores: Sea Creatures",
-    "primalmagic.research.sanguine_core_sea_creatures.text.stage.1": "Sanguine cores - sea creatures: lorem ipsum",
-    "primalmagic.research.sanguine_core_sea_creatures.text.stage.2": "Sanguine cores - sea creatures research complete!",
+    "primalmagic.research.sanguine_core_sea_creatures.text.stage.1": "The creatures of the sea and the cold require their own type of Sanguine Core attunement.",
+    "primalmagic.research.sanguine_core_sea_creatures.text.stage.2": "I now know how to attune a Sanguine Core to sea creature life.",
     
     "primalmagic.research.sanguine_core_flying_creatures.title": "Sanguine Cores: Flying Creatures",
-    "primalmagic.research.sanguine_core_flying_creatures.text.stage.1": "Sanguine cores - flying creatures: lorem ipsum",
-    "primalmagic.research.sanguine_core_flying_creatures.text.stage.2": "Sanguine cores - flying creatures research complete!",
+    "primalmagic.research.sanguine_core_flying_creatures.text.stage.1": "I may not have encountered many flying creatures, but I may still want to spawn them with my Sanguine Crucible.",
+    "primalmagic.research.sanguine_core_flying_creatures.text.stage.2": "I now know how to attune a Sanguine Core to flying creature life.",
     
     "primalmagic.research.sanguine_core_plants.title": "Sanguine Cores: Plants",
-    "primalmagic.research.sanguine_core_plants.text.stage.1": "Sanguine cores - plants: lorem ipsum",
-    "primalmagic.research.sanguine_core_plants.text.stage.2": "Sanguine cores - plants research complete!",
+    "primalmagic.research.sanguine_core_plants.text.stage.1": "Some of the strangest life in this world takes the form of animated plants and fungus.  I desire to spawn them as well.",
+    "primalmagic.research.sanguine_core_plants.text.stage.2": "I now know how to attune a Sanguine Core to animated plant and fungal life.",
     
     "primalmagic.research.sanguine_core_undead.title": "Sanguine Cores: Undead",
-    "primalmagic.research.sanguine_core_undead.text.stage.1": "Sanguine cores - undead: lorem ipsum",
-    "primalmagic.research.sanguine_core_undead.text.stage.2": "Sanguine cores - undead research complete!",
+    "primalmagic.research.sanguine_core_undead.text.stage.1": "Ah, the loathsome undead.  If only my Sanguine Crucible would let me control them as well as spawn them.  Alas, I will have to settle for spawning them as hostile entities.",
+    "primalmagic.research.sanguine_core_undead.text.stage.2": "I now know how to attune a Sanguine Core to un-life.",
     
     "primalmagic.research.sanguine_core_sapients.title": "Sanguine Cores: Sapients",
-    "primalmagic.research.sanguine_core_sapients.text.stage.1": "Sanguine cores - sapients: lorem ipsum",
-    "primalmagic.research.sanguine_core_sapients.text.stage.2": "Sanguine cores - sapients research complete!",
+    "primalmagic.research.sanguine_core_sapients.text.stage.1": "Now this will be a fine trick.  To spawn not a mere animal, but a thinking, self-aware person!  I must learn how to do this!",
+    "primalmagic.research.sanguine_core_sapients.text.stage.2": "I now know how to attune a Sanguine Core to sapient life.",
     
     "primalmagic.research.sanguine_core_demons.title": "Sanguine Cores: Demons",
-    "primalmagic.research.sanguine_core_demons.text.stage.1": "Sanguine cores - demons: lorem ipsum",
-    "primalmagic.research.sanguine_core_demons.text.stage.2": "Sanguine cores - demons research complete!",
+    "primalmagic.research.sanguine_core_demons.text.stage.1": "The Nether teems with demons.  How ironic it would be to play into the mad wizard archetype by summoning one.",
+    "primalmagic.research.sanguine_core_demons.text.stage.2": "I now know how to attune a Sanguine Core to demonic life.<BR>I should take care to remember, however, that the energies of the Overworld are anathema to many of their kind.  If summoned here, they will quickly transform into undead creatures.",
     
     "primalmagic.research.sanguine_core_aliens.title": "Sanguine Cores: Aliens",
-    "primalmagic.research.sanguine_core_aliens.text.stage.1": "Sanguine cores - aliens: lorem ipsum",
-    "primalmagic.research.sanguine_core_aliens.text.stage.2": "Sanguine cores - aliens research complete!",
+    "primalmagic.research.sanguine_core_aliens.text.stage.1": "Even the End has life, after a fashion.  I am not mad enough to attempt to spawn a dragon, but perhaps the rest of it will make a fine capstone to my spawning arts.",
+    "primalmagic.research.sanguine_core_aliens.text.stage.2": "I now know how to attune a Sanguine Core to alien life.",
     
     "primalmagic.research.basic_sorcery.title": "Basic Sorcery",
     "primalmagic.research.basic_sorcery.text.stage.1": "Basic sorcery: Lorem ipsum",
