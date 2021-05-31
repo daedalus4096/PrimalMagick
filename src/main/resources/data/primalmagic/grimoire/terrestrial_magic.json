@@ -3,7 +3,7 @@
   "name": "primalmagic.research.terrestrial_magic.title",
   "discipline": "BASICS",
   "parents": [
-    "FIRST_STEPS"
+    "ATTUNEMENTS"
   ],
   "stages": [
     {

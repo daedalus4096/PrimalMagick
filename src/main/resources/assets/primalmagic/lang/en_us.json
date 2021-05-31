@@ -760,49 +760,49 @@
     "primalmagic.research.unlock_magitech.text.stage.2": "Magic and redstone, together at last, forming the backbone of the discipline I call Magitech.  I'm truly excited to see what creations can be wrought with this knowledge.  I've created a new section for it under the main index of my Grimoire, and can find more information there.",
     
     "primalmagic.research.terrestrial_magic.title": "Terrestrial Magic",
-    "primalmagic.research.terrestrial_magic.text.stage.1": "For terrestrial magic: Lorem ipsum",
+    "primalmagic.research.terrestrial_magic.text.stage.1": "As I've mentioned before, the five sources of magic are the Earth, the Sea, the Sky, the Sun, and the Moon.  Almost everything I've found has some affinity to one or more of them, but what exactly are they, really?  What makes them magical?<BR>This is probably more philosophy than magic, and I'm unlikely to learn any recipes or spells by meditating on them, but I have faith that it will be beneficial to me.  If nothing else, I'm sure I'll feel more in tune with these sources once I understand them better.",
     
     "primalmagic.research.source_earth.title": "Source: The Earth",
-    "primalmagic.research.source_earth.text.stage.1": "Investigate the secrets of earth magic",
-    "primalmagic.research.source_earth.text.stage.2": "Stone, strength, solidity: Lorem ipsum",
+    "primalmagic.research.source_earth.text.stage.1": "Through sacrifice, study, and exploration, I investigate the secrets of earth magic.",
+    "primalmagic.research.source_earth.text.stage.2": "Stone, strength, solidity: these are the foundations of the Earth.  It seeks the most direct answer between any two problems, not brooking any compromise or alternative.  One either overcomes it or yields.",
     
     "primalmagic.research.source_sea.title": "Source: The Sea",
-    "primalmagic.research.source_sea.text.stage.1": "Investigate the secrets of sea magic",
-    "primalmagic.research.source_sea.text.stage.2": "Water, cold, cycles: Lorem ipsum",
+    "primalmagic.research.source_sea.text.stage.1": "Through sacrifice, study, and exploration, I investigate the secrets of sea magic.",
+    "primalmagic.research.source_sea.text.stage.2": "Water, cold, cycles: these are the currents of the Sea.  It finds every pore, penetrates every crack, and will in time wash away whatever opposes it.  To quote a particularly wise doctor, water always wins.",
     
     "primalmagic.research.source_sky.title": "Source: The Sky",
-    "primalmagic.research.source_sky.text.stage.1": "Investigate the secrets of sky magic",
-    "primalmagic.research.source_sky.text.stage.2": "Air, energy, motion: Lorem ipsum",
+    "primalmagic.research.source_sky.text.stage.1": "Through sacrifice, study, and exploration, I investigate the secrets of sky magic.",
+    "primalmagic.research.source_sky.text.stage.2": "Air, energy, motion: these are the heights of the Sky.  Always moving, ever shifting, there is no pinning down the wind.  Those who try find themselves facing a bolt from the blue.",
     
     "primalmagic.research.source_sun.title": "Source: The Sun",
-    "primalmagic.research.source_sun.text.stage.1": "Investigate the secrets of sun magic",
-    "primalmagic.research.source_sun.text.stage.2": "Day, warmth, growth: Lorem ipsum",
+    "primalmagic.research.source_sun.text.stage.1": "Through sacrifice, study, and exploration, I investigate the secrets of sun magic.",
+    "primalmagic.research.source_sun.text.stage.2": "Day, warmth, growth: it is this light that the Sun shines down upon us.  Not a burning flame, but a gentle warmth that nurtures and brings life.  That said, the Sun has no love for death and will purge its minions with blazing rays.",
     
     "primalmagic.research.source_moon.title": "Source: The Moon",
-    "primalmagic.research.source_moon.text.stage.1": "Investigate the secrets of moon magic",
-    "primalmagic.research.source_moon.text.stage.2": "Night, change, fortune: Lorem ipsum",
+    "primalmagic.research.source_moon.text.stage.1": "Through sacrifice, study, and exploration, I investigate the secrets of moon magic.",
+    "primalmagic.research.source_moon.text.stage.2": "Night, change, fortune: these are the blessings the Moon brings us.  Ever changing, the Moon is not one's ally unless it wishes to be, and even then its friendship is fickle.  But it loves all that which the Sun does not, and cares for the creatures of darkness when nobody else will.",
     
     "primalmagic.research.forbidden_magic.title": "Forbidden Magic",
-    "primalmagic.research.forbidden_magic.text.stage.1": "For forbidden magic: Lorem ipsum",
+    "primalmagic.research.forbidden_magic.text.stage.1": "What is this?!  Have I truly discovered a new source of magic?  Could I truly have stumbled across something so easily that the ancients in their wisdom missed?<BR>No, I don't think that's it at all.  I've searched the Grimoire for any mention of this source and found nothing.<BR>And yet...<BR>And yet I can almost see the gaps.  The places where this source would have become apparent, glossed over.  The formulae for which it would be a natural conclusion, elided.<BR>No, I think the ancients knew all about this source and chose to erase it from their knowledge.  For whatever reason, this magic was forbidden.<BR>I intend to find out why.",
     
     "primalmagic.research.source_blood.title": "Source: The Blood",
-    "primalmagic.research.source_blood.text.stage.1": "Investigate the secrets of blood magic",
-    "primalmagic.research.source_blood.text.stage.2": "Life, death, flesh: Lorem ipsum",
+    "primalmagic.research.source_blood.text.stage.1": "Through sacrifice and study, I investigate the secrets of blood magic.",
+    "primalmagic.research.source_blood.text.stage.2": "Life, death, flesh: this is the pulse of the Blood.  Beating through all life (well, almost all life), it is part of us whether we wish it or not.  All a mage can do is decide whether to harness it, or to leave it to clot.",
     
     "primalmagic.research.source_infernal.title": "Source: The Infernal",
-    "primalmagic.research.source_infernal.text.stage.1": "Investigate the secrets of infernal magic",
-    "primalmagic.research.source_infernal.text.stage.2": "Flame, suffering, rage: Lorem ipsum",
+    "primalmagic.research.source_infernal.text.stage.1": "Through sacrifice and study, I investigate the secrets of infernal magic.",
+    "primalmagic.research.source_infernal.text.stage.2": "Flame, suffering, rage: these are the wages of the Infernal.  The native magic of the Nether and its damned occupants, countless souls have fallen prey to its grasp.  Will I fare any better?",
     
     "primalmagic.research.source_void.title": "Source: The Void",
-    "primalmagic.research.source_void.text.stage.1": "Investigate the secrets of void magic",
-    "primalmagic.research.source_void.text.stage.2": "Emptiness, hunger, the eldritch: Lorem ipsum",
+    "primalmagic.research.source_void.text.stage.1": "Through sacrifice and study, I investigate the secrets of void magic.",
+    "primalmagic.research.source_void.text.stage.2": "Emptiness, hunger, space: this is the paradox of the Void.  The native magic of the End and the places beyond, its secrets are all but unknowable by a human mind.  Do I have the mental fortitude to unlock its secrets, or will the attempt warp me beyond recognition?",
     
     "primalmagic.research.heavenly_magic.title": "Heavenly Magic",
-    "primalmagic.research.heavenly_magic.text.stage.1": "For heavenly magic: Lorem ipsum",
+    "primalmagic.research.heavenly_magic.text.stage.1": "At last, I think I begin to understand.<BR>The Earth... the Sea... the Sky... the Sun... the Moon... even the forbidden sources...<BR>They're all reflections.  Pale shadows cast by the pure, true light of the universe.  Echoes of the perfect harmony of its song.<BR>I feel like enlightenment is within my grasp now.  Perhaps even forgiveness for my many sins in the pursuit of magical power.<BR>My journey nears its end.",
     
     "primalmagic.research.source_hallowed.title": "Source: The Hallowed",
-    "primalmagic.research.source_hallowed.text.stage.1": "Investigate the secrets of hallowed magic",
-    "primalmagic.research.source_hallowed.text.stage.2": "Purity, harmony, enlightenment: Lorem ipsum",
+    "primalmagic.research.source_hallowed.text.stage.1": "Through sacrifice and study, I investigate the secrets of hallowed magic.",
+    "primalmagic.research.source_hallowed.text.stage.2": "Purity, harmony, enlightenment: this is the truth of the Hallowed.  There are no words to describe the lightness I now feel, the understanding I bear.  To you, reading this Grimoire after I'm gone, know that peace is within you, and that you are loved.",
     
     "primalmagic.research.basic_alchemy.title": "Basic Alchemy",
     "primalmagic.research.basic_alchemy.text.stage.1": "Basic alchemy: Lorem ipsum",

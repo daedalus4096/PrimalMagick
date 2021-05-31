@@ -122,7 +122,7 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("TERRESTRIAL_MAGIC", discipline).parent("FIRST_STEPS")
+        ResearchEntryBuilder.entry("TERRESTRIAL_MAGIC", discipline).parent("ATTUNEMENTS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_EARTH", discipline).parent("TERRESTRIAL_MAGIC")
