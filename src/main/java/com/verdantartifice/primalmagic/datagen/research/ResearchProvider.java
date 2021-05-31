@@ -357,9 +357,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("STONEMELDING", discipline).parent("BASIC_ALCHEMY")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredCraftStack(Items.STONE).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(PrimalMagic.MODID, "stone_from_stonemelding").attunement(Source.EARTH, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SKYGLASS", discipline).parent("BASIC_ALCHEMY")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_SKY.get()).requiredCraftStack(Items.GLASS).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 1)
                     .recipe(ItemsPM.SKYGLASS.get()).recipe(ItemsPM.SKYGLASS_PANE.get())
                     .recipe(ItemsPM.STAINED_SKYGLASS_BLACK.get()).recipe(ItemsPM.STAINED_SKYGLASS_BLUE.get()).recipe(ItemsPM.STAINED_SKYGLASS_BROWN.get()).recipe(ItemsPM.STAINED_SKYGLASS_CYAN.get())

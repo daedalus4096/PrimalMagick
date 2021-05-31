@@ -805,25 +805,27 @@
     "primalmagic.research.source_hallowed.text.stage.2": "Purity, harmony, enlightenment: this is the truth of the Hallowed.  There are no words to describe the lightness I now feel, the understanding I bear.  To you, reading this Grimoire after I'm gone, know that peace is within you, and that you are loved.",
     
     "primalmagic.research.basic_alchemy.title": "Basic Alchemy",
-    "primalmagic.research.basic_alchemy.text.stage.1": "Basic alchemy: Lorem ipsum",
+    "primalmagic.research.basic_alchemy.text.stage.1": "I think I'm getting the hang of the basics of alchemy.  Combine dust with like-affinity materials for interesting results.  Be careful handling it.  *Definitely* don't eat it again, ugh.<BR>More importantly, I believe I've figured out how to make more of it.  If my studies of the Grimoire are correct, I believe that I can create an Essence Furnace by waving a wand at a regular furnace.  This essence furnace will consume any item, but instead of a smelted result, will produce a small amount of essence dust based on the item's affinities.<BR>It's not very efficient, as it only produces a single handful of dust for each type of affinity that the item has, no matter how strong that affinity.  But it's a lot better than nothing.",
     
     "primalmagic.research.expert_alchemy.title": "Expert Alchemy",
-    "primalmagic.research.expert_alchemy.text.stage.1": "Expert alchemy: Lorem ipsum",
-    "primalmagic.research.expert_alchemy.text.stage.2": "Expert alchemy research complete!",
+    "primalmagic.research.expert_alchemy.text.stage.1": "My skill with alchemy is growing, but I need more practice with it before I can get over this plateau I'm on.  Nothing to do but keep at it.",
+    "primalmagic.research.expert_alchemy.text.stage.2": "I now feel comfortable calling myself an expert with basic alchemical processes.  Time to get to the advanced stuff.  I have a feeling that there's more to essence than just dust, for instance...",
     
     "primalmagic.research.master_alchemy.title": "Master Alchemy",
-    "primalmagic.research.master_alchemy.text.stage.1": "Master alchemy: Lorem ipsum",
-    "primalmagic.research.master_alchemy.text.stage.2": "Master alchemy research complete!",
+    "primalmagic.research.master_alchemy.text.stage.1": "My skill with alchemy is growing, but I need more practice with it before I can get over this plateau I'm on.  Nothing to do but keep at it.",
+    "primalmagic.research.master_alchemy.text.stage.2": "I've now mastered conventional alchemy and have started researching the forbidden topics that my Grimoire remains silent about.",
     
     "primalmagic.research.supreme_alchemy.title": "Supreme Alchemy",
-    "primalmagic.research.supreme_alchemy.text.stage.1": "Supreme alchemy: Lorem ipsum",
-    "primalmagic.research.supreme_alchemy.text.stage.2": "Supreme alchemy research complete!",
+    "primalmagic.research.supreme_alchemy.text.stage.1": "The top of the hill is in sight.  My skills with alchemy are almost without peer...  Almost.",
+    "primalmagic.research.supreme_alchemy.text.stage.2": "The most advanced topics in the discipline of alchemy are now at my fingertips.",
     
     "primalmagic.research.stonemelding.title": "Stonemelding",
-    "primalmagic.research.stonemelding.text.stage.1": "Stonemelding: Lorem ipsum",
+    "primalmagic.research.stonemelding.text.stage.1": "Stone is an excellent material to build with because it's so unyielding.  But that same inflexibility also makes it a pain to work with.  Cobblestone is frequently an acceptable substitue, but sometimes you need a single, solid block, not a mass of small boulders.<BR>Perhaps alchemy can present an easier way to refine stone than cooking it in a furnace.",
+    "primalmagic.research.stonemelding.text.stage.2": "As I hoped, alchemy was the answer here.  Sprinkling a handful of earth dust into the cracks of some blocks of cobblestone will cause the mass to become temporarily pliable, like wet clay.  I can then take the individual cobbles and mash them together.",
     
     "primalmagic.research.skyglass.title": "Skyglass",
-    "primalmagic.research.skyglass.text.stage.1": "Skyglass: Lorem ipsum",
+    "primalmagic.research.skyglass.text.stage.1": "Glass is a beautiful addition to any base.  But the result of smelting sand in a furnace is often streaky and unrefined.  I find that I spend half my time trying to look between the seams in the blocks, rather than just enjoying the view.  Maybe alchemy can provide a superior product.",
+    "primalmagic.research.skyglass.text.stage.2": "Behold, skyglass.  By taking several blocks of glass and imbuing them with sky dust, I can remove the various impurities left behind by the furnace.  The results are amazing.  The seams between blocks are invisible; except for the outer border you'd hardly even know it was there.<BR>In addition, skyglass can be stained like regular glass, or turned into thin panes.  I can't wait to install my new skyglass window!",
     
     "primalmagic.research.shard_synthesis.title": "Shard Synthesis",
     "primalmagic.research.shard_synthesis.text.stage.1": "How to make shards from dust!",

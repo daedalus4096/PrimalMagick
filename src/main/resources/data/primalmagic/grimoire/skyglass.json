@@ -8,6 +8,18 @@
   "stages": [
     {
       "text": "primalmagic.research.skyglass.text.stage.1",
+      "required_item": [
+        "primalmagic:essence_dust_sky"
+      ],
+      "required_craft": [
+        "minecraft:glass"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.skyglass.text.stage.2",
       "attunements": {
         "sky": 1
       },
