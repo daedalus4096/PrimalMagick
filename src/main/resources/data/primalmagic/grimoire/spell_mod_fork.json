@@ -10,6 +10,9 @@
   "stages": [
     {
       "text": "primalmagic.research.spell_mod_fork.text.stage.1"
+    },
+    {
+      "text": "primalmagic.research.spell_mod_fork.text.stage.2"
     }
   ],
   "addenda": []

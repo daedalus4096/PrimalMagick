@@ -9,6 +9,9 @@
   "stages": [
     {
       "text": "primalmagic.research.spell_mod_quicken.text.stage.1"
+    },
+    {
+      "text": "primalmagic.research.spell_mod_quicken.text.stage.2"
     }
   ],
   "addenda": []

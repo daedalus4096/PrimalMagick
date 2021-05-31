@@ -9,7 +9,10 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_payload_conjure_lava.text.stage.1",
+      "text": "primalmagic.research.spell_payload_conjure_lava.text.stage.1"
+    },
+    {
+      "text": "primalmagic.research.spell_payload_conjure_lava.text.stage.2",
       "attunements": {
         "infernal": 3
       }

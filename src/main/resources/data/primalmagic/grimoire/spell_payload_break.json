@@ -7,7 +7,10 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_payload_break.text.stage.1",
+      "text": "primalmagic.research.spell_payload_break.text.stage.1"
+    },
+    {
+      "text": "primalmagic.research.spell_payload_break.text.stage.2",
       "attunements": {
         "earth": 3
       }

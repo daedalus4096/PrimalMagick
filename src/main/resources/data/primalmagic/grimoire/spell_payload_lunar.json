@@ -7,7 +7,10 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_payload_lunar.text.stage.1",
+      "text": "primalmagic.research.spell_payload_lunar.text.stage.1"
+    },
+    {
+      "text": "primalmagic.research.spell_payload_lunar.text.stage.2",
       "attunements": {
         "moon": 1
       }

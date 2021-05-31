@@ -8,7 +8,10 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_payload_polymorph.text.stage.1",
+      "text": "primalmagic.research.spell_payload_polymorph.text.stage.1"
+    },
+    {
+      "text": "primalmagic.research.spell_payload_polymorph.text.stage.2",
       "attunements": {
         "moon": 3
       }

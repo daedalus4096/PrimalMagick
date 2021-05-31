@@ -609,77 +609,102 @@ public class ResearchProvider implements IDataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_VEHICLE_PROJECTILE", discipline).parent("EXPERT_SORCERY")
             .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_VEHICLE_BOLT", discipline).parent("MASTER_SORCERY").parent("SPELL_VEHICLE_PROJECTILE")
             .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_FROST", discipline).parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_LIGHTNING", discipline).parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_SOLAR", discipline).parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_LUNAR", discipline).parent("BASIC_SORCERY")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_BLOOD", discipline).parent("EXPERT_SORCERY").parent("t_discover_blood")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLAME", discipline).parent("EXPERT_SORCERY").parent("t_discover_infernal")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_VOID", discipline).parent("EXPERT_SORCERY").parent("t_discover_void")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_HOLY", discipline).parent("MASTER_SORCERY").parent("t_discover_hallowed")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_BREAK", discipline).parent("EXPERT_SORCERY")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_WATER", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_FROST")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLIGHT", discipline).parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_LIGHTNING")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_HEALING", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_SOLAR")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_LUNAR")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_ANIMAL", discipline).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_BLOOD")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_LAVA", discipline).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_CONJURE_WATER").parent("SPELL_PAYLOAD_FLAME")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_DRAIN_SOUL", discipline).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_FLAME")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).recipe(ItemsPM.SOUL_GEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_TELEPORT", discipline).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_VOID")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONSECRATE", discipline).parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_HOLY")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_MOD_AMPLIFY", discipline).parent("EXPERT_SORCERY")
             .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_MOD_MINE", discipline).parent("EXPERT_SORCERY")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_MOD_QUICKEN", discipline).parent("MASTER_SORCERY").parent("SPELL_MOD_AMPLIFY")
             .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_MOD_BURST", discipline).parent("MASTER_SORCERY").parent("SPELL_MOD_MINE")
             .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_MOD_FORK", discipline).parent("SUPREME_SORCERY").parent("SPELL_MOD_QUICKEN").parent("SPELL_MOD_BURST")
+            .stage(ResearchStageBuilder.stage().build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
     }

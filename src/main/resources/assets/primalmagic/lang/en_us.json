@@ -964,78 +964,103 @@
     
     "primalmagic.research.spell_vehicle_projectile.title": "Spell Type: Projectile",
     "primalmagic.research.spell_vehicle_projectile.text.stage.1": "Projectile spells: Lorem ipsum",
+    "primalmagic.research.spell_vehicle_projectile.text.stage.2": "Projectile spells: Lorem ipsum",
     
     "primalmagic.research.spell_vehicle_bolt.title": "Spell Type: Bolt",
     "primalmagic.research.spell_vehicle_bolt.text.stage.1": "Bolt spells: Lorem ipsum",
+    "primalmagic.research.spell_vehicle_bolt.text.stage.2": "Bolt spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_frost.title": "Spell Payload: Frost",
     "primalmagic.research.spell_payload_frost.text.stage.1": "Frost spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_frost.text.stage.2": "Frost spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_lightning.title": "Spell Payload: Lightning",
     "primalmagic.research.spell_payload_lightning.text.stage.1": "Lightning spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_lightning.text.stage.2": "Lightning spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_solar.title": "Spell Payload: Solar",
     "primalmagic.research.spell_payload_solar.text.stage.1": "Solar spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_solar.text.stage.2": "Solar spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_lunar.title": "Spell Payload: Lunar",
     "primalmagic.research.spell_payload_lunar.text.stage.1": "Lunar spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_lunar.text.stage.2": "Lunar spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_blood.title": "Spell Payload: Blood",
     "primalmagic.research.spell_payload_blood.text.stage.1": "Blood spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_blood.text.stage.2": "Blood spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_flame.title": "Spell Payload: Flame",
     "primalmagic.research.spell_payload_flame.text.stage.1": "Flame spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_flame.text.stage.2": "Flame spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_void.title": "Spell Payload: Void",
     "primalmagic.research.spell_payload_void.text.stage.1": "Void spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_void.text.stage.2": "Void spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_holy.title": "Spell Payload: Holy",
     "primalmagic.research.spell_payload_holy.text.stage.1": "Holy spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_holy.text.stage.2": "Holy spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_break.title": "Spell Payload: Break",
     "primalmagic.research.spell_payload_break.text.stage.1": "Breaking spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_break.text.stage.2": "Breaking spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_conjure_water.title": "Spell Payload: Conjure Water",
     "primalmagic.research.spell_payload_conjure_water.text.stage.1": "Water conjuration spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_conjure_water.text.stage.2": "Water conjuration spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_flight.title": "Spell Payload: Flight",
     "primalmagic.research.spell_payload_flight.text.stage.1": "Flight spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_flight.text.stage.2": "Flight spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_healing.title": "Spell Payload: Healing",
     "primalmagic.research.spell_payload_healing.text.stage.1": "Healing spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_healing.text.stage.2": "Healing spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_polymorph.title": "Spell Payload: Polymorph",
     "primalmagic.research.spell_payload_polymorph.text.stage.1": "Polymorph spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_polymorph.text.stage.2": "Polymorph spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_conjure_animal.title": "Spell Payload: Conjure Animal",
     "primalmagic.research.spell_payload_conjure_animal.text.stage.1": "Animal conjuration spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_conjure_animal.text.stage.2": "Animal conjuration spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_conjure_lava.title": "Spell Payload: Conjure Lava",
     "primalmagic.research.spell_payload_conjure_lava.text.stage.1": "Lava conjuration spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_conjure_lava.text.stage.2": "Lava conjuration spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_drain_soul.title": "Spell Payload: Drain Soul",
     "primalmagic.research.spell_payload_drain_soul.text.stage.1": "Soul drain spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_drain_soul.text.stage.2": "Soul drain spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_teleport.title": "Spell Payload: Teleport",
     "primalmagic.research.spell_payload_teleport.text.stage.1": "Teleport spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_teleport.text.stage.2": "Teleport spells: Lorem ipsum",
     
     "primalmagic.research.spell_payload_consecrate.title": "Spell Payload: Consecrate",
     "primalmagic.research.spell_payload_consecrate.text.stage.1": "Consecrate spells: Lorem ipsum",
+    "primalmagic.research.spell_payload_consecrate.text.stage.2": "Consecrate spells: Lorem ipsum",
     
     "primalmagic.research.spell_mod_amplify.title": "Spell Mod: Amplify",
     "primalmagic.research.spell_mod_amplify.text.stage.1": "Amplify spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_amplify.text.stage.2": "Amplify spells: Lorem ipsum",
     
     "primalmagic.research.spell_mod_burst.title": "Spell Mod: Burst",
     "primalmagic.research.spell_mod_burst.text.stage.1": "Burst spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_burst.text.stage.2": "Burst spells: Lorem ipsum",
     
     "primalmagic.research.spell_mod_quicken.title": "Spell Mod: Quicken",
     "primalmagic.research.spell_mod_quicken.text.stage.1": "Quicken spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_quicken.text.stage.2": "Quicken spells: Lorem ipsum",
     
     "primalmagic.research.spell_mod_mine.title": "Spell Mod: Mine",
     "primalmagic.research.spell_mod_mine.text.stage.1": "Mine spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_mine.text.stage.2": "Mine spells: Lorem ipsum",
     
     "primalmagic.research.spell_mod_fork.title": "Spell Mod: Fork",
     "primalmagic.research.spell_mod_fork.text.stage.1": "Fork spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_fork.text.stage.2": "Fork spells: Lorem ipsum",
     
     "primalmagic.research.basic_manaweaving.title": "Basic Manaweaving",
     "primalmagic.research.basic_manaweaving.text.stage.1": "Basic manaweaving: Lorem ipsum",
