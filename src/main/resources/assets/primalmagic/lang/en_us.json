@@ -732,8 +732,8 @@
     "primalmagic.research.theorycrafting.text.stage.4": "I've formed my first theory!  This will definitely prove useful later in my studies.<BR>I should expect research projects to become more difficult as I exhaust the low-hanging fruit.  They'll probably have lower starting success chances and require more research materials the more projects I complete.  This will only make bonus projects unlocked by research aids more economical, so I should definitely try to identify as many of them as I can.",
     
     "primalmagic.research.attunements.title": "Attunements",
-    "primalmagic.research.attunements.text.stage.1": "For attunements: Lorem ipsum.",
-    "primalmagic.research.attunements.text.stage.2": "Attunements complete!",
+    "primalmagic.research.attunements.text.stage.1": "In my studies of the Grimoire, I've seen the concept of 'attunement' mentioned.  I should find out more about what this means.",
+    "primalmagic.research.attunements.text.stage.2": "Fascinating.  From what I've can tell, the study and use of magic brings a person more into alignment with that source of magic, body and mind.  This results in the development of incredible new abilities on the part of the attuned mage.<BR>Learning a new spell or recipe in my Grimoire will sometimes permanently increase my attunement to the relevant source; I'll be sure to note in the grimoire when this happens.  In addition, channeling mana, whether by crafting a recipe or casting a spell, will temporarily increase my attunement to that source.  The effect can be significant, but it will slowly decay over time.<BR>I've cast a simple spell on my Grimoire to track my current attunement levels.  Should I ever wish to check them, or to remind myself what attunement to a particular source will gain me, I need only check the Attunements section under Other Topics in the main index.",
     
     "primalmagic.research.unlock_alchemy.title": "Introduction to Alchemy",
     "primalmagic.research.unlock_alchemy.text.stage.1": "For alchemy: Lorem ipsum",
