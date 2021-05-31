@@ -8,6 +8,12 @@
   "stages": [
     {
       "text": "primalmagic.research.shard_synthesis.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.shard_synthesis.text.stage.2",
       "attunements": {
         "earth": 1,
         "sea": 1,

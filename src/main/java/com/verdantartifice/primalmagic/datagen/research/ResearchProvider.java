@@ -387,6 +387,7 @@ public class ResearchProvider implements IDataProvider {
                     .build())
             .build(consumer);
         ResearchEntryBuilder.entry("SHARD_SYNTHESIS", discipline).parent("EXPERT_ALCHEMY")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage()
                     .attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
                     .recipe(PrimalMagic.MODID, "essence_shard_earth_from_dust").recipe(PrimalMagic.MODID, "essence_shard_sea_from_dust")
@@ -402,6 +403,7 @@ public class ResearchProvider implements IDataProvider {
                     .recipe(PrimalMagic.MODID, "essence_shard_hallowed_from_dust").build())
             .build(consumer);
         ResearchEntryBuilder.entry("SHARD_DESYNTHESIS", discipline).parent("SHARD_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage()
                     .attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
                     .recipe(PrimalMagic.MODID, "essence_dust_earth_from_shard").recipe(PrimalMagic.MODID, "essence_dust_sea_from_shard")
@@ -426,6 +428,7 @@ public class ResearchProvider implements IDataProvider {
                     .recipe(ItemsPM.PRIMALITE_CHEST.get()).recipe(ItemsPM.PRIMALITE_LEGS.get()).recipe(ItemsPM.PRIMALITE_FEET.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("CRYSTAL_SYNTHESIS", discipline).parent("MASTER_ALCHEMY").parent("SHARD_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage()
                     .attunement(Source.EARTH, 2).attunement(Source.SEA, 2).attunement(Source.SKY, 2).attunement(Source.SUN, 2).attunement(Source.MOON, 2)
                     .recipe(PrimalMagic.MODID, "essence_crystal_earth_from_shard").recipe(PrimalMagic.MODID, "essence_crystal_sea_from_shard")
@@ -441,6 +444,7 @@ public class ResearchProvider implements IDataProvider {
                     .recipe(PrimalMagic.MODID, "essence_crystal_hallowed_from_shard").build())
             .build(consumer);
         ResearchEntryBuilder.entry("CRYSTAL_DESYNTHESIS", discipline).parent("CRYSTAL_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage()
                     .attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
                     .recipe(PrimalMagic.MODID, "essence_shard_earth_from_crystal").recipe(PrimalMagic.MODID, "essence_shard_sea_from_crystal")
@@ -465,6 +469,7 @@ public class ResearchProvider implements IDataProvider {
                     .recipe(ItemsPM.HEXIUM_FEET.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("CLUSTER_SYNTHESIS", discipline).parent("SUPREME_ALCHEMY").parent("CRYSTAL_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage()
                     .attunement(Source.EARTH, 3).attunement(Source.SEA, 3).attunement(Source.SKY, 3).attunement(Source.SUN, 3).attunement(Source.MOON, 3)
                     .recipe(PrimalMagic.MODID, "essence_cluster_earth_from_crystal").recipe(PrimalMagic.MODID, "essence_cluster_sea_from_crystal")
@@ -480,6 +485,7 @@ public class ResearchProvider implements IDataProvider {
                     .recipe(PrimalMagic.MODID, "essence_cluster_hallowed_from_crystal").build())
             .build(consumer);
         ResearchEntryBuilder.entry("CLUSTER_DESYNTHESIS", discipline).parent("CLUSTER_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage()
                     .attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
                     .recipe(PrimalMagic.MODID, "essence_crystal_earth_from_cluster").recipe(PrimalMagic.MODID, "essence_crystal_sea_from_cluster")

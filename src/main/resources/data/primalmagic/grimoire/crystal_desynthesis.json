@@ -8,6 +8,12 @@
   "stages": [
     {
       "text": "primalmagic.research.crystal_desynthesis.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.crystal_desynthesis.text.stage.2",
       "attunements": {
         "earth": 1,
         "sea": 1,

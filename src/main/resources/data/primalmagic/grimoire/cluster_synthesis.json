@@ -9,6 +9,12 @@
   "stages": [
     {
       "text": "primalmagic.research.cluster_synthesis.text.stage.1",
+      "required_knowledge": [
+        "THEORY;3"
+      ]
+    },
+    {
+      "text": "primalmagic.research.cluster_synthesis.text.stage.2",
       "attunements": {
         "earth": 3,
         "sea": 3,
