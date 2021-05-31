@@ -8,7 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.unlock_magitech.text.stage.1"
+      "text": "primalmagic.research.unlock_magitech.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.unlock_magitech.text.stage.2"
     }
   ],
   "addenda": []

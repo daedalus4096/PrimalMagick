@@ -8,8 +8,8 @@
   "stages": [
     {
       "text": "primalmagic.research.unlock_sorcery.text.stage.1",
-      "required_item": [
-        "minecraft:stick"
+      "required_knowledge": [
+        "OBSERVATION;1"
       ]
     },
     {

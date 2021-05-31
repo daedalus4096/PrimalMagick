@@ -735,25 +735,29 @@
     "primalmagic.research.attunements.text.stage.1": "In my studies of the Grimoire, I've seen the concept of 'attunement' mentioned.  I should find out more about what this means.",
     "primalmagic.research.attunements.text.stage.2": "Fascinating.  From what I've can tell, the study and use of magic brings a person more into alignment with that source of magic, body and mind.  This results in the development of incredible new abilities on the part of the attuned mage.<BR>Learning a new spell or recipe in my Grimoire will sometimes permanently increase my attunement to the relevant source; I'll be sure to note in the grimoire when this happens.  In addition, channeling mana, whether by crafting a recipe or casting a spell, will temporarily increase my attunement to that source.  The effect can be significant, but it will slowly decay over time.<BR>I've cast a simple spell on my Grimoire to track my current attunement levels.  Should I ever wish to check them, or to remind myself what attunement to a particular source will gain me, I need only check the Attunements section under Other Topics in the main index.",
     
+    "primalmagic.research.unlock_manaweaving.title": "Introduction to Manaweaving",
+    "primalmagic.research.unlock_manaweaving.text.stage.1": "Integrating mana into my crafting process should be the next goal in my magical studies.  This will hopefully allow me to create better materials and tools for magical crafting and for channeling mana.",
+    "primalmagic.research.unlock_manaweaving.text.stage.2": "I believe I've unlocked a new magical discipline, which I've taken to calling Manaweaving.  This will lead me to greater knowledge of working with mana directly.  I've created a new section for it under the main index of my Grimoire, and can find more information there.",
+    
     "primalmagic.research.unlock_alchemy.title": "Introduction to Alchemy",
-    "primalmagic.research.unlock_alchemy.text.stage.1": "For alchemy: Lorem ipsum",
+    "primalmagic.research.unlock_alchemy.text.stage.1": "The properties and uses of magical essence are the next mystery I should crack, I think.  I need to know more about this mysterious dust that I've been using.",
+    "primalmagic.research.unlock_alchemy.text.stage.2": "I've unlocked another new discipline of magic.  This one I'm calling Alchemy.  I believe it will help me understand how to better use magical essence, and maybe even discover new types of essence.  I've created a new section for this discipline under the main index of my Grimoire, and can find more information there.",
     
     "primalmagic.research.unlock_sorcery.title": "Introduction to Sorcery",
-    "primalmagic.research.unlock_sorcery.text.stage.1": "For sorcery: Lorem ipsum",
-    "primalmagic.research.unlock_sorcery.text.stage.2": "Sorcery unlock complete!",
-    
-    "primalmagic.research.unlock_manaweaving.title": "Introduction to Manaweaving",
-    "primalmagic.research.unlock_manaweaving.text.stage.1": "For manaweaving: Lorem ipsum",
+    "primalmagic.research.unlock_sorcery.text.stage.1": "Crafting is all well and good, but there must be a way to use mana to affect the world directly.  If this truly is magic, then I want to cast some spells!",
+    "primalmagic.research.unlock_sorcery.text.stage.2": "The discipline of Sorcery is now open to me.  This will allow me to use mana to change the world to my will, at least within the structure of spells that I can research.  I've created a new section for it under the main index of my Grimoire, and can find more information there.",
     
     "primalmagic.research.unlock_runeworking.title": "Introduction to Runeworking",
-    "primalmagic.research.unlock_runeworking.text.stage.1": "For runeworking: Lorem ipsum",
-    "primalmagic.research.unlock_runeworking.text.stage.2": "Runeworking unlock complete!",
+    "primalmagic.research.unlock_runeworking.text.stage.1": "During my alchemical studies in the Grimoire, I keep coming across strange symbols.  They don't seem to correspond to any of the formulae that I've examined, but have a power all their own.  I should find out more about them.",
+    "primalmagic.research.unlock_runeworking.text.stage.2": "I think that I'm starting to understand more about these symbols, or Runes as I've taken to calling them.  By inscribing them on items, I appear to be able to infuse those items with power, but the mechanics still elude me.  This will take more study.  I've created a new section for this discipline under the main index of my Grimoire, and can find more information there.",
     
     "primalmagic.research.unlock_ritual.title": "Introduction to Ritual Magic",
-    "primalmagic.research.unlock_ritual.text.stage.1": "For rituals: Lorem ipsum",
+    "primalmagic.research.unlock_ritual.text.stage.1": "There seem to be limits to the kind of power that can be exercised in magical crafting or sorcery.  But I didn't start studying magic because I was interested in limits.  Perhaps there's a process I can use to surpass them.",
+    "primalmagic.research.unlock_ritual.text.stage.2": "My efforts have unveiled a new discipline of magical study: Ritual Magic.  By going through a series of steps, a sort of simulation of a magical journey, and offering up various items in the process, I can manifest creations that would be impossible using traditional methods.  I've created a new section for this discipline under the main index of my Grimoire, and can find more information there.",
     
     "primalmagic.research.unlock_magitech.title": "Introduction to Magitech",
-    "primalmagic.research.unlock_magitech.text.stage.1": "For magitech: Lorem ipsum",
+    "primalmagic.research.unlock_magitech.text.stage.1": "In the pursuit of magical knowledge, it's easy to forget the simple power of mundane machinery.  The wonders that can be created without a drop of magic should not be discounted.  Perhaps there's a way to combine the two?",
+    "primalmagic.research.unlock_magitech.text.stage.2": "Magic and redstone, together at last, forming the backbone of the discipline I call Magitech.  I'm truly excited to see what creations can be wrought with this knowledge.  I've created a new section for it under the main index of my Grimoire, and can find more information there.",
     
     "primalmagic.research.terrestrial_magic.title": "Terrestrial Magic",
     "primalmagic.research.terrestrial_magic.text.stage.1": "For terrestrial magic: Lorem ipsum",

@@ -3,11 +3,18 @@
   "name": "primalmagic.research.unlock_ritual.title",
   "discipline": "BASICS",
   "parents": [
+    "UNLOCK_SORCERY",
     "UNLOCK_RUNEWORKING"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.unlock_ritual.text.stage.1"
+      "text": "primalmagic.research.unlock_ritual.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.unlock_ritual.text.stage.2"
     }
   ],
   "addenda": []

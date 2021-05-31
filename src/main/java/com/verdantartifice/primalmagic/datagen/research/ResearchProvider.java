@@ -99,23 +99,27 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("UNLOCK_MANAWEAVING", discipline).parent("FIRST_STEPS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("UNLOCK_ALCHEMY", discipline).parent("UNLOCK_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("UNLOCK_SORCERY", discipline).parent("UNLOCK_MANAWEAVING")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.STICK).build())
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("UNLOCK_RUNEWORKING", discipline).parent("UNLOCK_ALCHEMY")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("UNLOCK_RITUAL", discipline).parent("UNLOCK_RUNEWORKING")
+        ResearchEntryBuilder.entry("UNLOCK_RITUAL", discipline).parent("UNLOCK_SORCERY").parent("UNLOCK_RUNEWORKING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("UNLOCK_MAGITECH", discipline).parent("UNLOCK_RITUAL").parent("MANA_SALTS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("TERRESTRIAL_MAGIC", discipline).parent("FIRST_STEPS")
