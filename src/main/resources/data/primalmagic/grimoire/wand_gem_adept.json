@@ -4,7 +4,8 @@
   "discipline": "MANAWEAVING",
   "parents": [
     "EXPERT_MANAWEAVING",
-    "WAND_GEM_APPRENTICE"
+    "WAND_GEM_APPRENTICE",
+    "SHARD_SYNTHESIS"
   ],
   "stages": [
     {

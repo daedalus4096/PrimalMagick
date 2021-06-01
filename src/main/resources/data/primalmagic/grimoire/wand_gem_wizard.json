@@ -4,7 +4,8 @@
   "discipline": "MANAWEAVING",
   "parents": [
     "MASTER_MANAWEAVING",
-    "WAND_GEM_ADEPT"
+    "WAND_GEM_ADEPT",
+    "CRYSTAL_SYNTHESIS"
   ],
   "stages": [
     {

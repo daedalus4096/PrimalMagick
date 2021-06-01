@@ -269,15 +269,15 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.LANTERN).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 2).recipe(ItemsPM.SUNLAMP.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_GEM_ADEPT", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_GEM_APPRENTICE")
+        ResearchEntryBuilder.entry("WAND_GEM_ADEPT", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_GEM_APPRENTICE").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_GEM_WIZARD", discipline).parent("MASTER_MANAWEAVING").parent("WAND_GEM_ADEPT")
+        ResearchEntryBuilder.entry("WAND_GEM_WIZARD", discipline).parent("MASTER_MANAWEAVING").parent("WAND_GEM_ADEPT").parent("CRYSTAL_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_GEM_ARCHMAGE", discipline).parent("SUPREME_MANAWEAVING").parent("WAND_GEM_WIZARD")
+        ResearchEntryBuilder.entry("WAND_GEM_ARCHMAGE", discipline).parent("SUPREME_MANAWEAVING").parent("WAND_GEM_WIZARD").parent("CLUSTER_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()).build())
             .build(consumer);
