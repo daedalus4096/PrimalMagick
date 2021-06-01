@@ -46,6 +46,9 @@ public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
         this.getOrCreateBuilder(EntityTypeTagsPM.FLYING_CREATURES).addTag(EntityTypeTagsPM.PIXIES).add(EntityType.BAT, EntityType.BEE, EntityType.BLAZE, EntityType.CHICKEN, EntityType.ENDER_DRAGON,
                 EntityType.GHAST, EntityType.PARROT, EntityType.PHANTOM, EntityType.VEX, EntityType.WITHER);
         this.getOrCreateBuilder(EntityTypeTagsPM.GOLEMS).addTag(EntityTypeTagsPM.ENCHANTED_GOLEMS).add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
+        
+        this.getOrCreateBuilder(EntityTypeTagsPM.DROPS_BLOODY_FLESH).add(EntityType.EVOKER, EntityType.ILLUSIONER, EntityType.PILLAGER, EntityType.PLAYER, EntityType.VILLAGER, EntityType.VINDICATOR,
+                EntityType.WANDERING_TRADER, EntityType.WITCH);
     }
 
     @Override

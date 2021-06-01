@@ -1,0 +1,11 @@
+{
+    "conditions": [
+        {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+                "type": "#primalmagic:drops_bloody_flesh"
+            }
+        }
+    ]
+}

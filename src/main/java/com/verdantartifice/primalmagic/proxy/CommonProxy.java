@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
+import com.verdantartifice.primalmagic.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagic.common.misc.DispenseLazySpawnEggBehavior;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
@@ -62,6 +63,7 @@ public class CommonProxy implements IProxyPM {
         SoundsPM.init();
         FeaturesPM.init();
         EnchantmentsPM.init();
+        LootModifierSerializersPM.init();
     }
     
     @Override

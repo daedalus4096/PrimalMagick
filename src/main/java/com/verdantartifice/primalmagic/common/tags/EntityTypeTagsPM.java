@@ -19,6 +19,8 @@ public class EntityTypeTagsPM {
     
     public static final IOptionalNamedTag<EntityType<?>> FLYING_CREATURES = tag("flying_creatures");
     public static final IOptionalNamedTag<EntityType<?>> GOLEMS = tag("golems");
+    
+    public static final IOptionalNamedTag<EntityType<?>> DROPS_BLOODY_FLESH = tag("drops_bloody_flesh");
 
     private static IOptionalNamedTag<EntityType<?>> tag(String name) {
         return EntityTypeTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
