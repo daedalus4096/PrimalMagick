@@ -1043,24 +1043,24 @@
     "primalmagic.research.spell_payload_consecrate.text.stage.2": "Through the Hallowed, I can now consecrate small spaces with the song of the universe.  Standing in these zones will heal my wounds and fill my belly, not to mention enhance my calm.<BR>Other creatures will find themselves unable to enter these consecrated spaces.  The exception to this is other players, whose free will allow themselves to move where they please with impunity.",
     
     "primalmagic.research.spell_mod_amplify.title": "Spell Mod: Amplify",
-    "primalmagic.research.spell_mod_amplify.text.stage.1": "Amplify spells: Lorem ipsum",
-    "primalmagic.research.spell_mod_amplify.text.stage.2": "Amplify spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_amplify.text.stage.1": "It seems that spells have a relatively narrow range of power available to them.  Is this really the best I can do?",
+    "primalmagic.research.spell_mod_amplify.text.stage.2": "So it turns out that throwing mana at the problem will let you bypass these limits, to a point.<BR>Any spell can have an Amplify mod attached to it.  Amplification will increase the Power and Duration of any other spell payloads or mods by the power of the Amplify mod itself.<BR>Amplifying a spell in this way will greatly increase its mana cost, but the effects can't be argued with.<BR>Only the Amplify mod with the greatest Power value will be considered for a single spell.",
     
     "primalmagic.research.spell_mod_burst.title": "Spell Mod: Burst",
-    "primalmagic.research.spell_mod_burst.text.stage.1": "Burst spells: Lorem ipsum",
-    "primalmagic.research.spell_mod_burst.text.stage.2": "Burst spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_burst.text.stage.1": "Spells so far just seem to affect a single target at a time.  But what if I'm facing down a whole raiding party of pillagers?  What do I do then?",
+    "primalmagic.research.spell_mod_burst.text.stage.2": "Sometimes, explosions are the best answer.  And while this isn't quite that, it's the next best thing.<BR>A Burst spell will affect all targets within a certain range of the point of impact, be they blocks or creatures.  The range of this effect is controlled by the Burst mod's Radius config value, while it's Power value determines how well the burst penetrates intervening blocks.<BR>The effect is very mana-intensive, however, and will greatly increase the spell's cost.<BR>Some spell payloads are not compatible with the Burst mod and will fail to activate if the two are combined; this will be noted in the payload's Grimoire entry.<BR>Only the Burst mod with the highest Radius value will be considered for a single spell.",
     
     "primalmagic.research.spell_mod_quicken.title": "Spell Mod: Quicken",
-    "primalmagic.research.spell_mod_quicken.text.stage.1": "Quicken spells: Lorem ipsum",
-    "primalmagic.research.spell_mod_quicken.text.stage.2": "Quicken spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_quicken.text.stage.1": "It generally takes a few seconds to recover from casting a spell, be it from a scroll or a wand.  These seconds can be the difference between life or death in a duel.",
+    "primalmagic.research.spell_mod_quicken.text.stage.2": "By applying the Quicken mod to a spell, I can decrease the amount of recovery time needed between spellcasts.  Every point of Haste value applied to the mod will decrease that recovery time by a half second, down to a minimum of half a second.<BR>Any spell can be affected by a Quicken mod, but it greatly increases the mana cost of the spell, so I should be careful not to run out my mana reserves too quickly.<BR>Only the Quicken mod with the highest Haste value will be considered for a single spell.",
     
     "primalmagic.research.spell_mod_mine.title": "Spell Mod: Mine",
-    "primalmagic.research.spell_mod_mine.text.stage.1": "Mine spells: Lorem ipsum",
-    "primalmagic.research.spell_mod_mine.text.stage.2": "Mine spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_mine.text.stage.1": "Sometimes, rather than attack a creature directly, I would prefer to lay a trap.  Maybe that can be arranged.",
+    "primalmagic.research.spell_mod_mine.text.stage.2": "I've learned how to take the energy of a spell and delay its effect in the form of a Mine.  Rather than take effect immediately, a Mine will fade from view and wait for the first creature to approach it.  When that happens, the spell will be unleashed on that creature.<BR>These Mines are not permanent, but will last for a few minutes per point of Duration applied to the mod.  And though it should go without saying, these Mines only affect creatures; blocks will not trigger them, and so block-only spells are wasted in them.<BR>It's also worth noting that Mines have an arming time of a few seconds.  During this time, they are fully visible and will not trigger their loaded spell even if touched.<BR>Unlike most spell mods, Mine only slightly increases the cost of a spell, rather than greatly so.<BR>Only the Mine mod with the greatest Duration value will be considered for a single spell.",
     
     "primalmagic.research.spell_mod_fork.title": "Spell Mod: Fork",
-    "primalmagic.research.spell_mod_fork.text.stage.1": "Fork spells: Lorem ipsum",
-    "primalmagic.research.spell_mod_fork.text.stage.2": "Fork spells: Lorem ipsum",
+    "primalmagic.research.spell_mod_fork.text.stage.1": "On occasion, casting a single spell at a time is simply insufficient.  Can the universe be persuaded to let a humble mage do two things at once?",
+    "primalmagic.research.spell_mod_fork.text.stage.2": "The universe smiles upon me once more, and my knowledge increases.<BR>The Fork mod will indeed let me cast a spell multiple times in the same instant.  It's not perfect, though.  This warping of time and space causes the spells to bend from their intended path.<BR>I can mitigate this, to a point, by increasing the Precision value of the mod; each point will bring the forks back closer to true.  And increasing the Forks value of the mod will increase the number of times the spell is cast, at its full potency.<BR>Forking a spell in this fashion will greatly increase its mana cost.<BR>Only the Fork mod with the highest Forks value will be considered for a single spell.",
     
     "primalmagic.research.basic_manaweaving.title": "Basic Manaweaving",
     "primalmagic.research.basic_manaweaving.text.stage.1": "Basic manaweaving: Lorem ipsum",
