@@ -20,5 +20,5 @@ public class LootModifierSerializersPM {
         SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<GlobalLootModifierSerializer<?>> BLOODY_FLESH = SERIALIZERS.register("bloody_flesh", BloodyFleshModifier.Serializer::new);
+    public static final RegistryObject<GlobalLootModifierSerializer<BloodyFleshModifier>> BLOODY_FLESH = SERIALIZERS.register("bloody_flesh", BloodyFleshModifier.Serializer::new);
 }

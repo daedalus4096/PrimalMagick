@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.datagen;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.datagen.affinities.AffinityProvider;
+import com.verdantartifice.primalmagic.datagen.loot_modifiers.LootModifierProvider;
 import com.verdantartifice.primalmagic.datagen.loot_tables.BlockLootTables;
 import com.verdantartifice.primalmagic.datagen.loot_tables.EntityLootTables;
 import com.verdantartifice.primalmagic.datagen.recipes.Recipes;
@@ -36,5 +37,6 @@ public class DataGenerators {
         generator.addProvider(new AffinityProvider(generator));
         generator.addProvider(new ResearchProvider(generator));
         generator.addProvider(new ProjectProvider(generator));
+        generator.addProvider(new LootModifierProvider(generator));
     }
 }
