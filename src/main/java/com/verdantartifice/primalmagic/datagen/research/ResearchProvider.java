@@ -244,7 +244,7 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_ASSEMBLY_TABLE.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("STAVES", discipline).parent("EXPERT_MANAWEAVING").parent("ADVANCED_WANDMAKING")
+        ResearchEntryBuilder.entry("STAVES", discipline).parent("EXPERT_MANAWEAVING").parent("ADVANCED_WANDMAKING").parent("WAND_INSCRIPTION")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
