@@ -14,7 +14,10 @@
       ]
     },
     {
-      "text": "primalmagic.research.expert_runeworking.text.stage.2"
+      "text": "primalmagic.research.expert_runeworking.text.stage.2",
+      "recipes": [
+        "primalmagic:runescribing_altar_enchanted"
+      ]
     }
   ],
   "addenda": []

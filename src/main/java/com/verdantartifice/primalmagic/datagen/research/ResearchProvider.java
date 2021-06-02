@@ -712,19 +712,19 @@ public class ResearchProvider implements IDataProvider {
     protected void registerRuneworkingEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "RUNEWORKING";
         ResearchEntryBuilder.entry("BASIC_RUNEWORKING", discipline).parent("UNLOCK_RUNEWORKING")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_UNATTUNED.get()).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNECARVING_TABLE.get()).recipe(ItemsPM.RUNE_UNATTUNED.get()).recipe(ItemsPM.RUNESCRIBING_ALTAR_BASIC.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("EXPERT_RUNEWORKING", discipline).parent("BASIC_RUNEWORKING")
             .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_runeworking_expert").requiredResearch("t_items_runescribed_expert").build())
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_RUNEWORKING", discipline).parent("EXPERT_RUNEWORKING")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_runeworking_master").requiredResearch("t_items_runescribed_master").build())
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", discipline).parent("MASTER_RUNEWORKING")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme").build())
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("RUNE_EARTH", discipline).parent("BASIC_RUNEWORKING")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())

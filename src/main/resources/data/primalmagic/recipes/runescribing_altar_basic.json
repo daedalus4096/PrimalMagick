@@ -1,0 +1,30 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "BASIC_RUNEWORKING",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5
+  },
+  "pattern": [
+    " R ",
+    "DMD",
+    "MMM"
+  ],
+  "key": {
+    "R": {
+      "item": "primalmagic:rune_unattuned"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    },
+    "M": {
+      "item": "primalmagic:marble_raw"
+    }
+  },
+  "result": {
+    "item": "primalmagic:runescribing_altar_basic"
+  }
+}

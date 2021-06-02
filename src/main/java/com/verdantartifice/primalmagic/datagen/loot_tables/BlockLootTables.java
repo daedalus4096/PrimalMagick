@@ -61,6 +61,11 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get());
         this.registerBasicTable(BlocksPM.SANGUINE_CRUCIBLE.get());
         this.registerManaBearingDeviceTable(BlocksPM.CONCOCTER.get());
+        this.registerBasicTable(BlocksPM.RUNECARVING_TABLE.get());
+        this.registerBasicTable(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get());
+        this.registerBasicTable(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get());
+        this.registerBasicTable(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get());
+        this.registerBasicTable(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get());
 
         // Register misc loot tables
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());

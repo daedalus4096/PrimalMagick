@@ -1,0 +1,25 @@
+{
+  "type": "primalmagic:arcane_crafting_shapeless",
+  "research": "BASIC_RUNEWORKING",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5
+  },
+  "ingredients": [
+    {
+      "item": "primalmagic:wood_table"
+    },
+    {
+      "item": "minecraft:stone_slab"
+    },
+    {
+      "item": "minecraft:diamond_sword"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:runecarving_table"
+  }
+}

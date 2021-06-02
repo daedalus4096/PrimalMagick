@@ -15,7 +15,10 @@
       ]
     },
     {
-      "text": "primalmagic.research.supreme_runeworking.text.stage.2"
+      "text": "primalmagic.research.supreme_runeworking.text.stage.2",
+      "recipes": [
+        "primalmagic:runescribing_altar_heavenly"
+      ]
     }
   ],
   "addenda": []
