@@ -31,7 +31,7 @@ import net.minecraft.util.text.StringTextComponent;
  */
 public class StatsManager {
     protected static final Map<ResourceLocation, Stat> REGISTRY = new HashMap<>();
-    protected static final List<Stat> SORTED_STATS = new ArrayList<>();
+    protected static final List<Stat> DISPLAY_STATS = new ArrayList<>();
     
     // Set of unique IDs of players that need their research synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
@@ -54,14 +54,18 @@ public class StatsManager {
         return Collections.unmodifiableSet(REGISTRY.keySet());
     }
     
-    public static List<Stat> getSortedStats() {
-        return Collections.unmodifiableList(SORTED_STATS);
+    public static List<Stat> getDisplayStats() {
+        return Collections.unmodifiableList(DISPLAY_STATS);
     }
     
     public static boolean registerStat(@Nullable Stat stat) {
         if (stat != null) {
             REGISTRY.put(stat.getLocation(), stat);
-            return SORTED_STATS.add(stat);
+            if (stat.isInternal()) {
+                return true;    // Don't register internal stats in the display list
+            } else {
+                return DISPLAY_STATS.add(stat);
+            }
         } else {
             return false;
         }

@@ -18,17 +18,24 @@ public class Stat {
     protected ResourceLocation location;
     protected IStatFormatter formatter;
     protected boolean hidden;
+    protected boolean internal;
     
-    protected Stat(@Nonnull ResourceLocation location, @Nonnull IStatFormatter formatter, boolean hidden) {
+    protected Stat(@Nonnull ResourceLocation location, @Nonnull IStatFormatter formatter, boolean hidden, boolean internal) {
         this.location = location;
         this.formatter = formatter;
         this.hidden = hidden;
+        this.internal = internal;
     }
     
     @Nonnull
     public static Stat create(@Nonnull String name, @Nonnull IStatFormatter formatter, boolean hidden) {
+        return create(name, formatter, hidden, false);
+    }
+    
+    @Nonnull
+    public static Stat create(@Nonnull String name, @Nonnull IStatFormatter formatter, boolean hidden, boolean internal) {
         // Create the new stat and register it with the stats manager
-        Stat retVal = new Stat(new ResourceLocation(PrimalMagic.MODID, name), formatter, hidden);
+        Stat retVal = new Stat(new ResourceLocation(PrimalMagic.MODID, name), formatter, hidden, internal);
         StatsManager.registerStat(retVal);
         return retVal;
     }
@@ -45,6 +52,10 @@ public class Stat {
     
     public boolean isHidden() {
         return this.hidden;
+    }
+    
+    public boolean isInternal() {
+        return this.internal;
     }
     
     @Nonnull

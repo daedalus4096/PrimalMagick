@@ -9,6 +9,7 @@ import net.minecraft.stats.IStatFormatter;
  * @author Daedalus4096
  */
 public class StatsPM {
+    // Display stats
     public static final Stat GRIMOIRE_READ = Stat.create("grimoire_read", IStatFormatter.DEFAULT, false);
     public static final Stat ITEMS_ANALYZED = Stat.create("items_analyzed", IStatFormatter.DEFAULT, false);
     public static final Stat ENTITIES_ANALYZED = Stat.create("entities_analyzed", IStatFormatter.DEFAULT, false);
@@ -42,4 +43,7 @@ public class StatsPM {
     public static final Stat SHRINE_FOUND_SUN = Stat.create("shrine_found_sun", IStatFormatter.DEFAULT, false);
     public static final Stat SHRINE_FOUND_MOON = Stat.create("shrine_found_moon", IStatFormatter.DEFAULT, false);
     public static final Stat TREANTS_NAMED = Stat.create("treants_named", IStatFormatter.DEFAULT, false);
+    
+    // Internal-only stats
+    public static final Stat BLOCKS_BROKEN_BAREHANDED = Stat.create("blocks_broken_barehanded", IStatFormatter.DEFAULT, false, true);
 }

@@ -582,7 +582,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected void parseStatsPages() {
         // For each visible statistic, create one or more page strings for that stat's text and value
         this.currentStageIndex = 0;
-        List<Stat> stats = StatsManager.getSortedStats();
+        List<Stat> stats = StatsManager.getDisplayStats();
         if (stats.isEmpty()) {
             return;
         }

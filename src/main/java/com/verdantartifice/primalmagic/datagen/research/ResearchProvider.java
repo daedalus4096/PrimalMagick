@@ -648,7 +648,7 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_BREAK", discipline).parent("EXPERT_SORCERY")
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_blocks_broken_barehanded_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_WATER", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_FROST")
