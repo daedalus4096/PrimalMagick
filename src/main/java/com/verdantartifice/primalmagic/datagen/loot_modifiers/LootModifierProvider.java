@@ -10,6 +10,8 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.loot.LootContext.EntityTarget;
 import net.minecraft.loot.conditions.EntityHasProperty;
 import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.loot.conditions.KilledByPlayer;
+import net.minecraft.loot.conditions.RandomChanceWithLooting;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
 /**
@@ -26,7 +28,9 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
     protected void start() {
         this.add("bloody_flesh", LootModifierSerializersPM.BLOODY_FLESH.get(), new BloodyFleshModifier(
                 new ILootCondition[] {
-                        EntityHasProperty.builder(EntityTarget.THIS, EntityPredicate.Builder.create().type(EntityTypeTagsPM.DROPS_BLOODY_FLESH)).build()
+                        EntityHasProperty.builder(EntityTarget.THIS, EntityPredicate.Builder.create().type(EntityTypeTagsPM.DROPS_BLOODY_FLESH)).build(),
+                        KilledByPlayer.builder().build(),
+                        RandomChanceWithLooting.builder(0.5F, 0.1F).build()
                 }));
     }
 }
