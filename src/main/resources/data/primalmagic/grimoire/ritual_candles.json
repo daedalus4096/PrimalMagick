@@ -20,7 +20,6 @@
       "recipes": [
         "primalmagic:tallow",
         "primalmagic:ritual_candle_white_from_tallow",
-        "primalmagic:ritual_candle_white_from_beeswax",
         "primalmagic:ritual_candle_black",
         "primalmagic:ritual_candle_blue",
         "primalmagic:ritual_candle_brown",
@@ -40,5 +39,15 @@
       ]
     }
   ],
-  "addenda": []
+  "addenda": [
+    {
+      "text": "primalmagic.research.ritual_candles.text.addenda.1",
+      "required_research": [
+        "HONEY_EXTRACTOR"
+      ],
+      "recipes": [
+        "primalmagic:ritual_candle_white_from_beeswax"
+      ]
+    }
+  ]
 }

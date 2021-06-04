@@ -1293,16 +1293,17 @@
     "primalmagic.research.supreme_ritual.text.stage.2": "The most advanced topics in the discipline of ritual magic are now at my fingertips.",
     
     "primalmagic.research.ritual_candles.title": "Ritual Candles",
-    "primalmagic.research.ritual_candles.text.stage.1": "Ritual candles: Lorem ipsum",
-    "primalmagic.research.ritual_candles.text.stage.2": "Ritual candles research complete!",
+    "primalmagic.research.ritual_candles.text.stage.1": "I'm going to need special props in order to conduct my rituals.  According to my Grimoire, ritual candles are a classic.  I should figure out what makes them special, compared to ordinary candles.",
+    "primalmagic.research.ritual_candles.text.stage.2": "Apparently there's a special sanctification process that goes into the preparation of ritual candles.<BR>It requires the intonation of special blessings while handling the tallow, and the inscription of mystical sigils.  No mana, though.<BR>There's nothing stopping me from using them as tasteful decoration, either, and they come in a wide variety of colors.<BR>To activate this prop during a ritual, I must light it with a flint and steel.  It's very important that the candle not already be lit when I start the ritual; the sparking of new light is symbolic.<BR>To reset the prop, I can just snuff it with my fingertips.",
+    "primalmagic.research.ritual_candles.text.addenda.1": "It seems that ritual candles can be made from beeswax in addition to tallow.  The sanctification process is the same, so I need not alter my process, just the materials I use.",
     
     "primalmagic.research.incense_brazier.title": "Incense Brazier",
-    "primalmagic.research.incense_brazier.text.stage.1": "Incense brazier: Lorem ipsum",
-    "primalmagic.research.incense_brazier.text.stage.2": "Incense brazier research complete!",
+    "primalmagic.research.incense_brazier.text.stage.1": "I'm going to need special props in order to conduct my rituals.  According to my Grimoire, incense is commonly used.",
+    "primalmagic.research.incense_brazier.text.stage.2": "Incense can be created from most types of flowers, simply burn it on the end of a stick.  The brazier it's burned in, however, must be specially sanctified before use.<BR>To activate this prop during a ritual, I simply take a stick of incense and add it to an unlit brazier.  It's very important that the brazier not already be lit when I start the ritual.<BR>To reset the prop, I just remove the charred incense stick with an empty hand.",
     
     "primalmagic.research.manafruit.title": "Manafruit",
-    "primalmagic.research.manafruit.text.stage.1": "Manafruit: Lorem ipsum",
-    "primalmagic.research.manafruit.text.stage.2": "Manafruit research complete!",
+    "primalmagic.research.manafruit.text.stage.1": "My first real ritual!  I'm so excited.<BR>I'm piecing together the props and offerings I'll need from my Grimoire's hints.  I'll be ready to try it soon!",
+    "primalmagic.research.manafruit.text.stage.2": "Fruit?  Huh, okay then.<BR>It looks like it's not just any old fruit, though.  In addition to being nourishing, this Manafruit will temporarily allow me to channel mana more efficiently, resulting in a slight discount in all my mana costs.<BR>May I can find some other use for it as well?",
     
     "primalmagic.research.ritual_lectern.title": "Ritual Lectern",
     "primalmagic.research.ritual_lectern.text.stage.1": "Ritual lectern: Lorem ipsum",
