@@ -33,6 +33,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.BloodletterBlock;
+import com.verdantartifice.primalmagic.common.blocks.rituals.CelestialHarpBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.IncenseBrazierBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.OfferingPedestalBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
@@ -285,6 +286,7 @@ public class BlocksPM {
     public static final RegistryObject<HallowsteelGolemControllerBlock> HALLOWSTEEL_GOLEM_CONTROLLER = BLOCKS.register("hallowsteel_golem_controller", () -> new HallowsteelGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<SanguineCrucibleBlock> SANGUINE_CRUCIBLE = BLOCKS.register("sanguine_crucible", SanguineCrucibleBlock::new);
     public static final RegistryObject<ConcocterBlock> CONCOCTER = BLOCKS.register("concocter", ConcocterBlock::new);
+    public static final RegistryObject<CelestialHarpBlock> CELESTIAL_HARP = BLOCKS.register("celestial_harp", CelestialHarpBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
