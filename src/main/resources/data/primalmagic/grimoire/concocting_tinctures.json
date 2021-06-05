@@ -4,7 +4,8 @@
   "discipline": "MAGITECH",
   "parents": [
     "EXPERT_MAGITECH",
-    "SKYGLASS"
+    "SKYGLASS",
+    "t_discover_infernal"
   ],
   "stages": [
     {

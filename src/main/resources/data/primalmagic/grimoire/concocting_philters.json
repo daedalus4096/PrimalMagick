@@ -4,7 +4,8 @@
   "discipline": "MAGITECH",
   "parents": [
     "MASTER_MAGITECH",
-    "CONCOCTING_TINCTURES"
+    "CONCOCTING_TINCTURES",
+    "SHARD_SYNTHESIS"
   ],
   "stages": [
     {

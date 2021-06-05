@@ -987,7 +987,7 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("CONCOCTING_TINCTURES", discipline).parent("EXPERT_MAGITECH").parent("SKYGLASS")
+        ResearchEntryBuilder.entry("CONCOCTING_TINCTURES", discipline).parent("EXPERT_MAGITECH").parent("SKYGLASS").parent(Source.INFERNAL.getDiscoverKey())
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SKYGLASS_FLASK.get()).recipe(ItemsPM.CONCOCTER.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "night_vision_tincture"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "long_night_vision_tincture")).recipe(new ResourceLocation(PrimalMagic.MODID, "invisibility_tincture"))
@@ -1006,7 +1006,7 @@ public class ResearchProvider implements IDataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "fire_resistance_tincture"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "long_fire_resistance_tincture")).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("CONCOCTING_PHILTERS", discipline).parent("MASTER_MAGITECH").parent("CONCOCTING_TINCTURES")
+        ResearchEntryBuilder.entry("CONCOCTING_PHILTERS", discipline).parent("MASTER_MAGITECH").parent("CONCOCTING_TINCTURES").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(new ResourceLocation(PrimalMagic.MODID, "night_vision_philter"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "long_night_vision_philter")).recipe(new ResourceLocation(PrimalMagic.MODID, "invisibility_philter"))
@@ -1025,7 +1025,7 @@ public class ResearchProvider implements IDataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "fire_resistance_philter"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "long_fire_resistance_philter")).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("CONCOCTING_ELIXIRS", discipline).parent("SUPREME_MAGITECH").parent("CONCOCTING_PHILTERS")
+        ResearchEntryBuilder.entry("CONCOCTING_ELIXIRS", discipline).parent("SUPREME_MAGITECH").parent("CONCOCTING_PHILTERS").parent("CRYSTAL_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(new ResourceLocation(PrimalMagic.MODID, "night_vision_elixir"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "long_night_vision_elixir")).recipe(new ResourceLocation(PrimalMagic.MODID, "invisibility_elixir"))
@@ -1044,7 +1044,7 @@ public class ResearchProvider implements IDataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(new ResourceLocation(PrimalMagic.MODID, "fire_resistance_elixir"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "long_fire_resistance_elixir")).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("CONCOCTING_BOMBS", discipline).parent("MASTER_MAGITECH").parent("CONCOCTING_TINCTURES")
+        ResearchEntryBuilder.entry("CONCOCTING_BOMBS", discipline).parent("MASTER_MAGITECH").parent("CONCOCTING_TINCTURES").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(new ResourceLocation(PrimalMagic.MODID, "night_vision_bomb"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "long_night_vision_bomb")).recipe(new ResourceLocation(PrimalMagic.MODID, "invisibility_bomb"))
