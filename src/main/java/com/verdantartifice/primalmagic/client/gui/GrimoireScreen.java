@@ -322,7 +322,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 completeList.add(entry);
             } else if (this.knowledge.getResearchStatus(entry.getKey()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS) {
                 inProgressList.add(entry);
-            } else if (entry.getParentResearch() == null || entry.getParentResearch().isKnownByStrict(Minecraft.getInstance().player)) {
+            } else if (!entry.isHidden() && (entry.getParentResearch() == null || entry.getParentResearch().isKnownByStrict(Minecraft.getInstance().player))) {
                 availableList.add(entry);
             }
         }

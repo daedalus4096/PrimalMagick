@@ -20,11 +20,13 @@ public class ResearchEntryBuilder {
     protected final List<SimpleResearchKey> parents = new ArrayList<>();
     protected final List<IFinishedResearchStage> stages = new ArrayList<>();
     protected final List<IFinishedResearchAddendum> addenda = new ArrayList<>();
+    protected boolean hidden;
     
     protected ResearchEntryBuilder(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
         this.key = key.stripStage();
         this.nameTranslationKey = modId.toLowerCase() + ".research." + this.key.getRootKey().toLowerCase() + ".title";
         this.disciplineName = discipline;
+        this.hidden = false;
     }
     
     public static ResearchEntryBuilder entry(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
@@ -46,6 +48,11 @@ public class ResearchEntryBuilder {
     
     public ResearchEntryBuilder parent(String parentStr) {
         this.parents.add(SimpleResearchKey.parse(parentStr));
+        return this;
+    }
+    
+    public ResearchEntryBuilder hidden() {
+        this.hidden = true;
         return this;
     }
     
@@ -86,7 +93,7 @@ public class ResearchEntryBuilder {
     
     public void build(Consumer<IFinishedResearchEntry> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new ResearchEntryBuilder.Result(id, this.key, this.nameTranslationKey, this.disciplineName, this.parents, this.stages, this.addenda));
+        consumer.accept(new ResearchEntryBuilder.Result(id, this.key, this.nameTranslationKey, this.disciplineName, this.hidden, this.parents, this.stages, this.addenda));
     }
     
     public static class Result implements IFinishedResearchEntry {
@@ -94,15 +101,17 @@ public class ResearchEntryBuilder {
         protected final SimpleResearchKey key;
         protected final String name;
         protected final String discipline;
+        protected final boolean hidden;
         protected final List<SimpleResearchKey> parents;
         protected final List<IFinishedResearchStage> stages;
         protected final List<IFinishedResearchAddendum> addenda;
         
-        public Result(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline, @Nonnull List<SimpleResearchKey> parents, @Nonnull List<IFinishedResearchStage> stages, @Nonnull List<IFinishedResearchAddendum> addenda) {
+        public Result(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline, boolean hidden, @Nonnull List<SimpleResearchKey> parents, @Nonnull List<IFinishedResearchStage> stages, @Nonnull List<IFinishedResearchAddendum> addenda) {
             this.id = id;
             this.key = key;
             this.name = name;
             this.discipline = discipline;
+            this.hidden = hidden;
             this.parents = parents;
             this.stages = stages;
             this.addenda = addenda;
@@ -118,6 +127,10 @@ public class ResearchEntryBuilder {
             json.addProperty("key", this.key.toString());
             json.addProperty("name", this.name);
             json.addProperty("discipline", this.discipline);
+            
+            if (this.hidden) {
+                json.addProperty("hidden", this.hidden);
+            }
             
             JsonArray parentsArray = new JsonArray();
             for (SimpleResearchKey parent : this.parents) {

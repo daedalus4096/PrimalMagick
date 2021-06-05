@@ -2,6 +2,7 @@
   "key": "HALLOWED_ORB",
   "name": "primalmagic.research.hallowed_orb.title",
   "discipline": "SCANS",
+  "hidden": true,
   "parents": [
     "UNLOCK_SCANS"
   ],

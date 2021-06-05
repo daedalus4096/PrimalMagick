@@ -1073,13 +1073,13 @@ public class ResearchProvider implements IDataProvider {
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "SCANS";
-        ResearchEntryBuilder.entry("RAW_MARBLE", discipline).parent("UNLOCK_SCANS")
+        ResearchEntryBuilder.entry("RAW_MARBLE", discipline).hidden().parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("HALLOWED_ORB", discipline).parent("UNLOCK_SCANS")
+        ResearchEntryBuilder.entry("HALLOWED_ORB", discipline).hidden().parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWOOD_SAPLING.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("HALLOWOOD_TREES", discipline).parent("UNLOCK_SCANS")
+        ResearchEntryBuilder.entry("HALLOWOOD_TREES", discipline).hidden().parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_HALLOWOOD_WOOD.get()).recipe(ItemsPM.HALLOWOOD_PLANKS.get())
                     .recipe(ItemsPM.HALLOWOOD_SLAB.get()).recipe(ItemsPM.HALLOWOOD_STAIRS.get()).recipe(ItemsPM.HALLOWOOD_PILLAR.get()).build())
             .build(consumer);

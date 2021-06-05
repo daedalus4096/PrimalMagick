@@ -26,6 +26,7 @@ public class ResearchEntry {
     protected String disciplineKey;
     protected String nameTranslationKey;
     protected CompoundResearchKey parentResearch;
+    protected boolean hidden;
     protected List<ResearchStage> stages = new ArrayList<>();
     protected List<ResearchAddendum> addenda = new ArrayList<>();
     
@@ -33,6 +34,7 @@ public class ResearchEntry {
         this.key = key;
         this.disciplineKey = disciplineKey;
         this.nameTranslationKey = nameTranslationKey;
+        this.hidden = false;
     }
     
     @Nullable
@@ -55,6 +57,10 @@ public class ResearchEntry {
         );
         if (entry == null) {
             throw new JsonParseException("Invalid entry data in research JSON");
+        }
+        
+        if (obj.has("hidden")) {
+            entry.hidden = obj.getAsJsonPrimitive("hidden").getAsBoolean();
         }
         
         if (obj.has("parents")) {
@@ -92,6 +98,10 @@ public class ResearchEntry {
     @Nullable
     public CompoundResearchKey getParentResearch() {
         return this.parentResearch;
+    }
+    
+    public boolean isHidden() {
+        return this.hidden;
     }
     
     @Nonnull
