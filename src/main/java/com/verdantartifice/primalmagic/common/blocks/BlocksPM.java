@@ -41,6 +41,7 @@ import com.verdantartifice.primalmagic.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualLecternBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SoulAnvilBlock;
+import com.verdantartifice.primalmagic.common.blocks.trees.HallowoodTree;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodLogBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodPillarBlock;
@@ -48,6 +49,7 @@ import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodPlanksBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodSlabBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodStairsBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.MoonwoodTree;
+import com.verdantartifice.primalmagic.common.blocks.trees.StrippableLogBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLeavesBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodLogBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodPillarBlock;
@@ -60,13 +62,19 @@ import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.DyeColor;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -160,6 +168,18 @@ public class BlocksPM {
     public static final RegistryObject<MoonwoodSlabBlock> MOONWOOD_SLAB = BLOCKS.register("moonwood_slab", () -> new MoonwoodSlabBlock(Block.Properties.from(MOONWOOD_PLANKS.get())));
     public static final RegistryObject<MoonwoodStairsBlock> MOONWOOD_STAIRS = BLOCKS.register("moonwood_stairs", () -> new MoonwoodStairsBlock(MOONWOOD_PLANKS.get()::getDefaultState, Block.Properties.from(MOONWOOD_PLANKS.get())));
     public static final RegistryObject<MoonwoodPillarBlock> MOONWOOD_PILLAR = BLOCKS.register("moonwood_pillar", MoonwoodPillarBlock::new);
+    
+    // Register hallowood blocks
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_LOG = BLOCKS.register("stripped_hallowood_log", () -> new RotatedPillarBlock(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<StrippableLogBlock> HALLOWOOD_LOG = BLOCKS.register("hallowood_log", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_LOG.get(), Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_WOOD = BLOCKS.register("stripped_hallowood_wood", () -> new RotatedPillarBlock(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<StrippableLogBlock> HALLOWOOD_WOOD = BLOCKS.register("hallowood_wood", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_WOOD.get(), Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<LeavesBlock> HALLOWOOD_LEAVES = BLOCKS.register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).notSolid().sound(SoundType.PLANT).setSuffocates(BlocksPM::isntSolid).setBlocksVision(BlocksPM::isntSolid).setAllowsSpawn(BlocksPM::allowsSpawnOnLeaves)));
+    public static final RegistryObject<SaplingBlockPM> HALLOWOOD_SAPLING = BLOCKS.register("hallowood_sapling", () -> new SaplingBlockPM(new HallowoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.PLANT)));
+    public static final RegistryObject<Block> HALLOWOOD_PLANKS = BLOCKS.register("hallowood_planks", () -> new Block(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<SlabBlock> HALLOWOOD_SLAB = BLOCKS.register("hallowood_slab", () -> new SlabBlock(Block.Properties.from(HALLOWOOD_PLANKS.get())));
+    public static final RegistryObject<StairsBlock> HALLOWOOD_STAIRS = BLOCKS.register("hallowood_stairs", () -> new StairsBlock(HALLOWOOD_PLANKS.get()::getDefaultState, Block.Properties.from(HALLOWOOD_PLANKS.get())));
+    public static final RegistryObject<PillarBlock> HALLOWOOD_PILLAR = BLOCKS.register("hallowood_pillar", () -> new PillarBlock(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
     
     // Register infused stone
     public static final RegistryObject<Block> INFUSED_STONE_EARTH = BLOCKS.register("infused_stone_earth", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)));
@@ -276,4 +296,13 @@ public class BlocksPM {
     public static final RegistryObject<Block> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.IRON.getLevel())));
     public static final RegistryObject<Block> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.DIAMOND.getLevel())));
     public static final RegistryObject<PyramidBlock> PYRAMID = BLOCKS.register("pyramid", PyramidBlock::new);
+
+    // Helper functions for block properties
+    protected static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
+        return false;
+    }
+
+    protected static Boolean allowsSpawnOnLeaves(BlockState state, IBlockReader reader, BlockPos pos, EntityType<?> entity) {
+        return entity == EntityType.OCELOT || entity == EntityType.PARROT;
+    }
 }

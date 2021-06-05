@@ -28,6 +28,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerHallowedMarbleLootTables();
         this.registerSunwoodLootTables();
         this.registerMoonwoodLootTables();
+        this.registerHallowoodLootTables();
         this.registerInfusedStoneLootTables();
         this.registerSkyglassLootTables();
         this.registerRitualCandleLootTables();
@@ -167,6 +168,19 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.MOONWOOD_SLAB.get());
         this.registerBasicTable(BlocksPM.MOONWOOD_STAIRS.get());
         this.registerBasicTable(BlocksPM.MOONWOOD_PILLAR.get());
+    }
+    
+    private void registerHallowoodLootTables() {
+        this.registerBasicTable(BlocksPM.HALLOWOOD_LOG.get());
+        this.registerBasicTable(BlocksPM.STRIPPED_HALLOWOOD_LOG.get());
+        this.registerBasicTable(BlocksPM.HALLOWOOD_WOOD.get());
+        this.registerBasicTable(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get());
+        this.registerLeavesTable(BlocksPM.HALLOWOOD_LEAVES.get(), BlocksPM.HALLOWOOD_SAPLING.get());
+        this.registerBasicTable(BlocksPM.HALLOWOOD_SAPLING.get());
+        this.registerBasicTable(BlocksPM.HALLOWOOD_PLANKS.get());
+        this.registerSlabTable(BlocksPM.HALLOWOOD_SLAB.get());
+        this.registerBasicTable(BlocksPM.HALLOWOOD_STAIRS.get());
+        this.registerBasicTable(BlocksPM.HALLOWOOD_PILLAR.get());
     }
     
     private void registerInfusedStoneLootTables() {

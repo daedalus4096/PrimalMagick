@@ -62,6 +62,8 @@ public class FeaturesPM {
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TREE_MOONWOOD_WANING;
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TREE_MOONWOOD_FADED;
     
+    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TREE_HALLOWOOD;
+    
     public static ConfiguredFeature<?, ?> TREE_SUNWOOD_FULL_SPACED;
     public static ConfiguredFeature<?, ?> TREE_MOONWOOD_FULL_SPACED;
 
@@ -81,6 +83,8 @@ public class FeaturesPM {
         TREE_MOONWOOD_WAXING = registerFeature("tree_moonwood_waxing", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LOG_WAXING), new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LEAVES_WAXING), new BlobFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 3), new StraightTrunkPlacer(5, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()));
         TREE_MOONWOOD_WANING = registerFeature("tree_moonwood_waning", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LOG_WANING), new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LEAVES_WANING), new BlobFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 3), new StraightTrunkPlacer(5, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()));
         TREE_MOONWOOD_FADED = registerFeature("tree_moonwood_faded", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LOG_FADED), new SimpleBlockStateProvider(FeaturesPM.States.MOONWOOD_LEAVES_FADED), new BlobFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 3), new StraightTrunkPlacer(5, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()));
+        
+        TREE_HALLOWOOD = registerFeature("tree_hallowood", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(FeaturesPM.States.HALLOWOOD_LOG), new SimpleBlockStateProvider(FeaturesPM.States.HALLOWOOD_LEAVES), new BlobFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 3), new StraightTrunkPlacer(5, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()));
         
         TREE_SUNWOOD_FULL_SPACED = registerFeature("tree_sunwood_full_spaced", TREE_SUNWOOD_FULL.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.05F, 1))));
         TREE_MOONWOOD_FULL_SPACED = registerFeature("tree_moonwood_full_spaced", TREE_MOONWOOD_FULL.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.05F, 1))));
@@ -125,5 +129,7 @@ public class FeaturesPM {
         protected static final BlockState MOONWOOD_LEAVES_WAXING = BlocksPM.MOONWOOD_LEAVES.get().getDefaultState().with(MoonwoodLeavesBlock.PHASE, TimePhase.WAXING);
         protected static final BlockState MOONWOOD_LEAVES_WANING = BlocksPM.MOONWOOD_LEAVES.get().getDefaultState().with(MoonwoodLeavesBlock.PHASE, TimePhase.WANING);
         protected static final BlockState MOONWOOD_LEAVES_FADED = BlocksPM.MOONWOOD_LEAVES.get().getDefaultState().with(MoonwoodLeavesBlock.PHASE, TimePhase.FADED);
+        protected static final BlockState HALLOWOOD_LOG = BlocksPM.HALLOWOOD_LOG.get().getDefaultState();
+        protected static final BlockState HALLOWOOD_LEAVES = BlocksPM.HALLOWOOD_LEAVES.get().getDefaultState();
     }
 }

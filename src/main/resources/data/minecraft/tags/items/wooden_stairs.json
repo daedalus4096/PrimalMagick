@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "primalmagic:moonwood_stairs",
-    "primalmagic:sunwood_stairs"
+    "primalmagic:sunwood_stairs",
+    "primalmagic:hallowood_stairs"
   ]
 }

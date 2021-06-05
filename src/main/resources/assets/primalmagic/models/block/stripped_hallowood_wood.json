@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "primalmagic:block/stripped_hallowood_log",
+        "side": "primalmagic:block/stripped_hallowood_log"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=base":   { "model": "primalmagic:block/hallowood_pillar" },
+        "type=bottom": { "model": "primalmagic:block/hallowood_pillar_bottom" },
+        "type=top":    { "model": "primalmagic:block/hallowood_pillar_top" }
+    }
+}

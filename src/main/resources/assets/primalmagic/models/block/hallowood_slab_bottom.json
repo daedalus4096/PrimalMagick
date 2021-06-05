@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "primalmagic:block/hallowood_planks",
+        "top": "primalmagic:block/hallowood_planks",
+        "side": "primalmagic:block/hallowood_planks"
+    }
+}
