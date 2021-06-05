@@ -1,0 +1,22 @@
+{
+  "key": "HALLOWOOD_TREES",
+  "name": "primalmagic.research.hallowood_trees.title",
+  "discipline": "SCANS",
+  "parents": [
+    "UNLOCK_SCANS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.hallowood_trees.text.stage.1",
+      "recipes": [
+        "primalmagic:hallowood_wood",
+        "primalmagic:stripped_hallowood_wood",
+        "primalmagic:hallowood_planks",
+        "primalmagic:hallowood_slab",
+        "primalmagic:hallowood_stairs",
+        "primalmagic:hallowood_pillar"
+      ]
+    }
+  ],
+  "addenda": []
+}

@@ -1464,6 +1464,12 @@
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble is a lovely variety of stone, but that's not what makes it so special.  It synergizes with magic, reflecting, absorbing, or redirecting it at the will of the mage.<BR>I can see why the ancients used marble to build their shrines.  It will be very important in many of my workings.",
     
+    "primalmagic.research.hallowed_orb.title": "Hallowed Orb",
+    "primalmagic.research.hallowed_orb.text.stage.1": "Now just what was such a powerful creature of darkness doing with this?  The orb hums with a soothing power of a sort I've never felt before.  And I do mean hum: I can feel, rather than hear, music in my heart when I hold it.<BR>I want to see this power grow, see what it will become when mature.  Perhaps if I infuse its energy into a tree sapling...",
+    
+    "primalmagic.research.hallowood_trees.title": "Hallowood Trees",
+    "primalmagic.research.hallowood_trees.text.stage.1": "Positively wondrous!  To think that such beauty could be the end product of the cleansing rite I've undertaken.<BR>These trees resonate with Hallowed energy, seeming to draw life from the very creative forces of the universe, rather than mere sunlight.  Perhaps I could learn more by studying their essence.<BR>Yes, that feels right.  Nurturing life to gain knowledge.  Perhaps this is a lesson in humility that I sorely need.",
+    
     "commands.primalmagic.research.list": "All research for %1$s: %2$s",
     "commands.primalmagic.research.reset": "Resetting all research for %1$s",
     "commands.primalmagic.research.reset.target": "%1$s has reset all of your research",

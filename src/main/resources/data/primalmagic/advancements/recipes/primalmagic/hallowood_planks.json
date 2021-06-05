@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagic:hallowood_planks"
+    ]
+  },
+  "criteria": {
+    "has_hallowood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "primalmagic:hallowood_logs"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagic:hallowood_planks"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hallowood_log",
+      "has_the_recipe"
+    ]
+  ]
+}

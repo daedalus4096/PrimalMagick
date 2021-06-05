@@ -55,6 +55,7 @@ public class Recipes extends RecipeProvider {
         this.registerHallowedMarbleRecipes(consumer);
         this.registerSunwoodRecipes(consumer);
         this.registerMoonwoodRecipes(consumer);
+        this.registerHallowoodRecipes(consumer);
         this.registerEssenceUpgradeRecipes(consumer);
         this.registerEssenceDowngradeRecipes(consumer);
         this.registerSaltRecipes(consumer);
@@ -981,6 +982,54 @@ public class Recipes extends RecipeProvider {
             .patternLine("#")
             .key('#', ItemTagsPM.MOONWOOD_LOGS)
             .addCriterion("has_moonwood_log", hasItem(ItemTagsPM.MOONWOOD_LOGS))
+            .build(consumer);
+    }
+    
+    protected void registerHallowoodRecipes(Consumer<IFinishedRecipe> consumer) {
+        ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.HALLOWOOD_SAPLING.get())
+            .addIngredient(ItemsPM.HALLOWED_ORB.get())
+            .addIngredient(ItemTags.SAPLINGS)
+            .addCriterion("has_hallowed_orb", hasItem(ItemsPM.HALLOWED_ORB.get()))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemsPM.HALLOWOOD_WOOD.get(), 3)
+            .patternLine("WW")
+            .patternLine("WW")
+            .key('W', ItemsPM.HALLOWOOD_LOG.get())
+            .setGroup("bark")
+            .addCriterion("has_hallowood_log", hasItem(ItemsPM.HALLOWOOD_LOG.get()))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemsPM.STRIPPED_HALLOWOOD_WOOD.get(), 3)
+            .patternLine("WW")
+            .patternLine("WW")
+            .key('W', ItemsPM.STRIPPED_HALLOWOOD_LOG.get())
+            .setGroup("stripped_bark")
+            .addCriterion("has_hallowood_log", hasItem(ItemsPM.HALLOWOOD_LOG.get()))
+            .addCriterion("has_stripped_hallowood_log", hasItem(ItemsPM.STRIPPED_HALLOWOOD_LOG.get()))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapelessRecipe(BlocksPM.HALLOWOOD_PLANKS.get(), 4)
+            .addIngredient(ItemTagsPM.HALLOWOOD_LOGS)
+            .setGroup("planks")
+            .addCriterion("has_hallowood_log", hasItem(ItemTagsPM.HALLOWOOD_LOGS))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.HALLOWOOD_SLAB.get(), 6)
+            .patternLine("###")
+            .key('#', BlocksPM.HALLOWOOD_PLANKS.get())
+            .setGroup("wooden_slab")
+            .addCriterion("has_planks", hasItem(BlocksPM.HALLOWOOD_PLANKS.get()))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.HALLOWOOD_STAIRS.get(), 4)
+            .patternLine("#  ")
+            .patternLine("## ")
+            .patternLine("###")
+            .key('#', BlocksPM.HALLOWOOD_PLANKS.get())
+            .setGroup("wooden_stairs")
+            .addCriterion("has_planks", hasItem(BlocksPM.HALLOWOOD_PLANKS.get()))
+            .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksPM.HALLOWOOD_PILLAR.get(), 2)
+            .patternLine("#")
+            .patternLine("#")
+            .key('#', ItemTagsPM.HALLOWOOD_LOGS)
+            .addCriterion("has_hallowood_log", hasItem(ItemTagsPM.HALLOWOOD_LOGS))
             .build(consumer);
     }
 

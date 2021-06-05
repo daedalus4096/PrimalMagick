@@ -527,6 +527,14 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_SAPLING.get()).base(Items.OAK_SAPLING).add(Source.SUN, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_PLANKS.get()).base(Items.OAK_PLANKS).add(Source.SUN, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.SUNWOOD_SLAB.get()).base(Items.OAK_SLAB).add(Source.SUN, 1).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWOOD_LOG.get()).base(Items.OAK_LOG).add(Source.HALLOWED, 10).remove(Source.SUN, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.STRIPPED_HALLOWOOD_LOG.get()).base(ItemsPM.HALLOWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWOOD_WOOD.get()).base(ItemsPM.HALLOWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.STRIPPED_HALLOWOOD_WOOD.get()).base(ItemsPM.HALLOWOOD_LOG.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWOOD_LEAVES.get()).base(Items.OAK_LEAVES).add(Source.HALLOWED, 5).remove(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWOOD_SAPLING.get()).base(Items.OAK_SAPLING).add(Source.HALLOWED, 10).remove(Source.SUN, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWOOD_PLANKS.get()).base(Items.OAK_PLANKS).add(Source.HALLOWED, 2).remove(Source.SUN, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWOOD_SLAB.get()).base(Items.OAK_SLAB).add(Source.HALLOWED, 1).remove(Source.SUN, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_EARTH.get()).base(Items.STONE).add(Source.EARTH, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_SEA.get()).base(Items.STONE).add(Source.SEA, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_SKY.get()).base(Items.STONE).add(Source.SKY, 1).build(consumer);

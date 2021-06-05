@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagic:hallowood_wood"
+    ]
+  },
+  "criteria": {
+    "has_hallowood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "primalmagic:hallowood_log"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagic:hallowood_wood"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hallowood_log",
+      "has_the_recipe"
+    ]
+  ]
+}

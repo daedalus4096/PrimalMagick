@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "target": "primalmagic:hallowood_planks",
+  "base": "minecraft:oak_planks",
+  "add": {
+    "hallowed": 2
+  },
+  "remove": {
+    "sun": 2
+  }
+}
