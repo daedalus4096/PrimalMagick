@@ -1388,31 +1388,31 @@
     "primalmagic.research.cleansing_rite.text.stage.2": "I magicked my way into this problem, and I will magic my way back out.<BR>I've devised a ritual that will collect and congeal the negative energy of my sins, allowing me to manifest them in physical form.  This alone will not free me, however, as they will remain metaphysically bound to me unless I face and overcome them.<BR>But thanks to magic, that may be possible without undergoing years of therapy.  If I bind this negative energy to a Sanguine Core, I can use a crucible to spawn a manifestation of those sins and defeat it in combat!  Unorthodox, but it just might work.<BR>Unless it kills me, of course.  I should be very clear on that: I don't know what exactly will come out of that crucible, but it will be very powerful and very, very angry.  I had best be prepared for a difficult fight.",
     
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
-    "primalmagic.research.basic_magitech.text.stage.1": "Basic magitech: Lorem ipsum",
+    "primalmagic.research.basic_magitech.text.stage.1": "I think I'm starting to get the hang of Magitech.  The devices are just like normal machines, except they run on mana instead of redstone.<BR>I've drawn up schematics for set of simple, replaceable parts that I can use when designing enchanted machinery.  No doubt more advanced devices will need something more intricate, but it's a start!",
     
     "primalmagic.research.expert_magitech.title": "Expert Magitech",
-    "primalmagic.research.expert_magitech.text.stage.1": "Expert magitech: Lorem ipsum",
-    "primalmagic.research.expert_magitech.text.stage.2": "Expert magitech research complete!",
+    "primalmagic.research.expert_magitech.text.stage.1": "My skill with magitech is growing, but I need more practice with it before I can get over this plateau I'm on.  Nothing to do but keep at it.",
+    "primalmagic.research.expert_magitech.text.stage.2": "I now feel comfortable calling myself an expert at designing magitech devices.  Now I can start researching more advanced machines and continue my studies.",
     
     "primalmagic.research.master_magitech.title": "Master Magitech",
-    "primalmagic.research.master_magitech.text.stage.1": "Master magitech: Lorem ipsum",
-    "primalmagic.research.master_magitech.text.stage.2": "Master magitech research complete!",
+    "primalmagic.research.master_magitech.text.stage.1": "My skill with magitech is growing, but I need more practice with it before I can get over this plateau I'm on.  Nothing to do but keep at it.",
+    "primalmagic.research.master_magitech.text.stage.2": "I've now mastered conventional magitech and have started researching the forbidden topics that my Grimoire remains silent about.",
     
     "primalmagic.research.supreme_magitech.title": "Supreme Magitech",
-    "primalmagic.research.supreme_magitech.text.stage.1": "Supreme magitech: Lorem ipsum",
-    "primalmagic.research.supreme_magitech.text.stage.2": "Supreme magitech research complete!",
+    "primalmagic.research.supreme_magitech.text.stage.1": "The top of the hill is in sight.  My skills with magitech are almost without peer...  Almost.",
+    "primalmagic.research.supreme_magitech.text.stage.2": "The most advanced topics in the discipline of magitech are now at my fingertips.",
     
     "primalmagic.research.honey_extractor.title": "Honey Extractor",
-    "primalmagic.research.honey_extractor.text.stage.1": "Honey extractor: Lorem ipsum",
-    "primalmagic.research.honey_extractor.text.stage.2": "Honey extractor research complete!",
+    "primalmagic.research.honey_extractor.text.stage.1": "Honey is delicious and sweet, and I wish there was a way to get it more efficiently from hives.  There's more of it in honeycombs than I can get from a bottle, but it's trapped inside the wax.  Can magic help?",
+    "primalmagic.research.honey_extractor.text.stage.2": "I've devised simple device that should help me extract the honey my sweet tooth craves.  It spins the honeycombs very fast, causing the cells of the comb to rupture and spill their honey.  While such a device would conceivably by possible without magic, I found that powering it with Sky mana made the design much simpler.<BR>To begin, I'll need a honeycomb and an empty glass bottle.  The extractor will also need to be powered with a small amount of Sky mana, which can be done by placing a wand in the designated slot.<BR>The machine will then process the honeycomb over several seconds, resulting in a bottle of honey and a clean clump of beeswax that I may be able to repurpose.",
     
     "primalmagic.research.seascribe_pen.title": "Seascribe Pen",
-    "primalmagic.research.seascribe_pen.text.stage.1": "Seascribe pen: Lorem ipsum",
-    "primalmagic.research.seascribe_pen.text.stage.2": "Seascribe pen research complete!",
+    "primalmagic.research.seascribe_pen.text.stage.1": "Working at my research table requires a lot of writing, and it feels like my quill is always running out of ink.  I spend more time dipping than I do writing!  Maybe there's a better way.",
+    "primalmagic.research.seascribe_pen.text.stage.2": "Oh, now this is elegant.  I've designed a magitech pen which will let me work at my research table much better.<BR>The pen is loaded with the same enchanted ink that I use already, but the tiny magitech device embedded within causes it to slowly pull Sea mana from the environment.  It's not much, but it's more than enough to replenish my ink supply.<BR>The result is a pen that never runs dry, no matter how much I write.  And it's very pleasing to hold, to boot.  Functionaly and stylish both!",
     
     "primalmagic.research.arcanometer.title": "Arcanometer",
-    "primalmagic.research.arcanometer.text.stage.1": "Arcanometer: Lorem ipsum",
-    "primalmagic.research.arcanometer.text.stage.2": "Arcanometer research complete!",
+    "primalmagic.research.arcanometer.text.stage.1": "Analyzing items is tedious, exacting work, and it's a destructive process.  I'm always hesitant to analyze anything valuable because I don't want to lose it.<BR>Is there a way I can overcome these limitations?",
+    "primalmagic.research.arcanometer.text.stage.2": "I'm feeling very proud of myself right now.  Behold, the Arcanometer!<BR>Rather than spending an afternoon hunched over an analysis table, I can simply take the Arcanometer, point it at a block, and trigger it.  Presto, one detailed scan result.<BR>I can even use it to scan creatures now!  For obvious reasons, they'd never let me take them apart under a magnifying glass, but now I don't have to.  I should just make sure not to let them eat me while I'm scanning them.",
     
     "primalmagic.research.primalite_golem.title": "Primalite Golem",
     "primalmagic.research.primalite_golem.text.stage.1": "Primalite golem: Lorem ipsum",
