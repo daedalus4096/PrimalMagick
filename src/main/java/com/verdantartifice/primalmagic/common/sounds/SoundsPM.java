@@ -41,4 +41,5 @@ public class SoundsPM {
     public static final RegistryObject<SoundEvent> TREEFOLK_HURT = SOUNDS.register("treefolk_hurt", () -> new SoundEvent(new ResourceLocation(PrimalMagic.MODID, "treefolk_hurt")));
     public static final RegistryObject<SoundEvent> TREEFOLK_DEATH = SOUNDS.register("treefolk_death", () -> new SoundEvent(new ResourceLocation(PrimalMagic.MODID, "treefolk_death")));
     public static final RegistryObject<SoundEvent> CLANK = SOUNDS.register("clank", () -> new SoundEvent(new ResourceLocation(PrimalMagic.MODID, "clank")));
+    public static final RegistryObject<SoundEvent> HARP = SOUNDS.register("harp", () -> new SoundEvent(new ResourceLocation(PrimalMagic.MODID, "harp")));
 }

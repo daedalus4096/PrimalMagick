@@ -6,6 +6,7 @@ import java.util.Random;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,6 +23,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -109,6 +111,8 @@ public class CelestialHarpBlock extends Block implements IRitualPropBlock {
         if (player != null && player.getHeldItem(handIn).isEmpty() && !this.isPropActivated(state, worldIn, pos)) {
             if (!worldIn.isRemote) {
                 // TODO Start the harp tile entity playing
+                worldIn.playSound(null, pos, SoundsPM.HARP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
                     this.onPropActivated(state, worldIn, pos);
