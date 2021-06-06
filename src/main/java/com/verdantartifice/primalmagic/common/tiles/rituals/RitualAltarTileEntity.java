@@ -74,7 +74,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -352,17 +351,16 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
     public ActionResultType onWandRightClick(ItemStack wandStack, World world, PlayerEntity player, BlockPos pos, Direction direction) {
         if (!this.world.isRemote && wandStack.getItem() instanceof IWand) {
             if (this.active) {
-                player.sendStatusMessage(new StringTextComponent("Ritual canceled"), false);
+                player.sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.info.canceled"), false);
                 this.reset();
             } else if (this.startCraft(wandStack, player)) {
                 this.active = true;
                 this.activeCount = 0;
-                player.sendStatusMessage(new StringTextComponent("Ritual started!"), false);
+                player.sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.info.started"), false);
                 this.setActivePlayer(player);
                 this.markDirty();
                 this.syncTile(false);
             } else {
-                player.sendStatusMessage(new StringTextComponent("No valid ritual recipe found"), false);
                 this.reset();
             }
             return ActionResultType.SUCCESS;
@@ -439,7 +437,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
             this.setInventorySlotContents(0, recipe.getRecipeOutput().copy());
         }
         if (this.getActivePlayer() != null) {
-            this.getActivePlayer().sendStatusMessage(new StringTextComponent("Ritual complete!"), false);
+            this.getActivePlayer().sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.info.complete"), false);
         }
         this.spawnSuccessParticles();
         this.reset();

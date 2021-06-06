@@ -1892,6 +1892,9 @@
     "primalmagic.ritual.warning.missing_prop": "The ritual cannot find a required prop!",
     "primalmagic.ritual.warning.channel_interrupt": "The channeling of a required offering has been interrupted!",
     "primalmagic.ritual.warning.prop_interrupt": "The activation of a required prop has been interrupted!",
+    "primalmagic.ritual.info.started": "Ritual started!",
+    "primalmagic.ritual.info.complete": "Ritual complete!",
+    "primalmagic.ritual.info.canceled": "Ritual canceled",
     
     "rune_enchantment.text.minecraft.protection": "The Protection enchantment can be imbued through the use of Protect, Self, and Earth runes.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage.  It is incompatible with other Protection enchantments.",
     "rune_enchantment.text.minecraft.fire_protection": "The Fire Protection enchantment can be imbued through the use of Protect, Self, and Infernal runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming fire damage as well as the amount of time that the wearer is engulfed in flames.  It is incompatible with other Protection enchantments.",
