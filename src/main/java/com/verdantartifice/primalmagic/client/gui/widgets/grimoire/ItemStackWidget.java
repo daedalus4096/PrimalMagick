@@ -45,8 +45,8 @@ public class ItemStackWidget extends Widget {
             ITextComponent amountText = new StringTextComponent(Integer.toString(this.stack.getCount()));
             int width = mc.fontRenderer.getStringWidth(amountText.getString());
             matrixStack.push();
-            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
-            matrixStack.scale(0.5F, 0.5F, 0.5F);
+            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 900.0F);
+            matrixStack.scale(0.5F, 0.5F, 1.0F);
             mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
             matrixStack.pop();
         }
