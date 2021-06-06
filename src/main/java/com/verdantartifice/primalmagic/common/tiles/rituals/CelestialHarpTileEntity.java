@@ -10,7 +10,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
  * @author Daedalus4096
  */
 public class CelestialHarpTileEntity extends AbstractRitualPropTileEntity implements ITickableTileEntity {
-    protected static final int TICKS_PER_PLAY = 138;    // 6.9s
+    public static final int TICKS_PER_PLAY = 138;   // 6.9s, just under the length of the harp sound effect
     
     protected int playTicks;
     protected boolean isPlaying;

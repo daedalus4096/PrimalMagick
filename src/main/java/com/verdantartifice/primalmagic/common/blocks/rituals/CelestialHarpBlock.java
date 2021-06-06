@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Random;
 
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagic.client.fx.particles.NoteEmitterParticleData;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
@@ -111,8 +112,9 @@ public class CelestialHarpBlock extends Block implements IRitualPropBlock {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (player != null && player.getHeldItem(handIn).isEmpty() && !this.isPropActivated(state, worldIn, pos)) {
             TileEntity tile = worldIn.getTileEntity(pos);
+            final double noteHue = 2.0D / 24.0D;
             worldIn.playSound(player, pos, SoundsPM.HARP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
-            // TODO Launch note particles
+            worldIn.addParticle(new NoteEmitterParticleData(noteHue, CelestialHarpTileEntity.TICKS_PER_PLAY), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
             if (!worldIn.isRemote && tile instanceof CelestialHarpTileEntity) {
                 // Start the harp tile entity playing
                 ((CelestialHarpTileEntity)tile).startPlaying();

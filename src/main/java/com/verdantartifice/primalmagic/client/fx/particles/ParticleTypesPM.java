@@ -48,4 +48,10 @@ public class ParticleTypesPM {
             return PotionExplosionParticleData.CODEC;
         }
     });
+    public static final RegistryObject<ParticleType<NoteEmitterParticleData>> NOTE_EMITTER = PARTICLE_TYPES.register("note_emitter", () -> new ParticleType<NoteEmitterParticleData>(false, NoteEmitterParticleData.DESERIALIZER) {
+        @Override
+        public Codec<NoteEmitterParticleData> func_230522_e_() {
+            return NoteEmitterParticleData.CODEC;
+        }
+    });
 }
