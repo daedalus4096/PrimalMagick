@@ -2,9 +2,7 @@
   "replace": false,
   "values": [
     "#primalmagic:essences/terrestrial_shards",
-    "primalmagic:essence_shard_blood",
-    "primalmagic:essence_shard_infernal",
-    "primalmagic:essence_shard_void",
+    "#primalmagic:essences/forbidden_shards",
     "primalmagic:essence_shard_hallowed"
   ]
 }

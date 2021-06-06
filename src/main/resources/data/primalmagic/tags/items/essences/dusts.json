@@ -2,9 +2,7 @@
   "replace": false,
   "values": [
     "#primalmagic:essences/terrestrial_dusts",
-    "primalmagic:essence_dust_blood",
-    "primalmagic:essence_dust_infernal",
-    "primalmagic:essence_dust_void",
+    "#primalmagic:essences/forbidden_dusts",
     "primalmagic:essence_dust_hallowed"
   ]
 }

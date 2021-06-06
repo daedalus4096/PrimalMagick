@@ -35,12 +35,16 @@ public class ItemTagsPM {
     
     public static final IOptionalNamedTag<Item> ESSENCES_DUSTS = tag("essences/dusts");
     public static final IOptionalNamedTag<Item> ESSENCES_TERRESTRIAL_DUSTS = tag("essences/terrestrial_dusts");
+    public static final IOptionalNamedTag<Item> ESSENCES_FORBIDDEN_DUSTS = tag("essences/forbidden_dusts");
     public static final IOptionalNamedTag<Item> ESSENCES_SHARDS = tag("essences/shards");
     public static final IOptionalNamedTag<Item> ESSENCES_TERRESTRIAL_SHARDS = tag("essences/terrestrial_shards");
+    public static final IOptionalNamedTag<Item> ESSENCES_FORBIDDEN_SHARDS = tag("essences/forbidden_shards");
     public static final IOptionalNamedTag<Item> ESSENCES_CRYSTALS = tag("essences/crystals");
     public static final IOptionalNamedTag<Item> ESSENCES_TERRESTRIAL_CRYSTALS = tag("essences/terrestrial_crystals");
+    public static final IOptionalNamedTag<Item> ESSENCES_FORBIDDEN_CRYSTALS = tag("essences/forbidden_crystals");
     public static final IOptionalNamedTag<Item> ESSENCES_CLUSTERS = tag("essences/clusters");
     public static final IOptionalNamedTag<Item> ESSENCES_TERRESTRIAL_CLUSTERS = tag("essences/terrestrial_clusters");
+    public static final IOptionalNamedTag<Item> ESSENCES_FORBIDDEN_CLUSTERS = tag("essences/forbidden_clusters");
     
     public static final IOptionalNamedTag<Item> INGOTS_PRIMALITE = tag("ingots/primalite");
     public static final IOptionalNamedTag<Item> INGOTS_HEXIUM = tag("ingots/hexium");

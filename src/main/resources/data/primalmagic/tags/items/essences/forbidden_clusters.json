@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "primalmagic:essence_cluster_blood",
+    "primalmagic:essence_cluster_infernal",
+    "primalmagic:essence_cluster_void"
+  ]
+}

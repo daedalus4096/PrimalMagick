@@ -2,9 +2,7 @@
   "replace": false,
   "values": [
     "#primalmagic:essences/terrestrial_clusters",
-    "primalmagic:essence_cluster_blood",
-    "primalmagic:essence_cluster_infernal",
-    "primalmagic:essence_cluster_void",
+    "#primalmagic:essences/forbidden_clusters",
     "primalmagic:essence_cluster_hallowed"
   ]
 }
