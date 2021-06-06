@@ -1,0 +1,17 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "SAINTSWOOL",
+  "pattern": [
+    "# #",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primalmagic:saintswool"
+    }
+  },
+  "result": {
+    "item": "primalmagic:saintswool_chest"
+  }
+}

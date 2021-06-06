@@ -1193,6 +1193,22 @@
     "primalmagic.research.wand_core_purpur.text.stage.2": "It turned out harder than I expected to isolate a suitable material, but in the end I succeeded.  The alien purpur blocks have the right material properties and have a strong alignment to the Void.<BR>Unlike lesser materials, a purpur wand core can be inscribed with two spells, in addition to a bonus Void spell.<BR>It still provides a five percent Void mana discount on all workings, and will harvest Void mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.",
     "primalmagic.research.wand_core_purpur.text.addenda.1": "Purpur will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Void spell slot is not doubled.  In total, that makes four of any type of spell plus one Void spell.",
     
+    "primalmagic.research.imbued_wool.title": "Imbued Wool",
+    "primalmagic.research.imbued_wool.text.stage.1": "Lorem ipsum",
+    "primalmagic.research.imbued_wool.text.stage.2": "Lorem ipsum",
+    
+    "primalmagic.research.spellcloth.title": "Spellcloth",
+    "primalmagic.research.spellcloth.text.stage.1": "Lorem ipsum",
+    "primalmagic.research.spellcloth.text.stage.2": "Lorem ipsum",
+    
+    "primalmagic.research.hexweave.title": "Hexweave",
+    "primalmagic.research.hexweave.text.stage.1": "Lorem ipsum",
+    "primalmagic.research.hexweave.text.stage.2": "Lorem ipsum",
+    
+    "primalmagic.research.saintswool.title": "Saintswool",
+    "primalmagic.research.saintswool.text.stage.1": "Lorem ipsum",
+    "primalmagic.research.saintswool.text.stage.2": "Lorem ipsum",
+    
     "primalmagic.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagic.research.basic_runeworking.text.stage.1": "I think I'm starting to get the hang of Runeworking.  Certain symbols carry inherent magical power.  By carving them into stone, then inscribing the right combination of them onto an item, I can imbue that item with an effect much like an enchantment.<BR>While somewhat invovled, there appear to be a number of benefits to this process over using an enchanting table.<BR>First, it doesn't cost me any of my hard-won experience.  That alone makes it worth studying.<BR>Second, I have full control of the enchantment that gets applied.  No more praying for the right random result at the enchanting table.<BR>And third, I can actually apply runes to an item that I've already enchanted for further effect.<BR>This process has its drawbacks, though.  These runes are very complicated; I'm going to have to research each of them individually to make sure I get them right.  And an item can only have one set of runes applied to it at a time.  Finally, and most strangely, while a standard grindstone will remove the magic that the runes impart, it won't remove the runes themselves, so I can't apply new ones.<BR>Still, this is a discipline that seems well worth my time to pursue, if I want to give myself the arms and armor I need to survive.",
     

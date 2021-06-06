@@ -77,6 +77,7 @@ public class Recipes extends RecipeProvider {
         this.registerPhilterRecipes(consumer);
         this.registerElixirRecipes(consumer);
         this.registerAlchemicalBombRecipes(consumer);
+        this.registerClothRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -4701,6 +4702,147 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
+            .build(consumer);
+    }
+    
+    protected void registerClothRecipes(Consumer<IFinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH.get())
+            .patternLine("ESE")
+            .patternLine("SCS")
+            .patternLine("ESE")
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .key('S', Tags.Items.STRING)
+            .key('C', ItemTags.WOOL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE.get())
+            .patternLine("ESE")
+            .patternLine("SCS")
+            .patternLine("ESE")
+            .key('E', ItemTagsPM.ESSENCES_FORBIDDEN_SHARDS)
+            .key('S', Tags.Items.STRING)
+            .key('C', ItemsPM.SPELLCLOTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .manaCost(new SourceList().add(Source.BLOOD, 20).add(Source.INFERNAL, 20).add(Source.VOID, 20))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL.get())
+            .patternLine("ESE")
+            .patternLine("SCS")
+            .patternLine("ESE")
+            .key('E', ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
+            .key('S', Tags.Items.STRING)
+            .key('C', ItemsPM.HEXWEAVE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .manaCost(new SourceList().add(Source.HALLOWED, 50))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_HEAD.get())
+            .patternLine("###")
+            .patternLine("# #")
+            .key('#', ItemTags.WOOL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IMBUED_WOOL")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_CHEST.get())
+            .patternLine("# #")
+            .patternLine("###")
+            .patternLine("###")
+            .key('#', ItemTags.WOOL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IMBUED_WOOL")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_LEGS.get())
+            .patternLine("###")
+            .patternLine("# #")
+            .patternLine("# #")
+            .key('#', ItemTags.WOOL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IMBUED_WOOL")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_FEET.get())
+            .patternLine("# #")
+            .patternLine("# #")
+            .key('#', ItemTags.WOOL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IMBUED_WOOL")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_HEAD.get())
+            .patternLine("###")
+            .patternLine("# #")
+            .key('#', ItemsPM.SPELLCLOTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_CHEST.get())
+            .patternLine("# #")
+            .patternLine("###")
+            .patternLine("###")
+            .key('#', ItemsPM.SPELLCLOTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_LEGS.get())
+            .patternLine("###")
+            .patternLine("# #")
+            .patternLine("# #")
+            .key('#', ItemsPM.SPELLCLOTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_FEET.get())
+            .patternLine("# #")
+            .patternLine("# #")
+            .key('#', ItemsPM.SPELLCLOTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_HEAD.get())
+            .patternLine("###")
+            .patternLine("# #")
+            .key('#', ItemsPM.HEXWEAVE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_CHEST.get())
+            .patternLine("# #")
+            .patternLine("###")
+            .patternLine("###")
+            .key('#', ItemsPM.HEXWEAVE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_LEGS.get())
+            .patternLine("###")
+            .patternLine("# #")
+            .patternLine("# #")
+            .key('#', ItemsPM.HEXWEAVE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_FEET.get())
+            .patternLine("# #")
+            .patternLine("# #")
+            .key('#', ItemsPM.HEXWEAVE.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_HEAD.get())
+            .patternLine("###")
+            .patternLine("# #")
+            .key('#', ItemsPM.SAINTSWOOL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_CHEST.get())
+            .patternLine("# #")
+            .patternLine("###")
+            .patternLine("###")
+            .key('#', ItemsPM.SAINTSWOOL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_LEGS.get())
+            .patternLine("###")
+            .patternLine("# #")
+            .patternLine("# #")
+            .key('#', ItemsPM.SAINTSWOOL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_FEET.get())
+            .patternLine("# #")
+            .patternLine("# #")
+            .key('#', ItemsPM.SAINTSWOOL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
             .build(consumer);
     }
 }

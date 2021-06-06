@@ -1,0 +1,17 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "HEXWEAVE",
+  "pattern": [
+    "# #",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primalmagic:hexweave"
+    }
+  },
+  "result": {
+    "item": "primalmagic:hexweave_chest"
+  }
+}

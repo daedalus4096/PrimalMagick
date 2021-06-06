@@ -1,0 +1,26 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "SAINTSWOOL",
+  "mana": {
+    "hallowed": 50
+  },
+  "pattern": [
+    "ESE",
+    "SCS",
+    "ESE"
+  ],
+  "key": {
+    "E": {
+      "item": "primalmagic:essence_crystal_hallowed"
+    },
+    "S": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "item": "primalmagic:hexweave"
+    }
+  },
+  "result": {
+    "item": "primalmagic:saintswool"
+  }
+}
