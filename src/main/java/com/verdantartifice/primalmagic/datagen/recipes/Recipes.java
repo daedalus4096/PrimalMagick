@@ -287,6 +287,15 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SOUL_ANVIL")))
             .manaCost(new SourceList().add(Source.INFERNAL, 50))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CELESTIAL_HARP.get())
+            .patternLine("WWW")
+            .patternLine("SSW")
+            .patternLine("SW ")
+            .key('W', ItemsPM.HALLOWOOD_PLANKS.get())
+            .key('S', Tags.Items.STRING)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CELESTIAL_HARP")))
+            .manaCost(new SourceList().add(Source.HALLOWED, 100))
+            .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.SOUL_GEM.get())
             .addIngredient(ItemsPM.SOUL_GEM_SLIVER.get(), 9)
             .addCriterion("has_sliver", hasItem(ItemsPM.SOUL_GEM_SLIVER.get()))

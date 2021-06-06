@@ -859,6 +859,10 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 1).recipe(ItemsPM.SOUL_ANVIL.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("CELESTIAL_HARP", discipline).parent("SUPREME_RITUAL").parent(Source.HALLOWED.getDiscoverKey())
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.NOTE_BLOCK).requiredItemStack(Items.JUKEBOX).requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 1).recipe(ItemsPM.CELESTIAL_HARP.get()).build())
+            .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_PRIMAL", discipline).parent("EXPERT_RITUAL").parent("WAND_CORE_OBSIDIAN").parent("WAND_CORE_CORAL").parent("WAND_CORE_BAMBOO").parent("WAND_CORE_SUNWOOD")
             .parent("WAND_CORE_MOONWOOD").parent("MANA_SALTS").parent("RITUAL_CANDLES").parent("RITUAL_LECTERN").parent("RITUAL_BELL")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
