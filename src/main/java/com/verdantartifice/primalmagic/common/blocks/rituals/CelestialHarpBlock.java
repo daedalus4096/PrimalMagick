@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagic.common.tiles.rituals.CelestialHarpTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -91,8 +93,8 @@ public class CelestialHarpBlock extends Block implements IRitualPropBlock {
 
     @Override
     public boolean isPropActivated(BlockState state, World world, BlockPos pos) {
-        // TODO Get playing status from tile entity
-        return false;
+        TileEntity tile = world.getTileEntity(pos);
+        return (tile instanceof CelestialHarpTileEntity && ((CelestialHarpTileEntity)tile).isPlaying());
     }
 
     @Override
@@ -107,11 +109,13 @@ public class CelestialHarpBlock extends Block implements IRitualPropBlock {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        // TODO Auto-generated method stub
         if (player != null && player.getHeldItem(handIn).isEmpty() && !this.isPropActivated(state, worldIn, pos)) {
-            if (!worldIn.isRemote) {
-                // TODO Start the harp tile entity playing
-                worldIn.playSound(null, pos, SoundsPM.HARP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+            TileEntity tile = worldIn.getTileEntity(pos);
+            worldIn.playSound(player, pos, SoundsPM.HARP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+            // TODO Launch note particles
+            if (!worldIn.isRemote && tile instanceof CelestialHarpTileEntity) {
+                // Start the harp tile entity playing
+                ((CelestialHarpTileEntity)tile).startPlaying();
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
@@ -141,5 +145,24 @@ public class CelestialHarpBlock extends Block implements IRitualPropBlock {
         if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
         }
+    }
+    
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new CelestialHarpTileEntity();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        // Pass any received events on to the tile entity and let it decide what to do with it
+        super.eventReceived(state, worldIn, pos, id, param);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        return (tile == null) ? false : tile.receiveClientEvent(id, param);
     }
 }

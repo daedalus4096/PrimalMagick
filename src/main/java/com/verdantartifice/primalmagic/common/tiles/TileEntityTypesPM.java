@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.BloodletterTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.rituals.CelestialHarpTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity;
@@ -55,4 +56,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<TileEntityType<HoneyExtractorTileEntity>> HONEY_EXTRACTOR = TILE_ENTITIES.register("honey_extractor", () -> TileEntityType.Builder.create(HoneyExtractorTileEntity::new, BlocksPM.HONEY_EXTRACTOR.get()).build(null));
     public static final RegistryObject<TileEntityType<SanguineCrucibleTileEntity>> SANGUINE_CRUCIBLE = TILE_ENTITIES.register("sanguine_crucible", () -> TileEntityType.Builder.create(SanguineCrucibleTileEntity::new, BlocksPM.SANGUINE_CRUCIBLE.get()).build(null));
     public static final RegistryObject<TileEntityType<ConcocterTileEntity>> CONCOCTER = TILE_ENTITIES.register("concocter", () -> TileEntityType.Builder.create(ConcocterTileEntity::new, BlocksPM.CONCOCTER.get()).build(null));
+    public static final RegistryObject<TileEntityType<CelestialHarpTileEntity>> CELESTIAL_HARP = TILE_ENTITIES.register("celestial_harp", () -> TileEntityType.Builder.create(CelestialHarpTileEntity::new, BlocksPM.CELESTIAL_HARP.get()).build(null));
 }
