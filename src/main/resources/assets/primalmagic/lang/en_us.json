@@ -1194,20 +1194,20 @@
     "primalmagic.research.wand_core_purpur.text.addenda.1": "Purpur will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Void spell slot is not doubled.  In total, that makes four of any type of spell plus one Void spell.",
     
     "primalmagic.research.imbued_wool.title": "Imbued Wool",
-    "primalmagic.research.imbued_wool.text.stage.1": "Lorem ipsum",
-    "primalmagic.research.imbued_wool.text.stage.2": "Lorem ipsum",
+    "primalmagic.research.imbued_wool.text.stage.1": "If I'm going to study magic, I feel it's important that I look the part.  That means robes.<BR>A nice silk or breathable cotton would be nice, but wool is what I've got, so wool is what I'll use.  And I should make sure to imbue them with mana to see how it affects the result.",
+    "primalmagic.research.imbued_wool.text.stage.2": "Well, it's scratchy and a little warm, but I think I made a good fitting of it.<BR>The addition of mana to the design was a good idea.  Not only are the robes more durable and protective this way, but they also seem to make it easier for me to channel mana while wearing them.  Each piece should give me a small discount on all my mana costs.  Nice!",
     
     "primalmagic.research.spellcloth.title": "Spellcloth",
-    "primalmagic.research.spellcloth.text.stage.1": "Lorem ipsum",
-    "primalmagic.research.spellcloth.text.stage.2": "Lorem ipsum",
+    "primalmagic.research.spellcloth.text.stage.1": "I think I've outgrown my apprentice's robes.  It's time to make something a little more functional, and a lot less scratchy.<BR>Time to see about creating a fabric that's truly magical, rather than just imbued with a little mana.",
+    "primalmagic.research.spellcloth.text.stage.2": "Oh, this will do nicely!  By starting with a wool base, embroidering it with spider-silk stitching, and infusing the result with essence, I've created a stylish and functional fabric that I call Spellcloth.  And it's silky smooth, too!<BR>The robes I make out of this cloth will be more protective and allow me to channel mana a little better, leading to deeper discounts on my mana expenditures.",
     
     "primalmagic.research.hexweave.title": "Hexweave",
-    "primalmagic.research.hexweave.text.stage.1": "Lorem ipsum",
-    "primalmagic.research.hexweave.text.stage.2": "Lorem ipsum",
+    "primalmagic.research.hexweave.text.stage.1": "I am no longer a mere adept, and an adept's garb is no longer suitable for me.  This magical fabric I've created can be improved upon with my new power, I'm certain of it.",
+    "primalmagic.research.hexweave.text.stage.2": "Now these are robes worthy of a true wizard.<BR>The Hexweave I've created is most durable, capable of turning an angry blade.  And it conducts mana much better than Spellcloth, resulting in more efficient workings while I wear it.<BR>Plus, I do cut a striking figure in these robes, if I do say so myself.",
     
     "primalmagic.research.saintswool.title": "Saintswool",
-    "primalmagic.research.saintswool.text.stage.1": "Lorem ipsum",
-    "primalmagic.research.saintswool.text.stage.2": "Lorem ipsum",
+    "primalmagic.research.saintswool.text.stage.1": "I can no longer bear to wear the vestments of darkness that I once garbed myself in.  They reek of hubris.<BR>Let me see if I can persuade the universe to deign to bless some humble fabric.",
+    "primalmagic.research.saintswool.text.stage.2": "I have created Saintswool, and it is beautiful.<BR>Made of purified Hexweave, and suffused with subtle spider-silk patterns, it is pleasing to the eye, protective of the body, and flowing with magic.<BR>Of course, it's a touch scratchy, but that will help to remind me that I am but a mere mortal.",
     
     "primalmagic.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagic.research.basic_runeworking.text.stage.1": "I think I'm starting to get the hang of Runeworking.  Certain symbols carry inherent magical power.  By carving them into stone, then inscribing the right combination of them onto an item, I can imbue that item with an effect much like an enchantment.<BR>While somewhat invovled, there appear to be a number of benefits to this process over using an enchanting table.<BR>First, it doesn't cost me any of my hard-won experience.  That alone makes it worth studying.<BR>Second, I have full control of the enchantment that gets applied.  No more praying for the right random result at the enchanting table.<BR>And third, I can actually apply runes to an item that I've already enchanted for further effect.<BR>This process has its drawbacks, though.  These runes are very complicated; I'm going to have to research each of them individually to make sure I get them right.  And an item can only have one set of runes applied to it at a time.  Finally, and most strangely, while a standard grindstone will remove the magic that the runes impart, it won't remove the runes themselves, so I can't apply new ones.<BR>Still, this is a discipline that seems well worth my time to pursue, if I want to give myself the arms and armor I need to survive.",
