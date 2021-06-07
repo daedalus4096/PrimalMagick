@@ -1,0 +1,14 @@
+{
+  "type": "item",
+  "target": "primalmagic:hexweave",
+  "set": {
+    "earth": 3,
+    "sea": 3,
+    "sky": 29,
+    "sun": 3,
+    "moon": 3,
+    "blood": 30,
+    "infernal": 27,
+    "void": 27
+  }
+}

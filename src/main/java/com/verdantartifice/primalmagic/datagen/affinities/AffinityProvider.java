@@ -613,6 +613,8 @@ public class AffinityProvider implements IDataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.PRIMALITE_INGOT.get()).set(auraUnit.copy().multiply(3)).set(Source.EARTH, 8).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HEXIUM_INGOT.get()).set(auraUnit.copy().multiply(2)).set(Source.EARTH, 6).set(Source.BLOOD, 15).set(Source.INFERNAL, 15).set(Source.VOID, 15).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWSTEEL_INGOT.get()).set(auraUnit).set(Source.EARTH, 5).set(Source.BLOOD, 11).set(Source.INFERNAL, 11).set(Source.VOID, 11).set(Source.HALLOWED, 37).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SPELLCLOTH.get()).set(Source.EARTH, 4).set(Source.SEA, 4).set(Source.SKY, 19).set(Source.SUN, 4).set(Source.MOON, 4).set(Source.BLOOD, 9).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HEXWEAVE.get()).set(Source.EARTH, 3).set(Source.SEA, 3).set(Source.SKY, 29).set(Source.SUN, 3).set(Source.MOON, 3).set(Source.BLOOD, 30).set(Source.INFERNAL, 27).set(Source.VOID, 27).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HEARTWOOD.get()).set(auraUnit.copy().multiply(5)).set(Source.EARTH, 10).set(Source.SUN, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INCENSE_STICK.get()).set(Source.EARTH, 4).set(Source.SKY, 5).set(Source.SUN, 4).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).base(Items.DIAMOND).add(auraUnit.copy().multiply(2)).build(consumer);
