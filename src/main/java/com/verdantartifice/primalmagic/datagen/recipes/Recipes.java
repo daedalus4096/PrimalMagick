@@ -1999,6 +1999,21 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_DARK_PRIMAL")))
             .manaCost(new SourceList().add(Source.EARTH, 50).add(Source.SEA, 50).add(Source.SKY, 50).add(Source.SUN, 50).add(Source.MOON, 50).add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get())
+            .addIngredient(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get())
+            .addIngredient(ItemsPM.HALLOWOOD_LOG.get(), 2)
+            .addIngredient(Tags.Items.NETHER_STARS)
+            .addIngredient(ItemsPM.MANA_SALTS.get(), 2)
+            .addProp(BlocksPM.RITUAL_BELL.get())
+            .addProp(BlocksPM.RITUAL_LECTERN.get())
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.BLOODLETTER.get())
+            .addProp(BlocksPM.SOUL_ANVIL.get())
+            .addProp(BlocksPM.CELESTIAL_HARP.get())
+            .instability(7)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_PURE_PRIMAL")))
+            .manaCost(new SourceList().add(Source.EARTH, 100).add(Source.SEA, 100).add(Source.SKY, 100).add(Source.SUN, 100).add(Source.MOON, 100).add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100).add(Source.HALLOWED, 100))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IRON_WAND_CAP_ITEM.get())
             .patternLine("NNN")
             .patternLine("N N")
@@ -2168,6 +2183,21 @@ public class Recipes extends RecipeProvider {
             .instability(6)
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_DARK_PRIMAL")))
             .manaCost(new SourceList().add(Source.EARTH, 50).add(Source.SEA, 50).add(Source.SKY, 50).add(Source.SUN, 50).add(Source.MOON, 50).add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
+            .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PURE_PRIMAL_STAFF_CORE_ITEM.get())
+            .addIngredient(ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get())
+            .addIngredient(ItemsPM.HALLOWOOD_LOG.get(), 2)
+            .addIngredient(Tags.Items.NETHER_STARS)
+            .addIngredient(ItemsPM.MANA_SALTS.get(), 2)
+            .addProp(BlocksPM.RITUAL_BELL.get())
+            .addProp(BlocksPM.RITUAL_LECTERN.get())
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.BLOODLETTER.get())
+            .addProp(BlocksPM.SOUL_ANVIL.get())
+            .addProp(BlocksPM.CELESTIAL_HARP.get())
+            .instability(8)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_PURE_PRIMAL")))
+            .manaCost(new SourceList().add(Source.EARTH, 100).add(Source.SEA, 100).add(Source.SKY, 100).add(Source.SUN, 100).add(Source.MOON, 100).add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100).add(Source.HALLOWED, 100))
             .build(consumer);
     }
     

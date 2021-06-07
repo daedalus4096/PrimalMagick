@@ -897,6 +897,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 4).attunement(Source.INFERNAL, 4).attunement(Source.VOID, 4).recipe(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("WAND_CORE_PURE_PRIMAL", discipline).parent("SUPREME_RITUAL").parent("WAND_CORE_DARK_PRIMAL").parent("CELESTIAL_HARP")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 5).recipe(ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.PURE_PRIMAL_STAFF_CORE_ITEM.get()).build())
+            .build(consumer);
         ResearchEntryBuilder.entry("PIXIES", discipline).parent("EXPERT_RITUAL").parent("MANA_SALTS").parent("SHARD_SYNTHESIS").parent("RUNE_SUMMON").parent("RUNE_CREATURE").parent("INCENSE_BRAZIER")
             .parent("RITUAL_BELL")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_SUMMON.get()).requiredItemStack(ItemsPM.RUNE_CREATURE.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
