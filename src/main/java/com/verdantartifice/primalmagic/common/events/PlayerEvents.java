@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.events;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,8 +68,8 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class PlayerEvents {
-    private static final Map<Integer, Float> PREV_STEP_HEIGHTS = new HashMap<>();
-    private static final Map<Integer, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
+    private static final Map<UUID, Float> PREV_STEP_HEIGHTS = new HashMap<>();
+    private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
@@ -259,14 +260,14 @@ public class PlayerEvents {
     protected static void handleStepHeightChange(PlayerEntity player) {
         if (!player.isSneaking() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height and save the old one
-            if (!PREV_STEP_HEIGHTS.containsKey(Integer.valueOf(player.getEntityId()))) {
-                PREV_STEP_HEIGHTS.put(Integer.valueOf(player.getEntityId()), Float.valueOf(player.stepHeight));
+            if (!PREV_STEP_HEIGHTS.containsKey(player.getUniqueID())) {
+                PREV_STEP_HEIGHTS.put(player.getUniqueID(), Float.valueOf(player.stepHeight));
             }
-            player.stepHeight = 1.0F;
+            player.stepHeight = Math.max(1.0F, player.stepHeight);
         } else {
             // Otherwise, check to see if their step height needs to be reset
-            if (PREV_STEP_HEIGHTS.containsKey(Integer.valueOf(player.getEntityId()))) {
-                player.stepHeight = PREV_STEP_HEIGHTS.remove(Integer.valueOf(player.getEntityId()));
+            if (PREV_STEP_HEIGHTS.containsKey(player.getUniqueID())) {
+                player.stepHeight = PREV_STEP_HEIGHTS.remove(player.getUniqueID());
             }
         }
     }
@@ -274,16 +275,16 @@ public class PlayerEvents {
     protected static void handleDoubleJump(PlayerEntity player) {
     	Minecraft mc = Minecraft.getInstance();
         boolean jumpPressed = mc.gameSettings.keyBindJump.isPressed();
-        if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getEntityId())) {
-            DOUBLE_JUMP_ALLOWED.put(player.getEntityId(), Boolean.TRUE);
+        if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getUniqueID())) {
+            DOUBLE_JUMP_ALLOWED.put(player.getUniqueID(), Boolean.TRUE);
         }
         if (jumpPressed && !player.isOnGround() && !player.isInWater() && 
-                DOUBLE_JUMP_ALLOWED.getOrDefault(player.getEntityId(), Boolean.FALSE).booleanValue() && 
+                DOUBLE_JUMP_ALLOWED.getOrDefault(player.getUniqueID(), Boolean.FALSE).booleanValue() && 
                 AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
             // If the conditions are right, execute the second jump
             player.world.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 
                     SoundCategory.PLAYERS, 0.1F, 1.0F + (0.05F * (float)player.world.rand.nextGaussian()), false);
-            DOUBLE_JUMP_ALLOWED.put(player.getEntityId(), Boolean.FALSE);
+            DOUBLE_JUMP_ALLOWED.put(player.getUniqueID(), Boolean.FALSE);
             
             // Update motion
             Vector3d oldMotion = player.getMotion();
@@ -307,9 +308,9 @@ public class PlayerEvents {
             // Trigger jump events
             ForgeHooks.onLivingJump(player);
         }
-        if (player.isOnGround() && DOUBLE_JUMP_ALLOWED.containsKey(player.getEntityId())) {
+        if (player.isOnGround() && DOUBLE_JUMP_ALLOWED.containsKey(player.getUniqueID())) {
             // Reset double jump permissions upon touching the ground
-            DOUBLE_JUMP_ALLOWED.remove(player.getEntityId());
+            DOUBLE_JUMP_ALLOWED.remove(player.getUniqueID());
         }
     }
     
