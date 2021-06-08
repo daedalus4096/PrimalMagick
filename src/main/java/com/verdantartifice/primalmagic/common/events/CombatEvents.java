@@ -7,13 +7,15 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
-import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.misc.DamageSourcesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
@@ -91,6 +93,16 @@ public class CombatEvents {
         // Handle effects triggered by damage target
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity target = (PlayerEntity)event.getEntityLiving();
+            
+            // Gain appropriate research for damage sources, if applicable
+            if (ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("FIRST_STEPS"))) {
+                if (event.getSource() == DamageSource.DROWN && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_drown_a_little"))) {
+                    ResearchManager.completeResearch(target, SimpleResearchKey.parse("m_drown_a_little"));
+                }
+                if (event.getSource() == DamageSource.LAVA && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_feel_the_burn"))) {
+                    ResearchManager.completeResearch(target, SimpleResearchKey.parse("m_feel_the_burn"));
+                }
+            }
 
             // Reduce fall damage if the recipient has lesser sky attunement
             if (event.getSource() == DamageSource.FALL && AttunementManager.meetsThreshold(target, Source.SKY, AttunementThreshold.LESSER)) {
