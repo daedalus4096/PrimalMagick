@@ -693,11 +693,11 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_LAVA", discipline).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_CONJURE_WATER").parent("SPELL_PAYLOAD_FLAME")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_feel_the_burn").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_feel_the_burn").requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_DRAIN_SOUL", discipline).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_FLAME")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.SOUL_SAND).requiredItemStack(Items.SOUL_SOIL).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.SOUL_SAND).requiredItemStack(Items.SOUL_SOIL).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).recipe(ItemsPM.SOUL_GEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_TELEPORT", discipline).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_VOID")
@@ -705,7 +705,7 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONSECRATE", discipline).parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_HOLY")
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_scan_nether_star").requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_MOD_AMPLIFY", discipline).parent("EXPERT_SORCERY")

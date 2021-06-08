@@ -1811,6 +1811,7 @@
     "primalmagic.research.m_blocks_broken_barehanded_expert.text": "Break 50 blocks with your bare hands.  They must be at least as hard as wood.",
     "primalmagic.research.m_drown_a_little.text": "Test the limits of your underwater endurance",
     "primalmagic.research.m_feel_the_burn.text": "Feel the burn",
+    "primalmagic.research.b_scan_nether_star.text": "Analyze an item of extra-dimensional power",
     
     "key.categories.primalmagic": "Primal Magic",
     "key.primalmagic.change_spell": "Cycle Active Spell",

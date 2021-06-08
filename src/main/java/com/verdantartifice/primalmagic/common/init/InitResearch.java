@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 
 /**
  * Point of registration for mod research data.
@@ -56,5 +57,6 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL, SimpleResearchKey.parse("b_scan_hallowsteel"), false));
         ResearchManager.registerScanTrigger(new ScanEntityTagResearchTrigger(EntityTypeTagsPM.FLYING_CREATURES, SimpleResearchKey.parse("t_flying_creature"), false));
         ResearchManager.registerScanTrigger(new ScanEntityTagResearchTrigger(EntityTypeTagsPM.GOLEMS, SimpleResearchKey.parse("t_golem"), false));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.NETHER_STARS, SimpleResearchKey.parse("b_scan_nether_star"), false));
     }
 }
