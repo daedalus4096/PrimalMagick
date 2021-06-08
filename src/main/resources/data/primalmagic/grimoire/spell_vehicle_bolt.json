@@ -8,7 +8,10 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_vehicle_bolt.text.stage.1"
+      "text": "primalmagic.research.spell_vehicle_bolt.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
     },
     {
       "text": "primalmagic.research.spell_vehicle_bolt.text.stage.2"
