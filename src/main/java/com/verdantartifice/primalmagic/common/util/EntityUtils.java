@@ -18,10 +18,13 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
 /**
  * Collection of utility methods pertaining to entities.
@@ -178,19 +181,26 @@ public class EntityUtils {
      * @param destination the point to which to teleport
      */
     public static void teleportEntity(LivingEntity player, World world, Vector3d destination) {
-        // Show a teleport particle effect at the destination
-        PacketHandler.sendToAllAround(new TeleportArrivalPacket(destination.x, destination.y, destination.z), world.getDimensionKey(), new BlockPos(destination), 64.0D);
-        
-        if (!world.isRemote && player instanceof ServerPlayerEntity) {
-            boolean isPlayer = (player instanceof ServerPlayerEntity);
-            if ((!isPlayer || ((ServerPlayerEntity)player).connection.getNetworkManager().isChannelOpen()) && player.world == world && !player.isSleeping()) {
-                if (player.isPassenger()) {
-                    player.stopRiding();
+        // Fire an EnderTeleportEvent to allow cancellation or modification of the teleport
+        EnderTeleportEvent event = new EnderTeleportEvent(player, destination.x, destination.y, destination.z, 0.0F);
+        if (!MinecraftForge.EVENT_BUS.post(event)) {
+            // Show a teleport particle effect at the destination
+            PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.getDimensionKey(), new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()), 64.0D);
+            
+            if (!world.isRemote && player instanceof ServerPlayerEntity) {
+                boolean isPlayer = (player instanceof ServerPlayerEntity);
+                if ((!isPlayer || ((ServerPlayerEntity)player).connection.getNetworkManager().isChannelOpen()) && player.world == world && !player.isSleeping()) {
+                    if (player.isPassenger()) {
+                        player.stopRiding();
+                    }
+                    
+                    // Do the teleportation
+                    player.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+                    player.fallDistance = 0.0F;
+                    if (event.getAttackDamage() > 0.0F) {
+                        player.attackEntityFrom(DamageSource.FALL, event.getAttackDamage());
+                    }
                 }
-                
-                // Do the teleportation
-                player.setPositionAndUpdate(destination.x, destination.y, destination.z);
-                player.fallDistance = 0.0F;
             }
         }
     }
