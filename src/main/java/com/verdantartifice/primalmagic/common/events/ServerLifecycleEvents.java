@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.commands.PrimalMagicCommand;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -15,7 +16,6 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 public class ServerLifecycleEvents {
     @SubscribeEvent
     public static void serverStarting(FMLServerStartingEvent event) {
-        // Perform server-starting work on the sided proxy
-        PrimalMagic.proxy.serverStarting(event);
+        PrimalMagicCommand.register(event.getServer().getCommandManager().getDispatcher());
     }
 }

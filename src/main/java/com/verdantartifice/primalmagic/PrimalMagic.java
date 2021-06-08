@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic;
 
 import com.verdantartifice.primalmagic.common.config.Config;
+import com.verdantartifice.primalmagic.common.init.InitRegistries;
 import com.verdantartifice.primalmagic.common.misc.ItemGroupPM;
 import com.verdantartifice.primalmagic.proxy.ClientProxy;
 import com.verdantartifice.primalmagic.proxy.IProxyPM;
@@ -29,6 +30,6 @@ public class PrimalMagic {
     
     public PrimalMagic() {
         Config.register();
-        proxy.initDeferredRegistries();
+        InitRegistries.initDeferredRegistries();
     }
 }

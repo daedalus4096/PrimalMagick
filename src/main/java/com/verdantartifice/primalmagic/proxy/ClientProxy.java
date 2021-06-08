@@ -62,16 +62,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
  * 
  * @author Daedalus4096
  */
-public class ClientProxy extends CommonProxy {
+public class ClientProxy implements IProxyPM {
     @Override
     public void initDeferredRegistries() {
-        super.initDeferredRegistries();
         ParticleTypesPM.init();
     }
     
     @Override
     public void clientSetup(FMLClientSetupEvent event) {
-        super.clientSetup(event);
         this.registerKeybinds();
         this.registerScreens();
         this.registerTERs();
