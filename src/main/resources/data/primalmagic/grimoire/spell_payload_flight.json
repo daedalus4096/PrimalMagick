@@ -8,7 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_payload_flight.text.stage.1"
+      "text": "primalmagic.research.spell_payload_flight.text.stage.1",
+      "required_knowledge": [
+        "THEORY;3"
+      ],
+      "required_research": [
+        "m_fly_elytra"
+      ]
     },
     {
       "text": "primalmagic.research.spell_payload_flight.text.stage.2",

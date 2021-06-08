@@ -40,6 +40,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -93,6 +94,7 @@ public class PlayerEvents {
             if (player.ticksExisted % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries and for photosynthesis
                 checkEnvironmentalResearch(player);
+                checkVanillaStatistics(player);
                 handlePhotosynthesis(player);
             }
             if (player.ticksExisted % 1200 == 0) {
@@ -235,6 +237,12 @@ public class PlayerEvents {
         }
     }
     
+    protected static void checkVanillaStatistics(ServerPlayerEntity player) {
+        if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_fly_elytra")) && player.getStats().getValue(Stats.CUSTOM.get(Stats.AVIATE_ONE_CM)) >= 100000) {
+            ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_fly_elytra"));
+        }
+    }
+
     protected static void handlePhotosynthesis(ServerPlayerEntity player) {
         if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && player.world.isDaytime() &&
                 player.getBrightness() > 0.5F && player.world.canSeeSky(player.getPosition())) {
