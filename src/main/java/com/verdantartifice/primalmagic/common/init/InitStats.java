@@ -58,5 +58,6 @@ public class InitStats {
         StatTriggers.register(StatsPM.OBSERVATIONS_MADE, 1, SimpleResearchKey.parse("t_observations_made_basics"));
         StatTriggers.register(StatsPM.THEORIES_FORMED, 1, SimpleResearchKey.parse("t_theories_formed_basics"));
         StatTriggers.register(StatsPM.BLOCKS_BROKEN_BAREHANDED, 50, SimpleResearchKey.parse("m_blocks_broken_barehanded_expert"));
+        StatTriggers.register(StatsPM.DISTANCE_TELEPORTED_CM, 10000, SimpleResearchKey.parse("m_teleport_a_lot"));
     }
 }

@@ -3,12 +3,17 @@ package com.verdantartifice.primalmagic.common.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -24,6 +29,17 @@ public class EntityEvents {
         // Prevent the teleport if the teleporter is afflicted with Enderlock
         if (event.isCancelable() && event.getEntityLiving().isPotionActive(EffectsPM.ENDERLOCK.get())) {
             event.setCanceled(true);
+        }
+    }
+    
+    @SubscribeEvent(priority=EventPriority.LOWEST)
+    public static void onEnderTeleportLowest(EnderTeleportEvent event) {
+        // Keep track of the distance teleported for stats
+        LivingEntity entity = event.getEntityLiving();
+        if (!event.isCanceled() && entity instanceof PlayerEntity) {
+            Vector3d start = entity.getPositionVec();
+            Vector3d end = new Vector3d(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+            StatsManager.incrementValue((PlayerEntity)entity, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * start.distanceTo(end)));
         }
     }
     

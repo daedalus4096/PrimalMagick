@@ -28,6 +28,7 @@ public class StatsPM {
     public static final Stat ITEMS_RUNESCRIBED = Stat.create("items_runescribed", IStatFormatter.DEFAULT, false);
     public static final Stat RITUALS_COMPLETED = Stat.create("rituals_completed", IStatFormatter.DEFAULT, false);
     public static final Stat CONCOCTIONS_USED = Stat.create("concoctions_used", IStatFormatter.DEFAULT, false);
+    public static final Stat DISTANCE_TELEPORTED_CM = Stat.create("distance_teleported_cm", IStatFormatter.DISTANCE, false);
     public static final Stat MANA_SPENT_EARTH = Stat.create("mana_spent_earth", IStatFormatter.DEFAULT, false);
     public static final Stat MANA_SPENT_SEA = Stat.create("mana_spent_sea", IStatFormatter.DEFAULT, false);
     public static final Stat MANA_SPENT_SKY = Stat.create("mana_spent_sky", IStatFormatter.DEFAULT, false);
