@@ -681,7 +681,7 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_HEALING", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_SOLAR")
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_near_death_experience").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_LUNAR")

@@ -8,7 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_payload_healing.text.stage.1"
+      "text": "primalmagic.research.spell_payload_healing.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "required_research": [
+        "m_near_death_experience"
+      ]
     },
     {
       "text": "primalmagic.research.spell_payload_healing.text.stage.2",

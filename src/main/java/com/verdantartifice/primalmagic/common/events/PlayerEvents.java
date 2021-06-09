@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagic.common.events;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -71,12 +73,15 @@ import net.minecraftforge.fml.common.Mod;
 public class PlayerEvents {
     private static final Map<UUID, Float> PREV_STEP_HEIGHTS = new HashMap<>();
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
+    private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
+    private static final SimpleResearchKey NDE_RESEARCH_KEY = SimpleResearchKey.parse("m_near_death_experience");
     private static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
         if (!event.getEntity().world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
+            checkNearDeathExperience(player);
             if (player.ticksExisted % 5 == 0) {
                 // Apply any earned buffs for attunements
                 applyAttunementBuffs(player);
@@ -110,6 +115,25 @@ public class PlayerEvents {
         }
     }
     
+    protected static void checkNearDeathExperience(ServerPlayerEntity player) {
+        float health = player.getHealth();
+        UUID playerId = player.getUniqueID();
+        if (health > 0.0F && health <= 6.0F && !NEAR_DEATH_ELIGIBLE.contains(playerId)) {
+            NEAR_DEATH_ELIGIBLE.add(playerId);
+        }
+        if (health <= 0.0F && NEAR_DEATH_ELIGIBLE.contains(playerId)) {
+            NEAR_DEATH_ELIGIBLE.remove(playerId);
+        }
+        if ( NEAR_DEATH_ELIGIBLE.contains(playerId) && 
+             health >= player.getMaxHealth() &&
+             ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("FIRST_STEPS")) ) {
+            if (!ResearchManager.isResearchComplete(player, NDE_RESEARCH_KEY)) {
+                ResearchManager.completeResearch(player, NDE_RESEARCH_KEY);
+            }
+            NEAR_DEATH_ELIGIBLE.remove(playerId);
+        }
+    }
+
     protected static void applyAttunementBuffs(ServerPlayerEntity player) {
         if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.LESSER)) {
             // Apply Dolphin's Grace for 30.5s if the player has lesser sea attunement
