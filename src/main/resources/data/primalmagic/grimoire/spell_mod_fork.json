@@ -9,7 +9,10 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_mod_fork.text.stage.1"
+      "text": "primalmagic.research.spell_mod_fork.text.stage.1",
+      "required_knowledge": [
+        "THEORY;3"
+      ]
     },
     {
       "text": "primalmagic.research.spell_mod_fork.text.stage.2"

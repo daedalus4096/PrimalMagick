@@ -7,7 +7,10 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_mod_mine.text.stage.1"
+      "text": "primalmagic.research.spell_mod_mine.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
     },
     {
       "text": "primalmagic.research.spell_mod_mine.text.stage.2"

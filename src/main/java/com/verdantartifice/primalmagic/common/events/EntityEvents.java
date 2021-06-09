@@ -3,15 +3,20 @@ package com.verdantartifice.primalmagic.common.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.AnimalTameEvent;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -49,6 +54,30 @@ public class EntityEvents {
         Entity shooter = event.getArrow().getShooter();
         if (shooter instanceof LivingEntity && EnchantmentHelperPM.hasEnderport((LivingEntity)shooter)) {
             EntityUtils.teleportEntity((LivingEntity)shooter, event.getArrow().world, event.getRayTraceResult().getHitVec());
+        }
+    }
+    
+    @SubscribeEvent(priority=EventPriority.LOWEST)
+    public static void onAnimalTameLowest(AnimalTameEvent event) {
+        // Grant appropriate research if a player tames a wolf
+        PlayerEntity player = event.getTamer();
+        if ( !event.isCanceled() &&
+             event.getAnimal() instanceof WolfEntity && 
+             ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("FIRST_STEPS")) && 
+             !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_furry_friend")) ) {
+            ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_furry_friend"));
+        }
+    }
+    
+    @SubscribeEvent(priority=EventPriority.LOWEST)
+    public static void onBabyEntitySpawnLowest(BabyEntitySpawnEvent event) {
+        // Grant appropriate research if a player breeds an animal
+        PlayerEntity player = event.getCausedByPlayer();
+        if ( !event.isCanceled() && 
+             player != null &&
+             ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("FIRST_STEPS")) &&
+             !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_breed_animal")) ) {
+            ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_breed_animal"));
         }
     }
 }

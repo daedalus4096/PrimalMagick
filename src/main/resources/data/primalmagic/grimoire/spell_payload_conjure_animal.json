@@ -8,7 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_payload_conjure_animal.text.stage.1"
+      "text": "primalmagic.research.spell_payload_conjure_animal.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ],
+      "required_research": [
+        "m_breed_animal"
+      ]
     },
     {
       "text": "primalmagic.research.spell_payload_conjure_animal.text.stage.2",
