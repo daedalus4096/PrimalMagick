@@ -38,7 +38,7 @@ public class BloodyFleshItem extends Item {
         if (!worldIn.isRemote && (entityLiving instanceof PlayerEntity)) {
             PlayerEntity player = (PlayerEntity)entityLiving;
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-            if (knowledge != null && knowledge.isResearchKnown(SimpleResearchKey.parse("FIRST_STEPS")) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
+            if (knowledge != null && knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
                 // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
                 ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));

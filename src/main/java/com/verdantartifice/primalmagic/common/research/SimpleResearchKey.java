@@ -18,6 +18,8 @@ import net.minecraft.item.ItemStack;
  * @author Daedalus4096
  */
 public class SimpleResearchKey {
+    public static final SimpleResearchKey FIRST_STEPS = SimpleResearchKey.parse("FIRST_STEPS");
+    
     protected static final String ITEM_SCAN_PREFIX = "!";
     protected static final String ENTITY_SCAN_PREFIX = "*";
     protected static final String CRAFTED_PREFIX = "[#]";

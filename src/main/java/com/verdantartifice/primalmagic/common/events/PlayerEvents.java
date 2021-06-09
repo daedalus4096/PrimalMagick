@@ -126,7 +126,7 @@ public class PlayerEvents {
         }
         if ( NEAR_DEATH_ELIGIBLE.contains(playerId) && 
              health >= player.getMaxHealth() &&
-             ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("FIRST_STEPS")) ) {
+             ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) ) {
             if (!ResearchManager.isResearchComplete(player, NDE_RESEARCH_KEY)) {
                 ResearchManager.completeResearch(player, NDE_RESEARCH_KEY);
             }
@@ -196,7 +196,7 @@ public class PlayerEvents {
     
     protected static void checkEnvironmentalResearch(ServerPlayerEntity player) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-        if (knowledge == null || !knowledge.isResearchKnown(SimpleResearchKey.parse("FIRST_STEPS"))) {
+        if (knowledge == null || !knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
             // Only check environmental research if the player has started progression
             return;
         }

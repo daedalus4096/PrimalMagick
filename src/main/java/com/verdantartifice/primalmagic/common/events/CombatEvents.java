@@ -95,7 +95,7 @@ public class CombatEvents {
             PlayerEntity target = (PlayerEntity)event.getEntityLiving();
             
             // Gain appropriate research for damage sources, if applicable
-            if (ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("FIRST_STEPS"))) {
+            if (ResearchManager.isResearchComplete(target, SimpleResearchKey.FIRST_STEPS)) {
                 if (event.getSource() == DamageSource.DROWN && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_drown_a_little"))) {
                     ResearchManager.completeResearch(target, SimpleResearchKey.parse("m_drown_a_little"));
                 }

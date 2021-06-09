@@ -46,7 +46,7 @@ public class AmbrosiaItem extends Item {
             PlayerEntity player = (PlayerEntity)entityLiving;
 
             // Only modify attunements if the player has started mod progression
-            if (ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("FIRST_STEPS"))) {
+            if (ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS)) {
                 int limit = Math.min(this.limit, AttunementType.INDUCED.getMaximum());
                 int current = AttunementManager.getAttunement(player, this.source, AttunementType.INDUCED);
                 int toIncrement = Math.min(BONUS, limit - current);

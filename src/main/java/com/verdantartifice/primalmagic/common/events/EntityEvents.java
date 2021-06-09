@@ -63,7 +63,7 @@ public class EntityEvents {
         PlayerEntity player = event.getTamer();
         if ( !event.isCanceled() &&
              event.getAnimal() instanceof WolfEntity && 
-             ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("FIRST_STEPS")) && 
+             ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) && 
              !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_furry_friend")) ) {
             ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_furry_friend"));
         }
@@ -75,7 +75,7 @@ public class EntityEvents {
         PlayerEntity player = event.getCausedByPlayer();
         if ( !event.isCanceled() && 
              player != null &&
-             ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("FIRST_STEPS")) &&
+             ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) &&
              !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_breed_animal")) ) {
             ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_breed_animal"));
         }
