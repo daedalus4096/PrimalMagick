@@ -266,7 +266,8 @@ public class BlocksPM {
     public static final RegistryObject<SpellcraftingAltarBlock> SPELLCRAFTING_ALTAR = BLOCKS.register("spellcrafting_altar", SpellcraftingAltarBlock::new);
     public static final RegistryObject<WandChargerBlock> WAND_CHARGER = BLOCKS.register("wand_charger", WandChargerBlock::new);
     public static final RegistryObject<ResearchTableBlock> RESEARCH_TABLE = BLOCKS.register("research_table", ResearchTableBlock::new);
-    public static final RegistryObject<SunlampBlock> SUNLAMP = BLOCKS.register("sunlamp", SunlampBlock::new);
+    public static final RegistryObject<SunlampBlock> SUNLAMP = BLOCKS.register("sunlamp", () -> new SunlampBlock(() -> BlocksPM.GLOW_FIELD.get()));
+    public static final RegistryObject<SunlampBlock> SPIRIT_LANTERN = BLOCKS.register("spirit_lantern", () -> new SunlampBlock(() -> BlocksPM.SOUL_GLOW_FIELD.get()));
     public static final RegistryObject<RitualAltarBlock> RITUAL_ALTAR = BLOCKS.register("ritual_altar", RitualAltarBlock::new);
     public static final RegistryObject<OfferingPedestalBlock> OFFERING_PEDESTAL = BLOCKS.register("offering_pedestal", OfferingPedestalBlock::new);
     public static final RegistryObject<IncenseBrazierBlock> INCENSE_BRAZIER = BLOCKS.register("incense_brazier", IncenseBrazierBlock::new);
@@ -291,6 +292,7 @@ public class BlocksPM {
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
+    public static final RegistryObject<GlowFieldBlock> SOUL_GLOW_FIELD = BLOCKS.register("soul_glow_field", GlowFieldBlock::new);
     public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
     public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
     public static final RegistryObject<QuartzOreBlock> QUARTZ_ORE = BLOCKS.register("quartz_ore", () -> new QuartzOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));

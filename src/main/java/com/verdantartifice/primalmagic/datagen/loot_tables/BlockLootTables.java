@@ -48,6 +48,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.WAND_CHARGER.get());
         this.registerBasicTable(BlocksPM.RESEARCH_TABLE.get());
         this.registerBasicTable(BlocksPM.SUNLAMP.get());
+        this.registerBasicTable(BlocksPM.SPIRIT_LANTERN.get());
         this.registerBasicTable(BlocksPM.RITUAL_ALTAR.get());
         this.registerBasicTable(BlocksPM.OFFERING_PEDESTAL.get());
         this.registerBasicTable(BlocksPM.INCENSE_BRAZIER.get());

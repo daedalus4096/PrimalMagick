@@ -1,10 +1,11 @@
 package com.verdantartifice.primalmagic.common.tiles.devices;
 
-import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
@@ -44,11 +45,15 @@ public class SunlampTileEntity extends TilePM implements ITickableTileEntity {
             }
 
             // If location is ordinary air and dark enough and in line-of-sight, spawn a glow field there
-            if ( this.world.isAirBlock(bp) &&
-                 this.world.getBlockState(bp) != BlocksPM.GLOW_FIELD.get().getDefaultState() &&
-                 this.world.getLightFor(LightType.BLOCK, bp) < 11 &&
-                 RayTraceUtils.hasLineOfSight(this.world, this.pos, bp) ) {
-                this.world.setBlockState(bp, BlocksPM.GLOW_FIELD.get().getDefaultState(), Constants.BlockFlags.DEFAULT);
+            Block block = this.world.getBlockState(this.pos).getBlock();
+            if (block instanceof SunlampBlock) {
+                Block glowBlock = ((SunlampBlock)block).getGlowField();
+                if ( this.world.isAirBlock(bp) &&
+                     this.world.getBlockState(bp) != glowBlock.getDefaultState() &&
+                     this.world.getLightFor(LightType.BLOCK, bp) < 11 &&
+                     RayTraceUtils.hasLineOfSight(this.world, this.pos, bp) ) {
+                    this.world.setBlockState(bp, glowBlock.getDefaultState(), Constants.BlockFlags.DEFAULT);
+                }
             }
         }
     }

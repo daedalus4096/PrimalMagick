@@ -1,9 +1,12 @@
 package com.verdantartifice.primalmagic.common.blocks.devices;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
@@ -42,9 +45,12 @@ public class SunlampBlock extends Block {
     protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/sunlamp_ground_base"));
     protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/sunlamp_hanging_base"));
     
-    public SunlampBlock() {
+    protected final Supplier<GlowFieldBlock> glowSupplier;
+    
+    public SunlampBlock(Supplier<GlowFieldBlock> glowSupplier) {
         super(Block.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.LANTERN).setLightLevel((state) -> { return 15; }).notSolid());
         this.setDefaultState(this.getDefaultState().with(ATTACHMENT, Direction.DOWN));
+        this.glowSupplier = glowSupplier;
     }
     
     @Override
@@ -121,5 +127,9 @@ public class SunlampBlock extends Block {
             }
         }
         super.onReplaced(state, worldIn, pos, newState, isMoving);
+    }
+    
+    public GlowFieldBlock getGlowField() {
+        return this.glowSupplier.get();
     }
 }
