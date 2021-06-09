@@ -352,6 +352,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements ITickableT
         if (!this.world.isRemote && wandStack.getItem() instanceof IWand) {
             if (this.active) {
                 player.sendStatusMessage(new TranslationTextComponent("primalmagic.ritual.info.canceled"), false);
+                this.doMishap();    // Trigger an automatic mishap if canceling a ritual early
                 this.reset();
             } else if (this.startCraft(wandStack, player)) {
                 this.active = true;
