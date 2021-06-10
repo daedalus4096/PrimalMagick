@@ -1857,8 +1857,8 @@
     "stat.primalmagic.shrine_found_sky": "Sky shrines found",
     "stat.primalmagic.shrine_found_sun": "Sun shrines found",
     "stat.primalmagic.shrine_found_moon": "Moon shrines found",
+    "stat.primalmagic.blocks_broken_barehanded": "Hard blocks broken bare-handed",
     "stat.primalmagic.treants_named": "Treefolk driven to self-immolation",
-    "stat.primalmagic.blocks_broken_barehanded": "Blocks broken bare-handed",
     
     "primalmagic.research_project.name.trade": "Trade",
     "primalmagic.research_project.name.mundane_tinkering": "Mundane Tinkering",

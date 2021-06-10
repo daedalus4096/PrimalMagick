@@ -43,8 +43,6 @@ public class StatsPM {
     public static final Stat SHRINE_FOUND_SKY = Stat.create("shrine_found_sky", IStatFormatter.DEFAULT, false);
     public static final Stat SHRINE_FOUND_SUN = Stat.create("shrine_found_sun", IStatFormatter.DEFAULT, false);
     public static final Stat SHRINE_FOUND_MOON = Stat.create("shrine_found_moon", IStatFormatter.DEFAULT, false);
+    public static final Stat BLOCKS_BROKEN_BAREHANDED = Stat.create("blocks_broken_barehanded", IStatFormatter.DEFAULT, false);
     public static final Stat TREANTS_NAMED = Stat.create("treants_named", IStatFormatter.DEFAULT, false);
-    
-    // Internal-only stats
-    public static final Stat BLOCKS_BROKEN_BAREHANDED = Stat.create("blocks_broken_barehanded", IStatFormatter.DEFAULT, false, true);
 }
