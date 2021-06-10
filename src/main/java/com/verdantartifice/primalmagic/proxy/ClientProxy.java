@@ -197,6 +197,7 @@ public class ClientProxy implements IProxyPM {
         
         RenderTypeLookup.setRenderLayer(BlocksPM.SALT_TRAIL.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlocksPM.SUNLAMP.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlocksPM.SPIRIT_LANTERN.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlocksPM.BLOODLETTER.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlocksPM.CONCOCTER.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlocksPM.CELESTIAL_HARP.get(), RenderType.getCutout());

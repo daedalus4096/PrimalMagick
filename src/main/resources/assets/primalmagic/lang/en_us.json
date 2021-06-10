@@ -1125,6 +1125,7 @@
     "primalmagic.research.sunlamp.title": "Sunlamp",
     "primalmagic.research.sunlamp.text.stage.1": "Darkness is dangerous here in the Overworld, and it takes a lot of torches to keep my base safe.  Maybe Sun magic will let me be more efficient with my lighting?",
     "primalmagic.research.sunlamp.text.stage.2": "With the help of some magical materials, I've succeeded in creating a device I call a Sunlamp.<BR>Not only does the Sunlamp shine brightly itself, but it's enchanted to spread that light.  It will periodically find dark spaces nearby and create a small glow field within them, extending its light even further.<BR>They can be attached to walls or ceilings, or simply left on the ground.  Removing a sunlamp will also remove the glow fields that it's created.",
+    "primalmagic.research.sunlamp.text.addenda.1": "The techniques used to create a sunlamp can also be used to spread the light of soul fire.  A Spirit Lantern not only contains the aesthetically-pleasing cool blue flame of soul fire, but its light will repel piglins.  This will be useful for securing territory in the Nether.",
     
     "primalmagic.research.wand_gem_adept.title": "Wand Gem: Adept",
     "primalmagic.research.wand_gem_adept.text.stage.1": "Based on my experiences with my current wand gem, I'd wager that it's possible to increase its capacity by using stronger essence.  Let's find out!",
