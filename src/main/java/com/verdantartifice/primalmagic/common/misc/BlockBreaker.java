@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagic.common.misc;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +33,7 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class BlockBreaker {
-    protected static final Map<ResourceLocation, Queue<BlockBreaker>> REGISTRY = new HashMap<>();
+    protected static final Map<ResourceLocation, TreeMap<Integer, Map<BlockPos, BlockBreaker>>> SCHEDULE = new ConcurrentHashMap<>();
     
     protected final float power;
     protected final BlockPos pos;
@@ -41,35 +41,83 @@ public class BlockBreaker {
     protected final float currentDurability;
     protected final float maxDurability;
     protected final PlayerEntity player;
+    protected final boolean oneShot;
     
-    public BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player) {
+    public BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot) {
         this.power = power;
         this.pos = pos;
         this.targetBlock = targetBlock;
         this.currentDurability = currentDurability;
         this.maxDurability = maxDurability;
         this.player = player;
+        this.oneShot = oneShot;
     }
     
-    public static boolean enqueue(@Nonnull World world, @Nullable BlockBreaker breaker) {
+    public BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player) {
+        this(power, pos, targetBlock, currentDurability, maxDurability, player, false);
+    }
+    
+    /**
+     * Schedules the given block breaker to be run on the given world after a given delay.
+     * 
+     * @param world the world in which to run the block breaker
+     * @param delayTicks the delay, in ticks, to wait before running the breaker, minimum zero
+     * @param breaker the block breaker to be run
+     * @return true if the breaker was successfully scheduled, false otherwise
+     */
+    public static boolean schedule(@Nonnull World world, int delayTicks, @Nullable BlockBreaker breaker) {
         if (breaker == null) {
-            // Don't allow null breakers in the queue
+            // Don't allow null breakers in the schedule
             return false;
         } else {
-            return getWorldBreakers(world).offer(breaker);
+            int delay = Math.max(0, delayTicks);
+            SCHEDULE.computeIfAbsent(world.getDimensionKey().getLocation(), key -> {
+                return new TreeMap<>();
+            }).computeIfAbsent(delay, key -> {
+                return new ConcurrentHashMap<>();
+            }).put(breaker.pos, breaker);
+            return true;
         }
     }
     
-    @Nonnull
-    public static Queue<BlockBreaker> getWorldBreakers(@Nonnull World world) {
-    	return REGISTRY.computeIfAbsent(world.getDimensionKey().getLocation(), (key) -> {
-    		return new LinkedBlockingQueue<>();
-    	});
+    /**
+     * Advances the block breaker schedule by a tick, returning the breakers to be run now
+     * 
+     * @param world the world for which to run
+     * @return the collection of block breakers that should be executed now
+     */
+    public static Iterable<BlockBreaker> tick(@Nonnull World world) {
+        TreeMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.getDimensionKey().getLocation());
+        if (tree == null) {
+            return Collections.emptyList();
+        } else {
+            Iterable<BlockBreaker> retVal = Collections.emptyList();
+            TreeMap<Integer, Map<BlockPos, BlockBreaker>> newTree = new TreeMap<>();
+            while (!tree.isEmpty()) {
+                Map.Entry<Integer, Map<BlockPos, BlockBreaker>> entry = tree.pollFirstEntry();
+                if (entry.getKey() <= 0) {
+                    retVal = entry.getValue().values();
+                } else {
+                    newTree.put(entry.getKey() - 1, entry.getValue());
+                }
+            }
+            if (!newTree.isEmpty()) {
+                SCHEDULE.put(world.getDimensionKey().getLocation(), newTree);
+            }
+            return retVal;
+        }
     }
     
-    public static void setWorldBreakerQueue(@Nonnull World world, @Nonnull Queue<BlockBreaker> breakerQueue) {
-        // Replace the world's breaker queue with the given one
-    	REGISTRY.put(world.getDimensionKey().getLocation(), breakerQueue);
+    public static boolean hasBreakerQueued(@Nonnull World world, @Nonnull BlockPos pos) {
+        TreeMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.getDimensionKey().getLocation());
+        if (tree != null) {
+            for (Map<BlockPos, BlockBreaker> tickMap : tree.values()) {
+                if (tickMap.keySet().contains(pos)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     @Nullable
@@ -88,9 +136,9 @@ public class BlockBreaker {
                     // Do block break
                     this.doHarvest(world);
                     world.sendBlockBreakProgress(this.pos.hashCode(), this.pos, -1);
-                } else {
+                } else if (!this.oneShot) {
                     // Queue up another round of breaking progress
-                    retVal = new BlockBreaker(this.power, this.pos, this.targetBlock, newDurability, this.maxDurability, this.player);
+                    retVal = new BlockBreaker(this.power, this.pos, this.targetBlock, newDurability, this.maxDurability, this.player, this.oneShot);
                 }
             }
         }

@@ -48,21 +48,13 @@ public class ServerEvents {
     }
     
     protected static void tickBlockBreakers(World world) {
-        Queue<BlockBreaker> breakerQueue = BlockBreaker.getWorldBreakers(world);
-        if (breakerQueue != null) {
+        Iterable<BlockBreaker> breakers = BlockBreaker.tick(world);
+        for (BlockBreaker breaker : breakers) {
             // Execute each pending block breaker in turn
-            Queue<BlockBreaker> newQueue = new LinkedBlockingQueue<>();
-            while (!breakerQueue.isEmpty()) {
-                BlockBreaker breaker = breakerQueue.poll();
-                if (breaker != null) {
-                    BlockBreaker newBreaker = breaker.execute(world);
-                    if (newBreaker != null) {
-                        // If the block breaking isn't done, re-queue the new breaker
-                        newQueue.offer(newBreaker);
-                    }
-                }
+            BlockBreaker newBreaker = breaker.execute(world);
+            if (newBreaker != null) {
+                BlockBreaker.schedule(world, 1, newBreaker);
             }
-            BlockBreaker.setWorldBreakerQueue(world, newQueue);
         }
     }
     
