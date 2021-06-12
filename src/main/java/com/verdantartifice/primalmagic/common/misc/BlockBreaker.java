@@ -2,8 +2,9 @@ package com.verdantartifice.primalmagic.common.misc;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +34,7 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class BlockBreaker {
-    protected static final Map<ResourceLocation, TreeMap<Integer, Map<BlockPos, BlockBreaker>>> SCHEDULE = new ConcurrentHashMap<>();
+    protected static final Map<ResourceLocation, ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>>> SCHEDULE = new ConcurrentHashMap<>();
     
     protected final float power;
     protected final BlockPos pos;
@@ -42,8 +43,9 @@ public class BlockBreaker {
     protected final float maxDurability;
     protected final PlayerEntity player;
     protected final boolean oneShot;
+    protected boolean skipEvent;
     
-    public BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot) {
+    public BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot, boolean skipEvent) {
         this.power = power;
         this.pos = pos;
         this.targetBlock = targetBlock;
@@ -51,10 +53,11 @@ public class BlockBreaker {
         this.maxDurability = maxDurability;
         this.player = player;
         this.oneShot = oneShot;
+        this.skipEvent = skipEvent;
     }
     
     public BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player) {
-        this(power, pos, targetBlock, currentDurability, maxDurability, player, false);
+        this(power, pos, targetBlock, currentDurability, maxDurability, player, false, false);
     }
     
     /**
@@ -72,7 +75,7 @@ public class BlockBreaker {
         } else {
             int delay = Math.max(0, delayTicks);
             SCHEDULE.computeIfAbsent(world.getDimensionKey().getLocation(), key -> {
-                return new TreeMap<>();
+                return new ConcurrentSkipListMap<>();
             }).computeIfAbsent(delay, key -> {
                 return new ConcurrentHashMap<>();
             }).put(breaker.pos, breaker);
@@ -87,12 +90,12 @@ public class BlockBreaker {
      * @return the collection of block breakers that should be executed now
      */
     public static Iterable<BlockBreaker> tick(@Nonnull World world) {
-        TreeMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.getDimensionKey().getLocation());
+        ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.getDimensionKey().getLocation());
         if (tree == null) {
             return Collections.emptyList();
         } else {
             Iterable<BlockBreaker> retVal = Collections.emptyList();
-            TreeMap<Integer, Map<BlockPos, BlockBreaker>> newTree = new TreeMap<>();
+            ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> newTree = new ConcurrentSkipListMap<>();
             while (!tree.isEmpty()) {
                 Map.Entry<Integer, Map<BlockPos, BlockBreaker>> entry = tree.pollFirstEntry();
                 if (entry.getKey() <= 0) {
@@ -109,7 +112,7 @@ public class BlockBreaker {
     }
     
     public static boolean hasBreakerQueued(@Nonnull World world, @Nonnull BlockPos pos) {
-        TreeMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.getDimensionKey().getLocation());
+        ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.getDimensionKey().getLocation());
         if (tree != null) {
             for (Map<BlockPos, BlockBreaker> tickMap : tree.values()) {
                 if (tickMap.keySet().contains(pos)) {
@@ -138,7 +141,7 @@ public class BlockBreaker {
                     world.sendBlockBreakProgress(this.pos.hashCode(), this.pos, -1);
                 } else if (!this.oneShot) {
                     // Queue up another round of breaking progress
-                    retVal = new BlockBreaker(this.power, this.pos, this.targetBlock, newDurability, this.maxDurability, this.player, this.oneShot);
+                    retVal = new BlockBreaker(this.power, this.pos, this.targetBlock, newDurability, this.maxDurability, this.player, this.oneShot, this.skipEvent);
                 }
             }
         }
@@ -158,7 +161,7 @@ public class BlockBreaker {
         }
         ServerPlayerEntity serverPlayer = (ServerPlayerEntity)this.player;
         ServerWorld serverWorld = (ServerWorld)world;
-        int exp = ForgeHooks.onBlockBreakEvent(world, serverPlayer.interactionManager.getGameType(), serverPlayer, this.pos);
+        int exp = this.skipEvent ? 0 : ForgeHooks.onBlockBreakEvent(world, serverPlayer.interactionManager.getGameType(), serverPlayer, this.pos);
         if (exp == -1) {
             return false;
         } else {

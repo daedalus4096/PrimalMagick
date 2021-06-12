@@ -73,7 +73,7 @@ public class BlockEvents {
                         BlockState targetState = world.getBlockState(targetPos);
                         float targetDurability = (float)Math.sqrt(100.0F * targetState.getBlockHardness(world, pos));
                         float newDurability = Math.max(0.0F, targetDurability - durability);
-                        BlockBreaker.schedule(world, targetPos.manhattanDistance(pos), new BlockBreaker(0, targetPos, targetState, newDurability, targetDurability, player, true));
+                        BlockBreaker.schedule(world, 2 * targetPos.manhattanDistance(pos), new BlockBreaker(0, targetPos, targetState, newDurability, targetDurability, player, true, true));
                         count++;
                     }
                 }
