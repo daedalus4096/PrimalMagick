@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.events;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.misc.BlockBreaker;
+import com.verdantartifice.primalmagic.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
@@ -35,7 +36,7 @@ public class BlockEvents {
         World world = (event.getWorld() instanceof World) ? (World)event.getWorld() : null;
         if (!event.isCanceled() && world != null && !world.isRemote && !player.isSecondaryUseActive() && !BlockBreaker.hasBreakerQueued(world, event.getPos())) {
             // Trigger block breakers if the player has a Reverberation tool in the main hand
-            int reverbLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.REVERBERATION.get(), player.getHeldItemMainhand());
+            int reverbLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.REVERBERATION.get(), player.getHeldItem(player.getActiveHand()));
             if (reverbLevel > 0) {
                 triggerReverberation(world, event.getPos(), event.getState(), player, reverbLevel);
             }
@@ -46,13 +47,19 @@ public class BlockEvents {
         float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
         
         // Calculate the direction from which the block was broken
-        Vector3d startPos = player.getEyePosition(1.0F);
-        Vector3d endPos = startPos.add(player.getLook(1.0F).scale(player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue()));
-        BlockRayTraceResult rayTraceResult = world.rayTraceBlocks(new RayTraceContext(startPos, endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
-        if (rayTraceResult.getType() == RayTraceResult.Type.MISS) {
-            return;
+        InteractionRecord interact = PlayerEvents.LAST_BLOCK_LEFT_CLICK.get(player.getUniqueID());
+        Direction dir;
+        if (interact == null) {
+            Vector3d startPos = player.getEyePosition(1.0F);
+            Vector3d endPos = startPos.add(player.getLook(1.0F).scale(player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue()));
+            BlockRayTraceResult rayTraceResult = world.rayTraceBlocks(new RayTraceContext(startPos, endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
+            if (rayTraceResult.getType() == RayTraceResult.Type.MISS) {
+                return;
+            }
+            dir = rayTraceResult.getFace();
+        } else {
+            dir = interact.getFace();
         }
-        Direction dir = rayTraceResult.getFace();
         
         // Iterate through the affected blocks
         int xLimit = level * (dir.getXOffset() == 0 ? 1 : 0);

@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
+import com.verdantartifice.primalmagic.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
@@ -60,6 +61,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -71,6 +73,8 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class PlayerEvents {
+    public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
+    
     private static final Map<UUID, Float> PREV_STEP_HEIGHTS = new HashMap<>();
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
@@ -483,5 +487,10 @@ public class PlayerEvents {
                 player.setMotion(motion);
             }
         }
+    }
+    
+    @SubscribeEvent
+    public static void onPlayerInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+        LAST_BLOCK_LEFT_CLICK.put(event.getPlayer().getUniqueID(), new InteractionRecord(event.getPlayer(), event.getHand(), event.getPos(), event.getFace()));
     }
 }
