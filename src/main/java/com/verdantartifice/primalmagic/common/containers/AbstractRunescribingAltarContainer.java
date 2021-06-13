@@ -170,7 +170,7 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
                 }
 
                 // Determine what enchantments can be applied with the slotted rune combination
-                Map<Enchantment, Integer> inputEnch = RuneManager.getRuneEnchantments(runes, baseStack, true);
+                Map<Enchantment, Integer> inputEnch = RuneManager.getRuneEnchantments(runes, baseStack, this.player, true);
                 if (!inputEnch.isEmpty()) {
                     Map<Enchantment, Integer> finalEnch = RuneManager.mergeEnchantments(EnchantmentHelper.getEnchantments(baseStack), inputEnch);
                     stack = baseStack.copy();

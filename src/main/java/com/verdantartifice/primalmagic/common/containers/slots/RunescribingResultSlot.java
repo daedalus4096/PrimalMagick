@@ -50,7 +50,7 @@ public class RunescribingResultSlot extends Slot {
             // Grant the player rune enchantment research for each rune enchantmant imbued
             if (ResearchManager.isResearchComplete(this.player, SimpleResearchKey.FIRST_STEPS)) {
                 List<Rune> runes = RuneManager.getRunes(stack);
-                Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(runes, stack, false);
+                Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(runes, stack, this.player, false);
                 if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
                     ResearchManager.completeResearch(this.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"));
                 }

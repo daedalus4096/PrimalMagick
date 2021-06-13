@@ -14,9 +14,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
@@ -34,6 +36,7 @@ public class RuneManager {
     protected static final Map<VerbRune, Set<Enchantment>> VERB_ENCHANTMENTS = new HashMap<>();
     protected static final Map<NounRune, Set<Enchantment>> NOUN_ENCHANTMENTS = new HashMap<>();
     protected static final Map<SourceRune, Set<Enchantment>> SOURCE_ENCHANTMENTS = new HashMap<>();
+    protected static final Map<Enchantment, CompoundResearchKey> ENCHANTMENT_RESEARCH = new HashMap<>();
     protected static final String RUNE_TAG_NAME = PrimalMagic.MODID + ":runes";
     
     public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source) {
@@ -45,6 +48,13 @@ public class RuneManager {
             VERB_ENCHANTMENTS.computeIfAbsent(verb, r -> new HashSet<>()).add(enchantment);
             NOUN_ENCHANTMENTS.computeIfAbsent(noun, r -> new HashSet<>()).add(enchantment);
             SOURCE_ENCHANTMENTS.computeIfAbsent(source, r -> new HashSet<>()).add(enchantment);
+        }
+    }
+    
+    public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source, @Nullable CompoundResearchKey research) {
+        registerRuneEnchantment(enchantment, verb, noun, source);
+        if (enchantment != null && research != null) {
+            ENCHANTMENT_RESEARCH.put(enchantment, research);
         }
     }
     
@@ -85,12 +95,13 @@ public class RuneManager {
      * 
      * @param runes the runes for which to determine enchantments
      * @param stack the item stack to which the given runes are to be applied
+     * @param player the player attempting to generate the rune enchantments
      * @param filterIncompatible whether detection should exclude incompatible enchantments
      * @return the map of rune enchantments and the levels at which they should be applied
      */
     @Nonnull
-    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack, boolean filterIncompatible) {
-        if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty()) {
+    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack, @Nullable PlayerEntity player, boolean filterIncompatible) {
+        if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty() || player == null) {
             return Collections.emptyMap();
         }
         
@@ -113,9 +124,11 @@ public class RuneManager {
                     
                     for (Enchantment possible : possibleEnchantments) {
                         // If the rune enchantment can be applied to the given item stack, is compatible with 
-                        // those already found, and it meets the minimum power level, add it to the result set
+                        // those already found, it meets the minimum power level, and the player has any needed
+                        // research, add the enchantment to the result set
                         if ( possible.canApply(stack) && 
                              (!filterIncompatible || EnchantmentHelper.areAllCompatibleWith(retVal.keySet(), possible)) && 
+                             (!ENCHANTMENT_RESEARCH.containsKey(possible) || ENCHANTMENT_RESEARCH.get(possible).isKnownByStrict(player)) &&
                              powerLevel >= possible.getMinLevel() ) {
                             retVal.put(possible, Math.min(powerLevel, possible.getMaxLevel()));
                         }

@@ -1973,6 +1973,7 @@
     "rune_enchantment.text.primalmagic.spell_power": "The Spell Power enchantment can be imbued through the use of Project, Item, and Void runes.  It can be applied to any wand or staff.  When applied, it increases the Power and Duration traits of spell payloads and mods by one per level when cast.",
     "rune_enchantment.text.primalmagic.treasure": "The Treasure enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any wand or staff.  When applied, it increases the amount of loot dropped by creatures slain by the wielder.",
     "rune_enchantment.text.primalmagic.bludgeoning": "The Bludgeoning enchantment can be imbued through the use of Project, Item, and Earth runes.  It can be applied to any staff.  When applied, it increases the damage done by the wielder when using the staff as a melee weapon.",
+    "rune_enchantment.text.primalmagic.reverberation": "The Reverberation enchantment can be imbued through the use of Project, Area, and Earth runes.  It can be applied to any axe, pickaxe, shovel, or hoe.  When applied, it increases the tool's area of effect when digging.  It is incompatible with the Disintegration enchantment.",
     
     "concoctions.primalmagic.doses_remaining": "Doses: %1$d",
     "concoctions.primalmagic.charges_remaining": "Charges: %1$d",

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.init;
 
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.runes.Rune;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
 
@@ -59,5 +60,6 @@ public class InitRunes {
         RuneManager.registerRuneEnchantment(EnchantmentsPM.SPELL_POWER.get(), Rune.PROJECT, Rune.ITEM, Rune.VOID);
         RuneManager.registerRuneEnchantment(EnchantmentsPM.TREASURE.get(), Rune.PROJECT, Rune.ITEM, Rune.MOON);
         RuneManager.registerRuneEnchantment(EnchantmentsPM.BLUDGEONING.get(), Rune.PROJECT, Rune.ITEM, Rune.EARTH);
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.REVERBERATION.get(), Rune.PROJECT, Rune.AREA, Rune.EARTH, CompoundResearchKey.from(true, "MASTER_RUNEWORKING"));
     }
 }
