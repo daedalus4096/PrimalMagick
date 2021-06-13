@@ -176,6 +176,12 @@ public class ModularWandItem extends AbstractWandItem {
             this.setWandCap(stack, WandCap.IRON);
             this.setWandGem(stack, WandGem.APPRENTICE);
             items.add(stack);
+            
+            stack = new ItemStack(this);
+            this.setWandCore(stack, WandCore.HEARTWOOD);
+            this.setWandCap(stack, WandCap.IRON);
+            this.setWandGem(stack, WandGem.CREATIVE);
+            items.add(stack);
         }
     }
     
