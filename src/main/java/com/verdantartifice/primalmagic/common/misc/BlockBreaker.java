@@ -43,9 +43,9 @@ public class BlockBreaker {
     protected final float maxDurability;
     protected final PlayerEntity player;
     protected final boolean oneShot;
-    protected boolean skipEvent;
+    protected final boolean skipEvent;
     
-    public BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot, boolean skipEvent) {
+    protected BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot, boolean skipEvent) {
         this.power = power;
         this.pos = pos;
         this.targetBlock = targetBlock;
@@ -54,10 +54,6 @@ public class BlockBreaker {
         this.player = player;
         this.oneShot = oneShot;
         this.skipEvent = skipEvent;
-    }
-    
-    public BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player) {
-        this(power, pos, targetBlock, currentDurability, maxDurability, player, false, false);
     }
     
     /**
@@ -141,7 +137,7 @@ public class BlockBreaker {
                     world.sendBlockBreakProgress(this.pos.hashCode(), this.pos, -1);
                 } else if (!this.oneShot) {
                     // Queue up another round of breaking progress
-                    retVal = new BlockBreaker(this.power, this.pos, this.targetBlock, newDurability, this.maxDurability, this.player, this.oneShot, this.skipEvent);
+                    retVal = new BlockBreaker.Builder(this).currentDurability(newDurability).build();
                 }
             }
         }
@@ -184,7 +180,7 @@ public class BlockBreaker {
                     // TODO handle fortune and silk touch
                     ItemStack stack = serverPlayer.getHeldItemMainhand();
                     boolean canHarvest = true;
-                    boolean success = this.removeBlock(world, true);
+                    boolean success = this.removeBlock(world, canHarvest);
                     if (success && canHarvest) {
                         block.harvestBlock(world, serverPlayer, this.pos, state, tile, stack.copy());
                     }
@@ -212,5 +208,87 @@ public class BlockBreaker {
             state.getBlock().onPlayerDestroy(world, this.pos, state);
         }
         return removed;
+    }
+
+    public static class Builder {
+        protected float power = 0.0F;
+        protected BlockPos pos = BlockPos.ZERO;
+        protected BlockState targetBlock = null;
+        protected float currentDurability = 0.0F;
+        protected float maxDurability = 0.0F;
+        protected PlayerEntity player = null;
+        protected boolean oneShot = false;
+        protected boolean skipEvent = false;
+        
+        public Builder() {}
+        
+        public Builder(BlockBreaker existing) {
+            this.power = existing.power;
+            this.pos = existing.pos;
+            this.targetBlock = existing.targetBlock;
+            this.currentDurability = existing.currentDurability;
+            this.maxDurability = existing.maxDurability;
+            this.player = existing.player;
+            this.oneShot = existing.oneShot;
+            this.skipEvent = existing.skipEvent;
+        }
+        
+        public Builder power(float power) {
+            this.power = power;
+            return this;
+        }
+        
+        public Builder target(BlockPos pos, BlockState targetBlock) {
+            this.pos = pos;
+            this.targetBlock = targetBlock;
+            return this;
+        }
+        
+        public Builder durability(float max) {
+            return this.durability(max, max);
+        }
+        
+        public Builder durability(float current, float max) {
+            this.currentDurability = current;
+            this.maxDurability = max;
+            return this;
+        }
+        
+        public Builder currentDurability(float current) {
+            this.currentDurability = current;
+            return this;
+        }
+        
+        public Builder player(PlayerEntity player) {
+            this.player = player;
+            return this;
+        }
+        
+        public Builder oneShot() {
+            this.oneShot = true;
+            return this;
+        }
+        
+        public Builder skipEvent() {
+            this.skipEvent = true;
+            return this;
+        }
+        
+        private void validate() {
+            if (this.targetBlock == null) {
+                throw new IllegalStateException("Missing target block in BlockBreaker builder!");
+            }
+            if (this.maxDurability <= 0.0F) {
+                throw new IllegalStateException("Invalid max durability in BlockBreaker builder!");
+            }
+            if (this.player == null) {
+                throw new IllegalStateException("Missing player in BlockBreaker builder!");
+            }
+        }
+        
+        public BlockBreaker build() {
+            this.validate();
+            return new BlockBreaker(this.power, this.pos, this.targetBlock, this.currentDurability, this.maxDurability, this.player, this.oneShot, this.skipEvent);
+        }
     }
 }

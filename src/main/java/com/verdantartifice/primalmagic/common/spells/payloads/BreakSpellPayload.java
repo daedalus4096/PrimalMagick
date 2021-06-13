@@ -61,7 +61,8 @@ public class BreakSpellPayload extends AbstractSpellPayload {
             BlockPos pos = blockTarget.getPos();
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
-            BlockBreaker.schedule(world, 1, new BlockBreaker(this.getModdedPropertyValue("power", spell, spellSource), pos, state, durability, durability, (PlayerEntity)caster));
+            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue("power", spell, spellSource)).target(pos, state).durability(durability).player((PlayerEntity)caster).build();
+            BlockBreaker.schedule(world, 1, breaker);
         }
     }
 
