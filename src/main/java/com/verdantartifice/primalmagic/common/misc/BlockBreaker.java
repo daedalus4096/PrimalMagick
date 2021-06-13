@@ -176,6 +176,7 @@ public class BlockBreaker {
             } else if (serverPlayer.blockActionRestricted(world, this.pos, serverPlayer.interactionManager.getGameType())) {
                 return false;
             } else {
+                world.playEvent(null, 2001, this.pos, Block.getStateId(state));
                 if (serverPlayer.interactionManager.isCreative()) {
                     this.removeBlock(world, false);
                     return true;
