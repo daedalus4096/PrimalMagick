@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.misc;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -14,6 +15,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CommandBlockBlock;
 import net.minecraft.block.JigsawBlock;
 import net.minecraft.block.StructureBlock;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -45,8 +49,11 @@ public class BlockBreaker {
     protected final boolean oneShot;
     protected final boolean skipEvent;
     protected final boolean alwaysDrop;
+    protected final Optional<Boolean> silkTouchOverride;
+    protected final Optional<Integer> fortuneOverride;
     
-    protected BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot, boolean skipEvent, boolean alwaysDrop) {
+    protected BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot, 
+            boolean skipEvent, boolean alwaysDrop, Optional<Boolean> silkTouchOverride, Optional<Integer> fortuneOverride) {
         this.power = power;
         this.pos = pos;
         this.targetBlock = targetBlock;
@@ -56,6 +63,8 @@ public class BlockBreaker {
         this.oneShot = oneShot;
         this.skipEvent = skipEvent;
         this.alwaysDrop = alwaysDrop;
+        this.silkTouchOverride = silkTouchOverride;
+        this.fortuneOverride = fortuneOverride;
     }
     
     /**
@@ -179,12 +188,10 @@ public class BlockBreaker {
                     this.removeBlock(world, false);
                     return true;
                 } else {
-                    // TODO handle fortune and silk touch
-                    ItemStack stack = serverPlayer.getHeldItemMainhand();
                     boolean canHarvest = (this.alwaysDrop || state.canHarvestBlock(world, this.pos, serverPlayer));
                     boolean success = this.removeBlock(world, canHarvest);
                     if (success && canHarvest) {
-                        block.harvestBlock(world, serverPlayer, this.pos, state, tile, stack.copy());
+                        block.harvestBlock(world, serverPlayer, this.pos, state, tile, this.getHarvestTool(serverPlayer));
                     }
                     if (success && exp > 0) {
                         block.dropXpOnBlockBreak(serverWorld, this.pos, exp);
@@ -193,6 +200,32 @@ public class BlockBreaker {
                 }
             }
         }
+    }
+    
+    /**
+     * Get a copy of the tool the player is using to trigger the breaker, applying any enchantment overrides.
+     * 
+     * @param player the player whose tool to get
+     * @return a copy of the triggering tool
+     */
+    protected ItemStack getHarvestTool(PlayerEntity player) {
+        ItemStack stack = player.getHeldItemMainhand().copy();
+        if (this.silkTouchOverride.isPresent() || this.fortuneOverride.isPresent()) {
+            Map<Enchantment, Integer> enchantMap = EnchantmentHelper.getEnchantments(stack);
+            this.silkTouchOverride.ifPresent(silk -> {
+                if (silk) {
+                    enchantMap.put(Enchantments.SILK_TOUCH, 1);
+                }
+            });
+            this.fortuneOverride.ifPresent(fortune -> {
+                int newFortune = Math.max(fortune, enchantMap.getOrDefault(Enchantments.FORTUNE, 0));
+                if (newFortune > 0) {
+                    enchantMap.put(Enchantments.FORTUNE, newFortune);
+                }
+            });
+            EnchantmentHelper.setEnchantments(enchantMap, stack);
+        }
+        return stack;
     }
     
     /**
@@ -222,6 +255,8 @@ public class BlockBreaker {
         protected boolean oneShot = false;
         protected boolean skipEvent = false;
         protected boolean alwaysDrop = false;
+        protected Optional<Boolean> silkTouchOverride = Optional.empty();
+        protected Optional<Integer> fortuneOverride = Optional.empty();
         
         public Builder() {}
         
@@ -235,6 +270,8 @@ public class BlockBreaker {
             this.oneShot = existing.oneShot;
             this.skipEvent = existing.skipEvent;
             this.alwaysDrop = existing.alwaysDrop;
+            this.silkTouchOverride = existing.silkTouchOverride;
+            this.fortuneOverride = existing.fortuneOverride;
         }
         
         public Builder power(float power) {
@@ -283,6 +320,16 @@ public class BlockBreaker {
             return this;
         }
         
+        public Builder silkTouch(boolean silk) {
+            this.silkTouchOverride = Optional.of(Boolean.valueOf(silk));
+            return this;
+        }
+        
+        public Builder fortune(int fortune) {
+            this.fortuneOverride = Optional.of(Integer.valueOf(fortune));
+            return this;
+        }
+        
         private void validate() {
             if (this.targetBlock == null) {
                 throw new IllegalStateException("Missing target block in BlockBreaker builder!");
@@ -294,7 +341,8 @@ public class BlockBreaker {
         
         public BlockBreaker build() {
             this.validate();
-            return new BlockBreaker(this.power, this.pos, this.targetBlock, this.currentDurability, this.maxDurability, this.player, this.oneShot, this.skipEvent, this.alwaysDrop);
+            return new BlockBreaker(this.power, this.pos, this.targetBlock, this.currentDurability, this.maxDurability, this.player, this.oneShot, this.skipEvent, this.alwaysDrop, 
+                    this.silkTouchOverride, this.fortuneOverride);
         }
     }
 }
