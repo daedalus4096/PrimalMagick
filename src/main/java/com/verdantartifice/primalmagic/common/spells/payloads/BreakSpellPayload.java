@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.spells.payloads;
 
 import java.util.Map;
 
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -10,6 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -50,6 +52,7 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
         propMap.put("power", new SpellProperty("power", "primalmagic.spell.property.power", 1, 5));
+        propMap.put("silk_touch", new SpellProperty("silk_touch", "primalmagic.spell.property.silk_touch", 0, 1));
         return propMap;
     }
     
@@ -61,7 +64,9 @@ public class BreakSpellPayload extends AbstractSpellPayload {
             BlockPos pos = blockTarget.getPos();
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
-            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue("power", spell, spellSource)).target(pos, state).durability(durability).player((PlayerEntity)caster).tool(spellSource).alwaysDrop().build();
+            boolean silk = (this.getPropertyValue("silk_touch") == 1);
+            int treasure = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.TREASURE.get(), spellSource);
+            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue("power", spell, spellSource)).target(pos, state).durability(durability).player((PlayerEntity)caster).tool(spellSource).silkTouch(silk).fortune(treasure).alwaysDrop().build();
             BlockBreaker.schedule(world, 1, breaker);
         }
     }
@@ -73,7 +78,7 @@ public class BreakSpellPayload extends AbstractSpellPayload {
 
     @Override
     public int getBaseManaCost() {
-        return this.getPropertyValue("power");
+        return this.getPropertyValue("power") + (10 * this.getPropertyValue("silk_touch"));
     }
 
     @Override
