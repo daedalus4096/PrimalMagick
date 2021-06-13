@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -35,16 +36,16 @@ public class BlockEvents {
         PlayerEntity player = event.getPlayer();
         World world = (event.getWorld() instanceof World) ? (World)event.getWorld() : null;
         if (!event.isCanceled() && world != null && !world.isRemote && !player.isSecondaryUseActive() && !BlockBreaker.hasBreakerQueued(world, event.getPos())) {
-            // Trigger block breakers if the player has a Reverberation tool in the main hand
-            int reverbLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.REVERBERATION.get(), player.getHeldItem(player.getActiveHand()));
-            if (reverbLevel > 0) {
-                triggerReverberation(world, event.getPos(), event.getState(), player, reverbLevel);
-            }
+            triggerReverberation(world, event.getPos(), event.getState(), player, player.getHeldItemMainhand());
         }
     }
     
-    private static void triggerReverberation(World world, BlockPos pos, BlockState state, PlayerEntity player, int level) {
-        float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
+    private static void triggerReverberation(World world, BlockPos pos, BlockState state, PlayerEntity player, ItemStack tool) {
+        // Trigger block breakers if the player has a Reverberation tool in the main hand
+        int level = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.REVERBERATION.get(), tool);
+        if (level <= 0) {
+            return;
+        }
         
         // Calculate the direction from which the block was broken
         InteractionRecord interact = PlayerEvents.LAST_BLOCK_LEFT_CLICK.get(player.getUniqueID());
@@ -62,6 +63,7 @@ public class BlockEvents {
         }
         
         // Iterate through the affected blocks
+        float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
         int xLimit = level * (dir.getXOffset() == 0 ? 1 : 0);
         int yLimit = level * (dir.getYOffset() == 0 ? 1 : 0);
         int zLimit = level * (dir.getZOffset() == 0 ? 1 : 0);
@@ -74,7 +76,7 @@ public class BlockEvents {
                         BlockState targetState = world.getBlockState(targetPos);
                         float targetDurability = (float)Math.sqrt(100.0F * targetState.getBlockHardness(world, pos));
                         float newDurability = Math.max(0.0F, targetDurability - durability);
-                        BlockBreaker breaker = new BlockBreaker.Builder().target(targetPos, targetState).durability(newDurability, targetDurability).player(player).oneShot().skipEvent().build();
+                        BlockBreaker breaker = new BlockBreaker.Builder().target(targetPos, targetState).durability(newDurability, targetDurability).player(player).tool(tool).oneShot().skipEvent().build();
                         BlockBreaker.schedule(world, targetPos.manhattanDistance(pos), breaker);
                     }
                 }

@@ -46,20 +46,22 @@ public class BlockBreaker {
     protected final float currentDurability;
     protected final float maxDurability;
     protected final PlayerEntity player;
+    protected final ItemStack tool;
     protected final boolean oneShot;
     protected final boolean skipEvent;
     protected final boolean alwaysDrop;
     protected final Optional<Boolean> silkTouchOverride;
     protected final Optional<Integer> fortuneOverride;
     
-    protected BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot, 
-            boolean skipEvent, boolean alwaysDrop, Optional<Boolean> silkTouchOverride, Optional<Integer> fortuneOverride) {
+    protected BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, 
+            ItemStack tool, boolean oneShot, boolean skipEvent, boolean alwaysDrop, Optional<Boolean> silkTouchOverride, Optional<Integer> fortuneOverride) {
         this.power = power;
         this.pos = pos;
         this.targetBlock = targetBlock;
         this.currentDurability = currentDurability;
         this.maxDurability = maxDurability;
         this.player = player;
+        this.tool = tool;
         this.oneShot = oneShot;
         this.skipEvent = skipEvent;
         this.alwaysDrop = alwaysDrop;
@@ -209,7 +211,10 @@ public class BlockBreaker {
      * @return a copy of the triggering tool
      */
     protected ItemStack getHarvestTool(PlayerEntity player) {
-        ItemStack stack = player.getHeldItemMainhand().copy();
+        ItemStack stack = this.tool.copy();
+        if (stack.isEmpty()) {
+            stack = player.getHeldItemMainhand().copy();
+        }
         if (this.silkTouchOverride.isPresent() || this.fortuneOverride.isPresent()) {
             Map<Enchantment, Integer> enchantMap = EnchantmentHelper.getEnchantments(stack);
             this.silkTouchOverride.ifPresent(silk -> {
@@ -252,6 +257,7 @@ public class BlockBreaker {
         protected float currentDurability = 0.0F;
         protected float maxDurability = 0.0F;
         protected PlayerEntity player = null;
+        protected ItemStack tool = ItemStack.EMPTY;
         protected boolean oneShot = false;
         protected boolean skipEvent = false;
         protected boolean alwaysDrop = false;
@@ -267,6 +273,7 @@ public class BlockBreaker {
             this.currentDurability = existing.currentDurability;
             this.maxDurability = existing.maxDurability;
             this.player = existing.player;
+            this.tool = existing.tool;
             this.oneShot = existing.oneShot;
             this.skipEvent = existing.skipEvent;
             this.alwaysDrop = existing.alwaysDrop;
@@ -305,6 +312,11 @@ public class BlockBreaker {
             return this;
         }
         
+        public Builder tool(ItemStack tool) {
+            this.tool = tool;
+            return this;
+        }
+        
         public Builder oneShot() {
             this.oneShot = true;
             return this;
@@ -337,11 +349,14 @@ public class BlockBreaker {
             if (this.player == null) {
                 throw new IllegalStateException("Missing player in BlockBreaker builder!");
             }
+            if (this.tool == null) {
+                throw new IllegalStateException("Invalid tool in BlockBreaker builder!");
+            }
         }
         
         public BlockBreaker build() {
             this.validate();
-            return new BlockBreaker(this.power, this.pos, this.targetBlock, this.currentDurability, this.maxDurability, this.player, this.oneShot, this.skipEvent, this.alwaysDrop, 
+            return new BlockBreaker(this.power, this.pos, this.targetBlock, this.currentDurability, this.maxDurability, this.player, this.tool, this.oneShot, this.skipEvent, this.alwaysDrop, 
                     this.silkTouchOverride, this.fortuneOverride);
         }
     }
