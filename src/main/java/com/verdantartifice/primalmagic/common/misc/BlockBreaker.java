@@ -44,8 +44,9 @@ public class BlockBreaker {
     protected final PlayerEntity player;
     protected final boolean oneShot;
     protected final boolean skipEvent;
+    protected final boolean alwaysDrop;
     
-    protected BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot, boolean skipEvent) {
+    protected BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull PlayerEntity player, boolean oneShot, boolean skipEvent, boolean alwaysDrop) {
         this.power = power;
         this.pos = pos;
         this.targetBlock = targetBlock;
@@ -54,6 +55,7 @@ public class BlockBreaker {
         this.player = player;
         this.oneShot = oneShot;
         this.skipEvent = skipEvent;
+        this.alwaysDrop = alwaysDrop;
     }
     
     /**
@@ -179,7 +181,7 @@ public class BlockBreaker {
                 } else {
                     // TODO handle fortune and silk touch
                     ItemStack stack = serverPlayer.getHeldItemMainhand();
-                    boolean canHarvest = true;
+                    boolean canHarvest = (this.alwaysDrop || state.canHarvestBlock(world, this.pos, serverPlayer));
                     boolean success = this.removeBlock(world, canHarvest);
                     if (success && canHarvest) {
                         block.harvestBlock(world, serverPlayer, this.pos, state, tile, stack.copy());
@@ -219,6 +221,7 @@ public class BlockBreaker {
         protected PlayerEntity player = null;
         protected boolean oneShot = false;
         protected boolean skipEvent = false;
+        protected boolean alwaysDrop = false;
         
         public Builder() {}
         
@@ -231,6 +234,7 @@ public class BlockBreaker {
             this.player = existing.player;
             this.oneShot = existing.oneShot;
             this.skipEvent = existing.skipEvent;
+            this.alwaysDrop = existing.alwaysDrop;
         }
         
         public Builder power(float power) {
@@ -274,12 +278,14 @@ public class BlockBreaker {
             return this;
         }
         
+        public Builder alwaysDrop() {
+            this.alwaysDrop = true;
+            return this;
+        }
+        
         private void validate() {
             if (this.targetBlock == null) {
                 throw new IllegalStateException("Missing target block in BlockBreaker builder!");
-            }
-            if (this.maxDurability <= 0.0F) {
-                throw new IllegalStateException("Invalid max durability in BlockBreaker builder!");
             }
             if (this.player == null) {
                 throw new IllegalStateException("Missing player in BlockBreaker builder!");
@@ -288,7 +294,7 @@ public class BlockBreaker {
         
         public BlockBreaker build() {
             this.validate();
-            return new BlockBreaker(this.power, this.pos, this.targetBlock, this.currentDurability, this.maxDurability, this.player, this.oneShot, this.skipEvent);
+            return new BlockBreaker(this.power, this.pos, this.targetBlock, this.currentDurability, this.maxDurability, this.player, this.oneShot, this.skipEvent, this.alwaysDrop);
         }
     }
 }
