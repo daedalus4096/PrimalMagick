@@ -30,6 +30,7 @@ import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagic.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagic.common.items.misc.SeascribePenItem;
 import com.verdantartifice.primalmagic.common.items.tools.ItemTierPM;
+import com.verdantartifice.primalmagic.common.items.tools.PrimalShovelItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
@@ -319,6 +320,7 @@ public class ItemsPM {
     public static final RegistryObject<PickaxeItem> HALLOWSTEEL_PICKAXE = ITEMS.register("hallowsteel_pickaxe", () -> new PickaxeItem(ItemTierPM.HALLOWSTEEL, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<AxeItem> HALLOWSTEEL_AXE = ITEMS.register("hallowsteel_axe", () -> new AxeItem(ItemTierPM.HALLOWSTEEL, 3.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<HoeItem> HALLOWSTEEL_HOE = ITEMS.register("hallowsteel_hoe", () -> new HoeItem(ItemTierPM.HALLOWSTEEL, -5, 0.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
+    public static final RegistryObject<PrimalShovelItem> PRIMAL_SHOVEL = ITEMS.register("primal_shovel", () -> new PrimalShovelItem(ItemTierPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     
     // Register armor items
     public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = ITEMS.register("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlotType.HEAD, 1, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
