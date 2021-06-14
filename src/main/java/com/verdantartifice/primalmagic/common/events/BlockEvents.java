@@ -1,5 +1,10 @@
 package com.verdantartifice.primalmagic.common.events;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.misc.BlockBreaker;
@@ -37,6 +42,7 @@ public class BlockEvents {
         World world = (event.getWorld() instanceof World) ? (World)event.getWorld() : null;
         if (!event.isCanceled() && world != null && !world.isRemote && !player.isSecondaryUseActive() && !BlockBreaker.hasBreakerQueued(world, event.getPos())) {
             triggerReverberation(world, event.getPos(), event.getState(), player, player.getHeldItemMainhand());
+            triggerDisintegration(world, event.getPos(), event.getState(), player, player.getHeldItemMainhand());
         }
     }
     
@@ -78,6 +84,46 @@ public class BlockEvents {
                         float newDurability = Math.max(0.0F, targetDurability - durability);
                         BlockBreaker breaker = new BlockBreaker.Builder().target(targetPos, targetState).durability(newDurability, targetDurability).player(player).tool(tool).oneShot().skipEvent().build();
                         BlockBreaker.schedule(world, targetPos.manhattanDistance(pos), breaker);
+                    }
+                }
+            }
+        }
+    }
+    
+    private static void triggerDisintegration(World world, BlockPos pos, BlockState state, PlayerEntity player, ItemStack tool) {
+        // Trigger block breakers if the player has a Reverberation tool in the main hand
+        int level = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.DISINTEGRATION.get(), tool);
+        if (level <= 0) {
+            return;
+        }
+        
+        float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
+        int breakerCount = (10 * level) - 1;
+        Set<BlockPos> examinedPositions = new HashSet<>();
+        Queue<BlockPos> processingQueue = new LinkedList<>();
+        
+        // Set up initial conditions
+        examinedPositions.add(pos);
+        for (Direction dir : Direction.values()) {
+            BlockPos setupPos = pos.offset(dir);
+            examinedPositions.add(setupPos);
+            processingQueue.offer(setupPos);
+        }
+
+        // Iterate through the affected blocks
+        while (!processingQueue.isEmpty() && breakerCount > 0) {
+            BlockPos curPos = processingQueue.poll();
+            BlockState curState = world.getBlockState(curPos);
+            if (curState.getBlock().equals(state.getBlock())) {
+                // If the currently examined block is of the same type as the original block, schedule a breaker and enqueue its neighbors for examination
+                breakerCount--;
+                BlockBreaker breaker = new BlockBreaker.Builder().target(curPos, curState).durability(0.0F, durability).player(player).tool(tool).oneShot().skipEvent().build();
+                BlockBreaker.schedule(world, curPos.manhattanDistance(pos), breaker);
+                for (Direction dir : Direction.values()) {
+                    BlockPos nextPos = curPos.offset(dir);
+                    if (!examinedPositions.contains(nextPos)) {
+                        examinedPositions.add(nextPos);
+                        processingQueue.offer(nextPos);
                     }
                 }
             }
