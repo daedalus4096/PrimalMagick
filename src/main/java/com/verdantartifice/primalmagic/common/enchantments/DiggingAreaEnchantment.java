@@ -5,12 +5,12 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
- * Definition of an enchantment that expands a digging tool's area of effect.
+ * Definition of an enchantment that expands a digging tool's area of effect in some way.
  * 
  * @author Daedalus4096
  */
-public class ReverberationEnchantment extends AbstractRuneEnchantment {
-    public ReverberationEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
+public class DiggingAreaEnchantment extends AbstractRuneEnchantment {
+    public DiggingAreaEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
         super(rarity, EnchantmentType.DIGGER, slots);
     }
 
@@ -31,7 +31,6 @@ public class ReverberationEnchantment extends AbstractRuneEnchantment {
 
     @Override
     protected boolean canApplyTogether(Enchantment ench) {
-        // TODO Disallow coexistence with Disintegration
-        return super.canApplyTogether(ench);
+        return super.canApplyTogether(ench) && !(ench instanceof DiggingAreaEnchantment);
     }
 }
