@@ -86,10 +86,7 @@ public class GuiUtils {
     
     public static void renderItemTooltip(MatrixStack matrixStack, ItemStack stack, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
-        List<ITextComponent> textList = new ArrayList<>();
-        textList.add(stack.getDisplayName().deepCopy().mergeStyle(stack.getItem().getRarity(stack).color));
-        stack.getItem().addInformation(stack, mc.world, textList, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
-        GuiUtils.renderCustomTooltip(matrixStack, textList, x, y);
+        GuiUtils.renderCustomTooltip(matrixStack, stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL), x, y);
     }
     
     public static void renderCustomTooltip(MatrixStack matrixStack, List<ITextComponent> textList, int x, int y) {
