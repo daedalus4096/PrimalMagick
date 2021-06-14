@@ -78,6 +78,7 @@ public class Recipes extends RecipeProvider {
         this.registerElixirRecipes(consumer);
         this.registerAlchemicalBombRecipes(consumer);
         this.registerClothRecipes(consumer);
+        this.registerPrimalToolRecipes(consumer);
         
         ShapelessRecipeBuilder.shapelessRecipe(ItemsPM.MUNDANE_WAND.get())
             .addIngredient(Tags.Items.RODS_WOODEN)
@@ -4882,6 +4883,21 @@ public class Recipes extends RecipeProvider {
             .patternLine("# #")
             .key('#', ItemsPM.SAINTSWOOL.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .build(consumer);
+    }
+    
+    protected void registerPrimalToolRecipes(Consumer<IFinishedRecipe> consumer) {
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_SHOVEL.get().getDefaultInstance())
+            .addIngredient(ItemsPM.PRIMALITE_SHOVEL.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get(), 2)
+            .addIngredient(ItemsPM.RUNE_EARTH.get())
+            .addIngredient(ItemsPM.MANA_PRISM.get())
+            .addIngredient(ItemsPM.MANA_SALTS.get())
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.RITUAL_BELL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_SHOVEL")))
+            .manaCost(new SourceList().add(Source.EARTH, 40))
+            .instability(3)
             .build(consumer);
     }
 }

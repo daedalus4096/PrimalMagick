@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import net.minecraft.block.Block;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
@@ -29,8 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class RitualRecipeBuilder {
-    protected final Item result;
-    protected final int count;
+    protected final ItemStack result;
     protected final List<Ingredient> ingredients = new ArrayList<>();
     protected final List<BlockIngredient> props = new ArrayList<>();
     protected String group;
@@ -38,9 +38,8 @@ public class RitualRecipeBuilder {
     protected SourceList manaCosts;
     protected int instability = 0;
 
-    protected RitualRecipeBuilder(IItemProvider result, int count) {
-        this.result = result.asItem();
-        this.count = count;
+    protected RitualRecipeBuilder(ItemStack result) {
+        this.result = result.copy();
     }
     
     /**
@@ -51,7 +50,7 @@ public class RitualRecipeBuilder {
      * @return a new builder for a ritual recipe
      */
     public static RitualRecipeBuilder ritualRecipe(IItemProvider result, int count) {
-        return new RitualRecipeBuilder(result, count);
+        return new RitualRecipeBuilder(new ItemStack(result, count));
     }
     
     /**
@@ -62,6 +61,16 @@ public class RitualRecipeBuilder {
      */
     public static RitualRecipeBuilder ritualRecipe(IItemProvider result) {
         return ritualRecipe(result, 1);
+    }
+    
+    /**
+     * Creates a new builder for a ritual recipe.
+     * 
+     * @param result the output item stack
+     * @return a new builder for a ritual recipe
+     */
+    public static RitualRecipeBuilder ritualRecipe(ItemStack result) {
+        return new RitualRecipeBuilder(result);
     }
     
     /**
@@ -248,7 +257,7 @@ public class RitualRecipeBuilder {
      */
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new RitualRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.ingredients, this.props, this.research, this.manaCosts, this.instability));
+        consumer.accept(new RitualRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.ingredients, this.props, this.research, this.manaCosts, this.instability));
     }
     
     /**
@@ -259,7 +268,7 @@ public class RitualRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(Consumer<IFinishedRecipe> consumer, String save) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result);
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
         ResourceLocation saveLoc = new ResourceLocation(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Ritual Recipe " + save + " should remove its 'save' argument");
@@ -274,7 +283,7 @@ public class RitualRecipeBuilder {
      * @param consumer a consumer for the finished recipe
      */
     public void build(Consumer<IFinishedRecipe> consumer) {
-        this.build(consumer, ForgeRegistries.ITEMS.getKey(this.result));
+        this.build(consumer, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
     }
     
     /**
@@ -296,8 +305,7 @@ public class RitualRecipeBuilder {
     
     public static class Result implements IFinishedRecipe {
         protected final ResourceLocation id;
-        protected final Item result;
-        protected final int count;
+        protected final ItemStack result;
         protected final String group;
         protected final List<Ingredient> ingredients;
         protected final List<BlockIngredient> props;
@@ -305,10 +313,9 @@ public class RitualRecipeBuilder {
         protected final SourceList manaCosts;
         protected final int instability;
 
-        public Result(ResourceLocation id, Item result, int count, String group, List<Ingredient> ingredients, List<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts, int instability) {
+        public Result(ResourceLocation id, ItemStack result, String group, List<Ingredient> ingredients, List<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts, int instability) {
             this.id = id;
             this.result = result;
-            this.count = count;
             this.group = group;
             this.ingredients = ingredients;
             this.props = props;
@@ -359,9 +366,12 @@ public class RitualRecipeBuilder {
             
             // Serialize the recipe result
             JsonObject resultJson = new JsonObject();
-            resultJson.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
-            if (this.count > 1) {
-                resultJson.addProperty("count", this.count);
+            resultJson.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result.getItem()).toString());
+            if (this.result.getCount() > 1) {
+                resultJson.addProperty("count", this.result.getCount());
+            }
+            if (this.result.hasTag()) {
+                resultJson.addProperty("nbt", this.result.getTag().toString());
             }
             json.add("result", resultJson);
         }

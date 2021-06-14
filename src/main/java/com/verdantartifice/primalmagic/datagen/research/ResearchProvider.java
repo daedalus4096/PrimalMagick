@@ -975,6 +975,12 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("PRIMAL_SHOVEL", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("RUNE_EARTH").parent("RITUAL_CANDLES")
+            .parent("RITUAL_BELL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_SHOVEL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
