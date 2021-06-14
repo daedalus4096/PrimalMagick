@@ -1,0 +1,36 @@
+{
+  "key": "PRIMAL_AXE",
+  "name": "primalmagic.research.primal_axe.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "EXPERT_RITUAL",
+    "PRIMALITE",
+    "SHARD_SYNTHESIS",
+    "MANA_SALTS",
+    "RUNE_SKY",
+    "RITUAL_BELL",
+    "INCENSE_BRAZIER"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.primal_axe.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.primal_axe.text.stage.2",
+      "recipes": [
+        "primalmagic:primal_axe"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.primal_axe.text.addenda.1",
+      "required_research": [
+        "MASTER_RUNEWORKING"
+      ]
+    }
+  ]
+}
