@@ -37,10 +37,11 @@ public class BountyFishingModifier extends LootModifier {
         LootTable table = context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING);
         int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.BOUNTY.get(), context.get(LootParameters.TOOL));
         for (int index = 0; index < enchantmentLevel; index++) {
-            // TODO Only grant a roll if below the given chance on RNG
-            List<ItemStack> bonusList = new ArrayList<>();
-            table.generate(context, bonusList::add);    // Use deprecated method to avoid recursive modification of loot generated
-            ItemUtils.mergeItemStackLists(generatedLoot, bonusList);
+            if (context.getRandom().nextFloat() < this.chance) {
+                List<ItemStack> bonusList = new ArrayList<>();
+                table.generate(context, bonusList::add);    // Use deprecated method to avoid recursive modification of loot generated
+                generatedLoot = ItemUtils.mergeItemStackLists(generatedLoot, bonusList);
+            }
         }
         return generatedLoot;
     }
