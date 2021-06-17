@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagic.common.init.InitRunes;
 import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
+import com.verdantartifice.primalmagic.common.loot.conditions.LootConditionTypesPM;
 import com.verdantartifice.primalmagic.common.misc.DispenseLazySpawnEggBehavior;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
@@ -66,6 +67,7 @@ public class ModLifecycleEvents {
         FeaturesPM.setupFeatures();
         FeaturesPM.setupStructures();
         ConfiguredFeaturesPM.registerConfiguredStructures();
+        LootConditionTypesPM.register();
 
         registerCommandArguments(event);
         registerEntityPlacements(event);

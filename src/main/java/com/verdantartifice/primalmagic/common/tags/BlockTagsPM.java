@@ -15,6 +15,7 @@ import net.minecraftforge.common.Tags.IOptionalNamedTag;
  */
 public class BlockTagsPM {
     public static final IOptionalNamedTag<Block> BEDS = tag("beds");
+    public static final IOptionalNamedTag<Block> BOUNTY_CROPS = tag("bounty_crops");
     public static final IOptionalNamedTag<Block> COLORED_SHULKER_BOXES = tag("colored_shulker_boxes");
     public static final IOptionalNamedTag<Block> CONCRETE = tag("concrete");
     public static final IOptionalNamedTag<Block> DEAD_CORAL_BLOCKS = tag("dead_coral_blocks");

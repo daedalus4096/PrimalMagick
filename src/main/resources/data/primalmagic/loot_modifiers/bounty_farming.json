@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "condition": "primalmagic:match_block_tag",
+      "tag": "primalmagic:bounty_crops"
+    },
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "enchantments": [
+          {
+            "enchantment": "primalmagic:bounty",
+            "levels": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "chance": 0.25,
+  "type": "primalmagic:bounty_farming"
+}

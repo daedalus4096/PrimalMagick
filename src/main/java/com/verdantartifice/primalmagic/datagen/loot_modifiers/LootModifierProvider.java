@@ -2,9 +2,12 @@ package com.verdantartifice.primalmagic.datagen.loot_modifiers;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagic.common.loot.conditions.MatchBlockTag;
 import com.verdantartifice.primalmagic.common.loot.modifiers.BloodyFleshModifier;
+import com.verdantartifice.primalmagic.common.loot.modifiers.BountyFarmingModifier;
 import com.verdantartifice.primalmagic.common.loot.modifiers.BountyFishingModifier;
 import com.verdantartifice.primalmagic.common.loot.modifiers.LootModifierSerializersPM;
+import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
 
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
@@ -39,6 +42,11 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         KilledByPlayer.builder().build(),
                         RandomChanceWithLooting.builder(0.5F, 0.1F).build()
                 }));
+        this.add("bounty_farming", LootModifierSerializersPM.BOUNTY_FARMING.get(), new BountyFarmingModifier(
+                new ILootCondition[] {
+                        MatchBlockTag.builder(BlockTagsPM.BOUNTY_CROPS).build(),
+                        MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.IntBound.atLeast(1)))).build()
+                }, 0.25F));
         this.add("bounty_fishing", LootModifierSerializersPM.BOUNTY_FISHING.get(), new BountyFishingModifier(
                 new ILootCondition[] {
                         EntityHasProperty.builder(EntityTarget.THIS, EntityPredicate.Builder.create().fishing(FishingPredicate.func_234640_a_(false))).build(),

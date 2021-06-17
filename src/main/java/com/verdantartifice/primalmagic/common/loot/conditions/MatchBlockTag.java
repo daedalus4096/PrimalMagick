@@ -39,8 +39,7 @@ public class MatchBlockTag implements ILootCondition {
 
     @Override
     public LootConditionType getConditionType() {
-        // TODO Auto-generated method stub
-        return null;
+        return LootConditionTypesPM.MATCH_BLOCK_TAG;
     }
     
     public static class Serializer implements ILootSerializer<MatchBlockTag> {
