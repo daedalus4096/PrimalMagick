@@ -1684,6 +1684,14 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.RODS_WOODEN)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_FISHING_ROD.get())
+            .patternLine("  I")
+            .patternLine(" IS")
+            .patternLine("I S")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('S', Tags.Items.STRING)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_HEAD.get())
             .patternLine("III")
             .patternLine("I I")
@@ -1782,6 +1790,14 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.RODS_WOODEN)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_FISHING_ROD.get())
+            .patternLine("  I")
+            .patternLine(" IS")
+            .patternLine("I S")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('S', Tags.Items.STRING)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_HEAD.get())
             .patternLine("III")
             .patternLine("I I")
@@ -1876,6 +1892,14 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.RODS_WOODEN)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_FISHING_ROD.get())
+            .patternLine("  I")
+            .patternLine(" IS")
+            .patternLine("I S")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('S', Tags.Items.STRING)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_HEAD.get())

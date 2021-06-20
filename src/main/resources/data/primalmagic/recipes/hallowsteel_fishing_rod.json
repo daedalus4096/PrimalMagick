@@ -1,0 +1,20 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "HALLOWSTEEL",
+  "pattern": [
+    "  I",
+    " IS",
+    "I S"
+  ],
+  "key": {
+    "I": {
+      "tag": "primalmagic:ingots/hallowsteel"
+    },
+    "S": {
+      "tag": "forge:string"
+    }
+  },
+  "result": {
+    "item": "primalmagic:hallowsteel_fishing_rod"
+  }
+}

@@ -52,7 +52,14 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -162,10 +169,26 @@ public class ClientProxy implements IProxyPM {
     }
     
     private void registerItemProperties(FMLClientSetupEvent event) {
-    	// Register properties for items on the main thread in a thread-safe fashion
-    	event.enqueueWork(() -> {
-    		ItemModelsProperties.registerProperty(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, ArcanometerItem.getScanStateProperty());
-    		ItemModelsProperties.registerProperty(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, FlyingCarpetItem.getColorProperty());
+        // Register properties for items on the main thread in a thread-safe fashion
+        event.enqueueWork(() -> {
+            ItemModelsProperties.registerProperty(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, ArcanometerItem.getScanStateProperty());
+            ItemModelsProperties.registerProperty(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, FlyingCarpetItem.getColorProperty());
+            
+            IItemPropertyGetter castProperty = (ItemStack stack, ClientWorld world, LivingEntity entity) -> {
+                if (entity == null) {
+                    return 0.0F;
+                } else {
+                    boolean inMain = entity.getHeldItemMainhand() == stack;
+                    boolean inOff = entity.getHeldItemOffhand() == stack;
+                    if (entity.getHeldItemMainhand().getItem() instanceof FishingRodItem) {
+                        inOff = false;
+                    }
+                    return (inMain || inOff) && entity instanceof PlayerEntity && ((PlayerEntity)entity).fishingBobber != null ? 1.0F : 0.0F;
+                }
+            };
+            ItemModelsProperties.registerProperty(ItemsPM.PRIMALITE_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.HEXIUM_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
     	});
     }
     
