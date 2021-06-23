@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagic.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagic.common.items.misc.SeascribePenItem;
 import com.verdantartifice.primalmagic.common.items.tools.ItemTierPM;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalAxeItem;
+import com.verdantartifice.primalmagic.common.items.tools.PrimalFishingRodItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalShovelItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
@@ -326,6 +327,7 @@ public class ItemsPM {
     public static final RegistryObject<HoeItem> HALLOWSTEEL_HOE = ITEMS.register("hallowsteel_hoe", () -> new HoeItem(ItemTierPM.HALLOWSTEEL, -5, 0.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<FishingRodItem> HALLOWSTEEL_FISHING_ROD = ITEMS.register("hallowsteel_fishing_rod", () -> new FishingRodItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxDamage(512).rarity(Rarity.EPIC)));
     public static final RegistryObject<PrimalShovelItem> PRIMAL_SHOVEL = ITEMS.register("primal_shovel", () -> new PrimalShovelItem(ItemTierPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PrimalFishingRodItem> PRIMAL_FISHING_ROD = ITEMS.register("primal_fishing_rod", () -> new PrimalFishingRodItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxDamage(128).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimalAxeItem> PRIMAL_AXE = ITEMS.register("primal_axe", () -> new PrimalAxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     
     // Register armor items

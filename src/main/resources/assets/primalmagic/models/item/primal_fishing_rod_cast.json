@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagic:item/primal_fishing_rod",
+    "textures": {
+        "layer0": "primalmagic:item/primal_fishing_rod_cast"
+    }
+}

@@ -189,6 +189,7 @@ public class ClientProxy implements IProxyPM {
             ItemModelsProperties.registerProperty(ItemsPM.PRIMALITE_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
             ItemModelsProperties.registerProperty(ItemsPM.HEXIUM_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
             ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.PRIMAL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
     	});
     }
     
