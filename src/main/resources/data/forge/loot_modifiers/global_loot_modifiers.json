@@ -2,7 +2,10 @@
   "replace": false,
   "entries": [
     "primalmagic:bloody_flesh",
+    "primalmagic:bonus_nugget_gold",
+    "primalmagic:bonus_nugget_quartz",
     "primalmagic:bounty_farming",
-    "primalmagic:bounty_fishing"
+    "primalmagic:bounty_fishing",
+    "primalmagic:bonus_nugget_iron"
   ]
 }
