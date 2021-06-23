@@ -981,6 +981,12 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_SHOVEL.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").build())
             .build(consumer);
+        ResearchEntryBuilder.entry("PRIMAL_FISHING_ROD", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_SEA").parent("RITUAL_BELL")
+            .parent("RITUAL_LECTERN")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_FISHING_ROD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").build())
+            .build(consumer);
         ResearchEntryBuilder.entry("PRIMAL_AXE", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_SKY").parent("RITUAL_BELL")
             .parent("INCENSE_BRAZIER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())

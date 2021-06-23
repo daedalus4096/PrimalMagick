@@ -1,0 +1,36 @@
+{
+  "key": "PRIMAL_FISHING_ROD",
+  "name": "primalmagic.research.primal_fishing_rod.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "EXPERT_RITUAL",
+    "PRIMALITE",
+    "SHARD_SYNTHESIS",
+    "MANA_SALTS",
+    "RUNE_SEA",
+    "RITUAL_BELL",
+    "RITUAL_LECTERN"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.primal_fishing_rod.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.primal_fishing_rod.text.stage.2",
+      "recipes": [
+        "primalmagic:primal_fishing_rod"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.primal_fishing_rod.text.addenda.1",
+      "required_research": [
+        "MASTER_RUNEWORKING"
+      ]
+    }
+  ]
+}

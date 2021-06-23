@@ -4923,6 +4923,18 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.EARTH, 40))
             .instability(3)
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_FISHING_ROD.get().getDefaultInstance())
+            .addIngredient(ItemsPM.PRIMALITE_FISHING_ROD.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get(), 2)
+            .addIngredient(ItemsPM.RUNE_SEA.get())
+            .addIngredient(ItemsPM.MANA_PRISM.get())
+            .addIngredient(ItemsPM.MANA_SALTS.get())
+            .addProp(BlocksPM.RITUAL_BELL.get())
+            .addProp(BlocksPM.RITUAL_LECTERN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_FISHING_ROD")))
+            .manaCost(new SourceList().add(Source.SEA, 40))
+            .instability(3)
+            .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_AXE.get().getDefaultInstance())
             .addIngredient(ItemsPM.PRIMALITE_AXE.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get(), 2)
