@@ -4947,5 +4947,17 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SKY, 40))
             .instability(3)
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_PICKAXE.get().getDefaultInstance())
+            .addIngredient(ItemsPM.PRIMALITE_PICKAXE.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get(), 2)
+            .addIngredient(ItemsPM.RUNE_MOON.get())
+            .addIngredient(ItemsPM.MANA_PRISM.get())
+            .addIngredient(ItemsPM.MANA_SALTS.get())
+            .addProp(BlocksPM.RITUAL_LECTERN.get())
+            .addProp(BlocksPM.INCENSE_BRAZIER.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_PICKAXE")))
+            .manaCost(new SourceList().add(Source.MOON, 40))
+            .instability(3)
+            .build(consumer);
     }
 }

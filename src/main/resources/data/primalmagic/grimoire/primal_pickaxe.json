@@ -1,0 +1,36 @@
+{
+  "key": "PRIMAL_PICKAXE",
+  "name": "primalmagic.research.primal_pickaxe.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "EXPERT_RITUAL",
+    "PRIMALITE",
+    "SHARD_SYNTHESIS",
+    "MANA_SALTS",
+    "RUNE_MOON",
+    "RITUAL_LECTERN",
+    "INCENSE_BRAZIER"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.primal_pickaxe.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.primal_pickaxe.text.stage.2",
+      "recipes": [
+        "primalmagic:primal_pickaxe"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.primal_pickaxe.text.addenda.1",
+      "required_research": [
+        "MASTER_RUNEWORKING"
+      ]
+    }
+  ]
+}
