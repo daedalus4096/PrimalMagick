@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.tools.TridentItemPM;
 
 import net.minecraft.client.Minecraft;
@@ -25,8 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.items.tools.TridentItemPM}
  */
 @OnlyIn(Dist.CLIENT)
-public class TridentISTER extends ItemStackTileEntityRenderer {
-    protected static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "primalite_trident"), "inventory");
+public abstract class AbstractTridentISTER extends ItemStackTileEntityRenderer {
     protected final TridentModel model = new TridentModel();
     
     @Override
@@ -39,17 +37,21 @@ public class TridentISTER extends ItemStackTileEntityRenderer {
                                 transformType == ItemCameraTransforms.TransformType.GROUND ||
                                 transformType == ItemCameraTransforms.TransformType.FIXED);
             if (render2d) {
-                IBakedModel bakedModel = mc.getModelManager().getModel(MRL).getBakedModel();
+                IBakedModel bakedModel = mc.getModelManager().getModel(this.getModelResourceLocation()).getBakedModel();
                 matrixStack.push();
                 itemRenderer.renderItem(stack, transformType, true, matrixStack, buffer, combinedLight, combinedOverlay, bakedModel);
                 matrixStack.pop();
             } else {
                 matrixStack.push();
                 matrixStack.scale(1.0F, -1.0F, -1.0F);
-                IVertexBuilder ivertexbuilder1 = ItemRenderer.getEntityGlintVertexBuilder(buffer, this.model.getRenderType(TridentModel.TEXTURE_LOCATION), false, stack.hasEffect());
+                IVertexBuilder ivertexbuilder1 = ItemRenderer.getEntityGlintVertexBuilder(buffer, this.model.getRenderType(this.getTextureLocation()), false, stack.hasEffect());
                 this.model.render(matrixStack, ivertexbuilder1, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
                 matrixStack.pop();
             }
         }
     }
+    
+    public abstract ModelResourceLocation getModelResourceLocation();
+    
+    public abstract ResourceLocation getTextureLocation();
 }

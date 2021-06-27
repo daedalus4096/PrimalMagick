@@ -2,5 +2,19 @@
     "parent": "item/generated",
     "textures": {
         "layer0": "primalmagic:item/hexium_trident"
-    }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "throwing": 0
+            },
+            "model": "primalmagic:item/hexium_trident_in_hand"
+        },
+        {
+            "predicate": {
+                "throwing": 1
+            },
+            "model": "primalmagic:item/hexium_trident_throwing"
+        }
+    ]
 }
