@@ -190,6 +190,13 @@ public class ClientProxy implements IProxyPM {
             ItemModelsProperties.registerProperty(ItemsPM.HEXIUM_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
             ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
             ItemModelsProperties.registerProperty(ItemsPM.PRIMAL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
+            
+            IItemPropertyGetter handActiveProperty = (ItemStack stack, ClientWorld world, LivingEntity entity) -> {
+                return entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F;
+            };
+            ItemModelsProperties.registerProperty(ItemsPM.PRIMALITE_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.HEXIUM_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
     	});
     }
     
