@@ -37,6 +37,9 @@ import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AlchemicalBombEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.HallowsteelTridentEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.HexiumTridentEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.PrimaliteTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
@@ -97,6 +100,24 @@ public class EntityTypesPM {
             .updateInterval(10)
             .setCustomClientFactory((spawnEntity, world) -> new AlchemicalBombEntity(EntityTypesPM.ALCHEMICAL_BOMB.get(), world))
             .build(PrimalMagic.MODID + ":alchemical_bomb"));
+    public static final RegistryObject<EntityType<PrimaliteTridentEntity>> PRIMALITE_TRIDENT = ENTITY_TYPES.register("primalite_trident", () -> EntityType.Builder.<PrimaliteTridentEntity>create(PrimaliteTridentEntity::new, EntityClassification.MISC)
+            .size(0.5F, 0.5F)
+            .trackingRange(4)
+            .updateInterval(20)
+            .setCustomClientFactory((spawnEntity, world) -> new PrimaliteTridentEntity(EntityTypesPM.PRIMALITE_TRIDENT.get(), world))
+            .build(PrimalMagic.MODID + ":primalite_trident"));
+    public static final RegistryObject<EntityType<HexiumTridentEntity>> HEXIUM_TRIDENT = ENTITY_TYPES.register("hexium_trident", () -> EntityType.Builder.<HexiumTridentEntity>create(HexiumTridentEntity::new, EntityClassification.MISC)
+            .size(0.5F, 0.5F)
+            .trackingRange(4)
+            .updateInterval(20)
+            .setCustomClientFactory((spawnEntity, world) -> new HexiumTridentEntity(EntityTypesPM.HEXIUM_TRIDENT.get(), world))
+            .build(PrimalMagic.MODID + ":hexium_trident"));
+    public static final RegistryObject<EntityType<HallowsteelTridentEntity>> HALLOWSTEEL_TRIDENT = ENTITY_TYPES.register("hallowsteel_trident", () -> EntityType.Builder.<HallowsteelTridentEntity>create(HallowsteelTridentEntity::new, EntityClassification.MISC)
+            .size(0.5F, 0.5F)
+            .trackingRange(4)
+            .updateInterval(20)
+            .setCustomClientFactory((spawnEntity, world) -> new HallowsteelTridentEntity(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), world))
+            .build(PrimalMagic.MODID + ":hallowsteel_trident"));
     public static final RegistryObject<EntityType<TreefolkEntity>> TREEFOLK = ENTITY_TYPES.register("treefolk", () -> EntityType.Builder.<TreefolkEntity>create(TreefolkEntity::new, EntityClassification.CREATURE)
             .size(0.6F, 1.95F)
             .trackingRange(8)

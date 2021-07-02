@@ -22,10 +22,13 @@ import com.verdantartifice.primalmagic.client.renderers.entity.BasicPixieRendere
 import com.verdantartifice.primalmagic.client.renderers.entity.FlyingCarpetRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.GrandPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelGolemRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelTridentRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HexiumGolemRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.HexiumTridentRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.InnerDemonRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.MajesticPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteGolemRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteTridentRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SinCrashRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SinCrystalRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellMineRenderer;
@@ -133,6 +136,9 @@ public class ClientProxy implements IProxyPM {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.ALCHEMICAL_BOMB.get(), (renderManager) -> {
             return new SpriteRenderer<>(renderManager, event.getMinecraftSupplier().get().getItemRenderer());
         });
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.FLYING_CARPET.get(), FlyingCarpetRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.INNER_DEMON.get(), InnerDemonRenderer::new);
