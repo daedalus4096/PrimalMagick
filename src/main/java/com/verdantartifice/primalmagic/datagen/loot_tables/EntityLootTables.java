@@ -116,6 +116,9 @@ public class EntityLootTables implements IDataProvider {
         this.registerEmptyLootTable(EntityTypesPM.SPELL_PROJECTILE.get());
         this.registerEmptyLootTable(EntityTypesPM.APPLE.get());
         this.registerEmptyLootTable(EntityTypesPM.ALCHEMICAL_BOMB.get());
+        this.registerEmptyLootTable(EntityTypesPM.PRIMALITE_TRIDENT.get());
+        this.registerEmptyLootTable(EntityTypesPM.HEXIUM_TRIDENT.get());
+        this.registerEmptyLootTable(EntityTypesPM.HALLOWSTEEL_TRIDENT.get());
         this.registerEmptyLootTable(EntityTypesPM.SIN_CRASH.get());
         this.registerEmptyLootTable(EntityTypesPM.SIN_CRYSTAL.get());
         this.registerEmptyLootTable(EntityTypesPM.FLYING_CARPET.get());
