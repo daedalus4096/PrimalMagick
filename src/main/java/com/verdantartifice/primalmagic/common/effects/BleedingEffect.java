@@ -19,12 +19,11 @@ public class BleedingEffect extends Effect {
 
     @Override
     public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-        entityLivingBaseIn.attackEntityFrom(DamageSourcesPM.BLEEDING, 1.0F);
+        entityLivingBaseIn.attackEntityFrom(DamageSourcesPM.BLEEDING, (float)(1 << Math.max(0, amplifier)));
     }
     
     @Override
     public boolean isReady(int duration, int amplifier) {
-        int ticks = 40 >> amplifier;
-        return (ticks > 0) ? (duration % ticks == 0) : true;
+        return (duration % 40 == 0);
     }
 }
