@@ -12,7 +12,7 @@ import net.minecraft.inventory.EquipmentSlotType;
  */
 public class LuckyStrikeEnchantment extends AbstractRuneEnchantment {
     public LuckyStrikeEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
-        super(rarity, EnchantmentType.FISHING_ROD, slots);
+        super(rarity, EnchantmentType.DIGGER, slots);
     }
 
     @Override
