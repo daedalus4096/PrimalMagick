@@ -147,7 +147,6 @@ public abstract class AbstractTridentEntity extends AbstractArrowEntity {
                 if (shooter instanceof LivingEntity) {
                     EnchantmentHelper.applyThornEnchantments(livingEntity, shooter);
                     EnchantmentHelper.applyArthropodEnchantments((LivingEntity)shooter, livingEntity);
-                    // TODO Apply Rending enchantment
                 }
                 this.arrowHit(livingEntity);
             }
