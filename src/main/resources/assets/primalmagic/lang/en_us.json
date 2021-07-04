@@ -1461,6 +1461,11 @@
     "primalmagic.research.primal_pickaxe.text.stage.2": "Ritually aligning a primalite pickaxe to the Moon has created a very efficient mining tool.<BR>When used to dig up certain valuable minerals, the magic of the pickaxe has a very good chance of yielding bonus nuggets of that same type of ore.<BR>The pickaxe doesn't seem to want to take on any other enchantments, though.  Maybe I'll find a way around that in the future.",
     "primalmagic.research.primal_pickaxe.text.addenda.1": "I've learned how to recreate this pickaxe's special properties using a rune enchantment.  By combining Summon, Item, and Moon runes, I can apply this enchantment to any digging tool to find bonus mineral nuggets.",
     
+    "primalmagic.research.forbidden_trident.title": "Forbidden Trident",
+    "primalmagic.research.forbidden_trident.text.stage.1": "I believe that I can increase the might of my weapons by ritually aligning them with a primal source.  Virtually any weapon could conceivably by aligned with the Blood, but I think I'm going to go with a trident.  Blood flows like water, after all.",
+    "primalmagic.research.forbidden_trident.text.stage.2": "Ritually aligning a hexium trident to the Blood has yielded an exceedingly deadly polearm.<BR>Creatures struck with it will be unable to stop bleeding for a few seconds, and the intensity of the blood loss will increase with subsequent strikes.<BR>The trident doesn't seem to want to take on any other enchantments, though.  Maybe I'll find a way around that in the future.",
+    "primalmagic.research.forbidden_trident.text.addenda.1": "I've learned how to recreate this trident's special properties using a rune enchantment.  By combining the Project, Creature, and Blood runes, I can apply this enchantment to any trident, sword, or axe to let it rend and tear at my foes' flesh.",
+    
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "I think I'm starting to get the hang of Magitech.  The devices are just like normal machines, except they run on mana instead of redstone.<BR>I've drawn up schematics for set of simple, replaceable parts that I can use when designing enchanted machinery.  No doubt more advanced devices will need something more intricate, but it's a start!",
     

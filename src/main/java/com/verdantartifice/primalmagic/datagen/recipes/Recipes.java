@@ -4983,5 +4983,16 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.MOON, 40))
             .instability(3)
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_TRIDENT.get().getDefaultInstance())
+            .addIngredient(ItemsPM.HEXIUM_TRIDENT.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get(), 2)
+            .addIngredient(ItemsPM.RUNE_BLOOD.get())
+            .addIngredient(ItemsPM.MANA_PRISM.get())
+            .addIngredient(ItemsPM.MANA_SALTS.get())
+            .addProp(BlocksPM.BLOODLETTER.get(), 2)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_TRIDENT")))
+            .manaCost(new SourceList().add(Source.BLOOD, 40))
+            .instability(3)
+            .build(consumer);
     }
 }
