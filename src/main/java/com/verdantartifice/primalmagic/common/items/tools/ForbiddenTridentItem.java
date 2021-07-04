@@ -18,7 +18,7 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public class ForbiddenTridentItem extends AbstractTridentItem {
+public class ForbiddenTridentItem extends AbstractTieredTridentItem {
     public ForbiddenTridentItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);
     }

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.verdantartifice.primalmagic.common.items.tools.AbstractTridentItem;
+import com.verdantartifice.primalmagic.common.items.tools.AbstractTieredTridentItem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -21,15 +21,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * Custom item stack renderer for magical metal tridents.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagic.common.items.tools.AbstractTridentItem}
+ * @see {@link com.verdantartifice.primalmagic.common.items.tools.AbstractTieredTridentItem}
  */
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractTridentISTER extends ItemStackTileEntityRenderer {
+public abstract class AbstractTieredTridentISTER extends ItemStackTileEntityRenderer {
     protected final TridentModel model = new TridentModel();
     
     @Override
     public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        if (stack.getItem() instanceof AbstractTridentItem) {
+        if (stack.getItem() instanceof AbstractTieredTridentItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             

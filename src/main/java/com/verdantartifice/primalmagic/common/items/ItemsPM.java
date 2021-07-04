@@ -39,7 +39,7 @@ import com.verdantartifice.primalmagic.common.items.tools.PrimalFishingRodItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalPickaxeItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalShovelItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimaliteTridentItem;
-import com.verdantartifice.primalmagic.common.items.tools.AbstractTridentItem;
+import com.verdantartifice.primalmagic.common.items.tools.AbstractTieredTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.HallowsteelTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.HexiumTridentItem;
@@ -319,21 +319,21 @@ public class ItemsPM {
     
     // Register tool items
     public static final RegistryObject<SwordItem> PRIMALITE_SWORD = ITEMS.register("primalite_sword", () -> new SwordItem(ItemTierPM.PRIMALITE, 3, -2.4F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<AbstractTridentItem> PRIMALITE_TRIDENT = ITEMS.register("primalite_trident", () -> new PrimaliteTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).setISTER(() -> PrimaliteTridentISTER::new)));
+    public static final RegistryObject<AbstractTieredTridentItem> PRIMALITE_TRIDENT = ITEMS.register("primalite_trident", () -> new PrimaliteTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).setISTER(() -> PrimaliteTridentISTER::new)));
     public static final RegistryObject<ShovelItem> PRIMALITE_SHOVEL = ITEMS.register("primalite_shovel", () -> new ShovelItem(ItemTierPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PickaxeItem> PRIMALITE_PICKAXE = ITEMS.register("primalite_pickaxe", () -> new PickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<AxeItem> PRIMALITE_AXE = ITEMS.register("primalite_axe", () -> new AxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<HoeItem> PRIMALITE_HOE = ITEMS.register("primalite_hoe", () -> new HoeItem(ItemTierPM.PRIMALITE, -2, 0.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<FishingRodItem> PRIMALITE_FISHING_ROD = ITEMS.register("primalite_fishing_rod", () -> new FishingRodItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxDamage(128).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<SwordItem> HEXIUM_SWORD = ITEMS.register("hexium_sword", () -> new SwordItem(ItemTierPM.HEXIUM, 3, -2.4F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
-    public static final RegistryObject<AbstractTridentItem> HEXIUM_TRIDENT = ITEMS.register("hexium_trident", () -> new HexiumTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE).setISTER(() -> HexiumTridentISTER::new)));
+    public static final RegistryObject<AbstractTieredTridentItem> HEXIUM_TRIDENT = ITEMS.register("hexium_trident", () -> new HexiumTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE).setISTER(() -> HexiumTridentISTER::new)));
     public static final RegistryObject<ShovelItem> HEXIUM_SHOVEL = ITEMS.register("hexium_shovel", () -> new ShovelItem(ItemTierPM.HEXIUM, 1.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<PickaxeItem> HEXIUM_PICKAXE = ITEMS.register("hexium_pickaxe", () -> new PickaxeItem(ItemTierPM.HEXIUM, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<AxeItem> HEXIUM_AXE = ITEMS.register("hexium_axe", () -> new AxeItem(ItemTierPM.HEXIUM, 4.0F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<HoeItem> HEXIUM_HOE = ITEMS.register("hexium_hoe", () -> new HoeItem(ItemTierPM.HEXIUM, -4, 0.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<FishingRodItem> HEXIUM_FISHING_ROD = ITEMS.register("hexium_fishing_rod", () -> new FishingRodItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxDamage(256).rarity(Rarity.RARE)));
     public static final RegistryObject<SwordItem> HALLOWSTEEL_SWORD = ITEMS.register("hallowsteel_sword", () -> new SwordItem(ItemTierPM.HALLOWSTEEL, 3, -2.4F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
-    public static final RegistryObject<AbstractTridentItem> HALLOWSTEEL_TRIDENT = ITEMS.register("hallowsteel_trident", () -> new HallowsteelTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC).setISTER(() -> HallowsteelTridentISTER::new)));
+    public static final RegistryObject<AbstractTieredTridentItem> HALLOWSTEEL_TRIDENT = ITEMS.register("hallowsteel_trident", () -> new HallowsteelTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC).setISTER(() -> HallowsteelTridentISTER::new)));
     public static final RegistryObject<ShovelItem> HALLOWSTEEL_SHOVEL = ITEMS.register("hallowsteel_shovel", () -> new ShovelItem(ItemTierPM.HALLOWSTEEL, 1.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<PickaxeItem> HALLOWSTEEL_PICKAXE = ITEMS.register("hallowsteel_pickaxe", () -> new PickaxeItem(ItemTierPM.HALLOWSTEEL, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<AxeItem> HALLOWSTEEL_AXE = ITEMS.register("hallowsteel_axe", () -> new AxeItem(ItemTierPM.HALLOWSTEEL, 3.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
@@ -343,7 +343,7 @@ public class ItemsPM {
     public static final RegistryObject<PrimalFishingRodItem> PRIMAL_FISHING_ROD = ITEMS.register("primal_fishing_rod", () -> new PrimalFishingRodItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxDamage(128).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimalAxeItem> PRIMAL_AXE = ITEMS.register("primal_axe", () -> new PrimalAxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimalPickaxeItem> PRIMAL_PICKAXE = ITEMS.register("primal_pickaxe", () -> new PrimalPickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<AbstractTridentItem> FORBIDDEN_TRIDENT = ITEMS.register("forbidden_trident", () -> new ForbiddenTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE).setISTER(() -> ForbiddenTridentISTER::new)));
+    public static final RegistryObject<AbstractTieredTridentItem> FORBIDDEN_TRIDENT = ITEMS.register("forbidden_trident", () -> new ForbiddenTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE).setISTER(() -> ForbiddenTridentISTER::new)));
     
     // Register armor items
     public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = ITEMS.register("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlotType.HEAD, 1, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));

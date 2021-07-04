@@ -31,11 +31,11 @@ import net.minecraft.world.World;
  *  
  * @author Daedalus4096
  */
-public abstract class AbstractTridentItem extends TridentItem {
+public abstract class AbstractTieredTridentItem extends TridentItem {
     protected final IItemTier tier;
     protected final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
-    public AbstractTridentItem(IItemTier tier, Item.Properties properties) {
+    public AbstractTieredTridentItem(IItemTier tier, Item.Properties properties) {
         super(properties.defaultMaxDamage(tier.getMaxUses()));
         this.tier = tier;
         Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();

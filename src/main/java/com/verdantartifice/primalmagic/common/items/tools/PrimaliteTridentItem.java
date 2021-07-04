@@ -13,7 +13,7 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public class PrimaliteTridentItem extends AbstractTridentItem {
+public class PrimaliteTridentItem extends AbstractTieredTridentItem {
     public PrimaliteTridentItem(Item.Properties properties) {
         super(ItemTierPM.PRIMALITE, properties);
     }

@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class HexiumTridentISTER extends AbstractTridentISTER {
+public class HexiumTridentISTER extends AbstractTieredTridentISTER {
     protected static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "hexium_trident"), "inventory");
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/trident/hexium_trident.png");
 

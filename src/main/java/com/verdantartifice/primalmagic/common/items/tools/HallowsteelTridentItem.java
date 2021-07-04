@@ -13,7 +13,7 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public class HallowsteelTridentItem extends AbstractTridentItem {
+public class HallowsteelTridentItem extends AbstractTieredTridentItem {
     public HallowsteelTridentItem(Item.Properties properties) {
         super(ItemTierPM.HALLOWSTEEL, properties);
     }

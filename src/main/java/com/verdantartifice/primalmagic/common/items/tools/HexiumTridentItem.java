@@ -13,7 +13,7 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public class HexiumTridentItem extends AbstractTridentItem {
+public class HexiumTridentItem extends AbstractTieredTridentItem {
     public HexiumTridentItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);
     }

@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class HallowsteelTridentISTER extends AbstractTridentISTER {
+public class HallowsteelTridentISTER extends AbstractTieredTridentISTER {
     protected static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "hallowsteel_trident"), "inventory");
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/trident/hallowsteel_trident.png");
 
