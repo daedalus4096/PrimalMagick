@@ -37,6 +37,7 @@ import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AlchemicalBombEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AppleEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.ForbiddenTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.HallowsteelTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.HexiumTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.PrimaliteTridentEntity;
@@ -118,6 +119,12 @@ public class EntityTypesPM {
             .updateInterval(20)
             .setCustomClientFactory((spawnEntity, world) -> new HallowsteelTridentEntity(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), world))
             .build(PrimalMagic.MODID + ":hallowsteel_trident"));
+    public static final RegistryObject<EntityType<ForbiddenTridentEntity>> FORBIDDEN_TRIDENT = ENTITY_TYPES.register("forbidden_trident", () -> EntityType.Builder.<ForbiddenTridentEntity>create(ForbiddenTridentEntity::new, EntityClassification.MISC)
+            .size(0.5F, 0.5F)
+            .trackingRange(4)
+            .updateInterval(20)
+            .setCustomClientFactory((spawnEntity, world) -> new ForbiddenTridentEntity(EntityTypesPM.FORBIDDEN_TRIDENT.get(), world))
+            .build(PrimalMagic.MODID + ":forbidden_trident"));
     public static final RegistryObject<EntityType<TreefolkEntity>> TREEFOLK = ENTITY_TYPES.register("treefolk", () -> EntityType.Builder.<TreefolkEntity>create(TreefolkEntity::new, EntityClassification.CREATURE)
             .size(0.6F, 1.95F)
             .trackingRange(8)

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.items;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.AncientManaFontISTER;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ForbiddenTridentISTER;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.HallowsteelTridentISTER;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.HexiumTridentISTER;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularStaffISTER;
@@ -39,6 +40,7 @@ import com.verdantartifice.primalmagic.common.items.tools.PrimalPickaxeItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalShovelItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.AbstractTridentItem;
+import com.verdantartifice.primalmagic.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.HallowsteelTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.HexiumTridentItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem;
@@ -341,6 +343,7 @@ public class ItemsPM {
     public static final RegistryObject<PrimalFishingRodItem> PRIMAL_FISHING_ROD = ITEMS.register("primal_fishing_rod", () -> new PrimalFishingRodItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxDamage(128).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimalAxeItem> PRIMAL_AXE = ITEMS.register("primal_axe", () -> new PrimalAxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimalPickaxeItem> PRIMAL_PICKAXE = ITEMS.register("primal_pickaxe", () -> new PrimalPickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<AbstractTridentItem> FORBIDDEN_TRIDENT = ITEMS.register("forbidden_trident", () -> new ForbiddenTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE).setISTER(() -> ForbiddenTridentISTER::new)));
     
     // Register armor items
     public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = ITEMS.register("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlotType.HEAD, 1, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));

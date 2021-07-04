@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagic.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
 import com.verdantartifice.primalmagic.client.renderers.entity.BasicPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.FlyingCarpetRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.ForbiddenTridentRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.GrandPixieRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelTridentRenderer;
@@ -139,6 +140,7 @@ public class ClientProxy implements IProxyPM {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.FORBIDDEN_TRIDENT.get(), ForbiddenTridentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.FLYING_CARPET.get(), FlyingCarpetRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.INNER_DEMON.get(), InnerDemonRenderer::new);
@@ -203,6 +205,7 @@ public class ClientProxy implements IProxyPM {
             ItemModelsProperties.registerProperty(ItemsPM.PRIMALITE_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
             ItemModelsProperties.registerProperty(ItemsPM.HEXIUM_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
             ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.FORBIDDEN_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
     	});
     }
     
