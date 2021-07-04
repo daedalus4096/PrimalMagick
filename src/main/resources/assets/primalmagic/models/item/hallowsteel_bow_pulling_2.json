@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagic:item/hallowsteel_bow",
+    "textures": {
+        "layer0": "primalmagic:item/hallowsteel_bow_pulling_2"
+    }
+}

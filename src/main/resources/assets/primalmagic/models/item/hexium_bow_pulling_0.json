@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagic:item/hexium_bow",
+    "textures": {
+        "layer0": "primalmagic:item/hexium_bow_pulling_0"
+    }
+}
