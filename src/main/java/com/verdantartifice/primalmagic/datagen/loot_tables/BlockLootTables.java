@@ -86,6 +86,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerEmptyTable(BlocksPM.ANCIENT_FONT_SUN.get());
         this.registerEmptyTable(BlocksPM.ANCIENT_FONT_MOON.get());
         this.registerEmptyTable(BlocksPM.GLOW_FIELD.get());
+        this.registerEmptyTable(BlocksPM.SOUL_GLOW_FIELD.get());
         this.registerEmptyTable(BlocksPM.CONSECRATION_FIELD.get());
         this.registerEmptyTable(BlocksPM.PYRAMID.get());
     }
