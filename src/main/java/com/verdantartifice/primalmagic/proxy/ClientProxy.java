@@ -220,6 +220,8 @@ public class ClientProxy implements IProxyPM {
             ItemModelsProperties.registerProperty(ItemsPM.HEXIUM_BOW.get(), new ResourceLocation("pulling"), handActiveProperty);
             ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_BOW.get(), new ResourceLocation("pull"), pullProperty);
             ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_BOW.get(), new ResourceLocation("pulling"), handActiveProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.FORBIDDEN_BOW.get(), new ResourceLocation("pull"), pullProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.FORBIDDEN_BOW.get(), new ResourceLocation("pulling"), handActiveProperty);
     	});
     }
     
