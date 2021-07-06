@@ -1,0 +1,36 @@
+{
+  "key": "FORBIDDEN_BOW",
+  "name": "primalmagic.research.forbidden_bow.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "t_discover_infernal",
+    "MASTER_RITUAL",
+    "HEXIUM",
+    "SHARD_SYNTHESIS",
+    "MANA_SALTS",
+    "RUNE_INFERNAL",
+    "SOUL_ANVIL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.forbidden_bow.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagic.research.forbidden_bow.text.stage.2",
+      "recipes": [
+        "primalmagic:forbidden_bow"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.forbidden_bow.text.addenda.1",
+      "required_research": [
+        "MASTER_RUNEWORKING"
+      ]
+    }
+  ]
+}

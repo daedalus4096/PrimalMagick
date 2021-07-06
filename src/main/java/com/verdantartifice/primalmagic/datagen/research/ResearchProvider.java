@@ -1006,6 +1006,12 @@ public class ResearchProvider implements IDataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_TRIDENT.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").build())
             .build(consumer);
+        ResearchEntryBuilder.entry("FORBIDDEN_BOW", discipline).parent(Source.INFERNAL.getDiscoverKey()).parent("MASTER_RITUAL").parent("HEXIUM").parent("SHARD_SYNTHESIS").parent("MANA_SALTS")
+            .parent("RUNE_INFERNAL").parent("SOUL_ANVIL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_BOW.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
