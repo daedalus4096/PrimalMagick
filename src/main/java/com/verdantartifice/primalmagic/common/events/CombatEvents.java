@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.misc.DamageSourcesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
@@ -20,7 +21,10 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -29,7 +33,10 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -182,6 +189,31 @@ public class CombatEvents {
             int slivers = MathHelper.floor(MathHelper.frac(gems) * 10.0F);
             InventoryHelper.spawnItemStack(entity.getEntityWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), new ItemStack(ItemsPM.SOUL_GEM.get(), wholeGems));
             InventoryHelper.spawnItemStack(entity.getEntityWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), slivers));
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
+        RayTraceResult rayTraceResult = event.getRayTraceResult();
+        if (rayTraceResult.getType() == RayTraceResult.Type.ENTITY) {
+            Entity targetEntity = ((EntityRayTraceResult)rayTraceResult).getEntity();
+            if (targetEntity instanceof LivingEntity) {
+                LivingEntity target = (LivingEntity)targetEntity;
+                Entity shooterEntity = event.getArrow().getShooter();
+                if (shooterEntity instanceof LivingEntity) {
+                    LivingEntity shooter = (LivingEntity)shooterEntity;
+                    
+                    // If the target can have its soul pierced, spawn some soul slivers
+                    int soulpiercingLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.SOULPIERCING.get(), shooter.getHeldItemMainhand());
+                    if (soulpiercingLevel > 0) {
+                        EffectInstance soulpiercedInstance = new EffectInstance(EffectsPM.SOULPIERCED.get(), 12000, 0, false, false);
+                        if (target.isPotionApplicable(soulpiercedInstance) && !target.isPotionActive(soulpiercedInstance.getPotion())) {
+                            InventoryHelper.spawnItemStack(target.world, target.getPosX(), target.getPosY(), target.getPosZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), soulpiercingLevel));
+                            target.addPotionEffect(soulpiercedInstance);
+                        }
+                    }
+                }
+            }
         }
     }
     

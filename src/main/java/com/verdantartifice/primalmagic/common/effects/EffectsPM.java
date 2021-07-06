@@ -30,4 +30,5 @@ public class EffectsPM {
     public static final RegistryObject<Effect> DRAIN_SOUL = EFFECTS.register("drain_soul", () -> new EffectPM(EffectType.HARMFUL, Source.INFERNAL.getColor()));
     public static final RegistryObject<Effect> MANA_IMPEDANCE = EFFECTS.register("mana_impedance", () -> new EffectPM(EffectType.HARMFUL, 0x808080));
     public static final RegistryObject<Effect> ENDERLOCK = EFFECTS.register("enderlock", () -> new EffectPM(EffectType.HARMFUL, Source.VOID.getColor()));
+    public static final RegistryObject<Effect> SOULPIERCED = EFFECTS.register("soulpierced", () -> new EffectPM(EffectType.NEUTRAL, 0x808080));
 }
