@@ -44,7 +44,7 @@ public class HoneyExtractorBlock extends Block {
     protected static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
     public HoneyExtractorBlock() {
-        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
+        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD).notSolid());
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
     
