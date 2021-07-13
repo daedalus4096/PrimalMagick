@@ -9,7 +9,7 @@ version="${file.jarVersion}"
 displayName="Primal Magic"
 #updateJSONURL=""
 #displayURL=""
-credits=""
+credits="Thanks to Lorelli, Quinloki, and DaRetroThaumaturge for the art!"
 authors="Daedalus4096"
 description='''Harness the magic of the primal sources of the land.'''
 
