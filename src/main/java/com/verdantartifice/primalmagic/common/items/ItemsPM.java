@@ -42,6 +42,7 @@ import com.verdantartifice.primalmagic.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.TieredBowItem;
 import com.verdantartifice.primalmagic.common.items.tools.AbstractTieredTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.ForbiddenBowItem;
+import com.verdantartifice.primalmagic.common.items.tools.ForbiddenSwordItem;
 import com.verdantartifice.primalmagic.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.HallowsteelTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.HexiumTridentItem;
@@ -350,6 +351,7 @@ public class ItemsPM {
     public static final RegistryObject<PrimalPickaxeItem> PRIMAL_PICKAXE = ITEMS.register("primal_pickaxe", () -> new PrimalPickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<AbstractTieredTridentItem> FORBIDDEN_TRIDENT = ITEMS.register("forbidden_trident", () -> new ForbiddenTridentItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE).setISTER(() -> ForbiddenTridentISTER::new)));
     public static final RegistryObject<ForbiddenBowItem> FORBIDDEN_BOW = ITEMS.register("forbidden_bow", () -> new ForbiddenBowItem(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<ForbiddenSwordItem> FORBIDDEN_SWORD = ITEMS.register("forbidden_sword", () -> new ForbiddenSwordItem(ItemTierPM.HEXIUM, 3, -2.4F, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     
     // Register armor items
     public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = ITEMS.register("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlotType.HEAD, 1, new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));
