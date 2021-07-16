@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagic.common.blocks.crafting;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.WandInscriptionTableContainer;
-import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,12 +20,12 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -41,18 +39,17 @@ import net.minecraftforge.fml.network.NetworkHooks;
  * @author Daedalus4096
  */
 public class WandInscriptionTableBlock extends Block {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/wand_inscription_table"));
-
     protected static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
     public WandInscriptionTableBlock() {
-        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD));
+        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.WOOD).notSolid());
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
     
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
+        // TODO Assemble more detailed shape for base table
+        return VoxelShapes.fullCube();
     }
     
     @Override
