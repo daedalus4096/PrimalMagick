@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
@@ -12,6 +13,8 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.misc.DamageSourcesPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
@@ -19,7 +22,9 @@ import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
+import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -188,6 +193,24 @@ public class CombatEvents {
             int slivers = MathHelper.floor(MathHelper.frac(gems) * 10.0F);
             InventoryHelper.spawnItemStack(entity.getEntityWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), new ItemStack(ItemsPM.SOUL_GEM.get(), wholeGems));
             InventoryHelper.spawnItemStack(entity.getEntityWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), slivers));
+        }
+        
+        // If the entity is afflicted with Stolen Essence, drop a sample of its essence
+        if (entity.isPotionActive(EffectsPM.STOLEN_ESSENCE.get()) && !event.isCanceled()) {
+            EffectInstance instance = entity.getActivePotionEffect(EffectsPM.STOLEN_ESSENCE.get());
+            SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
+            if (!affinities.isEmpty()) {
+                WeightedRandomBag<Source> bag = new WeightedRandomBag<>();
+                for (Source source : affinities.getSources()) {
+                    int amount = affinities.getAmount(source);
+                    if (amount > 0) {
+                        bag.add(source, amount);
+                    }
+                }
+                for (int index = 0; index < instance.getAmplifier() + 1; index++) {
+                    InventoryHelper.spawnItemStack(entity.getEntityWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), EssenceItem.getEssence(EssenceType.DUST, bag.getRandom(entity.getRNG())));
+                }
+            }
         }
     }
     

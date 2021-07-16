@@ -31,4 +31,5 @@ public class EffectsPM {
     public static final RegistryObject<Effect> MANA_IMPEDANCE = EFFECTS.register("mana_impedance", () -> new EffectPM(EffectType.HARMFUL, 0x808080));
     public static final RegistryObject<Effect> ENDERLOCK = EFFECTS.register("enderlock", () -> new EffectPM(EffectType.HARMFUL, Source.VOID.getColor()));
     public static final RegistryObject<Effect> SOULPIERCED = EFFECTS.register("soulpierced", () -> new EffectPM(EffectType.NEUTRAL, 0x808080));
+    public static final RegistryObject<Effect> STOLEN_ESSENCE = EFFECTS.register("stolen_essence", () -> new EffectPM(EffectType.HARMFUL, Source.VOID.getColor()));
 }
