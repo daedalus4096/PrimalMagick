@@ -5029,5 +5029,17 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.INFERNAL, 40))
             .instability(3)
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_SWORD.get().getDefaultInstance())
+            .addIngredient(ItemsPM.HEXIUM_SWORD.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get(), 2)
+            .addIngredient(ItemsPM.RUNE_VOID.get())
+            .addIngredient(ItemsPM.MANA_PRISM.get())
+            .addIngredient(ItemsPM.MANA_SALTS.get())
+            .addProp(BlocksPM.BLOODLETTER.get())
+            .addProp(BlocksPM.SOUL_ANVIL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_SWORD")))
+            .manaCost(new SourceList().add(Source.VOID, 40))
+            .instability(3)
+            .build(consumer);
     }
 }

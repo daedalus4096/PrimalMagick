@@ -1,0 +1,40 @@
+{
+  "type": "primalmagic:ritual",
+  "research": "FORBIDDEN_SWORD",
+  "mana": {
+    "void": 40
+  },
+  "instability": 3,
+  "ingredients": [
+    {
+      "item": "primalmagic:hexium_sword"
+    },
+    {
+      "item": "primalmagic:essence_shard_void"
+    },
+    {
+      "item": "primalmagic:essence_shard_void"
+    },
+    {
+      "item": "primalmagic:rune_void"
+    },
+    {
+      "item": "primalmagic:mana_prism"
+    },
+    {
+      "item": "primalmagic:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagic:bloodletter"
+    },
+    {
+      "block": "primalmagic:soul_anvil"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:forbidden_sword",
+    "nbt": "{Damage:0,Enchantments:[{lvl:2s,id:\"primalmagic:essence_thief\"}]}"
+  }
+}
