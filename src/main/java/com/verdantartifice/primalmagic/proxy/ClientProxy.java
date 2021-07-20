@@ -206,6 +206,9 @@ public class ClientProxy implements IProxyPM {
             ItemModelsProperties.registerProperty(ItemsPM.HEXIUM_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
             ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
             ItemModelsProperties.registerProperty(ItemsPM.FORBIDDEN_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.PRIMALITE_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.HEXIUM_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
+            ItemModelsProperties.registerProperty(ItemsPM.HALLOWSTEEL_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
             
             IItemPropertyGetter pullProperty = (ItemStack stack, ClientWorld world, LivingEntity entity) -> {
                 if (entity == null) {
