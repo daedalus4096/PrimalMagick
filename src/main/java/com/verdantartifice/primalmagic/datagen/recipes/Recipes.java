@@ -465,6 +465,8 @@ public class Recipes extends RecipeProvider {
             .build(consumer, PrimalMagic.MODID + ":spellcrafting");
         CustomRecipeBuilder.customRecipe(RecipeSerializersPM.FLYING_CARPET_DYE.get())
             .build(consumer, PrimalMagic.MODID + ":flying_carpet_dye");
+        CustomRecipeBuilder.customRecipe(RecipeSerializersPM.TIERED_SHIELD_DECORATION.get())
+            .build(consumer, PrimalMagic.MODID + ":tiered_shield_decoration");
     }
 
     protected void registerMarbleRecipes(Consumer<IFinishedRecipe> consumer) {

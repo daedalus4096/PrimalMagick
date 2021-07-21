@@ -30,4 +30,5 @@ public class RecipeSerializersPM {
     public static final RegistryObject<SpecialRecipeSerializer<SpellcraftingRecipe>> SPELLCRAFTING_SPECIAL = RECIPE_SERIALIZERS.register("spellcrafting_special", () -> new SpecialRecipeSerializer<>(SpellcraftingRecipe::new));
     public static final RegistryObject<IRecipeSerializer<RunecarvingRecipe>> RUNECARVING = RECIPE_SERIALIZERS.register("runecarving", RunecarvingRecipe.Serializer::new);
     public static final RegistryObject<IRecipeSerializer<ConcoctingRecipe>> CONCOCTING = RECIPE_SERIALIZERS.register("concocting", ConcoctingRecipe.Serializer::new);
+    public static final RegistryObject<SpecialRecipeSerializer<TieredShieldDecorationRecipe>> TIERED_SHIELD_DECORATION = RECIPE_SERIALIZERS.register("tiered_shield_decoration", () -> new SpecialRecipeSerializer<>(TieredShieldDecorationRecipe::new));
 }
