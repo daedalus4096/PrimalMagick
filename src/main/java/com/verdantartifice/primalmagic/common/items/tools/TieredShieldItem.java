@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.items.tools;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,5 +31,10 @@ public class TieredShieldItem extends ShieldItem {
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
         return this.tier.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+    }
+
+    @Override
+    public boolean isShield(ItemStack stack, LivingEntity entity) {
+        return true;
     }
 }
