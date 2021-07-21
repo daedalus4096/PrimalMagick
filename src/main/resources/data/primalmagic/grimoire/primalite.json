@@ -41,7 +41,8 @@
         "primalmagic:primalite_head",
         "primalmagic:primalite_chest",
         "primalmagic:primalite_legs",
-        "primalmagic:primalite_feet"
+        "primalmagic:primalite_feet",
+        "primalmagic:primalite_shield"
       ]
     }
   ],

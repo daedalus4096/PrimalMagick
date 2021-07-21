@@ -1734,6 +1734,14 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_SHIELD.get())
+            .patternLine("PIP")
+            .patternLine("PPP")
+            .patternLine(" P ")
+            .key('P', ItemTags.PLANKS)
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .build(consumer);
     }
     
     protected void registerHexiumRecipes(Consumer<IFinishedRecipe> consumer) {
@@ -1856,6 +1864,14 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_SHIELD.get())
+            .patternLine("PIP")
+            .patternLine("PPP")
+            .patternLine(" P ")
+            .key('P', ItemTags.PLANKS)
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .build(consumer);
     }
     
     protected void registerHallowsteelRecipes(Consumer<IFinishedRecipe> consumer) {
@@ -1973,6 +1989,14 @@ public class Recipes extends RecipeProvider {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_FEET.get())
             .patternLine("I I")
             .patternLine("I I")
+            .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_SHIELD.get())
+            .patternLine("PIP")
+            .patternLine("PPP")
+            .patternLine(" P ")
+            .key('P', ItemTags.PLANKS)
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
             .build(consumer);

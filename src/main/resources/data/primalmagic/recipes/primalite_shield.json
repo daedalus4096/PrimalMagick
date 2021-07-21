@@ -1,0 +1,20 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "PRIMALITE",
+  "pattern": [
+    "PIP",
+    "PPP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "I": {
+      "tag": "primalmagic:ingots/primalite"
+    }
+  },
+  "result": {
+    "item": "primalmagic:primalite_shield"
+  }
+}
