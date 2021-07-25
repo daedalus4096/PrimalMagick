@@ -6,7 +6,6 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -75,15 +74,5 @@ public class Config {
         loadConfig(Config.COMMON_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagic-common.toml"));
         loadConfig(Config.CLIENT_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagic-client.toml"));
         IS_REGISTERED = true;
-    }
-    
-    @SubscribeEvent
-    public static void onLoad(final ModConfig.Loading event) {
-        // Perform load-time operations here
-    }
-    
-    @SubscribeEvent
-    public static void onReload(final ModConfig.Reloading event) {
-        // Perform reload-time operations here
     }
 }

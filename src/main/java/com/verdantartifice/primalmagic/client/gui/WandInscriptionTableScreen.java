@@ -33,7 +33,7 @@ public class WandInscriptionTableScreen extends AbstractContainerScreen<WandInsc
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

@@ -51,7 +51,7 @@ public class HoneyExtractorScreen extends AbstractContainerScreen<HoneyExtractor
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
         // Render background texture
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // Animate spin progress indicator

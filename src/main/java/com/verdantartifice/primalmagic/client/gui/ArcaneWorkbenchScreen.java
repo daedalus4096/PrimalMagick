@@ -42,7 +42,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
     
@@ -60,8 +60,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     }
 
     protected void initWidgets() {
-        this.buttons.clear();
-        this.children.clear();
+        this.clearWidgets();
         
         // Show mana cost widgets, if the active recipe has a mana cost
         IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
@@ -72,7 +71,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
                 int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
                 int y = this.topPos + 10;
                 for (Source source : manaCosts.getSourcesSorted()) {
-                    this.addButton(new ManaCostWidget(source, manaCosts.getAmount(source), x, y));
+                    this.addRenderableWidget(new ManaCostWidget(source, manaCosts.getAmount(source), x, y));
                     x += 18;
                 }
             }

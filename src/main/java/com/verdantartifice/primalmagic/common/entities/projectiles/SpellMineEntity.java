@@ -24,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Definition for a spell mine entity.  Sits in the world until another entity collides with it, at which point it executes a

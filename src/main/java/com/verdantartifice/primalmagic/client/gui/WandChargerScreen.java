@@ -34,7 +34,7 @@ public class WandChargerScreen extends AbstractContainerScreen<WandChargerContai
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // Animate charge progress indicator

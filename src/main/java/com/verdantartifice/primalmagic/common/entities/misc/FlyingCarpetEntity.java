@@ -30,7 +30,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Definition of a flying carpet entity, a vehicle that can be used by players to soar through the sky.
@@ -167,12 +167,12 @@ public class FlyingCarpetEntity extends Entity {
             double newX = this.getX() + ((this.lerpX - this.getX()) / (double)this.lerpSteps);
             double newY = this.getY() + ((this.lerpY - this.getY()) / (double)this.lerpSteps);
             double newZ = this.getZ() + ((this.lerpZ - this.getZ()) / (double)this.lerpSteps);
-            double deltaYaw = Mth.wrapDegrees(this.lerpYaw - (double)this.yRot);
-            this.yRot = (float)((double)this.yRot + (deltaYaw / (double)this.lerpSteps));
-            this.xRot = (float)((double)this.xRot + ((this.lerpPitch - (double)this.xRot) / (double)this.lerpSteps));
+            double deltaYaw = Mth.wrapDegrees(this.lerpYaw - (double)this.getYRot());
+            float yRot = (float)((double)this.getYRot() + (deltaYaw / (double)this.lerpSteps));
+            float xRot = (float)((double)this.getXRot() + ((this.lerpPitch - (double)this.getXRot()) / (double)this.lerpSteps));
             this.lerpSteps--;
             this.setPos(newX, newY, newZ);
-            this.setRot(this.yRot, this.xRot);
+            this.setRot(yRot, xRot);
         }
     }
     
@@ -184,8 +184,8 @@ public class FlyingCarpetEntity extends Entity {
     private void controlCarpet() {
         if (this.isVehicle()) {
             Entity pilot = this.getControllingPassenger();
-            this.yRotO = this.yRot;
-            this.yRot = pilot.yRot;
+            this.yRotO = this.getYRot();
+            this.setYRot(pilot.getYRot());
             
             float f = 0.0F;
             if (this.forwardInputDown) {
@@ -195,9 +195,9 @@ public class FlyingCarpetEntity extends Entity {
                 f -= 0.005F;
             }
             Vec3 newMotion = this.getDeltaMovement().add(
-                    (double)(Mth.sin(-this.yRot * (float)(Math.PI / 180.0D)) * f), 
-                    (double)(Mth.sin(-pilot.xRot * (float)(Math.PI / 180.0D)) * f), 
-                    (double)(Mth.cos(this.yRot * (float)(Math.PI / 180.0D)) * f));
+                    (double)(Mth.sin(-this.getYRot() * (float)(Math.PI / 180.0D)) * f), 
+                    (double)(Mth.sin(-pilot.getXRot() * (float)(Math.PI / 180.0D)) * f), 
+                    (double)(Mth.cos(this.getYRot() * (float)(Math.PI / 180.0D)) * f));
             this.setDeltaMovement(newMotion);
         }
     }
@@ -211,12 +211,12 @@ public class FlyingCarpetEntity extends Entity {
      * Applies this carpet's yaw to the given entity. Used to update the orientation of its passenger.
      */
     protected void applyYawToEntity(Entity entityToUpdate) {
-        entityToUpdate.setYBodyRot(this.yRot);
-        float f = Mth.wrapDegrees(entityToUpdate.yRot - this.yRot);
+        entityToUpdate.setYBodyRot(this.getYRot());
+        float f = Mth.wrapDegrees(entityToUpdate.getYRot() - this.getYRot());
         float f1 = Mth.clamp(f, -105.0F, 105.0F);
         entityToUpdate.yRotO += f1 - f;
-        entityToUpdate.yRot += f1 - f;
-        entityToUpdate.setYHeadRot(entityToUpdate.yRot);
+        entityToUpdate.setYRot(entityToUpdate.getYRot() + f1 - f);
+        entityToUpdate.setYHeadRot(entityToUpdate.getYRot());
     }
 
     @OnlyIn(Dist.CLIENT)

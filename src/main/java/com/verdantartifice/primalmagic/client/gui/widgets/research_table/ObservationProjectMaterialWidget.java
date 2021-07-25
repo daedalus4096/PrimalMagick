@@ -30,7 +30,7 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw observation icon
-        Minecraft.getInstance().getTextureManager().bind(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
+        Minecraft.getInstance().getTextureManager().bindForSetup(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
         matrixStack.pushPose();
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);

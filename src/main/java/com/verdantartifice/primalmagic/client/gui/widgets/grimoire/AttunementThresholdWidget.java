@@ -61,7 +61,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
         } else {
             // Render the icon appropriate for this widget's source and threshold
             matrixStack.pushPose();
-            mc.getTextureManager().bind(this.texture);
+            mc.getTextureManager().bindForSetup(this.texture);
             matrixStack.translate(this.x, this.y, 0.0F);
             matrixStack.scale(0.0703125F, 0.0703125F, 0.0703125F);
             this.blit(matrixStack, 0, 0, 0, 0, 255, 255);

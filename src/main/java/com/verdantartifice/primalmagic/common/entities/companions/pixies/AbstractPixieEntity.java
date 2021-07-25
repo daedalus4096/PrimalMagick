@@ -38,10 +38,10 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.util.IntRange;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
@@ -56,7 +56,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 public abstract class AbstractPixieEntity extends AbstractCompanionEntity implements NeutralMob, FlyingAnimal, IPixie {
     protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractPixieEntity.class, EntityDataSerializers.INT);
-    protected static final IntRange ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
+    protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
 
     protected int attackTimer;
     protected UUID angerTarget;

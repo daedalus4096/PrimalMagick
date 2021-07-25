@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
@@ -30,6 +31,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -215,18 +217,24 @@ public class CombatEvents {
     }
     
     @SubscribeEvent
-    public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
+    public static void onArrowImpact(ProjectileImpactEvent<AbstractArrow> event) {
+        // If the shooter has the Enderport enchantment, teleport to the hit location
+        Entity shooter = event.getProjectile().getOwner();
+        if (shooter instanceof LivingEntity && EnchantmentHelperPM.hasEnderport((LivingEntity)shooter)) {
+            EntityUtils.teleportEntity((LivingEntity)shooter, event.getProjectile().level, event.getRayTraceResult().getLocation());
+        }
+
+        // Handle the Soulpiercing enchantment
         HitResult rayTraceResult = event.getRayTraceResult();
         if (rayTraceResult.getType() == HitResult.Type.ENTITY) {
             Entity targetEntity = ((EntityHitResult)rayTraceResult).getEntity();
             if (targetEntity instanceof LivingEntity) {
                 LivingEntity target = (LivingEntity)targetEntity;
-                Entity shooterEntity = event.getArrow().getOwner();
-                if (shooterEntity instanceof LivingEntity) {
-                    LivingEntity shooter = (LivingEntity)shooterEntity;
+                if (shooter instanceof LivingEntity) {
+                    LivingEntity livingShooter = (LivingEntity)shooter;
                     
                     // If the target can have its soul pierced, spawn some soul slivers
-                    int soulpiercingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.SOULPIERCING.get(), shooter.getMainHandItem());
+                    int soulpiercingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.SOULPIERCING.get(), livingShooter.getMainHandItem());
                     if (soulpiercingLevel > 0) {
                         MobEffectInstance soulpiercedInstance = new MobEffectInstance(EffectsPM.SOULPIERCED.get(), 12000, 0, false, false);
                         if (target.canBeAffected(soulpiercedInstance) && !target.hasEffect(soulpiercedInstance.getEffect())) {

@@ -14,7 +14,7 @@ import net.minecraft.core.Registry;
  * @author Daedalus4096
  */
 public class LootConditionTypesPM {
-    public static final LootItemConditionType MATCH_BLOCK_TAG = register("match_block_tag", new MatchBlockTag.Serializer());
+    public static final LootItemConditionType MATCH_BLOCK_TAG = register("match_block_tag", new MatchBlockTag.ConditionSerializer());
     
     public static void register() {
         // No-op method to ensure that the class is loaded

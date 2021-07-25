@@ -86,7 +86,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu {
             }
             
             @Override
-            public ItemStack onTake(Player thePlayer, ItemStack stack) {
+            public void onTake(Player thePlayer, ItemStack stack) {
                 RunecarvingTableContainer.this.inputSlabSlot.remove(1);
                 RunecarvingTableContainer.this.inputLapisSlot.remove(1);
                 RunecarvingTableContainer.this.updateRecipeResultSlot();
@@ -99,7 +99,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu {
                         RunecarvingTableContainer.this.lastOnTake = time;
                     }
                 });
-                return super.onTake(thePlayer, stack);
+                super.onTake(thePlayer, stack);
             }
         });
         

@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent from the server to trigger a mana sparkle particle effect on the client.

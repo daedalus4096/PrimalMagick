@@ -26,7 +26,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.hooks.BasicEventHooks;
+import net.minecraftforge.fmllegacy.hooks.BasicEventHooks;
 
 /**
  * Custom GUI slot for arcane crafting results.
@@ -153,7 +153,7 @@ public class ArcaneCraftingResultSlot extends Slot {
                 } else if (ItemStack.isSame(materialStack, remainingStack) && ItemStack.tagMatches(materialStack, remainingStack)) {
                     remainingStack.grow(materialStack.getCount());
                     this.craftingInventory.setItem(index, remainingStack);
-                } else if (!this.player.inventory.add(remainingStack)) {
+                } else if (!this.player.getInventory().add(remainingStack)) {
                     this.player.drop(remainingStack, false);
                 }
             }

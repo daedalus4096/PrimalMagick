@@ -49,7 +49,7 @@ public class InventoryUtils {
             return true;
         }
         int count = stack.getCount();
-        for (ItemStack searchStack : player.inventory.items) {
+        for (ItemStack searchStack : player.getInventory().items) {
             // Determine if the stack items, and optionally NBT, match
             boolean areEqual = matchNBT ?
                     ItemStack.matches(stack, searchStack) :
@@ -101,7 +101,7 @@ public class InventoryUtils {
             return true;
         }
         Tag<Item> tag = SerializationTags.getInstance().getItems().getTag(tagName);
-        for (ItemStack searchStack : player.inventory.items) {
+        for (ItemStack searchStack : player.getInventory().items) {
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
                 amount -= searchStack.getCount();
@@ -137,8 +137,8 @@ public class InventoryUtils {
             return false;
         }
         int count = stack.getCount();
-        for (int index = 0; index < player.inventory.items.size(); index++) {
-            ItemStack searchStack = player.inventory.items.get(index);
+        for (int index = 0; index < player.getInventory().items.size(); index++) {
+            ItemStack searchStack = player.getInventory().items.get(index);
             // Determine if the stack items, and optionally NBT, match
             boolean areEqual = matchNBT ?
                     ItemStack.matches(stack, searchStack) :
@@ -149,7 +149,7 @@ public class InventoryUtils {
                     count = 0;
                 } else {
                     count -= searchStack.getCount();
-                    player.inventory.items.set(index, ItemStack.EMPTY);
+                    player.getInventory().items.set(index, ItemStack.EMPTY);
                 }
                 if (count <= 0) {
                     // Once a sufficient number of the given item are removed, return true
@@ -200,8 +200,8 @@ public class InventoryUtils {
             return false;
         }
         Tag<Item> tag = SerializationTags.getInstance().getItems().getTag(tagName);
-        for (int index = 0; index < player.inventory.items.size(); index++) {
-            ItemStack searchStack = player.inventory.items.get(index);
+        for (int index = 0; index < player.getInventory().items.size(); index++) {
+            ItemStack searchStack = player.getInventory().items.get(index);
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
                 if (searchStack.getCount() > amount) {
@@ -209,7 +209,7 @@ public class InventoryUtils {
                     amount = 0;
                 } else {
                     amount -= searchStack.getCount();
-                    player.inventory.items.set(index, ItemStack.EMPTY);
+                    player.getInventory().items.set(index, ItemStack.EMPTY);
                 }
                 if (amount <= 0) {
                     // Once a sufficient number of the given items are removed, return true

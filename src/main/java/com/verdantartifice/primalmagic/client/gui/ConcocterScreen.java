@@ -42,13 +42,13 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterContainer>
     @Override
     protected void init() {
         super.init();
-        this.manaGauge = this.addButton(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.INFERNAL, this.menu.getCurrentMana(), this.menu.getMaxMana()));
+        this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.INFERNAL, this.menu.getCurrentMana(), this.menu.getMaxMana()));
     }
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
         // Render background texture
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // Animate spin progress indicator

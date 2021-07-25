@@ -58,7 +58,7 @@ public class ResearchWidget extends AbstractWidget {
         matrixStack.pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        Minecraft.getInstance().getTextureManager().bind(loc);
+        Minecraft.getInstance().getTextureManager().bindForSetup(loc);
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
@@ -68,7 +68,7 @@ public class ResearchWidget extends AbstractWidget {
             // Render completion checkmark if appropriate
             matrixStack.pushPose();
             matrixStack.translate(this.x + 8, this.y, 100.0F);
-            Minecraft.getInstance().getTextureManager().bind(GRIMOIRE_TEXTURE);
+            Minecraft.getInstance().getTextureManager().bindForSetup(GRIMOIRE_TEXTURE);
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();
         }

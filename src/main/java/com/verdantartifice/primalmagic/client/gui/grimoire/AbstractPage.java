@@ -62,7 +62,7 @@ public abstract class AbstractPage extends GuiComponent {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bind(GRIMOIRE_TEXTURE);
+        mc.getTextureManager().bindForSetup(GRIMOIRE_TEXTURE);
         if (this.renderTopTitleBar()) {
             this.blit(matrixStack, x + 10 + (side * 140), y + 18, 24, 184, 96, 5);   // Render the separator bar above the title text
         }
@@ -76,7 +76,7 @@ public abstract class AbstractPage extends GuiComponent {
                 matrixStack.pushPose();
                 matrixStack.translate(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21, 0.0F);
                 matrixStack.scale(0.06F, 0.06F, 0.06F);
-                mc.getTextureManager().bind(icon);
+                mc.getTextureManager().bindForSetup(icon);
                 this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
                 matrixStack.popPose();
             }
@@ -91,7 +91,7 @@ public abstract class AbstractPage extends GuiComponent {
                 matrixStack.pushPose();
                 matrixStack.translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21, 0.0F);
                 matrixStack.scale(0.06F, 0.06F, 0.06F);
-                mc.getTextureManager().bind(icon);
+                mc.getTextureManager().bindForSetup(icon);
                 this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
                 matrixStack.popPose();
             }

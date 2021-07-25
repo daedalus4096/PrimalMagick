@@ -331,7 +331,7 @@ public class PlayerEvents {
                 motionY += (0.1D * (1 + player.getEffect(MobEffects.JUMP).getAmplifier()));
             }
             if (player.isSprinting()) {
-                float yawRadians = player.yRot * (float)(Math.PI / 180.0D);
+                float yawRadians = player.getYRot() * (float)(Math.PI / 180.0D);
                 motionX -= (0.2D * Mth.sin(yawRadians));
                 motionZ += (0.2D * Mth.cos(yawRadians));
             }

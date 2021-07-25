@@ -46,10 +46,10 @@ import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.util.IntRange;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -70,7 +70,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEntity implements NeutralMob {
     protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractEnchantedGolemEntity.class, EntityDataSerializers.INT);
-    protected static final IntRange ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
+    protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
 
     protected int attackTimer;
     protected UUID angerTarget;
@@ -307,7 +307,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
                 return InteractionResult.PASS;
             } else {
                 this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
-                if (!playerIn.abilities.instabuild) {
+                if (!playerIn.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
                 return InteractionResult.sidedSuccess(this.level.isClientSide);

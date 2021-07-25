@@ -117,7 +117,7 @@ public class LazySpawnEggItem extends Item {
                 if (entitytype.spawn((ServerLevel)worldIn, itemstack, playerIn, blockpos, MobSpawnType.SPAWN_EGG, false, false) == null) {
                     return InteractionResultHolder.pass(itemstack);
                 } else {
-                    if (!playerIn.abilities.instabuild) {
+                    if (!playerIn.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }
                     playerIn.awardStat(Stats.ITEM_USED.get(this));

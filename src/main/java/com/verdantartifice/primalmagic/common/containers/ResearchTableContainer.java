@@ -159,7 +159,7 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
     
     public void consumeWritingImplements() {
         // Don't consume if in creative mode
-        if (!this.player.abilities.instabuild) {
+        if (!this.player.getAbilities().instabuild) {
             // Consume ink, if applicable
             ItemStack inkStack = this.getWritingImplementStack();
             if (!inkStack.isEmpty() && inkStack.getItem() instanceof IWritingImplement && ((IWritingImplement)inkStack.getItem()).isDamagedOnUse()) {

@@ -129,7 +129,7 @@ public class RitualLecternBlock extends Block implements IRitualPropBlock {
                     if (player.getItemInHand(handIn).getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
                     }
-                    player.inventory.setChanged();
+                    player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1.0F, 1.0F);
                     worldIn.setBlock(pos, state.setValue(HAS_BOOK, Boolean.TRUE), Constants.BlockFlags.DEFAULT);
                     
@@ -144,7 +144,7 @@ public class RitualLecternBlock extends Block implements IRitualPropBlock {
                     ItemStack stack = lecternTile.getItem(0).copy();
                     lecternTile.setItem(0, ItemStack.EMPTY);
                     player.setItemInHand(handIn, stack);
-                    player.inventory.setChanged();
+                    player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                     worldIn.setBlock(pos, state.setValue(HAS_BOOK, Boolean.FALSE), Constants.BlockFlags.DEFAULT);
                     return InteractionResult.SUCCESS;

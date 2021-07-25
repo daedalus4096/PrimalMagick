@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.hooks.BasicEventHooks;
+import net.minecraftforge.fmllegacy.hooks.BasicEventHooks;
 
 /**
  * Base wand transformation that triggers a block swapper.

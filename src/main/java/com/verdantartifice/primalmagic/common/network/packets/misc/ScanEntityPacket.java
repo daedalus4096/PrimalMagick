@@ -11,7 +11,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**

@@ -9,11 +9,9 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-
-import net.minecraft.client.gui.components.toasts.Toast.Visibility;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * GUI element for the toast that shows when you complete a research entry.
@@ -34,7 +32,7 @@ public class ResearchToast implements Toast {
     	Minecraft mc = toastGui.getMinecraft();
     	
         // Render the toast background
-    	mc.getTextureManager().bind(TEXTURE);
+    	mc.getTextureManager().bindForSetup(TEXTURE);
         toastGui.blit(matrixStack, 0, 0, 0, 224, 160, 32);
         
         // Render the toast title text

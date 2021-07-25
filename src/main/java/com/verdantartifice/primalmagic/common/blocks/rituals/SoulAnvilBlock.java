@@ -142,7 +142,7 @@ public class SoulAnvilBlock extends FallingBlock implements IRitualPropBlock {
             worldIn.playSound(player, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
-                if (!player.abilities.instabuild) {
+                if (!player.getAbilities().instabuild) {
                     player.getItemInHand(handIn).shrink(1);
                     if (player.getItemInHand(handIn).getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);

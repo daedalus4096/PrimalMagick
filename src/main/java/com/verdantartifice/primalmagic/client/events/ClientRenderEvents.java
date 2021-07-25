@@ -13,17 +13,17 @@ import com.verdantartifice.primalmagic.common.runes.RuneManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.util.Mth;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.DrawHighlightEvent;
+import net.minecraftforge.client.event.DrawSelectionEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -105,7 +105,7 @@ public class ClientRenderEvents {
     }
     
     @SubscribeEvent
-    public static void onHighlightEntity(DrawHighlightEvent.HighlightEntity event) {
+    public static void onHighlightEntity(DrawSelectionEvent.HighlightEntity event) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get()) {
             Entity entity = event.getTarget().getEntity();

@@ -54,7 +54,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
         int i = this.leftPos;
         int j = this.topPos;
         this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);

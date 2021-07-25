@@ -5,7 +5,7 @@ import org.lwjgl.glfw.GLFW;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 /**
  * Define and register custom client key-bindings.

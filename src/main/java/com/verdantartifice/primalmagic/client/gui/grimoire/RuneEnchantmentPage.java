@@ -73,7 +73,7 @@ public class RuneEnchantmentPage extends AbstractPage {
             this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
             y += 77;
             
-            Minecraft.getInstance().getTextureManager().bind(OVERLAY);
+            Minecraft.getInstance().getTextureManager().bindForSetup(OVERLAY);
             matrixStack.pushPose();
             matrixStack.translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
             this.blit(matrixStack, 0, 0, 0, 51, overlayWidth, overlayHeight);

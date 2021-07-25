@@ -64,8 +64,8 @@ import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 /**
@@ -182,7 +182,8 @@ public class ClientProxy implements IProxyPM {
             ItemProperties.register(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, ArcanometerItem.getScanStateProperty());
             ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, FlyingCarpetItem.getColorProperty());
             
-            ItemPropertyFunction castProperty = (ItemStack stack, ClientLevel world, LivingEntity entity) -> {
+            @SuppressWarnings("deprecation")
+            ItemPropertyFunction castProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
                 if (entity == null) {
                     return 0.0F;
                 } else {
@@ -199,7 +200,8 @@ public class ClientProxy implements IProxyPM {
             ItemProperties.register(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
             ItemProperties.register(ItemsPM.PRIMAL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
             
-            ItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity) -> {
+            @SuppressWarnings("deprecation")
+            ItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
                 return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
             };
             ItemProperties.register(ItemsPM.PRIMALITE_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
@@ -210,7 +212,8 @@ public class ClientProxy implements IProxyPM {
             ItemProperties.register(ItemsPM.HEXIUM_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
             ItemProperties.register(ItemsPM.HALLOWSTEEL_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
             
-            ItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity) -> {
+            @SuppressWarnings("deprecation")
+            ItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
                 if (entity == null) {
                     return 0.0F;
                 } else {

@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellComponent;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent to update the value of a spell component's property on the server in the spellcrafting altar GUI.

@@ -43,7 +43,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         
         // Draw knowledge type icon
         matrixStack.pushPose();
-        mc.getTextureManager().bind(this.type.getIconLocation());
+        mc.getTextureManager().bindForSetup(this.type.getIconLocation());
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);        
@@ -51,7 +51,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         
         // Draw progress bar background
         matrixStack.pushPose();
-        mc.getTextureManager().bind(TEXTURE);
+        mc.getTextureManager().bindForSetup(TEXTURE);
         matrixStack.translate(this.x, this.y + 17, 0.0F);
         this.blit(matrixStack, 0, 0, 182, 2, 16, 2);
         matrixStack.popPose();
@@ -72,7 +72,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             int levelPoints = rawPoints % this.type.getProgression();
             int px = (int)(16.0D * ((double)levelPoints / (double)this.type.getProgression()));
             matrixStack.pushPose();
-            mc.getTextureManager().bind(TEXTURE);
+            mc.getTextureManager().bindForSetup(TEXTURE);
             matrixStack.translate(this.x, this.y + 17, 1.0F);
             this.blit(matrixStack, 0, 0, 182, 0, px, 2);
             matrixStack.popPose();

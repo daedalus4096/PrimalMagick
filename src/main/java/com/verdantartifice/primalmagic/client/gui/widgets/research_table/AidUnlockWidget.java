@@ -40,7 +40,7 @@ public class AidUnlockWidget extends AbstractWidget {
         
         // Draw padlock icon
         matrixStack.pushPose();
-        mc.getTextureManager().bind(TEXTURE);
+        mc.getTextureManager().bindForSetup(TEXTURE);
         matrixStack.translate(this.x, this.y, 0.0F);
         this.blit(matrixStack, 0, 0, 198, 0, 8, 8);
         matrixStack.popPose();

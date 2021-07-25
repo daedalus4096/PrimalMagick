@@ -38,8 +38,8 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
     @Override
     public void render(SpellMineEntity entity, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
         @SuppressWarnings("deprecation")
-        float yaw = Mth.rotlerp(entity.yRotO, entity.yRot, partialTicks);
-        float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.xRot);
+        float yaw = Mth.rotlerp(entity.yRotO, entity.getYRot(), partialTicks);
+        float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
         float ticks = (float)entity.tickCount + partialTicks;
         Color c = new Color(entity.getColor());
         float r = (float)c.getRed() / 255.0F;

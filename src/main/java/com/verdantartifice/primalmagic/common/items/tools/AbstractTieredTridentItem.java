@@ -79,23 +79,23 @@ public abstract class AbstractTieredTridentItem extends TridentItem {
                         });
                         if (riptide == 0) {
                             AbstractTridentEntity trident = this.getThrownEntity(worldIn, player, stack);
-                            trident.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 2.5F + (float)riptide * 0.5F, 1.0F);
-                            if (player.abilities.instabuild) {
+                            trident.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F + (float)riptide * 0.5F, 1.0F);
+                            if (player.getAbilities().instabuild) {
                                 trident.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                             }
                             
                             worldIn.addFreshEntity(trident);
                             worldIn.playSound((Player)null, trident, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
-                            if (!player.abilities.instabuild) {
-                                player.inventory.removeItem(stack);
+                            if (!player.getAbilities().instabuild) {
+                                player.getInventory().removeItem(stack);
                             }
                         }
                     }
                     
                     player.awardStat(Stats.ITEM_USED.get(this));
                     if (riptide > 0) {
-                        float f7 = player.yRot;
-                        float f = player.xRot;
+                        float f7 = player.getYRot();
+                        float f = player.getXRot();
                         float f1 = -Mth.sin(f7 * ((float)Math.PI / 180F)) * Mth.cos(f * ((float)Math.PI / 180F));
                         float f2 = -Mth.sin(f * ((float)Math.PI / 180F));
                         float f3 = Mth.cos(f7 * ((float)Math.PI / 180F)) * Mth.cos(f * ((float)Math.PI / 180F));

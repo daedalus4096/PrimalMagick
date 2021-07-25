@@ -6,16 +6,14 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import net.minecraft.client.gui.components.Button.OnPress;
 
 /**
  * GUI button to navigate to the next or previous page of the current grimoire entry.
@@ -46,7 +44,7 @@ public class PageButton extends Button {
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bind(TEXTURE);
+        mc.getTextureManager().bindForSetup(TEXTURE);
         if (this.isHovered()) {
             // When hovered, scale the button up and down to create a pulsing effect
             float scaleMod = Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F;

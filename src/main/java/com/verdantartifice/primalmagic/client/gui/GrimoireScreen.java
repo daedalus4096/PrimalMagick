@@ -88,6 +88,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     protected boolean progressing = false;
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
+    protected Inventory inventory;
     
     protected PageButton nextPageButton;
     protected PageButton prevPageButton;
@@ -97,6 +98,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         super(screenContainer, inv, titleIn);
         this.imageWidth = 256;
         this.imageHeight = 181;
+        this.inventory = inv;
     }
     
     public Inventory getPlayerInventory() {
@@ -175,8 +177,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     protected void initButtons() {
         int current = 0;
-        this.buttons.clear();
-        this.children.clear();
+        this.clearWidgets();
         
         // Initialize buttons for the two visible pages
         for (AbstractPage page : this.pages) {
@@ -193,14 +194,14 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.nextPageButton = new PageButton(this.leftPos + 258, this.topPos + 172, this, true);
         this.prevPageButton = new PageButton(this.leftPos - 12, this.topPos + 172, this, false);
         this.backButton = new BackButton(this.leftPos + 120, this.topPos + 172, this);
-        this.addButton(this.nextPageButton);
-        this.addButton(this.prevPageButton);
-        this.addButton(this.backButton);
+        this.addRenderableWidget(this.nextPageButton);
+        this.addRenderableWidget(this.prevPageButton);
+        this.addRenderableWidget(this.backButton);
         this.updateNavButtonVisibility();
     }
     
     public <T extends AbstractWidget> T addWidgetToScreen(T widget) {
-        return this.addButton(widget);
+        return this.addRenderableWidget(widget);
     }
 
     private void initPageButtons(AbstractPage abstractPage, int side, int x, int y) {
@@ -224,7 +225,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render the grimoire background
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
 
         int unscaledLeft = (this.width - this.imageWidth) / 2;
         int unscaledTop = (this.height - this.imageHeight) / 2;

@@ -36,10 +36,10 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.util.IntRange;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
@@ -54,7 +54,7 @@ import net.minecraft.server.level.ServerLevel;
  */
 public class TreefolkEntity extends PathfinderMob implements NeutralMob, RangedAttackMob {
     protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.INT);
-    protected static final IntRange ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
+    protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final String DREADED_NAME = "Verdus";
 
     protected UUID angerTarget;

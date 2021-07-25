@@ -42,7 +42,7 @@ public class KnowledgeWidget extends AbstractWidget {
         matrixStack.pushPose();
         
         // Draw knowledge type icon
-        mc.getTextureManager().bind(this.knowledge.getType().getIconLocation());
+        mc.getTextureManager().bindForSetup(this.knowledge.getType().getIconLocation());
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
@@ -62,7 +62,7 @@ public class KnowledgeWidget extends AbstractWidget {
             // Render completion checkmark if appropriate
             matrixStack.pushPose();
             matrixStack.translate(this.x + 8, this.y, 100.0F);
-            Minecraft.getInstance().getTextureManager().bind(GRIMOIRE_TEXTURE);
+            Minecraft.getInstance().getTextureManager().bindForSetup(GRIMOIRE_TEXTURE);
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();
         }

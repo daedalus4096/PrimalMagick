@@ -66,7 +66,7 @@ public class ConcoctionItem extends Item {
             int waterLevel = blockState.getValue(CauldronBlock.LEVEL);
             if (waterLevel < 3 && !world.isClientSide) {
                 Player player = context.getPlayer();
-                if (!player.abilities.instabuild) {
+                if (!player.getAbilities().instabuild) {
                     player.setItemInHand(context.getHand(), new ItemStack(ItemsPM.SKYGLASS_FLASK.get()));
                     if (player instanceof ServerPlayer) {
                         ((ServerPlayer)player).refreshContainer(player.inventoryMenu);
@@ -96,7 +96,7 @@ public class ConcoctionItem extends Item {
         
         if (player != null) {
             StatsManager.incrementValue(player, StatsPM.CONCOCTIONS_USED);
-            if (!player.abilities.instabuild) {
+            if (!player.getAbilities().instabuild) {
                 int doses = ConcoctionUtils.getCurrentDoses(stack);
                 if (doses <= 1) {
                     stack.shrink(1);

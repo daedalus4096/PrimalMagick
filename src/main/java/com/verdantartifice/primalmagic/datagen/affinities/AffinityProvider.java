@@ -259,7 +259,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.CHIPPED_ANVIL).base(Items.ANVIL).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DAMAGED_ANVIL).base(Items.ANVIL).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.NETHER_QUARTZ_ORE).base(Items.NETHERRACK).add(Source.EARTH, 10).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.GRASS_PATH).base(Items.GRASS_BLOCK).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.DIRT_PATH).base(Items.GRASS_BLOCK).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SUNFLOWER).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.LILAC).base(Items.SUNFLOWER).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ROSE_BUSH).base(Items.SUNFLOWER).build(consumer);

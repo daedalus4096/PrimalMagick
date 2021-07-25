@@ -64,13 +64,13 @@ public abstract class AbstractConcoctionContainerItem extends Item {
             int waterLevel = blockState.getValue(CauldronBlock.LEVEL);
             if (waterLevel > 0 && !world.isClientSide) {
                 Player player = context.getPlayer();
-                if (!player.abilities.instabuild) {
+                if (!player.getAbilities().instabuild) {
                     ItemStack flaskStack = context.getItemInHand();
                     ItemStack waterStack = this.getConcoctionContainerItem();
                     flaskStack.shrink(1);
                     if (flaskStack.isEmpty()) {
                         player.setItemInHand(context.getHand(), waterStack);
-                    } else if (!player.inventory.add(waterStack)) {
+                    } else if (!player.getInventory().add(waterStack)) {
                         player.drop(waterStack, false);
                     } else if (player instanceof ServerPlayer) {
                         ((ServerPlayer)player).refreshContainer(player.inventoryMenu);

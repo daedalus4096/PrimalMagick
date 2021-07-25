@@ -28,17 +28,18 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.storage.loot.ConstantIntValue;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTables;
-import net.minecraft.world.level.storage.loot.RandomValueBounds;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
@@ -84,15 +85,15 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
     }
     
     protected void registerBasicTable(Block block) {
-        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(block))
+        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block))
                 .when(ExplosionCondition.survivesExplosion());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(poolBuilder);
         this.registerLootTableBuiler(block, tableBuilder);
     }
     
     protected void registerSlabTable(Block block) {
-        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(block)
-                .apply(SetItemCountFunction.setCount(ConstantIntValue.exactly(2))
+        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block)
+                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
                     .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                 ).apply(ApplyExplosionDecay.explosionDecay()));
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(poolBuilder);
@@ -106,17 +107,17 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
                 .or(MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1)))));
         LootPoolEntryContainer.Builder<?> saplingEntryBuilder = LootItem.lootTableItem(saplingBlock).when(ExplosionCondition.survivesExplosion()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, saplingFortuneChances));
         LootPoolEntryContainer.Builder<?> leavesEntryBuilder = LootItem.lootTableItem(leavesBlock).when(shearsOrSilkTouch);
-        LootPool.Builder saplingAndLeavesPool = LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(leavesEntryBuilder.otherwise(saplingEntryBuilder));
-        LootPoolEntryContainer.Builder<?> stickEntryBuilder = LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 2.0F))).apply(ApplyExplosionDecay.explosionDecay()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, stickFortuneChances));
-        LootPool.Builder stickPool = LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).when(shearsOrSilkTouch.invert()).add(stickEntryBuilder);
+        LootPool.Builder saplingAndLeavesPool = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(leavesEntryBuilder.otherwise(saplingEntryBuilder));
+        LootPoolEntryContainer.Builder<?> stickEntryBuilder = LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))).apply(ApplyExplosionDecay.explosionDecay()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, stickFortuneChances));
+        LootPool.Builder stickPool = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(shearsOrSilkTouch.invert()).add(stickEntryBuilder);
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(saplingAndLeavesPool).withPool(stickPool);
         this.registerLootTableBuiler(leavesBlock, tableBuilder);
     }
     
     protected void registerInfusedStoneTable(Block stoneBlock, Item dustItem) {
-        LootPool.Builder stonePoolBuilder = LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(Blocks.COBBLESTONE))
+        LootPool.Builder stonePoolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Blocks.COBBLESTONE))
                 .when(ExplosionCondition.survivesExplosion());
-        LootPool.Builder dustPoolBuilder = LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(dustItem))
+        LootPool.Builder dustPoolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(dustItem))
                 .when(ExplosionCondition.survivesExplosion());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(stonePoolBuilder).withPool(dustPoolBuilder);
         this.registerLootTableBuiler(stoneBlock, tableBuilder);
@@ -125,19 +126,19 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
     protected void registerGemOreTable(Block oreBlock, Item gemItem) {
         LootItemCondition.Builder silkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
         LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
-        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(oreBlock).when(silkTouch).otherwise(gemEntryBuilder)));
+        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(oreBlock).when(silkTouch).otherwise(gemEntryBuilder)));
         this.registerLootTableBuiler(oreBlock, tableBuilder);
     }
     
     protected void registerMultiGemOreTable(Block oreBlock, Item gemItem, float minGems, float maxGems) {
         LootItemCondition.Builder silkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
-        LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(SetItemCountFunction.setCount(RandomValueBounds.between(minGems, maxGems))).apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
-        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(oreBlock).when(silkTouch).otherwise(gemEntryBuilder)));
+        LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(SetItemCountFunction.setCount(UniformGenerator.between(minGems, maxGems))).apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
+        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(oreBlock).when(silkTouch).otherwise(gemEntryBuilder)));
         this.registerLootTableBuiler(oreBlock, tableBuilder);
     }
     
     protected void registerManaBearingDeviceTable(Block block) {
-        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(block).apply(CopyNbtFunction.copyData(CopyNbtFunction.DataSource.BLOCK_ENTITY).copy("ManaStorage.Mana.Sources", "ManaContainerTag.Sources")))
+        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("ManaStorage.Mana.Sources", "ManaContainerTag.Sources")))
                 .when(ExplosionCondition.survivesExplosion());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(poolBuilder);
         this.registerLootTableBuiler(block, tableBuilder);

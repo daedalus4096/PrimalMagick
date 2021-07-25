@@ -5,9 +5,9 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent to trigger a server-side scan of the slotted item on an analysis table.  Necessary to

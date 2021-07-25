@@ -79,7 +79,7 @@ public class BloodletterBlock extends Block implements IRitualPropBlock {
             // If using a water bucket on a filled bloodletter, clean it out
             worldIn.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isClientSide) {
-                if (!player.abilities.instabuild) {
+                if (!player.getAbilities().instabuild) {
                     player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
                 }
                 worldIn.setBlock(pos, state.setValue(FILLED, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);

@@ -107,7 +107,7 @@ public class RitualAltarBlock extends Block implements ISaltPowered {
                     ItemStack stack = altarTile.getItem(0).copy();
                     altarTile.setItem(0, ItemStack.EMPTY);
                     player.setItemInHand(handIn, stack);
-                    player.inventory.setChanged();
+                    player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                     return InteractionResult.SUCCESS;
                 }

@@ -39,11 +39,12 @@ public class FlyingCarpetItem extends Item {
         super(properties);
     }
     
+    @SuppressWarnings("deprecation")
     public static ItemPropertyFunction getColorProperty() {
         return new ItemPropertyFunction() {
             @OnlyIn(Dist.CLIENT)
             @Override
-            public float call(ItemStack stack, ClientLevel world, LivingEntity entity) {
+            public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) {
                 DyeColor color = null;
                 if (stack != null && stack.getItem() instanceof FlyingCarpetItem) {
                     color = ((FlyingCarpetItem)stack.getItem()).getDyeColor(stack);
@@ -85,14 +86,14 @@ public class FlyingCarpetItem extends Item {
             if (context.getClickedFace() != Direction.UP) {
                 return InteractionResult.PASS;
             }
-            double posX = /* (double)pos.getX() + */ context.getClickLocation().x;
-            double posY = /* (double)pos.getY() + */ context.getClickLocation().y;
-            double posZ = /* (double)pos.getZ() + */ context.getClickLocation().z;
+            double posX = context.getClickLocation().x;
+            double posY = context.getClickLocation().y;
+            double posZ = context.getClickLocation().z;
             FlyingCarpetEntity entityCarpet = new FlyingCarpetEntity(world, posX, posY, posZ);
             if (stack.hasTag()) {
                 entityCarpet.setDyeColor(this.getDyeColor(stack));
             }
-            entityCarpet.yRot = context.getPlayer().yRot;
+            entityCarpet.setYRot(context.getPlayer().getYRot());
             world.addFreshEntity(entityCarpet);
             world.playSound(null, posX, posY, posZ, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
             stack.shrink(1);

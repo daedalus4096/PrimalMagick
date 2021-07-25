@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent to trigger a server-side scan of a given item stack.  Used by the arcanometer for

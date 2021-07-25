@@ -123,7 +123,7 @@ public class FollowCompanionOwnerGoal extends Goal {
         } else if (!this.isTeleportFriendlyBlock(new BlockPos(x, y, z))) {
             return false;
         } else {
-            this.entity.moveTo((double)x + 0.5D, (double)y, (double)z + 0.5D, this.entity.yRot, this.entity.xRot);
+            this.entity.moveTo((double)x + 0.5D, (double)y, (double)z + 0.5D, this.entity.getYRot(), this.entity.getXRot());
             this.navigator.stop();
             return true;
         }

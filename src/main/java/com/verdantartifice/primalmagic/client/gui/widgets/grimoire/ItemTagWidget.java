@@ -50,7 +50,7 @@ public class ItemTagWidget extends AbstractWidget {
                 // Render completion checkmark if appropriate
                 matrixStack.pushPose();
                 matrixStack.translate(this.x + 8, this.y, 200.0F);
-                Minecraft.getInstance().getTextureManager().bind(GRIMOIRE_TEXTURE);
+                Minecraft.getInstance().getTextureManager().bindForSetup(GRIMOIRE_TEXTURE);
                 this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
                 matrixStack.popPose();
             }

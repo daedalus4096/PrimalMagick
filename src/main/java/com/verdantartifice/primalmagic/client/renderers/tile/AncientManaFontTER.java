@@ -4,20 +4,21 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 
-import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -28,11 +29,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock}
  */
 @OnlyIn(Dist.CLIENT)
-public class AncientManaFontTER extends BlockEntityRenderer<AncientManaFontTileEntity> {
+public class AncientManaFontTER implements BlockEntityRenderer<AncientManaFontTileEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/mana_font_core");
     
-    public AncientManaFontTER(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    protected Level level;
+    
+    public AncientManaFontTER(BlockEntityRendererProvider.Context context) {
+        this.level = context.getBlockEntityRenderDispatcher().level;
     }
     
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
@@ -55,7 +58,7 @@ public class AncientManaFontTER extends BlockEntityRenderer<AncientManaFontTileE
             float g = sourceColor.getGreen() / 255.0F;
             float b = sourceColor.getBlue() / 255.0F;
             float ds = 0.1875F;
-            int rot = (int)(this.renderer.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
             float scale = (float)tileEntityIn.getMana() / (float)tileEntityIn.getManaCapacity();    // Shrink the core as it holds less mana
             
             @SuppressWarnings("deprecation")

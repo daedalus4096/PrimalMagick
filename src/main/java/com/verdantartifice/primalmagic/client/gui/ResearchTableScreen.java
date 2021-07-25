@@ -134,12 +134,12 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render the GUI background
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // If a research project is ready to go, render the page overlay
         if (this.isProjectReady()) {
-            this.minecraft.getTextureManager().bind(OVERLAY);
+            this.minecraft.getTextureManager().bindForSetup(OVERLAY);
             this.blit(matrixStack, this.leftPos + 34, this.topPos + 7, 0, 0, 162, 128);
         }
     }
@@ -165,36 +165,35 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
     }
     
     protected void initButtons() {
-        this.buttons.clear();
-        this.children.clear();
+        this.clearWidgets();
         this.completeProjectButton = null;
         
         if (this.project == null && this.menu.isWritingReady()) {
             if (this.progressing) {
                 // Render starting widget
                 Component text = new TranslatableComponent("primalmagic.research_table.starting");
-                this.addButton(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
+                this.addRenderableWidget(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
             } else {
                 // Render start project button
                 Component text = new TranslatableComponent("primalmagic.research_table.start");
-                this.addButton(new StartProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
+                this.addRenderableWidget(new StartProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
             }
         } else if (this.isProjectReady()) {
             if (this.progressing) {
                 // Render completing widget
                 Component text = new TranslatableComponent("primalmagic.research_table.completing");
-                this.addButton(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
+                this.addRenderableWidget(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
             } else {
                 // Render complete project button
                 Player player = this.minecraft.player;
                 double chance = 100.0D * this.project.getSuccessChance();
                 Component text = new TranslatableComponent("primalmagic.research_table.complete", FORMATTER.format(chance));
-                this.completeProjectButton = this.addButton(new CompleteProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
+                this.completeProjectButton = this.addRenderableWidget(new CompleteProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
                 this.completeProjectButton.active = this.project.isSatisfied(player);
                 
                 // Render unlock widget, if applicable
                 if (this.project.getAidBlock() != null) {
-                    this.addButton(new AidUnlockWidget(this.leftPos + 186, this.topPos + 9, this.project.getAidBlock()));
+                    this.addRenderableWidget(new AidUnlockWidget(this.leftPos + 186, this.topPos + 9, this.project.getAidBlock()));
                 }
                 
                 // Render material widgets
@@ -204,9 +203,9 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
                     AbstractProjectMaterial material = this.project.getMaterials().get(index);
 
                     // Render material checkbox
-                    this.addButton(new ProjectMaterialSelectionCheckbox(this.leftPos + 42 + x, this.topPos + 93, this, material.isSelected(), index));
+                    this.addRenderableWidget(new ProjectMaterialSelectionCheckbox(this.leftPos + 42 + x, this.topPos + 93, this, material.isSelected(), index));
                     // Render material widget
-                    this.addButton(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93));
+                    this.addRenderableWidget(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93));
                     
                     x += 38;
                 }
@@ -214,8 +213,8 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         }
         
         // Render knowledge total widgets
-        this.addButton(new KnowledgeTotalWidget(this.leftPos + 11, this.topPos + 116, IPlayerKnowledge.KnowledgeType.OBSERVATION));
-        this.addButton(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, IPlayerKnowledge.KnowledgeType.THEORY));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 11, this.topPos + 116, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, IPlayerKnowledge.KnowledgeType.THEORY));
     }
     
     /**

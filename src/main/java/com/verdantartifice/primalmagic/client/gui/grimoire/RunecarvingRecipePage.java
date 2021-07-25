@@ -51,7 +51,7 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        Minecraft.getInstance().getTextureManager().bind(OVERLAY);
+        Minecraft.getInstance().getTextureManager().bindForSetup(OVERLAY);
         
         // Render overlay background
         matrixStack.pushPose();

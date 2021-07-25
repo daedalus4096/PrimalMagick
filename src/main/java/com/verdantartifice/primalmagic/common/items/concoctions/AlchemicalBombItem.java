@@ -57,20 +57,20 @@ public class AlchemicalBombItem extends Item {
                 playerIn.sendMessage(new TranslatableComponent("concoctions.primalmagic.fuse_set", fuseText), Util.NIL_UUID);
             }
         } else {
-            worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+            worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
             worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
             
             // Throw bomb entity
             AlchemicalBombEntity entity = new AlchemicalBombEntity(worldIn, playerIn);
             entity.setItem(stack);
-            entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, -20.0F, 0.5F, 1.0F);
+            entity.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), -20.0F, 0.5F, 1.0F);
             worldIn.addFreshEntity(entity);
             
             // Increment stat
             StatsManager.incrementValue(playerIn, StatsPM.CONCOCTIONS_USED);
 
             // Deduct charge
-            if (!playerIn.abilities.instabuild) {
+            if (!playerIn.getAbilities().instabuild) {
                 int charges = ConcoctionUtils.getCurrentDoses(stack);
                 if (charges <= 1) {
                     stack.shrink(1);

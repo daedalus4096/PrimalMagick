@@ -16,10 +16,10 @@ import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.theorycrafting.Project;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent to complete a research project on the server in the research table GUI.

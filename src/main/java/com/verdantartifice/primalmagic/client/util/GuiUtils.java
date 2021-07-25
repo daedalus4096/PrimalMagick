@@ -13,6 +13,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
@@ -218,7 +219,7 @@ public class GuiUtils {
         
         // Draw the rectangle
         Tesselator tess = Tesselator.getInstance();
-        tess.getBuilder().begin(7, DefaultVertexFormat.POSITION_COLOR);
+        tess.getBuilder().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
         tess.getBuilder().vertex(right, top, z).color(r1, g1, b1, a1).endVertex();
         tess.getBuilder().vertex(left, top, z).color(r1, g1, b1, a1).endVertex();
         tess.getBuilder().vertex(left, bottom, z).color(r2, g2, b2, a2).endVertex();

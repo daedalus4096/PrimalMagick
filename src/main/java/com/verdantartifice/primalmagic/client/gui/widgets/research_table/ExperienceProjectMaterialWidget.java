@@ -45,7 +45,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         float g = 1.0F;
         float b = (float)(Math.sin(approxTicks + 4.1887903F) + 1.0F) * 0.1F;
         float a = 0.5F;
-        Minecraft.getInstance().getTextureManager().bind(EXPERIENCE_ORB_TEXTURES);
+        Minecraft.getInstance().getTextureManager().bindForSetup(EXPERIENCE_ORB_TEXTURES);
         matrixStack.pushPose();
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.25F, 0.25F, 0.25F);

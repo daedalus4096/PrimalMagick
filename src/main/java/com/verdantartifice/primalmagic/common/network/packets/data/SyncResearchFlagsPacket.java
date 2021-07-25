@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet to update research entry flag data on the server (e.g. when a user clicks an "updated" entry

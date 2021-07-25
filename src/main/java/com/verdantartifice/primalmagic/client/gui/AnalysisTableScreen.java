@@ -52,7 +52,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
     
@@ -81,15 +81,14 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
     }
 
     protected void initWidgets() {
-        this.buttons.clear();
-        this.children.clear();
+        this.clearWidgets();
         
-        this.addButton(new ImageButton(this.leftPos + 78, this.topPos + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
+        this.addRenderableWidget(new ImageButton(this.leftPos + 78, this.topPos + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
             PacketHandler.sendToServer(new AnalysisActionPacket(this.menu.containerId));
         }));
         
         // Render observation tracker widget
-        this.addButton(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));
         
         // Show affinity widgets, if the last scanned stack has affinities
         ItemStack lastScannedStack = this.menu.getLastScannedStack();
@@ -100,7 +99,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
                 int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
                 int y = this.topPos + 10;
                 for (Source source : sources.getSourcesSorted()) {
-                    this.addButton(new AffinityWidget(source, sources.getAmount(source), x, y));
+                    this.addRenderableWidget(new AffinityWidget(source, sources.getAmount(source), x, y));
                     x += 18;
                 }
             }

@@ -46,6 +46,7 @@ public class ArcanometerItem extends Item {
         super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON).setISTER(() -> ArcanometerISTER::new));
     }
     
+    @SuppressWarnings("deprecation")
     public static ItemPropertyFunction getScanStateProperty() {
     	return new ItemPropertyFunction() {
             @OnlyIn(Dist.CLIENT)
@@ -53,7 +54,7 @@ public class ArcanometerItem extends Item {
 
             @OnlyIn(Dist.CLIENT)
             @Override
-            public float call(ItemStack stack, ClientLevel world, LivingEntity entity) {
+            public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) {
                 if (entity == null || !(entity instanceof Player)) {
                     return 0.0F;
                 } else {

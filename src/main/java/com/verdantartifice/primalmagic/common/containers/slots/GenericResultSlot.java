@@ -34,9 +34,9 @@ public class GenericResultSlot extends Slot {
     }
     
     @Override
-    public ItemStack onTake(Player thePlayer, ItemStack stack) {
+    public void onTake(Player thePlayer, ItemStack stack) {
         this.checkTakeAchievements(stack);
-        return super.onTake(thePlayer, stack);
+        super.onTake(thePlayer, stack);
     }
     
     @Override

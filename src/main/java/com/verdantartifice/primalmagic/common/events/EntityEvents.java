@@ -2,29 +2,25 @@ package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
-import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
-import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.util.Mth;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,7 +34,23 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class EntityEvents {
     @SubscribeEvent
-    public static void onEnderTeleport(EnderTeleportEvent event) {
+    public static void onEnderEntityTeleport(EntityTeleportEvent.EnderEntity event) {
+        // Prevent the teleport if the teleporter is afflicted with Enderlock
+        if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.get())) {
+            event.setCanceled(true);
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onEnderPearlTeleport(EntityTeleportEvent.EnderPearl event) {
+        // Prevent the teleport if the teleporter is afflicted with Enderlock
+        if (event.isCancelable() && event.getPlayer().hasEffect(EffectsPM.ENDERLOCK.get())) {
+            event.setCanceled(true);
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onChorusFruitTeleport(EntityTeleportEvent.ChorusFruit event) {
         // Prevent the teleport if the teleporter is afflicted with Enderlock
         if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.get())) {
             event.setCanceled(true);
@@ -46,22 +58,22 @@ public class EntityEvents {
     }
     
     @SubscribeEvent(priority=EventPriority.LOWEST)
-    public static void onEnderTeleportLowest(EnderTeleportEvent event) {
+    public static void onEnderPearlTeleportLowest(EntityTeleportEvent.EnderPearl event) {
+        // Keep track of the distance teleported for stats
+        Player entity = event.getPlayer();
+        Vec3 start = entity.position();
+        Vec3 end = new Vec3(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+        StatsManager.incrementValue((Player)entity, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * start.distanceTo(end)));
+    }
+    
+    @SubscribeEvent(priority=EventPriority.LOWEST)
+    public static void onChorusFruitTeleportLowest(EntityTeleportEvent.ChorusFruit event) {
         // Keep track of the distance teleported for stats
         LivingEntity entity = event.getEntityLiving();
         if (!event.isCanceled() && entity instanceof Player) {
             Vec3 start = entity.position();
             Vec3 end = new Vec3(event.getTargetX(), event.getTargetY(), event.getTargetZ());
             StatsManager.incrementValue((Player)entity, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * start.distanceTo(end)));
-        }
-    }
-    
-    @SubscribeEvent
-    public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
-        // If the shooter has the Enderport enchantment, teleport to the hit location
-        Entity shooter = event.getArrow().getOwner();
-        if (shooter instanceof LivingEntity && EnchantmentHelperPM.hasEnderport((LivingEntity)shooter)) {
-            EntityUtils.teleportEntity((LivingEntity)shooter, event.getArrow().level, event.getRayTraceResult().getLocation());
         }
     }
     

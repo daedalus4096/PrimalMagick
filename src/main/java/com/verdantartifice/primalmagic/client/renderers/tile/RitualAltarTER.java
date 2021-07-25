@@ -13,8 +13,10 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.util.Mth;
 import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,9 +30,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
-public class RitualAltarTER extends BlockEntityRenderer<RitualAltarTileEntity> {
-    public RitualAltarTER(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity> {
+    protected Level level;
+    
+    public RitualAltarTER(BlockEntityRendererProvider.Context context) {
+        this.level = context.getBlockEntityRenderDispatcher().level;
     }
     
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
@@ -90,7 +94,7 @@ public class RitualAltarTER extends BlockEntityRenderer<RitualAltarTileEntity> {
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = tileEntityIn.getSyncedStackInSlot(0).copy();
         if (!stack.isEmpty()) {
-            int rot = (int)(this.renderer.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 1.5D, 0.5D);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis

@@ -91,7 +91,7 @@ public class OfferingPedestalBlock extends Block implements ISaltPowered, IRitua
                     if (player.getItemInHand(handIn).getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
                     }
-                    player.inventory.setChanged();
+                    player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                     return InteractionResult.SUCCESS;
                 } else if (!pedestalTile.getItem(0).isEmpty() && player.getItemInHand(handIn).isEmpty()) {
@@ -99,7 +99,7 @@ public class OfferingPedestalBlock extends Block implements ISaltPowered, IRitua
                     ItemStack stack = pedestalTile.getItem(0).copy();
                     pedestalTile.setItem(0, ItemStack.EMPTY);
                     player.setItemInHand(handIn, stack);
-                    player.inventory.setChanged();
+                    player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                     return InteractionResult.SUCCESS;
                 }

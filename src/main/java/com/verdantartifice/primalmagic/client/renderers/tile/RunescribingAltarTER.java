@@ -8,8 +8,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+
 import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -21,11 +24,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarBlock}
  */
 @OnlyIn(Dist.CLIENT)
-public class RunescribingAltarTER extends BlockEntityRenderer<RunescribingAltarTileEntity> {
+public class RunescribingAltarTER implements BlockEntityRenderer<RunescribingAltarTileEntity> {
     protected ItemStack runeStack = null;
+    protected Level level;
     
-    public RunescribingAltarTER(BlockEntityRenderDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+    public RunescribingAltarTER(BlockEntityRendererProvider.Context context) {
+        this.level = context.getBlockEntityRenderDispatcher().level;
     }
     
     protected ItemStack getRuneStack() {
@@ -40,7 +44,7 @@ public class RunescribingAltarTER extends BlockEntityRenderer<RunescribingAltarT
         ItemStack stack = this.getRuneStack();
         if (!stack.isEmpty()) {
             // Render the rune stack above the altar
-            int rot = (int)(this.renderer.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 1.1D, 0.5D);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis

@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagic.common.commands.PrimalMagicCommand;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
 
 /**
  * Handlers for server lifecycle related events.

@@ -19,7 +19,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Definition for a spell projectile entity.  Shot from a wand or scroll, they fly through the world until colliding with a

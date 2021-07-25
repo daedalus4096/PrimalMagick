@@ -7,8 +7,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+
 import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -20,9 +23,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
  */
 @OnlyIn(Dist.CLIENT)
-public class WandChargerTER extends BlockEntityRenderer<WandChargerTileEntity> {
-    public WandChargerTER(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+public class WandChargerTER implements BlockEntityRenderer<WandChargerTileEntity> {
+    protected Level level;
+    
+    public WandChargerTER(BlockEntityRendererProvider.Context context) {
+        this.level = context.getBlockEntityRenderDispatcher().level;
     }
     
     @Override
@@ -31,7 +36,7 @@ public class WandChargerTER extends BlockEntityRenderer<WandChargerTileEntity> {
         if (!wandStack.isEmpty()) {
             // Render the wand in the center of the charger
             wandStack.setCount(1);
-            int rot = (int)(this.renderer.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 0.5D, 0.5D);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the wand around its Y-axis

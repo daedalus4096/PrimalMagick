@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent from the server to trigger a spell bolt particle effect on the client.

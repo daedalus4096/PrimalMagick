@@ -43,9 +43,9 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.pushPose();
         if (discovered) {
-            mc.getTextureManager().bind(this.source.getImage());
+            mc.getTextureManager().bindForSetup(this.source.getImage());
         } else {
-            mc.getTextureManager().bind(Source.getUnknownImage());
+            mc.getTextureManager().bindForSetup(Source.getUnknownImage());
         }
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);

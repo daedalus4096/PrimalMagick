@@ -36,7 +36,7 @@ public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescri
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
-        this.minecraft.getTextureManager().bind(this.getTextureLocation());
+        this.minecraft.getTextureManager().bindForSetup(this.getTextureLocation());
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

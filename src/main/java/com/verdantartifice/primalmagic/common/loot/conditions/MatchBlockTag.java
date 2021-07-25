@@ -42,7 +42,7 @@ public class MatchBlockTag implements LootItemCondition {
         return LootConditionTypesPM.MATCH_BLOCK_TAG;
     }
     
-    public static class Serializer implements Serializer<MatchBlockTag> {
+    public static class ConditionSerializer implements Serializer<MatchBlockTag> {
         @Override
         public void serialize(JsonObject obj, MatchBlockTag condition, JsonSerializationContext context) {
             obj.addProperty("tag", condition.tag.getName().toString());

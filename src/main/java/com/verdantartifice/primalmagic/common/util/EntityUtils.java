@@ -24,7 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 
 /**
  * Collection of utility methods pertaining to entities.
@@ -181,8 +181,8 @@ public class EntityUtils {
      * @param destination the point to which to teleport
      */
     public static void teleportEntity(LivingEntity player, Level world, Vec3 destination) {
-        // Fire an EnderTeleportEvent to allow cancellation or modification of the teleport
-        EnderTeleportEvent event = new EnderTeleportEvent(player, destination.x, destination.y, destination.z, 0.0F);
+        // Fire an EntityTeleportEvent to allow cancellation or modification of the teleport
+        EntityTeleportEvent.EnderEntity event = new EntityTeleportEvent.EnderEntity(player, destination.x, destination.y, destination.z);
         if (!MinecraftForge.EVENT_BUS.post(event)) {
             // Show a teleport particle effect at the destination
             PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.dimension(), new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()), 64.0D);
@@ -197,9 +197,6 @@ public class EntityUtils {
                     // Do the teleportation
                     player.teleportTo(event.getTargetX(), event.getTargetY(), event.getTargetZ());
                     player.fallDistance = 0.0F;
-                    if (event.getAttackDamage() > 0.0F) {
-                        player.hurt(DamageSource.FALL, event.getAttackDamage());
-                    }
                 }
             }
         }
