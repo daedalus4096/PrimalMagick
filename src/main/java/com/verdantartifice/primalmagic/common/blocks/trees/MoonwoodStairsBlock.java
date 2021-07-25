@@ -4,8 +4,10 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.LevelAccessor;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 /**
  * Block definition for moonwood stairs.  They are decorative blocks that fade out of existence and become indestructable during the day.
@@ -18,7 +20,7 @@ public class MoonwoodStairsBlock extends AbstractPhasingStairsBlock {
     }
 
     @Override
-    protected TimePhase getCurrentPhase(IWorld world) {
+    protected TimePhase getCurrentPhase(LevelAccessor world) {
         return TimePhase.getMoonPhase(world);
     }
 }

@@ -6,13 +6,13 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition for a blood damage spell.  Does standard damage to the target, and bypasses any armor
@@ -42,14 +42,14 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, BlockPos origin) {
-        world.playSound(null, origin, SoundsPM.BLOOD.get(), SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(Level world, BlockPos origin) {
+        world.playSound(null, origin, SoundsPM.BLOOD.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
     
     @Override
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
         // Bypass the target's armor, if any
-        return super.getDamageSource(target, source).setDamageBypassesArmor();
+        return super.getDamageSource(target, source).bypassArmor();
     }
 
     @Override

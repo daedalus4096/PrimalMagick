@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.research;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.tags.ITag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.Tag;
 
 /**
  * Definition of a trigger that grants a specified research entry upon scanning an entity type in a
@@ -11,19 +11,19 @@ import net.minecraft.tags.ITag;
  * @author Daedalus4096
  */
 public class ScanEntityTagResearchTrigger extends AbstractScanResearchTrigger {
-    protected final ITag<EntityType<?>> target;
+    protected final Tag<EntityType<?>> target;
 
-    public ScanEntityTagResearchTrigger(ITag<EntityType<?>> target, SimpleResearchKey toUnlock) {
+    public ScanEntityTagResearchTrigger(Tag<EntityType<?>> target, SimpleResearchKey toUnlock) {
         this(target, toUnlock, true);
     }
     
-    public ScanEntityTagResearchTrigger(ITag<EntityType<?>> target, SimpleResearchKey toUnlock, boolean unlockScansPage) {
+    public ScanEntityTagResearchTrigger(Tag<EntityType<?>> target, SimpleResearchKey toUnlock, boolean unlockScansPage) {
         super(toUnlock, unlockScansPage);
         this.target = target;
     }
 
     @Override
-    public boolean matches(ServerPlayerEntity player, Object obj) {
+    public boolean matches(ServerPlayer player, Object obj) {
         if (obj instanceof EntityType<?>) {
             return this.target.contains((EntityType<?>)obj);
         } else {

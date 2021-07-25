@@ -8,8 +8,8 @@ import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -28,11 +28,11 @@ public class StartProjectPacket implements IMessageToServer {
         this.windowId = windowId;
     }
     
-    public static void encode(StartProjectPacket message, PacketBuffer buf) {
+    public static void encode(StartProjectPacket message, FriendlyByteBuf buf) {
         buf.writeInt(message.windowId);
     }
     
-    public static StartProjectPacket decode(PacketBuffer buf) {
+    public static StartProjectPacket decode(FriendlyByteBuf buf) {
         StartProjectPacket message = new StartProjectPacket();
         message.windowId = buf.readInt();
         return message;
@@ -42,10 +42,10 @@ public class StartProjectPacket implements IMessageToServer {
         public static void onMessage(StartProjectPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                ServerPlayerEntity player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                if (player.openContainer != null && player.openContainer.windowId == message.windowId && player.openContainer instanceof ResearchTableContainer) {
-                    ((ResearchTableContainer)player.openContainer).getWorldPosCallable().consume((world, blockPos) -> {
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
+                    ((ResearchTableContainer)player.containerMenu).getWorldPosCallable().execute((world, blockPos) -> {
                         knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
                     });
                     knowledge.sync(player);

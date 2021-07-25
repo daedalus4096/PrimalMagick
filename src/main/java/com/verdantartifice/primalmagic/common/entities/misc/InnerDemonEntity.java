@@ -15,35 +15,35 @@ import com.verdantartifice.primalmagic.common.spells.payloads.BloodDamageSpellPa
 import com.verdantartifice.primalmagic.common.spells.vehicles.ProjectileSpellVehicle;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IChargeableMob;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PowerableMob;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -53,48 +53,48 @@ import net.minecraftforge.event.ForgeEventFactory;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(value = Dist.CLIENT, _interface = IChargeableMob.class)
-public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob, IChargeableMob {
+@OnlyIn(value = Dist.CLIENT, _interface = PowerableMob.class)
+public class InnerDemonEntity extends Monster implements RangedAttackMob, PowerableMob {
     public static final double HEAL_RANGE = 16.0D;
     protected static final double SIN_CRASH_RANGE = 12.0D;
 
-    protected final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
+    protected final ServerBossEvent bossInfo = (ServerBossEvent)(new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
     protected boolean isSuffocating = false;
     protected List<SinCrystalEntity> crystalsInRange = new ArrayList<>();
 
-    public InnerDemonEntity(EntityType<? extends InnerDemonEntity> type, World worldIn) {
+    public InnerDemonEntity(EntityType<? extends InnerDemonEntity> type, Level worldIn) {
         super(type, worldIn);
-        this.getNavigator().setCanSwim(true);
-        this.experienceValue = 50;
+        this.getNavigation().setCanFloat(true);
+        this.xpReward = 50;
     }
     
-    public static AttributeModifierMap.MutableAttribute getAttributeModifiers() {
-        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MAX_HEALTH, 400.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23D).createMutableAttribute(Attributes.FOLLOW_RANGE, 40.0D).createMutableAttribute(Attributes.ARMOR, 4.0D).createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.5D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 12.0D).createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 1.5D);
+    public static AttributeSupplier.Builder getAttributeModifiers() {
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 400.0D).add(Attributes.MOVEMENT_SPEED, 0.23D).add(Attributes.FOLLOW_RANGE, 40.0D).add(Attributes.ARMOR, 4.0D).add(Attributes.KNOCKBACK_RESISTANCE, 0.5D).add(Attributes.ATTACK_DAMAGE, 12.0D).add(Attributes.ATTACK_KNOCKBACK, 1.5D);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new InnerDemonEntity.SinCrashGoal(this, 100, 600));
         this.goalSelector.addGoal(3, new LongDistanceRangedAttackGoal<>(this, 1.0D, 30, 4.0F, 16.0F, true));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-        this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 0, false, false, null));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, null));
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
         if (this.hasCustomName()) {
             this.bossInfo.setName(this.getDisplayName());
         }
     }
 
     @Override
-    public void setCustomName(ITextComponent name) {
+    public void setCustomName(Component name) {
         super.setCustomName(name);
         this.bossInfo.setName(this.getDisplayName());
     }
@@ -105,113 +105,113 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
         ProjectileSpellVehicle vehicle = new ProjectileSpellVehicle();
         spell.setVehicle(vehicle);
         BloodDamageSpellPayload payload = new BloodDamageSpellPayload();
-        Difficulty difficulty = this.world.getDifficulty();
+        Difficulty difficulty = this.level.getDifficulty();
         payload.getProperty("power").setValue(difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 5 : 3));
         spell.setPayload(payload);
         return spell;
     }
 
     @Override
-    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-        this.getSpellPackage().cast(this.world, this, null);
+    public void performRangedAttack(LivingEntity target, float distanceFactor) {
+        this.getSpellPackage().cast(this.level, this, null);
     }
 
     @Override
-    public boolean isCharged() {
+    public boolean isPowered() {
         return true;
     }
 
     @Override
-    public void livingTick() {
+    public void aiStep() {
         // Detect nearby sin crystals and heal for each
-        this.crystalsInRange = EntityUtils.getEntitiesInRange(this.world, this.getPositionVec(), null, SinCrystalEntity.class, HEAL_RANGE);
-        if (!this.crystalsInRange.isEmpty() && this.ticksExisted % 10 == 0 && !this.world.isRemote) {
+        this.crystalsInRange = EntityUtils.getEntitiesInRange(this.level, this.position(), null, SinCrystalEntity.class, HEAL_RANGE);
+        if (!this.crystalsInRange.isEmpty() && this.tickCount % 10 == 0 && !this.level.isClientSide) {
             this.heal((float)this.crystalsInRange.size());
         }
-        super.livingTick();
+        super.aiStep();
     }
 
     @Override
-    protected void updateAITasks() {
-        if (!this.world.isRemote) {
+    protected void customServerAiStep() {
+        if (!this.level.isClientSide) {
             // Explode if suffocating
-            if (this.isSuffocating && this.ticksExisted % 20 == 0) {
-                Explosion.Mode mode = ForgeEventFactory.getMobGriefingEvent(this.world, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-                this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 7.0F, false, mode);
+            if (this.isSuffocating && this.tickCount % 20 == 0) {
+                Explosion.BlockInteraction mode = ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+                this.level.explode(this, this.getX(), this.getY(), this.getZ(), 7.0F, false, mode);
                 this.isSuffocating = false;
             }
             
             this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
         }
-        super.updateAITasks();
+        super.customServerAiStep();
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity entityIn) {
-        boolean retVal = super.attackEntityAsMob(entityIn);
-        entityIn.setFire(5);
+    public boolean doHurtTarget(Entity entityIn) {
+        boolean retVal = super.doHurtTarget(entityIn);
+        entityIn.setSecondsOnFire(5);
         return retVal;
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (source == DamageSource.DROWN || source.getTrueSource() instanceof InnerDemonEntity) {
+    public boolean hurt(DamageSource source, float amount) {
+        if (source == DamageSource.DROWN || source.getEntity() instanceof InnerDemonEntity) {
             return false;
         } else {
             if (source == DamageSource.IN_WALL) {
                 this.isSuffocating = true;
             }
-            return super.attackEntityFrom(source, amount);
+            return super.hurt(source, amount);
         }
     }
 
     @Override
-    public void addTrackingPlayer(ServerPlayerEntity player) {
-        super.addTrackingPlayer(player);
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
         this.bossInfo.addPlayer(player);
     }
 
     @Override
-    public void removeTrackingPlayer(ServerPlayerEntity player) {
-        super.removeTrackingPlayer(player);
+    public void stopSeenByPlayer(ServerPlayer player) {
+        super.stopSeenByPlayer(player);
         this.bossInfo.removePlayer(player);
     }
 
     @Override
-    protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-        super.dropSpecialItems(source, looting, recentlyHitIn);
-        ItemEntity itemEntity = this.entityDropItem(ItemsPM.HALLOWED_ORB.get());
+    protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
+        super.dropCustomDeathLoot(source, looting, recentlyHitIn);
+        ItemEntity itemEntity = this.spawnAtLocation(ItemsPM.HALLOWED_ORB.get());
         if (itemEntity != null) {
-            itemEntity.setNoDespawn();
+            itemEntity.setExtendedLifetime();
         }
     }
 
     @Override
     public void checkDespawn() {
-        if (this.world.getDifficulty() == Difficulty.PEACEFUL && this.isDespawnPeaceful()) {
+        if (this.level.getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
             this.remove();
         } else {
-            this.idleTime = 0;
+            this.noActionTime = 0;
         }
     }
 
     @Override
-    public boolean onLivingFall(float distance, float damageMultiplier) {
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
         return false;
     }
 
     @Override
-    public boolean isPotionApplicable(EffectInstance potioneffectIn) {
+    public boolean canBeAffected(MobEffectInstance potioneffectIn) {
         return false;
     }
 
     @Override
-    protected boolean canBeRidden(Entity entityIn) {
+    protected boolean canRide(Entity entityIn) {
         return false;
     }
 
     @Override
-    public boolean canChangeDimension() {
+    public boolean canChangeDimensions() {
         return false;
     }
     
@@ -221,21 +221,21 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
     }
     
     public void doSinCrash() {
-        if (!this.world.isRemote) {
-            double demonPosX = this.getPosX();
-            double demonPosY = this.getPosYEye();
-            double demonPosZ = this.getPosZ();
-            Difficulty difficulty = this.world.getDifficulty();
+        if (!this.level.isClientSide) {
+            double demonPosX = this.getX();
+            double demonPosY = this.getEyeY();
+            double demonPosZ = this.getZ();
+            Difficulty difficulty = this.level.getDifficulty();
             int crashCount = difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 3 : 2);
             for (int index = 0; index < crashCount; index++) {
-                double dx = this.world.rand.nextGaussian() * SIN_CRASH_RANGE * (this.world.rand.nextBoolean() ? 1.0D : -1.0D);
+                double dx = this.level.random.nextGaussian() * SIN_CRASH_RANGE * (this.level.random.nextBoolean() ? 1.0D : -1.0D);
                 double dy = -1.0D * (double)this.getEyeHeight();
-                double dz = this.world.rand.nextGaussian() * SIN_CRASH_RANGE * (this.world.rand.nextBoolean() ? 1.0D : -1.0D);
-                SinCrashEntity crash = new SinCrashEntity(this.world, this, dx, dy, dz);
-                crash.setLocationAndAngles(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
-                this.world.addEntity(crash);
+                double dz = this.level.random.nextGaussian() * SIN_CRASH_RANGE * (this.level.random.nextBoolean() ? 1.0D : -1.0D);
+                SinCrashEntity crash = new SinCrashEntity(this.level, this, dx, dy, dz);
+                crash.moveTo(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
+                this.level.addFreshEntity(crash);
             }
-            this.world.playSound(null, demonPosX, demonPosY, demonPosZ, SoundsPM.WHISPERS.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
+            this.level.playSound(null, demonPosX, demonPosY, demonPosZ, SoundsPM.WHISPERS.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
         }
     }
     
@@ -253,13 +253,13 @@ public class InnerDemonEntity extends MonsterEntity implements IRangedAttackMob,
         }
 
         @Override
-        public boolean shouldExecute() {
-            LivingEntity target = this.demon.getAttackTarget();
+        public boolean canUse() {
+            LivingEntity target = this.demon.getTarget();
             return (target != null && target.isAlive());
         }
 
         @Override
-        public void resetTask() {
+        public void stop() {
             this.timer = this.startDelayTicks;
         }
 

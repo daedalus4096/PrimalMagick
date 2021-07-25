@@ -11,9 +11,9 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -22,26 +22,26 @@ import net.minecraftforge.fml.network.NetworkEvent;
  * @author Daedalus4096
  */
 public class SyncKnowledgePacket implements IMessageToClient {
-    protected CompoundNBT data;
+    protected CompoundTag data;
     
     public SyncKnowledgePacket() {
         this.data = null;
     }
     
-    public SyncKnowledgePacket(PlayerEntity player) {
+    public SyncKnowledgePacket(Player player) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
         this.data = (knowledge != null) ?
                 knowledge.serializeNBT() :
                 null;
     }
     
-    public static void encode(SyncKnowledgePacket message, PacketBuffer buf) {
-        buf.writeCompoundTag(message.data);
+    public static void encode(SyncKnowledgePacket message, FriendlyByteBuf buf) {
+        buf.writeNbt(message.data);
     }
     
-    public static SyncKnowledgePacket decode(PacketBuffer buf) {
+    public static SyncKnowledgePacket decode(FriendlyByteBuf buf) {
         SyncKnowledgePacket message = new SyncKnowledgePacket();
-        message.data = buf.readCompoundTag();
+        message.data = buf.readNbt();
         return message;
     }
     
@@ -50,7 +50,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
             	Minecraft mc = Minecraft.getInstance();
-                PlayerEntity player = mc.player;
+                Player player = mc.player;
                 IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                 if (knowledge != null) {
                     knowledge.deserializeNBT(message.data);
@@ -59,7 +59,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
                         if (knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {
                             ResearchEntry entry = ResearchEntries.getEntry(key);
                             if (entry != null) {
-                                Minecraft.getInstance().getToastGui().add(new ResearchToast(entry));
+                                Minecraft.getInstance().getToasts().addToast(new ResearchToast(entry));
                             }
                             knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
                         }

@@ -2,16 +2,16 @@ package com.verdantartifice.primalmagic.common.enchantments;
 
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.TridentItem;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.effect.MobEffectInstance;
 
 /**
  * Definition of an enchantment that causes mobs to drop a sample of their essence when killed.
@@ -19,18 +19,18 @@ import net.minecraft.potion.EffectInstance;
  * @author Daedalus4096
  */
 public class EssenceThiefEnchantment extends AbstractRuneEnchantment {
-    public EssenceThiefEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
-        super(rarity, EnchantmentType.WEAPON, slots);
+    public EssenceThiefEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
+        super(rarity, EnchantmentCategory.WEAPON, slots);
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + ((enchantmentLevel - 1) * 10);
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 15;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 15;
     }
     
     @Override
@@ -39,16 +39,16 @@ public class EssenceThiefEnchantment extends AbstractRuneEnchantment {
     }
     
     @Override
-    public boolean canApply(ItemStack stack) {
+    public boolean canEnchant(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof TridentItem || item instanceof AxeItem ? true : super.canApply(stack);
+        return item instanceof TridentItem || item instanceof AxeItem ? true : super.canEnchant(stack);
     }
 
     @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-        super.onEntityDamaged(user, target, level);
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
+        super.doPostAttack(user, target, level);
         if (target instanceof LivingEntity) {
-            ((LivingEntity)target).addPotionEffect(new EffectInstance(EffectsPM.STOLEN_ESSENCE.get(), 200, Math.max(0, level - 1)));
+            ((LivingEntity)target).addEffect(new MobEffectInstance(EffectsPM.STOLEN_ESSENCE.get(), 200, Math.max(0, level - 1)));
         }
     }
 }

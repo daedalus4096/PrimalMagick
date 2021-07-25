@@ -1,25 +1,25 @@
 package com.verdantartifice.primalmagic.common.items.concoctions;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CauldronBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CauldronBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DrinkHelper;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 
 /**
  * Base definition of a concoction container.  Interacts with water sources to fill the container
@@ -35,56 +35,56 @@ public abstract class AbstractConcoctionContainerItem extends Item {
     protected abstract ItemStack getConcoctionContainerItem();
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemStack = playerIn.getHeldItem(handIn);
-        RayTraceResult rayTraceResult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
-        if (rayTraceResult.getType() == RayTraceResult.Type.MISS) {
-            return ActionResult.resultPass(itemStack);
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack itemStack = playerIn.getItemInHand(handIn);
+        HitResult rayTraceResult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
+        if (rayTraceResult.getType() == HitResult.Type.MISS) {
+            return InteractionResultHolder.pass(itemStack);
         } else {
-            if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
-                BlockPos blockPos = ((BlockRayTraceResult)rayTraceResult).getPos();
-                if (!worldIn.isBlockModifiable(playerIn, blockPos)) {
-                    return ActionResult.resultPass(itemStack);
+            if (rayTraceResult.getType() == HitResult.Type.BLOCK) {
+                BlockPos blockPos = ((BlockHitResult)rayTraceResult).getBlockPos();
+                if (!worldIn.mayInteract(playerIn, blockPos)) {
+                    return InteractionResultHolder.pass(itemStack);
                 }
-                if (worldIn.getFluidState(blockPos).isTagged(FluidTags.WATER)) {
-                    worldIn.playSound(playerIn, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-                    return ActionResult.func_233538_a_(this.turnFlaskIntoItem(itemStack, playerIn, this.getConcoctionContainerItem()), worldIn.isRemote());
+                if (worldIn.getFluidState(blockPos).is(FluidTags.WATER)) {
+                    worldIn.playSound(playerIn, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                    return InteractionResultHolder.sidedSuccess(this.turnFlaskIntoItem(itemStack, playerIn, this.getConcoctionContainerItem()), worldIn.isClientSide());
                 }
             }
-            return ActionResult.resultPass(itemStack);
+            return InteractionResultHolder.pass(itemStack);
         }
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
         BlockState blockState = world.getBlockState(pos);
         if (blockState.getBlock() == Blocks.CAULDRON) {
-            int waterLevel = blockState.get(CauldronBlock.LEVEL);
-            if (waterLevel > 0 && !world.isRemote) {
-                PlayerEntity player = context.getPlayer();
-                if (!player.abilities.isCreativeMode) {
-                    ItemStack flaskStack = context.getItem();
+            int waterLevel = blockState.getValue(CauldronBlock.LEVEL);
+            if (waterLevel > 0 && !world.isClientSide) {
+                Player player = context.getPlayer();
+                if (!player.abilities.instabuild) {
+                    ItemStack flaskStack = context.getItemInHand();
                     ItemStack waterStack = this.getConcoctionContainerItem();
                     flaskStack.shrink(1);
                     if (flaskStack.isEmpty()) {
-                        player.setHeldItem(context.getHand(), waterStack);
-                    } else if (!player.inventory.addItemStackToInventory(waterStack)) {
-                        player.dropItem(waterStack, false);
-                    } else if (player instanceof ServerPlayerEntity) {
-                        ((ServerPlayerEntity)player).sendContainerToPlayer(player.container);
+                        player.setItemInHand(context.getHand(), waterStack);
+                    } else if (!player.inventory.add(waterStack)) {
+                        player.drop(waterStack, false);
+                    } else if (player instanceof ServerPlayer) {
+                        ((ServerPlayer)player).refreshContainer(player.inventoryMenu);
                     }
                 }
-                world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 ((CauldronBlock)Blocks.CAULDRON).setWaterLevel(world, pos, blockState, waterLevel - 1);                
             }
-            return ActionResultType.func_233537_a_(world.isRemote);
+            return InteractionResult.sidedSuccess(world.isClientSide);
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
     
-    protected ItemStack turnFlaskIntoItem(ItemStack flaskStack, PlayerEntity player, ItemStack stack) {
-        return DrinkHelper.fill(flaskStack, player, stack);
+    protected ItemStack turnFlaskIntoItem(ItemStack flaskStack, Player player, ItemStack stack) {
+        return ItemUtils.createFilledResult(flaskStack, player, stack);
     }
 }

@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of an essence furnace tile entity.  Provides the melting functionality for the corresponding
@@ -33,7 +33,7 @@ public class EssenceFurnaceTileEntity extends AbstractCalcinatorTileEntity {
     @Nonnull
     protected List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs) {
         List<ItemStack> output = new ArrayList<>();
-        SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.world);
+        SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.level);
         if (sources != null && !sources.isEmpty()) {
             for (Source source : Source.SORTED_SOURCES) {
                 int amount = sources.getAmount(source);

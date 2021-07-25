@@ -1,13 +1,13 @@
 package com.verdantartifice.primalmagic.common.affinities;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * Type of affinity entry.
  * 
  * @author Daedalus4096
  */
-public enum AffinityType implements IStringSerializable {
+public enum AffinityType implements StringRepresentable {
     ITEM("item", "items"),
     POTION_BONUS("potion_bonus", "potions"),
     ENCHANTMENT_BONUS("enchantment_bonus", "enchantments"),
@@ -22,7 +22,7 @@ public enum AffinityType implements IStringSerializable {
     }
 
     @Override
-    public String getString() {
+    public String getSerializedName() {
         return this.name;
     }
     

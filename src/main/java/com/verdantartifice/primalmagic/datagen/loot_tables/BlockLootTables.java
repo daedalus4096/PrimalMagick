@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 
 /**
  * Data provider for all of the mod's block loot tables.

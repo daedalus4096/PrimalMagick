@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -26,11 +26,11 @@ public class AnalysisActionPacket implements IMessageToServer {
         this.windowId = windowId;
     }
     
-    public static void encode(AnalysisActionPacket message, PacketBuffer buf) {
+    public static void encode(AnalysisActionPacket message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.windowId);
     }
     
-    public static AnalysisActionPacket decode(PacketBuffer buf) {
+    public static AnalysisActionPacket decode(FriendlyByteBuf buf) {
         AnalysisActionPacket message = new AnalysisActionPacket();
         message.windowId = buf.readVarInt();
         return message;
@@ -40,10 +40,10 @@ public class AnalysisActionPacket implements IMessageToServer {
         public static void onMessage(AnalysisActionPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                ServerPlayerEntity player = ctx.get().getSender();
-                if (player.openContainer != null && player.openContainer.windowId == message.windowId && player.openContainer instanceof AnalysisTableContainer) {
+                ServerPlayer player = ctx.get().getSender();
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof AnalysisTableContainer) {
                     // Trigger the scan if the open container window matches the given one
-                    ((AnalysisTableContainer)player.openContainer).doScan();
+                    ((AnalysisTableContainer)player.containerMenu).doScan();
                 }
             });
             

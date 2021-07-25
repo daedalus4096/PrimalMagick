@@ -10,17 +10,17 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
-public class ProjectTemplateLoader extends JsonReloadListener {
+public class ProjectTemplateLoader extends SimpleJsonResourceReloadListener {
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
     
@@ -45,7 +45,7 @@ public class ProjectTemplateLoader extends JsonReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> objectIn, IResourceManager resourceManagerIn, IProfiler profilerIn) {
+    protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
         TheorycraftManager.clearAllTemplates();
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {
             ResourceLocation location = entry.getKey();
@@ -55,7 +55,7 @@ public class ProjectTemplateLoader extends JsonReloadListener {
             }
 
             try {
-                ProjectTemplate template = TheorycraftManager.TEMPLATE_SERIALIZER.read(location, JSONUtils.getJsonObject(entry.getValue(), "top member"));
+                ProjectTemplate template = TheorycraftManager.TEMPLATE_SERIALIZER.read(location, GsonHelper.convertToJsonObject(entry.getValue(), "top member"));
                 if (template == null || !TheorycraftManager.registerTemplate(location, template)) {
                     LOGGER.error("Failed to register theorycrafting project template {}", location);
                 }

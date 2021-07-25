@@ -8,14 +8,14 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 /**
  * Base class for a damaging spell.  Deals projectile damage to the target entity, scaling with the
@@ -52,16 +52,16 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     protected abstract float getTotalDamage(Entity target, SpellPackage spell, @Nullable ItemStack spellSource);
     
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
-        return DamageSource.causeThrownDamage(target, source);
+        return DamageSource.thrown(target, source);
     }
 
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
-        if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
-            EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+        if (target != null && target.getType() == HitResult.Type.ENTITY) {
+            EntityHitResult entityTarget = (EntityHitResult)target;
             if (entityTarget.getEntity() != null) {
                 // Damage the target entity
-                entityTarget.getEntity().attackEntityFrom(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource));
+                entityTarget.getEntity().hurt(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource));
             }
         }
         
@@ -69,7 +69,7 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         this.applySecondaryEffects(target, burstPoint, spell, world, caster, spellSource);
     }
     
-    protected void applySecondaryEffects(@Nullable RayTraceResult target, @Nullable Vector3d burstPoint, @Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource) {
+    protected void applySecondaryEffects(@Nullable HitResult target, @Nullable Vec3 burstPoint, @Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource) {
         // Do nothing by default
     }
 }

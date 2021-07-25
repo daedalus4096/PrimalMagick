@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.util;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Definition of a line segment between two points in 3D space.
@@ -10,36 +10,36 @@ import net.minecraft.util.math.vector.Vector3d;
  * @author Daedalus4096
  */
 public class LineSegment {
-    protected Vector3d start;
-    protected Vector3d end;
+    protected Vec3 start;
+    protected Vec3 end;
     
-    public LineSegment(Vector3d start, Vector3d end) {
+    public LineSegment(Vec3 start, Vec3 end) {
         this.start = start;
         this.end = end;
     }
     
-    public Vector3d getStart() {
+    public Vec3 getStart() {
         return this.start;
     }
     
-    public Vector3d getEnd() {
+    public Vec3 getEnd() {
         return this.end;
     }
     
-    public Vector3d getMiddle() {
+    public Vec3 getMiddle() {
         // Calculate the midpoint of the line segment
         double x = (this.start.x + this.end.x) / 2.0D;
         double y = (this.start.y + this.end.y) / 2.0D;
         double z = (this.start.z + this.end.z) / 2.0D;
-        return new Vector3d(x, y, z);
+        return new Vec3(x, y, z);
     }
     
-    public Vector3d getDelta() {
+    public Vec3 getDelta() {
         // Return what the end of the segment would be if it started at (0,0,0)
         return this.end.subtract(this.start);
     }
     
-    public void perturb(@Nonnull Vector3d perturbStart, @Nonnull Vector3d perturbEnd) {
+    public void perturb(@Nonnull Vec3 perturbStart, @Nonnull Vec3 perturbEnd) {
         // Displace the start and end of the line segment by the given deltas
         this.start = this.start.add(perturbStart);
         this.end = this.end.add(perturbEnd);

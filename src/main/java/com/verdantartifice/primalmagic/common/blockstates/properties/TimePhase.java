@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagic.common.blockstates.properties;
 
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.world.IWorld;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.LevelAccessor;
 
 /**
  * Representation of the current phase of a block that phases in and out over time.
  * 
  * @author Daedalus4096
  */
-public enum TimePhase implements IStringSerializable {
+public enum TimePhase implements StringRepresentable {
     FULL("full", 10),		// The block is fully phased in; use full light
     WAXING("waxing", 5),	// The block is mostly phased in; half light
     WANING("waning", 0),    // The block is mostly phased out; no light
@@ -22,8 +22,8 @@ public enum TimePhase implements IStringSerializable {
         this.light = light;
     }
     
-    public static TimePhase getSunPhase(IWorld world) {
-        float angle = world.func_242415_f(1.0F);
+    public static TimePhase getSunPhase(LevelAccessor world) {
+        float angle = world.getTimeOfDay(1.0F);
         if (angle < 0.1875F) {
             return FULL;    // Afternoon
         } else if (angle < 0.25F) {
@@ -41,8 +41,8 @@ public enum TimePhase implements IStringSerializable {
         }
     }
     
-    public static TimePhase getMoonPhase(IWorld world) {
-        float angle = world.func_242415_f(1.0F);
+    public static TimePhase getMoonPhase(LevelAccessor world) {
+        float angle = world.getTimeOfDay(1.0F);
         if (angle < 0.1875F) {
             return FADED;   // Afternoon
         } else if (angle < 0.25F) {
@@ -66,7 +66,7 @@ public enum TimePhase implements IStringSerializable {
     }
 
     @Override
-    public String getString() {
+    public String getSerializedName() {
         return this.name;
     }
     

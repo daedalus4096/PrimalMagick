@@ -11,16 +11,16 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -57,18 +57,18 @@ public class RitualRecipe implements IRitualRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inv, World worldIn) {
+    public boolean matches(CraftingContainer inv, Level worldIn) {
         // Ritual recipe matching only considers the ingredients, not the props
-        RecipeItemHelper helper = new RecipeItemHelper();
+        StackedContents helper = new StackedContents();
         List<ItemStack> inputs = new ArrayList<>();
         int count = 0;
         
-        for (int index = 0; index < inv.getSizeInventory(); index++) {
-            ItemStack stack = inv.getStackInSlot(index);
+        for (int index = 0; index < inv.getContainerSize(); index++) {
+            ItemStack stack = inv.getItem(index);
             if (!stack.isEmpty()) {
                 count++;
                 if (this.isSimple) {
-                    helper.func_221264_a(stack, 1);
+                    helper.accountStack(stack, 1);
                 } else {
                     inputs.add(stack);
                 }
@@ -79,18 +79,18 @@ public class RitualRecipe implements IRitualRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(CraftingInventory inv) {
+    public ItemStack assemble(CraftingContainer inv) {
         return this.recipeOutput.copy();
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         // Ritual recipes aren't space-limited
         return true;
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return this.recipeOutput;
     }
 
@@ -105,7 +105,7 @@ public class RitualRecipe implements IRitualRecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return RecipeSerializersPM.RITUAL.get();
     }
 
@@ -129,16 +129,16 @@ public class RitualRecipe implements IRitualRecipe {
         return this.instability;
     }
     
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RitualRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RitualRecipe> {
         @Override
-        public RitualRecipe read(ResourceLocation recipeId, JsonObject json) {
-            String group = JSONUtils.getString(json, "group", "");
-            SimpleResearchKey research = SimpleResearchKey.parse(JSONUtils.getString(json, "research", ""));
-            SourceList manaCosts = JsonUtils.toSourceList(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
-            int instability = JSONUtils.getInt(json, "instability", 0);
-            ItemStack result = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "result"), true);
-            NonNullList<Ingredient> ingredients = this.readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
-            NonNullList<BlockIngredient> props = this.readProps(JSONUtils.getJsonArray(json, "props", new JsonArray()));
+        public RitualRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            String group = GsonHelper.getAsString(json, "group", "");
+            SimpleResearchKey research = SimpleResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
+            SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
+            int instability = GsonHelper.getAsInt(json, "instability", 0);
+            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
+            NonNullList<Ingredient> ingredients = this.readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
+            NonNullList<BlockIngredient> props = this.readProps(GsonHelper.getAsJsonArray(json, "props", new JsonArray()));
             if (ingredients.isEmpty()) {
                 throw new JsonParseException("No ingredients for ritual recipe");
             } else {
@@ -149,8 +149,8 @@ public class RitualRecipe implements IRitualRecipe {
         protected NonNullList<Ingredient> readIngredients(JsonArray jsonArray) {
             NonNullList<Ingredient> retVal = NonNullList.create();
             for (int i = 0; i < jsonArray.size(); ++i) {
-                Ingredient ingredient = Ingredient.deserialize(jsonArray.get(i));
-                if (!ingredient.hasNoMatchingItems()) {
+                Ingredient ingredient = Ingredient.fromJson(jsonArray.get(i));
+                if (!ingredient.isEmpty()) {
                     retVal.add(ingredient);
                 }
             }
@@ -169,9 +169,9 @@ public class RitualRecipe implements IRitualRecipe {
         }
 
         @Override
-        public RitualRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-            String group = buffer.readString(32767);
-            SimpleResearchKey research = SimpleResearchKey.parse(buffer.readString(32767));
+        public RitualRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+            String group = buffer.readUtf(32767);
+            SimpleResearchKey research = SimpleResearchKey.parse(buffer.readUtf(32767));
             int instability = buffer.readVarInt();
             
             SourceList manaCosts = new SourceList();
@@ -182,7 +182,7 @@ public class RitualRecipe implements IRitualRecipe {
             int ingredientCount = buffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
             for (int index = 0; index < ingredients.size(); index++) {
-                ingredients.set(index, Ingredient.read(buffer));
+                ingredients.set(index, Ingredient.fromNetwork(buffer));
             }
             
             int propCount = buffer.readVarInt();
@@ -191,27 +191,27 @@ public class RitualRecipe implements IRitualRecipe {
                 props.set(index, BlockIngredient.read(buffer));
             }
             
-            ItemStack result = buffer.readItemStack();
+            ItemStack result = buffer.readItem();
             return new RitualRecipe(recipeId, group, research, manaCosts, instability, result, ingredients, props);
         }
 
         @Override
-        public void write(PacketBuffer buffer, RitualRecipe recipe) {
-            buffer.writeString(recipe.group);
-            buffer.writeString(recipe.research.toString());
+        public void toNetwork(FriendlyByteBuf buffer, RitualRecipe recipe) {
+            buffer.writeUtf(recipe.group);
+            buffer.writeUtf(recipe.research.toString());
             buffer.writeVarInt(recipe.instability);
             for (Source source : Source.SORTED_SOURCES) {
                 buffer.writeVarInt(recipe.manaCosts.getAmount(source));
             }
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {
-                ingredient.write(buffer);
+                ingredient.toNetwork(buffer);
             }
             buffer.writeVarInt(recipe.recipeProps.size());
             for (BlockIngredient prop : recipe.recipeProps) {
                 prop.write(buffer);
             }
-            buffer.writeItemStack(recipe.recipeOutput);
+            buffer.writeItem(recipe.recipeOutput);
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
 
 /**
  * Definition of an enchantment that grants a chance of bonus nuggets when mining quartz or metal
@@ -11,18 +11,18 @@ import net.minecraft.inventory.EquipmentSlotType;
  * @author Daedalus4096
  */
 public class LuckyStrikeEnchantment extends AbstractRuneEnchantment {
-    public LuckyStrikeEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
-        super(rarity, EnchantmentType.DIGGER, slots);
+    public LuckyStrikeEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
+        super(rarity, EnchantmentCategory.DIGGER, slots);
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + ((enchantmentLevel - 1) * 10);
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 15;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 15;
     }
     
     @Override

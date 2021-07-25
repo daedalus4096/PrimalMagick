@@ -2,16 +2,16 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -22,16 +22,16 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class BlockIngredientWidget extends Widget {
+public class BlockIngredientWidget extends AbstractWidget {
     protected final BlockIngredient ingredient;
     
     public BlockIngredientWidget(@Nullable BlockIngredient ingredient, int xIn, int yIn) {
-        super(xIn, yIn, 16, 16, StringTextComponent.EMPTY);
+        super(xIn, yIn, 16, 16, TextComponent.EMPTY);
         this.ingredient = ingredient;
     }
 
     @Override
-    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (this.ingredient != null) {
             Block[] matching = this.ingredient.getMatchingBlocks();
             if (matching != null && matching.length > 0) {
@@ -40,7 +40,7 @@ public class BlockIngredientWidget extends Widget {
                 Block block = matching[index];
                 ItemStack toDisplay = (block != null) ? 
                         new ItemStack(block) : 
-                        new ItemStack(Blocks.BARRIER).setDisplayName(new TranslationTextComponent("primalmagic.grimoire.missing_block"));
+                        new ItemStack(Blocks.BARRIER).setHoverName(new TranslatableComponent("primalmagic.grimoire.missing_block"));
                 GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
                 if (this.isHovered()) {
                     // If hovered, show a tooltip with the display name of the current matching itemstack

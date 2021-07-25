@@ -14,36 +14,36 @@ import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagic.common.tiles.rituals.SoulAnvilTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.item.FallingBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
@@ -56,7 +56,7 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class SoulAnvilBlock extends FallingBlock implements IRitualPropBlock {
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty DIRTY = BooleanProperty.create("dirty");
     
     protected static final VoxelShape BASE_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/soul_anvil"));
@@ -68,51 +68,51 @@ public class SoulAnvilBlock extends FallingBlock implements IRitualPropBlock {
     });
     
     public SoulAnvilBlock() {
-        super(Block.Properties.create(Material.ANVIL, MaterialColor.RED).hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
-        this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(DIRTY, Boolean.FALSE));
+        super(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F).sound(SoundType.ANVIL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
+        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(DIRTY, Boolean.FALSE));
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         builder.add(FACING, DIRTY);
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPES.getOrDefault(state.get(FACING), BASE_SHAPE);
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return SHAPES.getOrDefault(state.getValue(FACING), BASE_SHAPE);
     }
     
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().rotateY());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getClockWise());
     }
     
     @Override
-    protected void onStartFalling(FallingBlockEntity fallingEntity) {
-        fallingEntity.setHurtEntities(true);
+    protected void falling(FallingBlockEntity fallingEntity) {
+        fallingEntity.setHurtsEntities(true);
     }
     
     @Override
-    public void onEndFalling(World worldIn, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
+    public void onLand(Level worldIn, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
     	if (!fallingBlock.isSilent()) {
-            worldIn.playEvent(1031, pos, 0);
+            worldIn.levelEvent(1031, pos, 0);
     	}
     }
     
     @Override
-    public void onBroken(World worldIn, BlockPos pos, FallingBlockEntity fallingBlock) {
+    public void onBroken(Level worldIn, BlockPos pos, FallingBlockEntity fallingBlock) {
     	if (!fallingBlock.isSilent()) {
-            worldIn.playEvent(1029, pos, 0);
+            worldIn.levelEvent(1029, pos, 0);
     	}
     }
     
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
     @Override
-    public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
         return false;
     }
 
@@ -122,30 +122,30 @@ public class SoulAnvilBlock extends FallingBlock implements IRitualPropBlock {
     }
     
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return new SoulAnvilTileEntity();
     }
     
     @SuppressWarnings("deprecation")
     @Override
-    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         // Pass any received events on to the tile entity and let it decide what to do with it
-        super.eventReceived(state, worldIn, pos, id, param);
-        TileEntity tile = worldIn.getTileEntity(pos);
-        return (tile == null) ? false : tile.receiveClientEvent(id, param);
+        super.triggerEvent(state, worldIn, pos, id, param);
+        BlockEntity tile = worldIn.getBlockEntity(pos);
+        return (tile == null) ? false : tile.triggerEvent(id, param);
     }
     
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player != null && player.getHeldItem(handIn).getItem() == ItemsPM.SOUL_GEM.get() && !state.get(DIRTY)) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player != null && player.getItemInHand(handIn).getItem() == ItemsPM.SOUL_GEM.get() && !state.getValue(DIRTY)) {
             // If using a soul gem on a clean anvil, break it
-            worldIn.playSound(player, pos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
-            if (!worldIn.isRemote) {
-                worldIn.setBlockState(pos, state.with(DIRTY, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
-                if (!player.abilities.isCreativeMode) {
-                    player.getHeldItem(handIn).shrink(1);
-                    if (player.getHeldItem(handIn).getCount() <= 0) {
-                        player.setHeldItem(handIn, ItemStack.EMPTY);
+            worldIn.playSound(player, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            if (!worldIn.isClientSide) {
+                worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                if (!player.abilities.instabuild) {
+                    player.getItemInHand(handIn).shrink(1);
+                    if (player.getItemInHand(handIn).getCount() <= 0) {
+                        player.setItemInHand(handIn, ItemStack.EMPTY);
                     }
                 }
                 
@@ -154,32 +154,32 @@ public class SoulAnvilBlock extends FallingBlock implements IRitualPropBlock {
                     this.onPropActivated(state, worldIn, pos);
                 }
             }
-            return ActionResultType.SUCCESS;
-        } else if (player != null && player.getHeldItem(handIn).getItem().isIn(ItemTagsPM.MAGICAL_CLOTH) && state.get(DIRTY)) {
+            return InteractionResult.SUCCESS;
+        } else if (player != null && player.getItemInHand(handIn).getItem().is(ItemTagsPM.MAGICAL_CLOTH) && state.getValue(DIRTY)) {
             // If using a magical cloth on a dirty anvil, clean it
-            worldIn.playSound(player, pos, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
-            if (!worldIn.isRemote) {
-                worldIn.setBlockState(pos, state.with(DIRTY, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+            worldIn.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            if (!worldIn.isClientSide) {
+                worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
     }
     
     @SuppressWarnings("deprecation")
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isRemote && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
     
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // Show spell sparkles if receiving salt power
         if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
@@ -187,19 +187,19 @@ public class SoulAnvilBlock extends FallingBlock implements IRitualPropBlock {
     }
     
     @Override
-    public float getStabilityBonus(World world, BlockPos pos) {
+    public float getStabilityBonus(Level world, BlockPos pos) {
         return 0.03F;
     }
 
     @Override
-    public float getSymmetryPenalty(World world, BlockPos pos) {
+    public float getSymmetryPenalty(Level world, BlockPos pos) {
         return 0.03F;
     }
 
     @Override
-    public boolean isPropActivated(BlockState state, World world, BlockPos pos) {
+    public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
         if (state != null && state.getBlock() instanceof SoulAnvilBlock) {
-            return state.get(DIRTY);
+            return state.getValue(DIRTY);
         } else {
             return false;
         }

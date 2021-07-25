@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Data object identifying multiple research entries/stages at once.  Comprised of multiple simple
@@ -127,7 +127,7 @@ public class CompoundResearchKey {
         return this.requireAll;
     }
     
-    public boolean isKnownBy(@Nullable PlayerEntity player) {
+    public boolean isKnownBy(@Nullable Player player) {
         if (this.requireAll) {
             // If requireAll is true, the CRK is only known if all contained SRKs are known
             for (SimpleResearchKey simpleKey : this.keys) {
@@ -147,7 +147,7 @@ public class CompoundResearchKey {
         }
     }
     
-    public boolean isKnownByStrict(@Nullable PlayerEntity player) {
+    public boolean isKnownByStrict(@Nullable Player player) {
         if (this.requireAll) {
             // If requireAll is true, the CRK is only known if all contained SRKs are known
             for (SimpleResearchKey simpleKey : this.keys) {

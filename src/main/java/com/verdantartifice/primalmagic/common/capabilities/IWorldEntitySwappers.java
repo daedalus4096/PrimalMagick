@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.misc.EntitySwapper;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -15,7 +15,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface IWorldEntitySwappers extends INBTSerializable<CompoundNBT> {
+public interface IWorldEntitySwappers extends INBTSerializable<CompoundTag> {
     /**
      * Add the given entity swapper to the world's queue.
      * 

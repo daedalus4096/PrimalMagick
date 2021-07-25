@@ -7,42 +7,42 @@ import com.verdantartifice.primalmagic.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandGemItem;
 
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.SpecialRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
 /**
  * Special definition for a wand assembly recipe.
  * 
  * @author Daedalus4096
  */
-public class WandAssemblyRecipe extends SpecialRecipe {
+public class WandAssemblyRecipe extends CustomRecipe {
     public WandAssemblyRecipe(ResourceLocation idIn) {
         super(idIn);
     }
 
     @Override
-    public boolean matches(CraftingInventory inv, World worldIn) {
-        ItemStack coreStack = inv.getStackInSlot(0);
-        ItemStack gemStack = inv.getStackInSlot(1);
-        ItemStack capStack1 = inv.getStackInSlot(2);
-        ItemStack capStack2 = inv.getStackInSlot(3);
+    public boolean matches(CraftingContainer inv, Level worldIn) {
+        ItemStack coreStack = inv.getItem(0);
+        ItemStack gemStack = inv.getItem(1);
+        ItemStack capStack1 = inv.getItem(2);
+        ItemStack capStack2 = inv.getItem(3);
         
         // Make sure the crafting inventory has a core, a gem, and two identical caps
         return !coreStack.isEmpty() && ((coreStack.getItem() instanceof WandCoreItem) || (coreStack.getItem() instanceof StaffCoreItem)) &&
                !gemStack.isEmpty() && (gemStack.getItem() instanceof WandGemItem) &&
                !capStack1.isEmpty() && (capStack1.getItem() instanceof WandCapItem) &&
-               !capStack2.isEmpty() && capStack1.isItemEqual(capStack2);
+               !capStack2.isEmpty() && capStack1.sameItem(capStack2);
     }
 
     @Override
-    public ItemStack getCraftingResult(CraftingInventory inv) {
-        ItemStack coreStack = inv.getStackInSlot(0);
-        ItemStack gemStack = inv.getStackInSlot(1);
-        ItemStack capStack = inv.getStackInSlot(2);
+    public ItemStack assemble(CraftingContainer inv) {
+        ItemStack coreStack = inv.getItem(0);
+        ItemStack gemStack = inv.getItem(1);
+        ItemStack capStack = inv.getItem(2);
         
         ItemStack outputStack = (coreStack.getItem() instanceof StaffCoreItem) ? 
                 new ItemStack(ItemsPM.MODULAR_STAFF.get()) : 
@@ -62,12 +62,12 @@ public class WandAssemblyRecipe extends SpecialRecipe {
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return width >= 2 && height >= 2;
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get();
     }
 }

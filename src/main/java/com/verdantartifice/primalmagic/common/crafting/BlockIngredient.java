@@ -15,12 +15,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
-import net.minecraft.block.Block;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.TagCollectionManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -72,7 +72,7 @@ public class BlockIngredient implements Predicate<Block> {
         }
     }
     
-    public void write(PacketBuffer buf) {
+    public void write(FriendlyByteBuf buf) {
         this.determineMatchingBlocks();
         buf.writeVarInt(this.matchingBlocks.length);
         for (int index = 0; index < this.matchingBlocks.length; index++) {
@@ -107,11 +107,11 @@ public class BlockIngredient implements Predicate<Block> {
         }));
     }
     
-    public static BlockIngredient fromTag(ITag<Block> tag) {
+    public static BlockIngredient fromTag(Tag<Block> tag) {
         return fromBlockListStream(Stream.of(new BlockIngredient.TagList(tag)));
     }
     
-    public static BlockIngredient read(PacketBuffer buf) {
+    public static BlockIngredient read(FriendlyByteBuf buf) {
         int size = buf.readVarInt();
         return fromBlockListStream(Stream.generate(() -> {
             ResourceLocation loc = buf.readResourceLocation();
@@ -123,7 +123,7 @@ public class BlockIngredient implements Predicate<Block> {
         if (json.has("block") && json.has("tag")) {
             throw new JsonParseException("A block ingredient entry is either a tag or a block, not both");
         } else if (json.has("block")) {
-            ResourceLocation loc = new ResourceLocation(JSONUtils.getString(json, "block"));
+            ResourceLocation loc = new ResourceLocation(GsonHelper.getAsString(json, "block"));
             Block block = ForgeRegistries.BLOCKS.getValue(loc);
             if (block == null) {
                 throw new JsonSyntaxException("Unknown block '" + loc.toString() + "'");
@@ -131,8 +131,8 @@ public class BlockIngredient implements Predicate<Block> {
                 return new BlockIngredient.SingleBlockList(block);
             }
         } else if (json.has("tag")) {
-            ResourceLocation loc = new ResourceLocation(JSONUtils.getString(json, "tag"));
-            ITag<Block> tag = TagCollectionManager.getManager().getBlockTags().get(loc);
+            ResourceLocation loc = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
+            Tag<Block> tag = SerializationTags.getInstance().getBlocks().getTag(loc);
             if (tag == null) {
                 throw new JsonSyntaxException("Unknown block tag '" + loc.toString() + "'");
             } else {
@@ -153,7 +153,7 @@ public class BlockIngredient implements Predicate<Block> {
                     throw new JsonSyntaxException("Block array cannot be empty, at least one block must be defined");
                 } else {
                     return fromBlockListStream(StreamSupport.stream(arr.spliterator(), false).map(element -> {
-                        return deserializeBlockList(JSONUtils.getJsonObject(element, "block"));
+                        return deserializeBlockList(GsonHelper.convertToJsonObject(element, "block"));
                     }));
                 }
             } else {
@@ -190,21 +190,21 @@ public class BlockIngredient implements Predicate<Block> {
     }
     
     protected static class TagList implements BlockIngredient.IBlockList {
-        private final ITag<Block> tag;
+        private final Tag<Block> tag;
         
-        public TagList(ITag<Block> tag) {
+        public TagList(Tag<Block> tag) {
             this.tag = tag;
         }
         
         @Override
         public Collection<Block> getBlocks() {
-            return this.tag.getAllElements();
+            return this.tag.getValues();
         }
 
         @Override
         public JsonObject serialize() {
             JsonObject json = new JsonObject();
-            json.addProperty("tag", TagCollectionManager.getManager().getBlockTags().getValidatedIdFromTag(this.tag).toString());
+            json.addProperty("tag", SerializationTags.getInstance().getBlocks().getIdOrThrow(this.tag).toString());
             return json;
         }
     }

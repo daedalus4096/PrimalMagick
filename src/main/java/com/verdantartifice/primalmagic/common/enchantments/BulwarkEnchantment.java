@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.EquipmentSlot;
 
 /**
  * Definition of an enchantment that grants reduction to all incoming damage while blocking.
@@ -9,18 +9,18 @@ import net.minecraft.inventory.EquipmentSlotType;
  * @author Daedalus4096
  */
 public class BulwarkEnchantment extends AbstractRuneEnchantment {
-    public BulwarkEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
+    public BulwarkEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
         super(rarity, EnchantmentTypesPM.SHIELD, slots);
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + ((enchantmentLevel - 1) * 10);
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 15;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 15;
     }
     
     @Override

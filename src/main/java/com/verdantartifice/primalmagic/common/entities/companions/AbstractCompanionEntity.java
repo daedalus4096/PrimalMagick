@@ -7,57 +7,57 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Util;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.Util;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 
 /**
  * Base class for an entity that follows a player as a friendly companion, similar to a tamed creature.
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractCompanionEntity extends CreatureEntity {
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(AbstractCompanionEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+public abstract class AbstractCompanionEntity extends PathfinderMob {
+    protected static final EntityDataAccessor<Optional<UUID>> OWNER_UNIQUE_ID = SynchedEntityData.defineId(AbstractCompanionEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
     protected boolean staying;
 
-    protected AbstractCompanionEntity(EntityType<? extends AbstractCompanionEntity> entityType, World world) {
+    protected AbstractCompanionEntity(EntityType<? extends AbstractCompanionEntity> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(OWNER_UNIQUE_ID, Optional.empty());
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
         compound.putBoolean("CompanionStaying", this.isCompanionStaying());
         if (this.hasCompanionOwner()) {
-            compound.putUniqueId("CompanionOwner", this.getCompanionOwnerId());
+            compound.putUUID("CompanionOwner", this.getCompanionOwnerId());
         }
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
         this.setCompanionStaying(compound.getBoolean("CompanionStaying"));
-        if (compound.hasUniqueId("CompanionOwner")) {
-            this.setCompanionOwnerId(compound.getUniqueId("CompanionOwner"));
+        if (compound.hasUUID("CompanionOwner")) {
+            this.setCompanionOwnerId(compound.getUUID("CompanionOwner"));
         } else {
             this.setCompanionOwnerId(null);
         }
@@ -70,7 +70,7 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
      */
     @Nullable
     public UUID getCompanionOwnerId() {
-        return this.dataManager.get(OWNER_UNIQUE_ID).orElse(null);
+        return this.entityData.get(OWNER_UNIQUE_ID).orElse(null);
     }
 
     /**
@@ -79,7 +79,7 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
      * @param ownerId the unique ID of this companion entity's new owner
      */
     public void setCompanionOwnerId(@Nullable UUID ownerId) {
-        this.dataManager.set(OWNER_UNIQUE_ID, Optional.ofNullable(ownerId));
+        this.entityData.set(OWNER_UNIQUE_ID, Optional.ofNullable(ownerId));
     }
 
     /**
@@ -89,10 +89,10 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
      * @return this companion entity's owner entity
      */
     @Nullable
-    public PlayerEntity getCompanionOwner() {
+    public Player getCompanionOwner() {
         try {
             UUID ownerId = this.getCompanionOwnerId();
-            return ownerId == null ? null : this.world.getPlayerByUuid(ownerId);
+            return ownerId == null ? null : this.level.getPlayerByUUID(ownerId);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -114,7 +114,7 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
      * @return whether the given player is this entity's companion owner
      */
     public boolean isCompanionOwner(LivingEntity entity) {
-        return entity instanceof PlayerEntity && ((PlayerEntity)entity) == this.getCompanionOwner();
+        return entity instanceof Player && ((Player)entity) == this.getCompanionOwner();
     }
     
     /**
@@ -142,16 +142,16 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
      * @param owner the companion's owner
      * @return whether this companion entity should target the given target entity
      */
-    public boolean shouldAttackEntity(LivingEntity target, PlayerEntity owner) {
+    public boolean shouldAttackEntity(LivingEntity target, Player owner) {
         if (target instanceof AbstractCompanionEntity) {
             AbstractCompanionEntity otherCompanion = (AbstractCompanionEntity)target;
             return !otherCompanion.hasCompanionOwner() || otherCompanion.getCompanionOwner() != owner;
-        } else if (target instanceof PlayerEntity && !owner.canAttackPlayer((PlayerEntity)target)) {
+        } else if (target instanceof Player && !owner.canHarmPlayer((Player)target)) {
             return false;
-        } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity)target).isTame()) {
+        } else if (target instanceof AbstractHorse && ((AbstractHorse)target).isTamed()) {
             return false;
         } else {
-            return !(target instanceof TameableEntity) || !((TameableEntity)target).isTamed();
+            return !(target instanceof TamableAnimal) || !((TamableAnimal)target).isTame();
         }
     }
 
@@ -171,10 +171,10 @@ public abstract class AbstractCompanionEntity extends CreatureEntity {
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
-        if (!this.world.isRemote && this.world.getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES) && this.getCompanionOwner() instanceof ServerPlayerEntity) {
-            this.getCompanionOwner().sendMessage(this.getCombatTracker().getDeathMessage(), Util.DUMMY_UUID);
+    public void die(DamageSource cause) {
+        if (!this.level.isClientSide && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getCompanionOwner() instanceof ServerPlayer) {
+            this.getCompanionOwner().sendMessage(this.getCombatTracker().getDeathMessage(), Util.NIL_UUID);
         }
-        super.onDeath(cause);
+        super.die(cause);
     }
 }

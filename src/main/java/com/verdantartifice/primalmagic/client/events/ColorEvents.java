@@ -10,11 +10,11 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.potion.PotionUtils;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -32,7 +32,7 @@ public class ColorEvents {
     @SubscribeEvent
     public static void onBlockColorInit(ColorHandlerEvent.Block event) {
         event.getBlockColors().register((state, lightReader, pos, dummy) -> {
-            return SaltTrailBlock.colorMultiplier(state.get(SaltTrailBlock.POWER));
+            return SaltTrailBlock.colorMultiplier(state.getValue(SaltTrailBlock.POWER));
         }, BlocksPM.SALT_TRAIL.get());
         
         event.getBlockColors().register((state, lightReader, pos, dummy) -> {

@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of an enchantment that causes the target to drop soul slivers when struck.
@@ -13,18 +13,18 @@ import net.minecraft.item.ItemStack;
  * @author Daedalus4096
  */
 public class SoulpiercingEnchantment extends AbstractRuneEnchantment {
-    public SoulpiercingEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
-        super(rarity, EnchantmentType.BOW, slots);
+    public SoulpiercingEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
+        super(rarity, EnchantmentCategory.BOW, slots);
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + ((enchantmentLevel - 1) * 10);
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 15;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 15;
     }
     
     @Override
@@ -33,8 +33,8 @@ public class SoulpiercingEnchantment extends AbstractRuneEnchantment {
     }
     
     @Override
-    public boolean canApply(ItemStack stack) {
+    public boolean canEnchant(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof CrossbowItem ? true : super.canApply(stack);
+        return item instanceof CrossbowItem ? true : super.canEnchant(stack);
     }
 }

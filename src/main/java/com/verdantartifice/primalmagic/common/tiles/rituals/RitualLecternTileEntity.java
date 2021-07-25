@@ -4,11 +4,11 @@ import com.verdantartifice.primalmagic.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -24,27 +24,27 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
     }
     
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
-        this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.fromLong(compound.getLong("AltarPos")) : null;
+    public void load(BlockState state, CompoundTag compound) {
+        super.load(state, compound);
+        this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
     }
     
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         if (this.altarPos != null) {
-            compound.putLong("AltarPos", this.altarPos.toLong());
+            compound.putLong("AltarPos", this.altarPos.asLong());
         }
-        return super.write(compound);
+        return super.save(compound);
     }
     
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
+    public boolean canPlaceItem(int index, ItemStack stack) {
         // Don't allow automation to add items
         return false;
     }
     
     @Override
-    public int getInventoryStackLimit() {
+    public int getMaxStackSize() {
         return 1;
     }
     
@@ -56,15 +56,15 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
     @Override
     public void setAltarPos(BlockPos pos) {
         this.altarPos = pos;
-        this.markDirty();
+        this.setChanged();
     }
 
     @Override
     public void notifyAltarOfPropActivation() {
         if (this.altarPos != null) {
-            TileEntity tile = this.world.getTileEntity(this.altarPos);
+            BlockEntity tile = this.level.getBlockEntity(this.altarPos);
             if (tile instanceof RitualAltarTileEntity) {
-                ((RitualAltarTileEntity)tile).onPropActivation(this.pos);
+                ((RitualAltarTileEntity)tile).onPropActivation(this.worldPosition);
             }
         }
     }

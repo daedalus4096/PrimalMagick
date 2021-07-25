@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagic.common.items.food;
 
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.level.Level;
 
 /**
  * Item definition for manafruit.  Manafruit is food that gives you a mana discount buff when
@@ -24,19 +24,19 @@ public class ManafruitItem extends Item {
     }
     
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isRemote) {
-            entityLiving.addPotionEffect(new EffectInstance(EffectsPM.MANAFRUIT.get(), 6000, this.amplifier));
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+        if (!worldIn.isClientSide) {
+            entityLiving.addEffect(new MobEffectInstance(EffectsPM.MANAFRUIT.get(), 6000, this.amplifier));
         }
-        return super.onItemUseFinish(stack, worldIn, entityLiving);
+        return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         if (stack.getItem() instanceof ManafruitItem) {
             return ((ManafruitItem)stack.getItem()).amplifier > 0;
         } else {
-            return super.hasEffect(stack);
+            return super.isFoil(stack);
         }
     }
 }

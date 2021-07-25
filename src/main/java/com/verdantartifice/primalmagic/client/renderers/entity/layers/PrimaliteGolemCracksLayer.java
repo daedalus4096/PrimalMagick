@@ -8,8 +8,8 @@ import com.verdantartifice.primalmagic.client.renderers.entity.model.EnchantedGo
 import com.verdantartifice.primalmagic.common.entities.companions.golems.AbstractEnchantedGolemEntity.Cracks;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.PrimaliteGolemEntity;
 
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Layer renderer for damage cracks on a primalite golem.
@@ -23,7 +23,7 @@ public class PrimaliteGolemCracksLayer extends AbstractEnchantedGolemCracksLayer
             .put(Cracks.HIGH, new ResourceLocation(PrimalMagic.MODID, "textures/entity/primalite_golem/primalite_golem_crackiness_high.png"))
             .build();
     
-    public PrimaliteGolemCracksLayer(IEntityRenderer<PrimaliteGolemEntity, EnchantedGolemModel<PrimaliteGolemEntity>> entityRendererIn) {
+    public PrimaliteGolemCracksLayer(RenderLayerParent<PrimaliteGolemEntity, EnchantedGolemModel<PrimaliteGolemEntity>> entityRendererIn) {
         super(entityRendererIn);
     }
 

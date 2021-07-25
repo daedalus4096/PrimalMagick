@@ -7,10 +7,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -18,7 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class SpellBoltParticleData implements IParticleData {
+public class SpellBoltParticleData implements ParticleOptions {
     public static final Codec<SpellBoltParticleData> CODEC = RecordCodecBuilder.create((instance) -> {
         return instance.group(Codec.DOUBLE.fieldOf("x").forGetter((data) -> {
             return data.target.x;
@@ -30,9 +30,9 @@ public class SpellBoltParticleData implements IParticleData {
     });
     
     @SuppressWarnings("deprecation")
-    public static final IParticleData.IDeserializer<SpellBoltParticleData> DESERIALIZER = new IParticleData.IDeserializer<SpellBoltParticleData>() {
+    public static final ParticleOptions.Deserializer<SpellBoltParticleData> DESERIALIZER = new ParticleOptions.Deserializer<SpellBoltParticleData>() {
         @Override
-        public SpellBoltParticleData deserialize(ParticleType<SpellBoltParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
+        public SpellBoltParticleData fromCommand(ParticleType<SpellBoltParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
             reader.expect(' ');
             double x = reader.readDouble();
             reader.expect(' ');
@@ -43,19 +43,19 @@ public class SpellBoltParticleData implements IParticleData {
         }
 
         @Override
-        public SpellBoltParticleData read(ParticleType<SpellBoltParticleData> particleTypeIn, PacketBuffer buffer) {
+        public SpellBoltParticleData fromNetwork(ParticleType<SpellBoltParticleData> particleTypeIn, FriendlyByteBuf buffer) {
             return new SpellBoltParticleData(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
         }
     };
     
-    protected final Vector3d target;
+    protected final Vec3 target;
     
-    public SpellBoltParticleData(Vector3d target) {
+    public SpellBoltParticleData(Vec3 target) {
         this(target.x, target.y, target.z);
     }
     
     public SpellBoltParticleData(double targetX, double targetY, double targetZ) {
-        this.target = new Vector3d(targetX, targetY, targetZ);
+        this.target = new Vec3(targetX, targetY, targetZ);
     }
 
     @Override
@@ -64,18 +64,18 @@ public class SpellBoltParticleData implements IParticleData {
     }
 
     @Override
-    public void write(PacketBuffer buffer) {
+    public void writeToNetwork(FriendlyByteBuf buffer) {
         buffer.writeDouble(this.target.x);
         buffer.writeDouble(this.target.y);
         buffer.writeDouble(this.target.z);
     }
 
     @Override
-    public String getParameters() {
+    public String writeToString() {
         return String.format(Locale.ROOT, "%s %d %d %d", ForgeRegistries.PARTICLE_TYPES.getKey(this.getType()), this.target.x, this.target.y, this.target.z);
     }
 
-    public Vector3d getTargetVec() {
+    public Vec3 getTargetVec() {
         return this.target;
     }
 }

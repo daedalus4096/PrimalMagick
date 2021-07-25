@@ -11,31 +11,31 @@ import com.google.common.collect.Iterables;
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.MobSpawnerTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.spawner.AbstractSpawner;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.BaseSpawner;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
@@ -63,31 +63,31 @@ public class LazySpawnEggItem extends Item {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        World world = context.getWorld();
-        if (!(world instanceof ServerWorld)) {
-            return ActionResultType.SUCCESS;
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
+        if (!(world instanceof ServerLevel)) {
+            return InteractionResult.SUCCESS;
         } else {
-            ItemStack itemStack = context.getItem();
-            BlockPos blockPos = context.getPos();
-            Direction direction = context.getFace();
+            ItemStack itemStack = context.getItemInHand();
+            BlockPos blockPos = context.getClickedPos();
+            Direction direction = context.getClickedFace();
             BlockState blockState = world.getBlockState(blockPos);
-            if (blockState.matchesBlock(Blocks.SPAWNER)) {
-                TileEntity tile = world.getTileEntity(blockPos);
-                if (tile instanceof MobSpawnerTileEntity) {
-                    AbstractSpawner abstractspawner = ((MobSpawnerTileEntity)tile).getSpawnerBaseLogic();
+            if (blockState.is(Blocks.SPAWNER)) {
+                BlockEntity tile = world.getBlockEntity(blockPos);
+                if (tile instanceof SpawnerBlockEntity) {
+                    BaseSpawner abstractspawner = ((SpawnerBlockEntity)tile).getSpawner();
                     EntityType<?> entitytype1 = this.getType(itemStack.getTag());
-                    abstractspawner.setEntityType(entitytype1);
-                    tile.markDirty();
-                    world.notifyBlockUpdate(blockPos, blockState, blockState, Constants.BlockFlags.DEFAULT);
+                    abstractspawner.setEntityId(entitytype1);
+                    tile.setChanged();
+                    world.sendBlockUpdated(blockPos, blockState, blockState, Constants.BlockFlags.DEFAULT);
                     itemStack.shrink(1);
-                    return ActionResultType.CONSUME;
+                    return InteractionResult.CONSUME;
                 }
             }
             
-            BlockPos spawnPos = blockState.getCollisionShapeUncached(world, blockPos).isEmpty() ? blockPos : blockPos.offset(direction);
+            BlockPos spawnPos = blockState.getCollisionShape(world, blockPos).isEmpty() ? blockPos : blockPos.relative(direction);
             EntityType<?> entitytype = this.getType(itemStack.getTag());
-            Entity entity = entitytype.spawn((ServerWorld)world, itemStack, context.getPlayer(), spawnPos, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockPos, spawnPos) && direction == Direction.UP);
+            Entity entity = entitytype.spawn((ServerLevel)world, itemStack, context.getPlayer(), spawnPos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, spawnPos) && direction == Direction.UP);
             if (entity != null) {
                 itemStack.shrink(1);
             }
@@ -95,45 +95,45 @@ public class LazySpawnEggItem extends Item {
                 CompanionManager.addCompanion(context.getPlayer(), (AbstractCompanionEntity)entity);
             }
             
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         }
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
-        if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
-            return ActionResult.resultPass(itemstack);
-        } else if (!(worldIn instanceof ServerWorld)) {
-            return ActionResult.resultSuccess(itemstack);
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
+        HitResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
+        if (raytraceresult.getType() != HitResult.Type.BLOCK) {
+            return InteractionResultHolder.pass(itemstack);
+        } else if (!(worldIn instanceof ServerLevel)) {
+            return InteractionResultHolder.success(itemstack);
         } else {
-            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult)raytraceresult;
-            BlockPos blockpos = blockraytraceresult.getPos();
-            if (!(worldIn.getBlockState(blockpos).getBlock() instanceof FlowingFluidBlock)) {
-                return ActionResult.resultPass(itemstack);
-            } else if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, blockraytraceresult.getFace(), itemstack)) {
+            BlockHitResult blockraytraceresult = (BlockHitResult)raytraceresult;
+            BlockPos blockpos = blockraytraceresult.getBlockPos();
+            if (!(worldIn.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
+                return InteractionResultHolder.pass(itemstack);
+            } else if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos, blockraytraceresult.getDirection(), itemstack)) {
                 EntityType<?> entitytype = this.getType(itemstack.getTag());
-                if (entitytype.spawn((ServerWorld)worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false) == null) {
-                    return ActionResult.resultPass(itemstack);
+                if (entitytype.spawn((ServerLevel)worldIn, itemstack, playerIn, blockpos, MobSpawnType.SPAWN_EGG, false, false) == null) {
+                    return InteractionResultHolder.pass(itemstack);
                 } else {
-                    if (!playerIn.abilities.isCreativeMode) {
+                    if (!playerIn.abilities.instabuild) {
                         itemstack.shrink(1);
                     }
-                    playerIn.addStat(Stats.ITEM_USED.get(this));
-                    return ActionResult.resultConsume(itemstack);
+                    playerIn.awardStat(Stats.ITEM_USED.get(this));
+                    return InteractionResultHolder.consume(itemstack);
                 }
             } else {
-                return ActionResult.resultFail(itemstack);
+                return InteractionResultHolder.fail(itemstack);
             }
         }
     }
     
-    public EntityType<?> getType(@Nullable CompoundNBT nbt) {
+    public EntityType<?> getType(@Nullable CompoundTag nbt) {
         if (nbt != null && nbt.contains("EntityTag", Constants.NBT.TAG_COMPOUND)) {
-            CompoundNBT tag = nbt.getCompound("EntityTag");
+            CompoundTag tag = nbt.getCompound("EntityTag");
             if (tag.contains("id", Constants.NBT.TAG_STRING)) {
-                return EntityType.byKey(tag.getString("id")).orElseGet(this.typeSupplier);
+                return EntityType.byString(tag.getString("id")).orElseGet(this.typeSupplier);
             }
         }
         return this.typeSupplier.get();

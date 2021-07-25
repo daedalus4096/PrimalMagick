@@ -9,9 +9,9 @@ import com.verdantartifice.primalmagic.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.ShapelessArcaneRecipe;
 
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 
 /**
  * Factory class to create an appropriate grimoire recipe page for a given recipe type.
@@ -20,7 +20,7 @@ import net.minecraft.item.crafting.ShapelessRecipe;
  */
 public class RecipePageFactory {
     @Nullable
-    public static AbstractRecipePage createPage(@Nonnull IRecipe<?> recipe) {
+    public static AbstractRecipePage createPage(@Nonnull Recipe<?> recipe) {
         if (recipe instanceof ShapelessArcaneRecipe) {
             return new ShapelessArcaneRecipePage((ShapelessArcaneRecipe)recipe);
         } else if (recipe instanceof ShapedArcaneRecipe) {

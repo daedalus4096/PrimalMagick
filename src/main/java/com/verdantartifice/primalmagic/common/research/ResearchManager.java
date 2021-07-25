@@ -21,17 +21,17 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.Util;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -61,21 +61,21 @@ public class ResearchManager {
         CRAFTING_REFERENCES.clear();
     }
     
-    public static boolean isSyncScheduled(@Nullable PlayerEntity player) {
+    public static boolean isSyncScheduled(@Nullable Player player) {
         if (player == null) {
             return false;
         } else {
-            return SYNC_SET.remove(player.getUniqueID());
+            return SYNC_SET.remove(player.getUUID());
         }
     }
     
-    public static void scheduleSync(@Nullable PlayerEntity player) {
+    public static void scheduleSync(@Nullable Player player) {
         if (player != null) {
-            SYNC_SET.add(player.getUniqueID());
+            SYNC_SET.add(player.getUUID());
         }
     }
     
-    public static boolean hasPrerequisites(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+    public static boolean hasPrerequisites(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player == null) {
             return false;
         }
@@ -91,7 +91,7 @@ public class ResearchManager {
         }
     }
     
-    public static boolean isResearchComplete(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+    public static boolean isResearchComplete(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player == null || key == null) {
             return false;
         }
@@ -103,12 +103,12 @@ public class ResearchManager {
         }
     }
     
-    public static boolean completeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+    public static boolean completeResearch(@Nullable Player player, @Nullable SimpleResearchKey key) {
         // Complete the given research and sync it to the player's client
         return completeResearch(player, key, true);
     }
     
-    public static boolean completeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync) {
+    public static boolean completeResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync) {
         // Repeatedly progress the given research until it is completed, optionally syncing it to the player's client
         boolean retVal = false;
         while (progressResearch(player, key, sync)) {
@@ -117,7 +117,7 @@ public class ResearchManager {
         return retVal;
     }
     
-    public static void forceGrantWithAllParents(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+    public static void forceGrantWithAllParents(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
             key = key.stripStage(); // When we force-grant, we fully complete the entry, not partially
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
@@ -156,7 +156,7 @@ public class ResearchManager {
         }
     }
     
-    public static void forceRevokeWithAllChildren(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+    public static void forceRevokeWithAllChildren(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
             if (knowledge != null && knowledge.isResearchComplete(key)) {
@@ -174,12 +174,12 @@ public class ResearchManager {
         }
     }
     
-    public static boolean revokeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+    public static boolean revokeResearch(@Nullable Player player, @Nullable SimpleResearchKey key) {
         // Revoke the given research and sync it to the player's client
         return revokeResearch(player, key, true);
     }
     
-    public static boolean revokeResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync) {
+    public static boolean revokeResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync) {
         // Remove the given research from the player's known list and optionally sync to the player's client
         if (player == null || key == null) {
             return false;
@@ -197,17 +197,17 @@ public class ResearchManager {
         return true;
     }
     
-    public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key) {
+    public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key) {
         // Progress the given research to its next stage and sync to the player's client
         return progressResearch(player, key, true);
     }
     
-    public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync) {
+    public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync) {
         // Progress the given research to its next stage and sync to the player's client
         return progressResearch(player, key, sync, true);
     }
     
-    public static boolean progressResearch(@Nullable PlayerEntity player, @Nullable SimpleResearchKey key, boolean sync, boolean flags) {
+    public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync, boolean flags) {
         // Progress the given research to its next stage and optionally sync to the player's client
         if (player == null || key == null) {
             return false;
@@ -287,8 +287,8 @@ public class ResearchManager {
                     for (ResearchAddendum addendum : searchEntry.getAddenda()) {
                         if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key) && addendum.getRequiredResearch().isKnownByStrict(player)) {
                             // Announce completion of the addendum
-                            ITextComponent nameComp = new TranslationTextComponent(searchEntry.getNameTranslationKey());
-                            player.sendMessage(new TranslationTextComponent("event.primalmagic.add_addendum", nameComp), Util.DUMMY_UUID);
+                            Component nameComp = new TranslatableComponent(searchEntry.getNameTranslationKey());
+                            player.sendMessage(new TranslatableComponent("event.primalmagic.add_addendum", nameComp), Util.NIL_UUID);
                             knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
                             
                             // Process attunement grants
@@ -313,11 +313,11 @@ public class ResearchManager {
         return true;
     }
     
-    public static boolean addKnowledge(PlayerEntity player, IPlayerKnowledge.KnowledgeType type, int points) {
+    public static boolean addKnowledge(Player player, IPlayerKnowledge.KnowledgeType type, int points) {
         return addKnowledge(player, type, points, true);
     }
     
-    public static boolean addKnowledge(PlayerEntity player, IPlayerKnowledge.KnowledgeType type, int points, boolean scheduleSync) {
+    public static boolean addKnowledge(Player player, IPlayerKnowledge.KnowledgeType type, int points, boolean scheduleSync) {
         // Add the given number of knowledge points to the player and sync to their client
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
         if (knowledge == null) {
@@ -353,15 +353,15 @@ public class ResearchManager {
         return SCAN_TRIGGERS.add(trigger);
     }
     
-    public static void checkScanTriggers(ServerPlayerEntity player, IItemProvider itemProvider) {
+    public static void checkScanTriggers(ServerPlayer player, ItemLike itemProvider) {
         checkScanTriggersInner(player, itemProvider);
     }
     
-    public static void checkScanTriggers(ServerPlayerEntity player, EntityType<?> entityType) {
+    public static void checkScanTriggers(ServerPlayer player, EntityType<?> entityType) {
         checkScanTriggersInner(player, entityType);
     }
     
-    private static void checkScanTriggersInner(ServerPlayerEntity player, Object obj) {
+    private static void checkScanTriggersInner(ServerPlayer player, Object obj) {
         for (IScanTrigger trigger : SCAN_TRIGGERS) {
             if (trigger.matches(player, obj)) {
                 trigger.onMatch(player, obj);
@@ -369,11 +369,11 @@ public class ResearchManager {
         }
     }
 
-    public static boolean isScanned(@Nullable ItemStack stack, @Nullable PlayerEntity player) {
+    public static boolean isScanned(@Nullable ItemStack stack, @Nullable Player player) {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
-        SourceList affinities = AffinityManager.getInstance().getAffinityValues(stack, player.world);
+        SourceList affinities = AffinityManager.getInstance().getAffinityValues(stack, player.level);
         if (affinities == null || affinities.isEmpty()) {
             // If the given itemstack has no affinities, consider it already scanned
             return true;
@@ -382,7 +382,7 @@ public class ResearchManager {
         return (key != null && key.isKnownByStrict(player));
     }
     
-    public static boolean isScanned(@Nullable EntityType<?> type, @Nullable PlayerEntity player) {
+    public static boolean isScanned(@Nullable EntityType<?> type, @Nullable Player player) {
         if (type == null || player == null) {
             return false;
         }
@@ -391,12 +391,12 @@ public class ResearchManager {
         return (key != null && key.isKnownByStrict(player));
     }
 
-    public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayerEntity player) {
+    public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayer player) {
         // Scan the given itemstack and sync the data to the player's client
         return setScanned(stack, player, true);
     }
 
-    public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayerEntity player, boolean sync) {
+    public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayer player, boolean sync) {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
@@ -409,7 +409,7 @@ public class ResearchManager {
         SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
         if (key != null && knowledge.addResearch(key)) {
             // Determine how many observation points the itemstack is worth and add those to the player's knowledge
-            int obsPoints = getObservationPoints(stack, player.getEntityWorld());
+            int obsPoints = getObservationPoints(stack, player.getCommandSenderWorld());
             if (obsPoints > 0) {
                 addKnowledge(player, IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints, false);
             }
@@ -430,11 +430,11 @@ public class ResearchManager {
         }
     }
     
-    public static boolean setScanned(@Nullable EntityType<?> type, @Nullable ServerPlayerEntity player) {
+    public static boolean setScanned(@Nullable EntityType<?> type, @Nullable ServerPlayer player) {
         return setScanned(type, player, true);
     }
     
-    public static boolean setScanned(@Nullable EntityType<?> type, @Nullable ServerPlayerEntity player, boolean sync) {
+    public static boolean setScanned(@Nullable EntityType<?> type, @Nullable ServerPlayer player, boolean sync) {
         if (type == null || player == null) {
             return false;
         }
@@ -468,7 +468,7 @@ public class ResearchManager {
         }
     }
 
-    public static int setAllScanned(@Nullable ServerPlayerEntity player) {
+    public static int setAllScanned(@Nullable ServerPlayer player) {
         if (player == null) {
             return 0;
         }
@@ -489,7 +489,7 @@ public class ResearchManager {
                 count++;
     
                 // Determine how many observation points the itemstack is worth and add those to the player's knowledge
-                int obsPoints = getObservationPoints(stack, player.getEntityWorld());
+                int obsPoints = getObservationPoints(stack, player.getCommandSenderWorld());
                 if (obsPoints > 0) {
                     addKnowledge(player, IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints, false);
                 }
@@ -508,7 +508,7 @@ public class ResearchManager {
         return count;
     }
 
-    private static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull World world) {
+    private static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull Level world) {
         // Calculate observation points for the itemstack based on its affinities
         return getObservationPoints(AffinityManager.getInstance().getAffinityValues(stack, world));
     }
@@ -533,6 +533,6 @@ public class ResearchManager {
         }
         
         // Round up to ensure that any item with affinities generates at least one observation point
-        return MathHelper.ceil(total);
+        return Mth.ceil(total);
     }
 }

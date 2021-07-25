@@ -4,29 +4,29 @@ import java.util.Random;
 
 import com.verdantartifice.primalmagic.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -41,33 +41,33 @@ public abstract class AbstractCalcinatorBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     
     public AbstractCalcinatorBlock() {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).setLightLevel((state) -> { 
-        	return state.get(BlockStateProperties.LIT) ? 13 : 0; 
+        super(Block.Properties.of(Material.STONE).strength(3.5F).lightLevel((state) -> { 
+        	return state.getValue(BlockStateProperties.LIT) ? 13 : 0; 
     	}).sound(SoundType.STONE));
-        this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(LIT, Boolean.valueOf(false)));
+        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(FACING, LIT);
     }
     
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Make the block face the player when placed
-        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
     
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
     @SuppressWarnings("deprecation")
 	@Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
     
     @Override
@@ -76,57 +76,57 @@ public abstract class AbstractCalcinatorBlock extends Block {
     }
     
     @Override
-    public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
+    public abstract BlockEntity createTileEntity(BlockState state, BlockGetter world);
     
     @SuppressWarnings("deprecation")
     @Override
-    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         // Pass any received events on to the tile entity and let it decide what to do with it
-        super.eventReceived(state, worldIn, pos, id, param);
-        TileEntity tile = worldIn.getTileEntity(pos);
-        return (tile == null) ? false : tile.receiveClientEvent(id, param);
+        super.triggerEvent(state, worldIn, pos, id, param);
+        BlockEntity tile = worldIn.getBlockEntity(pos);
+        return (tile == null) ? false : tile.triggerEvent(id, param);
     }
     
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (!worldIn.isClientSide) {
             // Open the GUI for the calcinator
-            TileEntity tile = worldIn.getTileEntity(pos);
+            BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AbstractCalcinatorTileEntity) {
-                player.openContainer((AbstractCalcinatorTileEntity)tile);
+                player.openMenu((AbstractCalcinatorTileEntity)tile);
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
     
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(worldIn, pos, state, placer, stack);
         
         // Set the calcinator tile entity's owner when placed by a player.  Needed so that the tile entity can do research checks.
-        if (!worldIn.isRemote && placer instanceof PlayerEntity) {
-            TileEntity tile = worldIn.getTileEntity(pos);
+        if (!worldIn.isClientSide && placer instanceof Player) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AbstractCalcinatorTileEntity) {
-                ((AbstractCalcinatorTileEntity)tile).setTileOwner((PlayerEntity)placer);
+                ((AbstractCalcinatorTileEntity)tile).setTileOwner((Player)placer);
             }
         }
     }
     
     @SuppressWarnings("deprecation")
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
-            TileEntity tile = worldIn.getTileEntity(pos);
+            BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AbstractCalcinatorTileEntity) {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (AbstractCalcinatorTileEntity)tile);
-                worldIn.updateComparatorOutputLevel(pos, this);
+                Containers.dropContents(worldIn, pos, (AbstractCalcinatorTileEntity)tile);
+                worldIn.updateNeighbourForOutputSignal(pos, this);
             }
-            super.onReplaced(state, worldIn, pos, newState, isMoving);
+            super.onRemove(state, worldIn, pos, newState, isMoving);
         }
     }
     
     @OnlyIn(Dist.CLIENT)
     @Override
-    public abstract void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand);
+    public abstract void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand);
 }

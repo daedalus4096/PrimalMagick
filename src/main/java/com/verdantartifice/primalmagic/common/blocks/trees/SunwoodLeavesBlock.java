@@ -2,10 +2,10 @@ package com.verdantartifice.primalmagic.common.blocks.trees;
 
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.LevelAccessor;
 
 /**
  * Block definition for sunwood leaves.  They are decorative blocks that fade out of existence and become indestructable at night.
@@ -14,17 +14,17 @@ import net.minecraft.world.IWorld;
  */
 public class SunwoodLeavesBlock extends AbstractPhasingLeavesBlock {
     public SunwoodLeavesBlock() {
-        super(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().notSolid().sound(SoundType.PLANT).setLightLevel((state) -> {
-            return state.get(PHASE).getLightLevel();
-        }).setSuffocates((state, blockReader, pos) -> {
+        super(Block.Properties.of(Material.LEAVES).strength(0.2F).randomTicks().noOcclusion().sound(SoundType.GRASS).lightLevel((state) -> {
+            return state.getValue(PHASE).getLightLevel();
+        }).isSuffocating((state, blockReader, pos) -> {
         	return false;
-        }).setBlocksVision((state, blockReader, pos) -> {
+        }).isViewBlocking((state, blockReader, pos) -> {
         	return false;
-        }).setAllowsSpawn(AbstractPhasingLeavesBlock::allowsSpawnOnLeaves));
+        }).isValidSpawn(AbstractPhasingLeavesBlock::allowsSpawnOnLeaves));
     }
 
     @Override
-    public TimePhase getCurrentPhase(IWorld world) {
+    public TimePhase getCurrentPhase(LevelAccessor world) {
         return TimePhase.getSunPhase(world);
     }
 }

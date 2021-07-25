@@ -8,11 +8,11 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a project material that requires a specific item stack, which may or may not be
@@ -46,27 +46,27 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         this(stack, consumed, false);
     }
     
-    public ItemProjectMaterial(@Nonnull IItemProvider item, boolean consumed, boolean matchNBT) {
+    public ItemProjectMaterial(@Nonnull ItemLike item, boolean consumed, boolean matchNBT) {
         this(new ItemStack(item), consumed, matchNBT);
     }
     
-    public ItemProjectMaterial(@Nonnull IItemProvider item, boolean consumed) {
+    public ItemProjectMaterial(@Nonnull ItemLike item, boolean consumed) {
         this(item, consumed, false);
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = super.serializeNBT();
-        tag.put("Stack", this.stack.write(new CompoundNBT()));
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = super.serializeNBT();
+        tag.put("Stack", this.stack.save(new CompoundTag()));
         tag.putBoolean("Consumed", this.consumed);
         tag.putBoolean("MatchNBT", this.matchNBT);
         return tag;
     }
     
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
-        this.stack = ItemStack.read(nbt.getCompound("Stack"));
+        this.stack = ItemStack.of(nbt.getCompound("Stack"));
         this.consumed = nbt.getBoolean("Consumed");
         this.matchNBT = nbt.getBoolean("MatchNBT");
     }
@@ -77,12 +77,12 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(PlayerEntity player) {
+    public boolean isSatisfied(Player player) {
         return InventoryUtils.isPlayerCarrying(player, this.stack, this.matchNBT);
     }
 
     @Override
-    public boolean consume(PlayerEntity player) {
+    public boolean consume(Player player) {
         // Remove this material's item from the player's inventory if it's supposed to be consumed
         if (this.consumed) {
             return InventoryUtils.consumeItem(player, this.stack, this.matchNBT);
@@ -141,7 +141,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         if (stack == null) {
             if (other.stack != null)
                 return false;
-        } else if (!ItemStack.areItemStacksEqual(this.stack, other.stack))
+        } else if (!ItemStack.matches(this.stack, other.stack))
             return false;
         return true;
     }

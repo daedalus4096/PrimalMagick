@@ -9,16 +9,16 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition of a soul drain spell.  This payload afflicts the target with a potion effect which
@@ -53,14 +53,14 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
-        if (target != null && target.getType() == RayTraceResult.Type.ENTITY) {
-            EntityRayTraceResult entityTarget = (EntityRayTraceResult)target;
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+        if (target != null && target.getType() == HitResult.Type.ENTITY) {
+            EntityHitResult entityTarget = (EntityHitResult)target;
             if (entityTarget.getEntity() instanceof LivingEntity) {
                 // Grant the potion effect
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 int ticks = this.getModdedPropertyValue("duration", spell, spellSource) * TICKS_PER_DURATION;
-                entity.addPotionEffect(new EffectInstance(EffectsPM.DRAIN_SOUL.get(), ticks));
+                entity.addEffect(new MobEffectInstance(EffectsPM.DRAIN_SOUL.get(), ticks));
             }
         }
     }
@@ -76,8 +76,8 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, BlockPos origin) {
-        world.playSound(null, origin, SoundEvents.BLOCK_BEACON_DEACTIVATE, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(Level world, BlockPos origin) {
+        world.playSound(null, origin, SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
     @Override

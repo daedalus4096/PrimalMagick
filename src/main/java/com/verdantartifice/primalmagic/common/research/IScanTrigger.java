@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.research;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 /**
  * Primary interface for behavior to be triggered upon the successful scan of an object in the
@@ -16,7 +16,7 @@ public interface IScanTrigger {
      * @param obj the object being scanned
      * @return true if the trigger should be executed, false otherwise
      */
-    boolean matches(ServerPlayerEntity player, Object obj);
+    boolean matches(ServerPlayer player, Object obj);
     
     /**
      * Execute this trigger's behavior.
@@ -24,5 +24,5 @@ public interface IScanTrigger {
      * @param player the player performing the scan
      * @param obj the object being scanned
      */
-    void onMatch(ServerPlayerEntity player, Object obj);
+    void onMatch(ServerPlayer player, Object obj);
 }

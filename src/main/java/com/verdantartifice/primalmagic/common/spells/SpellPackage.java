@@ -12,15 +12,15 @@ import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -33,7 +33,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @see {@link com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload}
  * @see {@link com.verdantartifice.primalmagic.common.spells.mods.ISpellMod}
  */
-public class SpellPackage implements INBTSerializable<CompoundNBT> {
+public class SpellPackage implements INBTSerializable<CompoundTag> {
     protected String name = "";
     protected ISpellVehicle vehicle = null;
     protected ISpellPayload payload = null;
@@ -46,14 +46,14 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
         this.setName(name);
     }
     
-    public SpellPackage(CompoundNBT tag) {
+    public SpellPackage(CompoundTag tag) {
         this.deserializeNBT(tag);
     }
     
     @Nonnull
-    public ITextComponent getName() {
+    public Component getName() {
         // Color spell names according to their rarity, like with items
-        return new StringTextComponent(this.name).mergeStyle(this.getRarity().color);
+        return new TextComponent(this.name).withStyle(this.getRarity().color);
     }
     
     public void setName(@Nullable String name) {
@@ -106,8 +106,8 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
         if (this.name != null) {
             nbt.putString("SpellName", this.name);
         }
@@ -127,7 +127,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         this.name = nbt.getString("SpellName");
         this.vehicle = nbt.contains("SpellVehicle") ? SpellFactory.getVehicleFromNBT(nbt.getCompound("SpellVehicle")) : null;
         this.payload = nbt.contains("SpellPayload") ? SpellFactory.getPayloadFromNBT(nbt.getCompound("SpellPayload")) : null;
@@ -142,7 +142,7 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
         if (quickenMod != null) {
             retVal -= (10 * quickenMod.getPropertyValue("haste"));
         }
-        return MathHelper.clamp(retVal, 0, 60);
+        return Mth.clamp(retVal, 0, 60);
     }
     
     @Nonnull
@@ -178,13 +178,13 @@ public class SpellPackage implements INBTSerializable<CompoundNBT> {
         return new SourceList().add(source, (baseManaCost + baseModifier) * multiplier);
     }
     
-    public void cast(World world, LivingEntity caster, ItemStack spellSource) {
+    public void cast(Level world, LivingEntity caster, ItemStack spellSource) {
         if (this.payload != null) {
-            this.payload.playSounds(world, caster.getPosition());
+            this.payload.playSounds(world, caster.blockPosition());
         }
         if (this.vehicle != null) {
-            if (caster instanceof PlayerEntity) {
-                StatsManager.incrementValue((PlayerEntity)caster, StatsPM.SPELLS_CAST);
+            if (caster instanceof Player) {
+                StatsManager.incrementValue((Player)caster, StatsPM.SPELLS_CAST);
             }
             this.vehicle.execute(this, world, caster, spellSource);
         }

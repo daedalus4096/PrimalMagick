@@ -11,9 +11,9 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.tags.BlockTagsForgeExt;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 
 /**
  * Point of registration for mod recipe types, as well as other crafting related things.
@@ -22,10 +22,10 @@ import net.minecraft.item.crafting.IRecipeType;
  */
 public class InitRecipes {
     public static void initRecipeTypes() {
-        RecipeTypesPM.ARCANE_CRAFTING = IRecipeType.register(PrimalMagic.MODID + ":arcane_crafting");
-        RecipeTypesPM.RITUAL = IRecipeType.register(PrimalMagic.MODID + ":ritual");
-        RecipeTypesPM.RUNECARVING = IRecipeType.register(PrimalMagic.MODID + ":runecarving");
-        RecipeTypesPM.CONCOCTING = IRecipeType.register(PrimalMagic.MODID + ":concocting");
+        RecipeTypesPM.ARCANE_CRAFTING = RecipeType.register(PrimalMagic.MODID + ":arcane_crafting");
+        RecipeTypesPM.RITUAL = RecipeType.register(PrimalMagic.MODID + ":ritual");
+        RecipeTypesPM.RUNECARVING = RecipeType.register(PrimalMagic.MODID + ":runecarving");
+        RecipeTypesPM.CONCOCTING = RecipeType.register(PrimalMagic.MODID + ":concocting");
     }
     
     public static void initWandTransforms() {

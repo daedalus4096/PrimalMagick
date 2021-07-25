@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
@@ -14,14 +14,14 @@ import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActio
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.button.ImageButton;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,52 +31,52 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer> {
+public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_table.png");
     private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_button.png");
     
-    protected World world;
+    protected Level world;
 
-    public AnalysisTableScreen(AnalysisTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public AnalysisTableScreen(AnalysisTableContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
-        this.world = inv.player.world;
+        this.world = inv.player.level;
     }
     
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.initWidgets();
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
     
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-        ITextComponent text = null;
-        ItemStack lastScannedStack = this.container.getLastScannedStack();
+    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+        Component text = null;
+        ItemStack lastScannedStack = this.menu.getLastScannedStack();
         
         // Generate text in the case that no item has been analyzed, or the item has no affinities
         if (lastScannedStack == null || lastScannedStack.isEmpty()) {
-            text = new TranslationTextComponent("primalmagic.analysis.no_item");
+            text = new TranslatableComponent("primalmagic.analysis.no_item");
         } else {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world);
             if (sources == null || sources.isEmpty()) {
-                text = new TranslationTextComponent("primalmagic.analysis.no_affinities");
+                text = new TranslatableComponent("primalmagic.analysis.no_affinities");
             }
         }
         
         // Render any generated text
         if (text != null) {
-            int width = this.font.getStringWidth(text.getString());
+            int width = this.font.width(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
-            int y = 10 + (16 - this.font.FONT_HEIGHT) / 2;
-            this.font.drawText(matrixStack, text, x, y, Color.BLACK.getRGB());
+            int y = 10 + (16 - this.font.lineHeight) / 2;
+            this.font.draw(matrixStack, text, x, y, Color.BLACK.getRGB());
         }
     }
 
@@ -84,21 +84,21 @@ public class AnalysisTableScreen extends ContainerScreen<AnalysisTableContainer>
         this.buttons.clear();
         this.children.clear();
         
-        this.addButton(new ImageButton(this.guiLeft + 78, this.guiTop + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
-            PacketHandler.sendToServer(new AnalysisActionPacket(this.container.windowId));
+        this.addButton(new ImageButton(this.leftPos + 78, this.topPos + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, (button) -> {
+            PacketHandler.sendToServer(new AnalysisActionPacket(this.menu.containerId));
         }));
         
         // Render observation tracker widget
-        this.addButton(new KnowledgeTotalWidget(this.guiLeft + 8, this.guiTop + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+        this.addButton(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));
         
         // Show affinity widgets, if the last scanned stack has affinities
-        ItemStack lastScannedStack = this.container.getLastScannedStack();
+        ItemStack lastScannedStack = this.menu.getLastScannedStack();
         if (lastScannedStack != null && !lastScannedStack.isEmpty()) {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world);
             if (!sources.isEmpty()) {
                 int widgetSetWidth = sources.getSourcesSorted().size() * 18;
-                int x = this.guiLeft + 1 + (this.getXSize() - widgetSetWidth) / 2;
-                int y = this.guiTop + 10;
+                int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
+                int y = this.topPos + 10;
                 for (Source source : sources.getSourcesSorted()) {
                     this.addButton(new AffinityWidget(source, sources.getAmount(source), x, y));
                     x += 18;

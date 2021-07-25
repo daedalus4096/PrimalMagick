@@ -17,21 +17,21 @@ import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants;
 
@@ -43,18 +43,18 @@ import net.minecraftforge.common.util.Constants;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.crafting.AbstractCalcinatorBlock}
  * @see {@link net.minecraft.tileentity.FurnaceTileEntity}
  */
-public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IOwnedTileEntity {
+public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM implements TickableBlockEntity, MenuProvider, IOwnedTileEntity {
     protected static final int OUTPUT_CAPACITY = 9;
     
     protected int burnTime;
     protected int burnTimeTotal;
     protected int cookTime;
     protected int cookTimeTotal;
-    protected PlayerEntity owner;
+    protected Player owner;
     protected UUID ownerUUID;
     
     // Define a container-trackable representation of this tile's relevant data
-    protected final IIntArray calcinatorData = new IIntArray() {
+    protected final ContainerData calcinatorData = new ContainerData() {
         @Override
         public int get(int index) {
             switch (index) {
@@ -90,12 +90,12 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         }
 
         @Override
-        public int size() {
+        public int getCount() {
             return 4;
         }
     };
     
-    public AbstractCalcinatorTileEntity(TileEntityType<? extends AbstractCalcinatorTileEntity> tileEntityType) {
+    public AbstractCalcinatorTileEntity(BlockEntityType<? extends AbstractCalcinatorTileEntity> tileEntityType) {
         super(tileEntityType, OUTPUT_CAPACITY + 2);
     }
     
@@ -104,8 +104,8 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     }
     
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+        super.load(state, compound);
         
         this.burnTime = compound.getInt("BurnTime");
         this.burnTimeTotal = compound.getInt("BurnTimeTotal");
@@ -123,7 +123,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     }
     
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.putInt("BurnTime", this.burnTime);
         compound.putInt("BurnTimeTotal", this.burnTimeTotal);
         compound.putInt("CookTime", this.cookTime);
@@ -131,7 +131,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Override
@@ -142,7 +142,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         if (burningAtStart) {
             this.burnTime--;
         }
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             ItemStack inputStack = this.items.get(0);
             ItemStack fuelStack = this.items.get(1);
             if (this.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
@@ -179,17 +179,17 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
                 }
             } else if (!this.isBurning() && this.cookTime > 0) {
                 // Decay any cooking progress if the calcinator isn't lit
-                this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
+                this.cookTime = Mth.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
             }
             
             if (burningAtStart != this.isBurning()) {
                 // Update the tile's block state if the calcinator was lit up or went out this tick
                 shouldMarkDirty = true;
-                this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(AbstractCalcinatorBlock.LIT, Boolean.valueOf(this.isBurning())), Constants.BlockFlags.DEFAULT);
+                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(AbstractCalcinatorBlock.LIT, Boolean.valueOf(this.isBurning())), Constants.BlockFlags.DEFAULT);
             }
         }
         if (shouldMarkDirty) {
-            this.markDirty();
+            this.setChanged();
             this.syncTile(true);
         }
     }
@@ -219,7 +219,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
 
     protected boolean canCalcinate(ItemStack inputStack) {
         if (inputStack != null && !inputStack.isEmpty()) {
-            SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.world);
+            SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.level);
             if (sources == null || sources.isEmpty()) {
                 // An item without affinities cannot be melted
                 return false;
@@ -249,38 +249,38 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     }
 
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInv, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
         return new CalcinatorContainer(windowId, playerInv, this, this.calcinatorData);
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+    public Component getDisplayName() {
+        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        super.setInventorySlotContents(index, stack);
-        boolean flag = !stack.isEmpty() && stack.isItemEqual(slotStack) && ItemStack.areItemStackTagsEqual(stack, slotStack);
+        super.setItem(index, stack);
+        boolean flag = !stack.isEmpty() && stack.sameItem(slotStack) && ItemStack.tagMatches(stack, slotStack);
         if (index == 0 && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;
-            this.markDirty();
+            this.setChanged();
         }
     }
 
     @Override
-    public void setTileOwner(PlayerEntity owner) {
+    public void setTileOwner(Player owner) {
         this.owner = owner;
-        this.ownerUUID = owner.getUniqueID();
+        this.ownerUUID = owner.getUUID();
     }
 
     @Override
-    public PlayerEntity getTileOwner() {
-        if (this.owner == null && this.ownerUUID != null && this.hasWorld() && this.world instanceof ServerWorld) {
+    public Player getTileOwner() {
+        if (this.owner == null && this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel) {
             // If the owner cache is empty, find the entity matching the owner's unique ID
-            ServerPlayerEntity player = ((ServerWorld)this.world).getServer().getPlayerList().getPlayerByUUID(this.ownerUUID);
+            ServerPlayer player = ((ServerLevel)this.level).getServer().getPlayerList().getPlayer(this.ownerUUID);
             if (player != null) {
                 this.owner = player;
             } else {

@@ -11,9 +11,9 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Collection of utility methods pertaining to JSON parsing.
@@ -102,7 +102,7 @@ public class JsonUtils {
     public static SourceList toSourceList(@Nonnull JsonObject jsonObject) {
         SourceList retVal = new SourceList();
         for (Source source : Source.SORTED_SOURCES) {
-            retVal.add(source, JSONUtils.getInt(jsonObject, source.getTag(), 0));
+            retVal.add(source, GsonHelper.getAsInt(jsonObject, source.getTag(), 0));
         }
         return retVal;
     }

@@ -25,38 +25,38 @@ import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 /**
  * Server data container for the spellcrafting altar GUI.
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarContainer extends Container {
+public class SpellcraftingAltarContainer extends AbstractContainerMenu {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "spellcrafting");
 
-    protected final CraftingInventory scrollInv = new CraftingInventory(this, 1, 1);
+    protected final CraftingContainer scrollInv = new CraftingContainer(this, 1, 1);
     protected final WandInventory wandInv = new WandInventory(this);
-    protected final CraftResultInventory resultInv = new CraftResultInventory();
-    protected final IWorldPosCallable worldPosCallable;
-    protected final PlayerEntity player;
+    protected final ResultContainer resultInv = new ResultContainer();
+    protected final ContainerLevelAccess worldPosCallable;
+    protected final Player player;
     protected final Slot wandSlot;
     protected final Slot scrollSlot;
     
@@ -68,11 +68,11 @@ public class SpellcraftingAltarContainer extends Container {
     protected SpellPackage spellPackageCache = null;
     protected Map<SpellComponent, Map<String, Integer>> spellPropertyCache = new HashMap<>();
 
-    public SpellcraftingAltarContainer(int windowId, PlayerInventory inv) {
-        this(windowId, inv, IWorldPosCallable.DUMMY);
+    public SpellcraftingAltarContainer(int windowId, Inventory inv) {
+        this(windowId, inv, ContainerLevelAccess.NULL);
     }
 
-    public SpellcraftingAltarContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
+    public SpellcraftingAltarContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
         super(ContainersPM.SPELLCRAFTING_ALTAR.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
@@ -103,15 +103,15 @@ public class SpellcraftingAltarContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.SPELLCRAFTING_ALTAR.get());
+    public boolean stillValid(Player playerIn) {
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.SPELLCRAFTING_ALTAR.get());
     }
 
     public SourceList getManaCosts() {
         return this.getSpellPackage().getManaCost();
     }
     
-    public PlayerEntity getPlayer() {
+    public Player getPlayer() {
         return this.player;
     }
     
@@ -138,29 +138,29 @@ public class SpellcraftingAltarContainer extends Container {
     }
     
     @Nonnull
-    public ITextComponent getDefaultSpellName() {
+    public Component getDefaultSpellName() {
         // Don't use getSpellPackage here, or it will cause infinite recursion
-        ITextComponent vehiclePiece = this.getSpellVehicleComponent().getDefaultNamePiece();
-        ITextComponent payloadPiece = this.getSpellPayloadComponent().getDefaultNamePiece();
-        ITextComponent primaryModPiece = this.getSpellPrimaryModComponent().getDefaultNamePiece();
-        ITextComponent secondaryModPiece = this.getSpellSecondaryModComponent().getDefaultNamePiece();
+        Component vehiclePiece = this.getSpellVehicleComponent().getDefaultNamePiece();
+        Component payloadPiece = this.getSpellPayloadComponent().getDefaultNamePiece();
+        Component primaryModPiece = this.getSpellPrimaryModComponent().getDefaultNamePiece();
+        Component secondaryModPiece = this.getSpellSecondaryModComponent().getDefaultNamePiece();
         boolean primaryActive = this.getSpellPrimaryModComponent().isActive();
         boolean secondaryActive = this.getSpellSecondaryModComponent().isActive();
         if (vehiclePiece == null || payloadPiece == null || vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
             // If the constructed spell is invalid, don't show a default name
-            return new StringTextComponent("");
+            return new TextComponent("");
         } else if (!primaryActive && !secondaryActive) {
             // No mods selected
-            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
+            return new TranslatableComponent("primalmagic.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
         } else if (primaryActive && secondaryActive) {
             // Two mods selected
-            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
+            return new TranslatableComponent("primalmagic.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
         } else if (primaryActive) {
             // Only a primary mod selected
-            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
+            return new TranslatableComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
         } else {
             // Only a secondary mod selected
-            return new TranslationTextComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
+            return new TranslatableComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
         }
     }
     
@@ -168,7 +168,7 @@ public class SpellcraftingAltarContainer extends Container {
         // Clear the spell package cache and trigger a regeneration of the output item on change
         this.spellName = name;
         this.spellPackageCache = null;
-        this.worldPosCallable.consume((world, blockPos) -> {
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -192,10 +192,10 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellVehicleTypeIndex(int index) {
         // Clear the spell package cache and trigger a regeneration of the output item on change
-        index = MathHelper.clamp(index, 0, SpellManager.getVehicleTypes(this.player).size() - 1);
+        index = Mth.clamp(index, 0, SpellManager.getVehicleTypes(this.player).size() - 1);
         this.spellVehicleTypeIndex = index;
         this.spellPackageCache = null;
-        this.worldPosCallable.consume((world, blockPos) -> {
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -219,10 +219,10 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellPayloadTypeIndex(int index) {
         // Clear the spell package cache and trigger a regeneration of the output item on change
-        index = MathHelper.clamp(index, 0, SpellManager.getPayloadTypes(this.player).size() - 1);
+        index = Mth.clamp(index, 0, SpellManager.getPayloadTypes(this.player).size() - 1);
         this.spellPayloadTypeIndex = index;
         this.spellPackageCache = null;
-        this.worldPosCallable.consume((world, blockPos) -> {
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -246,10 +246,10 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellPrimaryModTypeIndex(int index) {
         // Clear the spell package cache and trigger a regeneration of the output item on change
-        index = MathHelper.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
+        index = Mth.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellPrimaryModTypeIndex = index;
         this.spellPackageCache = null;
-        this.worldPosCallable.consume((world, blockPos) -> {
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -273,10 +273,10 @@ public class SpellcraftingAltarContainer extends Container {
     
     public void setSpellSecondaryModTypeIndex(int index) {
         // Clear the spell package cache and trigger a regeneration of the output item on change
-        index = MathHelper.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
+        index = Mth.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellSecondaryModTypeIndex = index;
         this.spellPackageCache = null;
-        this.worldPosCallable.consume((world, blockPos) -> {
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -300,74 +300,74 @@ public class SpellcraftingAltarContainer extends Container {
         if (property != null) {
             property.setValue(value);
             this.spellPropertyCache.get(component).put(name, value);
-            this.worldPosCallable.consume((world, blockPos) -> {
+            this.worldPosCallable.execute((world, blockPos) -> {
                 this.slotChangedCraftingGrid(world);
             });
         }
     }
     
     @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
+    public void removed(Player playerIn) {
         // Return input scroll and wand to the player's inventory when the GUI is closed
-        super.onContainerClosed(playerIn);
-        this.worldPosCallable.consume((world, blockPos) -> {
+        super.removed(playerIn);
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.clearContainer(playerIn, world, this.wandInv);
             this.clearContainer(playerIn, world, this.scrollInv);
         });
     }
     
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
                 // If transferring the output item, move it into the player's backpack or hotbar
-                if (!this.mergeItemStack(slotStack, 3, 39, true)) {
+                if (!this.moveItemStackTo(slotStack, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onSlotChange(slotStack, stack);
+                slot.onQuickCraft(slotStack, stack);
             } else if (index >= 3 && index < 30) {
                 // If transferring from the backpack, move wands or blank scrolls to the appropriate slot, and anything else to the hotbar
-                if (this.wandSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                if (this.wandSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.scrollSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 2, 3, false)) {
+                } else if (this.scrollSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 30, 39, false)) {
+                    if (!this.moveItemStackTo(slotStack, 30, 39, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
             } else if (index >= 30 && index < 39) {
                 // If transferring from the hotbar, move wands or blank scrolls to the appropriate slot, and anything else to the backpack
-                if (this.wandSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                if (this.wandSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.scrollSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 2, 3, false)) {
+                } else if (this.scrollSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 3, 30, false)) {
+                    if (!this.moveItemStackTo(slotStack, 3, 30, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.mergeItemStack(slotStack, 3, 39, false)) {
+            } else if (!this.moveItemStackTo(slotStack, 3, 39, false)) {
                 // Move all other transfers to the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
             
             if (slotStack.getCount() == stack.getCount()) {
@@ -376,35 +376,35 @@ public class SpellcraftingAltarContainer extends Container {
             
             ItemStack taken = slot.onTake(playerIn, slotStack);
             if (index == 0) {
-                playerIn.dropItem(taken, false);
+                playerIn.drop(taken, false);
             }
         }
         return stack;
     }
     
     @Override
-    public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-        return slotIn.inventory != this.resultInv && super.canMergeSlot(stack, slotIn);
+    public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+        return slotIn.container != this.resultInv && super.canTakeItemForPickAll(stack, slotIn);
     }
     
     @Override
-    public void onCraftMatrixChanged(IInventory inventoryIn) {
-        super.onCraftMatrixChanged(inventoryIn);
-        this.worldPosCallable.consume((world, blockPos) -> {
+    public void slotsChanged(Container inventoryIn) {
+        super.slotsChanged(inventoryIn);
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
 
-    protected void slotChangedCraftingGrid(World world) {
-        if (!world.isRemote && this.player instanceof ServerPlayerEntity) {
-            ServerPlayerEntity spe = (ServerPlayerEntity)this.player;
+    protected void slotChangedCraftingGrid(Level world) {
+        if (!world.isClientSide && this.player instanceof ServerPlayer) {
+            ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            Optional<? extends IRecipe<?>> opt = world.getServer().getRecipeManager().getRecipe(RECIPE_LOC);
+            Optional<? extends Recipe<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get() instanceof SpellcraftingRecipe) {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
                 SpellcraftingRecipe recipe = (SpellcraftingRecipe)opt.get();
                 if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
-                    stack = recipe.getCraftingResult(this.scrollInv);
+                    stack = recipe.assemble(this.scrollInv);
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {
                         ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());
                     }
@@ -412,13 +412,13 @@ public class SpellcraftingAltarContainer extends Container {
             }
 
             // Send a packet to the client to update its GUI with the shown output
-            this.resultInv.setInventorySlotContents(0, stack);
-            spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
+            this.resultInv.setItem(0, stack);
+            spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, 0, stack));
         }
     }
     
-    protected boolean wandContainsEnoughMana(PlayerEntity player) {
-        ItemStack stack = this.wandInv.getStackInSlot(0);
+    protected boolean wandContainsEnoughMana(Player player) {
+        ItemStack stack = this.wandInv.getItem(0);
         if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand)) {
             return false;
         }

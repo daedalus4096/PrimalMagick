@@ -16,13 +16,13 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -40,7 +40,7 @@ public class ArcaneShapedRecipeBuilder {
     protected CompoundResearchKey research;
     protected SourceList manaCosts;
     
-    protected ArcaneShapedRecipeBuilder(IItemProvider result, int count) {
+    protected ArcaneShapedRecipeBuilder(ItemLike result, int count) {
         this.result = result.asItem();
         this.count = count;
     }
@@ -52,7 +52,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a shaped arcane recipe
      */
-    public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(IItemProvider result, int count) {
+    public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(ItemLike result, int count) {
         return new ArcaneShapedRecipeBuilder(result, count);
     }
     
@@ -62,7 +62,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a shaped arcane recipe
      */
-    public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(IItemProvider result) {
+    public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(ItemLike result) {
         return arcaneShapedRecipe(result, 1);
     }
     
@@ -91,8 +91,8 @@ public class ArcaneShapedRecipeBuilder {
      * @param item the item to use for the given symbol
      * @return the modified builder
      */
-    public ArcaneShapedRecipeBuilder key(Character symbol, IItemProvider item) {
-        return key(symbol, Ingredient.fromItems(item));
+    public ArcaneShapedRecipeBuilder key(Character symbol, ItemLike item) {
+        return key(symbol, Ingredient.of(item));
     }
     
     /**
@@ -102,8 +102,8 @@ public class ArcaneShapedRecipeBuilder {
      * @param tag the item tag to use for the given symbol
      * @return the modified builder
      */
-    public ArcaneShapedRecipeBuilder key(Character symbol, ITag<Item> tag) {
-        return key(symbol, Ingredient.fromTag(tag));
+    public ArcaneShapedRecipeBuilder key(Character symbol, Tag<Item> tag) {
+        return key(symbol, Ingredient.of(tag));
     }
     
     /**
@@ -160,7 +160,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param consumer a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
+    public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
         consumer.accept(new ArcaneShapedRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.pattern, this.key, this.research, this.manaCosts));
     }
@@ -172,7 +172,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param consumer a consumer for the finished recipe
      * @param save custom ID for the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer, String save) {
+    public void build(Consumer<FinishedRecipe> consumer, String save) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result);
         ResourceLocation saveLoc = new ResourceLocation(save);
         if (saveLoc.equals(id)) {
@@ -187,7 +187,7 @@ public class ArcaneShapedRecipeBuilder {
      * 
      * @param consumer a consumer for the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer) {
+    public void build(Consumer<FinishedRecipe> consumer) {
         this.build(consumer, ForgeRegistries.ITEMS.getKey(this.result));
     }
 
@@ -223,7 +223,7 @@ public class ArcaneShapedRecipeBuilder {
         }
     }
     
-    public static class Result implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         protected final ResourceLocation id;
         protected final Item result;
         protected final int count;
@@ -245,7 +245,7 @@ public class ArcaneShapedRecipeBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
             if (this.group != null && !this.group.isEmpty()) {
                 json.addProperty("group", this.group);
             }
@@ -269,7 +269,7 @@ public class ArcaneShapedRecipeBuilder {
             
             JsonObject keyJson = new JsonObject();
             for (Entry<Character, Ingredient> entry : this.key.entrySet()) {
-                keyJson.add(String.valueOf(entry.getKey()), entry.getValue().serialize());
+                keyJson.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
             }
             json.add("key", keyJson);
             
@@ -282,23 +282,23 @@ public class ArcaneShapedRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
             return this.id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public RecipeSerializer<?> getType() {
             return RecipeSerializersPM.ARCANE_CRAFTING_SHAPED.get();
         }
 
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
             // Arcane recipes don't use the vanilla advancement unlock system, so return null
             return null;
         }
 
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
             return new ResourceLocation("");
         }
     }

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -30,7 +30,7 @@ public class SpellImpactPacket implements IMessageToClient {
         this.color = color;
     }
     
-    public static void encode(SpellImpactPacket message, PacketBuffer buf) {
+    public static void encode(SpellImpactPacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
         buf.writeDouble(message.z);
@@ -38,7 +38,7 @@ public class SpellImpactPacket implements IMessageToClient {
         buf.writeInt(message.color);
     }
     
-    public static SpellImpactPacket decode(PacketBuffer buf) {
+    public static SpellImpactPacket decode(FriendlyByteBuf buf) {
         SpellImpactPacket message = new SpellImpactPacket();
         message.x = buf.readDouble();
         message.y = buf.readDouble();

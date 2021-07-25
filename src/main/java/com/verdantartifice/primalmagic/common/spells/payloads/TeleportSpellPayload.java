@@ -6,16 +6,16 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition of a teleport spell.  Teleports the caster to the target location.  Works similarly to
@@ -36,19 +36,19 @@ public class TeleportSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
         if (burstPoint != null) {
             // Do nothing if this was from a burst spell
             return;
         }
-        if (target.getType() == RayTraceResult.Type.ENTITY) {
-            Entity entity = ((EntityRayTraceResult)target).getEntity();
+        if (target.getType() == HitResult.Type.ENTITY) {
+            Entity entity = ((EntityHitResult)target).getEntity();
             if (entity.equals(caster)) {
                 // Do nothing if the caster targeted themselves
                 return;
             }
         }
-        EntityUtils.teleportEntity(caster, world, target.getHitVec());
+        EntityUtils.teleportEntity(caster, world, target.getLocation());
     }
 
     @Override
@@ -62,8 +62,8 @@ public class TeleportSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, BlockPos origin) {
-        world.playSound(null, origin, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(Level world, BlockPos origin) {
+        world.playSound(null, origin, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
     @Override

@@ -7,27 +7,27 @@ import com.verdantartifice.primalmagic.common.blockstates.properties.SkyglassPan
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -38,7 +38,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link net.minecraft.block.PaneBlock}
  */
-public class SkyglassPaneBlock extends Block implements IWaterLoggable {
+public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
     public static final EnumProperty<SkyglassPaneSide> NORTH = EnumProperty.create("north", SkyglassPaneSide.class);
     public static final EnumProperty<SkyglassPaneSide> EAST = EnumProperty.create("east", SkyglassPaneSide.class);
     public static final EnumProperty<SkyglassPaneSide> SOUTH = EnumProperty.create("south", SkyglassPaneSide.class);
@@ -64,7 +64,7 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
         super(properties);
         this.shapes = this.makeShapes(1.0F, 1.0F, 16.0F, 0.0F, 16.0F);
         this.collisionShapes = this.makeShapes(1.0F, 1.0F, 16.0F, 0.0F, 16.0F);
-        this.setDefaultState(this.getDefaultState().with(NORTH, SkyglassPaneSide.NONE).with(EAST, SkyglassPaneSide.NONE).with(SOUTH, SkyglassPaneSide.NONE).with(WEST, SkyglassPaneSide.NONE).with(UP, SkyglassPaneSide.NONE).with(DOWN, SkyglassPaneSide.NONE).with(WATERLOGGED, Boolean.valueOf(false)));
+        this.registerDefaultState(this.defaultBlockState().setValue(NORTH, SkyglassPaneSide.NONE).setValue(EAST, SkyglassPaneSide.NONE).setValue(SOUTH, SkyglassPaneSide.NONE).setValue(WEST, SkyglassPaneSide.NONE).setValue(UP, SkyglassPaneSide.NONE).setValue(DOWN, SkyglassPaneSide.NONE).setValue(WATERLOGGED, Boolean.valueOf(false)));
     }
     
     protected VoxelShape[] makeShapes(float nodeWidth, float extensionWidth, float p_196408_3_, float p_196408_4_, float p_196408_5_) {
@@ -72,50 +72,50 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
         float f1 = 8.0F + nodeWidth;
         float f2 = 8.0F - extensionWidth;
         float f3 = 8.0F + extensionWidth;
-        VoxelShape voxelshape = Block.makeCuboidShape((double)f, 0.0D, (double)f, (double)f1, (double)p_196408_3_, (double)f1);
-        VoxelShape voxelshape1 = Block.makeCuboidShape((double)f2, (double)p_196408_4_, 0.0D, (double)f3, (double)p_196408_5_, (double)f3);
-        VoxelShape voxelshape2 = Block.makeCuboidShape((double)f2, (double)p_196408_4_, (double)f2, (double)f3, (double)p_196408_5_, 16.0D);
-        VoxelShape voxelshape3 = Block.makeCuboidShape(0.0D, (double)p_196408_4_, (double)f2, (double)f3, (double)p_196408_5_, (double)f3);
-        VoxelShape voxelshape4 = Block.makeCuboidShape((double)f2, (double)p_196408_4_, (double)f2, 16.0D, (double)p_196408_5_, (double)f3);
-        VoxelShape voxelshape5 = VoxelShapes.or(voxelshape1, voxelshape4);
-        VoxelShape voxelshape6 = VoxelShapes.or(voxelshape2, voxelshape3);
-        VoxelShape[] avoxelshape = new VoxelShape[]{VoxelShapes.empty(), voxelshape2, voxelshape3, voxelshape6, voxelshape1, VoxelShapes.or(voxelshape2, voxelshape1), VoxelShapes.or(voxelshape3, voxelshape1), VoxelShapes.or(voxelshape6, voxelshape1), voxelshape4, VoxelShapes.or(voxelshape2, voxelshape4), VoxelShapes.or(voxelshape3, voxelshape4), VoxelShapes.or(voxelshape6, voxelshape4), voxelshape5, VoxelShapes.or(voxelshape2, voxelshape5), VoxelShapes.or(voxelshape3, voxelshape5), VoxelShapes.or(voxelshape6, voxelshape5)};
+        VoxelShape voxelshape = Block.box((double)f, 0.0D, (double)f, (double)f1, (double)p_196408_3_, (double)f1);
+        VoxelShape voxelshape1 = Block.box((double)f2, (double)p_196408_4_, 0.0D, (double)f3, (double)p_196408_5_, (double)f3);
+        VoxelShape voxelshape2 = Block.box((double)f2, (double)p_196408_4_, (double)f2, (double)f3, (double)p_196408_5_, 16.0D);
+        VoxelShape voxelshape3 = Block.box(0.0D, (double)p_196408_4_, (double)f2, (double)f3, (double)p_196408_5_, (double)f3);
+        VoxelShape voxelshape4 = Block.box((double)f2, (double)p_196408_4_, (double)f2, 16.0D, (double)p_196408_5_, (double)f3);
+        VoxelShape voxelshape5 = Shapes.or(voxelshape1, voxelshape4);
+        VoxelShape voxelshape6 = Shapes.or(voxelshape2, voxelshape3);
+        VoxelShape[] avoxelshape = new VoxelShape[]{Shapes.empty(), voxelshape2, voxelshape3, voxelshape6, voxelshape1, Shapes.or(voxelshape2, voxelshape1), Shapes.or(voxelshape3, voxelshape1), Shapes.or(voxelshape6, voxelshape1), voxelshape4, Shapes.or(voxelshape2, voxelshape4), Shapes.or(voxelshape3, voxelshape4), Shapes.or(voxelshape6, voxelshape4), voxelshape5, Shapes.or(voxelshape2, voxelshape5), Shapes.or(voxelshape3, voxelshape5), Shapes.or(voxelshape6, voxelshape5)};
 
         for (int i = 0; i < avoxelshape.length; i++) {
-            avoxelshape[i] = VoxelShapes.or(voxelshape, avoxelshape[i]);
+            avoxelshape[i] = Shapes.or(voxelshape, avoxelshape[i]);
         }
         
         return avoxelshape;
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         builder.add(UP, DOWN, NORTH, EAST, WEST, SOUTH, WATERLOGGED);
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return this.shapes[this.getShapeIndex(state)];
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return this.collisionShapes[this.getShapeIndex(state)];
     }
     
     protected int getShapeIndex(BlockState state) {
         return this.stateShapeIndices.computeIntIfAbsent(state, (s) -> {
             int index = 0;
-            if (s.get(NORTH) == SkyglassPaneSide.GLASS || s.get(NORTH) == SkyglassPaneSide.OTHER) {
+            if (s.getValue(NORTH) == SkyglassPaneSide.GLASS || s.getValue(NORTH) == SkyglassPaneSide.OTHER) {
                 index |= getDirectionMask(Direction.NORTH);
             }
-            if (s.get(SOUTH) == SkyglassPaneSide.GLASS || s.get(SOUTH) == SkyglassPaneSide.OTHER) {
+            if (s.getValue(SOUTH) == SkyglassPaneSide.GLASS || s.getValue(SOUTH) == SkyglassPaneSide.OTHER) {
                 index |= getDirectionMask(Direction.SOUTH);
             }
-            if (s.get(WEST) == SkyglassPaneSide.GLASS || s.get(WEST) == SkyglassPaneSide.OTHER) {
+            if (s.getValue(WEST) == SkyglassPaneSide.GLASS || s.getValue(WEST) == SkyglassPaneSide.OTHER) {
                 index |= getDirectionMask(Direction.WEST);
             }
-            if (s.get(EAST) == SkyglassPaneSide.GLASS || s.get(EAST) == SkyglassPaneSide.OTHER) {
+            if (s.getValue(EAST) == SkyglassPaneSide.GLASS || s.getValue(EAST) == SkyglassPaneSide.OTHER) {
                 index |= getDirectionMask(Direction.EAST);
             }
             return index;
@@ -123,43 +123,43 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
     }
     
     protected static int getDirectionMask(Direction dir) {
-        return 1 << dir.getHorizontalIndex();
+        return 1 << dir.get2DDataValue();
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Determine the block's connections when it is placed into the world
-        return this.getCurrentState(this.getDefaultState(), context.getWorld(), context.getPos());
+        return this.getCurrentState(this.defaultBlockState(), context.getLevel(), context.getClickedPos());
     }
     
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if (stateIn.get(WATERLOGGED)) {
-            worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+        if (stateIn.getValue(WATERLOGGED)) {
+            worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
         }
         
         // Determine the block's connections when one of its neighbors is updated
         return this.getCurrentState(stateIn, worldIn, currentPos);
     }
     
-    protected BlockState getCurrentState(BlockState state, IWorld world, BlockPos pos) {
-        return this.getDefaultState()
-                .with(UP, this.getSideConnection(state, world, pos, Direction.UP))
-                .with(DOWN, this.getSideConnection(state, world, pos, Direction.DOWN))
-                .with(NORTH, this.getSideConnection(state, world, pos, Direction.NORTH))
-                .with(SOUTH, this.getSideConnection(state, world, pos, Direction.SOUTH))
-                .with(WEST, this.getSideConnection(state, world, pos, Direction.WEST))
-                .with(EAST, this.getSideConnection(state, world, pos, Direction.EAST))
-                .with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER);
+    protected BlockState getCurrentState(BlockState state, LevelAccessor world, BlockPos pos) {
+        return this.defaultBlockState()
+                .setValue(UP, this.getSideConnection(state, world, pos, Direction.UP))
+                .setValue(DOWN, this.getSideConnection(state, world, pos, Direction.DOWN))
+                .setValue(NORTH, this.getSideConnection(state, world, pos, Direction.NORTH))
+                .setValue(SOUTH, this.getSideConnection(state, world, pos, Direction.SOUTH))
+                .setValue(WEST, this.getSideConnection(state, world, pos, Direction.WEST))
+                .setValue(EAST, this.getSideConnection(state, world, pos, Direction.EAST))
+                .setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER);
     }
     
-    protected SkyglassPaneSide getSideConnection(BlockState state, IWorld world, BlockPos pos, Direction dir) {
-        BlockState adjacent = world.getBlockState(pos.offset(dir));
-        if (adjacent == null || cannotAttach(adjacent.getBlock())) {
+    protected SkyglassPaneSide getSideConnection(BlockState state, LevelAccessor world, BlockPos pos, Direction dir) {
+        BlockState adjacent = world.getBlockState(pos.relative(dir));
+        if (adjacent == null || isExceptionForConnection(adjacent.getBlock())) {
             return SkyglassPaneSide.NONE;
         } else if (state.getBlock() == adjacent.getBlock()) {
             return SkyglassPaneSide.GLASS;
-        } else if (adjacent.isSolidSide(world, pos.offset(dir), dir.getOpposite()) || adjacent.getBlock() instanceof SkyglassPaneBlock) {
+        } else if (adjacent.isFaceSturdy(world, pos.relative(dir), dir.getOpposite()) || adjacent.getBlock() instanceof SkyglassPaneBlock) {
             return SkyglassPaneSide.OTHER;
         } else {
             return SkyglassPaneSide.NONE;
@@ -169,44 +169,44 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
     @SuppressWarnings("deprecation")
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+    public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
         if (adjacentBlockState.getBlock() == state.getBlock()) {
             if (!side.getAxis().isHorizontal()) {
                 return true;
             }
-            if ( state.get(FACING_TO_PROPERTY_MAP.get(side)) == SkyglassPaneSide.GLASS &&
-                 adjacentBlockState.get(FACING_TO_PROPERTY_MAP.get(side.getOpposite())) == SkyglassPaneSide.GLASS ) {
+            if ( state.getValue(FACING_TO_PROPERTY_MAP.get(side)) == SkyglassPaneSide.GLASS &&
+                 adjacentBlockState.getValue(FACING_TO_PROPERTY_MAP.get(side.getOpposite())) == SkyglassPaneSide.GLASS ) {
                 return true;
             }
         }
-        return super.isSideInvisible(state, adjacentBlockState, side);
+        return super.skipRendering(state, adjacentBlockState, side);
     }
     
     @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
     
     @Override
-    public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
         return false;
     }
     
     @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-        return !state.get(WATERLOGGED);
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+        return !state.getValue(WATERLOGGED);
     }
     
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
         switch (rot) {
         case CLOCKWISE_180:
-            return state.with(NORTH, state.get(SOUTH)).with(EAST, state.get(WEST)).with(SOUTH, state.get(NORTH)).with(WEST, state.get(EAST));
+            return state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
         case CLOCKWISE_90:
-            return state.with(NORTH, state.get(WEST)).with(EAST, state.get(NORTH)).with(SOUTH, state.get(EAST)).with(WEST, state.get(SOUTH));
+            return state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
         case COUNTERCLOCKWISE_90:
-            return state.with(NORTH, state.get(EAST)).with(EAST, state.get(SOUTH)).with(SOUTH, state.get(WEST)).with(WEST, state.get(NORTH));
+            return state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
         default:
             return state;
         }
@@ -216,9 +216,9 @@ public class SkyglassPaneBlock extends Block implements IWaterLoggable {
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         switch (mirrorIn) {
         case LEFT_RIGHT:
-            return state.with(NORTH, state.get(SOUTH)).with(SOUTH, state.get(NORTH));
+            return state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
         case FRONT_BACK:
-            return state.with(EAST, state.get(WEST)).with(WEST, state.get(EAST));
+            return state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
         default:
             return state;
         }

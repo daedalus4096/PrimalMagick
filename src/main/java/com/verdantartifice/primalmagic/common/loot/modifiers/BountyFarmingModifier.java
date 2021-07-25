@@ -7,13 +7,13 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -26,7 +26,7 @@ import net.minecraftforge.common.loot.LootModifier;
 public class BountyFarmingModifier extends LootModifier {
     protected final float chance;
 
-    public BountyFarmingModifier(ILootCondition[] conditionsIn, float chance) {
+    public BountyFarmingModifier(LootItemCondition[] conditionsIn, float chance) {
         super(conditionsIn);
         this.chance = chance;
     }
@@ -34,12 +34,12 @@ public class BountyFarmingModifier extends LootModifier {
     @SuppressWarnings("deprecation")
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        LootTable table = context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(context.get(LootParameters.BLOCK_STATE).getBlock().getLootTable());
-        int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.BOUNTY.get(), context.get(LootParameters.TOOL));
+        LootTable table = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
+        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.BOUNTY.get(), context.getParamOrNull(LootContextParams.TOOL));
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < this.chance) {
                 List<ItemStack> bonusList = new ArrayList<>();
-                table.generate(context, bonusList::add);    // Use deprecated method to avoid recursive modification of loot generated
+                table.getRandomItems(context, bonusList::add);    // Use deprecated method to avoid recursive modification of loot generated
                 generatedLoot = ItemUtils.mergeItemStackLists(generatedLoot, bonusList);
             }
         }
@@ -48,7 +48,7 @@ public class BountyFarmingModifier extends LootModifier {
 
     public static class Serializer extends GlobalLootModifierSerializer<BountyFarmingModifier> {
         @Override
-        public BountyFarmingModifier read(ResourceLocation location, JsonObject object, ILootCondition[] ailootcondition) {
+        public BountyFarmingModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
             float chance = object.getAsJsonPrimitive("chance").getAsFloat();
             return new BountyFarmingModifier(ailootcondition, chance);
         }

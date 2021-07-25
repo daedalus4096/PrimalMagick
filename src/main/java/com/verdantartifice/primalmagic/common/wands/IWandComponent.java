@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.wands;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.Rarity;
+import net.minecraft.world.item.Rarity;
 
 /**
  * Definition of a wand component data structure.  Components are either cores, caps, or gems.

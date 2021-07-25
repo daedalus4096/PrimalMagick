@@ -4,8 +4,8 @@ import java.util.EnumSet;
 
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * AI goal for a companion to stay put at its owner's command.
@@ -18,40 +18,40 @@ public class CompanionStayGoal extends Goal {
     
     public CompanionStayGoal(AbstractCompanionEntity entity) {
         this.entity = entity;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
     }
     
     @Override
-    public boolean shouldContinueExecuting() {
+    public boolean canContinueToUse() {
         return this.entity.isCompanionStaying();
     }
 
     @Override
-    public boolean shouldExecute() {
+    public boolean canUse() {
         if (!this.entity.hasCompanionOwner()) {
             return false;
-        } else if (this.entity.isInWaterOrBubbleColumn()) {
+        } else if (this.entity.isInWaterOrBubble()) {
             return false;
         } else if (!this.entity.isOnGround()) {
             return false;
         } else {
-            PlayerEntity owner = this.entity.getCompanionOwner();
+            Player owner = this.entity.getCompanionOwner();
             if (owner == null) {
                 return true;
             } else {
-                return this.entity.getDistanceSq(owner) < 144.0D && owner.getRevengeTarget() != null ? false : this.entity.isCompanionStaying();
+                return this.entity.distanceToSqr(owner) < 144.0D && owner.getLastHurtByMob() != null ? false : this.entity.isCompanionStaying();
             }
         }
     }
 
     @Override
-    public void startExecuting() {
-        this.entity.getNavigator().clearPath();
+    public void start() {
+        this.entity.getNavigation().stop();
         this.entity.setCompanionStaying(true);
     }
 
     @Override
-    public void resetTask() {
+    public void stop() {
         this.entity.setCompanionStaying(false);
     }
 }

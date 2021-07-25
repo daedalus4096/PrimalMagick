@@ -3,15 +3,15 @@ package com.verdantartifice.primalmagic.common.enchantments;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.TridentItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TridentItem;
 
 /**
  * Definition of an enchantment that steals life from entities wounded by this weapon.  Gives a
@@ -22,18 +22,18 @@ import net.minecraft.item.TridentItem;
 public class LifestealEnchantment extends AbstractRuneEnchantment {
     protected static final Map<Entity, Long> LAST_LEECHED = new HashMap<>();
     
-    public LifestealEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
-        super(rarity, EnchantmentType.WEAPON, slots);
+    public LifestealEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
+        super(rarity, EnchantmentCategory.WEAPON, slots);
     }
     
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + ((enchantmentLevel - 1) * 10);
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 15;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 15;
     }
     
     @Override
@@ -42,18 +42,18 @@ public class LifestealEnchantment extends AbstractRuneEnchantment {
     }
     
     @Override
-    public boolean canApply(ItemStack stack) {
+    public boolean canEnchant(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof TridentItem || item instanceof AxeItem ? true : super.canApply(stack);
+        return item instanceof TridentItem || item instanceof AxeItem ? true : super.canEnchant(stack);
     }
     
     @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-        super.onEntityDamaged(user, target, level);
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
+        super.doPostAttack(user, target, level);
         
         // Disallow leeching from the same entity multiple times in one tick to prevent bigger than intended heals
-        long ticks = user.world.getGameTime();
-        if (target instanceof LivingEntity && user.getRNG().nextInt(5) < level && LAST_LEECHED.getOrDefault(target, 0L) != ticks) {
+        long ticks = user.level.getGameTime();
+        if (target instanceof LivingEntity && user.getRandom().nextInt(5) < level && LAST_LEECHED.getOrDefault(target, 0L) != ticks) {
             user.heal(1.0F);
             LAST_LEECHED.put(target, ticks);
         }

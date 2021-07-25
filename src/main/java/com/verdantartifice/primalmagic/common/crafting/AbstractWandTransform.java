@@ -6,11 +6,11 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.misc.BlockSwapper;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.hooks.BasicEventHooks;
 
 /**
@@ -28,12 +28,12 @@ public abstract class AbstractWandTransform implements IWandTransform {
     }
 
     @Override
-    public boolean isValid(World world, PlayerEntity player, BlockPos pos) {
+    public boolean isValid(Level world, Player player, BlockPos pos) {
         return this.research == null || this.research.isKnownBy(player);
     }
 
     @Override
-    public void execute(World world, PlayerEntity player, BlockPos pos) {
+    public void execute(Level world, Player player, BlockPos pos) {
         // Enqueue a block swapper to be executed on the world next tick
         BasicEventHooks.firePlayerCraftingEvent(player, this.result, new FakeInventory(1));
         BlockState state = world.getBlockState(pos);

@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagic.common.wands;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * Control interface for a block or tile entity that can interact with wands when right-clicked wtih them.
@@ -23,7 +23,7 @@ public interface IInteractWithWand {
      * @param direction the side of the block/tile that was right-clicked
      * @return whether the interaction succeeded, failed, or should defer to subsequent code
      */
-    public ActionResultType onWandRightClick(ItemStack wandStack, World world, PlayerEntity player, BlockPos pos, Direction direction);
+    public InteractionResult onWandRightClick(ItemStack wandStack, Level world, Player player, BlockPos pos, Direction direction);
     
     /**
      * Handle a tick's worth of behavior when the initial interaction is continued by holding the right-click.
@@ -32,5 +32,5 @@ public interface IInteractWithWand {
      * @param player the player who used the wand
      * @param count the number of ticks which the wand has been used for continuously
      */
-    public void onWandUseTick(ItemStack wandStack, PlayerEntity player, int count);
+    public void onWandUseTick(ItemStack wandStack, Player player, int count);
 }

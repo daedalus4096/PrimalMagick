@@ -8,8 +8,8 @@ import com.verdantartifice.primalmagic.client.renderers.entity.model.EnchantedGo
 import com.verdantartifice.primalmagic.common.entities.companions.golems.AbstractEnchantedGolemEntity.Cracks;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumGolemEntity;
 
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Layer renderer for damage cracks on a hexium golem.
@@ -23,7 +23,7 @@ public class HexiumGolemCracksLayer extends AbstractEnchantedGolemCracksLayer<He
             .put(Cracks.HIGH, new ResourceLocation(PrimalMagic.MODID, "textures/entity/hexium_golem/hexium_golem_crackiness_high.png"))
             .build();
     
-    public HexiumGolemCracksLayer(IEntityRenderer<HexiumGolemEntity, EnchantedGolemModel<HexiumGolemEntity>> entityRendererIn) {
+    public HexiumGolemCracksLayer(RenderLayerParent<HexiumGolemEntity, EnchantedGolemModel<HexiumGolemEntity>> entityRendererIn) {
         super(entityRendererIn);
     }
 

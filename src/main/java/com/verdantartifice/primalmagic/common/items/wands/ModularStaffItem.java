@@ -8,13 +8,15 @@ import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+
+import net.minecraft.world.item.Item.Properties;
 
 /**
  * Item definition for a modular staff.  Modular staves are made up of cores, caps, and gems, and their
@@ -32,21 +34,21 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
         this.attackDamage = (float)attackDamage;
         this.attackSpeed = attackSpeed;
         Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
     
     @Override
-    public ITextComponent getDisplayName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         // A modular staff's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Staff")
         WandCore core = this.getWandCore(stack);
-        ITextComponent coreName = (core == null) ? new TranslationTextComponent("primalmagic.wand_core.unknown.name") : new TranslationTextComponent(core.getNameTranslationKey());
+        Component coreName = (core == null) ? new TranslatableComponent("primalmagic.wand_core.unknown.name") : new TranslatableComponent(core.getNameTranslationKey());
         WandCap cap = this.getWandCap(stack);
-        ITextComponent capName = (cap == null) ? new TranslationTextComponent("primalmagic.wand_cap.unknown.name") : new TranslationTextComponent(cap.getNameTranslationKey());
+        Component capName = (cap == null) ? new TranslatableComponent("primalmagic.wand_cap.unknown.name") : new TranslatableComponent(cap.getNameTranslationKey());
         WandGem gem = this.getWandGem(stack);
-        ITextComponent gemName = (gem == null) ? new TranslationTextComponent("primalmagic.wand_gem.unknown.name") : new TranslationTextComponent(gem.getNameTranslationKey());
-        return new TranslationTextComponent("item.primalmagic.modular_staff", gemName, capName, coreName);
+        Component gemName = (gem == null) ? new TranslatableComponent("primalmagic.wand_gem.unknown.name") : new TranslatableComponent(gem.getNameTranslationKey());
+        return new TranslatableComponent("item.primalmagic.modular_staff", gemName, capName, coreName);
     }
     
     @Override
@@ -57,7 +59,7 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
     
     @Override
     @SuppressWarnings("deprecation")
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
+        return equipmentSlot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 }

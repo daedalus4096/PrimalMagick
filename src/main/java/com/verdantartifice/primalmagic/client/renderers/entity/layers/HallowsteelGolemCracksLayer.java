@@ -8,8 +8,8 @@ import com.verdantartifice.primalmagic.client.renderers.entity.model.EnchantedGo
 import com.verdantartifice.primalmagic.common.entities.companions.golems.AbstractEnchantedGolemEntity.Cracks;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HallowsteelGolemEntity;
 
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Layer renderer for damage cracks on a hallowsteel golem.
@@ -23,7 +23,7 @@ public class HallowsteelGolemCracksLayer extends AbstractEnchantedGolemCracksLay
             .put(Cracks.HIGH, new ResourceLocation(PrimalMagic.MODID, "textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_high.png"))
             .build();
     
-    public HallowsteelGolemCracksLayer(IEntityRenderer<HallowsteelGolemEntity, EnchantedGolemModel<HallowsteelGolemEntity>> entityRendererIn) {
+    public HallowsteelGolemCracksLayer(RenderLayerParent<HallowsteelGolemEntity, EnchantedGolemModel<HallowsteelGolemEntity>> entityRendererIn) {
         super(entityRendererIn);
     }
 

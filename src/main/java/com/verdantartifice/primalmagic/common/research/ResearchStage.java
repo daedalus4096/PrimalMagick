@@ -18,9 +18,9 @@ import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a research stage, a portion of a research entry.  A research stage contains text to be
@@ -143,7 +143,7 @@ public class ResearchStage {
         return !this.mustObtain.isEmpty() || !this.mustCraft.isEmpty() || !this.requiredKnowledge.isEmpty() || this.requiredResearch != null;
     }
     
-    public boolean arePrerequisitesMet(@Nullable PlayerEntity player) {
+    public boolean arePrerequisitesMet(@Nullable Player player) {
         if (player == null) {
             return false;
         }
@@ -183,7 +183,7 @@ public class ResearchStage {
         return true;
     }
     
-    public List<Boolean> getObtainRequirementCompletion(@Nullable PlayerEntity player) {
+    public List<Boolean> getObtainRequirementCompletion(@Nullable Player player) {
         if (this.mustObtain.isEmpty()) {
             return Collections.emptyList();
         }
@@ -208,7 +208,7 @@ public class ResearchStage {
         return retVal;
     }
     
-    public List<Boolean> getCraftRequirementCompletion(@Nullable PlayerEntity player) {
+    public List<Boolean> getCraftRequirementCompletion(@Nullable Player player) {
         if (this.craftReference.isEmpty()) {
             return Collections.emptyList();
         }
@@ -230,7 +230,7 @@ public class ResearchStage {
         return retVal;
     }
     
-    public List<Boolean> getKnowledgeRequirementCompletion(@Nullable PlayerEntity player) {
+    public List<Boolean> getKnowledgeRequirementCompletion(@Nullable Player player) {
         if (this.requiredKnowledge.isEmpty()) {
             return Collections.emptyList();
         }
@@ -252,7 +252,7 @@ public class ResearchStage {
         return retVal;
     }
     
-    public List<Boolean> getResearchRequirementCompletion(@Nullable PlayerEntity player) {
+    public List<Boolean> getResearchRequirementCompletion(@Nullable Player player) {
         if (this.requiredResearch == null || this.requiredResearch.getKeys().isEmpty()) {
             return Collections.emptyList();
         }

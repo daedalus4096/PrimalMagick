@@ -34,28 +34,28 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -83,45 +83,45 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
-        if (!event.getEntity().world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
-            ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
+        if (!event.getEntity().level.isClientSide && (event.getEntity() instanceof ServerPlayer)) {
+            ServerPlayer player = (ServerPlayer)event.getEntity();
             checkNearDeathExperience(player);
-            if (player.ticksExisted % 5 == 0) {
+            if (player.tickCount % 5 == 0) {
                 // Apply any earned buffs for attunements
                 applyAttunementBuffs(player);
                 refreshWeakenedSoul(player);
             }
-            if (player.ticksExisted % 10 == 0) {
+            if (player.tickCount % 10 == 0) {
                 // Check to see if any players need their capabilities synced to their clients
                 doScheduledSyncs(player, false);
             }
-            if (player.ticksExisted % 20 == 0) {
+            if (player.tickCount % 20 == 0) {
                 // Periodically check to see if attuned players should drop a light source or if regrowing equipment should mend
                 handleLightDrop(player);
                 handleRegrowth(player);
             }
-            if (player.ticksExisted % 200 == 0) {
+            if (player.tickCount % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries and for photosynthesis
                 checkEnvironmentalResearch(player);
                 checkVanillaStatistics(player);
                 handlePhotosynthesis(player);
             }
-            if (player.ticksExisted % 1200 == 0) {
+            if (player.tickCount % 1200 == 0) {
                 // Periodically decay temporary attunements on the player
                 AttunementManager.decayTemporaryAttunements(player);
             }
         }
-        if (event.getEntity().world.isRemote && (event.getEntity() instanceof PlayerEntity)) {
+        if (event.getEntity().level.isClientSide && (event.getEntity() instanceof Player)) {
             // If this is a client-side player, handle any step-height changes and double jumps from attunement bonuses
-            PlayerEntity player = (PlayerEntity)event.getEntity();
+            Player player = (Player)event.getEntity();
             handleStepHeightChange(player);
             handleDoubleJump(player);
         }
     }
     
-    protected static void checkNearDeathExperience(ServerPlayerEntity player) {
+    protected static void checkNearDeathExperience(ServerPlayer player) {
         float health = player.getHealth();
-        UUID playerId = player.getUniqueID();
+        UUID playerId = player.getUUID();
         if (health > 0.0F && health <= 6.0F && !NEAR_DEATH_ELIGIBLE.contains(playerId)) {
             NEAR_DEATH_ELIGIBLE.add(playerId);
         }
@@ -138,33 +138,33 @@ public class PlayerEvents {
         }
     }
 
-    protected static void applyAttunementBuffs(ServerPlayerEntity player) {
+    protected static void applyAttunementBuffs(ServerPlayer player) {
         if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.LESSER)) {
             // Apply Dolphin's Grace for 30.5s if the player has lesser sea attunement
-            player.addPotionEffect(new EffectInstance(Effects.DOLPHINS_GRACE, 610, 0, true, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 610, 0, true, false, true));
         }
         if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.GREATER)) {
             // Apply Water Breathing for 30.5s if the player has greater sea attunement
-            player.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 610, 0, true, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 610, 0, true, false, true));
         }
         if (AttunementManager.meetsThreshold(player, Source.MOON, AttunementThreshold.GREATER)) {
             // Apply Night Vision for 30.5s if the player has greater moon attunement
-            player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 610, 0, true, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 610, 0, true, false, true));
         }
     }
 
-    protected static void refreshWeakenedSoul(ServerPlayerEntity player) {
+    protected static void refreshWeakenedSoul(ServerPlayer player) {
         IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
         if (cooldowns != null) {
             long remaining = cooldowns.getRemainingCooldown(CooldownType.DEATH_SAVE);
-            if (remaining > 0 && !player.isPotionActive(EffectsPM.WEAKENED_SOUL.get())) {
+            if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.get())) {
                 // If the player's death save is on cooldown but they've cleared their marker debuff, reapply it
-                player.addPotionEffect(new EffectInstance(EffectsPM.WEAKENED_SOUL.get(), MathHelper.ceil(remaining / 50.0F), 0, true, false, true));
+                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.get(), Mth.ceil(remaining / 50.0F), 0, true, false, true));
             }
         }
     }
 
-    protected static void doScheduledSyncs(ServerPlayerEntity player, boolean immediate) {
+    protected static void doScheduledSyncs(ServerPlayer player, boolean immediate) {
         if (immediate || ResearchManager.isSyncScheduled(player)) {
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
             if (knowledge != null) {
@@ -198,144 +198,144 @@ public class PlayerEvents {
         }
     }
     
-    protected static void checkEnvironmentalResearch(ServerPlayerEntity player) {
+    protected static void checkEnvironmentalResearch(ServerPlayer player) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
         if (knowledge == null || !knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
             // Only check environmental research if the player has started progression
             return;
         }
         
-        Biome biome = player.world.getBiome(player.getPosition());
-        if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && Biome.Category.NETHER.equals(biome.getCategory())) {
+        Biome biome = player.level.getBiome(player.blockPosition());
+        if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && Biome.BiomeCategory.NETHER.equals(biome.getBiomeCategory())) {
             // If the player is in a Nether-based biome, discover the Infernal source
             ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
             ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.infernal").mergeStyle(TextFormatting.GREEN), false);
+            player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
         }
-        if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && Biome.Category.THEEND.equals(biome.getCategory())) {
+        if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && Biome.BiomeCategory.THEEND.equals(biome.getBiomeCategory())) {
             // If the player is in an End-based biome, discover the Void source
             ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
             ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-            player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.void").mergeStyle(TextFormatting.GREEN), false);
+            player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.void").withStyle(ChatFormatting.GREEN), false);
         }
         
         // If the player is working on the Earth Source research, check if they're far enough down
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
-            if (player.getPositionVec().y < 10.0D && !knowledge.isResearchKnown(key)) {
+            if (player.position().y < 10.0D && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_earth").mergeStyle(TextFormatting.GREEN), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_earth").withStyle(ChatFormatting.GREEN), false);
             }
         }
         
         // If the player is working on the Sea Source research, check if they're in the ocean
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
-            if (Biome.Category.OCEAN.equals(biome.getCategory()) && !knowledge.isResearchKnown(key)) {
+            if (Biome.BiomeCategory.OCEAN.equals(biome.getBiomeCategory()) && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sea").mergeStyle(TextFormatting.GREEN), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sea").withStyle(ChatFormatting.GREEN), false);
             }
         }
         
         // If the player is working on the Sky Source research, check if they're high up enough
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
-            if (player.getPositionVec().y > 100.0D && !knowledge.isResearchKnown(key)) {
+            if (player.position().y > 100.0D && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sky").mergeStyle(TextFormatting.GREEN), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sky").withStyle(ChatFormatting.GREEN), false);
             }
         }
         
         // If the player is working on the Sun Source research, check if they're in the desert during the daytime
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
-            if (Biome.Category.DESERT.equals(biome.getCategory()) && TimePhase.getSunPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+            if (Biome.BiomeCategory.DESERT.equals(biome.getBiomeCategory()) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_sun").mergeStyle(TextFormatting.GREEN), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sun").withStyle(ChatFormatting.GREEN), false);
             }
         }
         
         // If the player is working on the Moon Source research, check if they're in the forest during the night-time
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
-            if (Biome.Category.FOREST.equals(biome.getCategory()) && TimePhase.getMoonPhase(player.world) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+            if (Biome.BiomeCategory.FOREST.equals(biome.getBiomeCategory()) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.env_moon").mergeStyle(TextFormatting.GREEN), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_moon").withStyle(ChatFormatting.GREEN), false);
             }
         }
     }
     
-    protected static void checkVanillaStatistics(ServerPlayerEntity player) {
+    protected static void checkVanillaStatistics(ServerPlayer player) {
         if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_fly_elytra")) && player.getStats().getValue(Stats.CUSTOM.get(Stats.AVIATE_ONE_CM)) >= 100000) {
             ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_fly_elytra"));
         }
     }
 
-    protected static void handlePhotosynthesis(ServerPlayerEntity player) {
-        if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && player.world.isDaytime() &&
-                player.getBrightness() > 0.5F && player.world.canSeeSky(player.getPosition())) {
+    protected static void handlePhotosynthesis(ServerPlayer player) {
+        if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && player.level.isDay() &&
+                player.getBrightness() > 0.5F && player.level.canSeeSky(player.blockPosition())) {
             // If an attuned player is outdoors during the daytime, restore some hunger
-            player.getFoodStats().addStats(1, 0.3F);
+            player.getFoodData().eat(1, 0.3F);
         }
     }
 
-    protected static void handleLightDrop(ServerPlayerEntity player) {
-        BlockPos pos = player.getPosition();
-        World world = player.world;
-        if (world.rand.nextDouble() < 0.1D && 
+    protected static void handleLightDrop(ServerPlayer player) {
+        BlockPos pos = player.blockPosition();
+        Level world = player.level;
+        if (world.random.nextDouble() < 0.1D && 
                 AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.GREATER) && 
-                !player.isSneaking() && 
-                world.isAirBlock(pos) && 
-                world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().getDefaultState() && 
-                world.getLightFor(LightType.BLOCK, pos) < 11) {
+                !player.isShiftKeyDown() && 
+                world.isEmptyBlock(pos) && 
+                world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().defaultBlockState() && 
+                world.getBrightness(LightLayer.BLOCK, pos) < 11) {
             // If an attuned, non-sneaking player is in a dark area, they have a chance to drop a glow field
-            world.setBlockState(pos, BlocksPM.GLOW_FIELD.get().getDefaultState(), Constants.BlockFlags.DEFAULT);
+            world.setBlock(pos, BlocksPM.GLOW_FIELD.get().defaultBlockState(), Constants.BlockFlags.DEFAULT);
         }
     }
 
-    protected static void handleStepHeightChange(PlayerEntity player) {
-        if (!player.isSneaking() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
+    protected static void handleStepHeightChange(Player player) {
+        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height and save the old one
-            if (!PREV_STEP_HEIGHTS.containsKey(player.getUniqueID())) {
-                PREV_STEP_HEIGHTS.put(player.getUniqueID(), Float.valueOf(player.stepHeight));
+            if (!PREV_STEP_HEIGHTS.containsKey(player.getUUID())) {
+                PREV_STEP_HEIGHTS.put(player.getUUID(), Float.valueOf(player.maxUpStep));
             }
-            player.stepHeight = Math.max(1.0F, player.stepHeight);
+            player.maxUpStep = Math.max(1.0F, player.maxUpStep);
         } else {
             // Otherwise, check to see if their step height needs to be reset
-            if (PREV_STEP_HEIGHTS.containsKey(player.getUniqueID())) {
-                player.stepHeight = PREV_STEP_HEIGHTS.remove(player.getUniqueID());
+            if (PREV_STEP_HEIGHTS.containsKey(player.getUUID())) {
+                player.maxUpStep = PREV_STEP_HEIGHTS.remove(player.getUUID());
             }
         }
     }
 
-    protected static void handleDoubleJump(PlayerEntity player) {
+    protected static void handleDoubleJump(Player player) {
     	Minecraft mc = Minecraft.getInstance();
-        boolean jumpPressed = mc.gameSettings.keyBindJump.isPressed();
-        if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getUniqueID())) {
-            DOUBLE_JUMP_ALLOWED.put(player.getUniqueID(), Boolean.TRUE);
+        boolean jumpPressed = mc.options.keyJump.consumeClick();
+        if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
+            DOUBLE_JUMP_ALLOWED.put(player.getUUID(), Boolean.TRUE);
         }
         if (jumpPressed && !player.isOnGround() && !player.isInWater() && 
-                DOUBLE_JUMP_ALLOWED.getOrDefault(player.getUniqueID(), Boolean.FALSE).booleanValue() && 
+                DOUBLE_JUMP_ALLOWED.getOrDefault(player.getUUID(), Boolean.FALSE).booleanValue() && 
                 AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
             // If the conditions are right, execute the second jump
-            player.world.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 
-                    SoundCategory.PLAYERS, 0.1F, 1.0F + (0.05F * (float)player.world.rand.nextGaussian()), false);
-            DOUBLE_JUMP_ALLOWED.put(player.getUniqueID(), Boolean.FALSE);
+            player.level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, 
+                    SoundSource.PLAYERS, 0.1F, 1.0F + (0.05F * (float)player.level.random.nextGaussian()), false);
+            DOUBLE_JUMP_ALLOWED.put(player.getUUID(), Boolean.FALSE);
             
             // Update motion
-            Vector3d oldMotion = player.getMotion();
+            Vec3 oldMotion = player.getDeltaMovement();
             double motionX = oldMotion.x;
             double motionY = 0.75D;
             double motionZ = oldMotion.z;
-            if (player.isPotionActive(Effects.JUMP_BOOST)) {
-                motionY += (0.1D * (1 + player.getActivePotionEffect(Effects.JUMP_BOOST).getAmplifier()));
+            if (player.hasEffect(MobEffects.JUMP)) {
+                motionY += (0.1D * (1 + player.getEffect(MobEffects.JUMP).getAmplifier()));
             }
             if (player.isSprinting()) {
-                float yawRadians = player.rotationYaw * (float)(Math.PI / 180.0D);
-                motionX -= (0.2D * MathHelper.sin(yawRadians));
-                motionZ += (0.2D * MathHelper.cos(yawRadians));
+                float yawRadians = player.yRot * (float)(Math.PI / 180.0D);
+                motionX -= (0.2D * Mth.sin(yawRadians));
+                motionZ += (0.2D * Mth.cos(yawRadians));
             }
-            player.setMotion(motionX, motionY, motionZ);
+            player.setDeltaMovement(motionX, motionY, motionZ);
             
             // Reset fall distance
             player.fallDistance = 0.0F;
@@ -344,26 +344,26 @@ public class PlayerEvents {
             // Trigger jump events
             ForgeHooks.onLivingJump(player);
         }
-        if (player.isOnGround() && DOUBLE_JUMP_ALLOWED.containsKey(player.getUniqueID())) {
+        if (player.isOnGround() && DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
             // Reset double jump permissions upon touching the ground
-            DOUBLE_JUMP_ALLOWED.remove(player.getUniqueID());
+            DOUBLE_JUMP_ALLOWED.remove(player.getUUID());
         }
     }
     
-    protected static void handleRegrowth(PlayerEntity player) {
-        for (ItemStack stack : player.getEquipmentAndArmor()) {
+    protected static void handleRegrowth(Player player) {
+        for (ItemStack stack : player.getAllSlots()) {
             if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack)) {
-                stack.damageItem(-1, player, p -> {});
+                stack.hurtAndBreak(-1, player, p -> {});
             }
         }
     }
     
     @SubscribeEvent
     public static void playerJoinEvent(EntityJoinWorldEvent event) {
-    	World world = event.getWorld();
-        if (!world.isRemote && (event.getEntity() instanceof ServerPlayerEntity)) {
+    	Level world = event.getWorld();
+        if (!world.isClientSide && (event.getEntity() instanceof ServerPlayer)) {
             // When a player first joins a world, sync that player's capabilities to their client
-            ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
+            ServerPlayer player = (ServerPlayer)event.getEntity();
             doScheduledSyncs(player, true);
         }
     }
@@ -373,35 +373,35 @@ public class PlayerEvents {
         // Preserve player capability data between deaths
         if (event.isWasDeath()) {
             try {
-                CompoundNBT nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).serializeNBT();
+                CompoundTag nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getKnowledge(event.getPlayer()).deserializeNBT(nbtKnowledge);
             } catch (Exception e) {
                 LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
             }
             
             try {
-                CompoundNBT nbtCooldowns = PrimalMagicCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
+                CompoundTag nbtCooldowns = PrimalMagicCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getCooldowns(event.getPlayer()).deserializeNBT(nbtCooldowns);
             } catch (Exception e) {
                 LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
             }
             
             try {
-                CompoundNBT nbtStats = PrimalMagicCapabilities.getStats(event.getOriginal()).serializeNBT();
+                CompoundTag nbtStats = PrimalMagicCapabilities.getStats(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
             } catch (Exception e) {
                 LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
             }
             
             try {
-                CompoundNBT nbtAttunements = PrimalMagicCapabilities.getAttunements(event.getOriginal()).serializeNBT();
+                CompoundTag nbtAttunements = PrimalMagicCapabilities.getAttunements(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
             } catch (Exception e) {
                 LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
             }
             
             try {
-                CompoundNBT nbtCompanions = PrimalMagicCapabilities.getCompanions(event.getOriginal()).serializeNBT();
+                CompoundTag nbtCompanions = PrimalMagicCapabilities.getCompanions(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getCompanions(event.getPlayer()).deserializeNBT(nbtCompanions);
             } catch (Exception e) {
                 LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
@@ -419,8 +419,8 @@ public class PlayerEvents {
         registerItemCrafted(event.getPlayer(), event.getSmelting().copy());
     }
     
-    protected static void registerItemCrafted(PlayerEntity player, ItemStack stack) {
-        if (player != null && !player.world.isRemote) {
+    protected static void registerItemCrafted(Player player, ItemStack stack) {
+        if (player != null && !player.level.isClientSide) {
             int stackHash = ItemUtils.getHashCode(stack);
             
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
@@ -442,8 +442,8 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onWakeUp(PlayerWakeUpEvent event) {
-        PlayerEntity player = event.getPlayer();
-        if (player != null && !player.world.isRemote) {
+        Player player = event.getPlayer();
+        if (player != null && !player.level.isClientSide) {
             if ( ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_found_shrine")) &&
                  !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("t_got_dream")) ) {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
@@ -452,45 +452,45 @@ public class PlayerEvents {
         }
     }
     
-    protected static void grantDreamJournal(PlayerEntity player) {
+    protected static void grantDreamJournal(Player player) {
         // First grant the appropriate research entry to continue FTUX
         ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_got_dream"));
         
         // Construct the dream journal item
         ItemStack journal = new ItemStack(Items.WRITTEN_BOOK);
-        CompoundNBT contents = new CompoundNBT();
+        CompoundTag contents = new CompoundTag();
         contents.putInt("generation", 3);
-        contents.putString("title", new TranslationTextComponent("primalmagic.dream_journal.title").getString());
+        contents.putString("title", new TranslatableComponent("primalmagic.dream_journal.title").getString());
         contents.putString("author", player.getName().getString());
-        ListNBT pages = new ListNBT();
-        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.1").getString()));
-        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.2").getString()));
-        pages.add(StringNBT.valueOf(new TranslationTextComponent("primalmagic.dream_journal.text.3").getString()));
+        ListTag pages = new ListTag();
+        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagic.dream_journal.text.1").getString()));
+        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagic.dream_journal.text.2").getString()));
+        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagic.dream_journal.text.3").getString()));
         contents.put("pages", pages);
         journal.setTag(contents);
         
         // Give the dream journal to the player and announce it
-        if (!player.addItemStackToInventory(journal)) {
-            player.dropItem(journal, false);
+        if (!player.addItem(journal)) {
+            player.drop(journal, false);
         }
-        player.sendMessage(new TranslationTextComponent("event.primalmagic.got_dream").mergeStyle(TextFormatting.GREEN), Util.DUMMY_UUID);
+        player.sendMessage(new TranslatableComponent("event.primalmagic.got_dream").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
     }
     
     @SubscribeEvent
     public static void onJump(LivingEvent.LivingJumpEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+        if (event.getEntityLiving() instanceof Player) {
+            Player player = (Player)event.getEntityLiving();
             if (AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
                 // Boost the player's vertical motion on jump if they have greater sky attunement
-                Vector3d motion = player.getMotion();
+                Vec3 motion = player.getDeltaMovement();
                 motion = motion.add(0.0D, 0.275D, 0.0D);
-                player.setMotion(motion);
+                player.setDeltaMovement(motion);
             }
         }
     }
     
     @SubscribeEvent
     public static void onPlayerInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        LAST_BLOCK_LEFT_CLICK.put(event.getPlayer().getUniqueID(), new InteractionRecord(event.getPlayer(), event.getHand(), event.getPos(), event.getFace()));
+        LAST_BLOCK_LEFT_CLICK.put(event.getPlayer().getUUID(), new InteractionRecord(event.getPlayer(), event.getHand(), event.getPos(), event.getFace()));
     }
 }

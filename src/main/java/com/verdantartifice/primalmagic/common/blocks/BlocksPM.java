@@ -62,20 +62,20 @@ import com.verdantartifice.primalmagic.common.misc.DeviceTier;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.WallBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -95,56 +95,56 @@ public class BlocksPM {
     }
     
     // Register raw marble blocks
-    public static final RegistryObject<Block> MARBLE_RAW = BLOCKS.register("marble_raw", () -> new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)));
-    public static final RegistryObject<SlabBlock> MARBLE_SLAB = BLOCKS.register("marble_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_RAW.get())));
-    public static final RegistryObject<StairsBlock> MARBLE_STAIRS = BLOCKS.register("marble_stairs", () -> new StairsBlock(MARBLE_RAW.get()::getDefaultState, Block.Properties.from(MARBLE_RAW.get())));
-    public static final RegistryObject<WallBlock> MARBLE_WALL = BLOCKS.register("marble_wall", () -> new WallBlock(Block.Properties.from(MARBLE_RAW.get())));
-    public static final RegistryObject<Block> MARBLE_BRICKS = BLOCKS.register("marble_bricks", () -> new Block(Block.Properties.from(MARBLE_RAW.get())));
-    public static final RegistryObject<SlabBlock> MARBLE_BRICK_SLAB = BLOCKS.register("marble_brick_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_BRICKS.get())));
-    public static final RegistryObject<StairsBlock> MARBLE_BRICK_STAIRS = BLOCKS.register("marble_brick_stairs", () -> new StairsBlock(MARBLE_BRICKS.get()::getDefaultState, Block.Properties.from(MARBLE_BRICKS.get())));
-    public static final RegistryObject<WallBlock> MARBLE_BRICK_WALL = BLOCKS.register("marble_brick_wall", () -> new WallBlock(Block.Properties.from(MARBLE_BRICKS.get())));
-    public static final RegistryObject<PillarBlock> MARBLE_PILLAR = BLOCKS.register("marble_pillar", () -> new PillarBlock(Block.Properties.from(MARBLE_RAW.get())));
-    public static final RegistryObject<Block> MARBLE_CHISELED = BLOCKS.register("marble_chiseled", () -> new Block(Block.Properties.from(MARBLE_RAW.get())));
-    public static final RegistryObject<Block> MARBLE_RUNED = BLOCKS.register("marble_runed", () -> new Block(Block.Properties.from(MARBLE_RAW.get())));
+    public static final RegistryObject<Block> MARBLE_RAW = BLOCKS.register("marble_raw", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<SlabBlock> MARBLE_SLAB = BLOCKS.register("marble_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_RAW.get())));
+    public static final RegistryObject<StairBlock> MARBLE_STAIRS = BLOCKS.register("marble_stairs", () -> new StairBlock(MARBLE_RAW.get()::defaultBlockState, Block.Properties.copy(MARBLE_RAW.get())));
+    public static final RegistryObject<WallBlock> MARBLE_WALL = BLOCKS.register("marble_wall", () -> new WallBlock(Block.Properties.copy(MARBLE_RAW.get())));
+    public static final RegistryObject<Block> MARBLE_BRICKS = BLOCKS.register("marble_bricks", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
+    public static final RegistryObject<SlabBlock> MARBLE_BRICK_SLAB = BLOCKS.register("marble_brick_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_BRICKS.get())));
+    public static final RegistryObject<StairBlock> MARBLE_BRICK_STAIRS = BLOCKS.register("marble_brick_stairs", () -> new StairBlock(MARBLE_BRICKS.get()::defaultBlockState, Block.Properties.copy(MARBLE_BRICKS.get())));
+    public static final RegistryObject<WallBlock> MARBLE_BRICK_WALL = BLOCKS.register("marble_brick_wall", () -> new WallBlock(Block.Properties.copy(MARBLE_BRICKS.get())));
+    public static final RegistryObject<PillarBlock> MARBLE_PILLAR = BLOCKS.register("marble_pillar", () -> new PillarBlock(Block.Properties.copy(MARBLE_RAW.get())));
+    public static final RegistryObject<Block> MARBLE_CHISELED = BLOCKS.register("marble_chiseled", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
+    public static final RegistryObject<Block> MARBLE_RUNED = BLOCKS.register("marble_runed", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
     
     // Register enchanted marble blocks
-    public static final RegistryObject<Block> MARBLE_ENCHANTED = BLOCKS.register("marble_enchanted", () -> new Block(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(3.0F, 12.0F).sound(SoundType.STONE)));
-    public static final RegistryObject<SlabBlock> MARBLE_ENCHANTED_SLAB = BLOCKS.register("marble_enchanted_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_ENCHANTED.get())));
-    public static final RegistryObject<StairsBlock> MARBLE_ENCHANTED_STAIRS = BLOCKS.register("marble_enchanted_stairs", () -> new StairsBlock(MARBLE_ENCHANTED.get()::getDefaultState, Block.Properties.from(MARBLE_ENCHANTED.get())));
-    public static final RegistryObject<WallBlock> MARBLE_ENCHANTED_WALL = BLOCKS.register("marble_enchanted_wall", () -> new WallBlock(Block.Properties.from(MARBLE_ENCHANTED.get())));
-    public static final RegistryObject<Block> MARBLE_ENCHANTED_BRICKS = BLOCKS.register("marble_enchanted_bricks", () -> new Block(Block.Properties.from(MARBLE_ENCHANTED.get())));
-    public static final RegistryObject<SlabBlock> MARBLE_ENCHANTED_BRICK_SLAB = BLOCKS.register("marble_enchanted_brick_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_ENCHANTED_BRICKS.get())));
-    public static final RegistryObject<StairsBlock> MARBLE_ENCHANTED_BRICK_STAIRS = BLOCKS.register("marble_enchanted_brick_stairs", () -> new StairsBlock(MARBLE_ENCHANTED_BRICKS.get()::getDefaultState, Block.Properties.from(MARBLE_ENCHANTED_BRICKS.get())));
-    public static final RegistryObject<WallBlock> MARBLE_ENCHANTED_BRICK_WALL = BLOCKS.register("marble_enchanted_brick_wall", () -> new WallBlock(Block.Properties.from(MARBLE_ENCHANTED_BRICKS.get())));
-    public static final RegistryObject<PillarBlock> MARBLE_ENCHANTED_PILLAR = BLOCKS.register("marble_enchanted_pillar", () -> new PillarBlock(Block.Properties.from(MARBLE_ENCHANTED.get())));
-    public static final RegistryObject<Block> MARBLE_ENCHANTED_CHISELED = BLOCKS.register("marble_enchanted_chiseled", () -> new Block(Block.Properties.from(MARBLE_ENCHANTED.get())));
-    public static final RegistryObject<Block> MARBLE_ENCHANTED_RUNED = BLOCKS.register("marble_enchanted_runed", () -> new Block(Block.Properties.from(MARBLE_ENCHANTED.get())));
+    public static final RegistryObject<Block> MARBLE_ENCHANTED = BLOCKS.register("marble_enchanted", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(3.0F, 12.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<SlabBlock> MARBLE_ENCHANTED_SLAB = BLOCKS.register("marble_enchanted_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_ENCHANTED.get())));
+    public static final RegistryObject<StairBlock> MARBLE_ENCHANTED_STAIRS = BLOCKS.register("marble_enchanted_stairs", () -> new StairBlock(MARBLE_ENCHANTED.get()::defaultBlockState, Block.Properties.copy(MARBLE_ENCHANTED.get())));
+    public static final RegistryObject<WallBlock> MARBLE_ENCHANTED_WALL = BLOCKS.register("marble_enchanted_wall", () -> new WallBlock(Block.Properties.copy(MARBLE_ENCHANTED.get())));
+    public static final RegistryObject<Block> MARBLE_ENCHANTED_BRICKS = BLOCKS.register("marble_enchanted_bricks", () -> new Block(Block.Properties.copy(MARBLE_ENCHANTED.get())));
+    public static final RegistryObject<SlabBlock> MARBLE_ENCHANTED_BRICK_SLAB = BLOCKS.register("marble_enchanted_brick_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_ENCHANTED_BRICKS.get())));
+    public static final RegistryObject<StairBlock> MARBLE_ENCHANTED_BRICK_STAIRS = BLOCKS.register("marble_enchanted_brick_stairs", () -> new StairBlock(MARBLE_ENCHANTED_BRICKS.get()::defaultBlockState, Block.Properties.copy(MARBLE_ENCHANTED_BRICKS.get())));
+    public static final RegistryObject<WallBlock> MARBLE_ENCHANTED_BRICK_WALL = BLOCKS.register("marble_enchanted_brick_wall", () -> new WallBlock(Block.Properties.copy(MARBLE_ENCHANTED_BRICKS.get())));
+    public static final RegistryObject<PillarBlock> MARBLE_ENCHANTED_PILLAR = BLOCKS.register("marble_enchanted_pillar", () -> new PillarBlock(Block.Properties.copy(MARBLE_ENCHANTED.get())));
+    public static final RegistryObject<Block> MARBLE_ENCHANTED_CHISELED = BLOCKS.register("marble_enchanted_chiseled", () -> new Block(Block.Properties.copy(MARBLE_ENCHANTED.get())));
+    public static final RegistryObject<Block> MARBLE_ENCHANTED_RUNED = BLOCKS.register("marble_enchanted_runed", () -> new Block(Block.Properties.copy(MARBLE_ENCHANTED.get())));
     
     // Register smoked marble blocks
-    public static final RegistryObject<Block> MARBLE_SMOKED = BLOCKS.register("marble_smoked", () -> new Block(Block.Properties.create(Material.ROCK, MaterialColor.OBSIDIAN).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)));
-    public static final RegistryObject<SlabBlock> MARBLE_SMOKED_SLAB = BLOCKS.register("marble_smoked_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_SMOKED.get())));
-    public static final RegistryObject<StairsBlock> MARBLE_SMOKED_STAIRS = BLOCKS.register("marble_smoked_stairs", () -> new StairsBlock(MARBLE_SMOKED.get()::getDefaultState, Block.Properties.from(MARBLE_SMOKED.get())));
-    public static final RegistryObject<WallBlock> MARBLE_SMOKED_WALL = BLOCKS.register("marble_smoked_wall", () -> new WallBlock(Block.Properties.from(MARBLE_SMOKED.get())));
-    public static final RegistryObject<Block> MARBLE_SMOKED_BRICKS = BLOCKS.register("marble_smoked_bricks", () -> new Block(Block.Properties.from(MARBLE_SMOKED.get())));
-    public static final RegistryObject<SlabBlock> MARBLE_SMOKED_BRICK_SLAB = BLOCKS.register("marble_smoked_brick_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_SMOKED_BRICKS.get())));
-    public static final RegistryObject<StairsBlock> MARBLE_SMOKED_BRICK_STAIRS = BLOCKS.register("marble_smoked_brick_stairs", () -> new StairsBlock(MARBLE_SMOKED_BRICKS.get()::getDefaultState, Block.Properties.from(MARBLE_SMOKED_BRICKS.get())));
-    public static final RegistryObject<WallBlock> MARBLE_SMOKED_BRICK_WALL = BLOCKS.register("marble_smoked_brick_wall", () -> new WallBlock(Block.Properties.from(MARBLE_SMOKED_BRICKS.get())));
-    public static final RegistryObject<PillarBlock> MARBLE_SMOKED_PILLAR = BLOCKS.register("marble_smoked_pillar", () -> new PillarBlock(Block.Properties.from(MARBLE_SMOKED.get())));
-    public static final RegistryObject<Block> MARBLE_SMOKED_CHISELED = BLOCKS.register("marble_smoked_chiseled", () -> new Block(Block.Properties.from(MARBLE_SMOKED.get())));
-    public static final RegistryObject<Block> MARBLE_SMOKED_RUNED = BLOCKS.register("marble_smoked_runed", () -> new Block(Block.Properties.from(MARBLE_SMOKED.get())));
+    public static final RegistryObject<Block> MARBLE_SMOKED = BLOCKS.register("marble_smoked", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.PODZOL).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<SlabBlock> MARBLE_SMOKED_SLAB = BLOCKS.register("marble_smoked_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_SMOKED.get())));
+    public static final RegistryObject<StairBlock> MARBLE_SMOKED_STAIRS = BLOCKS.register("marble_smoked_stairs", () -> new StairBlock(MARBLE_SMOKED.get()::defaultBlockState, Block.Properties.copy(MARBLE_SMOKED.get())));
+    public static final RegistryObject<WallBlock> MARBLE_SMOKED_WALL = BLOCKS.register("marble_smoked_wall", () -> new WallBlock(Block.Properties.copy(MARBLE_SMOKED.get())));
+    public static final RegistryObject<Block> MARBLE_SMOKED_BRICKS = BLOCKS.register("marble_smoked_bricks", () -> new Block(Block.Properties.copy(MARBLE_SMOKED.get())));
+    public static final RegistryObject<SlabBlock> MARBLE_SMOKED_BRICK_SLAB = BLOCKS.register("marble_smoked_brick_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_SMOKED_BRICKS.get())));
+    public static final RegistryObject<StairBlock> MARBLE_SMOKED_BRICK_STAIRS = BLOCKS.register("marble_smoked_brick_stairs", () -> new StairBlock(MARBLE_SMOKED_BRICKS.get()::defaultBlockState, Block.Properties.copy(MARBLE_SMOKED_BRICKS.get())));
+    public static final RegistryObject<WallBlock> MARBLE_SMOKED_BRICK_WALL = BLOCKS.register("marble_smoked_brick_wall", () -> new WallBlock(Block.Properties.copy(MARBLE_SMOKED_BRICKS.get())));
+    public static final RegistryObject<PillarBlock> MARBLE_SMOKED_PILLAR = BLOCKS.register("marble_smoked_pillar", () -> new PillarBlock(Block.Properties.copy(MARBLE_SMOKED.get())));
+    public static final RegistryObject<Block> MARBLE_SMOKED_CHISELED = BLOCKS.register("marble_smoked_chiseled", () -> new Block(Block.Properties.copy(MARBLE_SMOKED.get())));
+    public static final RegistryObject<Block> MARBLE_SMOKED_RUNED = BLOCKS.register("marble_smoked_runed", () -> new Block(Block.Properties.copy(MARBLE_SMOKED.get())));
     
     // Register hallowed marble blocks
-    public static final RegistryObject<Block> MARBLE_HALLOWED = BLOCKS.register("marble_hallowed", () -> new Block(Block.Properties.create(Material.ROCK, MaterialColor.GOLD).hardnessAndResistance(3.0F, 12.0F).sound(SoundType.STONE)));
-    public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_SLAB  = BLOCKS.register("marble_hallowed_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_HALLOWED.get())));
-    public static final RegistryObject<StairsBlock> MARBLE_HALLOWED_STAIRS = BLOCKS.register("marble_hallowed_stairs", () -> new StairsBlock(MARBLE_HALLOWED.get()::getDefaultState, Block.Properties.from(MARBLE_HALLOWED.get())));
-    public static final RegistryObject<WallBlock> MARBLE_HALLOWED_WALL = BLOCKS.register("marble_hallowed_wall", () -> new WallBlock(Block.Properties.from(MARBLE_HALLOWED.get())));
-    public static final RegistryObject<Block> MARBLE_HALLOWED_BRICKS = BLOCKS.register("marble_hallowed_bricks", () -> new Block(Block.Properties.from(MARBLE_HALLOWED.get())));
-    public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_BRICK_SLAB = BLOCKS.register("marble_hallowed_brick_slab", () -> new SlabBlock(Block.Properties.from(MARBLE_HALLOWED_BRICKS.get())));
-    public static final RegistryObject<StairsBlock> MARBLE_HALLOWED_BRICK_STAIRS = BLOCKS.register("marble_hallowed_brick_stairs", () -> new StairsBlock(MARBLE_HALLOWED_BRICKS.get()::getDefaultState, Block.Properties.from(MARBLE_HALLOWED_BRICKS.get())));
-    public static final RegistryObject<WallBlock> MARBLE_HALLOWED_BRICK_WALL = BLOCKS.register("marble_hallowed_brick_wall", () -> new WallBlock(Block.Properties.from(MARBLE_HALLOWED_BRICKS.get())));
-    public static final RegistryObject<PillarBlock> MARBLE_HALLOWED_PILLAR = BLOCKS.register("marble_hallowed_pillar", () -> new PillarBlock(Block.Properties.from(MARBLE_HALLOWED.get())));
-    public static final RegistryObject<Block> MARBLE_HALLOWED_CHISELED = BLOCKS.register("marble_hallowed_chiseled", () -> new Block(Block.Properties.from(MARBLE_HALLOWED.get())));
-    public static final RegistryObject<Block> MARBLE_HALLOWED_RUNED = BLOCKS.register("marble_hallowed_runed", () -> new Block(Block.Properties.from(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<Block> MARBLE_HALLOWED = BLOCKS.register("marble_hallowed", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.GOLD).strength(3.0F, 12.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_SLAB  = BLOCKS.register("marble_hallowed_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<StairBlock> MARBLE_HALLOWED_STAIRS = BLOCKS.register("marble_hallowed_stairs", () -> new StairBlock(MARBLE_HALLOWED.get()::defaultBlockState, Block.Properties.copy(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<WallBlock> MARBLE_HALLOWED_WALL = BLOCKS.register("marble_hallowed_wall", () -> new WallBlock(Block.Properties.copy(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<Block> MARBLE_HALLOWED_BRICKS = BLOCKS.register("marble_hallowed_bricks", () -> new Block(Block.Properties.copy(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_BRICK_SLAB = BLOCKS.register("marble_hallowed_brick_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_HALLOWED_BRICKS.get())));
+    public static final RegistryObject<StairBlock> MARBLE_HALLOWED_BRICK_STAIRS = BLOCKS.register("marble_hallowed_brick_stairs", () -> new StairBlock(MARBLE_HALLOWED_BRICKS.get()::defaultBlockState, Block.Properties.copy(MARBLE_HALLOWED_BRICKS.get())));
+    public static final RegistryObject<WallBlock> MARBLE_HALLOWED_BRICK_WALL = BLOCKS.register("marble_hallowed_brick_wall", () -> new WallBlock(Block.Properties.copy(MARBLE_HALLOWED_BRICKS.get())));
+    public static final RegistryObject<PillarBlock> MARBLE_HALLOWED_PILLAR = BLOCKS.register("marble_hallowed_pillar", () -> new PillarBlock(Block.Properties.copy(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<Block> MARBLE_HALLOWED_CHISELED = BLOCKS.register("marble_hallowed_chiseled", () -> new Block(Block.Properties.copy(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<Block> MARBLE_HALLOWED_RUNED = BLOCKS.register("marble_hallowed_runed", () -> new Block(Block.Properties.copy(MARBLE_HALLOWED.get())));
     
     // Register sunwood blocks
     public static final RegistryObject<SunwoodLogBlock> STRIPPED_SUNWOOD_LOG = BLOCKS.register("stripped_sunwood_log", () -> new SunwoodLogBlock(null));
@@ -152,10 +152,10 @@ public class BlocksPM {
     public static final RegistryObject<SunwoodLogBlock> STRIPPED_SUNWOOD_WOOD = BLOCKS.register("stripped_sunwood_wood", () -> new SunwoodLogBlock(null));
     public static final RegistryObject<SunwoodLogBlock> SUNWOOD_WOOD = BLOCKS.register("sunwood_wood", () -> new SunwoodLogBlock(STRIPPED_SUNWOOD_WOOD.get()));
     public static final RegistryObject<SunwoodLeavesBlock> SUNWOOD_LEAVES = BLOCKS.register("sunwood_leaves", SunwoodLeavesBlock::new);
-    public static final RegistryObject<SaplingBlockPM> SUNWOOD_SAPLING = BLOCKS.register("sunwood_sapling", () -> new SaplingBlockPM(new SunwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.PLANT)));
+    public static final RegistryObject<SaplingBlockPM> SUNWOOD_SAPLING = BLOCKS.register("sunwood_sapling", () -> new SaplingBlockPM(new SunwoodTree(), Block.Properties.of(Material.PLANT).noCollission().randomTicks().strength(0.0F).sound(SoundType.GRASS)));
     public static final RegistryObject<SunwoodPlanksBlock> SUNWOOD_PLANKS = BLOCKS.register("sunwood_planks", SunwoodPlanksBlock::new);
-    public static final RegistryObject<SunwoodSlabBlock> SUNWOOD_SLAB = BLOCKS.register("sunwood_slab", () -> new SunwoodSlabBlock(Block.Properties.from(SUNWOOD_PLANKS.get())));
-    public static final RegistryObject<SunwoodStairsBlock> SUNWOOD_STAIRS = BLOCKS.register("sunwood_stairs", () -> new SunwoodStairsBlock(SUNWOOD_PLANKS.get()::getDefaultState, Block.Properties.from(SUNWOOD_PLANKS.get())));
+    public static final RegistryObject<SunwoodSlabBlock> SUNWOOD_SLAB = BLOCKS.register("sunwood_slab", () -> new SunwoodSlabBlock(Block.Properties.copy(SUNWOOD_PLANKS.get())));
+    public static final RegistryObject<SunwoodStairsBlock> SUNWOOD_STAIRS = BLOCKS.register("sunwood_stairs", () -> new SunwoodStairsBlock(SUNWOOD_PLANKS.get()::defaultBlockState, Block.Properties.copy(SUNWOOD_PLANKS.get())));
     public static final RegistryObject<SunwoodPillarBlock> SUNWOOD_PILLAR = BLOCKS.register("sunwood_pillar", SunwoodPillarBlock::new);
     
     // Register moonwood blocks
@@ -164,86 +164,86 @@ public class BlocksPM {
     public static final RegistryObject<MoonwoodLogBlock> STRIPPED_MOONWOOD_WOOD = BLOCKS.register("stripped_moonwood_wood", () -> new MoonwoodLogBlock(null));
     public static final RegistryObject<MoonwoodLogBlock> MOONWOOD_WOOD = BLOCKS.register("moonwood_wood", () -> new MoonwoodLogBlock(STRIPPED_MOONWOOD_WOOD.get()));
     public static final RegistryObject<MoonwoodLeavesBlock> MOONWOOD_LEAVES = BLOCKS.register("moonwood_leaves", MoonwoodLeavesBlock::new);
-    public static final RegistryObject<SaplingBlockPM> MOONWOOD_SAPLING = BLOCKS.register("moonwood_sapling", () -> new SaplingBlockPM(new MoonwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.PLANT)));
+    public static final RegistryObject<SaplingBlockPM> MOONWOOD_SAPLING = BLOCKS.register("moonwood_sapling", () -> new SaplingBlockPM(new MoonwoodTree(), Block.Properties.of(Material.PLANT).noCollission().randomTicks().strength(0.0F).sound(SoundType.GRASS)));
     public static final RegistryObject<MoonwoodPlanksBlock> MOONWOOD_PLANKS = BLOCKS.register("moonwood_planks", MoonwoodPlanksBlock::new);
-    public static final RegistryObject<MoonwoodSlabBlock> MOONWOOD_SLAB = BLOCKS.register("moonwood_slab", () -> new MoonwoodSlabBlock(Block.Properties.from(MOONWOOD_PLANKS.get())));
-    public static final RegistryObject<MoonwoodStairsBlock> MOONWOOD_STAIRS = BLOCKS.register("moonwood_stairs", () -> new MoonwoodStairsBlock(MOONWOOD_PLANKS.get()::getDefaultState, Block.Properties.from(MOONWOOD_PLANKS.get())));
+    public static final RegistryObject<MoonwoodSlabBlock> MOONWOOD_SLAB = BLOCKS.register("moonwood_slab", () -> new MoonwoodSlabBlock(Block.Properties.copy(MOONWOOD_PLANKS.get())));
+    public static final RegistryObject<MoonwoodStairsBlock> MOONWOOD_STAIRS = BLOCKS.register("moonwood_stairs", () -> new MoonwoodStairsBlock(MOONWOOD_PLANKS.get()::defaultBlockState, Block.Properties.copy(MOONWOOD_PLANKS.get())));
     public static final RegistryObject<MoonwoodPillarBlock> MOONWOOD_PILLAR = BLOCKS.register("moonwood_pillar", MoonwoodPillarBlock::new);
     
     // Register hallowood blocks
-    public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_LOG = BLOCKS.register("stripped_hallowood_log", () -> new RotatedPillarBlock(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
-    public static final RegistryObject<StrippableLogBlock> HALLOWOOD_LOG = BLOCKS.register("hallowood_log", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_LOG.get(), Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
-    public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_WOOD = BLOCKS.register("stripped_hallowood_wood", () -> new RotatedPillarBlock(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
-    public static final RegistryObject<StrippableLogBlock> HALLOWOOD_WOOD = BLOCKS.register("hallowood_wood", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_WOOD.get(), Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
-    public static final RegistryObject<LeavesBlock> HALLOWOOD_LEAVES = BLOCKS.register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).notSolid().sound(SoundType.PLANT).setLightLevel((state) -> { return 10; }).setSuffocates(BlocksPM::isntSolid).setBlocksVision(BlocksPM::isntSolid).setAllowsSpawn(BlocksPM::allowsSpawnOnLeaves)));
-    public static final RegistryObject<SaplingBlockPM> HALLOWOOD_SAPLING = BLOCKS.register("hallowood_sapling", () -> new SaplingBlockPM(new HallowoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.PLANT)));
-    public static final RegistryObject<Block> HALLOWOOD_PLANKS = BLOCKS.register("hallowood_planks", () -> new Block(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
-    public static final RegistryObject<SlabBlock> HALLOWOOD_SLAB = BLOCKS.register("hallowood_slab", () -> new SlabBlock(Block.Properties.from(HALLOWOOD_PLANKS.get())));
-    public static final RegistryObject<StairsBlock> HALLOWOOD_STAIRS = BLOCKS.register("hallowood_stairs", () -> new StairsBlock(HALLOWOOD_PLANKS.get()::getDefaultState, Block.Properties.from(HALLOWOOD_PLANKS.get())));
-    public static final RegistryObject<PillarBlock> HALLOWOOD_PILLAR = BLOCKS.register("hallowood_pillar", () -> new PillarBlock(Block.Properties.create(Material.WOOD, MaterialColor.GOLD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_LOG = BLOCKS.register("stripped_hallowood_log", () -> new RotatedPillarBlock(Block.Properties.of(Material.WOOD, MaterialColor.GOLD).strength(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<StrippableLogBlock> HALLOWOOD_LOG = BLOCKS.register("hallowood_log", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_LOG.get(), Block.Properties.of(Material.WOOD, MaterialColor.GOLD).strength(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_WOOD = BLOCKS.register("stripped_hallowood_wood", () -> new RotatedPillarBlock(Block.Properties.of(Material.WOOD, MaterialColor.GOLD).strength(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<StrippableLogBlock> HALLOWOOD_WOOD = BLOCKS.register("hallowood_wood", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_WOOD.get(), Block.Properties.of(Material.WOOD, MaterialColor.GOLD).strength(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<LeavesBlock> HALLOWOOD_LEAVES = BLOCKS.register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.of(Material.LEAVES).strength(0.2F).noOcclusion().sound(SoundType.GRASS).lightLevel((state) -> { return 10; }).isSuffocating(BlocksPM::isntSolid).isViewBlocking(BlocksPM::isntSolid).isValidSpawn(BlocksPM::allowsSpawnOnLeaves)));
+    public static final RegistryObject<SaplingBlockPM> HALLOWOOD_SAPLING = BLOCKS.register("hallowood_sapling", () -> new SaplingBlockPM(new HallowoodTree(), Block.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final RegistryObject<Block> HALLOWOOD_PLANKS = BLOCKS.register("hallowood_planks", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.GOLD).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<SlabBlock> HALLOWOOD_SLAB = BLOCKS.register("hallowood_slab", () -> new SlabBlock(Block.Properties.copy(HALLOWOOD_PLANKS.get())));
+    public static final RegistryObject<StairBlock> HALLOWOOD_STAIRS = BLOCKS.register("hallowood_stairs", () -> new StairBlock(HALLOWOOD_PLANKS.get()::defaultBlockState, Block.Properties.copy(HALLOWOOD_PLANKS.get())));
+    public static final RegistryObject<PillarBlock> HALLOWOOD_PILLAR = BLOCKS.register("hallowood_pillar", () -> new PillarBlock(Block.Properties.of(Material.WOOD, MaterialColor.GOLD).strength(2.0F).sound(SoundType.WOOD)));
     
     // Register infused stone
-    public static final RegistryObject<Block> INFUSED_STONE_EARTH = BLOCKS.register("infused_stone_earth", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)));
-    public static final RegistryObject<Block> INFUSED_STONE_SEA = BLOCKS.register("infused_stone_sea", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)));
-    public static final RegistryObject<Block> INFUSED_STONE_SKY = BLOCKS.register("infused_stone_sky", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)));
-    public static final RegistryObject<Block> INFUSED_STONE_SUN = BLOCKS.register("infused_stone_sun", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)));
-    public static final RegistryObject<Block> INFUSED_STONE_MOON = BLOCKS.register("infused_stone_moon", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> INFUSED_STONE_EARTH = BLOCKS.register("infused_stone_earth", () -> new Block(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> INFUSED_STONE_SEA = BLOCKS.register("infused_stone_sea", () -> new Block(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> INFUSED_STONE_SKY = BLOCKS.register("infused_stone_sky", () -> new Block(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> INFUSED_STONE_SUN = BLOCKS.register("infused_stone_sun", () -> new Block(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> INFUSED_STONE_MOON = BLOCKS.register("infused_stone_moon", () -> new Block(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).sound(SoundType.STONE)));
     
     // Register skyglass
-    public static final RegistryObject<SkyglassBlock> SKYGLASS = BLOCKS.register("skyglass", () -> new SkyglassBlock(Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_BLACK = BLOCKS.register("stained_skyglass_black", () -> new StainedSkyglassBlock(DyeColor.BLACK, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_BLUE = BLOCKS.register("stained_skyglass_blue", () -> new StainedSkyglassBlock(DyeColor.BLUE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_BROWN = BLOCKS.register("stained_skyglass_brown", () -> new StainedSkyglassBlock(DyeColor.BROWN, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_CYAN = BLOCKS.register("stained_skyglass_cyan", () -> new StainedSkyglassBlock(DyeColor.CYAN, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_GRAY = BLOCKS.register("stained_skyglass_gray", () -> new StainedSkyglassBlock(DyeColor.GRAY, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_GREEN = BLOCKS.register("stained_skyglass_green", () -> new StainedSkyglassBlock(DyeColor.GREEN, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_LIGHT_BLUE = BLOCKS.register("stained_skyglass_light_blue", () -> new StainedSkyglassBlock(DyeColor.LIGHT_BLUE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_LIGHT_GRAY = BLOCKS.register("stained_skyglass_light_gray", () -> new StainedSkyglassBlock(DyeColor.LIGHT_GRAY, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_LIME = BLOCKS.register("stained_skyglass_lime", () -> new StainedSkyglassBlock(DyeColor.LIME, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_MAGENTA = BLOCKS.register("stained_skyglass_magenta", () -> new StainedSkyglassBlock(DyeColor.MAGENTA, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_ORANGE = BLOCKS.register("stained_skyglass_orange", () -> new StainedSkyglassBlock(DyeColor.ORANGE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_PINK = BLOCKS.register("stained_skyglass_pink", () -> new StainedSkyglassBlock(DyeColor.PINK, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_PURPLE = BLOCKS.register("stained_skyglass_purple", () -> new StainedSkyglassBlock(DyeColor.PURPLE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_RED = BLOCKS.register("stained_skyglass_red", () -> new StainedSkyglassBlock(DyeColor.RED, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_WHITE = BLOCKS.register("stained_skyglass_white", () -> new StainedSkyglassBlock(DyeColor.WHITE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_YELLOW = BLOCKS.register("stained_skyglass_yellow", () -> new StainedSkyglassBlock(DyeColor.YELLOW, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
+    public static final RegistryObject<SkyglassBlock> SKYGLASS = BLOCKS.register("skyglass", () -> new SkyglassBlock(Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_BLACK = BLOCKS.register("stained_skyglass_black", () -> new StainedSkyglassBlock(DyeColor.BLACK, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_BLUE = BLOCKS.register("stained_skyglass_blue", () -> new StainedSkyglassBlock(DyeColor.BLUE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_BROWN = BLOCKS.register("stained_skyglass_brown", () -> new StainedSkyglassBlock(DyeColor.BROWN, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_CYAN = BLOCKS.register("stained_skyglass_cyan", () -> new StainedSkyglassBlock(DyeColor.CYAN, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_GRAY = BLOCKS.register("stained_skyglass_gray", () -> new StainedSkyglassBlock(DyeColor.GRAY, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_GREEN = BLOCKS.register("stained_skyglass_green", () -> new StainedSkyglassBlock(DyeColor.GREEN, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_LIGHT_BLUE = BLOCKS.register("stained_skyglass_light_blue", () -> new StainedSkyglassBlock(DyeColor.LIGHT_BLUE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_LIGHT_GRAY = BLOCKS.register("stained_skyglass_light_gray", () -> new StainedSkyglassBlock(DyeColor.LIGHT_GRAY, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_LIME = BLOCKS.register("stained_skyglass_lime", () -> new StainedSkyglassBlock(DyeColor.LIME, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_MAGENTA = BLOCKS.register("stained_skyglass_magenta", () -> new StainedSkyglassBlock(DyeColor.MAGENTA, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_ORANGE = BLOCKS.register("stained_skyglass_orange", () -> new StainedSkyglassBlock(DyeColor.ORANGE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_PINK = BLOCKS.register("stained_skyglass_pink", () -> new StainedSkyglassBlock(DyeColor.PINK, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_PURPLE = BLOCKS.register("stained_skyglass_purple", () -> new StainedSkyglassBlock(DyeColor.PURPLE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_RED = BLOCKS.register("stained_skyglass_red", () -> new StainedSkyglassBlock(DyeColor.RED, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_WHITE = BLOCKS.register("stained_skyglass_white", () -> new StainedSkyglassBlock(DyeColor.WHITE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassBlock> STAINED_SKYGLASS_YELLOW = BLOCKS.register("stained_skyglass_yellow", () -> new StainedSkyglassBlock(DyeColor.YELLOW, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
     
     // Register skyglass panes
-    public static final RegistryObject<SkyglassPaneBlock> SKYGLASS_PANE = BLOCKS.register("skyglass_pane", () -> new SkyglassPaneBlock(Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_BLACK = BLOCKS.register("stained_skyglass_pane_black", () -> new StainedSkyglassPaneBlock(DyeColor.BLACK, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_BLUE = BLOCKS.register("stained_skyglass_pane_blue", () -> new StainedSkyglassPaneBlock(DyeColor.BLUE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_BROWN = BLOCKS.register("stained_skyglass_pane_brown", () -> new StainedSkyglassPaneBlock(DyeColor.BROWN, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_CYAN = BLOCKS.register("stained_skyglass_pane_cyan", () -> new StainedSkyglassPaneBlock(DyeColor.CYAN, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_GRAY = BLOCKS.register("stained_skyglass_pane_gray", () -> new StainedSkyglassPaneBlock(DyeColor.GRAY, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_GREEN = BLOCKS.register("stained_skyglass_pane_green", () -> new StainedSkyglassPaneBlock(DyeColor.GREEN, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_LIGHT_BLUE = BLOCKS.register("stained_skyglass_pane_light_blue", () -> new StainedSkyglassPaneBlock(DyeColor.LIGHT_BLUE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_LIGHT_GRAY = BLOCKS.register("stained_skyglass_pane_light_gray", () -> new StainedSkyglassPaneBlock(DyeColor.LIGHT_GRAY, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_LIME = BLOCKS.register("stained_skyglass_pane_lime", () -> new StainedSkyglassPaneBlock(DyeColor.LIME, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_MAGENTA = BLOCKS.register("stained_skyglass_pane_magenta", () -> new StainedSkyglassPaneBlock(DyeColor.MAGENTA, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_ORANGE = BLOCKS.register("stained_skyglass_pane_orange", () -> new StainedSkyglassPaneBlock(DyeColor.ORANGE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_PINK = BLOCKS.register("stained_skyglass_pane_pink", () -> new StainedSkyglassPaneBlock(DyeColor.PINK, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_PURPLE = BLOCKS.register("stained_skyglass_pane_purple", () -> new StainedSkyglassPaneBlock(DyeColor.PURPLE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_RED = BLOCKS.register("stained_skyglass_pane_red", () -> new StainedSkyglassPaneBlock(DyeColor.RED, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_WHITE = BLOCKS.register("stained_skyglass_pane_white", () -> new StainedSkyglassPaneBlock(DyeColor.WHITE, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
-    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_YELLOW = BLOCKS.register("stained_skyglass_pane_yellow", () -> new StainedSkyglassPaneBlock(DyeColor.YELLOW, Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS).notSolid()));
+    public static final RegistryObject<SkyglassPaneBlock> SKYGLASS_PANE = BLOCKS.register("skyglass_pane", () -> new SkyglassPaneBlock(Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_BLACK = BLOCKS.register("stained_skyglass_pane_black", () -> new StainedSkyglassPaneBlock(DyeColor.BLACK, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_BLUE = BLOCKS.register("stained_skyglass_pane_blue", () -> new StainedSkyglassPaneBlock(DyeColor.BLUE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_BROWN = BLOCKS.register("stained_skyglass_pane_brown", () -> new StainedSkyglassPaneBlock(DyeColor.BROWN, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_CYAN = BLOCKS.register("stained_skyglass_pane_cyan", () -> new StainedSkyglassPaneBlock(DyeColor.CYAN, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_GRAY = BLOCKS.register("stained_skyglass_pane_gray", () -> new StainedSkyglassPaneBlock(DyeColor.GRAY, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_GREEN = BLOCKS.register("stained_skyglass_pane_green", () -> new StainedSkyglassPaneBlock(DyeColor.GREEN, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_LIGHT_BLUE = BLOCKS.register("stained_skyglass_pane_light_blue", () -> new StainedSkyglassPaneBlock(DyeColor.LIGHT_BLUE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_LIGHT_GRAY = BLOCKS.register("stained_skyglass_pane_light_gray", () -> new StainedSkyglassPaneBlock(DyeColor.LIGHT_GRAY, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_LIME = BLOCKS.register("stained_skyglass_pane_lime", () -> new StainedSkyglassPaneBlock(DyeColor.LIME, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_MAGENTA = BLOCKS.register("stained_skyglass_pane_magenta", () -> new StainedSkyglassPaneBlock(DyeColor.MAGENTA, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_ORANGE = BLOCKS.register("stained_skyglass_pane_orange", () -> new StainedSkyglassPaneBlock(DyeColor.ORANGE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_PINK = BLOCKS.register("stained_skyglass_pane_pink", () -> new StainedSkyglassPaneBlock(DyeColor.PINK, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_PURPLE = BLOCKS.register("stained_skyglass_pane_purple", () -> new StainedSkyglassPaneBlock(DyeColor.PURPLE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_RED = BLOCKS.register("stained_skyglass_pane_red", () -> new StainedSkyglassPaneBlock(DyeColor.RED, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_WHITE = BLOCKS.register("stained_skyglass_pane_white", () -> new StainedSkyglassPaneBlock(DyeColor.WHITE, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
+    public static final RegistryObject<StainedSkyglassPaneBlock> STAINED_SKYGLASS_PANE_YELLOW = BLOCKS.register("stained_skyglass_pane_yellow", () -> new StainedSkyglassPaneBlock(DyeColor.YELLOW, Block.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));
 
     // Register ritual candles
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_BLACK = BLOCKS.register("ritual_candle_black", () -> new RitualCandleBlock(DyeColor.BLACK, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_BLUE = BLOCKS.register("ritual_candle_blue", () -> new RitualCandleBlock(DyeColor.BLUE, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_BROWN = BLOCKS.register("ritual_candle_brown", () -> new RitualCandleBlock(DyeColor.BROWN, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_CYAN = BLOCKS.register("ritual_candle_cyan", () -> new RitualCandleBlock(DyeColor.CYAN, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_GRAY = BLOCKS.register("ritual_candle_gray", () -> new RitualCandleBlock(DyeColor.GRAY, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_GREEN = BLOCKS.register("ritual_candle_green", () -> new RitualCandleBlock(DyeColor.GREEN, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_LIGHT_BLUE = BLOCKS.register("ritual_candle_light_blue", () -> new RitualCandleBlock(DyeColor.LIGHT_BLUE, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_LIGHT_GRAY = BLOCKS.register("ritual_candle_light_gray", () -> new RitualCandleBlock(DyeColor.LIGHT_GRAY, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_LIME = BLOCKS.register("ritual_candle_lime", () -> new RitualCandleBlock(DyeColor.LIME, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_MAGENTA = BLOCKS.register("ritual_candle_magenta", () -> new RitualCandleBlock(DyeColor.MAGENTA, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_ORANGE = BLOCKS.register("ritual_candle_orange", () -> new RitualCandleBlock(DyeColor.ORANGE, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_PINK = BLOCKS.register("ritual_candle_pink", () -> new RitualCandleBlock(DyeColor.PINK, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_PURPLE = BLOCKS.register("ritual_candle_purple", () -> new RitualCandleBlock(DyeColor.PURPLE, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_RED = BLOCKS.register("ritual_candle_red", () -> new RitualCandleBlock(DyeColor.RED, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_WHITE = BLOCKS.register("ritual_candle_white", () -> new RitualCandleBlock(DyeColor.WHITE, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
-    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_YELLOW = BLOCKS.register("ritual_candle_yellow", () -> new RitualCandleBlock(DyeColor.YELLOW, Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.0F).setLightLevel((state) -> { return 7; }).sound(SoundType.CLOTH).notSolid()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_BLACK = BLOCKS.register("ritual_candle_black", () -> new RitualCandleBlock(DyeColor.BLACK, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_BLUE = BLOCKS.register("ritual_candle_blue", () -> new RitualCandleBlock(DyeColor.BLUE, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_BROWN = BLOCKS.register("ritual_candle_brown", () -> new RitualCandleBlock(DyeColor.BROWN, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_CYAN = BLOCKS.register("ritual_candle_cyan", () -> new RitualCandleBlock(DyeColor.CYAN, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_GRAY = BLOCKS.register("ritual_candle_gray", () -> new RitualCandleBlock(DyeColor.GRAY, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_GREEN = BLOCKS.register("ritual_candle_green", () -> new RitualCandleBlock(DyeColor.GREEN, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_LIGHT_BLUE = BLOCKS.register("ritual_candle_light_blue", () -> new RitualCandleBlock(DyeColor.LIGHT_BLUE, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_LIGHT_GRAY = BLOCKS.register("ritual_candle_light_gray", () -> new RitualCandleBlock(DyeColor.LIGHT_GRAY, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_LIME = BLOCKS.register("ritual_candle_lime", () -> new RitualCandleBlock(DyeColor.LIME, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_MAGENTA = BLOCKS.register("ritual_candle_magenta", () -> new RitualCandleBlock(DyeColor.MAGENTA, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_ORANGE = BLOCKS.register("ritual_candle_orange", () -> new RitualCandleBlock(DyeColor.ORANGE, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_PINK = BLOCKS.register("ritual_candle_pink", () -> new RitualCandleBlock(DyeColor.PINK, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_PURPLE = BLOCKS.register("ritual_candle_purple", () -> new RitualCandleBlock(DyeColor.PURPLE, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_RED = BLOCKS.register("ritual_candle_red", () -> new RitualCandleBlock(DyeColor.RED, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_WHITE = BLOCKS.register("ritual_candle_white", () -> new RitualCandleBlock(DyeColor.WHITE, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_YELLOW = BLOCKS.register("ritual_candle_yellow", () -> new RitualCandleBlock(DyeColor.YELLOW, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
 
     // Register mana fonts
     public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_EARTH = BLOCKS.register("ancient_font_earth", () -> new AncientManaFontBlock(Source.EARTH));
@@ -282,9 +282,9 @@ public class BlocksPM {
     public static final RegistryObject<RunecarvingTableBlock> RUNECARVING_TABLE = BLOCKS.register("runecarving_table", RunecarvingTableBlock::new);
     public static final RegistryObject<RunicGrindstoneBlock> RUNIC_GRINDSTONE = BLOCKS.register("runic_grindstone", RunicGrindstoneBlock::new);
     public static final RegistryObject<HoneyExtractorBlock> HONEY_EXTRACTOR = BLOCKS.register("honey_extractor", HoneyExtractorBlock::new);
-    public static final RegistryObject<PrimaliteGolemControllerBlock> PRIMALITE_GOLEM_CONTROLLER = BLOCKS.register("primalite_golem_controller", () -> new PrimaliteGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final RegistryObject<HexiumGolemControllerBlock> HEXIUM_GOLEM_CONTROLLER = BLOCKS.register("hexium_golem_controller", () -> new HexiumGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0F, 6.0F).sound(SoundType.METAL)));
-    public static final RegistryObject<HallowsteelGolemControllerBlock> HALLOWSTEEL_GOLEM_CONTROLLER = BLOCKS.register("hallowsteel_golem_controller", () -> new HallowsteelGolemControllerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistryObject<PrimaliteGolemControllerBlock> PRIMALITE_GOLEM_CONTROLLER = BLOCKS.register("primalite_golem_controller", () -> new PrimaliteGolemControllerBlock(Block.Properties.of(Material.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistryObject<HexiumGolemControllerBlock> HEXIUM_GOLEM_CONTROLLER = BLOCKS.register("hexium_golem_controller", () -> new HexiumGolemControllerBlock(Block.Properties.of(Material.METAL).strength(7.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistryObject<HallowsteelGolemControllerBlock> HALLOWSTEEL_GOLEM_CONTROLLER = BLOCKS.register("hallowsteel_golem_controller", () -> new HallowsteelGolemControllerBlock(Block.Properties.of(Material.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<SanguineCrucibleBlock> SANGUINE_CRUCIBLE = BLOCKS.register("sanguine_crucible", SanguineCrucibleBlock::new);
     public static final RegistryObject<ConcocterBlock> CONCOCTER = BLOCKS.register("concocter", ConcocterBlock::new);
     public static final RegistryObject<CelestialHarpBlock> CELESTIAL_HARP = BLOCKS.register("celestial_harp", CelestialHarpBlock::new);
@@ -294,19 +294,19 @@ public class BlocksPM {
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
     public static final RegistryObject<GlowFieldBlock> SOUL_GLOW_FIELD = BLOCKS.register("soul_glow_field", GlowFieldBlock::new);
     public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
-    public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
-    public static final RegistryObject<QuartzOreBlock> QUARTZ_ORE = BLOCKS.register("quartz_ore", () -> new QuartzOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
-    public static final RegistryObject<Block> PRIMALITE_BLOCK = BLOCKS.register("primalite_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
-    public static final RegistryObject<Block> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.IRON.getLevel())));
-    public static final RegistryObject<Block> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(9.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.DIAMOND.getLevel())));
+    public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.of(Material.STONE).strength(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
+    public static final RegistryObject<QuartzOreBlock> QUARTZ_ORE = BLOCKS.register("quartz_ore", () -> new QuartzOreBlock(Block.Properties.of(Material.STONE).strength(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
+    public static final RegistryObject<Block> PRIMALITE_BLOCK = BLOCKS.register("primalite_block", () -> new Block(Block.Properties.of(Material.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
+    public static final RegistryObject<Block> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new Block(Block.Properties.of(Material.METAL).strength(7.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.IRON.getLevel())));
+    public static final RegistryObject<Block> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new Block(Block.Properties.of(Material.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.DIAMOND.getLevel())));
     public static final RegistryObject<PyramidBlock> PYRAMID = BLOCKS.register("pyramid", PyramidBlock::new);
 
     // Helper functions for block properties
-    protected static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
+    protected static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
         return false;
     }
 
-    protected static Boolean allowsSpawnOnLeaves(BlockState state, IBlockReader reader, BlockPos pos, EntityType<?> entity) {
+    protected static Boolean allowsSpawnOnLeaves(BlockState state, BlockGetter reader, BlockPos pos, EntityType<?> entity) {
         return entity == EntityType.OCELOT || entity == EntityType.PARROT;
     }
 }

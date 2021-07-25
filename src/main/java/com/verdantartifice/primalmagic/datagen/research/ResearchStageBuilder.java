@@ -15,9 +15,9 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
 
 public class ResearchStageBuilder {
     protected final String modId;
@@ -40,11 +40,11 @@ public class ResearchStageBuilder {
         return new ResearchStageBuilder(PrimalMagic.MODID);
     }
     
-    public ResearchStageBuilder requiredItemStack(@Nonnull IItemProvider item) {
+    public ResearchStageBuilder requiredItemStack(@Nonnull ItemLike item) {
         return requiredItemStack(item, 1);
     }
     
-    public ResearchStageBuilder requiredItemStack(@Nonnull IItemProvider item, int count) {
+    public ResearchStageBuilder requiredItemStack(@Nonnull ItemLike item, int count) {
         return requiredItemStack(new ItemStack(item, count));
     }
     
@@ -62,11 +62,11 @@ public class ResearchStageBuilder {
         return this;
     }
     
-    public ResearchStageBuilder requiredCraftStack(@Nonnull IItemProvider item) {
+    public ResearchStageBuilder requiredCraftStack(@Nonnull ItemLike item) {
         return requiredCraftStack(item, 1);
     }
     
-    public ResearchStageBuilder requiredCraftStack(@Nonnull IItemProvider item, int count) {
+    public ResearchStageBuilder requiredCraftStack(@Nonnull ItemLike item, int count) {
         return requiredCraftStack(new ItemStack(item, count));
     }
     
@@ -115,7 +115,7 @@ public class ResearchStageBuilder {
         return recipe(new ResourceLocation(modId, name));
     }
     
-    public ResearchStageBuilder recipe(@Nonnull IItemProvider item) {
+    public ResearchStageBuilder recipe(@Nonnull ItemLike item) {
         return recipe(item.asItem().getRegistryName());
     }
     

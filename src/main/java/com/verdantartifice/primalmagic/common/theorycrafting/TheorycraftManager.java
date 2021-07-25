@@ -12,10 +12,10 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 
 /**
  * Primary access point for theorycraft-related methods.  Also stores defined research projects in a
@@ -56,7 +56,7 @@ public class TheorycraftManager {
     }
     
     @Nonnull
-    public static Project createRandomProject(@Nonnull PlayerEntity player, @Nonnull BlockPos tablePos) {
+    public static Project createRandomProject(@Nonnull Player player, @Nonnull BlockPos tablePos) {
         WeightedRandomBag<ProjectTemplate> templateBag = new WeightedRandomBag<>();
         for (ProjectTemplate template : TEMPLATES.values()) {
             templateBag.add(template, 1);
@@ -64,10 +64,10 @@ public class TheorycraftManager {
         
         // Determine what blocks are nearby so that aid blocks can be checked
         Set<Block> nearby = new HashSet<>();
-        if (player.world.isAreaLoaded(tablePos, 5)) {
-            Iterable<BlockPos> positions = BlockPos.getAllInBoxMutable(tablePos.add(-5, -2, -5), tablePos.add(5, 2, 5));
+        if (player.level.isAreaLoaded(tablePos, 5)) {
+            Iterable<BlockPos> positions = BlockPos.betweenClosed(tablePos.offset(-5, -2, -5), tablePos.offset(5, 2, 5));
             for (BlockPos pos : positions) {
-                nearby.add(player.world.getBlockState(pos).getBlock());
+                nearby.add(player.level.getBlockState(pos).getBlock());
             }
         }
         
@@ -75,7 +75,7 @@ public class TheorycraftManager {
         int attempts = 0;   // Don't allow an infinite loop
         while (retVal == null && attempts < 1000) {
             attempts++;
-            ProjectTemplate selectedTemplate = templateBag.getRandom(player.getRNG());
+            ProjectTemplate selectedTemplate = templateBag.getRandom(player.getRandom());
             Project initializedProject = selectedTemplate.initialize(player);
             // Only select the project if it initializes successfully and any required aid blocks are nearby
             if (initializedProject != null && (initializedProject.getAidBlock() == null || nearby.contains(initializedProject.getAidBlock()))) {

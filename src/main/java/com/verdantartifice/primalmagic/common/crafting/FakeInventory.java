@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagic.common.crafting;
 
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Fake inventory.  Used in situations where a real inventory is unavailable, but still necessary.
  * 
  * @author Daedalus4096
  */
-public class FakeInventory extends Inventory {
+public class FakeInventory extends SimpleContainer {
     public FakeInventory(int numSlots) {
         super(numSlots);
     }

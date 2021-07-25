@@ -2,21 +2,21 @@ package com.verdantartifice.primalmagic.client.renderers.tile;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -28,60 +28,60 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
-public class RitualAltarTER extends TileEntityRenderer<RitualAltarTileEntity> {
-    public RitualAltarTER(TileEntityRendererDispatcher dispatcher) {
+public class RitualAltarTER extends BlockEntityRenderer<RitualAltarTileEntity> {
+    public RitualAltarTER(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
     
-    protected void addVertex(IVertexBuilder renderer, MatrixStack stack, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
-        renderer.pos(stack.getLast().getMatrix(), x, y, z)
+    protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
+        renderer.vertex(stack.last().pose(), x, y, z)
                 .color(r, g, b, a)
-                .tex(u, v)
-                .lightmap(0, 240)
+                .uv(u, v)
+                .uv2(0, 240)
                 .normal(1, 0, 0)
                 .endVertex();
     }
     
-    protected void renderCube(IVertexBuilder builder, MatrixStack matrixStack, float ds, float r, float g, float b, float a, TextureAtlasSprite sprite) {
+    protected void renderCube(VertexConsumer builder, PoseStack matrixStack, float ds, float r, float g, float b, float a, TextureAtlasSprite sprite) {
         // Draw the south face of the cube
-        this.addVertex(builder, matrixStack, -ds, ds, ds, r, g, b, a, sprite.getMinU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, -ds, -ds, ds, r, g, b, a, sprite.getMinU(), sprite.getMinV());
-        this.addVertex(builder, matrixStack, ds, -ds, ds, r, g, b, a, sprite.getMaxU(), sprite.getMinV());
-        this.addVertex(builder, matrixStack, ds, ds, ds, r, g, b, a, sprite.getMaxU(), sprite.getMaxV());
+        this.addVertex(builder, matrixStack, -ds, ds, ds, r, g, b, a, sprite.getU0(), sprite.getV1());
+        this.addVertex(builder, matrixStack, -ds, -ds, ds, r, g, b, a, sprite.getU0(), sprite.getV0());
+        this.addVertex(builder, matrixStack, ds, -ds, ds, r, g, b, a, sprite.getU1(), sprite.getV0());
+        this.addVertex(builder, matrixStack, ds, ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
         
         // Draw the north face of the cube
-        this.addVertex(builder, matrixStack, -ds, ds, -ds, r, g, b, a, sprite.getMinU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, ds, ds, -ds, r, g, b, a, sprite.getMaxU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, ds, -ds, -ds, r, g, b, a, sprite.getMaxU(), sprite.getMinV());
-        this.addVertex(builder, matrixStack, -ds, -ds, -ds, r, g, b, a, sprite.getMinU(), sprite.getMinV());
+        this.addVertex(builder, matrixStack, -ds, ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV1());
+        this.addVertex(builder, matrixStack, ds, ds, -ds, r, g, b, a, sprite.getU1(), sprite.getV1());
+        this.addVertex(builder, matrixStack, ds, -ds, -ds, r, g, b, a, sprite.getU1(), sprite.getV0());
+        this.addVertex(builder, matrixStack, -ds, -ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
         
         // Draw the east face of the cube
-        this.addVertex(builder, matrixStack, ds, ds, -ds, r, g, b, a, sprite.getMinU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, ds, ds, ds, r, g, b, a, sprite.getMaxU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, ds, -ds, ds, r, g, b, a, sprite.getMaxU(), sprite.getMinV());
-        this.addVertex(builder, matrixStack, ds, -ds, -ds, r, g, b, a, sprite.getMinU(), sprite.getMinV());
+        this.addVertex(builder, matrixStack, ds, ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV1());
+        this.addVertex(builder, matrixStack, ds, ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
+        this.addVertex(builder, matrixStack, ds, -ds, ds, r, g, b, a, sprite.getU1(), sprite.getV0());
+        this.addVertex(builder, matrixStack, ds, -ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
         
         // Draw the west face of the cube
-        this.addVertex(builder, matrixStack, -ds, -ds, ds, r, g, b, a, sprite.getMaxU(), sprite.getMinV());
-        this.addVertex(builder, matrixStack, -ds, ds, ds, r, g, b, a, sprite.getMaxU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, -ds, ds, -ds, r, g, b, a, sprite.getMinU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, -ds, -ds, -ds, r, g, b, a, sprite.getMinU(), sprite.getMinV());
+        this.addVertex(builder, matrixStack, -ds, -ds, ds, r, g, b, a, sprite.getU1(), sprite.getV0());
+        this.addVertex(builder, matrixStack, -ds, ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
+        this.addVertex(builder, matrixStack, -ds, ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV1());
+        this.addVertex(builder, matrixStack, -ds, -ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
         
         // Draw the top face of the cube
-        this.addVertex(builder, matrixStack, ds, ds, -ds, r, g, b, a, sprite.getMaxU(), sprite.getMinV());
-        this.addVertex(builder, matrixStack, -ds, ds, -ds, r, g, b, a, sprite.getMinU(), sprite.getMinV());
-        this.addVertex(builder, matrixStack, -ds, ds, ds, r, g, b, a, sprite.getMinU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, ds, ds, ds, r, g, b, a, sprite.getMaxU(), sprite.getMaxV());
+        this.addVertex(builder, matrixStack, ds, ds, -ds, r, g, b, a, sprite.getU1(), sprite.getV0());
+        this.addVertex(builder, matrixStack, -ds, ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
+        this.addVertex(builder, matrixStack, -ds, ds, ds, r, g, b, a, sprite.getU0(), sprite.getV1());
+        this.addVertex(builder, matrixStack, ds, ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
         
         // Draw the bottom face of the cube
-        this.addVertex(builder, matrixStack, ds, -ds, -ds, r, g, b, a, sprite.getMaxU(), sprite.getMinV());
-        this.addVertex(builder, matrixStack, ds, -ds, ds, r, g, b, a, sprite.getMaxU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, -ds, -ds, ds, r, g, b, a, sprite.getMinU(), sprite.getMaxV());
-        this.addVertex(builder, matrixStack, -ds, -ds, -ds, r, g, b, a, sprite.getMinU(), sprite.getMinV());
+        this.addVertex(builder, matrixStack, ds, -ds, -ds, r, g, b, a, sprite.getU1(), sprite.getV0());
+        this.addVertex(builder, matrixStack, ds, -ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
+        this.addVertex(builder, matrixStack, -ds, -ds, ds, r, g, b, a, sprite.getU0(), sprite.getV1());
+        this.addVertex(builder, matrixStack, -ds, -ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
     }
     
     @Override
-    public void render(RitualAltarTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
+    public void render(RitualAltarTileEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
         if (tileEntityIn == null) {
             return;
         }
@@ -90,13 +90,13 @@ public class RitualAltarTER extends TileEntityRenderer<RitualAltarTileEntity> {
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = tileEntityIn.getSyncedStackInSlot(0).copy();
         if (!stack.isEmpty()) {
-            int rot = (int)(this.renderDispatcher.world.getWorldInfo().getGameTime() % 360);
-            matrixStack.push();
+            int rot = (int)(this.renderer.level.getLevelData().getGameTime() % 360);
+            matrixStack.pushPose();
             matrixStack.translate(0.5D, 1.5D, 0.5D);
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis
             matrixStack.scale(0.75F, 0.75F, 0.75F);
-            Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.GUI, combinedLightIn, combinedOverlayIn, matrixStack, buffer);
-            matrixStack.pop();
+            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.GUI, combinedLightIn, combinedOverlayIn, matrixStack, buffer);
+            matrixStack.popPose();
         }
 
         // Render the ritual orb above the altar if active
@@ -108,20 +108,20 @@ public class RitualAltarTER extends TileEntityRenderer<RitualAltarTileEntity> {
             float ds = 0.1875F;
             float ticks = (float)tileEntityIn.getActiveCount() + partialTicks;
 
-            TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(AncientManaFontTER.TEXTURE);
-            IVertexBuilder builder = buffer.getBuffer(RenderType.getTranslucent());
+            TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(AncientManaFontTER.TEXTURE);
+            VertexConsumer builder = buffer.getBuffer(RenderType.translucent());
             
-            matrixStack.push();
+            matrixStack.pushPose();
             matrixStack.translate(0.5D, 2.5D, 0.5D);
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.sin(ticks * 0.1F) * 180.0F)); // Spin the indicator like a shulker bullet
-            matrixStack.rotate(Vector3f.XP.rotationDegrees(MathHelper.cos(ticks * 0.1F) * 180.0F));
-            matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.sin(ticks * 0.15F) * 360.0F));
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the indicator like a shulker bullet
+            matrixStack.mulPose(Vector3f.XP.rotationDegrees(Mth.cos(ticks * 0.1F) * 180.0F));
+            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(ticks * 0.15F) * 360.0F));
             this.renderCube(builder, matrixStack, ds, r, g, b, 1.0F, sprite);
             
             matrixStack.scale(1.5F, 1.5F, 1.5F);
             this.renderCube(builder, matrixStack, ds, r, g, b, 0.5F, sprite);
             
-            matrixStack.pop();
+            matrixStack.popPose();
         }
     }
 }

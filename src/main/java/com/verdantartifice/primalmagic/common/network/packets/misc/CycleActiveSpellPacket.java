@@ -6,8 +6,8 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -24,11 +24,11 @@ public class CycleActiveSpellPacket implements IMessageToServer {
         this.reverse = reverse;
     }
     
-    public static void encode(CycleActiveSpellPacket message, PacketBuffer buf) {
+    public static void encode(CycleActiveSpellPacket message, FriendlyByteBuf buf) {
         buf.writeBoolean(message.reverse);
     }
     
-    public static CycleActiveSpellPacket decode(PacketBuffer buf) {
+    public static CycleActiveSpellPacket decode(FriendlyByteBuf buf) {
         CycleActiveSpellPacket message = new CycleActiveSpellPacket();
         message.reverse = buf.readBoolean();
         return message;
@@ -38,13 +38,13 @@ public class CycleActiveSpellPacket implements IMessageToServer {
         public static void onMessage(CycleActiveSpellPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                ServerPlayerEntity player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 if (player != null) {
                     // Mainhand takes priority over the offhand in case two wands are equipped
-                    if (player.getHeldItemMainhand().getItem() instanceof IWand) {
-                        SpellManager.cycleActiveSpell(player, player.getHeldItemMainhand(), message.reverse);
-                    } else if (player.getHeldItemOffhand().getItem() instanceof IWand) {
-                        SpellManager.cycleActiveSpell(player, player.getHeldItemOffhand(), message.reverse);
+                    if (player.getMainHandItem().getItem() instanceof IWand) {
+                        SpellManager.cycleActiveSpell(player, player.getMainHandItem(), message.reverse);
+                    } else if (player.getOffhandItem().getItem() instanceof IWand) {
+                        SpellManager.cycleActiveSpell(player, player.getOffhandItem(), message.reverse);
                     }
                 }
             });

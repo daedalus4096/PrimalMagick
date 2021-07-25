@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.items.tools;
 
 import java.util.function.Supplier;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.util.LazyLoadedValue;
 
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
@@ -14,15 +14,15 @@ import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
  * 
  * @author Daedalus4096
  */
-public enum ItemTierPM implements IItemTier {
+public enum ItemTierPM implements Tier {
     PRIMALITE(HarvestLevel.IRON.getLevel(), 800, 7.5F, 2.5F, 18, () -> {
-        return Ingredient.fromTag(ItemTagsPM.INGOTS_PRIMALITE);
+        return Ingredient.of(ItemTagsPM.INGOTS_PRIMALITE);
     }),
     HEXIUM(HarvestLevel.DIAMOND.getLevel(), 1600, 9.5F, 4.0F, 23, () -> {
-        return Ingredient.fromTag(ItemTagsPM.INGOTS_HEXIUM);
+        return Ingredient.of(ItemTagsPM.INGOTS_HEXIUM);
     }),
     HALLOWSTEEL(HarvestLevel.HALLOWSTEEL.getLevel(), 2400, 11.5F, 5.5F, 28, () -> {
-        return Ingredient.fromTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
+        return Ingredient.of(ItemTagsPM.INGOTS_HALLOWSTEEL);
     });
 
     private final int harvestLevel;
@@ -30,7 +30,7 @@ public enum ItemTierPM implements IItemTier {
     private final float efficiency;
     private final float attackDamage;
     private final int enchantability;
-    private final LazyValue<Ingredient> repairMaterial;
+    private final LazyLoadedValue<Ingredient> repairMaterial;
 
     private ItemTierPM(int harvestLevel, int maxUses, float efficiency, float attackDamage, int enchantability, Supplier<Ingredient> repairMaterial) {
         this.harvestLevel = harvestLevel;
@@ -38,36 +38,36 @@ public enum ItemTierPM implements IItemTier {
         this.efficiency = efficiency;
         this.attackDamage = attackDamage;
         this.enchantability = enchantability;
-        this.repairMaterial = new LazyValue<>(repairMaterial);
+        this.repairMaterial = new LazyLoadedValue<>(repairMaterial);
     }
 
     @Override
-    public int getMaxUses() {
+    public int getUses() {
         return this.maxUses;
     }
 
     @Override
-    public float getEfficiency() {
+    public float getSpeed() {
         return this.efficiency;
     }
 
     @Override
-    public float getAttackDamage() {
+    public float getAttackDamageBonus() {
         return this.attackDamage;
     }
 
     @Override
-    public int getHarvestLevel() {
+    public int getLevel() {
         return this.harvestLevel;
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
         return this.enchantability;
     }
 
     @Override
-    public Ingredient getRepairMaterial() {
-        return this.repairMaterial.getValue();
+    public Ingredient getRepairIngredient() {
+        return this.repairMaterial.get();
     }
 }

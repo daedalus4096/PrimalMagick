@@ -15,8 +15,8 @@ import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -36,14 +36,14 @@ public class ClientRegistrationEvents {
     @SubscribeEvent
     public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        mc.particles.registerFactory(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.OFFERING.get(), OfferingParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
-        mc.particles.registerFactory(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
-        mc.particles.registerFactory(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
+        mc.particleEngine.register(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.OFFERING.get(), OfferingParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
+        mc.particleEngine.register(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
     }
     
     /**

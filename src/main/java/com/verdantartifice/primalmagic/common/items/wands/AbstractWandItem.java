@@ -22,29 +22,31 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.UseAction;
-import net.minecraft.nbt.IntNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 /**
  * Base item definition for a wand.  Wands store mana for use in crafting and, optionally, casting spells.
@@ -76,14 +78,14 @@ public abstract class AbstractWandItem extends Item implements IWand {
         }
     }
     
-    protected StringTextComponent getManaText(ItemStack stack, Source source) {
+    protected TextComponent getManaText(ItemStack stack, Source source) {
         int mana = this.getMana(stack, source);
         if (mana == -1) {
             // If the given wand stack has infinte mana, show the infinity symbol
-            return new StringTextComponent(Character.toString('\u221E'));
+            return new TextComponent(Character.toString('\u221E'));
         } else {
             // Otherwise show the current real mana for that source from the stack's NBT tag
-            return new StringTextComponent(MANA_FORMATTER.format(mana / 100.0D));
+            return new TextComponent(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
 
@@ -105,20 +107,20 @@ public abstract class AbstractWandItem extends Item implements IWand {
         return retVal;
     }
 
-    protected StringTextComponent getMaxManaText(ItemStack stack) {
+    protected TextComponent getMaxManaText(ItemStack stack) {
         int mana = this.getMaxMana(stack);
         if (mana == -1) {
             // If the given wand stack has infinte mana, show the infinity symbol
-            return new StringTextComponent(Character.toString('\u221E'));
+            return new TextComponent(Character.toString('\u221E'));
         } else {
             // Otherwise show the max centimana for that source from the stack's NBT tag
-            return new StringTextComponent(MANA_FORMATTER.format(mana / 100.0D));
+            return new TextComponent(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
     
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
         // Save the given amount of centimana for the given source into the stack's NBT tag
-        stack.setTagInfo(source.getTag(), IntNBT.valueOf(amount));
+        stack.addTagElement(source.getTag(), IntTag.valueOf(amount));
     }
 
     @Override
@@ -137,7 +139,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean consumeMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+    public boolean consumeMana(ItemStack stack, Player player, Source source, int amount) {
         if (stack == null || source == null) {
             return false;
         }
@@ -155,7 +157,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 StatsManager.incrementValue(player, source.getManaSpentStat(), realAmount);
                 
                 // Update temporary attunement value
-                AttunementManager.incrementAttunement(player, source, AttunementType.TEMPORARY, MathHelper.floor(Math.sqrt(realAmount)));
+                AttunementManager.incrementAttunement(player, source, AttunementType.TEMPORARY, Mth.floor(Math.sqrt(realAmount)));
             }
             
             return true;
@@ -166,7 +168,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean consumeMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+    public boolean consumeMana(ItemStack stack, Player player, SourceList sources) {
         if (stack == null || sources == null) {
             return false;
         }
@@ -188,7 +190,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 }
                 
                 // Compute the amount of temporary attunement to be added to the player
-                attunementDeltas.add(source, MathHelper.floor(Math.sqrt(realAmount)));
+                attunementDeltas.add(source, Mth.floor(Math.sqrt(realAmount)));
             }
             if (player != null && !attunementDeltas.isEmpty()) {
                 // Update attunements in a batch
@@ -202,23 +204,23 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean consumeRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+    public boolean consumeRealMana(ItemStack stack, Player player, Source source, int amount) {
         return this.consumeMana(stack, player, source, amount * 100);
     }
     
     @Override
-    public boolean consumeRealMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+    public boolean consumeRealMana(ItemStack stack, Player player, SourceList sources) {
         return this.consumeMana(stack, player, sources.copy().multiply(100));
     }
     
     @Override
-    public boolean containsMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+    public boolean containsMana(ItemStack stack, Player player, Source source, int amount) {
         // A wand stack with infinite mana always contains the requested amount of mana
         return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (this.getTotalCostModifier(stack, player, source) * amount);
     }
 
     @Override
-    public boolean containsMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+    public boolean containsMana(ItemStack stack, Player player, SourceList sources) {
         for (Source source : sources.getSources()) {
             if (!this.containsMana(stack, player, source, sources.getAmount(source))) {
                 return false;
@@ -228,22 +230,22 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean containsRealMana(ItemStack stack, PlayerEntity player, Source source, int amount) {
+    public boolean containsRealMana(ItemStack stack, Player player, Source source, int amount) {
         return this.containsMana(stack, player, source, amount * 100);
     }
     
     @Override
-    public boolean containsRealMana(ItemStack stack, PlayerEntity player, SourceList sources) {
+    public boolean containsRealMana(ItemStack stack, Player player, SourceList sources) {
         return this.containsMana(stack, player, sources.copy().multiply(100));
     }
     
     @Override
-    public double getTotalCostModifier(ItemStack stack, PlayerEntity player, Source source) {
+    public double getTotalCostModifier(ItemStack stack, Player player, Source source) {
         // Start with the base modifier, as determined by wand cap
         double modifier = this.getBaseCostModifier(stack);
         
         // Subtract discounts from wand enchantments
-        int efficiencyLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.MANA_EFFICIENCY.get(), stack);
+        int efficiencyLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.MANA_EFFICIENCY.get(), stack);
         if (efficiencyLevel > 0) {
             modifier -= (0.02D * efficiencyLevel);
         }
@@ -251,7 +253,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (player != null) {
             // Subtract discounts from equipped player gear
             int gearDiscount = 0;
-            for (ItemStack gearStack : player.getEquipmentAndArmor()) {
+            for (ItemStack gearStack : player.getAllSlots()) {
                 if (gearStack.getItem() instanceof IManaDiscountGear) {
                     gearDiscount += ((IManaDiscountGear)gearStack.getItem()).getManaDiscount(gearStack, player);
                 }
@@ -266,15 +268,15 @@ public abstract class AbstractWandItem extends Item implements IWand {
             }
             
             // Substract discounts from temporary conditions
-            if (player.isPotionActive(EffectsPM.MANAFRUIT.get())) {
+            if (player.hasEffect(EffectsPM.MANAFRUIT.get())) {
                 // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
-                modifier -= (0.01D * ((2 * player.getActivePotionEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
+                modifier -= (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
             }
             
             // Add penalties from temporary conditions
-            if (player.isPotionActive(EffectsPM.MANA_IMPEDANCE.get())) {
+            if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.get())) {
                 // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
-                modifier += (0.05D * (player.getActivePotionEffect(EffectsPM.MANA_IMPEDANCE.get()).getAmplifier() + 1));
+                modifier += (0.05D * (player.getEffect(EffectsPM.MANA_IMPEDANCE.get()).getAmplifier() + 1));
             }
         }
         
@@ -283,20 +285,20 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         
         Minecraft mc = Minecraft.getInstance();
-        PlayerEntity player = mc.player;
+        Player player = mc.player;
         
         if (PrimalMagic.proxy.isShiftDown()) {
             // Add detailed mana information
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
-                    ITextComponent nameComp = new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor());
+                    Component nameComp = new TranslatableComponent(source.getNameTranslationKey()).withStyle(source.getChatColor());
                     int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source));
-                    ITextComponent line = new TranslationTextComponent("primalmagic.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
+                    Component line = new TranslatableComponent("primalmagic.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }
             }
@@ -304,30 +306,30 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add inscribed spell listing
             List<SpellPackage> spells = this.getSpells(stack);
             int activeIndex = this.getActiveSpellIndex(stack);
-            tooltip.add(new TranslationTextComponent("primalmagic.spells.wand_header", this.getSpellCapacityText(stack)));
+            tooltip.add(new TranslatableComponent("primalmagic.spells.wand_header", this.getSpellCapacityText(stack)));
             if (spells.isEmpty()) {
-                tooltip.add(new TranslationTextComponent("primalmagic.spells.none"));
+                tooltip.add(new TranslatableComponent("primalmagic.spells.none"));
             } else {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
-                    ITextComponent nameText = (index == activeIndex) ?
-                        new TranslationTextComponent("primalmagic.spells.name_selected", spell.getName()) :
-                        new TranslationTextComponent("primalmagic.spells.name_unselected", spell.getName());
+                    Component nameText = (index == activeIndex) ?
+                        new TranslatableComponent("primalmagic.spells.name_selected", spell.getName()) :
+                        new TranslatableComponent("primalmagic.spells.name_unselected", spell.getName());
                     tooltip.add(nameText);
                 }
             }
         } else {
             // Add mana summary
             boolean first = true;
-            ITextComponent summaryText = new StringTextComponent("");
+            Component summaryText = new TextComponent("");
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the summary if it's been discovered
                 if (source.isDiscovered(player)) {
-                    ITextComponent manaText = this.getManaText(stack, source).mergeStyle(source.getChatColor());
+                    Component manaText = this.getManaText(stack, source).withStyle(source.getChatColor());
                     if (first) {
                         summaryText = manaText;
                     } else {
-                        summaryText = new TranslationTextComponent("primalmagic.source.mana_summary_fragment", summaryText, manaText);
+                        summaryText = new TranslatableComponent("primalmagic.source.mana_summary_fragment", summaryText, manaText);
                     }
                     first = false;
                 }
@@ -336,16 +338,16 @@ public abstract class AbstractWandItem extends Item implements IWand {
             
             // Add active spell
             SpellPackage activeSpell = this.getActiveSpell(stack);
-            ITextComponent activeSpellName = (activeSpell == null) ?
-                    new TranslationTextComponent("tooltip.primalmagic.none") :
+            Component activeSpellName = (activeSpell == null) ?
+                    new TranslatableComponent("tooltip.primalmagic.none") :
                     activeSpell.getName();
-            tooltip.add(new TranslationTextComponent("primalmagic.spells.short_wand_header", activeSpellName));
+            tooltip.add(new TranslatableComponent("primalmagic.spells.short_wand_header", activeSpellName));
         }
     }
     
     @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.BOW;
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return UseAnim.BOW;
     }
     
     @Override
@@ -354,11 +356,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public IInteractWithWand getTileInUse(ItemStack wandStack, World world) {
+    public IInteractWithWand getTileInUse(ItemStack wandStack, Level world) {
         // Look up the world coordinates of the wand-interactable tile entity currently in use from NBT, then query the world for it
         if (wandStack.hasTag() && wandStack.getTag().contains("UsingX") && wandStack.getTag().contains("UsingY") && wandStack.getTag().contains("UsingZ")) {
             BlockPos pos = new BlockPos(wandStack.getTag().getInt("UsingX"), wandStack.getTag().getInt("UsingY"), wandStack.getTag().getInt("UsingZ"));
-            TileEntity tile = world.getTileEntity(pos);
+            BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof IInteractWithWand) {
                 return (IInteractWithWand)tile;
             }
@@ -367,11 +369,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public <T extends TileEntity & IInteractWithWand> void setTileInUse(ItemStack wandStack, T tile) {
+    public <T extends BlockEntity & IInteractWithWand> void setTileInUse(ItemStack wandStack, T tile) {
         // Save the position of the wand-interactable tile entity so it can be looked up later
-        wandStack.setTagInfo("UsingX", IntNBT.valueOf(tile.getPos().getX()));
-        wandStack.setTagInfo("UsingY", IntNBT.valueOf(tile.getPos().getY()));
-        wandStack.setTagInfo("UsingZ", IntNBT.valueOf(tile.getPos().getZ()));
+        wandStack.addTagElement("UsingX", IntTag.valueOf(tile.getBlockPos().getX()));
+        wandStack.addTagElement("UsingY", IntTag.valueOf(tile.getBlockPos().getY()));
+        wandStack.addTagElement("UsingZ", IntTag.valueOf(tile.getBlockPos().getZ()));
     }
     
     @Override
@@ -384,76 +386,76 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack stack = playerIn.getHeldItem(handIn);
-        playerIn.setActiveHand(handIn);
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack stack = playerIn.getItemInHand(handIn);
+        playerIn.startUsingItem(handIn);
         SpellPackage activeSpell = this.getActiveSpell(stack);
         if (activeSpell != null && !SpellManager.isOnCooldown(playerIn)) {
             // If the wand has an active spell and spells are off the player's cooldown, attempt to cast the spell on right-click
             SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());
-            if (worldIn.isRemote) {
-                return new ActionResult<>(ActionResultType.SUCCESS, stack);
+            if (worldIn.isClientSide) {
+                return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
             } else if (this.consumeRealMana(stack, playerIn, activeSpell.getManaCost())) {
                 // If the wand contains enough mana, consume it and cast the spell
                 activeSpell.cast(worldIn, playerIn, stack);
-                playerIn.swingArm(handIn);
-                return new ActionResult<>(ActionResultType.SUCCESS, stack);
+                playerIn.swing(handIn);
+                return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
             } else {
-                return new ActionResult<>(ActionResultType.FAIL, stack);
+                return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
             }
         } else {
-            return new ActionResult<>(ActionResultType.PASS, stack);
+            return new InteractionResultHolder<>(InteractionResult.PASS, stack);
         }
     }
     
     @Override
-    public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         // Only process on server side
-    	World world = context.getWorld();
-        if (world.isRemote) {
-            return ActionResultType.PASS;
+    	Level world = context.getLevel();
+        if (world.isClientSide) {
+            return InteractionResult.PASS;
         }
         
         // Bypass wand functionality if the player is sneaking
-        if (context.getPlayer().isSneaking()) {
-            return ActionResultType.PASS;
+        if (context.getPlayer().isShiftKeyDown()) {
+            return InteractionResult.PASS;
         }
         
-        context.getPlayer().setActiveHand(context.getHand());
+        context.getPlayer().startUsingItem(context.getHand());
         
         // If the mouseover target is a wand-sensitive block, trigger that initial interaction
-        BlockState bs = context.getWorld().getBlockState(context.getPos());
+        BlockState bs = context.getLevel().getBlockState(context.getClickedPos());
         if (bs.getBlock() instanceof IInteractWithWand) {
-            return ((IInteractWithWand)bs.getBlock()).onWandRightClick(context.getItem(), context.getWorld(), context.getPlayer(), context.getPos(), context.getFace());
+            return ((IInteractWithWand)bs.getBlock()).onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
         }
         
         // If the mouseover target is a wand-sensitive tile entity, trigger that initial interaction
-        TileEntity tile = context.getWorld().getTileEntity(context.getPos());
+        BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
         if (tile != null && tile instanceof IInteractWithWand) {
-            return ((IInteractWithWand)tile).onWandRightClick(context.getItem(), context.getWorld(), context.getPlayer(), context.getPos(), context.getFace());
+            return ((IInteractWithWand)tile).onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
         }
         
         // Otherwise, see if the mouseover target is a valid target for wand transformation
         for (IWandTransform transform : WandTransforms.getAll()) {
-            if (transform.isValid(context.getWorld(), context.getPlayer(), context.getPos())) {
-                if (!context.getPlayer().canPlayerEdit(context.getPos(), context.getFace(), context.getItem())) {
-                    return ActionResultType.FAIL;
+            if (transform.isValid(context.getLevel(), context.getPlayer(), context.getClickedPos())) {
+                if (!context.getPlayer().mayUseItemAt(context.getClickedPos(), context.getClickedFace(), context.getItemInHand())) {
+                    return InteractionResult.FAIL;
                 } else {
-                    context.getPlayer().swingArm(context.getHand());
-                    transform.execute(context.getWorld(), context.getPlayer(), context.getPos());
-                    return ActionResultType.SUCCESS;
+                    context.getPlayer().swing(context.getHand());
+                    transform.execute(context.getLevel(), context.getPlayer(), context.getClickedPos());
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
     
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity living, int count) {
         // If the player continues to hold the interact button, continue the interaction with the last wand-sensitive block/tile interacted with
-        if (living instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)living;
-            IInteractWithWand wandable = this.getTileInUse(stack, player.world);
+        if (living instanceof Player) {
+            Player player = (Player)living;
+            IInteractWithWand wandable = this.getTileInUse(stack, player.level);
             if (wandable != null) {
                 wandable.onWandUseTick(stack, player, count);
             }
@@ -461,9 +463,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+    public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
         // Once interaction ceases, clear the last-interacted coordinates
-        super.onPlayerStoppedUsing(stack, worldIn, entityLiving, timeLeft);
+        super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
         this.clearTileInUse(stack);
     }
     

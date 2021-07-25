@@ -13,23 +13,23 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -43,22 +43,22 @@ public class ArcanometerItem extends Item {
     public static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "scan_state");
 
     public ArcanometerItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).rarity(Rarity.UNCOMMON).setISTER(() -> ArcanometerISTER::new));
+        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON).setISTER(() -> ArcanometerISTER::new));
     }
     
-    public static IItemPropertyGetter getScanStateProperty() {
-    	return new IItemPropertyGetter() {
+    public static ItemPropertyFunction getScanStateProperty() {
+    	return new ItemPropertyFunction() {
             @OnlyIn(Dist.CLIENT)
             protected float scanState = 0;
 
             @OnlyIn(Dist.CLIENT)
             @Override
-            public float call(ItemStack stack, ClientWorld world, LivingEntity entity) {
-                if (entity == null || !(entity instanceof PlayerEntity)) {
+            public float call(ItemStack stack, ClientLevel world, LivingEntity entity) {
+                if (entity == null || !(entity instanceof Player)) {
                     return 0.0F;
                 } else {
                     // If the currently moused-over block/item has not yet been scanned, raise the antennae
-                    if (isMouseOverScannable(RayTraceUtils.getMouseOver(), world, (PlayerEntity)entity)) {
+                    if (isMouseOverScannable(RayTraceUtils.getMouseOver(), world, (Player)entity)) {
                         this.incrementScanState();
                     } else {
                         this.decrementScanState();
@@ -79,21 +79,21 @@ public class ArcanometerItem extends Item {
         };
     }
     
-    public static boolean isMouseOverScannable(@Nullable RayTraceResult result, @Nullable World world, @Nullable PlayerEntity player) {
+    public static boolean isMouseOverScannable(@Nullable HitResult result, @Nullable Level world, @Nullable Player player) {
         if (result == null || world == null) {
             return false;
-        } else if (result.getType() == RayTraceResult.Type.ENTITY) {
+        } else if (result.getType() == HitResult.Type.ENTITY) {
             // If the current mouseover is an entity, try to get its corresponding item and scan that if it has one, otherwise scan the entity itself
-            Entity entity = ((EntityRayTraceResult)result).getEntity();
+            Entity entity = ((EntityHitResult)result).getEntity();
             ItemStack stack = EntityUtils.getEntityItemStack(entity);
             if (!stack.isEmpty()) {
                 return !ResearchManager.isScanned(stack, player);
             } else {
                 return !ResearchManager.isScanned(entity.getType(), player);
             }
-        } else if (result.getType() == RayTraceResult.Type.BLOCK) {
+        } else if (result.getType() == HitResult.Type.BLOCK) {
             // If the current mouseover is a block, try to get its corresponding block item and scan that
-            BlockPos pos = ((BlockRayTraceResult)result).getPos();
+            BlockPos pos = ((BlockHitResult)result).getBlockPos();
             ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock());
             return !stack.isEmpty() && !ResearchManager.isScanned(stack, player);
         } else {
@@ -102,26 +102,26 @@ public class ArcanometerItem extends Item {
     }
     
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (worldIn.isRemote) {
-            RayTraceResult result = RayTraceUtils.getMouseOver();
-            if (result != null && result.getType() != RayTraceResult.Type.MISS) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        if (worldIn.isClientSide) {
+            HitResult result = RayTraceUtils.getMouseOver();
+            if (result != null && result.getType() != HitResult.Type.MISS) {
                 // If something is being moused over, play the sound effect for the player and send a scan packet to the server
-                worldIn.playSound(playerIn, playerIn.getPosition(), SoundsPM.SCAN.get(), SoundCategory.MASTER, 1.0F, 1.0F);
-                if (result.getType() == RayTraceResult.Type.ENTITY) {
-                    Entity entity = ((EntityRayTraceResult)result).getEntity();
+                worldIn.playSound(playerIn, playerIn.blockPosition(), SoundsPM.SCAN.get(), SoundSource.MASTER, 1.0F, 1.0F);
+                if (result.getType() == HitResult.Type.ENTITY) {
+                    Entity entity = ((EntityHitResult)result).getEntity();
                     ItemStack entityStack = EntityUtils.getEntityItemStack(entity);
                     if (!entityStack.isEmpty()) {
                         PacketHandler.sendToServer(new ScanItemPacket(entityStack));
                     } else {
                         PacketHandler.sendToServer(new ScanEntityPacket(entity.getType()));
                     }
-                } else if (result.getType() == RayTraceResult.Type.BLOCK) {
-                    BlockPos pos = ((BlockRayTraceResult)result).getPos();
+                } else if (result.getType() == HitResult.Type.BLOCK) {
+                    BlockPos pos = ((BlockHitResult)result).getBlockPos();
                     PacketHandler.sendToServer(new ScanPositionPacket(pos));
                 }
             }
         }
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 }

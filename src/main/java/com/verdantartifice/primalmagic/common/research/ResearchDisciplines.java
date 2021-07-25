@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.stats.Stat;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Collection of all defined research disciplines and their defining JSON data files.

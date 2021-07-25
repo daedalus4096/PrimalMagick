@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagic.client.renderers.models;
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
-import net.minecraft.client.renderer.entity.model.SegmentedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.model.ListModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,26 +15,26 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer}
  */
 @OnlyIn(Dist.CLIENT)
-public class SpellProjectileModel extends SegmentedModel<SpellProjectileEntity> {
-    protected final ModelRenderer renderer;
+public class SpellProjectileModel extends ListModel<SpellProjectileEntity> {
+    protected final ModelPart renderer;
     
     public SpellProjectileModel() {
-        this.textureWidth = 64;
-        this.textureHeight = 32;
+        this.texWidth = 64;
+        this.texHeight = 32;
         
         // Model is a simple block-sized cube centered at its relative origin
-        this.renderer = new ModelRenderer(this);
-        this.renderer.setTextureOffset(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16, 16, 16, 0.0F);
-        this.renderer.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.renderer = new ModelPart(this);
+        this.renderer.texOffs(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16, 16, 16, 0.0F);
+        this.renderer.setPos(0.0F, 0.0F, 0.0F);
     }
     
-    public Iterable<ModelRenderer> getParts() {
+    public Iterable<ModelPart> parts() {
         return ImmutableList.of(this.renderer);
     }
 
     @Override
-    public void setRotationAngles(SpellProjectileEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.renderer.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
-        this.renderer.rotateAngleX = headPitch * ((float)Math.PI / 180F);
+    public void setupAnim(SpellProjectileEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.renderer.yRot = netHeadYaw * ((float)Math.PI / 180F);
+        this.renderer.xRot = headPitch * ((float)Math.PI / 180F);
     }
 }

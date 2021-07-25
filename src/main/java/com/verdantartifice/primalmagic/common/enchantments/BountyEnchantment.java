@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of an enchantment that grants bonus rolls when fishing or harvesting crops.  Note
@@ -13,18 +13,18 @@ import net.minecraft.item.ItemStack;
  * @author Daedalus4096
  */
 public class BountyEnchantment extends AbstractRuneEnchantment {
-    public BountyEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
-        super(rarity, EnchantmentType.FISHING_ROD, slots);
+    public BountyEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
+        super(rarity, EnchantmentCategory.FISHING_ROD, slots);
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + ((enchantmentLevel - 1) * 10);
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 15;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 15;
     }
     
     @Override
@@ -33,7 +33,7 @@ public class BountyEnchantment extends AbstractRuneEnchantment {
     }
 
     @Override
-    public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof HoeItem || super.canApply(stack);
+    public boolean canEnchant(ItemStack stack) {
+        return stack.getItem() instanceof HoeItem || super.canEnchant(stack);
     }
 }

@@ -14,12 +14,12 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Primary access point for attunement-related methods.  As players utilize magic, they gain or
@@ -37,17 +37,17 @@ public class AttunementManager {
     // Set of unique IDs of players that need their research synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
     
-    public static boolean isSyncScheduled(@Nullable PlayerEntity player) {
+    public static boolean isSyncScheduled(@Nullable Player player) {
         if (player == null) {
             return false;
         } else {
-            return SYNC_SET.remove(player.getUniqueID());
+            return SYNC_SET.remove(player.getUUID());
         }
     }
     
-    public static void scheduleSync(@Nullable PlayerEntity player) {
+    public static void scheduleSync(@Nullable Player player) {
         if (player != null) {
-            SYNC_SET.add(player.getUniqueID());
+            SYNC_SET.add(player.getUUID());
         }
     }
     
@@ -63,7 +63,7 @@ public class AttunementManager {
      * @param type the type of attunement to be retrieved
      * @return the partial attunement value
      */
-    public static int getAttunement(@Nullable PlayerEntity player, @Nullable Source source, @Nullable AttunementType type) {
+    public static int getAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type) {
         if (player != null && source != null && type != null) {
             IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
             if (attunements != null) {
@@ -80,7 +80,7 @@ public class AttunementManager {
      * @param source the source of attunement to be retrieved
      * @return the total attunement value
      */
-    public static int getTotalAttunement(@Nullable PlayerEntity player, @Nullable Source source) {
+    public static int getTotalAttunement(@Nullable Player player, @Nullable Source source) {
         if (player != null && source != null) {
             IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
             if (attunements != null) {
@@ -104,7 +104,7 @@ public class AttunementManager {
      * @param threshold the threshold value to test against
      * @return true if the player's total attunement meets or exceeds the given threshold, false otherwise
      */
-    public static boolean meetsThreshold(@Nullable PlayerEntity player, @Nullable Source source, @Nullable AttunementThreshold threshold) {
+    public static boolean meetsThreshold(@Nullable Player player, @Nullable Source source, @Nullable AttunementThreshold threshold) {
         if (player != null && source != null && threshold != null) {
             return getTotalAttunement(player, source) >= threshold.getValue();
         } else {
@@ -120,8 +120,8 @@ public class AttunementManager {
      * @param type the type of attunement to be set
      * @param value the new partial attunement value
      */
-    public static void setAttunement(@Nullable PlayerEntity player, @Nullable Source source, @Nullable AttunementType type, int value) {
-        if (player instanceof ServerPlayerEntity && source != null && type != null) {
+    public static void setAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type, int value) {
+        if (player instanceof ServerPlayer && source != null && type != null) {
             IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
             if (attunements != null) {
                 int oldTotal = getTotalAttunement(player, source);
@@ -135,11 +135,11 @@ public class AttunementManager {
                 // Determine if any thresholds were passed, either up or down
                 for (AttunementThreshold threshold : AttunementThreshold.values()) {
                     int thresholdValue = threshold.getValue();
-                    ITextComponent sourceText = new TranslationTextComponent(source.getNameTranslationKey()).mergeStyle(source.getChatColor());
+                    Component sourceText = new TranslatableComponent(source.getNameTranslationKey()).withStyle(source.getChatColor());
                     if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
                         // If gaining a threshold, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.sendStatusMessage(new TranslationTextComponent("primalmagic.attunement.threshold_gain", sourceText), false);
+                            player.displayClientMessage(new TranslatableComponent("primalmagic.attunement.threshold_gain", sourceText), false);
                         }
                         
                         // Apply any new attribute modifiers from the threshold gain
@@ -152,7 +152,7 @@ public class AttunementManager {
                     if (oldTotal >= thresholdValue && newTotal < thresholdValue) {
                         // If losing a threshold, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.sendStatusMessage(new TranslationTextComponent("primalmagic.attunement.threshold_loss", sourceText), false);
+                            player.displayClientMessage(new TranslatableComponent("primalmagic.attunement.threshold_loss", sourceText), false);
                         }
                         
                         // Remove any lost attribute modifiers from the threshold loss
@@ -174,7 +174,7 @@ public class AttunementManager {
      * @param type the type of attunement to be set
      * @param values the new partial attunement values
      */
-    public static void setAttunement(@Nullable PlayerEntity player, @Nullable AttunementType type, @Nullable SourceList values) {
+    public static void setAttunement(@Nullable Player player, @Nullable AttunementType type, @Nullable SourceList values) {
         if (values != null && !values.isEmpty()) {
             for (Source source : values.getSources()) {
                 setAttunement(player, source, type, values.getAmount(source));
@@ -190,7 +190,7 @@ public class AttunementManager {
      * @param type the type of attunement to be changed
      * @param delta the amount of change to apply, may be negative
      */
-    public static void incrementAttunement(@Nullable PlayerEntity player, @Nullable Source source, @Nullable AttunementType type, int delta) {
+    public static void incrementAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type, int delta) {
         int oldValue = getAttunement(player, source, type);
         setAttunement(player, source, type, oldValue + delta);
     }
@@ -202,7 +202,7 @@ public class AttunementManager {
      * @param source the source of attunement to be changed
      * @param type the type of attunement to be changed
      */
-    public static void incrementAttunement(@Nullable PlayerEntity player, @Nullable Source source, @Nullable AttunementType type) {
+    public static void incrementAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type) {
         incrementAttunement(player, source, type, 1);
     }
     
@@ -213,7 +213,7 @@ public class AttunementManager {
      * @param type the type of attunement to be changed
      * @param deltas the amounts of change to apply, may be negative
      */
-    public static void incrementAttunement(@Nullable PlayerEntity player, @Nullable AttunementType type, @Nullable SourceList deltas) {
+    public static void incrementAttunement(@Nullable Player player, @Nullable AttunementType type, @Nullable SourceList deltas) {
         SourceList newValues = new SourceList();
         for (Source source : deltas.getSources()) {
             int oldValue = getAttunement(player, source, type);
@@ -227,8 +227,8 @@ public class AttunementManager {
      * 
      * @param player the player to be modified
      */
-    public static void decayTemporaryAttunements(@Nullable PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity) {
+    public static void decayTemporaryAttunements(@Nullable Player player) {
+        if (player instanceof ServerPlayer) {
             for (Source source : Source.SORTED_SOURCES) {
                 incrementAttunement(player, source, AttunementType.TEMPORARY, -1);
             }

@@ -9,49 +9,49 @@ import com.verdantartifice.primalmagic.common.containers.slots.WandCoreSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandGemSlot;
 import com.verdantartifice.primalmagic.common.crafting.WandAssemblyRecipe;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.CraftingResultSlot;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
 /**
  * Server data container for the wand assembly table GUI.
  * 
  * @author Daedalus4096
  */
-public class WandAssemblyTableContainer extends Container {
+public class WandAssemblyTableContainer extends AbstractContainerMenu {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "wand_assembly");
     
-    protected final IWorldPosCallable worldPosCallable;
+    protected final ContainerLevelAccess worldPosCallable;
     protected final WandComponentInventory componentInv = new WandComponentInventory();
-    protected final CraftResultInventory resultInv = new CraftResultInventory();
-    protected final PlayerEntity player;
+    protected final ResultContainer resultInv = new ResultContainer();
+    protected final Player player;
     protected final Slot coreSlot;
     protected final Slot capSlot;
     protected final Slot gemSlot;
     
-    public WandAssemblyTableContainer(int windowId, PlayerInventory inv) {
-        this(windowId, inv, IWorldPosCallable.DUMMY);
+    public WandAssemblyTableContainer(int windowId, Inventory inv) {
+        this(windowId, inv, ContainerLevelAccess.NULL);
     }
     
-    public WandAssemblyTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
+    public WandAssemblyTableContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
         super(ContainersPM.WAND_ASSEMBLY_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         
         // Slot 0: Result
-        this.addSlot(new CraftingResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
+        this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Wand core
         this.coreSlot = this.addSlot(new WandCoreSlot(this.componentInv, 0, 48, 35));
@@ -77,79 +77,79 @@ public class WandAssemblyTableContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.WAND_ASSEMBLY_TABLE.get());
+    public boolean stillValid(Player playerIn) {
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.WAND_ASSEMBLY_TABLE.get());
     }
     
     @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
+    public void removed(Player playerIn) {
         // Return crafting inputs to the player's inventory when GUI is closed
-        super.onContainerClosed(playerIn);
-        this.worldPosCallable.consume((world, blockPos) -> {
+        super.removed(playerIn);
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.clearContainer(playerIn, world, this.componentInv);
         });
     }
     
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
                 // If transferring the output item, move it into the player's backpack or hotbar
-                if (!this.mergeItemStack(slotStack, 5, 41, true)) {
+                if (!this.moveItemStackTo(slotStack, 5, 41, true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onSlotChange(slotStack, stack);
+                slot.onQuickCraft(slotStack, stack);
             } else if (index >= 5 && index < 32) {
                 // If transferring from the backpack, move cores, caps, and gems to the appropriate slots, and everything else to the hotbar
-                if (this.coreSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                if (this.coreSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.gemSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 2, 3, false)) {
+                } else if (this.gemSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.capSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 3, 5, false)) {
+                } else if (this.capSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 3, 5, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 32, 41, false)) {
+                    if (!this.moveItemStackTo(slotStack, 32, 41, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
             } else if (index >= 32 && index < 41) {
                 // If transferring from the hotbar, move cores, caps, and gems to the appropriate slots, and everything else to the backpack
-                if (this.coreSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                if (this.coreSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.gemSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 2, 3, false)) {
+                } else if (this.gemSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.capSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 3, 5, false)) {
+                } else if (this.capSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 3, 5, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 5, 32, false)) {
+                    if (!this.moveItemStackTo(slotStack, 5, 32, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.mergeItemStack(slotStack, 5, 41, false)) {
+            } else if (!this.moveItemStackTo(slotStack, 5, 41, false)) {
                 // Move all other transfers to the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
             
             if (slotStack.getCount() == stack.getCount()) {
@@ -158,51 +158,51 @@ public class WandAssemblyTableContainer extends Container {
             
             ItemStack taken = slot.onTake(playerIn, slotStack);
             if (index == 0) {
-                playerIn.dropItem(taken, false);
+                playerIn.drop(taken, false);
             }
         }
         return stack;
     }
     
     @Override
-    public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-        return slotIn.inventory != this.resultInv && super.canMergeSlot(stack, slotIn);
+    public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+        return slotIn.container != this.resultInv && super.canTakeItemForPickAll(stack, slotIn);
     }
     
     @Override
-    public void onCraftMatrixChanged(IInventory inventoryIn) {
-        super.onCraftMatrixChanged(inventoryIn);
-        this.worldPosCallable.consume((world, blockPos) -> {
+    public void slotsChanged(Container inventoryIn) {
+        super.slotsChanged(inventoryIn);
+        this.worldPosCallable.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
     
-    protected void slotChangedCraftingGrid(World world) {
-        if (!world.isRemote && this.player instanceof ServerPlayerEntity) {
-            ServerPlayerEntity spe = (ServerPlayerEntity)this.player;
+    protected void slotChangedCraftingGrid(Level world) {
+        if (!world.isClientSide && this.player instanceof ServerPlayer) {
+            ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            Optional<? extends IRecipe<?>> opt = world.getServer().getRecipeManager().getRecipe(RECIPE_LOC);
+            Optional<? extends Recipe<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get() instanceof WandAssemblyRecipe) {
                 // If the inputs make a valid wand, show the output
                 WandAssemblyRecipe recipe = (WandAssemblyRecipe)opt.get();
                 if (recipe.matches(this.componentInv, world)) {
-                    stack = recipe.getCraftingResult(this.componentInv);
+                    stack = recipe.assemble(this.componentInv);
                 }
             }
             
             // Send a packet to the client to update its GUI with the shown output
-            this.resultInv.setInventorySlotContents(0, stack);
-            spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
+            this.resultInv.setItem(0, stack);
+            spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, 0, stack));
         }
     }
 
-    protected class WandComponentInventory extends CraftingInventory {
+    protected class WandComponentInventory extends CraftingContainer {
         public WandComponentInventory() {
             super(WandAssemblyTableContainer.this, 2, 2);
         }
         
         @Override
-        public int getInventoryStackLimit() {
+        public int getMaxStackSize() {
             return 1;
         }
     }

@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.blocks.misc;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.IBeaconBeamColorProvider;
-import net.minecraft.item.DyeColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BeaconBeamBlock;
+import net.minecraft.world.item.DyeColor;
 
 /**
  * Block definition for a stained skyglass pane.  Like normal stained glass panes, except that it
@@ -11,7 +11,7 @@ import net.minecraft.item.DyeColor;
  * 
  * @author Daedalus4096
  */
-public class StainedSkyglassPaneBlock extends SkyglassPaneBlock implements IBeaconBeamColorProvider {
+public class StainedSkyglassPaneBlock extends SkyglassPaneBlock implements BeaconBeamBlock {
     protected final DyeColor color;
 
     public StainedSkyglassPaneBlock(DyeColor colorIn, Block.Properties properties) {

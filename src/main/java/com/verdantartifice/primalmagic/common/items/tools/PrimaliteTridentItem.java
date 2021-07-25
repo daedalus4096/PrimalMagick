@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagic.common.items.tools;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.PrimaliteTridentEntity;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition for a trident made of the magical metal primalite.
@@ -19,7 +19,7 @@ public class PrimaliteTridentItem extends AbstractTieredTridentItem {
     }
 
     @Override
-    protected AbstractTridentEntity getThrownEntity(World world, LivingEntity thrower, ItemStack stack) {
+    protected AbstractTridentEntity getThrownEntity(Level world, LivingEntity thrower, ItemStack stack) {
         return new PrimaliteTridentEntity(world, thrower, stack);
     }
 }

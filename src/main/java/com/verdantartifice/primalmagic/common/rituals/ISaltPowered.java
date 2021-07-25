@@ -2,10 +2,10 @@ package com.verdantartifice.primalmagic.common.rituals;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 
 /**
  * Interface indicating whether a block can send or receive salt power for rituals.
@@ -20,16 +20,16 @@ public interface ISaltPowered {
      * @param pos the position of the queried block
      * @return whether the queried block is receiving salt power
      */
-    public default boolean isBlockSaltPowered(@Nonnull IBlockReader world, @Nonnull BlockPos pos) {
+    public default boolean isBlockSaltPowered(@Nonnull BlockGetter world, @Nonnull BlockPos pos) {
         for (Direction dir : Direction.values()) {
-            if (this.getSaltPower(world, pos.offset(dir), dir) > 0) {
+            if (this.getSaltPower(world, pos.relative(dir), dir) > 0) {
                 return true;
             }
         }
         return false;
     }
     
-    public default int getSaltPower(@Nonnull IBlockReader world, @Nonnull BlockPos pos, @Nonnull Direction facing) {
+    public default int getSaltPower(@Nonnull BlockGetter world, @Nonnull BlockPos pos, @Nonnull Direction facing) {
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof ISaltPowered) {
             return ((ISaltPowered)state.getBlock()).getStrongSaltPower(state, world, pos, facing);
@@ -38,7 +38,7 @@ public interface ISaltPowered {
         }
     }
 
-    public default int getStrongSaltPower(@Nonnull BlockState blockState, @Nonnull IBlockReader blockAccess, @Nonnull BlockPos pos, @Nonnull Direction side) {
+    public default int getStrongSaltPower(@Nonnull BlockState blockState, @Nonnull BlockGetter blockAccess, @Nonnull BlockPos pos, @Nonnull Direction side) {
         return 0;
     }
 }

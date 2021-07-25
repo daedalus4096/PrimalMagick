@@ -3,25 +3,25 @@ package com.verdantartifice.primalmagic.common.items.entities;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CauldronBlock;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CauldronBlock;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
@@ -39,11 +39,11 @@ public class FlyingCarpetItem extends Item {
         super(properties);
     }
     
-    public static IItemPropertyGetter getColorProperty() {
-        return new IItemPropertyGetter() {
+    public static ItemPropertyFunction getColorProperty() {
+        return new ItemPropertyFunction() {
             @OnlyIn(Dist.CLIENT)
             @Override
-            public float call(ItemStack stack, ClientWorld world, LivingEntity entity) {
+            public float call(ItemStack stack, ClientLevel world, LivingEntity entity) {
                 DyeColor color = null;
                 if (stack != null && stack.getItem() instanceof FlyingCarpetItem) {
                     color = ((FlyingCarpetItem)stack.getItem()).getDyeColor(stack);
@@ -68,45 +68,45 @@ public class FlyingCarpetItem extends Item {
     }
 
     @Override
-    public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
         BlockState state = world.getBlockState(pos);
-        if (!world.isRemote && state.getBlock() == Blocks.CAULDRON) {
-            int level = state.get(CauldronBlock.LEVEL).intValue();
+        if (!world.isClientSide && state.getBlock() == Blocks.CAULDRON) {
+            int level = state.getValue(CauldronBlock.LEVEL).intValue();
             if (level > 0) {
                 this.removeDyeColor(stack);
                 ((CauldronBlock)Blocks.CAULDRON).setWaterLevel(world, pos, state, level - 1);
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else {
-                return ActionResultType.PASS;
+                return InteractionResult.PASS;
             }
-        } else if (!world.isRemote) {
-            if (context.getFace() != Direction.UP) {
-                return ActionResultType.PASS;
+        } else if (!world.isClientSide) {
+            if (context.getClickedFace() != Direction.UP) {
+                return InteractionResult.PASS;
             }
-            double posX = /* (double)pos.getX() + */ context.getHitVec().x;
-            double posY = /* (double)pos.getY() + */ context.getHitVec().y;
-            double posZ = /* (double)pos.getZ() + */ context.getHitVec().z;
+            double posX = /* (double)pos.getX() + */ context.getClickLocation().x;
+            double posY = /* (double)pos.getY() + */ context.getClickLocation().y;
+            double posZ = /* (double)pos.getZ() + */ context.getClickLocation().z;
             FlyingCarpetEntity entityCarpet = new FlyingCarpetEntity(world, posX, posY, posZ);
             if (stack.hasTag()) {
                 entityCarpet.setDyeColor(this.getDyeColor(stack));
             }
-            entityCarpet.rotationYaw = context.getPlayer().rotationYaw;
-            world.addEntity(entityCarpet);
-            world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_WOOL_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            entityCarpet.yRot = context.getPlayer().yRot;
+            world.addFreshEntity(entityCarpet);
+            world.playSound(null, posX, posY, posZ, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
             stack.shrink(1);
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
     }
     
     public DyeColor getDyeColor(ItemStack stack) {
         if (stack.hasTag()) {
-            CompoundNBT nbt = stack.getTag();
+            CompoundTag nbt = stack.getTag();
             if (nbt != null && nbt.contains("display", Constants.NBT.TAG_COMPOUND)) {
-                CompoundNBT displayNbt = nbt.getCompound("display");
+                CompoundTag displayNbt = nbt.getCompound("display");
                 if (displayNbt != null && displayNbt.contains("color", Constants.NBT.TAG_INT)) {
                     return DyeColor.byId(displayNbt.getInt("color"));
                 }
@@ -120,20 +120,20 @@ public class FlyingCarpetItem extends Item {
             return;
         }
         if (!stack.hasTag()) {
-            stack.setTag(new CompoundNBT());
+            stack.setTag(new CompoundTag());
         }
-        CompoundNBT nbt = stack.getTag();
+        CompoundTag nbt = stack.getTag();
         if (!nbt.contains("display", Constants.NBT.TAG_COMPOUND)) {
-            nbt.put("display", new CompoundNBT());
+            nbt.put("display", new CompoundTag());
         }
         nbt.getCompound("display").putInt("color", color.getId());
     }
     
     public void removeDyeColor(ItemStack stack) {
         if (stack.hasTag()) {
-            CompoundNBT nbt = stack.getTag();
+            CompoundTag nbt = stack.getTag();
             if (nbt != null && nbt.contains("display", Constants.NBT.TAG_COMPOUND)) {
-                CompoundNBT displayNbt = nbt.getCompound("display");
+                CompoundTag displayNbt = nbt.getCompound("display");
                 if (displayNbt != null && displayNbt.contains("color", Constants.NBT.TAG_INT)) {
                     displayNbt.remove("color");
                 }

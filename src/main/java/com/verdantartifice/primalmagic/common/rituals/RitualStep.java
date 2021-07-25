@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.rituals;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -8,7 +8,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public class RitualStep implements INBTSerializable<CompoundNBT> {
+public class RitualStep implements INBTSerializable<CompoundTag> {
     protected RitualStepType type;
     protected int index;
     
@@ -35,15 +35,15 @@ public class RitualStep implements INBTSerializable<CompoundNBT> {
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT retVal = new CompoundNBT();
-        retVal.putString("Type", this.type.getString());
+    public CompoundTag serializeNBT() {
+        CompoundTag retVal = new CompoundTag();
+        retVal.putString("Type", this.type.getSerializedName());
         retVal.putInt("Index", this.index);
         return retVal;
     }
     
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         this.type = RitualStepType.fromName(nbt.getString("Type"));
         this.index = nbt.getInt("Index");
     }

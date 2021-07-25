@@ -6,23 +6,23 @@ import com.verdantartifice.primalmagic.common.crafting.WandInventory;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.CraftingResultSlot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Custom GUI slot for spellcrafting altar outputs.
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingResultSlot extends CraftingResultSlot {
+public class SpellcraftingResultSlot extends ResultSlot {
     protected final WandInventory wandInventory;
-    protected final PlayerEntity player;
+    protected final Player player;
     protected final Supplier<SourceList> costSupplier;
 
-    public SpellcraftingResultSlot(PlayerEntity player, CraftingInventory craftingInventory, WandInventory wandInventory, Supplier<SourceList> costSupplier, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
+    public SpellcraftingResultSlot(Player player, CraftingContainer craftingInventory, WandInventory wandInventory, Supplier<SourceList> costSupplier, Container inventoryIn, int slotIndex, int xPosition, int yPosition) {
         super(player, craftingInventory, inventoryIn, slotIndex, xPosition, yPosition);
         this.wandInventory = wandInventory;
         this.player = player;
@@ -30,15 +30,15 @@ public class SpellcraftingResultSlot extends CraftingResultSlot {
     }
     
     @Override
-    protected void onCrafting(ItemStack stack) {
+    protected void checkTakeAchievements(ItemStack stack) {
         // Deduct the cost of the spell from the wand
         SourceList manaCosts = this.costSupplier.get();
         if (manaCosts != null && !manaCosts.isEmpty()) {
-            ItemStack wandStack = this.wandInventory.getStackInSlot(0);
+            ItemStack wandStack = this.wandInventory.getItem(0);
             if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 ((IWand)wandStack.getItem()).consumeRealMana(wandStack, this.player, manaCosts);
             }
         }
-        super.onCrafting(stack);
+        super.checkTakeAchievements(stack);
     }
 }

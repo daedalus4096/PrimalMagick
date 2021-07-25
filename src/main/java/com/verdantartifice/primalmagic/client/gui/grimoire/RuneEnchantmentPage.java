@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
@@ -15,9 +15,9 @@ import com.verdantartifice.primalmagic.common.runes.Rune;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -58,11 +58,11 @@ public class RuneEnchantmentPage extends AbstractPage {
     
     @Override
     protected String getTitleTranslationKey() {
-        return this.enchant.getName();
+        return this.enchant.getDescriptionId();
     }
     
     @Override
-    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         int startY = y;
         int indent = 84;
         int overlayWidth = 13;
@@ -73,12 +73,12 @@ public class RuneEnchantmentPage extends AbstractPage {
             this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
             y += 77;
             
-            Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
-            matrixStack.push();
+            Minecraft.getInstance().getTextureManager().bind(OVERLAY);
+            matrixStack.pushPose();
             matrixStack.translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
             this.blit(matrixStack, 0, 0, 0, 51, overlayWidth, overlayHeight);
             this.blit(matrixStack, 32, 0, 0, 51, overlayWidth, overlayHeight);
-            matrixStack.pop();
+            matrixStack.popPose();
         } else {
             y += 25;
         }

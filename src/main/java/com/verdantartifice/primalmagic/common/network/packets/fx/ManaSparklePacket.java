@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -43,7 +43,7 @@ public class ManaSparklePacket implements IMessageToClient {
         this(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D, targetX, targetY, targetZ, maxAge, color);
     }
     
-    public static void encode(ManaSparklePacket message, PacketBuffer buf) {
+    public static void encode(ManaSparklePacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
         buf.writeDouble(message.z1);
@@ -54,7 +54,7 @@ public class ManaSparklePacket implements IMessageToClient {
         buf.writeVarInt(message.color);
     }
     
-    public static ManaSparklePacket decode(PacketBuffer buf) {
+    public static ManaSparklePacket decode(FriendlyByteBuf buf) {
         ManaSparklePacket message = new ManaSparklePacket();
         message.x1 = buf.readDouble();
         message.y1 = buf.readDouble();

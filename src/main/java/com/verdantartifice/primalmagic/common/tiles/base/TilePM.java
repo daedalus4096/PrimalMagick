@@ -7,13 +7,13 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerPacket;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -22,8 +22,8 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class TilePM extends TileEntity {
-    public TilePM(TileEntityType<?> type) {
+public class TilePM extends BlockEntity {
+    public TilePM(BlockEntityType<?> type) {
         super(type);
     }
     
@@ -33,27 +33,27 @@ public class TilePM extends TileEntity {
      * @param rerender whether to re-render the tile's block
      */
     public void syncTile(boolean rerender) {
-        BlockState state = this.world.getBlockState(this.pos);
+        BlockState state = this.level.getBlockState(this.worldPosition);
         int flags = Constants.BlockFlags.BLOCK_UPDATE;
         if (!rerender) {
             flags |= Constants.BlockFlags.NO_RERENDER;
         }
-        this.world.notifyBlockUpdate(this.pos, state, state, flags);
+        this.level.sendBlockUpdated(this.worldPosition, state, state, flags);
     }
     
     @Override
-    public CompoundNBT getUpdateTag() {
-        return this.write(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return this.save(new CompoundTag());
     }
     
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, 1, this.getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
     }
     
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(this.getBlockState(), pkt.getNbtCompound());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        this.load(this.getBlockState(), pkt.getTag());
     }
     
     /**
@@ -63,13 +63,13 @@ public class TilePM extends TileEntity {
      * @param nbt the data to be synced
      * @param player the player whose client is to receive the given data
      */
-    public void sendMessageToClient(CompoundNBT nbt, @Nullable ServerPlayerEntity player) {
+    public void sendMessageToClient(CompoundTag nbt, @Nullable ServerPlayer player) {
         if (player == null) {
-            if (this.hasWorld()) {
-                PacketHandler.sendToAllAround(new TileToClientPacket(this.pos, nbt), this.world.getDimensionKey(), this.pos, 128.0D);
+            if (this.hasLevel()) {
+                PacketHandler.sendToAllAround(new TileToClientPacket(this.worldPosition, nbt), this.level.dimension(), this.worldPosition, 128.0D);
             }
         } else {
-            PacketHandler.sendToPlayer(new TileToClientPacket(this.pos, nbt), player);
+            PacketHandler.sendToPlayer(new TileToClientPacket(this.worldPosition, nbt), player);
         }
     }
     
@@ -78,8 +78,8 @@ public class TilePM extends TileEntity {
      * 
      * @param nbt the data to be synced
      */
-    public void sendMessageToServer(CompoundNBT nbt) {
-        PacketHandler.sendToServer(new TileToServerPacket(this.pos, nbt));
+    public void sendMessageToServer(CompoundTag nbt) {
+        PacketHandler.sendToServer(new TileToServerPacket(this.worldPosition, nbt));
     }
     
     /**
@@ -89,7 +89,7 @@ public class TilePM extends TileEntity {
      * @param player the player whose client sent the given data
      * @see {@link #sendMessageToServer(CompoundNBT)}
      */
-    public void onMessageFromClient(CompoundNBT nbt, @Nonnull ServerPlayerEntity player) {
+    public void onMessageFromClient(CompoundTag nbt, @Nonnull ServerPlayer player) {
         // Do nothing by default
     }
     
@@ -99,7 +99,7 @@ public class TilePM extends TileEntity {
      * @param nbt the received data
      * @see {@link #sendMessageToClient(CompoundNBT, ServerPlayerEntity)}
      */
-    public void onMessageFromServer(CompoundNBT nbt) {
+    public void onMessageFromServer(CompoundTag nbt) {
         // Do nothing by default
     }
 }

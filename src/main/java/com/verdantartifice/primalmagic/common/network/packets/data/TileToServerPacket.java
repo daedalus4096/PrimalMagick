@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -21,27 +21,27 @@ import net.minecraftforge.fml.network.NetworkEvent;
  */
 public class TileToServerPacket implements IMessageToServer {
     protected BlockPos pos;
-    protected CompoundNBT data;
+    protected CompoundTag data;
     
     public TileToServerPacket() {
         this.pos = BlockPos.ZERO;
         this.data = null;
     }
     
-    public TileToServerPacket(BlockPos pos, CompoundNBT data) {
+    public TileToServerPacket(BlockPos pos, CompoundTag data) {
         this.pos = pos;
         this.data = data;
     }
     
-    public static void encode(TileToServerPacket message, PacketBuffer buf) {
+    public static void encode(TileToServerPacket message, FriendlyByteBuf buf) {
         buf.writeBlockPos(message.pos);
-        buf.writeCompoundTag(message.data);
+        buf.writeNbt(message.data);
     }
     
-    public static TileToServerPacket decode(PacketBuffer buf) {
+    public static TileToServerPacket decode(FriendlyByteBuf buf) {
         TileToServerPacket message = new TileToServerPacket();
         message.pos = buf.readBlockPos();
-        message.data = buf.readCompoundTag();
+        message.data = buf.readNbt();
         return message;
     }
     
@@ -50,14 +50,14 @@ public class TileToServerPacket implements IMessageToServer {
         public static void onMessage(TileToServerPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                ServerPlayerEntity sender = ctx.get().getSender();
-                World world = sender.world;
+                ServerPlayer sender = ctx.get().getSender();
+                Level world = sender.level;
                 // Only process tile entities that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
-                if (world != null && world.isBlockLoaded(message.pos)) {
-                    TileEntity tile = world.getTileEntity(message.pos);
+                if (world != null && world.hasChunkAt(message.pos)) {
+                    BlockEntity tile = world.getBlockEntity(message.pos);
                     if (tile != null && tile instanceof TilePM) {
-                        ((TilePM)tile).onMessageFromClient(message.data == null ? new CompoundNBT() : message.data, sender);
+                        ((TilePM)tile).onMessageFromClient(message.data == null ? new CompoundTag() : message.data, sender);
                     }
                 }
             });

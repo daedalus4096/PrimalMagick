@@ -12,7 +12,7 @@ import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a research addendum.  An addendum is an addon to a research entry that is separately

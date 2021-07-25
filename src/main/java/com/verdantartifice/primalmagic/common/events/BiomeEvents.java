@@ -7,12 +7,12 @@ import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,51 +27,51 @@ import net.minecraftforge.fml.common.Mod;
 public class BiomeEvents {
 	@SubscribeEvent(priority=EventPriority.HIGH)
 	public static void loadBiome(BiomeLoadingEvent event) {
-		Biome.Category cat = event.getCategory();
+		Biome.BiomeCategory cat = event.getCategory();
 		
         // Add raw marble, rock salt, and quartz seams to all non-Nether, non-End biomes
 		if (isOverworldBiome(event.getName(), cat)) {
-			event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_MARBLE_RAW);
-			event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_ROCK_SALT);
-			event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_QUARTZ);
+			event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_MARBLE_RAW);
+			event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_ROCK_SALT);
+			event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_QUARTZ);
 		}
 		
 		// Add earth shrines to flatlands
-		if (Biome.Category.PLAINS.equals(cat) || Biome.Category.SAVANNA.equals(cat)) {
+		if (Biome.BiomeCategory.PLAINS.equals(cat) || Biome.BiomeCategory.SAVANNA.equals(cat)) {
 			event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_EARTH_SHRINE);
 		}
 		
 		// Add sea shrines to wet biomes
-		if (Biome.Category.RIVER.equals(cat) || Biome.Category.BEACH.equals(cat) || Biome.Category.SWAMP.equals(cat)) {
+		if (Biome.BiomeCategory.RIVER.equals(cat) || Biome.BiomeCategory.BEACH.equals(cat) || Biome.BiomeCategory.SWAMP.equals(cat)) {
 			event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_SEA_SHRINE);
 		}
 		
 		// Add sky shrines to mountains
-		if (Biome.Category.EXTREME_HILLS.equals(cat)) {
+		if (Biome.BiomeCategory.EXTREME_HILLS.equals(cat)) {
 			event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_SKY_SHRINE);
 		}
 		
 		// Add sun shrines to deserts
-		if (Biome.Category.DESERT.equals(cat)) {
+		if (Biome.BiomeCategory.DESERT.equals(cat)) {
 			event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_SUN_SHRINE);
 		}
 		
 		// Add moon shrines to forests
-		if (Biome.Category.FOREST.equals(cat)) {
-		    event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(EntityTypesPM.TREEFOLK.get(), 100, 1, 3));
+		if (Biome.BiomeCategory.FOREST.equals(cat)) {
+		    event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(EntityTypesPM.TREEFOLK.get(), 100, 1, 3));
 			// TODO Phase sunwood and moonwood trees appropriately
-		    event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_SUNWOOD_FULL_SPACED);
-		    event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_MOONWOOD_FULL_SPACED);
+		    event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_SUNWOOD_FULL_SPACED);
+		    event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_MOONWOOD_FULL_SPACED);
 			event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_MOON_SHRINE);
 		}
 	}
 
-    private static boolean isOverworldBiome(@Nonnull ResourceLocation biomeName, @Nonnull Biome.Category biomeCategory) {
+    private static boolean isOverworldBiome(@Nonnull ResourceLocation biomeName, @Nonnull Biome.BiomeCategory biomeCategory) {
         if (biomeName.equals(Biomes.STONE_SHORE.getRegistryName())) {
             // Stone Shore has a category of None, but it still exists in the Overworld
             return true;
         } else {
-            return !Biome.Category.NONE.equals(biomeCategory) && !Biome.Category.NETHER.equals(biomeCategory) && !Biome.Category.THEEND.equals(biomeCategory);
+            return !Biome.BiomeCategory.NONE.equals(biomeCategory) && !Biome.BiomeCategory.NETHER.equals(biomeCategory) && !Biome.BiomeCategory.THEEND.equals(biomeCategory);
         }
     }
 }

@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Collection of utility methods pertaining to 3D vectors.
@@ -18,8 +18,8 @@ public class VectorUtils {
      * @param rng the random number generator to use
      * @return a random unit vector in 3D space
      */
-    public static Vector3d getRandomUnitVector(@Nonnull Random rng) {
-        return new Vector3d(rng.nextGaussian(), rng.nextGaussian(), rng.nextGaussian()).normalize();
+    public static Vec3 getRandomUnitVector(@Nonnull Random rng) {
+        return new Vec3(rng.nextGaussian(), rng.nextGaussian(), rng.nextGaussian()).normalize();
     }
     
     /**
@@ -29,17 +29,17 @@ public class VectorUtils {
      * @param rng the random number generator to use
      * @return a random unit vector that is orthogonal to the given 3D vector
      */
-    public static Vector3d getRandomOrthogonalUnitVector(@Nonnull Vector3d vec, @Nonnull Random rng) {
+    public static Vec3 getRandomOrthogonalUnitVector(@Nonnull Vec3 vec, @Nonnull Random rng) {
         // Generate a random other vector
-    	Vector3d other = getRandomUnitVector(rng);
+    	Vec3 other = getRandomUnitVector(rng);
         
         // Ensure that the given vector and the other vector are not co-linear
-    	Vector3d normVec = vec.normalize();
+    	Vec3 normVec = vec.normalize();
         if (other.equals(normVec) || other.equals(normVec.scale(-1.0D))) {
             other = (other.y == 0.0D && other.z == 0.0D) ? other.add(0, 1, 0) : other.add(1, 0, 0);
         }
         
         // Return the normalized cross-product of the given vector and the other vector
-        return other.crossProduct(normVec).normalize();
+        return other.cross(normVec).normalize();
     }
 }

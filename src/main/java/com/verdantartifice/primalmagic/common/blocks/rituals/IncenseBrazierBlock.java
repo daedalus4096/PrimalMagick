@@ -10,28 +10,28 @@ import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
@@ -47,28 +47,28 @@ public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/incense_brazier"));
 
     public IncenseBrazierBlock() {
-        super(Block.Properties.create(Material.IRON).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.METAL).setLightLevel((state) -> { 
-        	return state.get(BlockStateProperties.LIT) ? 7 : 0; 
+        super(Block.Properties.of(Material.METAL).strength(1.5F, 6.0F).sound(SoundType.METAL).lightLevel((state) -> { 
+        	return state.getValue(BlockStateProperties.LIT) ? 7 : 0; 
     	}));
-        this.setDefaultState(this.getDefaultState().with(LIT, Boolean.FALSE));
+        this.registerDefaultState(this.defaultBlockState().setValue(LIT, Boolean.FALSE));
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(LIT);
     }
     
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // Show flame particles if lit
-        if (stateIn.get(LIT)) {
+        if (stateIn.getValue(LIT)) {
             double x = pos.getX() + 0.5D;
             double y = pos.getY() + 0.8D;
             double z = pos.getZ() + 0.65D;
@@ -83,16 +83,16 @@ public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player != null && player.getHeldItem(handIn).getItem() == ItemsPM.INCENSE_STICK.get() && !state.get(LIT)) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player != null && player.getItemInHand(handIn).getItem() == ItemsPM.INCENSE_STICK.get() && !state.getValue(LIT)) {
             // If using an incense stick on an unlit brazier, light it
-            worldIn.playSound(player, pos, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
-            if (!worldIn.isRemote) {
-                worldIn.setBlockState(pos, state.with(LIT, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
-                if (!player.abilities.isCreativeMode) {
-                    player.getHeldItem(handIn).shrink(1);
-                    if (player.getHeldItem(handIn).getCount() <= 0) {
-                        player.setHeldItem(handIn, ItemStack.EMPTY);
+            worldIn.playSound(player, pos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            if (!worldIn.isClientSide) {
+                worldIn.setBlock(pos, state.setValue(LIT, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                if (!player.abilities.instabuild) {
+                    player.getItemInHand(handIn).shrink(1);
+                    if (player.getItemInHand(handIn).getCount() <= 0) {
+                        player.setItemInHand(handIn, ItemStack.EMPTY);
                     }
                 }
                 
@@ -101,27 +101,27 @@ public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
                     this.onPropActivated(state, worldIn, pos);
                 }
             }
-            return ActionResultType.SUCCESS;
-        } else if (player != null && player.getHeldItem(handIn).isEmpty() && state.get(LIT)) {
+            return InteractionResult.SUCCESS;
+        } else if (player != null && player.getItemInHand(handIn).isEmpty() && state.getValue(LIT)) {
             // If using an empty hand on a lit brazier, snuff it
-            worldIn.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            if (!worldIn.isRemote) {
-                worldIn.setBlockState(pos, state.with(LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+            worldIn.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!worldIn.isClientSide) {
+                worldIn.setBlock(pos, state.setValue(LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
     }
     
     @SuppressWarnings("deprecation")
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isRemote && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
     
     @Override
@@ -130,33 +130,33 @@ public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return new IncenseBrazierTileEntity();
     }
     
     @SuppressWarnings("deprecation")
     @Override
-    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         // Pass any received events on to the tile entity and let it decide what to do with it
-        super.eventReceived(state, worldIn, pos, id, param);
-        TileEntity tile = worldIn.getTileEntity(pos);
-        return (tile == null) ? false : tile.receiveClientEvent(id, param);
+        super.triggerEvent(state, worldIn, pos, id, param);
+        BlockEntity tile = worldIn.getBlockEntity(pos);
+        return (tile == null) ? false : tile.triggerEvent(id, param);
     }
     
     @Override
-    public float getStabilityBonus(World world, BlockPos pos) {
+    public float getStabilityBonus(Level world, BlockPos pos) {
         return 0.01F;
     }
 
     @Override
-    public float getSymmetryPenalty(World world, BlockPos pos) {
+    public float getSymmetryPenalty(Level world, BlockPos pos) {
         return 0.01F;
     }
 
     @Override
-    public boolean isPropActivated(BlockState state, World world, BlockPos pos) {
+    public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
         if (state != null && state.getBlock() instanceof RitualCandleBlock) {
-            return state.get(LIT);
+            return state.getValue(LIT);
         } else {
             return false;
         }

@@ -10,19 +10,19 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
@@ -44,8 +44,8 @@ public class EntityUtils {
         ItemStack stack = ItemStack.EMPTY;
         if (entity instanceof ItemEntity) {
             stack = ((ItemEntity)entity).getItem();
-        } else if (entity instanceof BoatEntity) {
-            stack = new ItemStack(((BoatEntity)entity).getItemBoat());
+        } else if (entity instanceof Boat) {
+            stack = new ItemStack(((Boat)entity).getDropItem());
         } else if (entity.getType().equals(EntityType.ITEM_FRAME)) {
             stack = new ItemStack(Items.ITEM_FRAME);
         } else if (entity.getType().equals(EntityType.ARMOR_STAND)) {
@@ -81,7 +81,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRange(world, center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, exclude, entityClass, range);
     }
 
@@ -96,8 +96,8 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, @Nonnull Vector3d center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
-        return getEntitiesInRange(world, center.getX(), center.getY(), center.getZ(), exclude, entityClass, range);
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+        return getEntitiesInRange(world, center.x(), center.y(), center.z(), exclude, entityClass, range);
     }
 
     /**
@@ -113,11 +113,11 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull World world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
-        List<T> retVal = world.getEntitiesWithinAABB(entityClass, new AxisAlignedBB(x, y, z, x, y, z).grow(range, range, range));
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+        List<T> retVal = world.getEntitiesOfClass(entityClass, new AABB(x, y, z, x, y, z).inflate(range, range, range));
         if (exclude != null) {
-            List<Integer> excludeIds = exclude.stream().map(e -> Integer.valueOf(e.getEntityId())).collect(Collectors.toList());
-            retVal = retVal.stream().filter(e -> !excludeIds.contains(Integer.valueOf(e.getEntityId()))).collect(Collectors.toList());
+            List<Integer> excludeIds = exclude.stream().map(e -> Integer.valueOf(e.getId())).collect(Collectors.toList());
+            retVal = retVal.stream().filter(e -> !excludeIds.contains(Integer.valueOf(e.getId()))).collect(Collectors.toList());
         }
         return retVal;
     }
@@ -134,7 +134,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull Level world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRangeSorted(world, center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, exclude, entityClass, range);
     }
     
@@ -150,7 +150,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, @Nonnull Vector3d center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         List<T> entities = getEntitiesInRange(world, center, exclude, entityClass, range);
         return entities.stream().sorted(new EntityDistanceComparator(center)).collect(Collectors.toList());
     }
@@ -169,8 +169,8 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull World world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
-        return getEntitiesInRangeSorted(world, new Vector3d(x, y, z), exclude, entityClass, range);
+    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull Level world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+        return getEntitiesInRangeSorted(world, new Vec3(x, y, z), exclude, entityClass, range);
     }
     
     /**
@@ -180,25 +180,25 @@ public class EntityUtils {
      * @param world the world in which to teleport
      * @param destination the point to which to teleport
      */
-    public static void teleportEntity(LivingEntity player, World world, Vector3d destination) {
+    public static void teleportEntity(LivingEntity player, Level world, Vec3 destination) {
         // Fire an EnderTeleportEvent to allow cancellation or modification of the teleport
         EnderTeleportEvent event = new EnderTeleportEvent(player, destination.x, destination.y, destination.z, 0.0F);
         if (!MinecraftForge.EVENT_BUS.post(event)) {
             // Show a teleport particle effect at the destination
-            PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.getDimensionKey(), new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()), 64.0D);
+            PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.dimension(), new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()), 64.0D);
             
-            if (!world.isRemote && player instanceof ServerPlayerEntity) {
-                boolean isPlayer = (player instanceof ServerPlayerEntity);
-                if ((!isPlayer || ((ServerPlayerEntity)player).connection.getNetworkManager().isChannelOpen()) && player.world == world && !player.isSleeping()) {
+            if (!world.isClientSide && player instanceof ServerPlayer) {
+                boolean isPlayer = (player instanceof ServerPlayer);
+                if ((!isPlayer || ((ServerPlayer)player).connection.getConnection().isConnected()) && player.level == world && !player.isSleeping()) {
                     if (player.isPassenger()) {
                         player.stopRiding();
                     }
                     
                     // Do the teleportation
-                    player.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+                    player.teleportTo(event.getTargetX(), event.getTargetY(), event.getTargetZ());
                     player.fallDistance = 0.0F;
                     if (event.getAttackDamage() > 0.0F) {
-                        player.attackEntityFrom(DamageSource.FALL, event.getAttackDamage());
+                        player.hurt(DamageSource.FALL, event.getAttackDamage());
                     }
                 }
             }
@@ -211,9 +211,9 @@ public class EntityUtils {
      * @author Daedalus4096
      */
     protected static class EntityDistanceComparator implements Comparator<Entity> {
-        protected final Vector3d center;
+        protected final Vec3 center;
         
-        public EntityDistanceComparator(@Nonnull Vector3d center) {
+        public EntityDistanceComparator(@Nonnull Vec3 center) {
             this.center = center;
         }
         
@@ -222,8 +222,8 @@ public class EntityUtils {
             if (a.equals(b)) {
                 return 0;
             } else {
-                double distA = this.center.squareDistanceTo(a.getPositionVec());
-                double distB = this.center.squareDistanceTo(b.getPositionVec());
+                double distA = this.center.distanceToSqr(a.position());
+                double distB = this.center.distanceToSqr(b.position());
                 return distA > distB ? 1 : (distA < distB ? -1 : 0);
             }
         }

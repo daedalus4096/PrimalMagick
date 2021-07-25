@@ -10,18 +10,18 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition for a block breaking spell.  Breaks the target block over time without further interaction
@@ -57,16 +57,16 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
-        if (target != null && target.getType() == RayTraceResult.Type.BLOCK && caster instanceof PlayerEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+        if (target != null && target.getType() == HitResult.Type.BLOCK && caster instanceof Player) {
             // Create and enqueue a block breaker for the target block
-            BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
-            BlockPos pos = blockTarget.getPos();
+            BlockHitResult blockTarget = (BlockHitResult)target;
+            BlockPos pos = blockTarget.getBlockPos();
             BlockState state = world.getBlockState(pos);
-            float durability = (float)Math.sqrt(100.0F * state.getBlockHardness(world, pos));
+            float durability = (float)Math.sqrt(100.0F * state.getDestroySpeed(world, pos));
             boolean silk = (this.getPropertyValue("silk_touch") == 1);
-            int treasure = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.TREASURE.get(), spellSource);
-            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue("power", spell, spellSource)).target(pos, state).durability(durability).player((PlayerEntity)caster).tool(spellSource).silkTouch(silk).fortune(treasure).alwaysDrop().build();
+            int treasure = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.TREASURE.get(), spellSource);
+            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue("power", spell, spellSource)).target(pos, state).durability(durability).player((Player)caster).tool(spellSource).silkTouch(silk).fortune(treasure).alwaysDrop().build();
             BlockBreaker.schedule(world, 1, breaker);
         }
     }
@@ -82,8 +82,8 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, BlockPos origin) {
-        world.playSound(null, origin, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(Level world, BlockPos origin) {
+        world.playSound(null, origin, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
     @Override

@@ -12,20 +12,20 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -35,7 +35,7 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.HoneyExtractorBlock}
  * @author Daedalus4096
  */
-public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IManaContainer {
+public class HoneyExtractorTileEntity extends TileInventoryPM implements TickableBlockEntity, MenuProvider, IManaContainer {
     protected int spinTime;
     protected int spinTimeTotal;
     protected ManaStorage manaStorage;
@@ -43,7 +43,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     
     // Define a container-trackable representation of this tile's relevant data
-    protected final IIntArray extractorData = new IIntArray() {
+    protected final ContainerData extractorData = new ContainerData() {
         @Override
         public int get(int index) {
             switch (index) {
@@ -74,7 +74,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
         }
 
         @Override
-        public int size() {
+        public int getCount() {
             return 4;
         }
     };
@@ -85,29 +85,29 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+        super.load(state, compound);
         this.spinTime = compound.getInt("SpinTime");
         this.spinTimeTotal = compound.getInt("SpinTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.putInt("SpinTime", this.spinTime);
         compound.putInt("SpinTimeTotal", this.spinTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInv, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
         return new HoneyExtractorContainer(windowId, playerInv, this, this.extractorData);
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+    public Component getDisplayName() {
+        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
     
     protected int getSpinTimeTotal() {
@@ -122,13 +122,13 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     public void tick() {
         boolean shouldMarkDirty = false;
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = this.items.get(4);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
                 int centimanaMissing = this.manaStorage.getMaxManaStored(Source.SKY) - this.manaStorage.getManaStored(Source.SKY);
-                int centimanaToTransfer = MathHelper.clamp(centimanaMissing, 0, 100);
+                int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
                 if (wand.consumeMana(wandStack, null, Source.SKY, centimanaToTransfer)) {
                     this.manaStorage.receiveMana(Source.SKY, centimanaToTransfer, false);
                     shouldMarkDirty = true;
@@ -153,11 +153,11 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
                 }
             } else if (this.spinTime > 0) {
                 // Decay any spin progress
-                this.spinTime = MathHelper.clamp(this.spinTime - 2, 0, this.spinTimeTotal);
+                this.spinTime = Mth.clamp(this.spinTime - 2, 0, this.spinTimeTotal);
             }
         }
         if (shouldMarkDirty) {
-            this.markDirty();
+            this.setChanged();
             this.syncTile(true);
         }
     }
@@ -165,9 +165,9 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     protected boolean canSpin() {
         ItemStack honeyOutput = this.items.get(2);
         ItemStack beeswaxOutput = this.items.get(3);
-        return (honeyOutput.getCount() < this.getInventoryStackLimit() &&
+        return (honeyOutput.getCount() < this.getMaxStackSize() &&
                 honeyOutput.getCount() < honeyOutput.getMaxStackSize() &&
-                beeswaxOutput.getCount() < this.getInventoryStackLimit() &&
+                beeswaxOutput.getCount() < this.getMaxStackSize() &&
                 beeswaxOutput.getCount() < beeswaxOutput.getMaxStackSize());
     }
     
@@ -196,19 +196,19 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        super.setInventorySlotContents(index, stack);
-        if ((index == 0 || index == 1) && (stack.isEmpty() || !stack.isItemEqual(slotStack) || !ItemStack.areItemStackTagsEqual(stack, slotStack))) {
+        super.setItem(index, stack);
+        if ((index == 0 || index == 1) && (stack.isEmpty() || !stack.sameItem(slotStack) || !ItemStack.tagMatches(stack, slotStack))) {
             this.spinTimeTotal = this.getSpinTimeTotal();
             this.spinTime = 0;
-            this.markDirty();
+            this.setChanged();
         }
     }
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.removed && cap == PrimalMagicCapabilities.MANA_STORAGE) {
+        if (!this.remove && cap == PrimalMagicCapabilities.MANA_STORAGE) {
             return this.manaStorageOpt.cast();
         }
         return super.getCapability(cap, side);
@@ -246,14 +246,14 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements ITickab
     @Override
     public void setMana(Source source, int amount) {
         this.manaStorage.setMana(source, amount);
-        this.markDirty();
+        this.setChanged();
         this.syncTile(true);
     }
 
     @Override
     public void setMana(SourceList mana) {
         this.manaStorage.setMana(mana);
-        this.markDirty();
+        this.setChanged();
         this.syncTile(true);
     }
 }

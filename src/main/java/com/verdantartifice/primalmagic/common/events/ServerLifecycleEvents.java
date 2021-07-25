@@ -16,6 +16,6 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 public class ServerLifecycleEvents {
     @SubscribeEvent
     public static void serverStarting(FMLServerStartingEvent event) {
-        PrimalMagicCommand.register(event.getServer().getCommandManager().getDispatcher());
+        PrimalMagicCommand.register(event.getServer().getCommands().getDispatcher());
     }
 }

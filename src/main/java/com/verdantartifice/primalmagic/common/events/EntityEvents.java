@@ -10,17 +10,17 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.WolfEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
@@ -40,7 +40,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onEnderTeleport(EnderTeleportEvent event) {
         // Prevent the teleport if the teleporter is afflicted with Enderlock
-        if (event.isCancelable() && event.getEntityLiving().isPotionActive(EffectsPM.ENDERLOCK.get())) {
+        if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.get())) {
             event.setCanceled(true);
         }
     }
@@ -49,28 +49,28 @@ public class EntityEvents {
     public static void onEnderTeleportLowest(EnderTeleportEvent event) {
         // Keep track of the distance teleported for stats
         LivingEntity entity = event.getEntityLiving();
-        if (!event.isCanceled() && entity instanceof PlayerEntity) {
-            Vector3d start = entity.getPositionVec();
-            Vector3d end = new Vector3d(event.getTargetX(), event.getTargetY(), event.getTargetZ());
-            StatsManager.incrementValue((PlayerEntity)entity, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * start.distanceTo(end)));
+        if (!event.isCanceled() && entity instanceof Player) {
+            Vec3 start = entity.position();
+            Vec3 end = new Vec3(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+            StatsManager.incrementValue((Player)entity, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * start.distanceTo(end)));
         }
     }
     
     @SubscribeEvent
     public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
         // If the shooter has the Enderport enchantment, teleport to the hit location
-        Entity shooter = event.getArrow().getShooter();
+        Entity shooter = event.getArrow().getOwner();
         if (shooter instanceof LivingEntity && EnchantmentHelperPM.hasEnderport((LivingEntity)shooter)) {
-            EntityUtils.teleportEntity((LivingEntity)shooter, event.getArrow().world, event.getRayTraceResult().getHitVec());
+            EntityUtils.teleportEntity((LivingEntity)shooter, event.getArrow().level, event.getRayTraceResult().getLocation());
         }
     }
     
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onAnimalTameLowest(AnimalTameEvent event) {
         // Grant appropriate research if a player tames a wolf
-        PlayerEntity player = event.getTamer();
+        Player player = event.getTamer();
         if ( !event.isCanceled() &&
-             event.getAnimal() instanceof WolfEntity && 
+             event.getAnimal() instanceof Wolf && 
              ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) && 
              !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_furry_friend")) ) {
             ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_furry_friend"));
@@ -80,7 +80,7 @@ public class EntityEvents {
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onBabyEntitySpawnLowest(BabyEntitySpawnEvent event) {
         // Grant appropriate research if a player breeds an animal
-        PlayerEntity player = event.getCausedByPlayer();
+        Player player = event.getCausedByPlayer();
         if ( !event.isCanceled() && 
              player != null &&
              ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) &&
@@ -97,11 +97,11 @@ public class EntityEvents {
         int currentDuration = event.getDuration();
         int maxDuration = stack.getUseDuration();
         int delta = maxDuration - currentDuration;
-        int enchantLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.BULWARK.get(), stack);
+        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.BULWARK.get(), stack);
         if (stack.getItem() instanceof ShieldItem && delta > 0 && delta % 5 == 0 && enchantLevel > 0) {
-            EffectInstance effectInstance = entity.getActivePotionEffect(Effects.RESISTANCE);
-            int amplifier = (effectInstance == null) ? 0 : MathHelper.clamp(1 + effectInstance.getAmplifier(), 0, enchantLevel - 1);
-            entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 10, amplifier));
+            MobEffectInstance effectInstance = entity.getEffect(MobEffects.DAMAGE_RESISTANCE);
+            int amplifier = (effectInstance == null) ? 0 : Mth.clamp(1 + effectInstance.getAmplifier(), 0, enchantLevel - 1);
+            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 10, amplifier));
         }
     }
 }

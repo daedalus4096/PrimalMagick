@@ -13,18 +13,18 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -42,16 +42,16 @@ public class BlockSwapper {
     protected final BlockPos pos;
     protected final BlockState source;
     protected final ItemStack target;
-    protected final PlayerEntity player;
+    protected final Player player;
     
-    public BlockSwapper(@Nonnull BlockPos pos, @Nullable BlockState source, @Nullable ItemStack target, @Nonnull PlayerEntity player) {
+    public BlockSwapper(@Nonnull BlockPos pos, @Nullable BlockState source, @Nullable ItemStack target, @Nonnull Player player) {
         this.pos = pos;
         this.source = source;
         this.target = target;
         this.player = player;
     }
     
-    public static boolean enqueue(@Nonnull World world, @Nullable BlockSwapper swapper) {
+    public static boolean enqueue(@Nonnull Level world, @Nullable BlockSwapper swapper) {
         if (swapper == null) {
             // Don't allow null swappers in the queue
             return false;
@@ -61,35 +61,35 @@ public class BlockSwapper {
     }
     
     @Nonnull
-    public static Queue<BlockSwapper> getWorldSwappers(@Nonnull World world) {
-    	return REGISTRY.computeIfAbsent(world.getDimensionKey().getLocation(), (key) -> {
+    public static Queue<BlockSwapper> getWorldSwappers(@Nonnull Level world) {
+    	return REGISTRY.computeIfAbsent(world.dimension().location(), (key) -> {
     		return new LinkedBlockingQueue<>();
     	});
     }
     
-    public void execute(World world) {
+    public void execute(Level world) {
         BlockState state = world.getBlockState(this.pos);
         
         // Only allow the swap if the source block could normally be removed by the player and there's a difference to be had
-        boolean allow = (state.getBlockHardness(world, this.pos) >= 0.0F) && (this.source == null || this.source.equals(state));
-        if (allow && world.isBlockModifiable(this.player, this.pos) && this.isTargetDifferent(state) && this.canPlace(world, state)) {
+        boolean allow = (state.getDestroySpeed(world, this.pos) >= 0.0F) && (this.source == null || this.source.equals(state));
+        if (allow && world.mayInteract(this.player, this.pos) && this.isTargetDifferent(state) && this.canPlace(world, state)) {
             if (this.target == null || this.target.isEmpty()) {
                 // If the swap target is empty, just remove the source block
                 world.removeBlock(this.pos, false);
             } else {
-                Block targetBlock = Block.getBlockFromItem(this.target.getItem());
+                Block targetBlock = Block.byItem(this.target.getItem());
                 if (targetBlock != null && targetBlock != Blocks.AIR) {
                     // If the target is a block, set its state, with facing if applicable, in the world
-                    BlockState targetState = targetBlock.getDefaultState();
+                    BlockState targetState = targetBlock.defaultBlockState();
                     if (state.hasProperty(BlockStateProperties.FACING)) {
-                        targetState = targetState.with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING));
+                        targetState = targetState.setValue(BlockStateProperties.FACING, state.getValue(BlockStateProperties.FACING));
                     } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
-                        targetState = targetState.with(BlockStateProperties.HORIZONTAL_FACING, state.get(BlockStateProperties.HORIZONTAL_FACING));
+                        targetState = targetState.setValue(BlockStateProperties.HORIZONTAL_FACING, state.getValue(BlockStateProperties.HORIZONTAL_FACING));
                     }
-                    world.setBlockState(this.pos, targetState, Constants.BlockFlags.DEFAULT);
+                    world.setBlock(this.pos, targetState, Constants.BlockFlags.DEFAULT);
                     
                     // Set the owner of the new block's tile entity, if applicable
-                    TileEntity tile = world.getTileEntity(this.pos);
+                    BlockEntity tile = world.getBlockEntity(this.pos);
                     if (tile instanceof IOwnedTileEntity) {
                         ((IOwnedTileEntity)tile).setTileOwner(this.player);
                     }
@@ -97,19 +97,19 @@ public class BlockSwapper {
                     // Otherwise, spawn an item in the block's place
                     world.removeBlock(this.pos, false);
                     ItemEntity entity = new ItemEntity(world, this.pos.getX() + 0.5D, this.pos.getY(), this.pos.getZ() + 0.5D, this.target.copy());
-                    entity.setMotion(0.0D, 0.0D, 0.0D);
-                    world.addEntity(entity);
+                    entity.setDeltaMovement(0.0D, 0.0D, 0.0D);
+                    world.addFreshEntity(entity);
                 }
-                PacketHandler.sendToAllAround(new WandPoofPacket(this.pos, Color.WHITE.getRGB(), true, Direction.UP), world.getDimensionKey(), this.pos, 32.0D);
+                PacketHandler.sendToAllAround(new WandPoofPacket(this.pos, Color.WHITE.getRGB(), true, Direction.UP), world.dimension(), this.pos, 32.0D);
             }
         }
     }
 
     protected boolean isTargetDifferent(BlockState sourceState) {
-        return this.target == null || this.target.isEmpty() || !this.target.isItemEqual(new ItemStack(sourceState.getBlock()));
+        return this.target == null || this.target.isEmpty() || !this.target.sameItem(new ItemStack(sourceState.getBlock()));
     }
     
-    protected boolean canPlace(World world, BlockState state) {
-        return !ForgeEventFactory.onBlockPlace(this.player, BlockSnapshot.create(world.getDimensionKey(), world, this.pos), Direction.UP);
+    protected boolean canPlace(Level world, BlockState state) {
+        return !ForgeEventFactory.onBlockPlace(this.player, BlockSnapshot.create(world.dimension(), world, this.pos), Direction.UP);
     }
 }

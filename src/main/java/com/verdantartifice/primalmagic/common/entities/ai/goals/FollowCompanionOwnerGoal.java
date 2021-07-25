@@ -4,17 +4,17 @@ import java.util.EnumSet;
 
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.pathfinding.GroundPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.pathfinding.WalkNodeProcessor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
 
 /**
  * AI goal for a companion to follow its owner.
@@ -24,10 +24,10 @@ import net.minecraft.world.IWorldReader;
  */
 public class FollowCompanionOwnerGoal extends Goal {
     protected final AbstractCompanionEntity entity;
-    protected PlayerEntity owner;
-    protected final IWorldReader world;
+    protected Player owner;
+    protected final LevelReader world;
     protected final double followSpeed;
-    protected final PathNavigator navigator;
+    protected final PathNavigation navigator;
     protected int timeToRecalcPath;
     protected final float maxDist;
     protected final float minDist;
@@ -36,28 +36,28 @@ public class FollowCompanionOwnerGoal extends Goal {
     
     public FollowCompanionOwnerGoal(AbstractCompanionEntity entity, double speed, float minDist, float maxDist, boolean teleportToLeaves) {
         this.entity = entity;
-        this.world = entity.world;
+        this.world = entity.level;
         this.followSpeed = speed;
-        this.navigator = entity.getNavigator();
+        this.navigator = entity.getNavigation();
         this.minDist = minDist;
         this.maxDist = maxDist;
         this.teleportToLeaves = teleportToLeaves;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-        if (!(this.navigator instanceof GroundPathNavigator) && !(this.navigator instanceof FlyingPathNavigator)) {
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        if (!(this.navigator instanceof GroundPathNavigation) && !(this.navigator instanceof FlyingPathNavigation)) {
             throw new IllegalArgumentException("Unsupported mob type for FollowCompanionOwnerGoal");
         }
     }
 
     @Override
-    public boolean shouldExecute() {
-        PlayerEntity owner = this.entity.getCompanionOwner();
+    public boolean canUse() {
+        Player owner = this.entity.getCompanionOwner();
         if (owner == null) {
             return false;
         } else if (owner.isSpectator()) {
             return false;
         } else if (this.entity.isCompanionStaying()) {
             return false;
-        } else if (this.entity.getDistanceSq(owner) < (double)(this.minDist * this.minDist)) {
+        } else if (this.entity.distanceToSqr(owner) < (double)(this.minDist * this.minDist)) {
             return false;
         } else {
             this.owner = owner;
@@ -66,47 +66,47 @@ public class FollowCompanionOwnerGoal extends Goal {
     }
 
     @Override
-    public boolean shouldContinueExecuting() {
-        if (this.navigator.noPath()) {
+    public boolean canContinueToUse() {
+        if (this.navigator.isDone()) {
             return false;
         } else if (this.entity.isCompanionStaying()) {
             return false;
         } else {
-            return !(this.entity.getDistanceSq(this.owner) <= (double)(this.maxDist * this.maxDist));
+            return !(this.entity.distanceToSqr(this.owner) <= (double)(this.maxDist * this.maxDist));
         }
     }
 
     @Override
-    public void startExecuting() {
+    public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.entity.getPathPriority(PathNodeType.WATER);
-        this.entity.setPathPriority(PathNodeType.WATER, 0.0F);
+        this.oldWaterCost = this.entity.getPathfindingMalus(BlockPathTypes.WATER);
+        this.entity.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
     }
 
     @Override
-    public void resetTask() {
+    public void stop() {
         this.owner = null;
-        this.navigator.clearPath();
-        this.entity.setPathPriority(PathNodeType.WATER, this.oldWaterCost);
+        this.navigator.stop();
+        this.entity.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
     }
 
     @Override
     public void tick() {
-        this.entity.getLookController().setLookPositionWithEntity(this.owner, 10.0F, (float)this.entity.getVerticalFaceSpeed());
+        this.entity.getLookControl().setLookAt(this.owner, 10.0F, (float)this.entity.getMaxHeadXRot());
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
-            if (!this.entity.getLeashed() && !this.entity.isPassenger()) {
-                if (this.entity.getDistanceSq(this.owner) >= 144.0D) {
+            if (!this.entity.isLeashed() && !this.entity.isPassenger()) {
+                if (this.entity.distanceToSqr(this.owner) >= 144.0D) {
                     this.tryToTeleportNearEntity();
                 } else {
-                    this.navigator.tryMoveToEntityLiving(this.owner, this.followSpeed);
+                    this.navigator.moveTo(this.owner, this.followSpeed);
                 }
             }
         }
     }
 
     protected void tryToTeleportNearEntity() {
-        BlockPos pos = this.owner.getPosition();
+        BlockPos pos = this.owner.blockPosition();
         for (int attempts = 0; attempts < 10; attempts++) {
             int dx = this.getRandomNumber(-3, 3);
             int dy = this.getRandomNumber(-1, 1);
@@ -118,33 +118,33 @@ public class FollowCompanionOwnerGoal extends Goal {
     }
     
     protected boolean tryToTeleportToLocation(int x, int y, int z) {
-        if (Math.abs((double)x - this.owner.getPosX()) < 2.0D && Math.abs((double)z - this.owner.getPosZ()) < 2.0D) {
+        if (Math.abs((double)x - this.owner.getX()) < 2.0D && Math.abs((double)z - this.owner.getZ()) < 2.0D) {
             return false;
         } else if (!this.isTeleportFriendlyBlock(new BlockPos(x, y, z))) {
             return false;
         } else {
-            this.entity.setLocationAndAngles((double)x + 0.5D, (double)y, (double)z + 0.5D, this.entity.rotationYaw, this.entity.rotationPitch);
-            this.navigator.clearPath();
+            this.entity.moveTo((double)x + 0.5D, (double)y, (double)z + 0.5D, this.entity.yRot, this.entity.xRot);
+            this.navigator.stop();
             return true;
         }
     }
     
     protected boolean isTeleportFriendlyBlock(BlockPos pos) {
-        PathNodeType type = WalkNodeProcessor.getFloorNodeType(this.world, pos.toMutable());
-        if (type != PathNodeType.WALKABLE) {
+        BlockPathTypes type = WalkNodeEvaluator.getBlockPathTypeStatic(this.world, pos.mutable());
+        if (type != BlockPathTypes.WALKABLE) {
             return false;
         } else {
-            BlockState blockstate = this.world.getBlockState(pos.down());
+            BlockState blockstate = this.world.getBlockState(pos.below());
             if (!this.teleportToLeaves && blockstate.getBlock() instanceof LeavesBlock) {
                 return false;
             } else {
-                BlockPos blockpos = pos.subtract(this.entity.getPosition());
-                return this.world.hasNoCollisions(this.entity, this.entity.getBoundingBox().offset(blockpos));
+                BlockPos blockpos = pos.subtract(this.entity.blockPosition());
+                return this.world.noCollision(this.entity, this.entity.getBoundingBox().move(blockpos));
             }
         }
     }
     
     protected int getRandomNumber(int min, int max) {
-        return this.entity.getRNG().nextInt(max - min + 1) + min;
+        return this.entity.getRandom().nextInt(max - min + 1) + min;
     }
 }

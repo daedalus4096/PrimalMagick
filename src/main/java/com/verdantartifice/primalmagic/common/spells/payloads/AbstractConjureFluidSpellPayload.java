@@ -5,24 +5,24 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ILiquidContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -40,71 +40,71 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
     }
     
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
-        if (!(caster instanceof PlayerEntity)) {
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+        if (!(caster instanceof Player)) {
             return;
         }
         
-        PlayerEntity player = (PlayerEntity)caster;
+        Player player = (Player)caster;
         if (target != null) {
             ItemStack stack = this.getSimulatedItemStack(this.fluid);
-            if (target.getType() == RayTraceResult.Type.BLOCK) {
+            if (target.getType() == HitResult.Type.BLOCK) {
                 // If the target is a block, place the fluid at the block position if it's a fluid container,
                 // or at the adjacent block position if it's not.
-                BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
-                BlockPos targetPos = blockTarget.getPos();
-                if (world.isBlockModifiable(player, targetPos) && player.canPlayerEdit(targetPos, blockTarget.getFace(), stack)) {
+                BlockHitResult blockTarget = (BlockHitResult)target;
+                BlockPos targetPos = blockTarget.getBlockPos();
+                if (world.mayInteract(player, targetPos) && player.mayUseItemAt(targetPos, blockTarget.getDirection(), stack)) {
                     // Only place if the caster is allowed to modify the target location
                     BlockState state = world.getBlockState(targetPos);
-                    BlockPos placePos = (state.getBlock() instanceof ILiquidContainer && this.fluid == Fluids.WATER) ? targetPos : targetPos.offset(blockTarget.getFace());
+                    BlockPos placePos = (state.getBlock() instanceof LiquidBlockContainer && this.fluid == Fluids.WATER) ? targetPos : targetPos.relative(blockTarget.getDirection());
                     this.placeFluid(player, world, placePos, blockTarget);
                 }
-            } else if (target.getType() == RayTraceResult.Type.ENTITY) {
+            } else if (target.getType() == HitResult.Type.ENTITY) {
                 // If the target is an entity, place the fluid at the entity's position
-                BlockRayTraceResult blockTarget = RayTraceUtils.getBlockResultFromEntityResult((EntityRayTraceResult)target);
-                if (world.isBlockModifiable(player, blockTarget.getPos()) && player.canPlayerEdit(blockTarget.getPos(), blockTarget.getFace(), stack)) {
+                BlockHitResult blockTarget = RayTraceUtils.getBlockResultFromEntityResult((EntityHitResult)target);
+                if (world.mayInteract(player, blockTarget.getBlockPos()) && player.mayUseItemAt(blockTarget.getBlockPos(), blockTarget.getDirection(), stack)) {
                     // Only place if the caster is allowed to modify the target location
-                    this.placeFluid(player, world, blockTarget.getPos(), blockTarget);
+                    this.placeFluid(player, world, blockTarget.getBlockPos(), blockTarget);
                 }
             }
         }
     }
 
     protected ItemStack getSimulatedItemStack(@Nonnull Fluid fluid) {
-        if (fluid.isIn(FluidTags.WATER)) {
+        if (fluid.is(FluidTags.WATER)) {
             return new ItemStack(Items.WATER_BUCKET);
-        } else if (fluid.isIn(FluidTags.LAVA)) {
+        } else if (fluid.is(FluidTags.LAVA)) {
             return new ItemStack(Items.LAVA_BUCKET);
         } else {
             return ItemStack.EMPTY;
         }
     }
 
-    protected void placeFluid(PlayerEntity player, World world, BlockPos pos, BlockRayTraceResult blockTarget) {
+    protected void placeFluid(Player player, Level world, BlockPos pos, BlockHitResult blockTarget) {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         Material material = state.getMaterial();
         boolean isSolid = material.isSolid();
         boolean isReplaceable = material.isReplaceable();
-        if (world.isAirBlock(pos) || !isSolid || isReplaceable || (block instanceof ILiquidContainer && ((ILiquidContainer)block).canContainFluid(world, pos, state, this.fluid))) {
-            if (world.getDimensionType().isUltrawarm() && this.fluid.isIn(FluidTags.WATER)) {
+        if (world.isEmptyBlock(pos) || !isSolid || isReplaceable || (block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, state, this.fluid))) {
+            if (world.dimensionType().ultraWarm() && this.fluid.is(FluidTags.WATER)) {
                 // Do nothing for water in the Nether or similar dimensions
                 return;
-            } else if (block instanceof ILiquidContainer && this.fluid == Fluids.WATER) {
+            } else if (block instanceof LiquidBlockContainer && this.fluid == Fluids.WATER) {
                 // If the block is a liquid container and we're dealing with water, place the water into the container
-                ((ILiquidContainer)block).receiveFluid(world, pos, state, this.fluid.getStillFluidState(false));
+                ((LiquidBlockContainer)block).placeLiquid(world, pos, state, this.fluid.getSource(false));
             } else {
                 // Destroy the existing block at the target location if fluid would replace it
-                if (!world.isRemote && (!isSolid || isReplaceable) && !material.isLiquid()) {
+                if (!world.isClientSide && (!isSolid || isReplaceable) && !material.isLiquid()) {
                     world.destroyBlock(pos, true);
                 }
                 
                 // Set the fluid block into the world
-                world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                world.setBlock(pos, this.fluid.defaultFluidState().createLegacyBlock(), Constants.BlockFlags.DEFAULT_AND_RERENDER);
             }
         } else if (blockTarget != null) {
             // If we can't place the fluid at the given position, place it instead at the adjacent position defined by the raytrace result
-            this.placeFluid(player, world, blockTarget.getPos().offset(blockTarget.getFace()), null);
+            this.placeFluid(player, world, blockTarget.getBlockPos().relative(blockTarget.getDirection()), null);
         }
     }
 }

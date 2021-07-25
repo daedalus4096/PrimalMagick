@@ -2,17 +2,17 @@ package com.verdantartifice.primalmagic.common.enchantments;
 
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.util.Mth;
 
 /**
  * Definition of an enchantment that applies a stacking bleed DoT to the target.
@@ -20,18 +20,18 @@ import net.minecraft.util.math.MathHelper;
  * @author Daedalus4096
  */
 public class RendingEnchantment extends AbstractRuneEnchantment {
-    public RendingEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
-        super(rarity, EnchantmentType.TRIDENT, slots);
+    public RendingEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
+        super(rarity, EnchantmentCategory.TRIDENT, slots);
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + ((enchantmentLevel - 1) * 10);
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 15;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 15;
     }
     
     @Override
@@ -40,19 +40,19 @@ public class RendingEnchantment extends AbstractRuneEnchantment {
     }
     
     @Override
-    public boolean canApply(ItemStack stack) {
+    public boolean canEnchant(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof SwordItem || item instanceof AxeItem ? true : super.canApply(stack);
+        return item instanceof SwordItem || item instanceof AxeItem ? true : super.canEnchant(stack);
     }
 
     @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-        super.onEntityDamaged(user, target, level);
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
+        super.doPostAttack(user, target, level);
         if (target instanceof LivingEntity) {
             LivingEntity livingTarget = (LivingEntity)target;
-            EffectInstance effectInstance = livingTarget.getActivePotionEffect(EffectsPM.BLEEDING.get());
-            int amplifier = (effectInstance == null) ? 0 : MathHelper.clamp(1 + effectInstance.getAmplifier(), 0, level - 1);
-            livingTarget.addPotionEffect(new EffectInstance(EffectsPM.BLEEDING.get(), 120, amplifier));
+            MobEffectInstance effectInstance = livingTarget.getEffect(EffectsPM.BLEEDING.get());
+            int amplifier = (effectInstance == null) ? 0 : Mth.clamp(1 + effectInstance.getAmplifier(), 0, level - 1);
+            livingTarget.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 120, amplifier));
         }
     }
 }

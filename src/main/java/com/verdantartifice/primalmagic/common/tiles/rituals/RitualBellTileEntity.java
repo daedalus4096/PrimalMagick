@@ -2,15 +2,15 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
 
 /**
  * Definition of a ritual bell tile entity.
  * 
  * @author Daedalus4096
  */
-public class RitualBellTileEntity extends AbstractRitualPropTileEntity implements ITickableTileEntity {
+public class RitualBellTileEntity extends AbstractRitualPropTileEntity implements TickableBlockEntity {
     protected int ringingTicks;
     protected boolean isRinging;
     protected Direction ringDirection;
@@ -43,14 +43,14 @@ public class RitualBellTileEntity extends AbstractRitualPropTileEntity implement
     }
     
     @Override
-    public boolean receiveClientEvent(int id, int type) {
+    public boolean triggerEvent(int id, int type) {
         if (id == 1) {
-            this.ringDirection = Direction.byIndex(type);
+            this.ringDirection = Direction.from3DDataValue(type);
             this.ringingTicks = 0;
             this.isRinging = true;
             return true;
         } else {
-            return super.receiveClientEvent(id, type);
+            return super.triggerEvent(id, type);
         }
     }
     
@@ -61,6 +61,6 @@ public class RitualBellTileEntity extends AbstractRitualPropTileEntity implement
         } else {
             this.isRinging = true;
         }
-        this.world.addBlockEvent(this.getPos(), this.getBlockState().getBlock(), 1, this.ringDirection.getIndex());
+        this.level.blockEvent(this.getBlockPos(), this.getBlockState().getBlock(), 1, this.ringDirection.get3DDataValue());
     }
 }

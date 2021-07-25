@@ -1,13 +1,13 @@
 package com.verdantartifice.primalmagic.client.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -17,34 +17,34 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class CalcinatorScreen extends ContainerScreen<CalcinatorContainer> {
+public class CalcinatorScreen extends AbstractContainerScreen<CalcinatorContainer> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/calcinator.png");
 
-    public CalcinatorScreen(CalcinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public CalcinatorScreen(CalcinatorContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
     }
     
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
-        this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.minecraft.getTextureManager().bind(TEXTURE);
+        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // Animate burn indicator
-        if (this.container.isBurning()) {
-            int burn = this.container.getBurnLeftScaled();
-            this.blit(matrixStack, this.guiLeft + 34, this.guiTop + 48 - burn, 176, 12 - burn, 14, burn + 1);
+        if (this.menu.isBurning()) {
+            int burn = this.menu.getBurnLeftScaled();
+            this.blit(matrixStack, this.leftPos + 34, this.topPos + 48 - burn, 176, 12 - burn, 14, burn + 1);
         }
         
         // Animate cook progress indicator
-        int cook = this.container.getCookProgressionScaled();
-        this.blit(matrixStack, this.guiLeft + 57, this.guiTop + 34, 176, 14, cook + 1, 16);
+        int cook = this.menu.getCookProgressionScaled();
+        this.blit(matrixStack, this.leftPos + 57, this.topPos + 34, 176, 14, cook + 1, 16);
     }
 }

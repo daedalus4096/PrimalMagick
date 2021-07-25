@@ -1,18 +1,18 @@
 package com.verdantartifice.primalmagic.client.renderers.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.renderers.entity.layers.InnerDemonArmorLayer;
 import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.BipedRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.model.PlayerModel;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -22,35 +22,35 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class InnerDemonRenderer extends BipedRenderer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
+public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
     protected static final float SCALE = 2.0F;
     
     protected InnerDemonArmorLayer armorLayer;
     protected boolean modelFinalized = false;
     
-    public InnerDemonRenderer(EntityRendererManager renderManagerIn) {
+    public InnerDemonRenderer(EntityRenderDispatcher renderManagerIn) {
         super(renderManagerIn, new PlayerModel<InnerDemonEntity>(0.0F, false), 0.5F * SCALE);
         this.armorLayer = new InnerDemonArmorLayer(this, false);
         this.addLayer(this.armorLayer);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(InnerDemonEntity entity) {
+    public ResourceLocation getTextureLocation(InnerDemonEntity entity) {
         // Use the viewing player's skin texture
         Minecraft mc = Minecraft.getInstance();
-        return mc.player.getLocationSkin();
+        return mc.player.getSkinTextureLocation();
     }
 
     @Override
-    protected void preRenderCallback(InnerDemonEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(InnerDemonEntity entitylivingbaseIn, PoseStack matrixStackIn, float partialTickTime) {
         if (!this.modelFinalized) {
             // Can't get the player's skin type at renderer registration time, so monkey-patch it after we're already going
             Minecraft mc = Minecraft.getInstance();
-            boolean slimModel = mc.player.getSkinType().equals("slim");
+            boolean slimModel = mc.player.getModelName().equals("slim");
             
-            this.entityModel = new PlayerModel<InnerDemonEntity>(0.0F, slimModel);
+            this.model = new PlayerModel<InnerDemonEntity>(0.0F, slimModel);
             
-            this.layerRenderers.remove(this.armorLayer);
+            this.layers.remove(this.armorLayer);
             this.armorLayer = new InnerDemonArmorLayer(this, slimModel);
             this.addLayer(this.armorLayer);
             
@@ -60,17 +60,17 @@ public class InnerDemonRenderer extends BipedRenderer<InnerDemonEntity, PlayerMo
     }
 
     @Override
-    public void render(InnerDemonEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(InnerDemonEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         
         // Render beams for each in-range sin crystal
         for (SinCrystalEntity crystal : entityIn.getCrystalsInRange()) {
-            matrixStackIn.push();
-            float f6 = (float)(crystal.getPosX() - MathHelper.lerp((double)partialTicks, entityIn.prevPosX, entityIn.getPosX()));
-            float f8 = (float)(crystal.getPosY() - MathHelper.lerp((double)partialTicks, entityIn.prevPosY, entityIn.getPosY()));
-            float f9 = (float)(crystal.getPosZ() - MathHelper.lerp((double)partialTicks, entityIn.prevPosZ, entityIn.getPosZ()));
-            EnderDragonRenderer.func_229059_a_(f6, f8 + SinCrystalRenderer.getDeltaY(crystal, partialTicks), f9, partialTicks, entityIn.ticksExisted, matrixStackIn, bufferIn, packedLightIn);
-            matrixStackIn.pop();
+            matrixStackIn.pushPose();
+            float f6 = (float)(crystal.getX() - Mth.lerp((double)partialTicks, entityIn.xo, entityIn.getX()));
+            float f8 = (float)(crystal.getY() - Mth.lerp((double)partialTicks, entityIn.yo, entityIn.getY()));
+            float f9 = (float)(crystal.getZ() - Mth.lerp((double)partialTicks, entityIn.zo, entityIn.getZ()));
+            EnderDragonRenderer.renderCrystalBeams(f6, f8 + SinCrystalRenderer.getDeltaY(crystal, partialTicks), f9, partialTicks, entityIn.tickCount, matrixStackIn, bufferIn, packedLightIn);
+            matrixStackIn.popPose();
         }
     }
 }

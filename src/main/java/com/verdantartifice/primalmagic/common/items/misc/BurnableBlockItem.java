@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagic.common.items.misc;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.world.item.Item.Properties;
 
 /**
  * Block item definition for a block that can be used as fuel in a furnace or similar device.

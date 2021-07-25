@@ -3,17 +3,17 @@ package com.verdantartifice.primalmagic.client.gui.widgets;
 import java.awt.Color;
 import java.util.Collections;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -23,50 +23,50 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractSourceWidget extends Widget {
+public abstract class AbstractSourceWidget extends AbstractWidget {
     protected Source source;
     protected int amount;
 
     public AbstractSourceWidget(Source source, int amount, int xIn, int yIn) {
-        super(xIn, yIn, 16, 16, StringTextComponent.EMPTY);
+        super(xIn, yIn, 16, 16, TextComponent.EMPTY);
         this.source = source;
         this.amount = amount;
     }
     
     @Override
-    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         boolean discovered = this.source.isDiscovered(mc.player);
         
         // Draw the colored source icon
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        matrixStack.push();
+        matrixStack.pushPose();
         if (discovered) {
-            mc.getTextureManager().bindTexture(this.source.getImage());
+            mc.getTextureManager().bind(this.source.getImage());
         } else {
-            mc.getTextureManager().bindTexture(Source.getUnknownImage());
+            mc.getTextureManager().bind(Source.getUnknownImage());
         }
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-        matrixStack.pop();
+        matrixStack.popPose();
         
         // Draw the amount string
-        matrixStack.push();
-        ITextComponent amountText = new StringTextComponent(Integer.toString(this.amount));
-        int width = mc.fontRenderer.getStringWidth(amountText.getString());
+        matrixStack.pushPose();
+        Component amountText = new TextComponent(Integer.toString(this.amount));
+        int width = mc.font.width(amountText.getString());
         matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
         matrixStack.scale(0.5F, 0.5F, 0.5F);
-        mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-        matrixStack.pop();
+        mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
+        matrixStack.popPose();
         
         // Draw the tooltip if applicable
         if (this.isHovered()) {
-            ITextComponent sourceText = discovered ? 
-                    new TranslationTextComponent(this.source.getNameTranslationKey()).mergeStyle(this.source.getChatColor()) :
-                    new TranslationTextComponent(Source.getUnknownTranslationKey());
-            ITextComponent labelText = new TranslationTextComponent(this.getTooltipTranslationKey(), this.amount, sourceText);
+            Component sourceText = discovered ? 
+                    new TranslatableComponent(this.source.getNameTranslationKey()).withStyle(this.source.getChatColor()) :
+                    new TranslatableComponent(Source.getUnknownTranslationKey());
+            Component labelText = new TranslatableComponent(this.getTooltipTranslationKey(), this.amount, sourceText);
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);
         }
     }

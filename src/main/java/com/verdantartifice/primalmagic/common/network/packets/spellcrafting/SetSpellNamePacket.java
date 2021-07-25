@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -28,15 +28,15 @@ public class SetSpellNamePacket implements IMessageToServer {
         this.name = name;
     }
     
-    public static void encode(SetSpellNamePacket message, PacketBuffer buf) {
+    public static void encode(SetSpellNamePacket message, FriendlyByteBuf buf) {
         buf.writeInt(message.windowId);
-        buf.writeString(message.name);
+        buf.writeUtf(message.name);
     }
     
-    public static SetSpellNamePacket decode(PacketBuffer buf) {
+    public static SetSpellNamePacket decode(FriendlyByteBuf buf) {
         SetSpellNamePacket message = new SetSpellNamePacket();
         message.windowId = buf.readInt();
-        message.name = buf.readString();
+        message.name = buf.readUtf();
         return message;
     }
     
@@ -44,10 +44,10 @@ public class SetSpellNamePacket implements IMessageToServer {
         public static void onMessage(SetSpellNamePacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                ServerPlayerEntity player = ctx.get().getSender();
-                if (player.openContainer != null && player.openContainer.windowId == message.windowId && player.openContainer instanceof SpellcraftingAltarContainer) {
+                ServerPlayer player = ctx.get().getSender();
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarContainer) {
                     // Update the spell name if the open container window matches the given one
-                    ((SpellcraftingAltarContainer)player.openContainer).setSpellName(message.name);
+                    ((SpellcraftingAltarContainer)player.containerMenu).setSpellName(message.name);
                 }
             });
             

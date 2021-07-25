@@ -6,13 +6,13 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -28,7 +28,7 @@ public class RunecarvingRecipeBuilder {
     protected String group;
     protected CompoundResearchKey research;
     
-    protected RunecarvingRecipeBuilder(IItemProvider item, int count) {
+    protected RunecarvingRecipeBuilder(ItemLike item, int count) {
         this.result = item.asItem();
         this.count = count;
     }
@@ -40,7 +40,7 @@ public class RunecarvingRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a runecarving recipe
      */
-    public static RunecarvingRecipeBuilder runecarvingRecipe(IItemProvider item, int count) {
+    public static RunecarvingRecipeBuilder runecarvingRecipe(ItemLike item, int count) {
         return new RunecarvingRecipeBuilder(item, count);
     }
     
@@ -50,7 +50,7 @@ public class RunecarvingRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a runecarving recipe
      */
-    public static RunecarvingRecipeBuilder runecarvingRecipe(IItemProvider item) {
+    public static RunecarvingRecipeBuilder runecarvingRecipe(ItemLike item) {
         return new RunecarvingRecipeBuilder(item, 1);
     }
     
@@ -71,8 +71,8 @@ public class RunecarvingRecipeBuilder {
      * @param item the item to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder firstIngredient(IItemProvider item) {
-        return this.firstIngredient(Ingredient.fromItems(item));
+    public RunecarvingRecipeBuilder firstIngredient(ItemLike item) {
+        return this.firstIngredient(Ingredient.of(item));
     }
     
     /**
@@ -81,8 +81,8 @@ public class RunecarvingRecipeBuilder {
      * @param tag the tag to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder firstIngredient(ITag<Item> tag) {
-        return this.firstIngredient(Ingredient.fromTag(tag));
+    public RunecarvingRecipeBuilder firstIngredient(Tag<Item> tag) {
+        return this.firstIngredient(Ingredient.of(tag));
     }
     
     /**
@@ -102,8 +102,8 @@ public class RunecarvingRecipeBuilder {
      * @param item the item to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder secondIngredient(IItemProvider item) {
-        return this.secondIngredient(Ingredient.fromItems(item));
+    public RunecarvingRecipeBuilder secondIngredient(ItemLike item) {
+        return this.secondIngredient(Ingredient.of(item));
     }
     
     /**
@@ -112,8 +112,8 @@ public class RunecarvingRecipeBuilder {
      * @param tag the tag to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder secondIngredient(ITag<Item> tag) {
-        return this.secondIngredient(Ingredient.fromTag(tag));
+    public RunecarvingRecipeBuilder secondIngredient(Tag<Item> tag) {
+        return this.secondIngredient(Ingredient.of(tag));
     }
     
     /**
@@ -144,7 +144,7 @@ public class RunecarvingRecipeBuilder {
      * @param consumer a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
+    public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
         consumer.accept(new RunecarvingRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.ingredient1, this.ingredient2, this.research));
     }
@@ -156,7 +156,7 @@ public class RunecarvingRecipeBuilder {
      * @param consumer a consumer for the finished recipe
      * @param save custom ID for the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer, String save) {
+    public void build(Consumer<FinishedRecipe> consumer, String save) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result);
         ResourceLocation saveLoc = new ResourceLocation(save);
         if (saveLoc.equals(id)) {
@@ -171,7 +171,7 @@ public class RunecarvingRecipeBuilder {
      * 
      * @param consumer a consumer for the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer) {
+    public void build(Consumer<FinishedRecipe> consumer) {
         this.build(consumer, ForgeRegistries.ITEMS.getKey(this.result));
     }
     
@@ -181,8 +181,8 @@ public class RunecarvingRecipeBuilder {
      * @param id the ID of the recipe
      */
     protected void validate(ResourceLocation id) {
-        if ( this.ingredient1 == null || this.ingredient1.hasNoMatchingItems() ||
-             this.ingredient2 == null || this.ingredient2.hasNoMatchingItems() ) {
+        if ( this.ingredient1 == null || this.ingredient1.isEmpty() ||
+             this.ingredient2 == null || this.ingredient2.isEmpty() ) {
             throw new IllegalStateException("Missing ingredient for runecarving recipe " + id + "!");
         }
         if (this.research == null) {
@@ -190,7 +190,7 @@ public class RunecarvingRecipeBuilder {
         }
     }
     
-    public static class Result implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         protected final ResourceLocation id;
         protected final Item result;
         protected final int count;
@@ -210,7 +210,7 @@ public class RunecarvingRecipeBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
             // Serialize the recipe group, if present
             if (this.group != null && !this.group.isEmpty()) {
                 json.addProperty("group", this.group);
@@ -222,8 +222,8 @@ public class RunecarvingRecipeBuilder {
             }
             
             // Serialize the recipe ingredients
-            json.add("ingredient1", this.ingredient1.serialize());
-            json.add("ingredient2", this.ingredient2.serialize());
+            json.add("ingredient1", this.ingredient1.toJson());
+            json.add("ingredient2", this.ingredient2.toJson());
             
             // Serialize the recipe result
             JsonObject resultJson = new JsonObject();
@@ -235,23 +235,23 @@ public class RunecarvingRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
             return this.id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public RecipeSerializer<?> getType() {
             return RecipeSerializersPM.RUNECARVING.get();
         }
 
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
             // Runecarving recipes don't use the vanilla advancement unlock system, so return null
             return null;
         }
 
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
             return new ResourceLocation("");
         }
     }

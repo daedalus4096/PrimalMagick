@@ -16,13 +16,13 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -74,7 +74,7 @@ public class RuneManager {
      */
     public static List<Enchantment> getRuneEnchantmentsSorted() {
         return getRuneEnchantments().stream().sorted((e1, e2) -> {
-            return e1.getDisplayName(1).getString().compareTo(e2.getDisplayName(1).getString());
+            return e1.getFullname(1).getString().compareTo(e2.getFullname(1).getString());
         }).collect(Collectors.toList());
     }
     
@@ -100,7 +100,7 @@ public class RuneManager {
      * @return the map of rune enchantments and the levels at which they should be applied
      */
     @Nonnull
-    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack, @Nullable PlayerEntity player, boolean filterIncompatible) {
+    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack, @Nullable Player player, boolean filterIncompatible) {
         if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty() || player == null) {
             return Collections.emptyMap();
         }
@@ -126,8 +126,8 @@ public class RuneManager {
                         // If the rune enchantment can be applied to the given item stack, is compatible with 
                         // those already found, it meets the minimum power level, and the player has any needed
                         // research, add the enchantment to the result set
-                        if ( possible.canApply(stack) && 
-                             (!filterIncompatible || EnchantmentHelper.areAllCompatibleWith(retVal.keySet(), possible)) && 
+                        if ( possible.canEnchant(stack) && 
+                             (!filterIncompatible || EnchantmentHelper.isEnchantmentCompatible(retVal.keySet(), possible)) && 
                              (!ENCHANTMENT_RESEARCH.containsKey(possible) || ENCHANTMENT_RESEARCH.get(possible).isKnownByStrict(player)) &&
                              powerLevel >= possible.getMinLevel() ) {
                             retVal.put(possible, Math.min(powerLevel, possible.getMaxLevel()));
@@ -156,7 +156,7 @@ public class RuneManager {
             if (retVal.containsKey(entry.getKey())) {
                 // If the original already contains the enchantment to be added, set its value to the higher of the two levels
                 retVal.put(entry.getKey(), Math.max(original.getOrDefault(entry.getKey(), 0), entry.getValue()));
-            } else if (EnchantmentHelper.areAllCompatibleWith(original.keySet(), entry.getKey())) {
+            } else if (EnchantmentHelper.isEnchantmentCompatible(original.keySet(), entry.getKey())) {
                 // Only add the addition enchantment if it's compatible with all those in the current output set
                 retVal.put(entry.getKey(), entry.getValue());
                 
@@ -193,7 +193,7 @@ public class RuneManager {
         }
         
         List<Rune> retVal = new ArrayList<>();
-        ListNBT tagList = stack.getTag().getList(RUNE_TAG_NAME, Constants.NBT.TAG_STRING);
+        ListTag tagList = stack.getTag().getList(RUNE_TAG_NAME, Constants.NBT.TAG_STRING);
         for (int index = 0; index < tagList.size(); index++) {
             String tagStr = tagList.getString(index);
             Rune rune = Rune.getRune(new ResourceLocation(tagStr));
@@ -213,13 +213,13 @@ public class RuneManager {
      */
     public static void setRunes(@Nullable ItemStack stack, @Nullable List<Rune> runes) {
         if (stack != null && !stack.isEmpty() && runes != null && !runes.isEmpty()) {
-            ListNBT tagList = new ListNBT();
+            ListTag tagList = new ListTag();
             for (Rune rune : runes) {
                 if (rune != null) {
-                    tagList.add(StringNBT.valueOf(rune.getId().toString()));
+                    tagList.add(StringTag.valueOf(rune.getId().toString()));
                 }
             }
-            stack.setTagInfo(RUNE_TAG_NAME, tagList);
+            stack.addTagElement(RUNE_TAG_NAME, tagList);
         }
     }
     
@@ -230,7 +230,7 @@ public class RuneManager {
      */
     public static void clearRunes(@Nullable ItemStack stack) {
         if (stack != null) {
-            stack.removeChildTag(RUNE_TAG_NAME);
+            stack.removeTagKey(RUNE_TAG_NAME);
         }
     }
 }

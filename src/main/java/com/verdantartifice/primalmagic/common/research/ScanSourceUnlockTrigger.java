@@ -2,10 +2,10 @@ package com.verdantartifice.primalmagic.common.research;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Subtype of research scan trigger that grants the required research for a primal source.  In addition
@@ -16,14 +16,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class ScanSourceUnlockTrigger extends ScanItemResearchTrigger {
     protected final Source source;
     
-    public ScanSourceUnlockTrigger(IItemProvider target, Source source) {
+    public ScanSourceUnlockTrigger(ItemLike target, Source source) {
         super(target, source.getDiscoverKey(), false);
         this.source = source;
     }
     
     @Override
-    public void onMatch(ServerPlayerEntity player, Object obj) {
+    public void onMatch(ServerPlayer player, Object obj) {
         super.onMatch(player, obj);
-        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source." + this.source.getTag()).mergeStyle(TextFormatting.GREEN), false);
+        player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source." + this.source.getTag()).withStyle(ChatFormatting.GREEN), false);
     }
 }

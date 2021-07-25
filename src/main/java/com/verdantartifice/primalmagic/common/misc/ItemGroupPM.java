@@ -2,21 +2,21 @@ package com.verdantartifice.primalmagic.common.misc;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of the mod's item group.  Creates a custom creative tab for this mod's items.
  * 
  * @author Daedalus4096
  */
-public class ItemGroupPM extends ItemGroup {
+public class ItemGroupPM extends CreativeModeTab {
     public ItemGroupPM() {
         super("primalmagic");
     }
 
     @Override
-    public ItemStack createIcon() {
+    public ItemStack makeIcon() {
         return new ItemStack(ItemsPM.GRIMOIRE.get());
     }
 }

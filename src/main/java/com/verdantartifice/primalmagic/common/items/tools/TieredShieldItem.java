@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagic.common.items.tools;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
 
 /**
  * Definition of a shield item made of a magical metal.
@@ -12,25 +12,25 @@ import net.minecraft.item.ShieldItem;
  * @author Daedalus4096
  */
 public class TieredShieldItem extends ShieldItem {
-    protected final IItemTier tier;
+    protected final Tier tier;
     
-    public TieredShieldItem(IItemTier tier, Item.Properties properties) {
-        super(properties.defaultMaxDamage(tier.getMaxUses()));
+    public TieredShieldItem(Tier tier, Item.Properties properties) {
+        super(properties.defaultDurability(tier.getUses()));
         this.tier = tier;
     }
     
-    public IItemTier getTier() {
+    public Tier getTier() {
         return this.tier;
     }
 
     @Override
-    public int getItemEnchantability() {
-        return this.tier.getEnchantability();
+    public int getEnchantmentValue() {
+        return this.tier.getEnchantmentValue();
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return this.tier.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
     }
 
     @Override

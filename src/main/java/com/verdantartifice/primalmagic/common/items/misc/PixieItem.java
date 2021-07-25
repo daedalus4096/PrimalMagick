@@ -4,8 +4,8 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 
 /**
  * Definition of a spawn item for a pixie companion.

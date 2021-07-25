@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class ResearchEntryBuilder {
     protected final SimpleResearchKey key;

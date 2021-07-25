@@ -1,16 +1,16 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,7 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class OfferingParticle extends SpriteTexturedParticle {
+public class OfferingParticle extends TextureSheetParticle {
     protected final float uVal;
     protected final float vVal;
     
@@ -29,108 +29,108 @@ public class OfferingParticle extends SpriteTexturedParticle {
     protected final double targetZ;
 
     @SuppressWarnings("deprecation")
-    protected OfferingParticle(ClientWorld world, double x, double y, double z, double tx, double ty, double tz, ItemStack stack) {
+    protected OfferingParticle(ClientLevel world, double x, double y, double z, double tx, double ty, double tz, ItemStack stack) {
         super(world, x, y, z);
-        this.setSprite(Minecraft.getInstance().getItemRenderer().getItemModelWithOverrides(stack, world, (LivingEntity)null).getParticleTexture());
+        this.setSprite(Minecraft.getInstance().getItemRenderer().getModel(stack, world, (LivingEntity)null).getParticleIcon());
         this.targetX = tx;
         this.targetY = ty;
         this.targetZ = tz;
-        this.particleGravity = 0.01F;
-        this.uVal = this.rand.nextFloat() * 3.0F;
-        this.vVal = this.rand.nextFloat() * 3.0F;
+        this.gravity = 0.01F;
+        this.uVal = this.random.nextFloat() * 3.0F;
+        this.vVal = this.random.nextFloat() * 3.0F;
         
-        double dx = this.targetX - this.posX;
-        double dy = this.targetY - this.posY;
-        double dz = this.targetZ - this.posZ;
-        int base = (int)(MathHelper.sqrt(dx * dx + dy * dy + dz * dz) * 10.0F);
+        double dx = this.targetX - this.x;
+        double dy = this.targetY - this.y;
+        double dz = this.targetZ - this.z;
+        int base = (int)(Mth.sqrt(dx * dx + dy * dy + dz * dz) * 10.0F);
         if (base < 1) {
             base = 1;
         }
-        this.maxAge = (base / 2 + this.rand.nextInt(base));
+        this.lifetime = (base / 2 + this.random.nextInt(base));
         
-        this.motionX = (0.03D * this.rand.nextGaussian());
-        this.motionY = (0.03D * this.rand.nextGaussian());
-        this.motionZ = (0.03D * this.rand.nextGaussian());
+        this.xd = (0.03D * this.random.nextGaussian());
+        this.yd = (0.03D * this.random.nextGaussian());
+        this.zd = (0.03D * this.random.nextGaussian());
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.TERRAIN_SHEET;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.TERRAIN_SHEET;
     }
 
     @Override
-    protected float getMinU() {
-        return this.sprite.getInterpolatedU((double)((this.uVal + 1.0F) / 4.0F * 16.0F));
+    protected float getU0() {
+        return this.sprite.getU((double)((this.uVal + 1.0F) / 4.0F * 16.0F));
     }
 
     @Override
-    protected float getMaxU() {
-        return this.sprite.getInterpolatedU((double)(this.uVal / 4.0F * 16.0F));
+    protected float getU1() {
+        return this.sprite.getU((double)(this.uVal / 4.0F * 16.0F));
     }
 
     @Override
-    protected float getMinV() {
-        return this.sprite.getInterpolatedV((double)(this.vVal / 4.0F * 16.0F));
+    protected float getV0() {
+        return this.sprite.getV((double)(this.vVal / 4.0F * 16.0F));
     }
 
     @Override
-    protected float getMaxV() {
-        return this.sprite.getInterpolatedV((double)((this.vVal + 1.0F) / 4.0F * 16.0F));
+    protected float getV1() {
+        return this.sprite.getV((double)((this.vVal + 1.0F) / 4.0F * 16.0F));
     }
     
     @Override
     public void tick() {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        if (this.age++ >= this.maxAge || this.hasReachedTarget()) {
-            this.setExpired();
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age++ >= this.lifetime || this.hasReachedTarget()) {
+            this.remove();
         } else {
-            this.move(this.motionX, this.motionY, this.motionZ);
+            this.move(this.xd, this.yd, this.zd);
 
-            this.motionX *= 0.985D;
-            this.motionY *= 0.95D;
-            this.motionZ *= 0.985D;
+            this.xd *= 0.985D;
+            this.yd *= 0.95D;
+            this.zd *= 0.985D;
             
-            double dx = this.targetX - this.posX;
-            double dy = this.targetY - this.posY;
-            double dz = this.targetZ - this.posZ;
-            double distance = MathHelper.sqrt(dx * dx + dy * dy + dz * dz);
+            double dx = this.targetX - this.x;
+            double dy = this.targetY - this.y;
+            double dz = this.targetZ - this.z;
+            double distance = Mth.sqrt(dx * dx + dy * dy + dz * dz);
             double clamp = Math.min(0.25D, distance / 15.0D);
             if (distance < 2.0D) {
-                this.particleScale *= 0.9F;
+                this.quadSize *= 0.9F;
             }
             dx /= distance;
             dy /= distance;
             dz /= distance;
             
-            this.motionX += dx * clamp;
-            this.motionY += dy * clamp;
-            this.motionZ += dz * clamp;
+            this.xd += dx * clamp;
+            this.yd += dy * clamp;
+            this.zd += dz * clamp;
             
-            this.motionX = MathHelper.clamp(this.motionX, -clamp, clamp);
-            this.motionY = MathHelper.clamp(this.motionY, -clamp, clamp);
-            this.motionZ = MathHelper.clamp(this.motionZ, -clamp, clamp);
+            this.xd = Mth.clamp(this.xd, -clamp, clamp);
+            this.yd = Mth.clamp(this.yd, -clamp, clamp);
+            this.zd = Mth.clamp(this.zd, -clamp, clamp);
             
-            this.motionX += this.rand.nextGaussian() * 0.005D;
-            this.motionY += this.rand.nextGaussian() * 0.005D;
-            this.motionZ += this.rand.nextGaussian() * 0.005D;
+            this.xd += this.random.nextGaussian() * 0.005D;
+            this.yd += this.random.nextGaussian() * 0.005D;
+            this.zd += this.random.nextGaussian() * 0.005D;
         }
     }
     
     protected boolean hasReachedTarget() {
-        return (MathHelper.floor(this.posX) == MathHelper.floor(this.targetX)) &&
-                (MathHelper.floor(this.posY) == MathHelper.floor(this.targetY)) &&
-                (MathHelper.floor(this.posZ) == MathHelper.floor(this.targetZ));
+        return (Mth.floor(this.x) == Mth.floor(this.targetX)) &&
+                (Mth.floor(this.y) == Mth.floor(this.targetY)) &&
+                (Mth.floor(this.z) == Mth.floor(this.targetZ));
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<ItemParticleData> {
-        public Factory(IAnimatedSprite spriteSet) {}
+    public static class Factory implements ParticleProvider<ItemParticleOption> {
+        public Factory(SpriteSet spriteSet) {}
 
         @Override
-        public Particle makeParticle(ItemParticleData typeIn, ClientWorld worldIn, double x, double y, double z, double tx, double ty, double tz) {
-            return new OfferingParticle(worldIn, x, y, z, tx, ty, tz, typeIn.getItemStack());
+        public Particle createParticle(ItemParticleOption typeIn, ClientLevel worldIn, double x, double y, double z, double tx, double ty, double tz) {
+            return new OfferingParticle(worldIn, x, y, z, tx, ty, tz, typeIn.getItem());
         }
     }
 }

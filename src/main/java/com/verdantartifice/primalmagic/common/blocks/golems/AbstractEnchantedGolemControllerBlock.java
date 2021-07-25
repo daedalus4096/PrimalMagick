@@ -8,29 +8,31 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.pattern.BlockMaterialMatcher;
-import net.minecraft.block.pattern.BlockPattern;
-import net.minecraft.block.pattern.BlockPatternBuilder;
-import net.minecraft.block.pattern.BlockStateMatcher;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.CachedBlockInfo;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.predicate.BlockMaterialPredicate;
+import net.minecraft.world.level.block.state.pattern.BlockPattern;
+import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
+import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.state.pattern.BlockInWorld;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 /**
  * Definition for the "head" block of an enchanted golem.  Place it on top of a T shape of
@@ -39,14 +41,14 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEnchantedGolemEntity> extends Block implements IInteractWithWand {
-    protected static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     @Nullable
     private BlockPattern golemPattern;
 
     public AbstractEnchantedGolemControllerBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
     
     protected abstract SimpleResearchKey getRequiredResearch();
@@ -58,73 +60,73 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
     protected abstract Block getControllerBlock();
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Make the block face the player when placed
-        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
     
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
     @SuppressWarnings("deprecation")
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
     
     @Override
-    public ActionResultType onWandRightClick(ItemStack wandStack, World world, PlayerEntity player, BlockPos pos, Direction direction) {
-        if (!world.isRemote && wandStack.getItem() instanceof IWand && this.getRequiredResearch().isKnownByStrict(player)) {
-            BlockPattern.PatternHelper helper = this.getGolemPattern().match(world, pos);
+    public InteractionResult onWandRightClick(ItemStack wandStack, Level world, Player player, BlockPos pos, Direction direction) {
+        if (!world.isClientSide && wandStack.getItem() instanceof IWand && this.getRequiredResearch().isKnownByStrict(player)) {
+            BlockPattern.BlockPatternMatch helper = this.getGolemPattern().find(world, pos);
             if (helper != null) {
-                for (int i = 0; i < this.getGolemPattern().getPalmLength(); i++) {
-                    for (int j = 0; j < this.getGolemPattern().getThumbLength(); j++) {
-                        CachedBlockInfo info = helper.translateOffset(i, j, 0);
-                        world.setBlockState(info.getPos(), Blocks.AIR.getDefaultState(), Constants.BlockFlags.BLOCK_UPDATE);
-                        world.playEvent(2001, info.getPos(), Block.getStateId(info.getBlockState()));
+                for (int i = 0; i < this.getGolemPattern().getWidth(); i++) {
+                    for (int j = 0; j < this.getGolemPattern().getHeight(); j++) {
+                        BlockInWorld info = helper.getBlock(i, j, 0);
+                        world.setBlock(info.getPos(), Blocks.AIR.defaultBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+                        world.levelEvent(2001, info.getPos(), Block.getId(info.getState()));
                     }
                 }
                 
-                BlockPos blockpos = helper.translateOffset(1, 2, 0).getPos();
+                BlockPos blockpos = helper.getBlock(1, 2, 0).getPos();
                 AbstractEnchantedGolemEntity golem = this.getEntityType().create(world);
                 CompanionManager.addCompanion(player, golem);
-                golem.setLocationAndAngles((double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.05D, (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
-                world.addEntity(golem);
+                golem.moveTo((double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.05D, (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
+                world.addFreshEntity(golem);
 
-                for (int i = 0; i < this.getGolemPattern().getPalmLength(); i++) {
-                    for (int j = 0; j < this.getGolemPattern().getThumbLength(); j++) {
-                        CachedBlockInfo info = helper.translateOffset(i, j, 0);
-                        world.updateBlock(info.getPos(), Blocks.AIR);
+                for (int i = 0; i < this.getGolemPattern().getWidth(); i++) {
+                    for (int j = 0; j < this.getGolemPattern().getHeight(); j++) {
+                        BlockInWorld info = helper.getBlock(i, j, 0);
+                        world.blockUpdated(info.getPos(), Blocks.AIR);
                     }
                 }
 
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else {
-                return ActionResultType.FAIL;
+                return InteractionResult.FAIL;
             }
         } else {
-            return ActionResultType.FAIL;
+            return InteractionResult.FAIL;
         }
     }
 
     @Override
-    public void onWandUseTick(ItemStack wandStack, PlayerEntity player, int count) {
+    public void onWandUseTick(ItemStack wandStack, Player player, int count) {
         // Do nothing; golem controllers don't support wand channeling
     }
     
     protected BlockPattern getGolemPattern() {
         if (this.golemPattern == null) {
             this.golemPattern = BlockPatternBuilder.start().aisle("~^~", "###", "~#~")
-                    .where('^', CachedBlockInfo.hasState(BlockStateMatcher.forBlock(this.getControllerBlock())))
-                    .where('#', CachedBlockInfo.hasState(BlockStateMatcher.forBlock(this.getBaseBlock())))
-                    .where('~', CachedBlockInfo.hasState(BlockMaterialMatcher.forMaterial(Material.AIR)))
+                    .where('^', BlockInWorld.hasState(BlockStatePredicate.forBlock(this.getControllerBlock())))
+                    .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(this.getBaseBlock())))
+                    .where('~', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR)))
                     .build();
         }
         return this.golemPattern;

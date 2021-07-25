@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.AbstractRecipePage;
@@ -48,20 +48,20 @@ import com.verdantartifice.primalmagic.common.stats.Stat;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.ITextProperties;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -71,7 +71,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
+public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagic:textures/gui/grimoire.png:24:184:95:6:1");
@@ -93,18 +93,18 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected PageButton prevPageButton;
     protected BackButton backButton;
     
-    public GrimoireScreen(GrimoireContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public GrimoireScreen(GrimoireContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
-        this.xSize = 256;
-        this.ySize = 181;
+        this.imageWidth = 256;
+        this.imageHeight = 181;
     }
     
-    public PlayerInventory getPlayerInventory() {
-        return this.playerInventory;
+    public Inventory getPlayerInventory() {
+        return this.inventory;
     }
     
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh
         long millis = System.currentTimeMillis();
         if (millis > this.lastCheck) {
@@ -124,7 +124,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
     
     public boolean isProgressing() {
@@ -140,8 +140,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     @Override
     protected void init() {
         super.init();
-        this.scaledLeft = (int)(this.width - this.xSize * SCALE) / 2;
-        this.scaledTop = (int)(this.height - this.ySize * SCALE) / 2;
+        this.scaledLeft = (int)(this.width - this.imageWidth * SCALE) / 2;
+        this.scaledTop = (int)(this.height - this.imageHeight * SCALE) / 2;
     	Minecraft mc = this.getMinecraft();
         this.knowledge = PrimalMagicCapabilities.getKnowledge(mc.player);
         if (this.knowledge == null) {
@@ -154,21 +154,21 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     protected void initPages() {
         // Parse grimoire pages based on the current topic
         this.pages.clear();
-        if (this.container.getTopic() == null) {
+        if (this.menu.getTopic() == null) {
             this.parseIndexPages();
-        } else if (this.container.getTopic() instanceof ResearchDiscipline) {
-            this.parseDisciplinePages((ResearchDiscipline)this.container.getTopic());
-        } else if (this.container.getTopic() instanceof ResearchEntry) {
-            this.parseEntryPages((ResearchEntry)this.container.getTopic());
-        } else if (this.container.getTopic() instanceof Source) {
-            this.parseAttunementPage((Source)this.container.getTopic());
-        } else if (this.container.getTopic() instanceof Enchantment) {
-            this.parseRuneEnchantmentPage((Enchantment)this.container.getTopic());
-        } else if (StatisticsPage.TOPIC.equals(this.container.getTopic())) {
+        } else if (this.menu.getTopic() instanceof ResearchDiscipline) {
+            this.parseDisciplinePages((ResearchDiscipline)this.menu.getTopic());
+        } else if (this.menu.getTopic() instanceof ResearchEntry) {
+            this.parseEntryPages((ResearchEntry)this.menu.getTopic());
+        } else if (this.menu.getTopic() instanceof Source) {
+            this.parseAttunementPage((Source)this.menu.getTopic());
+        } else if (this.menu.getTopic() instanceof Enchantment) {
+            this.parseRuneEnchantmentPage((Enchantment)this.menu.getTopic());
+        } else if (StatisticsPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseStatsPages();
-        } else if (AttunementIndexPage.TOPIC.equals(this.container.getTopic())) {
+        } else if (AttunementIndexPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseAttunementIndexPages();
-        } else if (RuneEnchantmentIndexPage.TOPIC.equals(this.container.getTopic())) {
+        } else if (RuneEnchantmentIndexPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseRuneEnchantmentIndexPages();
         }
     }
@@ -190,16 +190,16 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // Create navigation buttons and update their visibility
-        this.nextPageButton = new PageButton(this.guiLeft + 258, this.guiTop + 172, this, true);
-        this.prevPageButton = new PageButton(this.guiLeft - 12, this.guiTop + 172, this, false);
-        this.backButton = new BackButton(this.guiLeft + 120, this.guiTop + 172, this);
+        this.nextPageButton = new PageButton(this.leftPos + 258, this.topPos + 172, this, true);
+        this.prevPageButton = new PageButton(this.leftPos - 12, this.topPos + 172, this, false);
+        this.backButton = new BackButton(this.leftPos + 120, this.topPos + 172, this);
         this.addButton(this.nextPageButton);
         this.addButton(this.prevPageButton);
         this.addButton(this.backButton);
         this.updateNavButtonVisibility();
     }
     
-    public <T extends Widget> T addWidgetToScreen(T widget) {
+    public <T extends AbstractWidget> T addWidgetToScreen(T widget) {
         return this.addButton(widget);
     }
 
@@ -217,25 +217,25 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
         // Do nothing; we don't want to draw title text for the grimoire
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render the grimoire background
-        this.minecraft.getTextureManager().bindTexture(TEXTURE);
+        this.minecraft.getTextureManager().bind(TEXTURE);
 
-        int unscaledLeft = (this.width - this.xSize) / 2;
-        int unscaledTop = (this.height - this.ySize) / 2;
-        float scaledLeft = (this.width - this.xSize * SCALE) / 2.0F;
-        float scaledTop = (this.height - this.ySize * SCALE) / 2.0F;
+        int unscaledLeft = (this.width - this.imageWidth) / 2;
+        int unscaledTop = (this.height - this.imageHeight) / 2;
+        float scaledLeft = (this.width - this.imageWidth * SCALE) / 2.0F;
+        float scaledTop = (this.height - this.imageHeight * SCALE) / 2.0F;
 
-        matrixStack.push();
+        matrixStack.pushPose();
         matrixStack.translate(scaledLeft, scaledTop, 0.0F);
         matrixStack.scale(SCALE, SCALE, 1.0F);
-        this.blit(matrixStack, 0, 0, 0, 0, this.xSize, this.ySize);
-        matrixStack.pop();
+        this.blit(matrixStack, 0, 0, 0, 0, this.imageWidth, this.imageHeight);
+        matrixStack.popPose();
         
         // Render the two visible pages
         int current = 0;
@@ -253,14 +253,14 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     private List<ResearchDiscipline> buildDisciplineList() {
         // Gather a list of all research disciplines, sorted by their display names
         return ResearchDisciplines.getAllDisciplines().stream()
-                                    .sorted(Comparator.comparing(d -> (new TranslationTextComponent(d.getNameTranslationKey())).getString()))
+                                    .sorted(Comparator.comparing(d -> (new TranslatableComponent(d.getNameTranslationKey())).getString()))
                                     .collect(Collectors.toList());
     }
     
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
         // Gather a list of all research entries for the given discipline, sorted by their display names
         return discipline.getEntries().stream()
-                .sorted(Comparator.comparing(e -> (new TranslationTextComponent(e.getNameTranslationKey())).getString()))
+                .sorted(Comparator.comparing(e -> (new TranslatableComponent(e.getNameTranslationKey())).getString()))
                 .collect(Collectors.toList());
     }
     
@@ -354,7 +354,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     
     protected void parseDisciplinePageSection(List<ResearchEntry> researchList, String headerName, ResearchDiscipline discipline, DisciplinePageProperties properties) {
         // Append the section header and spacer
-        ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.section_header." + headerName).mergeStyle(TextFormatting.UNDERLINE);
+        Component headerText = new TranslatableComponent("primalmagic.grimoire.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
         if (properties.heightRemaining < 36 && !properties.page.getContents().isEmpty()) {
             // If there's not room for the spacer, the header, and a first entry, skip to the next page
             properties.heightRemaining = 155;
@@ -363,7 +363,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             properties.page.addContent(headerText);
         } else {
             if (!properties.firstSection && !properties.page.getContents().isEmpty()) {
-                properties.page.addContent(new StringTextComponent(""));
+                properties.page.addContent(new TextComponent(""));
                 properties.heightRemaining -= 12;
             }
             properties.page.addContent(headerText);
@@ -428,9 +428,9 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         }
         
         // Format text by font
-        List<ITextProperties> parsedText = new ArrayList<>();
+        List<FormattedText> parsedText = new ArrayList<>();
         for (String str : firstPassText) {
-            parsedText.addAll(this.font.getCharacterManager().func_238362_b_(ITextProperties.func_240652_a_(str), 124, Style.EMPTY));   // list formatted string to width
+            parsedText.addAll(this.font.getSplitter().splitLines(FormattedText.of(str), 124, Style.EMPTY));   // list formatted string to width
         }
         
         return new Tuple<>(parsedText.stream().map((t) -> t.getString()).collect(Collectors.toList()), images);
@@ -454,20 +454,20 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         ResearchStage stage = entry.getStages().get(this.currentStageIndex);
         List<ResearchAddendum> addenda = complete ? entry.getAddenda() : Collections.emptyList();
         
-        String rawText = (new TranslationTextComponent(stage.getTextTranslationKey())).getString();
+        String rawText = (new TranslatableComponent(stage.getTextTranslationKey())).getString();
         
         // Append unlocked addendum text
         int addendumCount = 0;
         for (ResearchAddendum addendum : addenda) {
             if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
-                ITextComponent headerText = new TranslationTextComponent("primalmagic.grimoire.addendum_header", ++addendumCount);
-                ITextComponent addendumText = new TranslationTextComponent(addendum.getTextTranslationKey());
+                Component headerText = new TranslatableComponent("primalmagic.grimoire.addendum_header", ++addendumCount);
+                Component addendumText = new TranslatableComponent(addendum.getTextTranslationKey());
                 rawText += ("<PAGE>" + headerText.getString() + "<BR>" + addendumText.getString());
             }
         }
         
         // Process text
-        int lineHeight = this.font.FONT_HEIGHT;
+        int lineHeight = this.font.lineHeight;
         Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
         List<String> parsedText = parsedData.getA();
         List<PageImage> images = parsedData.getB();
@@ -567,7 +567,7 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
             }
         }
         for (ResourceLocation recipeLoc : locList) {
-            Optional<? extends IRecipe<?>> opt = this.minecraft.world.getRecipeManager().getRecipe(recipeLoc);
+            Optional<? extends Recipe<?>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
             if (opt.isPresent()) {
                 AbstractRecipePage page = RecipePageFactory.createPage(opt.get());
                 if (page != null) {
@@ -589,34 +589,34 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         
         // Add each unlocked research discipline to the current discipline index page
         int heightRemaining = 137;  // Leave enough room for the page header
-        int dotWidth = this.font.getStringWidth(".");
+        int dotWidth = this.font.width(".");
         StatisticsPage tempPage = new StatisticsPage(true);
         Minecraft mc = this.getMinecraft();
         for (Stat stat : stats) {
             int statValue = StatsManager.getValue(mc.player, stat);
             if (!stat.isHidden() || statValue > 0) {
                 // Join the stat text and formatted value with periods in between for spacing
-                ITextComponent statText = new TranslationTextComponent(stat.getTranslationKey());
-                List<ITextProperties> statTextSegments = new ArrayList<>(this.font.getCharacterManager().func_238362_b_(statText, 124, Style.EMPTY));
-                ITextProperties lastStatTextSegment = statTextSegments.get(statTextSegments.size() - 1);
-                int lastStatTextSegmentWidth = this.font.getStringPropertyWidth(lastStatTextSegment);
+                Component statText = new TranslatableComponent(stat.getTranslationKey());
+                List<FormattedText> statTextSegments = new ArrayList<>(this.font.getSplitter().splitLines(statText, 124, Style.EMPTY));
+                FormattedText lastStatTextSegment = statTextSegments.get(statTextSegments.size() - 1);
+                int lastStatTextSegmentWidth = this.font.width(lastStatTextSegment);
                 String statFormattedValueStr = stat.getFormatter().format(statValue);
-                int statFormattedValueStrWidth = this.font.getStringWidth(statFormattedValueStr);
+                int statFormattedValueStrWidth = this.font.width(statFormattedValueStr);
                 int remainingWidth = 124 - lastStatTextSegmentWidth - statFormattedValueStrWidth;
                 if (remainingWidth < 10) {
                     // If there isn't enough room to put them on the same line, put the last text segment and the formatted value on different lines
                     String joiner1 = String.join("", Collections.nCopies((124 - lastStatTextSegmentWidth) / dotWidth, "."));
                     String joiner2 = String.join("", Collections.nCopies((124 - statFormattedValueStrWidth) / dotWidth, "."));
-                    statTextSegments.set(statTextSegments.size() - 1, ITextProperties.func_240652_a_(lastStatTextSegment.getString() + joiner1));
-                    statTextSegments.add(ITextProperties.func_240652_a_(joiner2 + statFormattedValueStr + "~B"));   // Include a section break at the end
+                    statTextSegments.set(statTextSegments.size() - 1, FormattedText.of(lastStatTextSegment.getString() + joiner1));
+                    statTextSegments.add(FormattedText.of(joiner2 + statFormattedValueStr + "~B"));   // Include a section break at the end
                 } else {
                     // Otherwise, join them as the last line of the block
                     String joiner = String.join("", Collections.nCopies(remainingWidth / dotWidth, "."));
-                    statTextSegments.set(statTextSegments.size() - 1, ITextProperties.func_240652_a_(lastStatTextSegment.getString() + joiner + statFormattedValueStr + "~B")); // Include a section break at the end
+                    statTextSegments.set(statTextSegments.size() - 1, FormattedText.of(lastStatTextSegment.getString() + joiner + statFormattedValueStr + "~B")); // Include a section break at the end
                 }
                 
                 // Calculate the total height of the stat block, including spacer, and determine if it will fit on the current page
-                int totalHeight = (int)(this.font.FONT_HEIGHT * statTextSegments.size());
+                int totalHeight = (int)(this.font.lineHeight * statTextSegments.size());
                 if (heightRemaining < totalHeight && !tempPage.getElements().isEmpty()) {
                     // If there isn't enough room for another stat block, start a new page
                     heightRemaining = 165;
@@ -625,11 +625,11 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
                 }
                 
                 // Add the stat block and its section break to the page
-                for (ITextProperties str : statTextSegments) {
+                for (FormattedText str : statTextSegments) {
                     tempPage.addElement(new PageString(str.getString()));
-                    heightRemaining -= this.font.FONT_HEIGHT;
+                    heightRemaining -= this.font.lineHeight;
                 }
-                heightRemaining -= (int)(this.font.FONT_HEIGHT * 0.66D);
+                heightRemaining -= (int)(this.font.lineHeight * 0.66D);
             }
         }
         
@@ -650,10 +650,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         // Add the first page with no contents to show the meter
         this.pages.add(new AttunementPage(source, true));
         
-        String rawText = (new TranslationTextComponent("primalmagic.attunement." + source.getTag() + ".text")).getString();
+        String rawText = (new TranslatableComponent("primalmagic.attunement." + source.getTag() + ".text")).getString();
         
         // Process text
-        int lineHeight = this.font.FONT_HEIGHT;
+        int lineHeight = this.font.lineHeight;
         Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
         List<String> parsedText = parsedData.getA();
         List<PageImage> images = parsedData.getB();
@@ -722,10 +722,10 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
     }
     
     protected void parseRuneEnchantmentPage(Enchantment enchant) {
-        String rawText = (new TranslationTextComponent(Util.makeTranslationKey("rune_enchantment.text", enchant.getRegistryName()))).getString();
+        String rawText = (new TranslatableComponent(Util.makeDescriptionId("rune_enchantment.text", enchant.getRegistryName()))).getString();
         
         // Process text
-        int lineHeight = this.font.FONT_HEIGHT;
+        int lineHeight = this.font.lineHeight;
         Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
         List<String> parsedText = parsedData.getA();
         List<PageImage> images = parsedData.getB();
@@ -833,8 +833,8 @@ public class GrimoireScreen extends ContainerScreen<GrimoireContainer> {
         // Pop the last viewed topic off the history stack and open a new screen for it
         if (!HISTORY.isEmpty()) {
             Object lastTopic = HISTORY.remove(HISTORY.size() - 1);
-            this.container.setTopic(lastTopic);
-            this.getMinecraft().displayGuiScreen(new GrimoireScreen(this.container, this.playerInventory, this.title));
+            this.menu.setTopic(lastTopic);
+            this.getMinecraft().setScreen(new GrimoireScreen(this.menu, this.inventory, this.title));
         }
     }
     

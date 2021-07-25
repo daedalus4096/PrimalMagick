@@ -5,13 +5,13 @@ import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.ForbiddenTridentEntity;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.world.World;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition for a trident made of the magical metal hexium which comes pre-enchanted with Rending.
@@ -24,7 +24,7 @@ public class ForbiddenTridentItem extends AbstractTieredTridentItem {
     }
 
     @Override
-    protected AbstractTridentEntity getThrownEntity(World world, LivingEntity thrower, ItemStack stack) {
+    protected AbstractTridentEntity getThrownEntity(Level world, LivingEntity thrower, ItemStack stack) {
         return new ForbiddenTridentEntity(world, thrower, stack);
     }
 
@@ -36,9 +36,9 @@ public class ForbiddenTridentItem extends AbstractTieredTridentItem {
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         // Populate the creative pane with a pre-enchanted trident
-        if (this.isInGroup(group)) {
+        if (this.allowdedIn(group)) {
             items.add(this.getDefaultInstance());
         }
     }

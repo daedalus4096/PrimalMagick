@@ -15,36 +15,36 @@ import com.verdantartifice.primalmagic.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IAngerable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.controller.FlyingMovementController;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.ResetAngerGoal;
-import net.minecraft.entity.passive.IFlyingAnimal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.RangedInteger;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.TickRangeConverter;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.util.IntRange;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -54,17 +54,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractPixieEntity extends AbstractCompanionEntity implements IAngerable, IFlyingAnimal, IPixie {
-    protected static final DataParameter<Integer> ANGER_TIME = EntityDataManager.createKey(AbstractPixieEntity.class, DataSerializers.VARINT);
-    protected static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.convertRange(20, 39);
+public abstract class AbstractPixieEntity extends AbstractCompanionEntity implements NeutralMob, FlyingAnimal, IPixie {
+    protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractPixieEntity.class, EntityDataSerializers.INT);
+    protected static final IntRange ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
 
     protected int attackTimer;
     protected UUID angerTarget;
     protected SpellPackage spellCache;
 
-    public AbstractPixieEntity(EntityType<? extends AbstractPixieEntity> type, World worldIn) {
+    public AbstractPixieEntity(EntityType<? extends AbstractPixieEntity> type, Level worldIn) {
         super(type, worldIn);
-        this.moveController = new FlyingMovementController(this, 20, false);
+        this.moveControl = new FlyingMoveControl(this, 20, false);
     }
 
     @Nonnull
@@ -85,16 +85,16 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
-        this.writeAngerNBT(compound);
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        this.addPersistentAngerSaveData(compound);
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
-        if (!this.world.isRemote) {
-            this.readAngerNBT((ServerWorld)this.world, compound);
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        if (!this.level.isClientSide) {
+            this.readPersistentAngerSaveData((ServerLevel)this.level, compound);
         }
     }
 
@@ -102,60 +102,60 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     protected void registerGoals() {
         this.goalSelector.addGoal(5, new FollowCompanionOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
         this.goalSelector.addGoal(6, new AbstractPixieEntity.RandomFlyGoal(this, 16.0F));
-        this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.targetSelector.addGoal(5, new ResetAngerGoal<>(this, false));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(ANGER_TIME, 0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ANGER_TIME, 0);
     }
 
     @Override
-    protected boolean canTriggerWalking() {
+    protected boolean isMovementNoisy() {
         return false;
     }
 
     @Override
-    public boolean onLivingFall(float distance, float damageMultiplier) {
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
         // Pixies fly, not fall
         return false;
     }
 
     @Override
-    protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
         // Pixies fly, not fall
     }
 
     @Override
-    public boolean doesEntityNotTriggerPressurePlate() {
+    public boolean isIgnoringBlockTriggers() {
         return true;
     }
 
     @Override
-    public int getTalkInterval() {
+    public int getAmbientSoundInterval() {
         return 120;
     }
 
     @Override
-    public boolean canDespawn(double distanceToClosestPlayer) {
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return false;
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
         
         if (this.attackTimer > 0) {
             this.attackTimer--;
         }
         
-        if (!this.world.isRemote) {
-            this.func_241359_a_((ServerWorld)this.world, true);
+        if (!this.level.isClientSide) {
+            this.updatePersistentAnger((ServerLevel)this.level, true);
             if (this.isAlive()) {
-                this.world.setEntityState(this, (byte)15);
+                this.level.broadcastEntityEvent(this, (byte)15);
             }
         }
     }
@@ -163,7 +163,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     @Override
     public void tick() {
         super.tick();
-        this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
+        this.setDeltaMovement(this.getDeltaMovement().multiply(1.0D, 0.6D, 1.0D));
     }
 
     /**
@@ -171,11 +171,11 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
      */
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void handleStatusUpdate(byte id) {
+    public void handleEntityEvent(byte id) {
         if (id == 15) {
-            FxDispatcher.INSTANCE.pixieDust(this.getPosX() + (this.rand.nextGaussian() * 0.25D), this.getPosY() + 0.25D, this.getPosZ() + (this.rand.nextGaussian() * 0.25D), this.getPixieSource().getColor());
+            FxDispatcher.INSTANCE.pixieDust(this.getX() + (this.random.nextGaussian() * 0.25D), this.getY() + 0.25D, this.getZ() + (this.random.nextGaussian() * 0.25D), this.getPixieSource().getColor());
         } else {
-            super.handleStatusUpdate(id);
+            super.handleEntityEvent(id);
         }
     }
 
@@ -185,28 +185,28 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public int getAngerTime() {
-        return this.dataManager.get(ANGER_TIME);
+    public int getRemainingPersistentAngerTime() {
+        return this.entityData.get(ANGER_TIME);
     }
 
     @Override
-    public void setAngerTime(int time) {
-        this.dataManager.set(ANGER_TIME, time);
+    public void setRemainingPersistentAngerTime(int time) {
+        this.entityData.set(ANGER_TIME, time);
     }
 
     @Override
-    public UUID getAngerTarget() {
+    public UUID getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setAngerTarget(UUID target) {
+    public void setPersistentAngerTarget(UUID target) {
         this.angerTarget = target;
     }
 
     @Override
-    public void func_230258_H__() {
-        this.setAngerTime(ANGER_TIME_RANGE.getRandomWithinRange(this.rand));
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.randomValue(this.random));
     }
 
     @Override
@@ -222,99 +222,99 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         // TODO Replace with custom sounds
-        return SoundEvents.ENTITY_BAT_HURT;
+        return SoundEvents.BAT_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
         // TODO Replace with custom sounds
-        return SoundEvents.ENTITY_BAT_DEATH;
+        return SoundEvents.BAT_DEATH;
     }
 
     @Override
-    protected ActionResultType getEntityInteractionResult(PlayerEntity playerIn, Hand hand) {
-        ActionResultType actionResult = super.getEntityInteractionResult(playerIn, hand);
-        if (!actionResult.isSuccessOrConsume() && !this.world.isRemote && this.isCompanionOwner(playerIn)) {
-            ItemStack held = playerIn.getHeldItem(hand);
+    protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
+        InteractionResult actionResult = super.mobInteract(playerIn, hand);
+        if (!actionResult.consumesAction() && !this.level.isClientSide && this.isCompanionOwner(playerIn)) {
+            ItemStack held = playerIn.getItemInHand(hand);
             ItemStack stack = new ItemStack(this.getSpawnItem());
-            if (held.isItemEqual(stack)) {
+            if (held.sameItem(stack)) {
                 held.grow(1);
             } else if (held.isEmpty()) {
-                playerIn.setHeldItem(hand, stack);
+                playerIn.setItemInHand(hand, stack);
             } else {
-                return ActionResultType.FAIL;
+                return InteractionResult.FAIL;
             }
             CompanionManager.removeCompanion(this.getCompanionOwner(), this);
             this.playSound(this.getHurtSound(null), 1.0F, 1.0F);
             this.remove();
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
             return actionResult;
         }
     }
 
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
         return false;
     }
 
     @Override
-    protected void collideWithEntity(Entity entityIn) {
+    protected void doPush(Entity entityIn) {
         // Pixies pass through other entities
     }
 
     @Override
-    protected void collideWithNearbyEntities() {
+    protected void pushEntities() {
         // Pixies pass through other entities
     }
 
     @Override
-    public boolean canBeLeashedTo(PlayerEntity player) {
+    public boolean canBeLeashed(Player player) {
         return false;
     }
 
     @Override
-    protected PathNavigator createNavigator(World worldIn) {
-        FlyingPathNavigator nav = new FlyingPathNavigator(this, worldIn);
+    protected PathNavigation createNavigation(Level worldIn) {
+        FlyingPathNavigation nav = new FlyingPathNavigation(this, worldIn);
         nav.setCanOpenDoors(false);
-        nav.setCanEnterDoors(true);
+        nav.setCanPassDoors(true);
         return nav;
     }
 
     protected static class RandomFlyGoal extends Goal {
         protected final AbstractPixieEntity pixie;
-        protected final PathNavigator navigator;
+        protected final PathNavigation navigator;
         protected final float wanderDistance;
         protected int timeToRecalcPath;
         
         public RandomFlyGoal(AbstractPixieEntity pixie, float wanderDistance) {
             this.pixie = pixie;
-            this.navigator = this.pixie.getNavigator();
+            this.navigator = this.pixie.getNavigation();
             this.wanderDistance = wanderDistance;
-            this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
         @Override
-        public boolean shouldExecute() {
-            MovementController movementcontroller = this.pixie.getMoveHelper();
-            if (!movementcontroller.isUpdating()) {
+        public boolean canUse() {
+            MoveControl movementcontroller = this.pixie.getMoveControl();
+            if (!movementcontroller.hasWanted()) {
                 return true;
             } else {
-                double dx = movementcontroller.getX() - this.pixie.getPosX();
-                double dy = movementcontroller.getY() - this.pixie.getPosY();
-                double dz = movementcontroller.getZ() - this.pixie.getPosZ();
+                double dx = movementcontroller.getWantedX() - this.pixie.getX();
+                double dy = movementcontroller.getWantedY() - this.pixie.getY();
+                double dz = movementcontroller.getWantedZ() - this.pixie.getZ();
                 double dist = dx * dx + dy * dy + dz * dz;
                 return dist < 1.0D || dist > 3600.0D;
             }
         }
 
         @Override
-        public boolean shouldContinueExecuting() {
+        public boolean canContinueToUse() {
             return this.timeToRecalcPath > 0;
         }
 
         @Override
-        public void startExecuting() {
+        public void start() {
             this.timeToRecalcPath = 0;
         }
 
@@ -322,11 +322,11 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         public void tick() {
             if (--this.timeToRecalcPath <= 0) {
                 this.timeToRecalcPath = 40;
-                Random random = this.pixie.getRNG();
-                double d0 = this.pixie.getPosX() + (double)((random.nextFloat() * 2.0F - 1.0F) * this.wanderDistance);
-                double d1 = this.pixie.getPosY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-                double d2 = this.pixie.getPosZ() + (double)((random.nextFloat() * 2.0F - 1.0F) * this.wanderDistance);
-                this.navigator.tryMoveToXYZ(d0, d1, d2, 1.0D);
+                Random random = this.pixie.getRandom();
+                double d0 = this.pixie.getX() + (double)((random.nextFloat() * 2.0F - 1.0F) * this.wanderDistance);
+                double d1 = this.pixie.getY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+                double d2 = this.pixie.getZ() + (double)((random.nextFloat() * 2.0F - 1.0F) * this.wanderDistance);
+                this.navigator.moveTo(d0, d1, d2, 1.0D);
             }
         }
     }

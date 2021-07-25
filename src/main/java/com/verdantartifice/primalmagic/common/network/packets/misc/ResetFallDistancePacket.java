@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -15,9 +15,9 @@ import net.minecraftforge.fml.network.NetworkEvent;
 public class ResetFallDistancePacket implements IMessageToServer {
     public ResetFallDistancePacket() {}
     
-    public static void encode(ResetFallDistancePacket message, PacketBuffer buf) {}
+    public static void encode(ResetFallDistancePacket message, FriendlyByteBuf buf) {}
     
-    public static ResetFallDistancePacket decode(PacketBuffer buf) {
+    public static ResetFallDistancePacket decode(FriendlyByteBuf buf) {
         return new ResetFallDistancePacket();
     }
     

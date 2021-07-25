@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagic.common.items.concoctions;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of a bomb casing.  Used as a base item for making alchemical bombs.

@@ -10,8 +10,8 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Item definition for magical essences.
@@ -25,7 +25,7 @@ public class EssenceItem extends Item {
     protected final Source source;
 
     public EssenceItem(@Nonnull EssenceType type, @Nonnull Source source) {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(type.getRarity()));
+        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(type.getRarity()));
         this.type = type;
         this.source = source;
         register(type, source, this);

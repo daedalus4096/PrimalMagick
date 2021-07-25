@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.rituals;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * Interface indicating whether a block can affect the stability of a magical ritual.
@@ -17,7 +17,7 @@ public interface IRitualStabilizer {
      * @param otherPos the position of the mirroring block
      * @return true if this block is exacting a symmetry penalty on the ritual, false otherwise
      */
-    public default boolean hasSymmetryPenalty(World world, BlockPos pos, BlockPos otherPos) {
+    public default boolean hasSymmetryPenalty(Level world, BlockPos pos, BlockPos otherPos) {
         return (world.getBlockState(pos).getBlock() != world.getBlockState(otherPos).getBlock());
     }
     
@@ -29,7 +29,7 @@ public interface IRitualStabilizer {
      * @param pos the position of this block
      * @return the absolute value of the bonus to ritual stability
      */
-    public float getStabilityBonus(World world, BlockPos pos);
+    public float getStabilityBonus(Level world, BlockPos pos);
     
     /**
      * Get the absolute value of the penalty to ritual stability inflicted by this block, if currently
@@ -39,5 +39,5 @@ public interface IRitualStabilizer {
      * @param pos the position of this block
      * @return the absolute value of the penalty to ritual stability
      */
-    public float getSymmetryPenalty(World world, BlockPos pos);
+    public float getSymmetryPenalty(Level world, BlockPos pos);
 }

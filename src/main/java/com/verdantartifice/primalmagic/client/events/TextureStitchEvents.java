@@ -19,7 +19,7 @@ import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementSlot;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -37,7 +37,7 @@ public class TextureStitchEvents {
     @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onPreTextureStitch(TextureStitchEvent.Pre event) {
-        if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().getTextureLocation())) {
+        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getMap().location())) {
             // Add empty-slot background images to the block atlas texture
             event.addSprite(WandCoreSlot.TEXTURE);
             event.addSprite(WandCapSlot.TEXTURE);

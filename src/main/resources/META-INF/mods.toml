@@ -16,6 +16,6 @@ description='''Harness the magic of the primal sources of the land.'''
 [[dependencies.primalmagic]]
     modId="forge"
     mandatory=true
-    versionRange="[34,)"
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"

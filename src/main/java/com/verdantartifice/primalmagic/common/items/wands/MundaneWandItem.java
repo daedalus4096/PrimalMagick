@@ -7,10 +7,10 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.MundaneWandISTER;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 /**
  * Item definition for a mundane wand.  Unlike modular wands, mundane wands cannot be inscribed with
@@ -20,7 +20,7 @@ import net.minecraft.util.text.StringTextComponent;
  */
 public class MundaneWandItem extends AbstractWandItem {
     public MundaneWandItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> MundaneWandISTER::new));
+        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).setISTER(() -> MundaneWandISTER::new));
     }
 
     @Override
@@ -48,9 +48,9 @@ public class MundaneWandItem extends AbstractWandItem {
     }
     
     @Override
-    public ITextComponent getSpellCapacityText(ItemStack stack) {
+    public Component getSpellCapacityText(ItemStack stack) {
         // Mundane wands can't carry spells
-        return new StringTextComponent("0");
+        return new TextComponent("0");
     }
 
     @Override

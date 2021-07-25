@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagic.common.blocks.misc;
 
-import net.minecraft.block.AbstractGlassBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.block.AbstractGlassBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
 
 /**
  * Block definition for skyglass.  Skyglass is completely transparent except at the edge, connecting
@@ -26,38 +26,38 @@ public class SkyglassBlock extends AbstractGlassBlock {
     
     public SkyglassBlock(Block.Properties properties) {
         super(properties);
-        this.setDefaultState(this.getDefaultState().with(UP, Boolean.FALSE).with(DOWN, Boolean.FALSE).with(NORTH, Boolean.FALSE).with(SOUTH, Boolean.FALSE).with(WEST, Boolean.FALSE).with(EAST, Boolean.FALSE));
+        this.registerDefaultState(this.defaultBlockState().setValue(UP, Boolean.FALSE).setValue(DOWN, Boolean.FALSE).setValue(NORTH, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST, Boolean.FALSE).setValue(EAST, Boolean.FALSE));
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         builder.add(UP, DOWN, NORTH, SOUTH, WEST, EAST);
     }
     
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Determine the block's connections when it is placed into the world
-        return this.getCurrentState(this.getDefaultState(), context.getWorld(), context.getPos());
+        return this.getCurrentState(this.defaultBlockState(), context.getLevel(), context.getClickedPos());
     }
     
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         // Determine the block's connections when one of its neighbors is updated
         return this.getCurrentState(stateIn, worldIn, currentPos);
     }
     
-    protected BlockState getCurrentState(BlockState state, IWorld world, BlockPos pos) {
-        return this.getDefaultState()
-                .with(UP, this.isSideConnected(state, world, pos, Direction.UP))
-                .with(DOWN, this.isSideConnected(state, world, pos, Direction.DOWN))
-                .with(NORTH, this.isSideConnected(state, world, pos, Direction.NORTH))
-                .with(SOUTH, this.isSideConnected(state, world, pos, Direction.SOUTH))
-                .with(WEST, this.isSideConnected(state, world, pos, Direction.WEST))
-                .with(EAST, this.isSideConnected(state, world, pos, Direction.EAST));
+    protected BlockState getCurrentState(BlockState state, LevelAccessor world, BlockPos pos) {
+        return this.defaultBlockState()
+                .setValue(UP, this.isSideConnected(state, world, pos, Direction.UP))
+                .setValue(DOWN, this.isSideConnected(state, world, pos, Direction.DOWN))
+                .setValue(NORTH, this.isSideConnected(state, world, pos, Direction.NORTH))
+                .setValue(SOUTH, this.isSideConnected(state, world, pos, Direction.SOUTH))
+                .setValue(WEST, this.isSideConnected(state, world, pos, Direction.WEST))
+                .setValue(EAST, this.isSideConnected(state, world, pos, Direction.EAST));
     }
     
-    protected boolean isSideConnected(BlockState state, IWorld world, BlockPos pos, Direction dir) {
-        BlockState adjacent = world.getBlockState(pos.offset(dir));
+    protected boolean isSideConnected(BlockState state, LevelAccessor world, BlockPos pos, Direction dir) {
+        BlockState adjacent = world.getBlockState(pos.relative(dir));
         return adjacent != null && state.getBlock() == adjacent.getBlock();
     }
 }

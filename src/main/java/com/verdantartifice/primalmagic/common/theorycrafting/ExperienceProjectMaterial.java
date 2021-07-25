@@ -4,9 +4,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a project material that requires experience levels, which may or may not be consumed as part
@@ -36,15 +36,15 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = super.serializeNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = super.serializeNBT();
         tag.putInt("Levels", this.levels);
         tag.putBoolean("Consumed", this.consumed);
         return tag;
     }
     
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
         this.levels = nbt.getInt("Levels");
         this.consumed = nbt.getBoolean("Consumed");
@@ -56,13 +56,13 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(PlayerEntity player) {
+    public boolean isSatisfied(Player player) {
         return player.experienceLevel >= this.levels;
     }
 
     @Override
-    public boolean consume(PlayerEntity player) {
-        player.addExperienceLevel(-1 * this.levels);
+    public boolean consume(Player player) {
+        player.giveExperienceLevels(-1 * this.levels);
         return true;
     }
     

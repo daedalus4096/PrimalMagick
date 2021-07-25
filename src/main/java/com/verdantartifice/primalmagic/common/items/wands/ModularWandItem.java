@@ -16,20 +16,22 @@ import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.IntNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
+
+import net.minecraft.world.item.Item.Properties;
 
 /**
  * Item definition for a modular wand.  Modular wands are made up of cores, caps, and gems, and their
@@ -69,7 +71,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     @Override
-    public double getTotalCostModifier(ItemStack stack, PlayerEntity player, Source source) {
+    public double getTotalCostModifier(ItemStack stack, Player player, Source source) {
         double mod = super.getTotalCostModifier(stack, player, source);
         
         // Subtract discount for wand core alignment, if any
@@ -91,7 +93,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandCore(@Nonnull ItemStack stack, @Nonnull WandCore core) {
-        stack.setTagInfo("core", StringNBT.valueOf(core.getTag()));
+        stack.addTagElement("core", StringTag.valueOf(core.getTag()));
     }
     
     @Nullable 
@@ -104,7 +106,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandCap(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
-        stack.setTagInfo("cap", StringNBT.valueOf(cap.getTag()));
+        stack.addTagElement("cap", StringTag.valueOf(cap.getTag()));
     }
     
     @Nullable
@@ -117,7 +119,7 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     public void setWandGem(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
-        stack.setTagInfo("gem", StringNBT.valueOf(gem.getTag()));
+        stack.addTagElement("gem", StringTag.valueOf(gem.getTag()));
     }
     
     @Nonnull
@@ -126,15 +128,15 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     @Override
-    public ITextComponent getDisplayName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         // A modular wand's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Wand")
         WandCore core = this.getWandCore(stack);
-        ITextComponent coreName = (core == null) ? new TranslationTextComponent("primalmagic.wand_core.unknown.name") : new TranslationTextComponent(core.getNameTranslationKey());
+        Component coreName = (core == null) ? new TranslatableComponent("primalmagic.wand_core.unknown.name") : new TranslatableComponent(core.getNameTranslationKey());
         WandCap cap = this.getWandCap(stack);
-        ITextComponent capName = (cap == null) ? new TranslationTextComponent("primalmagic.wand_cap.unknown.name") : new TranslationTextComponent(cap.getNameTranslationKey());
+        Component capName = (cap == null) ? new TranslatableComponent("primalmagic.wand_cap.unknown.name") : new TranslatableComponent(cap.getNameTranslationKey());
         WandGem gem = this.getWandGem(stack);
-        ITextComponent gemName = (gem == null) ? new TranslationTextComponent("primalmagic.wand_gem.unknown.name") : new TranslationTextComponent(gem.getNameTranslationKey());
-        return new TranslationTextComponent("item.primalmagic.modular_wand", gemName, capName, coreName);
+        Component gemName = (gem == null) ? new TranslatableComponent("primalmagic.wand_gem.unknown.name") : new TranslatableComponent(gem.getNameTranslationKey());
+        return new TranslatableComponent("item.primalmagic.modular_wand", gemName, capName, coreName);
     }
     
     @Override
@@ -168,9 +170,9 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         // Populate the creative pane with a NBT-complete modular wand(s)
-        if (this.isInGroup(group)) {
+        if (this.allowdedIn(group)) {
             ItemStack stack = new ItemStack(this);
             this.setWandCore(stack, WandCore.HEARTWOOD);
             this.setWandCap(stack, WandCap.IRON);
@@ -186,11 +188,11 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
         
         // Regenerate one mana per second for core-aligned sources
-        if (stack != null && entityIn.ticksExisted % 20 == 0) {
+        if (stack != null && entityIn.tickCount % 20 == 0) {
             int maxMana = this.getMaxMana(stack);
             WandCore core = this.getWandCore(stack);
             if (core != null && maxMana != -1) {
@@ -213,9 +215,9 @@ public class ModularWandItem extends AbstractWandItem {
         // Deserialize the list of inscribed spells from the given wand stack's NBT data
         List<SpellPackage> retVal = new ArrayList<>();
         if (stack != null) {
-            ListNBT spellTagsList = stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND);
+            ListTag spellTagsList = stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND);
             for (int index = 0; index < spellTagsList.size(); index++) {
-                CompoundNBT spellTag = spellTagsList.getCompound(index);
+                CompoundTag spellTag = spellTagsList.getCompound(index);
                 SpellPackage newSpell = new SpellPackage(spellTag);
                 if (newSpell != null) {
                     retVal.add(newSpell);
@@ -235,21 +237,21 @@ public class ModularWandItem extends AbstractWandItem {
     }
     
     @Override
-    public ITextComponent getSpellCapacityText(ItemStack stack) {
+    public Component getSpellCapacityText(ItemStack stack) {
         if (stack == null) {
-            return new TranslationTextComponent("primalmagic.spells.capacity", 0);
+            return new TranslatableComponent("primalmagic.spells.capacity", 0);
         } else {
             WandCore core = this.getWandCore(stack);
             if (core == null) {
-                return new TranslationTextComponent("primalmagic.spells.capacity", 0);
+                return new TranslatableComponent("primalmagic.spells.capacity", 0);
             } else {
                 int baseSlots = this.getCoreSpellSlotCount(core);
                 Source bonusSlot = core.getBonusSlot();
                 if (bonusSlot == null) {
-                    return new TranslationTextComponent("primalmagic.spells.capacity", baseSlots);
+                    return new TranslatableComponent("primalmagic.spells.capacity", baseSlots);
                 } else {
-                    ITextComponent bonusText = new TranslationTextComponent(bonusSlot.getNameTranslationKey());
-                    return new TranslationTextComponent("primalmagic.spells.capacity_with_bonus", baseSlots, bonusText);
+                    Component bonusText = new TranslatableComponent(bonusSlot.getNameTranslationKey());
+                    return new TranslatableComponent("primalmagic.spells.capacity_with_bonus", baseSlots, bonusText);
                 }
             }
         }
@@ -266,10 +268,10 @@ public class ModularWandItem extends AbstractWandItem {
         // Deserialize the active inscribed spell from the given wand stack's NBT data
         SpellPackage retVal = null;
         if (stack != null) {
-            ListNBT spellTagsList = stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND);
+            ListTag spellTagsList = stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND);
             int index = this.getActiveSpellIndex(stack);
             if (index >= 0 && index < spellTagsList.size()) {
-                CompoundNBT spellTag = spellTagsList.getCompound(index);
+                CompoundTag spellTag = spellTagsList.getCompound(index);
                 retVal = new SpellPackage(spellTag);
             }
         }
@@ -282,7 +284,7 @@ public class ModularWandItem extends AbstractWandItem {
             return false;
         } else if (index >= -1 && index < this.getSpells(stack).size()) {
             // -1 is a valid value and means "no active spell"
-            stack.setTagInfo("ActiveSpell", IntNBT.valueOf(index));
+            stack.addTagElement("ActiveSpell", IntTag.valueOf(index));
             return true;
         }
         return false;
@@ -325,9 +327,9 @@ public class ModularWandItem extends AbstractWandItem {
         if (this.canAddSpell(stack, spell)) {
             // Save the given spell into the wand stack's NBT data
             if (!stack.getTag().contains("Spells")) {
-                ListNBT newList = new ListNBT();
+                ListTag newList = new ListTag();
                 newList.add(spell.serializeNBT());
-                stack.setTagInfo("Spells", newList);
+                stack.addTagElement("Spells", newList);
                 return true;
             } else {
                 return stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND).add(spell.serializeNBT());

@@ -5,9 +5,9 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -36,7 +36,7 @@ public class SpellBoltPacket implements IMessageToClient {
         this.color = color;
     }
 
-    public SpellBoltPacket(Vector3d source, Vector3d target, int color) {
+    public SpellBoltPacket(Vec3 source, Vec3 target, int color) {
         this(source.x, source.y, source.z, target.x, target.y, target.z, color);
     }
     
@@ -44,7 +44,7 @@ public class SpellBoltPacket implements IMessageToClient {
         this(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, color);
     }
     
-    public static void encode(SpellBoltPacket message, PacketBuffer buf) {
+    public static void encode(SpellBoltPacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
         buf.writeDouble(message.z1);
@@ -54,7 +54,7 @@ public class SpellBoltPacket implements IMessageToClient {
         buf.writeVarInt(message.color);
     }
     
-    public static SpellBoltPacket decode(PacketBuffer buf) {
+    public static SpellBoltPacket decode(FriendlyByteBuf buf) {
         SpellBoltPacket message = new SpellBoltPacket();
         message.x1 = buf.readDouble();
         message.y1 = buf.readDouble();

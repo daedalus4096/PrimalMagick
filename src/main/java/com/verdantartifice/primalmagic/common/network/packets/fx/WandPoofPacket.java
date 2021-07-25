@@ -8,9 +8,9 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -34,14 +34,14 @@ public class WandPoofPacket implements IMessageToClient {
         this.z = z;
         this.color = color;
         this.sound = sound;
-        this.face = facing == null ? (byte)-1 : (byte)facing.getIndex();
+        this.face = facing == null ? (byte)-1 : (byte)facing.get3DDataValue();
     }
     
     public WandPoofPacket(@Nonnull BlockPos pos, int color, boolean sound, @Nullable Direction facing) {
         this(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, color, sound, facing);
     }
     
-    public static void encode(WandPoofPacket message, PacketBuffer buf) {
+    public static void encode(WandPoofPacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
         buf.writeDouble(message.z);
@@ -50,7 +50,7 @@ public class WandPoofPacket implements IMessageToClient {
         buf.writeByte(message.face);
     }
     
-    public static WandPoofPacket decode(PacketBuffer buf) {
+    public static WandPoofPacket decode(FriendlyByteBuf buf) {
         WandPoofPacket message = new WandPoofPacket();
         message.x = buf.readDouble();
         message.y = buf.readDouble();
@@ -67,7 +67,7 @@ public class WandPoofPacket implements IMessageToClient {
             ctx.get().enqueueWork(() -> {
                 Direction side = null;
                 if (message.face >= 0) {
-                    side = Direction.byIndex(message.face);
+                    side = Direction.from3DDataValue(message.face);
                 }
                 FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, side);
             });

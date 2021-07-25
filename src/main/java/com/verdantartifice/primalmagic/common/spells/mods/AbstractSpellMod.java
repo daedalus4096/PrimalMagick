@@ -12,11 +12,11 @@ import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Base class for a spell mod.  Handles property management and serialization.
@@ -38,8 +38,8 @@ public abstract class AbstractSpellMod implements ISpellMod {
     protected abstract String getModType();
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
         nbt.putString("ModType", this.getModType());
         for (Map.Entry<String, SpellProperty> entry : this.properties.entrySet()) {
             nbt.putInt(entry.getKey(), entry.getValue().getValue());
@@ -48,7 +48,7 @@ public abstract class AbstractSpellMod implements ISpellMod {
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         for (Map.Entry<String, SpellProperty> entry : this.properties.entrySet()) {
             entry.getValue().setValue(nbt.getInt(entry.getKey()));
         }
@@ -95,7 +95,7 @@ public abstract class AbstractSpellMod implements ISpellMod {
                 retVal += ampMod.getPropertyValue("power");
             }
             if (spellSource != null) {
-                int enchLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get(), spellSource);
+                int enchLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get(), spellSource);
                 if (enchLevel > 0) {
                     retVal += enchLevel;
                 }
@@ -105,12 +105,12 @@ public abstract class AbstractSpellMod implements ISpellMod {
     }
     
     @Override
-    public ITextComponent getTypeName() {
-        return new TranslationTextComponent("primalmagic.spell.mod.type." + this.getModType());
+    public Component getTypeName() {
+        return new TranslatableComponent("primalmagic.spell.mod.type." + this.getModType());
     }
     
     @Override
-    public ITextComponent getDefaultNamePiece() {
-        return new TranslationTextComponent("primalmagic.spell.mod.default_name." + this.getModType());
+    public Component getDefaultNamePiece() {
+        return new TranslatableComponent("primalmagic.spell.mod.default_name." + this.getModType());
     }
 }

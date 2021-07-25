@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagic.common.crafting;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.core.NonNullList;
 
 /**
  * Crafting recipe interface for a ritual recipe.  Ritual recipes are performed across multiple
@@ -15,7 +15,7 @@ import net.minecraft.util.NonNullList;
  * 
  * @author Daedalus4096
  */
-public interface IRitualRecipe extends ICraftingRecipe, IHasManaCost {
+public interface IRitualRecipe extends CraftingRecipe, IHasManaCost {
     /**
      * Get the required research for the recipe.
      * 
@@ -37,17 +37,17 @@ public interface IRitualRecipe extends ICraftingRecipe, IHasManaCost {
      */
     public int getInstability();
     
-    default IRecipeType<?> getType() {
+    default RecipeType<?> getType() {
         return RecipeTypesPM.RITUAL;
     }
     
     @Override
-    default boolean isDynamic() {
+    default boolean isSpecial() {
         // Return true to keep ritual recipes from showing up in the vanilla recipe book
         return true;
     }
     
-    default ItemStack getIcon() {
+    default ItemStack getToastSymbol() {
         return new ItemStack(BlocksPM.RITUAL_ALTAR.get());
     }
 }

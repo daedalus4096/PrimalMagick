@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -20,7 +20,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface ISpellMod extends INBTSerializable<CompoundNBT> {
+public interface ISpellMod extends INBTSerializable<CompoundTag> {
     /**
      * Determine whether the spell mod has an effect that should be executed.  Should be true for all but
      * placeholder spell mods.
@@ -60,7 +60,7 @@ public interface ISpellMod extends INBTSerializable<CompoundNBT> {
      * @return the spell mod type name
      */
     @Nonnull
-    public ITextComponent getTypeName();
+    public Component getTypeName();
     
     /**
      * Get a display text component containing the human-friendly text to be used to identify the
@@ -69,7 +69,7 @@ public interface ISpellMod extends INBTSerializable<CompoundNBT> {
      * @return the spell mod's default name
      */
     @Nonnull
-    public ITextComponent getDefaultNamePiece();
+    public Component getDefaultNamePiece();
     
     /**
      * Get the additive modifier to be applied to the spell mod's package's base cost.

@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,46 +16,46 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class SpellSparkleParticle extends SpriteTexturedParticle {
-    protected final IAnimatedSprite spriteSet;
+public class SpellSparkleParticle extends TextureSheetParticle {
+    protected final SpriteSet spriteSet;
 
-    public SpellSparkleParticle(ClientWorld world, double x, double y, double z, IAnimatedSprite spriteSet) {
+    public SpellSparkleParticle(ClientLevel world, double x, double y, double z, SpriteSet spriteSet) {
         this(world, x, y, z, 0.0D, 0.0D, 0.0D, spriteSet);
     }
     
-    public SpellSparkleParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite spriteSet) {
+    public SpellSparkleParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.motionX = xSpeed;
-        this.motionY = ySpeed;
-        this.motionZ = zSpeed;
-        this.particleScale = 0.125F;
-        this.particleGravity = 0.0F;
-        this.maxAge = 20;
+        this.xd = xSpeed;
+        this.yd = ySpeed;
+        this.zd = zSpeed;
+        this.quadSize = 0.125F;
+        this.gravity = 0.0F;
+        this.lifetime = 20;
         this.spriteSet = spriteSet;
-        this.selectSpriteWithAge(this.spriteSet);
+        this.setSpriteFromAge(this.spriteSet);
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
     
     @Override
     public void tick() {
         super.tick();
-        this.selectSpriteWithAge(this.spriteSet);
+        this.setSpriteFromAge(this.spriteSet);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        protected final IAnimatedSprite spriteSet;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        protected final SpriteSet spriteSet;
         
-        public Factory(IAnimatedSprite spriteSet) {
+        public Factory(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new SpellSparkleParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
         }
         

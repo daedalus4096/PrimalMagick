@@ -10,9 +10,9 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a wand cap data structure.  Wand caps determine the discount or penalty applied to a

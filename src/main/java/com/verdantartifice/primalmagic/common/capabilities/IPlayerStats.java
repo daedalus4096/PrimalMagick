@@ -4,9 +4,9 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.stats.Stat;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -14,7 +14,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerStats extends INBTSerializable<CompoundNBT> {
+public interface IPlayerStats extends INBTSerializable<CompoundTag> {
     /**
      * Remove all statistics data from the player.
      */
@@ -56,5 +56,5 @@ public interface IPlayerStats extends INBTSerializable<CompoundNBT> {
      * 
      * @param player the player whose client should receive the data
      */
-    public void sync(@Nullable ServerPlayerEntity player);
+    public void sync(@Nullable ServerPlayer player);
 }
