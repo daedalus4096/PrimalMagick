@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -21,8 +22,8 @@ import net.minecraftforge.common.util.Constants;
 public class SunlampTileEntity extends TilePM implements TickableBlockEntity {
     protected int ticksExisted = 0;
     
-    public SunlampTileEntity() {
-        super(TileEntityTypesPM.SUNLAMP.get());
+    public SunlampTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.SUNLAMP.get(), pos, state);
     }
 
     @Override

@@ -24,6 +24,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -95,8 +96,8 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         }
     };
     
-    public AbstractCalcinatorTileEntity(BlockEntityType<? extends AbstractCalcinatorTileEntity> tileEntityType) {
-        super(tileEntityType, OUTPUT_CAPACITY + 2);
+    public AbstractCalcinatorTileEntity(BlockEntityType<? extends AbstractCalcinatorTileEntity> tileEntityType, BlockPos pos, BlockState state) {
+        super(tileEntityType, pos, state, OUTPUT_CAPACITY + 2);
     }
     
     protected boolean isBurning() {
@@ -104,8 +105,8 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     }
     
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         
         this.burnTime = compound.getInt("BurnTime");
         this.burnTimeTotal = compound.getInt("BurnTimeTotal");
@@ -148,7 +149,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
             if (this.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
                 // If the calcinator isn't burning, but has meltable input in place, light it up
                 if (!this.isBurning() && this.canCalcinate(inputStack)) {
-                    this.burnTime = ForgeHooks.getBurnTime(fuelStack);
+                    this.burnTime = ForgeHooks.getBurnTime(fuelStack, null);
                     this.burnTimeTotal = this.burnTime;
                     if (this.isBurning()) {
                         shouldMarkDirty = true;
@@ -214,7 +215,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     protected abstract int getCookTimeTotal();
 
     public static boolean isFuel(ItemStack stack) {
-        return ForgeHooks.getBurnTime(stack) > 0;
+        return ForgeHooks.getBurnTime(stack, null) > 0;
     }
 
     protected boolean canCalcinate(ItemStack inputStack) {

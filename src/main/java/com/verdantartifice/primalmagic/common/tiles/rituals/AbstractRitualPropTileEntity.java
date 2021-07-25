@@ -20,8 +20,8 @@ import net.minecraftforge.common.util.Constants;
 public abstract class AbstractRitualPropTileEntity extends TilePM implements IRitualPropTileEntity {
     protected BlockPos altarPos = null;
     
-    public AbstractRitualPropTileEntity(BlockEntityType<?> type) {
-        super(type);
+    public AbstractRitualPropTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
     
     @Override
@@ -37,8 +37,8 @@ public abstract class AbstractRitualPropTileEntity extends TilePM implements IRi
     }
     
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
     }
     

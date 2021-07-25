@@ -33,7 +33,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class TileEntityTypesPM {
-    private static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, PrimalMagic.MODID);
+    private static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, PrimalMagic.MODID);
     
     public static void init() {
         TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());

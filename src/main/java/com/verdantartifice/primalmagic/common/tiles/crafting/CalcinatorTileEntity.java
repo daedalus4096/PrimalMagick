@@ -14,6 +14,8 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -24,8 +26,8 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
-    public CalcinatorTileEntity() {
-        super(TileEntityTypesPM.CALCINATOR.get());
+    public CalcinatorTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.CALCINATOR.get(), pos, state);
     }
     
     @Override

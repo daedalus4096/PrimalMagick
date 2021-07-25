@@ -11,7 +11,9 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Definition of an essence furnace tile entity.  Provides the melting functionality for the corresponding
@@ -20,8 +22,8 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class EssenceFurnaceTileEntity extends AbstractCalcinatorTileEntity {
-    public EssenceFurnaceTileEntity() {
-        super(TileEntityTypesPM.ESSENCE_FURNACE.get());
+    public EssenceFurnaceTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.ESSENCE_FURNACE.get(), pos, state);
     }
     
     @Override

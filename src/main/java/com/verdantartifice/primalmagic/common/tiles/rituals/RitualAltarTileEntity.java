@@ -115,8 +115,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements TickableBl
     protected List<BlockPos> propPositions = new ArrayList<>();
     protected Map<Block, Integer> blockCounts = new HashMap<>();
     
-    public RitualAltarTileEntity() {
-        super(TileEntityTypesPM.RITUAL_ALTAR.get(), 1);
+    public RitualAltarTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.RITUAL_ALTAR.get(), pos, state, 1);
         this.mishaps = Util.make(new WeightedRandomBag<>(), bag -> {
             bag.add(new Mishap(this::mishapOffering, false, 0.0F), 6.0D);
             bag.add(new Mishap(this::mishapSalt, false, 10.0F), 3.0D);
@@ -191,8 +191,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements TickableBl
     }
     
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.active = compound.getBoolean("Active");
         this.currentStepComplete = compound.getBoolean("CurrentStepComplete");
         this.activeCount = compound.getInt("ActiveCount");

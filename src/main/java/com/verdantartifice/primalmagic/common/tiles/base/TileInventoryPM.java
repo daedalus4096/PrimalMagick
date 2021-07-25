@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.util.Constants;
@@ -30,8 +31,8 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
     protected final int[] faceSlots;                // The slots of this tile's inventory visible from its sides
     
-    public TileInventoryPM(BlockEntityType<?> type, int invSize) {
-        super(type);
+    public TileInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state, int invSize) {
+        super(type, pos, state);
         this.items = NonNullList.withSize(invSize, ItemStack.EMPTY);
         this.syncedItems = NonNullList.withSize(invSize, ItemStack.EMPTY);
         this.syncedSlotIndices = this.getSyncedSlotIndices();
@@ -199,8 +200,8 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
     }
     
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(compound, this.items);
     }

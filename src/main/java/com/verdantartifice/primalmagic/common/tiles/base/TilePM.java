@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerP
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -23,8 +24,8 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class TilePM extends BlockEntity {
-    public TilePM(BlockEntityType<?> type) {
-        super(type);
+    public TilePM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
     
     /**
@@ -53,7 +54,7 @@ public class TilePM extends BlockEntity {
     
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(this.getBlockState(), pkt.getTag());
+        this.load(pkt.getTag());
     }
     
     /**

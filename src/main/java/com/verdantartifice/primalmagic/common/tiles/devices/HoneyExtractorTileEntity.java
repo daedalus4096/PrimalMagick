@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.util.Mth;
@@ -79,14 +80,14 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements Tickabl
         }
     };
     
-    public HoneyExtractorTileEntity() {
-        super(TileEntityTypesPM.HONEY_EXTRACTOR.get(), 5);
+    public HoneyExtractorTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state, 5);
         this.manaStorage = new ManaStorage(10000, 100, 100, Source.SKY);
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.spinTime = compound.getInt("SpinTime");
         this.spinTimeTotal = compound.getInt("SpinTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));

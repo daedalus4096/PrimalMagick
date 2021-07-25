@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
 /**
@@ -15,8 +17,8 @@ public class RitualBellTileEntity extends AbstractRitualPropTileEntity implement
     protected boolean isRinging;
     protected Direction ringDirection;
 
-    public RitualBellTileEntity() {
-        super(TileEntityTypesPM.RITUAL_BELL.get());
+    public RitualBellTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.RITUAL_BELL.get(), pos, state);
     }
     
     public int getRingingTicks() {

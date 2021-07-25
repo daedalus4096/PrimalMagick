@@ -32,6 +32,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.util.Mth;
@@ -92,14 +93,14 @@ public class ConcocterTileEntity extends TileInventoryPM implements TickableBloc
         }
     };
     
-    public ConcocterTileEntity() {
-        super(TileEntityTypesPM.CONCOCTER.get(), MAX_INPUT_ITEMS + 2);
+    public ConcocterTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.CONCOCTER.get(), pos, state, MAX_INPUT_ITEMS + 2);
         this.manaStorage = new ManaStorage(10000, 1000, 1000, Source.INFERNAL);
     }
     
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");

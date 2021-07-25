@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.inventory.ContainerData;
@@ -66,8 +67,8 @@ public class WandChargerTileEntity extends TileInventoryPM implements TickableBl
         }
     };
     
-    public WandChargerTileEntity() {
-        super(TileEntityTypesPM.WAND_CHARGER.get(), 2);
+    public WandChargerTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.WAND_CHARGER.get(), pos, state, 2);
     }
     
     @Override
@@ -77,8 +78,8 @@ public class WandChargerTileEntity extends TileInventoryPM implements TickableBl
     }
     
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
     }

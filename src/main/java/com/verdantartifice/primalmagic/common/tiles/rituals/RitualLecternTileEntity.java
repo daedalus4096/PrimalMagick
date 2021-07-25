@@ -19,13 +19,13 @@ import net.minecraftforge.common.util.Constants;
 public class RitualLecternTileEntity extends TileInventoryPM implements IRitualPropTileEntity {
     protected BlockPos altarPos = null;
     
-    public RitualLecternTileEntity() {
-        super(TileEntityTypesPM.RITUAL_LECTERN.get(), 1);
+    public RitualLecternTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.RITUAL_LECTERN.get(), pos, state, 1);
     }
     
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
     }
     

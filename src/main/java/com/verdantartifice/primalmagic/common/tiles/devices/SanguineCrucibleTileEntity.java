@@ -45,8 +45,8 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements Ticka
     protected int charge;
     protected int counter = 0;
     
-    public SanguineCrucibleTileEntity() {
-        super(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), 1);
+    public SanguineCrucibleTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), pos, state, 1);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements Ticka
     }
     
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.souls = compound.getInt("Souls");
         this.fluidAmount = compound.getInt("FluidAmount");
         this.charge = compound.getInt("Charge");

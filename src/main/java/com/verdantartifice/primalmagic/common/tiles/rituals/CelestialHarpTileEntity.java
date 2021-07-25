@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Definition of a celestial harp tile entity.
@@ -15,8 +17,8 @@ public class CelestialHarpTileEntity extends AbstractRitualPropTileEntity implem
     protected int playTicks;
     protected boolean isPlaying;
     
-    public CelestialHarpTileEntity() {
-        super(TileEntityTypesPM.CELESTIAL_HARP.get());
+    public CelestialHarpTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.CELESTIAL_HARP.get(), pos, state);
     }
 
     @Override
