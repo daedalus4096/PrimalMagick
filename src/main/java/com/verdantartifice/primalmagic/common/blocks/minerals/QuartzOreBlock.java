@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagic.common.blocks.minerals;
 
-import java.util.Random;
-
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.OreBlock;
-import net.minecraft.util.Mth;
 
 /**
  * Block definition for quartz ore.  Like nether quartz ore, except it spawns in the overworld in
@@ -14,11 +12,6 @@ import net.minecraft.util.Mth;
  */
 public class QuartzOreBlock extends OreBlock {
     public QuartzOreBlock(Block.Properties properties) {
-        super(properties);
-    }
-    
-    @Override
-    protected int xpOnDrop(Random rng) {
-        return Mth.nextInt(rng, 2, 5);
+        super(properties, UniformInt.of(2, 5));
     }
 }

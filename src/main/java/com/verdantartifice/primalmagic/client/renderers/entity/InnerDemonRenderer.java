@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -28,8 +29,8 @@ public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, Pl
     protected InnerDemonArmorLayer armorLayer;
     protected boolean modelFinalized = false;
     
-    public InnerDemonRenderer(EntityRenderDispatcher renderManagerIn) {
-        super(renderManagerIn, new PlayerModel<InnerDemonEntity>(0.0F, false), 0.5F * SCALE);
+    public InnerDemonRenderer(EntityRendererProvider.Context context) {
+        super(context, new PlayerModel<InnerDemonEntity>(0.0F, false), 0.5F * SCALE);
         this.armorLayer = new InnerDemonArmorLayer(this, false);
         this.addLayer(this.armorLayer);
     }

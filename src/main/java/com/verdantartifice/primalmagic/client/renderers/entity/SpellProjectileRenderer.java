@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.models.SpellProjectileModel;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
@@ -11,12 +12,11 @@ import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjecti
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,8 +32,8 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
 
     protected final SpellProjectileModel model = new SpellProjectileModel();
 
-    public SpellProjectileRenderer(EntityRenderDispatcher renderManager) {
-        super(renderManager);
+    public SpellProjectileRenderer(EntityRendererProvider.Context context) {
+        super(context);
     }
     
     @Override

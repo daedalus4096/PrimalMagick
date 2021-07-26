@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.EnchantedGolemModel;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.AbstractEnchantedGolemEntity;
 
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import com.mojang.math.Vector3f;
 
 /**
  * Base entity renderer for an enchanted golem.
@@ -14,8 +14,8 @@ import com.mojang.math.Vector3f;
  * @author Daedalus4096
  */
 public abstract class AbstractEnchantedGolemRenderer<T extends AbstractEnchantedGolemEntity> extends MobRenderer<T, EnchantedGolemModel<T>> {
-    public AbstractEnchantedGolemRenderer(EntityRenderDispatcher rendererManager) {
-        super(rendererManager, new EnchantedGolemModel<>(), 0.7F);
+    public AbstractEnchantedGolemRenderer(EntityRendererProvider.Context context) {
+        super(context, new EnchantedGolemModel<>(), 0.7F);
     }
 
     @Override

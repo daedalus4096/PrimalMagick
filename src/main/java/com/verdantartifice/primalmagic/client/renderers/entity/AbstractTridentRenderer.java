@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.entities.projectiles.AbstractTride
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.model.TridentModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -24,8 +25,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class AbstractTridentRenderer extends EntityRenderer<AbstractTridentEntity> {
     protected final TridentModel tridentModel = new TridentModel();
 
-    public AbstractTridentRenderer(EntityRenderDispatcher renderManager) {
-        super(renderManager);
+    public AbstractTridentRenderer(EntityRendererProvider.Context context) {
+        super(context);
     }
 
     @Override

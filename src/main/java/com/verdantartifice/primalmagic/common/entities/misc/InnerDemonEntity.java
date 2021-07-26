@@ -189,7 +189,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     @Override
     public void checkDespawn() {
         if (this.level.getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
-            this.remove();
+            this.discard();
         } else {
             this.noActionTime = 0;
         }

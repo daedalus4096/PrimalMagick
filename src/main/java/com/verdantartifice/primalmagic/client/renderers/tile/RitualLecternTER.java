@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import com.mojang.math.Vector3f;
 
@@ -20,11 +21,10 @@ import com.mojang.math.Vector3f;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.rituals.RitualLecternBlock}
  */
-public class RitualLecternTER extends BlockEntityRenderer<RitualLecternTileEntity> {
+public class RitualLecternTER implements BlockEntityRenderer<RitualLecternTileEntity> {
     protected final BookModel bookModel = new BookModel();
 
-    public RitualLecternTER(BlockEntityRenderDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+    public RitualLecternTER(BlockEntityRendererProvider.Context context) {
     }
 
     @Override

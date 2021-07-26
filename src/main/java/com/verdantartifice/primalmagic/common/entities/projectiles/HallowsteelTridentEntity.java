@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class HallowsteelTridentEntity extends AbstractTridentEntity {
-    public HallowsteelTridentEntity(EntityType<? extends HallowsteelTridentEntity> type, Level worldIn) {
+    public HallowsteelTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
         super(type, worldIn);
         this.thrownStack = new ItemStack(ItemsPM.HALLOWSTEEL_TRIDENT.get());
     }

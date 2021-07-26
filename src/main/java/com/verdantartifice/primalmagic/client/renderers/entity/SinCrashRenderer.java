@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.models.SpellProjectileModel;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntity;
@@ -12,12 +13,11 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import com.mojang.math.Vector3f;
 
 /**
  * Renderer for a sin crash projectile.  Looks just like a void spell projectile.
@@ -30,8 +30,8 @@ public class SinCrashRenderer extends EntityRenderer<SinCrashEntity> {
 
     protected final SpellProjectileModel model = new SpellProjectileModel();
 
-    public SinCrashRenderer(EntityRenderDispatcher renderManager) {
-        super(renderManager);
+    public SinCrashRenderer(EntityRendererProvider.Context context) {
+        super(context);
     }
 
     @Override

@@ -78,9 +78,7 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
     public void removed(Player playerIn) {
         // Return input pencil and paper to the player's inventory when the GUI is closed
         super.removed(playerIn);
-        this.worldPosCallable.execute((world, blockPos) -> {
-            this.clearContainer(playerIn, world, this.writingInv);
-        });
+        this.clearContainer(playerIn, this.writingInv);
     }
     
     @Override
@@ -135,10 +133,7 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 0) {
-                playerIn.drop(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }

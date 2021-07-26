@@ -53,26 +53,27 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.FishingRodItem;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
-import net.minecraftforge.fmlclient.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fmlclient.registry.RenderingRegistry;
 
 /**
  * Client sided proxy.  Handles client setup issues and provides side-dependent utility methods.
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public class ClientProxy implements IProxyPM {
     @Override
     public void initDeferredRegistries() {
@@ -115,14 +116,14 @@ public class ClientProxy implements IProxyPM {
     
     private void registerTERs() {
         // Register tile entity renderers for those tile entities that need them
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.ANCIENT_MANA_FONT.get(), dispatcher -> new AncientManaFontTER(dispatcher));
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.WAND_CHARGER.get(), dispatcher -> new WandChargerTER(dispatcher));
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RITUAL_ALTAR.get(), dispatcher -> new RitualAltarTER(dispatcher));
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.OFFERING_PEDESTAL.get(), dispatcher -> new OfferingPedestalTER(dispatcher));
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RITUAL_LECTERN.get(), dispatcher -> new RitualLecternTER(dispatcher));
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RITUAL_BELL.get(), dispatcher -> new RitualBellTER(dispatcher));
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), dispatcher -> new RunescribingAltarTER(dispatcher));
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), dispatcher -> new SanguineCrucibleTER(dispatcher));
+        BlockEntityRenderers.register(TileEntityTypesPM.ANCIENT_MANA_FONT.get(), AncientManaFontTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.WAND_CHARGER.get(), WandChargerTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_ALTAR.get(), RitualAltarTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.OFFERING_PEDESTAL.get(), OfferingPedestalTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_LECTERN.get(), RitualLecternTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_BELL.get(), RitualBellTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), RunescribingAltarTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTER::new);
     }
     
     private void registerEntityRenderers(FMLClientSetupEvent event) {
@@ -131,12 +132,8 @@ public class ClientProxy implements IProxyPM {
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SIN_CRASH.get(), SinCrashRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SIN_CRYSTAL.get(), SinCrystalRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.APPLE.get(), (renderManager) -> {
-            return new ThrownItemRenderer<>(renderManager, event.getMinecraftSupplier().get().getItemRenderer());
-        });
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.ALCHEMICAL_BOMB.get(), (renderManager) -> {
-            return new ThrownItemRenderer<>(renderManager, event.getMinecraftSupplier().get().getItemRenderer());
-        });
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.APPLE.get(), ThrownItemRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.ALCHEMICAL_BOMB.get(), ThrownItemRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentRenderer::new);
@@ -182,8 +179,7 @@ public class ClientProxy implements IProxyPM {
             ItemProperties.register(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, ArcanometerItem.getScanStateProperty());
             ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, FlyingCarpetItem.getColorProperty());
             
-            @SuppressWarnings("deprecation")
-            ItemPropertyFunction castProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
+            ItemPropertyFunction castProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 if (entity == null) {
                     return 0.0F;
                 } else {
@@ -200,8 +196,7 @@ public class ClientProxy implements IProxyPM {
             ItemProperties.register(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
             ItemProperties.register(ItemsPM.PRIMAL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
             
-            @SuppressWarnings("deprecation")
-            ItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
+            ItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
             };
             ItemProperties.register(ItemsPM.PRIMALITE_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
@@ -212,8 +207,7 @@ public class ClientProxy implements IProxyPM {
             ItemProperties.register(ItemsPM.HEXIUM_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
             ItemProperties.register(ItemsPM.HALLOWSTEEL_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
             
-            @SuppressWarnings("deprecation")
-            ItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
+            ItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 if (entity == null) {
                     return 0.0F;
                 } else {

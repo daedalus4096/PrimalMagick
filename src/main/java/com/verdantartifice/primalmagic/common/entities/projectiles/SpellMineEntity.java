@@ -166,10 +166,10 @@ public class SpellMineEntity extends Entity {
     public void tick() {
         super.tick();
         if (!this.level.isClientSide && (this.spell == null || !this.spell.isValid())) {
-            this.remove();
+            this.discard();
         }
         if (++this.currentLife > this.getLifespan()) {
-            this.remove();
+            this.discard();
         }
         if (!this.level.isClientSide && this.isAlive()) {
             if (!this.isArmed() && this.currentLife >= ARMING_TIME) {
@@ -193,7 +193,7 @@ public class SpellMineEntity extends Entity {
                     }
                 }
                 if (found) {
-                    this.remove();
+                    this.discard();
                 }
             }
         }

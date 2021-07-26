@@ -2,17 +2,17 @@ package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.FlyingCarpetModel;
 import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
+import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -42,8 +42,8 @@ public class FlyingCarpetRenderer extends EntityRenderer<FlyingCarpetEntity> {
     
     protected final FlyingCarpetModel model = new FlyingCarpetModel();
 
-    public FlyingCarpetRenderer(EntityRenderDispatcher renderManager) {
-        super(renderManager);
+    public FlyingCarpetRenderer(EntityRendererProvider.Context context) {
+        super(context);
         this.shadowRadius = 0.5F;
     }
 

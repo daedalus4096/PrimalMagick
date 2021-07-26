@@ -121,7 +121,7 @@ public class ConcoctionItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        return ItemUtils.useDrink(worldIn, playerIn, handIn);
+        return ItemUtils.startUsingInstantly(worldIn, playerIn, handIn);
     }
 
     @Override

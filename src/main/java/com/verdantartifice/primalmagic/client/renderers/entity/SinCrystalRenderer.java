@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -26,8 +27,8 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
     protected final ModelPart glassModelRenderer;
     protected final ModelPart runeModelRenderer;
 
-    public SinCrystalRenderer(EntityRenderDispatcher renderManager) {
-        super(renderManager);
+    public SinCrystalRenderer(EntityRendererProvider.Context context) {
+        super(context);
         this.shadowRadius = 0.5F;
         this.glassModelRenderer = new ModelPart(64, 32, 0, 0);
         this.glassModelRenderer.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);

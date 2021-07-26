@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.PixieModel;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.AbstractPixieEntity;
 
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.Mth;
 
@@ -14,8 +14,8 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public abstract class AbstractPixieRenderer extends MobRenderer<AbstractPixieEntity, PixieModel> {
-    public AbstractPixieRenderer(EntityRenderDispatcher renderManagerIn, PixieModel model) {
-        super(renderManagerIn, model, 0.25F);
+    public AbstractPixieRenderer(EntityRendererProvider.Context context, PixieModel model) {
+        super(context, model, 0.25F);
     }
 
     @Override

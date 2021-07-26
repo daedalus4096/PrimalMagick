@@ -246,7 +246,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
             }
             CompanionManager.removeCompanion(this.getCompanionOwner(), this);
             this.playSound(this.getHurtSound(null), 1.0F, 1.0F);
-            this.remove();
+            this.discard();
             return InteractionResult.SUCCESS;
         } else {
             return actionResult;

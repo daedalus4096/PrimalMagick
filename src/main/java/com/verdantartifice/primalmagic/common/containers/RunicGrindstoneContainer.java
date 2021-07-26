@@ -44,7 +44,7 @@ public class RunicGrindstoneContainer extends GrindstoneMenu {
             if (!world.isClientSide && this.player instanceof ServerPlayer) {
                 ServerPlayer spe = (ServerPlayer)this.player;
                 ItemStack stack = this.resultSlots.getItem(0);
-                spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, 2, stack));
+                spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 2, stack));
             }
         });
     }

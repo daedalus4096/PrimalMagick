@@ -254,8 +254,6 @@ public class RunecarvingTableContainer extends AbstractContainerMenu {
     public void removed(Player playerIn) {
         super.removed(playerIn);
         this.outputInventory.removeItemNoUpdate(0);
-        this.worldPosCallable.execute((world, pos) -> {
-            this.clearContainer(playerIn, playerIn.level, this.inputInventory);
-        });
+        this.clearContainer(playerIn, this.inputInventory);
     }
 }

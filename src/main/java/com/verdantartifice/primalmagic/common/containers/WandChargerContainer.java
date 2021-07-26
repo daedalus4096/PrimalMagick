@@ -115,10 +115,7 @@ public class WandChargerContainer extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 0) {
-                playerIn.drop(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }

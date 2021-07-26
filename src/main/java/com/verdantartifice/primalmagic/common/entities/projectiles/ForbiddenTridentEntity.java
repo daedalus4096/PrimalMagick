@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ForbiddenTridentEntity extends AbstractTridentEntity {
-    public ForbiddenTridentEntity(EntityType<? extends ForbiddenTridentEntity> type, Level worldIn) {
+    public ForbiddenTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
         super(type, worldIn);
         this.thrownStack = new ItemStack(ItemsPM.FORBIDDEN_TRIDENT.get());
     }

@@ -77,7 +77,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
                 if (!this.level.isClientSide && this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }
-                this.remove();
+                this.discard();
             } else if (loyalty > 0) {
                 this.setNoPhysics(true);
                 Vec3 vector3d = new Vec3(shooter.getX() - this.getX(), shooter.getEyeY() - this.getY(), shooter.getZ() - this.getZ());
@@ -124,12 +124,12 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
         return this.dealtDamage ? null : super.findHitEntity(startVec, endVec);
     }
     
-    protected abstract float getBaseDamage();
+    public abstract double getBaseDamage();
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
-        float damage = this.getBaseDamage();
+        float damage = (float)this.getBaseDamage();
         if (entity instanceof LivingEntity) {
             damage += EnchantmentHelper.getDamageBonus(this.thrownStack, ((LivingEntity)entity).getMobType());
         }

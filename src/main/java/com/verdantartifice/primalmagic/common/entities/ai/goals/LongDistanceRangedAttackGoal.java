@@ -67,8 +67,8 @@ public class LongDistanceRangedAttackGoal<T extends PathfinderMob & RangedAttack
 
     @Override
     public void tick() {
-        double distSq = this.entity.distanceToSqr(this.attackTarget);
-        boolean canSee = this.entity.getSensing().canSee(this.attackTarget);
+        float distSq = (float)this.entity.distanceToSqr(this.attackTarget);
+        boolean canSee = this.entity.getSensing().hasLineOfSight(this.attackTarget);
         if (canSee) {
             this.seeTime++;
         } else {

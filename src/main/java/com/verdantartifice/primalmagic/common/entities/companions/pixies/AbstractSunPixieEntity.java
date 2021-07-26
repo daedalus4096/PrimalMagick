@@ -102,8 +102,8 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
 
         @Override
         public void tick() {
-            double distSq = this.pixie.distanceToSqr(this.castTarget);
-            boolean canSee = this.pixie.getSensing().canSee(this.castTarget);
+            float distSq = (float)this.pixie.distanceToSqr(this.castTarget);
+            boolean canSee = this.pixie.getSensing().hasLineOfSight(this.castTarget);
             if (canSee) {
                 this.seeTime++;
             } else {

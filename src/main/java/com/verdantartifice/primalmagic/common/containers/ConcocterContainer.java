@@ -123,10 +123,7 @@ public class ConcocterContainer extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 10) {
-                playerIn.drop(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }

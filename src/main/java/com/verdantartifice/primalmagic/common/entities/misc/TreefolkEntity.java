@@ -172,7 +172,7 @@ public class TreefolkEntity extends PathfinderMob implements NeutralMob, RangedA
         double d1 = target.getX() - this.getX();
         double d2 = d0 - missile.getY();
         double d3 = target.getZ() - this.getZ();
-        float f = Mth.sqrt(d1 * d1 + d3 * d3) * 0.2F;
+        float f = (float)Math.sqrt(d1 * d1 + d3 * d3) * 0.2F;
         missile.shoot(d1, d2 + (double)f, d3, 1.6F, (float)(14 - this.level.getDifficulty().getId() * 4));
         this.playSound(SoundEvents.SNOWBALL_THROW, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.level.addFreshEntity(missile);

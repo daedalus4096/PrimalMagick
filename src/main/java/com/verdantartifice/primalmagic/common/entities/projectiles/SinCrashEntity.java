@@ -51,7 +51,7 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
         if (!this.level.isClientSide) {
             SinCrystalEntity crystal = new SinCrystalEntity(this.level, result.getLocation().x, result.getLocation().y, result.getLocation().z);
             this.level.addFreshEntity(crystal);
-            this.remove();
+            this.discard();
         }
     }
 

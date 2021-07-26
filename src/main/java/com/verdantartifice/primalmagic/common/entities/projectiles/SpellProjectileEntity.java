@@ -96,7 +96,7 @@ public class SpellProjectileEntity extends ThrowableProjectile {
                 LivingEntity shooter = (this.getOwner() instanceof LivingEntity) ? (LivingEntity)this.getOwner() : null;
                 SpellManager.executeSpellPayload(this.spell, result, this.level, shooter, this.spellSource, true);
             }
-            this.remove();
+            this.discard();
         }
     }
 

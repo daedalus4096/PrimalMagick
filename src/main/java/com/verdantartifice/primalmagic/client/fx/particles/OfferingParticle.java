@@ -42,7 +42,7 @@ public class OfferingParticle extends TextureSheetParticle {
         double dx = this.targetX - this.x;
         double dy = this.targetY - this.y;
         double dz = this.targetZ - this.z;
-        int base = (int)(Mth.sqrt(dx * dx + dy * dy + dz * dz) * 10.0F);
+        int base = (int)(Math.sqrt(dx * dx + dy * dy + dz * dz) * 10.0F);
         if (base < 1) {
             base = 1;
         }
@@ -95,7 +95,7 @@ public class OfferingParticle extends TextureSheetParticle {
             double dx = this.targetX - this.x;
             double dy = this.targetY - this.y;
             double dz = this.targetZ - this.z;
-            double distance = Mth.sqrt(dx * dx + dy * dy + dz * dz);
+            double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
             double clamp = Math.min(0.25D, distance / 15.0D);
             if (distance < 2.0D) {
                 this.quadSize *= 0.9F;

@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions.CompanionType;
 
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -163,11 +164,11 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     public abstract CompanionType getCompanionType();
 
     @Override
-    public void remove() {
+    public void remove(Entity.RemovalReason reason) {
         if (this.hasCompanionOwner()) {
             CompanionManager.removeCompanion(this.getCompanionOwner(), this);
         }
-        super.remove();
+        super.remove(reason);
     }
 
     @Override

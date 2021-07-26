@@ -122,7 +122,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
                 this.applyPotionEffects(effects, struckEntity);
             }
 
-            this.remove();
+            this.discard();
         }
     }
     

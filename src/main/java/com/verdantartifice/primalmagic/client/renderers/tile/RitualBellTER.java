@@ -11,6 +11,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -26,13 +27,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
-public class RitualBellTER extends BlockEntityRenderer<RitualBellTileEntity> {
+public class RitualBellTER implements BlockEntityRenderer<RitualBellTileEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/ritual_bell_body");
     public static final Material BODY_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, TEXTURE);
     protected final ModelPart modelRenderer = new ModelPart(32, 32, 0, 0);
 
-    public RitualBellTER(BlockEntityRenderDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+    public RitualBellTER(BlockEntityRendererProvider.Context context) {
         this.modelRenderer.addBox(-3.0F, -6.0F, -3.0F, 6.0F, 7.0F, 6.0F);
         this.modelRenderer.setPos(8.0F, 12.0F, 8.0F);
         ModelPart modelrenderer = new ModelPart(32, 32, 0, 13);

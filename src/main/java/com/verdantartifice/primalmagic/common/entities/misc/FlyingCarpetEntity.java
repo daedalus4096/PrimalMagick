@@ -235,7 +235,7 @@ public class FlyingCarpetEntity extends Entity {
                     ((FlyingCarpetItem)stack.getItem()).setDyeColor(stack, color);
                 }
                 this.spawnAtLocation(stack, 0.0F);
-                this.remove();
+                this.discard();
                 return InteractionResult.SUCCESS;
             } else {
                 player.startRiding(this);

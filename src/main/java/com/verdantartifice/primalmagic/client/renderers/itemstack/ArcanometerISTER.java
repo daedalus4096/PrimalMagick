@@ -105,12 +105,13 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
         matrixStack.popPose();
     }
     
+    @SuppressWarnings("deprecation")
     protected ModelResourceLocation getModelResourceLocation(ItemStack stack) {
         // Determine which model to use based on the scan state of the arcanometer item stack
         Minecraft mc = Minecraft.getInstance();
         ItemPropertyFunction propGetter = ItemProperties.getProperty(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY);
         if (propGetter != null) {
-            float value = propGetter.call(stack, mc.level, mc.player);
+            float value = propGetter.call(stack, mc.level, mc.player, 0);
             if (value <= 0.0F) {
                 return MRL0;
             } else if (value <= 1.0F) {

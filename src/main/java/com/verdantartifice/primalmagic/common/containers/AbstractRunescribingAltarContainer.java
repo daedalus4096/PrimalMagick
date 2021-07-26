@@ -91,7 +91,7 @@ public abstract class AbstractRunescribingAltarContainer extends AbstractContain
     @Override
     public void removed(Player playerIn) {
         super.removed(playerIn);
-        this.clearContainer(playerIn, this.world, this.altarInv);
+        this.clearContainer(playerIn, this.altarInv);
     }
 
     @Override
@@ -133,10 +133,7 @@ public abstract class AbstractRunescribingAltarContainer extends AbstractContain
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 0) {
-                playerIn.drop(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }
@@ -181,7 +178,7 @@ public abstract class AbstractRunescribingAltarContainer extends AbstractContain
             
             // Send a packet to the client to update its GUI with the shown output
             this.resultInv.setItem(0, stack);
-            spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, 0, stack));
+            spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 0, stack));
         }
     }
 }

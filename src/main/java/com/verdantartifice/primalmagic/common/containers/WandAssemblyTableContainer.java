@@ -85,9 +85,7 @@ public class WandAssemblyTableContainer extends AbstractContainerMenu {
     public void removed(Player playerIn) {
         // Return crafting inputs to the player's inventory when GUI is closed
         super.removed(playerIn);
-        this.worldPosCallable.execute((world, blockPos) -> {
-            this.clearContainer(playerIn, world, this.componentInv);
-        });
+        this.clearContainer(playerIn, this.componentInv);
     }
     
     @Override
@@ -156,10 +154,7 @@ public class WandAssemblyTableContainer extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 0) {
-                playerIn.drop(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }
@@ -192,7 +187,7 @@ public class WandAssemblyTableContainer extends AbstractContainerMenu {
             
             // Send a packet to the client to update its GUI with the shown output
             this.resultInv.setItem(0, stack);
-            spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, 0, stack));
+            spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 0, stack));
         }
     }
 

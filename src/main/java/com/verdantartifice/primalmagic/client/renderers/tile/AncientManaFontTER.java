@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -32,10 +31,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AncientManaFontTER implements BlockEntityRenderer<AncientManaFontTileEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/mana_font_core");
     
-    protected Level level;
-    
     public AncientManaFontTER(BlockEntityRendererProvider.Context context) {
-        this.level = context.getBlockEntityRenderDispatcher().level;
     }
     
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
@@ -58,7 +54,7 @@ public class AncientManaFontTER implements BlockEntityRenderer<AncientManaFontTi
             float g = sourceColor.getGreen() / 255.0F;
             float b = sourceColor.getBlue() / 255.0F;
             float ds = 0.1875F;
-            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
             float scale = (float)tileEntityIn.getMana() / (float)tileEntityIn.getManaCapacity();    // Shrink the core as it holds less mana
             
             @SuppressWarnings("deprecation")

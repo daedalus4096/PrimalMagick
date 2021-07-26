@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class HexiumTridentEntity extends AbstractTridentEntity {
-    public HexiumTridentEntity(EntityType<? extends HexiumTridentEntity> type, Level worldIn) {
+    public HexiumTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
         super(type, worldIn);
         this.thrownStack = new ItemStack(ItemsPM.HEXIUM_TRIDENT.get());
     }
