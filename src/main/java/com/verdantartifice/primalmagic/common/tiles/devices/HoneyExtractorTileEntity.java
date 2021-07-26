@@ -20,7 +20,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
@@ -36,7 +36,7 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.HoneyExtractorBlock}
  * @author Daedalus4096
  */
-public class HoneyExtractorTileEntity extends TileInventoryPM implements TickableBlockEntity, MenuProvider, IManaContainer {
+public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer {
     protected int spinTime;
     protected int spinTimeTotal;
     protected ManaStorage manaStorage;
@@ -119,47 +119,46 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements Tickabl
         return 10;
     }
 
-    @Override
-    public void tick() {
+    public static void tick(Level level, BlockPos pos, BlockState state, HoneyExtractorTileEntity entity) {
         boolean shouldMarkDirty = false;
 
-        if (!this.level.isClientSide) {
+        if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
-            ItemStack wandStack = this.items.get(4);
+            ItemStack wandStack = entity.items.get(4);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
-                int centimanaMissing = this.manaStorage.getMaxManaStored(Source.SKY) - this.manaStorage.getManaStored(Source.SKY);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.SKY) - entity.manaStorage.getManaStored(Source.SKY);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
                 if (wand.consumeMana(wandStack, null, Source.SKY, centimanaToTransfer)) {
-                    this.manaStorage.receiveMana(Source.SKY, centimanaToTransfer, false);
+                    entity.manaStorage.receiveMana(Source.SKY, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
             
             // Process ingredients
-            ItemStack honeycombStack = this.items.get(0);
-            ItemStack bottleStack = this.items.get(1);
-            if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && this.manaStorage.getManaStored(Source.SKY) >= this.getManaCost()) {
+            ItemStack honeycombStack = entity.items.get(0);
+            ItemStack bottleStack = entity.items.get(1);
+            if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && entity.manaStorage.getManaStored(Source.SKY) >= entity.getManaCost()) {
                 // If spinnable input is in place, process it
-                if (this.canSpin()) {
-                    this.spinTime++;
-                    if (this.spinTime == this.spinTimeTotal) {
-                        this.spinTime = 0;
-                        this.spinTimeTotal = this.getSpinTimeTotal();
-                        this.doExtraction();
+                if (entity.canSpin()) {
+                    entity.spinTime++;
+                    if (entity.spinTime == entity.spinTimeTotal) {
+                        entity.spinTime = 0;
+                        entity.spinTimeTotal = entity.getSpinTimeTotal();
+                        entity.doExtraction();
                         shouldMarkDirty = true;
                     }
                 } else {
-                    this.spinTime = 0;
+                    entity.spinTime = 0;
                 }
-            } else if (this.spinTime > 0) {
+            } else if (entity.spinTime > 0) {
                 // Decay any spin progress
-                this.spinTime = Mth.clamp(this.spinTime - 2, 0, this.spinTimeTotal);
+                entity.spinTime = Mth.clamp(entity.spinTime - 2, 0, entity.spinTimeTotal);
             }
         }
         if (shouldMarkDirty) {
-            this.setChanged();
-            this.syncTile(true);
+            entity.setChanged();
+            entity.syncTile(true);
         }
     }
 

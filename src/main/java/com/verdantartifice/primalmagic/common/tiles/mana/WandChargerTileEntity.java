@@ -18,7 +18,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
@@ -31,7 +31,7 @@ import net.minecraft.network.chat.TranslatableComponent;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
  */
-public class WandChargerTileEntity extends TileInventoryPM implements TickableBlockEntity, MenuProvider {
+public class WandChargerTileEntity extends TileInventoryPM implements MenuProvider {
     protected int chargeTime;
     protected int chargeTimeTotal;
     
@@ -101,35 +101,34 @@ public class WandChargerTileEntity extends TileInventoryPM implements TickableBl
         return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 
-    @Override
-    public void tick() {
+    public static void tick(Level level, BlockPos pos, BlockState state, WandChargerTileEntity entity) {
         boolean shouldMarkDirty = false;
 
-        if (!this.level.isClientSide) {
-            ItemStack inputStack = this.items.get(0);
-            ItemStack wandStack = this.items.get(1);
+        if (!level.isClientSide) {
+            ItemStack inputStack = entity.items.get(0);
+            ItemStack wandStack = entity.items.get(1);
             if (!inputStack.isEmpty() && !wandStack.isEmpty()) {
-                if (this.canCharge()) {
+                if (entity.canCharge()) {
                     // If there's an essence in the input slot and the slotted wand isn't full, do the charge
-                    this.chargeTime++;
-                    if (this.chargeTime >= this.chargeTimeTotal) {
-                        this.chargeTime = 0;
-                        this.chargeTimeTotal = this.getChargeTimeTotal();
-                        this.doCharge();
+                    entity.chargeTime++;
+                    if (entity.chargeTime >= entity.chargeTimeTotal) {
+                        entity.chargeTime = 0;
+                        entity.chargeTimeTotal = entity.getChargeTimeTotal();
+                        entity.doCharge();
                         shouldMarkDirty = true;
                     }
                 } else {
-                    this.chargeTime = 0;
+                    entity.chargeTime = 0;
                 }
-            } else if (this.chargeTime > 0) {
+            } else if (entity.chargeTime > 0) {
                 // Decay any charging progress if the charger isn't populated
-                this.chargeTime = Mth.clamp(this.chargeTime - 2, 0, this.chargeTimeTotal);
+                entity.chargeTime = Mth.clamp(entity.chargeTime - 2, 0, entity.chargeTimeTotal);
             }
         }
         
         if (shouldMarkDirty) {
-            this.setChanged();
-            this.syncTile(true);
+            entity.setChanged();
+            entity.syncTile(true);
         }
     }
     

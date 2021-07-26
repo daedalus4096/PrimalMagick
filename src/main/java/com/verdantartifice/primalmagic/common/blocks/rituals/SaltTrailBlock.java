@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableMap;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.common.blockstates.properties.SaltSide;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 
@@ -354,7 +355,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
             double z = (double)pos.getZ() + 0.5D + ((double)rand.nextFloat() - 0.5D) * 0.2D;
             float powerRatio = (float)power / 15.0F;
             float colorRatio = (power == 0) ? 0.6F : (powerRatio * 0.3F) + 0.7F;
-            world.addParticle(new DustParticleOptions(colorRatio, colorRatio, colorRatio, 1.0F), x, y, z, 0.0D, 0.0D, 0.0D);
+            world.addParticle(new DustParticleOptions(new Vector3f(colorRatio, colorRatio, colorRatio), 1.0F), x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
     

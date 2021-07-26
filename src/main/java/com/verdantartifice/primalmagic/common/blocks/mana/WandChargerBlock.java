@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagic.common.blocks.mana;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
@@ -12,6 +15,8 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.Containers;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +34,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class WandChargerBlock extends Block {
+public class WandChargerBlock extends BaseEntityBlock {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/wand_charger"));
     
     public WandChargerBlock() {
@@ -42,24 +47,20 @@ public class WandChargerBlock extends Block {
     }
     
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new WandChargerTileEntity(pos, state);
     }
     
     @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new WandChargerTileEntity();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, TileEntityTypesPM.WAND_CHARGER.get(), WandChargerTileEntity::tick);
     }
-    
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
-        // Pass any received events on to the tile entity and let it decide what to do with it
-        super.triggerEvent(state, worldIn, pos, id, param);
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        return (tile == null) ? false : tile.triggerEvent(id, param);
-    }
-    
+
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide) {

@@ -10,28 +10,30 @@ import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
@@ -42,7 +44,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
+public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/incense_brazier"));
 
@@ -58,6 +60,11 @@ public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
         return SHAPE;
     }
     
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
@@ -125,22 +132,8 @@ public class IncenseBrazierBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-    
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new IncenseBrazierTileEntity();
-    }
-    
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
-        // Pass any received events on to the tile entity and let it decide what to do with it
-        super.triggerEvent(state, worldIn, pos, id, param);
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        return (tile == null) ? false : tile.triggerEvent(id, param);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new IncenseBrazierTileEntity(pos, state);
     }
     
     @Override

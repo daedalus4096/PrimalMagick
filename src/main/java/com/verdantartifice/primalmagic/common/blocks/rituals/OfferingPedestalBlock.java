@@ -10,7 +10,9 @@ import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
@@ -36,7 +38,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class OfferingPedestalBlock extends Block implements ISaltPowered, IRitualStabilizer {
+public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPowered, IRitualStabilizer {
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/offering_pedestal"));
     
     public OfferingPedestalBlock() {
@@ -49,6 +51,11 @@ public class OfferingPedestalBlock extends Block implements ISaltPowered, IRitua
     }
     
     @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // Show spell sparkles if receiving salt power
         if (this.isBlockSaltPowered(worldIn, pos)) {
@@ -57,22 +64,8 @@ public class OfferingPedestalBlock extends Block implements ISaltPowered, IRitua
     }
     
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-    
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new OfferingPedestalTileEntity();
-    }
-    
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
-        // Pass any received events on to the tile entity and let it decide what to do with it
-        super.triggerEvent(state, worldIn, pos, id, param);
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        return (tile == null) ? false : tile.triggerEvent(id, param);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new OfferingPedestalTileEntity(pos, state);
     }
     
     @SuppressWarnings("deprecation")

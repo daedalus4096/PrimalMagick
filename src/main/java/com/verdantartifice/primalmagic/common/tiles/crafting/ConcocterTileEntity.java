@@ -31,7 +31,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
@@ -43,7 +43,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class ConcocterTileEntity extends TileInventoryPM implements TickableBlockEntity, MenuProvider, IOwnedTileEntity, IManaContainer {
+public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer {
     protected static final int MAX_INPUT_ITEMS = 9;
     protected static final int WAND_SLOT_INDEX = 9;
     protected static final int OUTPUT_SLOT_INDEX = 10;
@@ -154,19 +154,18 @@ public class ConcocterTileEntity extends TileInventoryPM implements TickableBloc
         return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 
-    @Override
-    public void tick() {
+    public static void tick(Level level, BlockPos pos, BlockState state, ConcocterTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        if (!this.level.isClientSide) {
+        if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
-            ItemStack wandStack = this.items.get(WAND_SLOT_INDEX);
+            ItemStack wandStack = entity.items.get(WAND_SLOT_INDEX);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
-                int centimanaMissing = this.manaStorage.getMaxManaStored(Source.INFERNAL) - this.manaStorage.getManaStored(Source.INFERNAL);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.INFERNAL) - entity.manaStorage.getManaStored(Source.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
                 if (wand.consumeMana(wandStack, null, Source.INFERNAL, centimanaToTransfer)) {
-                    this.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
+                    entity.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
@@ -174,30 +173,30 @@ public class ConcocterTileEntity extends TileInventoryPM implements TickableBloc
             SimpleContainer realInv = new SimpleContainer(MAX_INPUT_ITEMS);
             SimpleContainer testInv = new SimpleContainer(MAX_INPUT_ITEMS);
             for (int index = 0; index < MAX_INPUT_ITEMS; index++) {
-                ItemStack invStack = this.items.get(index);
+                ItemStack invStack = entity.items.get(index);
                 realInv.setItem(index, invStack);
                 // Don't consider fuse length when testing item inputs for recipe determination
                 testInv.setItem(index, ConcoctionUtils.isBomb(invStack) ? ConcoctionUtils.setFuseType(invStack.copy(), FuseType.MEDIUM) : invStack);
             }
-            IConcoctingRecipe recipe = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING, testInv, this.level).orElse(null);
-            if (this.canConcoct(realInv, recipe)) {
-                this.cookTime++;
-                if (this.cookTime >= this.cookTimeTotal) {
-                    this.cookTime = 0;
-                    this.cookTimeTotal = this.getCookTimeTotal();
-                    this.doConcoction(realInv, recipe);
+            IConcoctingRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING, testInv, level).orElse(null);
+            if (entity.canConcoct(realInv, recipe)) {
+                entity.cookTime++;
+                if (entity.cookTime >= entity.cookTimeTotal) {
+                    entity.cookTime = 0;
+                    entity.cookTimeTotal = entity.getCookTimeTotal();
+                    entity.doConcoction(realInv, recipe);
                     shouldMarkDirty = true;
                 }
             } else {
-                this.cookTime = Mth.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
+                entity.cookTime = Mth.clamp(entity.cookTime - 2, 0, entity.cookTimeTotal);
             }
             
-            this.level.setBlock(this.getBlockPos(), this.level.getBlockState(this.getBlockPos()).setValue(ConcocterBlock.HAS_BOTTLE, this.showBottle()), Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(pos, state.setValue(ConcocterBlock.HAS_BOTTLE, entity.showBottle()), Constants.BlockFlags.BLOCK_UPDATE);
         }
 
         if (shouldMarkDirty) {
-            this.setChanged();
-            this.syncTile(true);
+            entity.setChanged();
+            entity.syncTile(true);
         }
     }
     

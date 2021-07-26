@@ -10,7 +10,9 @@ import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.BloodletterTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
@@ -42,7 +44,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class BloodletterBlock extends Block implements IRitualPropBlock {
+public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final BooleanProperty FILLED = BooleanProperty.create("filled");
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/bloodletter"));
     
@@ -61,6 +63,11 @@ public class BloodletterBlock extends Block implements IRitualPropBlock {
         return SHAPE;
     }
     
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (player != null && player.getItemInHand(handIn).isEmpty() && !state.getValue(FILLED)) {
@@ -139,21 +146,7 @@ public class BloodletterBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-    
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new BloodletterTileEntity();
-    }
-    
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
-        // Pass any received events on to the tile entity and let it decide what to do with it
-        super.triggerEvent(state, worldIn, pos, id, param);
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        return (tile == null) ? false : tile.triggerEvent(id, param);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new BloodletterTileEntity(pos, state);
     }
 }

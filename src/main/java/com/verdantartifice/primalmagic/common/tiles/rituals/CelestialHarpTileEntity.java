@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * 
  * @author Daedalus4096
  */
-public class CelestialHarpTileEntity extends AbstractRitualPropTileEntity implements TickableBlockEntity {
+public class CelestialHarpTileEntity extends AbstractRitualPropTileEntity {
     public static final int TICKS_PER_PLAY = 138;   // 6.9s, just under the length of the harp sound effect
     
     protected int playTicks;
@@ -21,14 +21,13 @@ public class CelestialHarpTileEntity extends AbstractRitualPropTileEntity implem
         super(TileEntityTypesPM.CELESTIAL_HARP.get(), pos, state);
     }
 
-    @Override
-    public void tick() {
-        if (this.isPlaying) {
-            this.playTicks++;
+    public static void tick(Level level, BlockPos pos, BlockState state, CelestialHarpTileEntity entity) {
+        if (entity.isPlaying) {
+            entity.playTicks++;
         }
-        if (this.playTicks >= TICKS_PER_PLAY) {
-            this.isPlaying = false;
-            this.playTicks = 0;
+        if (entity.playTicks >= TICKS_PER_PLAY) {
+            entity.isPlaying = false;
+            entity.playTicks = 0;
         }
     }
 

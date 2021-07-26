@@ -9,7 +9,9 @@ import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualCandleTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.entity.player.Player;
@@ -42,7 +44,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class RitualCandleBlock extends Block implements IRitualPropBlock {
+public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/ritual_candle"));
 
@@ -63,6 +65,11 @@ public class RitualCandleBlock extends Block implements IRitualPropBlock {
         return SHAPE;
     }
     
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
@@ -132,22 +139,8 @@ public class RitualCandleBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-    
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new RitualCandleTileEntity();
-    }
-    
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
-        // Pass any received events on to the tile entity and let it decide what to do with it
-        super.triggerEvent(state, worldIn, pos, id, param);
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        return (tile == null) ? false : tile.triggerEvent(id, param);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new RitualCandleTileEntity(pos, state);
     }
     
     @Override

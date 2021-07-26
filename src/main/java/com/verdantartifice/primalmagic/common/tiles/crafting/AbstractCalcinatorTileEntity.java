@@ -26,7 +26,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.util.Mth;
@@ -44,7 +44,7 @@ import net.minecraftforge.common.util.Constants;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.crafting.AbstractCalcinatorBlock}
  * @see {@link net.minecraft.tileentity.FurnaceTileEntity}
  */
-public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM implements TickableBlockEntity, MenuProvider, IOwnedTileEntity {
+public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM implements MenuProvider, IOwnedTileEntity {
     protected static final int OUTPUT_CAPACITY = 9;
     
     protected int burnTime;
@@ -135,63 +135,62 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         return super.save(compound);
     }
 
-    @Override
-    public void tick() {
-        boolean burningAtStart = this.isBurning();
+    public static void tick(Level level, BlockPos pos, BlockState state, AbstractCalcinatorTileEntity entity) {
+        boolean burningAtStart = entity.isBurning();
         boolean shouldMarkDirty = false;
         
         if (burningAtStart) {
-            this.burnTime--;
+            entity.burnTime--;
         }
-        if (!this.level.isClientSide) {
-            ItemStack inputStack = this.items.get(0);
-            ItemStack fuelStack = this.items.get(1);
-            if (this.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
+        if (!level.isClientSide) {
+            ItemStack inputStack = entity.items.get(0);
+            ItemStack fuelStack = entity.items.get(1);
+            if (entity.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
                 // If the calcinator isn't burning, but has meltable input in place, light it up
-                if (!this.isBurning() && this.canCalcinate(inputStack)) {
-                    this.burnTime = ForgeHooks.getBurnTime(fuelStack, null);
-                    this.burnTimeTotal = this.burnTime;
-                    if (this.isBurning()) {
+                if (!entity.isBurning() && entity.canCalcinate(inputStack)) {
+                    entity.burnTime = ForgeHooks.getBurnTime(fuelStack, null);
+                    entity.burnTimeTotal = entity.burnTime;
+                    if (entity.isBurning()) {
                         shouldMarkDirty = true;
                         if (fuelStack.hasContainerItem()) {
                             // If the fuel has a container item (e.g. a lava bucket), place the empty container in the fuel slot
-                            this.items.set(1, fuelStack.getContainerItem());
+                            entity.items.set(1, fuelStack.getContainerItem());
                         } else if (!fuelStack.isEmpty()) {
                             // Otherwise, shrink the fuel stack
                             fuelStack.shrink(1);
                             if (fuelStack.isEmpty()) {
-                                this.items.set(1, fuelStack.getContainerItem());
+                                entity.items.set(1, fuelStack.getContainerItem());
                             }
                         }
                     }
                 }
                 
                 // If the calcinator is burning and has meltable input in place, process it
-                if (this.isBurning() && this.canCalcinate(inputStack)) {
-                    this.cookTime++;
-                    if (this.cookTime == this.cookTimeTotal) {
-                        this.cookTime = 0;
-                        this.cookTimeTotal = this.getCookTimeTotal();
-                        this.doCalcination();
+                if (entity.isBurning() && entity.canCalcinate(inputStack)) {
+                    entity.cookTime++;
+                    if (entity.cookTime == entity.cookTimeTotal) {
+                        entity.cookTime = 0;
+                        entity.cookTimeTotal = entity.getCookTimeTotal();
+                        entity.doCalcination();
                         shouldMarkDirty = true;
                     }
                 } else {
-                    this.cookTime = 0;
+                    entity.cookTime = 0;
                 }
-            } else if (!this.isBurning() && this.cookTime > 0) {
+            } else if (!entity.isBurning() && entity.cookTime > 0) {
                 // Decay any cooking progress if the calcinator isn't lit
-                this.cookTime = Mth.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
+                entity.cookTime = Mth.clamp(entity.cookTime - 2, 0, entity.cookTimeTotal);
             }
             
-            if (burningAtStart != this.isBurning()) {
+            if (burningAtStart != entity.isBurning()) {
                 // Update the tile's block state if the calcinator was lit up or went out this tick
                 shouldMarkDirty = true;
-                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(AbstractCalcinatorBlock.LIT, Boolean.valueOf(this.isBurning())), Constants.BlockFlags.DEFAULT);
+                level.setBlock(pos, state.setValue(AbstractCalcinatorBlock.LIT, Boolean.valueOf(entity.isBurning())), Constants.BlockFlags.DEFAULT);
             }
         }
         if (shouldMarkDirty) {
-            this.setChanged();
-            this.syncTile(true);
+            entity.setChanged();
+            entity.syncTile(true);
         }
     }
 

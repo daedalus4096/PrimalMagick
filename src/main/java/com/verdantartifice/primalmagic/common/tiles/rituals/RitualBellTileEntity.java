@@ -2,17 +2,17 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Definition of a ritual bell tile entity.
  * 
  * @author Daedalus4096
  */
-public class RitualBellTileEntity extends AbstractRitualPropTileEntity implements TickableBlockEntity {
+public class RitualBellTileEntity extends AbstractRitualPropTileEntity {
     protected int ringingTicks;
     protected boolean isRinging;
     protected Direction ringDirection;
@@ -33,14 +33,13 @@ public class RitualBellTileEntity extends AbstractRitualPropTileEntity implement
         return this.ringDirection;
     }
 
-    @Override
-    public void tick() {
-        if (this.isRinging) {
-            this.ringingTicks++;
+    public static void tick(Level level, BlockPos pos, BlockState state, RitualBellTileEntity entity) {
+        if (entity.isRinging) {
+            entity.ringingTicks++;
         }
-        if (this.ringingTicks >= 50) {
-            this.isRinging = false;
-            this.ringingTicks = 0;
+        if (entity.ringingTicks >= 50) {
+            entity.isRinging = false;
+            entity.ringingTicks = 0;
         }
     }
     

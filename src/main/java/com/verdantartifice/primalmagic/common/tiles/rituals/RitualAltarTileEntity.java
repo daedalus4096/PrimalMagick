@@ -48,36 +48,35 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.Containers;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.Util;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -87,7 +86,7 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock}
  */
-public class RitualAltarTileEntity extends TileInventoryPM implements TickableBlockEntity, IInteractWithWand {
+public class RitualAltarTileEntity extends TileInventoryPM implements IInteractWithWand {
     protected static final float MIN_STABILITY = -100.0F;
     protected static final float MAX_STABILITY = 25.0F;
     private static final Logger LOGGER = LogManager.getLogger();
@@ -302,48 +301,47 @@ public class RitualAltarTileEntity extends TileInventoryPM implements TickableBl
         this.syncTile(false);
     }
 
-    @Override
-    public void tick() {
-        if (this.active) {
-            this.activeCount++;
+    public static void tick(Level level, BlockPos pos, BlockState state, RitualAltarTileEntity entity) {
+        if (entity.active) {
+            entity.activeCount++;
         }
-        if (this.active && this.activeCount % 10 == 0 && !this.level.isClientSide) {
-            this.scanDirty = true;
+        if (entity.active && entity.activeCount % 10 == 0 && !level.isClientSide) {
+            entity.scanDirty = true;
         }
-        if (this.scanDirty && !this.level.isClientSide) {
-            this.scanSurroundings();
-            this.scanDirty = false;
+        if (entity.scanDirty && !level.isClientSide) {
+            entity.scanSurroundings();
+            entity.scanDirty = false;
         }
-        if (!this.level.isClientSide && this.active) {
-            if (this.currentStep == null || this.currentStepComplete) {
-                if (this.remainingSteps.isEmpty()) {
+        if (!level.isClientSide && entity.active) {
+            if (entity.currentStep == null || entity.currentStepComplete) {
+                if (entity.remainingSteps.isEmpty()) {
                     // If there are no steps remaining in the ritual, finish it up
-                    if (this.activeCount >= this.nextCheckCount) {
-                        this.finishCraft();
-                        this.setChanged();
-                        this.syncTile(false);
+                    if (entity.activeCount >= entity.nextCheckCount) {
+                        entity.finishCraft();
+                        entity.setChanged();
+                        entity.syncTile(false);
                     }
                     return;
                 } else {
                     // Pull the next step from the queue and start it
-                    this.currentStep = this.remainingSteps.poll();
-                    this.currentStepComplete = false;
-                    this.skipWarningMessage = false;
+                    entity.currentStep = entity.remainingSteps.poll();
+                    entity.currentStepComplete = false;
+                    entity.skipWarningMessage = false;
                 }
             }
-            float delta = this.calculateStabilityDelta();
-            this.addStability(delta);
-            if (this.currentStep != null) {
-                if (!this.doStep(this.currentStep)) {
+            float delta = entity.calculateStabilityDelta();
+            entity.addStability(delta);
+            if (entity.currentStep != null) {
+                if (!entity.doStep(entity.currentStep)) {
                     // Add extra instability if the ritual step was not productive (e.g. waiting for prop activation)
-                    this.addStability(Math.min(0.0F, delta));
+                    entity.addStability(Math.min(0.0F, delta));
                 }
             }
-            if (this.activeCount % 10 == 0 && this.stability < 0.0F && this.level.random.nextInt(1500) < Math.abs(this.stability)) {
-                this.doMishap();
+            if (entity.activeCount % 10 == 0 && entity.stability < 0.0F && level.random.nextInt(1500) < Math.abs(entity.stability)) {
+                entity.doMishap();
             }
-            this.setChanged();
-            this.syncTile(false);
+            entity.setChanged();
+            entity.syncTile(false);
         }
     }
 

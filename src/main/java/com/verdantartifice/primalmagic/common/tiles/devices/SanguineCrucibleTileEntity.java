@@ -22,7 +22,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +34,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class SanguineCrucibleTileEntity extends TileInventoryPM implements TickableBlockEntity {
+public class SanguineCrucibleTileEntity extends TileInventoryPM {
     protected static final int FLUID_CAPACITY = 1000;
     protected static final int FLUID_DRAIN = 200;
     protected static final int CHARGE_MAX = 100;
@@ -71,38 +71,37 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements Ticka
         return super.save(compound);
     }
 
-    @Override
-    public void tick() {
-        this.counter++;
-        if (this.fluidAmount < FLUID_CAPACITY) {
-            this.fluidAmount++;
+    public static void tick(Level level, BlockPos pos, BlockState state, SanguineCrucibleTileEntity entity) {
+        entity.counter++;
+        if (entity.fluidAmount < FLUID_CAPACITY) {
+            entity.fluidAmount++;
         }
-        if (this.hasCore() && this.fluidAmount >= FLUID_DRAIN) {
-            SanguineCoreItem core = this.getCoreItem();
-            if (core != null && this.souls >= core.getSoulsPerSpawn()) {
-                this.charge++;
-                if (this.charge >= CHARGE_MAX) {
-                    this.charge = 0;
-                    this.fluidAmount -= FLUID_DRAIN;
-                    this.souls -= core.getSoulsPerSpawn();
+        if (entity.hasCore() && entity.fluidAmount >= FLUID_DRAIN) {
+            SanguineCoreItem core = entity.getCoreItem();
+            if (core != null && entity.souls >= core.getSoulsPerSpawn()) {
+                entity.charge++;
+                if (entity.charge >= CHARGE_MAX) {
+                    entity.charge = 0;
+                    entity.fluidAmount -= FLUID_DRAIN;
+                    entity.souls -= core.getSoulsPerSpawn();
                     
-                    if (!this.level.isClientSide) {
-                        if (!this.getItem(0).isDamageableItem() || this.getItem(0).hurt(1, this.level.random, null)) {
-                            this.getItem(0).shrink(1);
-                            this.level.setBlock(this.worldPosition, this.level.getBlockState(worldPosition).setValue(SanguineCrucibleBlock.LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                    if (!level.isClientSide) {
+                        if (!entity.getItem(0).isDamageableItem() || entity.getItem(0).hurt(1, level.random, null)) {
+                            entity.getItem(0).shrink(1);
+                            level.setBlock(pos, state.setValue(SanguineCrucibleBlock.LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
                         }
                         
                         int attempts = 0;
                         boolean success = false;
                         while (attempts++ < 50 && !success) {
-                            success = this.attemptSpawn(core.getEntityType());
+                            success = entity.attemptSpawn(core.getEntityType());
                         }
                         
-                        PacketHandler.sendToAllAround(new WandPoofPacket(this.worldPosition.above(), Color.WHITE.getRGB(), true, Direction.UP), this.level.dimension(), this.worldPosition, 32.0D);
+                        PacketHandler.sendToAllAround(new WandPoofPacket(pos.above(), Color.WHITE.getRGB(), true, Direction.UP), level.dimension(), pos, 32.0D);
                     }
                     
-                    this.setChanged();
-                    this.syncTile(true);
+                    entity.setChanged();
+                    entity.syncTile(true);
                 }
             }
         }
