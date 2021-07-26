@@ -16,22 +16,20 @@ import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.core.NonNullList;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
-
-import net.minecraft.world.item.Item.Properties;
 
 /**
  * Item definition for a modular wand.  Modular wands are made up of cores, caps, and gems, and their

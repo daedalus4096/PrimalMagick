@@ -26,6 +26,6 @@ public class LapisLazuliSlot extends Slot {
     @Override
     public boolean mayPlace(ItemStack stack) {
         // Only allow lapis lazuli to be dropped in the slot
-        return stack.getItem().is(Tags.Items.GEMS_LAPIS);
+        return Tags.Items.GEMS_LAPIS.contains(stack.getItem());
     }
 }

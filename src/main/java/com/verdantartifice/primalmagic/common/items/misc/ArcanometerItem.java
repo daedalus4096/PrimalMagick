@@ -39,6 +39,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  *  
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public class ArcanometerItem extends Item {
     public static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "scan_state");
 
@@ -46,7 +47,6 @@ public class ArcanometerItem extends Item {
         super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON).setISTER(() -> ArcanometerISTER::new));
     }
     
-    @SuppressWarnings("deprecation")
     public static ItemPropertyFunction getScanStateProperty() {
     	return new ItemPropertyFunction() {
             @OnlyIn(Dist.CLIENT)

@@ -88,7 +88,7 @@ public class CombatEvents {
             if (!DamageSourcesPM.HELLISH_CHAIN_TYPE.equals(event.getSource().msgId) && 
                     !attacker.level.isClientSide && 
                     AttunementManager.meetsThreshold(attacker, Source.INFERNAL, AttunementThreshold.LESSER)) {
-                List<LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attacker.level, event.getEntityLiving().position(), 
+                List<? extends LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attacker.level, event.getEntityLiving().position(), 
                         Arrays.asList(event.getEntityLiving(), attacker), LivingEntity.class, 4.0D);
                 if (!targets.isEmpty()) {
                     LivingEntity target = targets.get(0);

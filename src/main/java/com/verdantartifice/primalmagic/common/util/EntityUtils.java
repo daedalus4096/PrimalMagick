@@ -10,19 +10,18 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 
@@ -81,7 +80,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<? extends T> getEntitiesInRange(@Nonnull Level world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRange(world, center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, exclude, entityClass, range);
     }
 
@@ -96,7 +95,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<? extends T> getEntitiesInRange(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRange(world, center.x(), center.y(), center.z(), exclude, entityClass, range);
     }
 
@@ -113,8 +112,8 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
-        List<T> retVal = world.getEntitiesOfClass(entityClass, new AABB(x, y, z, x, y, z).inflate(range, range, range));
+    public static <T extends Entity> List<? extends T> getEntitiesInRange(@Nonnull Level world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+        List<? extends T> retVal = world.getEntitiesOfClass(entityClass, new AABB(x, y, z, x, y, z).inflate(range, range, range));
         if (exclude != null) {
             List<Integer> excludeIds = exclude.stream().map(e -> Integer.valueOf(e.getId())).collect(Collectors.toList());
             retVal = retVal.stream().filter(e -> !excludeIds.contains(Integer.valueOf(e.getId()))).collect(Collectors.toList());
@@ -134,7 +133,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull Level world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<? extends T> getEntitiesInRangeSorted(@Nonnull Level world, @Nonnull BlockPos center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRangeSorted(world, center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, exclude, entityClass, range);
     }
     
@@ -150,8 +149,8 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
-        List<T> entities = getEntitiesInRange(world, center, exclude, entityClass, range);
+    public static <T extends Entity> List<? extends T> getEntitiesInRangeSorted(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+        List<? extends T> entities = getEntitiesInRange(world, center, exclude, entityClass, range);
         return entities.stream().sorted(new EntityDistanceComparator(center)).collect(Collectors.toList());
     }
     
@@ -169,7 +168,7 @@ public class EntityUtils {
      * @param range the radius in which to search
      * @return a list of all such entities in range
      */
-    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull Level world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
+    public static <T extends Entity> List<? extends T> getEntitiesInRangeSorted(@Nonnull Level world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<? extends T> entityClass, double range) {
         return getEntitiesInRangeSorted(world, new Vec3(x, y, z), exclude, entityClass, range);
     }
     

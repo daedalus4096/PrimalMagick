@@ -3,12 +3,10 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import net.minecraft.client.gui.components.Button.OnPress;
 
 /**
  * GUI button to view the grimoire page for a given rune enchantment.

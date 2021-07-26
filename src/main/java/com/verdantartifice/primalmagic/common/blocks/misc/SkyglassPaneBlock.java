@@ -155,7 +155,7 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
     
     protected SkyglassPaneSide getSideConnection(BlockState state, LevelAccessor world, BlockPos pos, Direction dir) {
         BlockState adjacent = world.getBlockState(pos.relative(dir));
-        if (adjacent == null || isExceptionForConnection(adjacent.getBlock())) {
+        if (adjacent == null || isExceptionForConnection(adjacent)) {
             return SkyglassPaneSide.NONE;
         } else if (state.getBlock() == adjacent.getBlock()) {
             return SkyglassPaneSide.GLASS;

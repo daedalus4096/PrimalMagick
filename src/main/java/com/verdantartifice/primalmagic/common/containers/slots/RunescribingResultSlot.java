@@ -65,7 +65,7 @@ public class RunescribingResultSlot extends Slot {
     }
     
     @Override
-    public ItemStack onTake(Player thePlayer, ItemStack stack) {
+    public void onTake(Player thePlayer, ItemStack stack) {
         // Handle crafting side effects
         this.checkTakeAchievements(stack);
         
@@ -76,7 +76,5 @@ public class RunescribingResultSlot extends Slot {
                 this.inputInventory.removeItem(index, 1);
             }
         }
-        
-        return stack;
     }
 }

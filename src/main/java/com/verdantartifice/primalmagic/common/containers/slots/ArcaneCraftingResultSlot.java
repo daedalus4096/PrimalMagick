@@ -116,7 +116,7 @@ public class ArcaneCraftingResultSlot extends Slot {
     }
     
     @Override
-    public ItemStack onTake(Player thePlayer, ItemStack stack) {
+    public void onTake(Player thePlayer, ItemStack stack) {
         this.checkTakeAchievements(stack);
         ForgeHooks.setCraftingPlayer(thePlayer);
         
@@ -158,7 +158,5 @@ public class ArcaneCraftingResultSlot extends Slot {
                 }
             }
         }
-        
-        return stack;
     }
 }

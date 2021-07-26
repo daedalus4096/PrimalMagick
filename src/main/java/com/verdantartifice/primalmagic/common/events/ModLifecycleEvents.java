@@ -117,7 +117,7 @@ public class ModLifecycleEvents {
     @SubscribeEvent
     public static void processIMC(InterModProcessEvent event) {
         // Populate the polymorph allow list with entity types from incoming messages
-        List<Object> allowMessageList = event.getIMCStream(m -> "polymorphAllow".equals(m)).map(m -> m.getMessageSupplier().get()).collect(Collectors.toList());
+        List<Object> allowMessageList = event.getIMCStream(m -> "polymorphAllow".equals(m)).map(m -> m.messageSupplier().get()).collect(Collectors.toList());
         for (Object obj : allowMessageList) {
             if (obj instanceof EntityType<?>) {
                 SpellManager.setPolymorphAllowed((EntityType<?>)obj);
@@ -125,7 +125,7 @@ public class ModLifecycleEvents {
         }
         
         // Populate the polymorph ban list with entity types from incoming messages
-        List<Object> banMessageList = event.getIMCStream(m -> "polymorphBan".equals(m)).map(m -> m.getMessageSupplier().get()).collect(Collectors.toList());
+        List<Object> banMessageList = event.getIMCStream(m -> "polymorphBan".equals(m)).map(m -> m.messageSupplier().get()).collect(Collectors.toList());
         for (Object obj : banMessageList) {
             if (obj instanceof EntityType<?>) {
                 SpellManager.setPolymorphBanned((EntityType<?>)obj);

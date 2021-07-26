@@ -14,8 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import net.minecraft.client.gui.components.Button.OnPress;
-
 /**
  * GUI button to view the grimoire page for a given research entry.
  * 

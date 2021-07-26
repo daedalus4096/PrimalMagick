@@ -28,6 +28,6 @@ public class WandTransformBlockTag extends AbstractWandTransform {
     @Override
     public boolean isValid(Level world, Player player, BlockPos pos) {
         // The block at the given world position must be in the expected tag and the given player must know the right research
-        return super.isValid(world, player, pos) && world.getBlockState(pos).getBlock().is(this.target);
+        return super.isValid(world, player, pos) && this.target.contains(world.getBlockState(pos).getBlock());
     }
 }

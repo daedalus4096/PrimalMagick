@@ -4,8 +4,6 @@ import com.verdantartifice.primalmagic.common.theorycrafting.IWritingImplement;
 
 import net.minecraft.world.item.Item;
 
-import net.minecraft.world.item.Item.Properties;
-
 /**
  * Item definition for a seascribe pen.  Serves as a writing implement on a research table.  Has
  * an infinite amount of ink.

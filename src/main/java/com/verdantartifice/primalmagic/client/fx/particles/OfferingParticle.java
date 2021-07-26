@@ -31,7 +31,7 @@ public class OfferingParticle extends TextureSheetParticle {
     @SuppressWarnings("deprecation")
     protected OfferingParticle(ClientLevel world, double x, double y, double z, double tx, double ty, double tz, ItemStack stack) {
         super(world, x, y, z);
-        this.setSprite(Minecraft.getInstance().getItemRenderer().getModel(stack, world, (LivingEntity)null).getParticleIcon());
+        this.setSprite(Minecraft.getInstance().getItemRenderer().getModel(stack, world, (LivingEntity)null, 0).getParticleIcon());
         this.targetX = tx;
         this.targetY = ty;
         this.targetZ = tz;

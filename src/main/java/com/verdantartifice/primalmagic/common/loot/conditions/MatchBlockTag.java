@@ -34,7 +34,7 @@ public class MatchBlockTag implements LootItemCondition {
     @Override
     public boolean test(LootContext context) {
         BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
-        return state != null && state.getBlock().is(this.tag);
+        return state != null && this.tag.contains(state.getBlock());
     }
 
     @Override

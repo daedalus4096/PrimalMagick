@@ -16,6 +16,7 @@ import net.minecraft.tags.Tag;
 import net.minecraft.tags.SerializationTags;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -100,7 +101,7 @@ public class InventoryUtils {
         if (tagName == null) {
             return true;
         }
-        Tag<Item> tag = SerializationTags.getInstance().getItems().getTag(tagName);
+        Tag<Item> tag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(tagName);
         for (ItemStack searchStack : player.getInventory().items) {
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
@@ -199,7 +200,7 @@ public class InventoryUtils {
             // If the player is not carrying enough of the given items, return false immediately
             return false;
         }
-        Tag<Item> tag = SerializationTags.getInstance().getItems().getTag(tagName);
+        Tag<Item> tag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(tagName);
         for (int index = 0; index < player.getInventory().items.size(); index++) {
             ItemStack searchStack = player.getInventory().items.get(index);
             // Only the items need match, not the NBT data

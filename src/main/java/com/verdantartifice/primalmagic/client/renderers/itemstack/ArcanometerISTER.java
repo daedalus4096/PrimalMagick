@@ -36,6 +36,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem}
  */
+@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
     private static final ModelResourceLocation MRL0 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_0"), "");
@@ -87,7 +88,7 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
         matrixStack.translate(0.5D, 0.4375D, 0.405D);
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
         matrixStack.scale(0.2F, 0.2F, 0.0001F);
-        itemRenderer.renderStatic(screenStack, ItemTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer);
+        itemRenderer.renderStatic(screenStack, ItemTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer, 0);
         matrixStack.popPose();
     }
     
@@ -105,7 +106,6 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
         matrixStack.popPose();
     }
     
-    @SuppressWarnings("deprecation")
     protected ModelResourceLocation getModelResourceLocation(ItemStack stack) {
         // Determine which model to use based on the scan state of the arcanometer item stack
         Minecraft mc = Minecraft.getInstance();

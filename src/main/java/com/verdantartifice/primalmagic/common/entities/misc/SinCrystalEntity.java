@@ -124,7 +124,7 @@ public class SinCrystalEntity extends Entity {
         } else {
             if (this.isAlive() && !this.level.isClientSide) {
                 // Cause backlash to any inner demons being healed by this crystal
-                List<InnerDemonEntity> demonsInRange = EntityUtils.getEntitiesInRange(this.level, this.position(), null, InnerDemonEntity.class, InnerDemonEntity.HEAL_RANGE);
+                List<? extends InnerDemonEntity> demonsInRange = EntityUtils.getEntitiesInRange(this.level, this.position(), null, InnerDemonEntity.class, InnerDemonEntity.HEAL_RANGE);
                 if (!demonsInRange.isEmpty()) {
                     LivingEntity trueSource = source.getEntity() instanceof LivingEntity ? (LivingEntity)source.getEntity() : null;
                     for (InnerDemonEntity demon : demonsInRange) {

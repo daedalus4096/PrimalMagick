@@ -77,7 +77,6 @@ public class BurstSpellMod extends AbstractSpellMod {
         return TYPE;
     }
 
-    @SuppressWarnings("deprecation")
     @Nonnull
     public Set<HitResult> getBurstTargets(HitResult origin, SpellPackage spell, @Nullable ItemStack spellSource, Level world) {
         Set<HitResult> retVal = new HashSet<>();
@@ -112,7 +111,7 @@ public class BurstSpellMod extends AbstractSpellMod {
                             // Decrement the remaining power based on the block's explosion resistance
                             BlockState blockState = world.getBlockState(curPos);
                             FluidState fluidState = world.getFluidState(curPos);
-                            if (!blockState.isAir(world, curPos) || !fluidState.isEmpty()) {
+                            if (!blockState.isAir() || !fluidState.isEmpty()) {
                                 float resistance = Math.max(blockState.getExplosionResistance(world, curPos, explosion), fluidState.getExplosionResistance(world, curPos, explosion));
                                 remainingPower -= (resistance + 0.3F) * 0.3F;
                             }
@@ -127,7 +126,7 @@ public class BurstSpellMod extends AbstractSpellMod {
         
         // Calculate blasted entities
         AABB aabb = new AABB(hitPos).inflate(searchRadius);
-        List<Entity> entities = world.getEntities(null, aabb, e -> !e.isSpectator());
+        List<Entity> entities = world.getEntities((Entity)null, aabb, e -> !e.isSpectator());
         for (Entity entity : entities) {
             if (origin.getLocation().distanceToSqr(entity.position()) <= sqRadius) {
                 retVal.add(new EntityHitResult(entity));

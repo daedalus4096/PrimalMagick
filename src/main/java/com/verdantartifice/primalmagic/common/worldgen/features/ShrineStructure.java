@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -22,7 +24,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureMana
  * Definition of a primal shrine structure.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.gen.feature.structure.DesertPyramidStructure}
+ * @see {@link net.minecraft.world.level.levelgen.feature.DesertPyramidFeature}
  */
 public class ShrineStructure extends StructureFeature<ShrineConfig> {
     public ShrineStructure(Codec<ShrineConfig> codec) {
@@ -41,22 +43,21 @@ public class ShrineStructure extends StructureFeature<ShrineConfig> {
 
     @Override
     public String getFeatureName() {
-        return "primalmagic:shrine";
+        return PrimalMagic.MODID + ":shrine";
     }
 
     public static class Start extends StructureStart<ShrineConfig> {
-        public Start(StructureFeature<ShrineConfig> structure, int chunkX, int chunkZ, BoundingBox boundsIn, int referenceIn, long seed) {
-            super(structure, chunkX, chunkZ, boundsIn, referenceIn, seed);
+        public Start(StructureFeature<ShrineConfig> structure, ChunkPos chunkPos, int referenceIn, long seed) {
+            super(structure, chunkPos, referenceIn, seed);
         }
 
         @Override
-        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator generator, StructureManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, ShrineConfig config) {
-        	int x = (chunkX << 4) + 7;
-            int z = (chunkZ << 4) + 7;
-            int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG);
+        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator generator, StructureManager templateManagerIn, ChunkPos chunkPos, Biome biomeIn, ShrineConfig config, LevelHeightAccessor levelHeightAccessor) {
+        	int x = (chunkPos.x << 4) + 7;
+            int z = (chunkPos.z << 4) + 7;
+            int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
         	BlockPos pos = new BlockPos(x, surfaceY, z);
-            this.pieces.add(new ShrinePiece(templateManagerIn, config.type, pos));
-            this.calculateBoundingBox();
+            this.addPiece(new ShrinePiece(templateManagerIn, config.type, pos));
         }
     }
     

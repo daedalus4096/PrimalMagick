@@ -29,7 +29,7 @@ public class HallowsteelTridentEntity extends AbstractTridentEntity {
     }
 
     @Override
-    protected float getBaseDamage() {
-        return 12.5F;
+    public double getBaseDamage() {
+        return 12.5D;
     }
 }

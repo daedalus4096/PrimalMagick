@@ -173,7 +173,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
             this.level.removeBlock(pos, false);
         } else if (CampfireBlock.isLitCampfire(state)) {
             this.level.levelEvent(null, 1009, pos, 0);
-            CampfireBlock.dowse(this.level, pos, state);
+            CampfireBlock.dowse(this.getOwner(), this.level, pos, state);
             this.level.setBlockAndUpdate(pos, state.setValue(CampfireBlock.LIT, false));
         }
     }

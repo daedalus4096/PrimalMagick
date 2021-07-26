@@ -60,7 +60,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     protected final ServerBossEvent bossInfo = (ServerBossEvent)(new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
     protected boolean isSuffocating = false;
-    protected List<SinCrystalEntity> crystalsInRange = new ArrayList<>();
+    protected List<? extends SinCrystalEntity> crystalsInRange = new ArrayList<>();
 
     public InnerDemonEntity(EntityType<? extends InnerDemonEntity> type, Level worldIn) {
         super(type, worldIn);
@@ -141,7 +141,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
                 this.isSuffocating = false;
             }
             
-            this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
+            this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
         }
         super.customServerAiStep();
     }
@@ -193,11 +193,6 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
         } else {
             this.noActionTime = 0;
         }
-    }
-
-    @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
-        return false;
     }
 
     @Override

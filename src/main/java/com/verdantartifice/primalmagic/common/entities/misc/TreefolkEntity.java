@@ -11,41 +11,40 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.LevelAccessor;
 
 /**
  * Definition of a treefolk entity, tree-like neutral bipeds that spawn in forest biomes.
@@ -127,7 +126,7 @@ public class TreefolkEntity extends PathfinderMob implements NeutralMob, RangedA
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.randomValue(this.random));
+        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
     }
 
     @Override
@@ -157,7 +156,7 @@ public class TreefolkEntity extends PathfinderMob implements NeutralMob, RangedA
     public void setCustomName(Component name) {
         super.setCustomName(name);
         if (!this.level.isClientSide && DREADED_NAME.equals(name.getString())) {
-            List<Player> nearby = EntityUtils.getEntitiesInRange(this.level, this.position(), null, Player.class, 6.0D);
+            List<? extends Player> nearby = EntityUtils.getEntitiesInRange(this.level, this.position(), null, Player.class, 6.0D);
             for (Player player : nearby) {
                 StatsManager.incrementValue(player, StatsPM.TREANTS_NAMED);
             }

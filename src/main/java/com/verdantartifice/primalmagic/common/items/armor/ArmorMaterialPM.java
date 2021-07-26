@@ -6,13 +6,13 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.LazyLoadedValue;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -21,6 +21,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public enum ArmorMaterialPM implements ArmorMaterial {
     IMBUED_WOOL("imbued_wool", 8, new int[] {1, 3, 4, 1}, 17, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
         return Ingredient.of(ItemTags.WOOL);

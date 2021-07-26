@@ -18,6 +18,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.level.BlockGetter;
@@ -53,11 +54,16 @@ public class ConsecrationFieldBlock extends Block {
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         // The field should only have a collision box for living, non-player entities; everything else can pass through it
-        if (context.getEntity() instanceof Player || !(context.getEntity() instanceof LivingEntity)) {
-            return Shapes.empty();
-        } else {
-            return Shapes.block();
+        if (context instanceof EntityCollisionContext) {
+            EntityCollisionContext ecc = (EntityCollisionContext)context;
+            if (ecc.getEntity().isPresent()) {
+                Entity entity = ecc.getEntity().get();
+                if (entity instanceof Player || !(entity instanceof LivingEntity)) {
+                    return Shapes.empty();
+                }
+            }
         }
+        return Shapes.block();
     }
     
     @Override

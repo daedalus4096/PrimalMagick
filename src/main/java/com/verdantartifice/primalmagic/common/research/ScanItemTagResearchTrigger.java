@@ -26,7 +26,7 @@ public class ScanItemTagResearchTrigger extends AbstractScanResearchTrigger {
     @Override
     public boolean matches(ServerPlayer player, Object obj) {
         if (obj instanceof ItemLike) {
-            return ((ItemLike)obj).asItem().is(this.target);
+            return this.target.contains(((ItemLike)obj).asItem());
         } else {
             return false;
         }

@@ -2,18 +2,19 @@ package com.verdantartifice.primalmagic.common.items.tools;
 
 import java.util.function.Supplier;
 
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.util.LazyLoadedValue;
-
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
+
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
 /**
  * Definition of tiered item materials for the mod.
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public enum ItemTierPM implements Tier {
     PRIMALITE(HarvestLevel.IRON.getLevel(), 800, 7.5F, 2.5F, 18, () -> {
         return Ingredient.of(ItemTagsPM.INGOTS_PRIMALITE);

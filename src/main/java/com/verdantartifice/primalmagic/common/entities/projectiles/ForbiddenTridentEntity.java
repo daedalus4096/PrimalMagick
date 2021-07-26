@@ -29,7 +29,7 @@ public class ForbiddenTridentEntity extends AbstractTridentEntity {
     }
 
     @Override
-    protected float getBaseDamage() {
-        return 11.0F;
+    public double getBaseDamage() {
+        return 11.0D;
     }
 }

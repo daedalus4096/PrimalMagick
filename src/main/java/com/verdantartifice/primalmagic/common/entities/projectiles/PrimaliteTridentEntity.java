@@ -29,7 +29,7 @@ public class PrimaliteTridentEntity extends AbstractTridentEntity {
     }
 
     @Override
-    protected float getBaseDamage() {
-        return 9.5F;
+    public double getBaseDamage() {
+        return 9.5D;
     }
 }

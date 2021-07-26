@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.Tag;
@@ -38,7 +39,7 @@ public class ItemTagWidget extends AbstractWidget {
     
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        Tag<Item> itemTag = SerializationTags.getInstance().getItems().getTag(this.tag);
+        Tag<Item> itemTag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(this.tag);
         Collection<Item> tagContents = itemTag.getValues();
         if (tagContents != null && !tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time

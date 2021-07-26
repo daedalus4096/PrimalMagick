@@ -32,6 +32,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public class FlyingCarpetItem extends Item {
     public static final ResourceLocation COLOR_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "color");
 
@@ -39,7 +40,6 @@ public class FlyingCarpetItem extends Item {
         super(properties);
     }
     
-    @SuppressWarnings("deprecation")
     public static ItemPropertyFunction getColorProperty() {
         return new ItemPropertyFunction() {
             @OnlyIn(Dist.CLIENT)

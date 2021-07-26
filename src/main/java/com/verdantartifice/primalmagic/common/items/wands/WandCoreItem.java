@@ -6,8 +6,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
-import net.minecraft.world.item.Item.Properties;
-
 /**
  * Item definition for a wand core.  May be used to construct modular wands.
  * 

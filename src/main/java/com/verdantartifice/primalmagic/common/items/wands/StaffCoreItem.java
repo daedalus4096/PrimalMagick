@@ -6,8 +6,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
-import net.minecraft.world.item.Item.Properties;
-
 /**
  * Item definition for a staff core.  May be used to construct modular staves.
  * 

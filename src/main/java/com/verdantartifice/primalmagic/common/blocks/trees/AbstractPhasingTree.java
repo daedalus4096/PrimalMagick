@@ -47,7 +47,6 @@ public abstract class AbstractPhasingTree extends AbstractTreeGrower {
             return false;
         } else {
             world.setBlock(pos, Blocks.AIR.defaultBlockState(), Constants.BlockFlags.NO_RERENDER);
-            configuredFeature.config.setFromSapling();
             if (configuredFeature.place(world, chunkGenerator, rand, pos)) {
                 return true;
             } else {

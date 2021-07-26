@@ -10,8 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import net.minecraft.client.gui.components.Button.OnPress;
-
 /**
  * GUI button to tell the server to attempt to progress to the next stage of the current research entry in the grimoire.
  * 

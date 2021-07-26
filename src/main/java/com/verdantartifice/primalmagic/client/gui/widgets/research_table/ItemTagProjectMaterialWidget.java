@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -70,7 +71,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
 
     @Nonnull
     protected ItemStack getStackToDisplay() {
-        Tag<Item> itemTag = SerializationTags.getInstance().getItems().getTag(this.material.getTagName());
+        Tag<Item> itemTag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(this.material.getTagName());
         Collection<Item> tagContents = itemTag.getValues();
         if (tagContents != null && !tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time

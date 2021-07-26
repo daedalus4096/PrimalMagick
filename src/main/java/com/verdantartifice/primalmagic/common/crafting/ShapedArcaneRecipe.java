@@ -15,16 +15,16 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -267,7 +267,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             int width = patternStrs[0].length();
             int height = patternStrs.length;
             NonNullList<Ingredient> ingredients = ShapedArcaneRecipe.deserializeIngredients(patternStrs, map, width, height);
-            ItemStack result = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result"));
+            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
             return new ShapedArcaneRecipe(recipeId, group, research, manaCosts, width, height, ingredients, result);
         }
         

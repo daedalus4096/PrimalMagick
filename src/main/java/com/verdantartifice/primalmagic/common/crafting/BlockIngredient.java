@@ -16,6 +16,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.Tag;
 import net.minecraft.tags.SerializationTags;
@@ -132,12 +133,10 @@ public class BlockIngredient implements Predicate<Block> {
             }
         } else if (json.has("tag")) {
             ResourceLocation loc = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
-            Tag<Block> tag = SerializationTags.getInstance().getBlocks().getTag(loc);
-            if (tag == null) {
-                throw new JsonSyntaxException("Unknown block tag '" + loc.toString() + "'");
-            } else {
-                return new BlockIngredient.TagList(tag);
-            }
+            Tag<Block> tag = SerializationTags.getInstance().getTagOrThrow(Registry.BLOCK_REGISTRY, loc, (resourceLocation) -> {
+                throw new JsonSyntaxException("Unknown block tag '" + resourceLocation.toString() + "'");
+            });
+            return new BlockIngredient.TagList(tag);
         } else {
             throw new JsonParseException("A block ingredient entry needs either a tag or a block");
         }
@@ -204,7 +203,9 @@ public class BlockIngredient implements Predicate<Block> {
         @Override
         public JsonObject serialize() {
             JsonObject json = new JsonObject();
-            json.addProperty("tag", SerializationTags.getInstance().getBlocks().getIdOrThrow(this.tag).toString());
+            json.addProperty("tag", SerializationTags.getInstance().getIdOrThrow(Registry.BLOCK_REGISTRY, this.tag, () -> {
+                return new IllegalStateException("Unknown block tag");
+            }).toString());
             return json;
         }
     }

@@ -31,7 +31,7 @@ import net.minecraftforge.common.util.Constants;
  * Definition of a piece of a primal shrine structure.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.gen.feature.structure.DesertPyramidPiece}
+ * @see {@link net.minecraft.world.level.levelgen.structure.DesertPyramidPiece}
  */
 public class ShrinePiece extends TemplateStructurePiece {
     protected static final ResourceLocation TEMPLATE = new ResourceLocation(PrimalMagic.MODID, "shrine");

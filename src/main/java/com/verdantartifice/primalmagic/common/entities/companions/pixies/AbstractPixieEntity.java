@@ -114,14 +114,8 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected boolean isMovementNoisy() {
-        return false;
-    }
-
-    @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
-        // Pixies fly, not fall
-        return false;
+    public boolean isFlying() {
+        return !this.onGround;
     }
 
     @Override
@@ -206,7 +200,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.randomValue(this.random));
+        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
     }
 
     @Override

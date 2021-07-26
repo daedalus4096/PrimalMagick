@@ -123,11 +123,6 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
-        return false;
-    }
-
-    @Override
     public int getAmbientSoundInterval() {
         return 120;
     }
@@ -153,15 +148,14 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
             this.attackTimer--;
         }
         
-        if (getHorizontalDistanceSqr(this.getDeltaMovement()) > (double)2.5000003E-7F && this.random.nextInt(5) == 0) {
+        if (this.getDeltaMovement().horizontalDistanceSqr() > (double)2.5000003E-7F && this.random.nextInt(5) == 0) {
             int i = Mth.floor(this.getX());
             int j = Mth.floor(this.getY() - (double)0.2F);
             int k = Mth.floor(this.getZ());
             BlockPos pos = new BlockPos(i, j, k);
             BlockState blockstate = this.level.getBlockState(pos);
             
-            @SuppressWarnings("deprecation")
-            boolean isAir = blockstate.isAir(this.level, pos);
+            boolean isAir = blockstate.isAir();
             if (!isAir) {
                 this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate).setPos(pos), this.getX() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), 4.0D * ((double)this.random.nextFloat() - 0.5D), 0.5D, ((double)this.random.nextFloat() - 0.5D) * 4.0D);
             }
@@ -208,7 +202,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.randomValue(this.random));
+        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
     }
 
     @Override
@@ -282,7 +276,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
         ItemStack itemstack = playerIn.getItemInHand(hand);
         Item item = itemstack.getItem();
-        if (!item.is(this.getRepairMaterialTag())) {
+        if (!this.getRepairMaterialTag().contains(item)) {
             InteractionResult actionResult = super.mobInteract(playerIn, hand);
             if (!actionResult.consumesAction() && this.isCompanionOwner(playerIn) && !this.level.isClientSide) {
                 long time = playerIn.level.getGameTime();
