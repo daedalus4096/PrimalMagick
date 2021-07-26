@@ -27,6 +27,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class AbstractTieredTridentISTER extends BlockEntityWithoutLevelRenderer {
     protected final TridentModel model = new TridentModel();
     
+    public AbstractTieredTridentISTER() {
+        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+    }
+    
     @Override
     public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (stack.getItem() instanceof AbstractTieredTridentItem) {

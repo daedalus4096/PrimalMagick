@@ -1,13 +1,17 @@
 package com.verdantartifice.primalmagic.common.items.wands;
 
+import java.util.function.Consumer;
+
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 import com.google.common.collect.Multimap;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularStaffISTER;
 import com.verdantartifice.primalmagic.common.wands.IStaff;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
 
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.IItemRenderProperties;
 
 /**
  * Item definition for a modular staff.  Modular staves are made up of cores, caps, and gems, and their
@@ -59,5 +64,17 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
     @SuppressWarnings("deprecation")
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
         return equipmentSlot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
+    }
+
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            final BlockEntityWithoutLevelRenderer renderer = new ModularStaffISTER();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                return renderer;
+            }
+        });
     }
 }

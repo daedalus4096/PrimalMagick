@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.items.misc;
 
+import java.util.function.Consumer;
+
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -17,6 +19,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,6 +35,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 
 /**
  * Item definition for an arcanometer.  An arcanometer is a PKE meter-like device that scans the 
@@ -44,7 +48,7 @@ public class ArcanometerItem extends Item {
     public static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "scan_state");
 
     public ArcanometerItem() {
-        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON).setISTER(() -> ArcanometerISTER::new));
+        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON));
     }
     
     public static ItemPropertyFunction getScanStateProperty() {
@@ -124,5 +128,17 @@ public class ArcanometerItem extends Item {
             }
         }
         return super.use(worldIn, playerIn, handIn);
+    }
+
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            final BlockEntityWithoutLevelRenderer renderer = new ArcanometerISTER();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                return renderer;
+            }
+        });
     }
 }

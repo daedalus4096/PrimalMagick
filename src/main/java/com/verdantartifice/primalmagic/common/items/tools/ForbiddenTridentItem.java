@@ -1,17 +1,22 @@
 package com.verdantartifice.primalmagic.common.items.tools;
 
+import java.util.function.Consumer;
+
 import com.google.common.collect.ImmutableMap;
+import com.verdantartifice.primalmagic.client.renderers.itemstack.ForbiddenTridentISTER;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.ForbiddenTridentEntity;
 
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.IItemRenderProperties;
 
 /**
  * Definition for a trident made of the magical metal hexium which comes pre-enchanted with Rending.
@@ -41,5 +46,17 @@ public class ForbiddenTridentItem extends AbstractTieredTridentItem {
         if (this.allowdedIn(group)) {
             items.add(this.getDefaultInstance());
         }
+    }
+
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            final BlockEntityWithoutLevelRenderer renderer = new ForbiddenTridentISTER();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                return renderer;
+            }
+        });
     }
 }

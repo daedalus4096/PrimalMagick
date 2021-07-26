@@ -36,6 +36,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AncientManaFontISTER extends BlockEntityWithoutLevelRenderer {
     private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
     
+    public AncientManaFontISTER() {
+        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+    }
+    
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
         renderer.vertex(stack.last().pose(), x, y, z)
                 .color(r, g, b, 1.0F)

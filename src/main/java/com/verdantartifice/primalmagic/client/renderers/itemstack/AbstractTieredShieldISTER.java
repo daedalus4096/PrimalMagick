@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.items.tools.TieredShieldItem;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ShieldModel;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.resources.model.Material;
@@ -31,6 +32,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public abstract class AbstractTieredShieldISTER extends BlockEntityWithoutLevelRenderer {
     protected final ShieldModel model = new ShieldModel();
+    
+    public AbstractTieredShieldISTER() {
+        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+    }
     
     @Override
     public void renderByItem(ItemStack stack, TransformType p_239207_2_, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {

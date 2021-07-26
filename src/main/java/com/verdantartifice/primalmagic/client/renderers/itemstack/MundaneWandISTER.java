@@ -28,6 +28,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MundaneWandISTER extends BlockEntityWithoutLevelRenderer {
     private static final ModelResourceLocation CORE_MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), "");
     
+    public MundaneWandISTER() {
+        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+    }
+    
     @Override
     public void renderByItem(ItemStack itemStack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (itemStack.getItem() instanceof MundaneWandItem) {
