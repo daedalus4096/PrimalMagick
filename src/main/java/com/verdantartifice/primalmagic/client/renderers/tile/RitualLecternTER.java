@@ -2,18 +2,18 @@ package com.verdantartifice.primalmagic.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualLecternBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualLecternTileEntity;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.model.BookModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.model.BookModel;
-import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Custom tile entity renderer for ritual lectern blocks.
@@ -22,9 +22,10 @@ import com.mojang.math.Vector3f;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.rituals.RitualLecternBlock}
  */
 public class RitualLecternTER implements BlockEntityRenderer<RitualLecternTileEntity> {
-    protected final BookModel bookModel = new BookModel();
+    protected final BookModel bookModel;
 
     public RitualLecternTER(BlockEntityRendererProvider.Context context) {
+        this.bookModel = new BookModel(context.bakeLayer(ModelLayers.BOOK));
     }
 
     @Override

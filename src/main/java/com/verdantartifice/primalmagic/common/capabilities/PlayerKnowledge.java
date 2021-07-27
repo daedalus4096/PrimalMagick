@@ -6,7 +6,6 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -22,12 +21,11 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.theorycrafting.Project;
 import com.verdantartifice.primalmagic.common.theorycrafting.ProjectFactory;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.Constants;
@@ -369,7 +367,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
         public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_knowledge");
         
-        private final IPlayerKnowledge instance = PrimalMagicCapabilities.KNOWLEDGE.getDefaultInstance();
+        private final IPlayerKnowledge instance = new PlayerKnowledge();
         private final LazyOptional<IPlayerKnowledge> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
         
         @Override
@@ -389,39 +387,6 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         @Override
         public void deserializeNBT(CompoundTag nbt) {
             instance.deserializeNBT(nbt);
-        }
-    }
-
-    /**
-     * Storage manager for the player knowledge capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Storage implements Capability.IStorage<IPlayerKnowledge> {
-        @Override
-        public Tag writeNBT(Capability<IPlayerKnowledge> capability, IPlayerKnowledge instance, Direction side) {
-            // Use the instance's pre-defined serialization
-            return instance.serializeNBT();
-        }
-
-        @Override
-        public void readNBT(Capability<IPlayerKnowledge> capability, IPlayerKnowledge instance, Direction side, Tag nbt) {
-            // Use the instance's pre-defined deserialization
-            instance.deserializeNBT((CompoundTag)nbt);
-        }
-    }
-    
-    /**
-     * Factory for the player knowledge capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Factory implements Callable<IPlayerKnowledge> {
-        @Override
-        public IPlayerKnowledge call() throws Exception {
-            return new PlayerKnowledge();
         }
     }
 }

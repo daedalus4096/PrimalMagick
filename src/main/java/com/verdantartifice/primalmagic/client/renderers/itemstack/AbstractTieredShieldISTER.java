@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ShieldModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
@@ -31,10 +32,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public abstract class AbstractTieredShieldISTER extends BlockEntityWithoutLevelRenderer {
-    protected final ShieldModel model = new ShieldModel();
+    protected final ShieldModel model;
     
     public AbstractTieredShieldISTER() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        this.model = new ShieldModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.SHIELD));
     }
     
     @Override

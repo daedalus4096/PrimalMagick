@@ -2,17 +2,17 @@ package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AbstractTridentEntity;
 
+import net.minecraft.client.model.TridentModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.model.TridentModel;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
-import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -23,10 +23,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public abstract class AbstractTridentRenderer extends EntityRenderer<AbstractTridentEntity> {
-    protected final TridentModel tridentModel = new TridentModel();
+    protected final TridentModel tridentModel;
 
     public AbstractTridentRenderer(EntityRendererProvider.Context context) {
         super(context);
+        this.tridentModel = new TridentModel(context.bakeLayer(ModelLayers.TRIDENT));
     }
 
     @Override

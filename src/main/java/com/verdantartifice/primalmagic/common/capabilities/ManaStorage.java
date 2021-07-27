@@ -3,16 +3,12 @@ package com.verdantartifice.primalmagic.common.capabilities;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraftforge.common.capabilities.Capability;
 
 /**
  * Default implementation of the mana storage capability.
@@ -122,39 +118,5 @@ public class ManaStorage implements IManaStorage {
     
     protected void onManaChanged() {
         // Do nothing by default
-    }
-    
-    /**
-     * Storage manager for the tile mana storage capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Storage implements Capability.IStorage<IManaStorage> {
-        @Override
-        public Tag writeNBT(Capability<IManaStorage> capability, IManaStorage instance, Direction side) {
-            // Use the instance's pre-defined serialization
-            return instance.serializeNBT();
-        }
-
-        @Override
-        public void readNBT(Capability<IManaStorage> capability, IManaStorage instance, Direction side, Tag nbt) {
-            // Use the instance's pre-defined deserialization
-            instance.deserializeNBT((CompoundTag)nbt);
-        }
-    }
-    
-    /**
-     * Factory for the tile mana storage capability.  Returns a stub default implementation.  Used
-     * to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Factory implements Callable<IManaStorage> {
-        @Override
-        public IManaStorage call() throws Exception {
-            return new ManaStorage(0, new Source[0]);
-        }
     }
 }

@@ -1,19 +1,17 @@
 package com.verdantartifice.primalmagic.common.capabilities;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncCooldownsPacket;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.Constants;
@@ -110,7 +108,7 @@ public class PlayerCooldowns implements IPlayerCooldowns {
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
         public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_cooldowns");
         
-        private final IPlayerCooldowns instance = PrimalMagicCapabilities.COOLDOWNS.getDefaultInstance();
+        private final IPlayerCooldowns instance = new PlayerCooldowns();
         private final LazyOptional<IPlayerCooldowns> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
 
         @Override
@@ -130,39 +128,6 @@ public class PlayerCooldowns implements IPlayerCooldowns {
         @Override
         public void deserializeNBT(CompoundTag nbt) {
             instance.deserializeNBT(nbt);
-        }
-    }
-    
-    /**
-     * Storage manager for the player cooldowns capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Storage implements Capability.IStorage<IPlayerCooldowns> {
-        @Override
-        public Tag writeNBT(Capability<IPlayerCooldowns> capability, IPlayerCooldowns instance, Direction side) {
-            // Use the instance's pre-defined serialization
-            return instance.serializeNBT();
-        }
-
-        @Override
-        public void readNBT(Capability<IPlayerCooldowns> capability, IPlayerCooldowns instance, Direction side, Tag nbt) {
-            // Use the instance's pre-defined deserialization
-            instance.deserializeNBT((CompoundTag)nbt);
-        }
-    }
-    
-    /**
-     * Factory for the player cooldowns capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Factory implements Callable<IPlayerCooldowns> {
-        @Override
-        public IPlayerCooldowns call() throws Exception {
-            return new PlayerCooldowns();
         }
     }
 }
