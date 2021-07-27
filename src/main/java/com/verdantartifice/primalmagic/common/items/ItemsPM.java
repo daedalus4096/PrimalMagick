@@ -1,16 +1,6 @@
 package com.verdantartifice.primalmagic.common.items;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.AncientManaFontISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.ForbiddenTridentISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.HallowsteelShieldISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.HallowsteelTridentISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.HexiumShieldISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.HexiumTridentISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularStaffISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.ModularWandISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.PrimaliteShieldISTER;
-import com.verdantartifice.primalmagic.client.renderers.itemstack.PrimaliteTridentISTER;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
@@ -25,6 +15,7 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagic.common.items.food.BloodyFleshItem;
 import com.verdantartifice.primalmagic.common.items.food.ManafruitItem;
+import com.verdantartifice.primalmagic.common.items.misc.AncientManaFontBlockItem;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagic.common.items.misc.EarthshatterHammerItem;
@@ -36,15 +27,6 @@ import com.verdantartifice.primalmagic.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagic.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagic.common.items.misc.SeascribePenItem;
-import com.verdantartifice.primalmagic.common.items.tools.ItemTierPM;
-import com.verdantartifice.primalmagic.common.items.tools.PrimalAxeItem;
-import com.verdantartifice.primalmagic.common.items.tools.PrimalFishingRodItem;
-import com.verdantartifice.primalmagic.common.items.tools.PrimalPickaxeItem;
-import com.verdantartifice.primalmagic.common.items.tools.PrimalShovelItem;
-import com.verdantartifice.primalmagic.common.items.tools.PrimaliteShieldItem;
-import com.verdantartifice.primalmagic.common.items.tools.PrimaliteTridentItem;
-import com.verdantartifice.primalmagic.common.items.tools.TieredBowItem;
-import com.verdantartifice.primalmagic.common.items.tools.AbstractTieredShieldItem;
 import com.verdantartifice.primalmagic.common.items.tools.AbstractTieredTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.ForbiddenBowItem;
 import com.verdantartifice.primalmagic.common.items.tools.ForbiddenSwordItem;
@@ -53,6 +35,14 @@ import com.verdantartifice.primalmagic.common.items.tools.HallowsteelShieldItem;
 import com.verdantartifice.primalmagic.common.items.tools.HallowsteelTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.HexiumShieldItem;
 import com.verdantartifice.primalmagic.common.items.tools.HexiumTridentItem;
+import com.verdantartifice.primalmagic.common.items.tools.ItemTierPM;
+import com.verdantartifice.primalmagic.common.items.tools.PrimalAxeItem;
+import com.verdantartifice.primalmagic.common.items.tools.PrimalFishingRodItem;
+import com.verdantartifice.primalmagic.common.items.tools.PrimalPickaxeItem;
+import com.verdantartifice.primalmagic.common.items.tools.PrimalShovelItem;
+import com.verdantartifice.primalmagic.common.items.tools.PrimaliteShieldItem;
+import com.verdantartifice.primalmagic.common.items.tools.PrimaliteTridentItem;
+import com.verdantartifice.primalmagic.common.items.tools.TieredBowItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagic.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagic.common.items.wands.MundaneWandItem;
@@ -69,21 +59,21 @@ import com.verdantartifice.primalmagic.common.wands.WandGem;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.FishingRodItem;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.SwordItem;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -251,11 +241,11 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> RITUAL_CANDLE_YELLOW = ITEMS.register("ritual_candle_yellow", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_YELLOW.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
 
     // Register mana font block items
-    public static final RegistryObject<BlockItem> ANCIENT_FONT_EARTH = ITEMS.register("ancient_font_earth", () -> new BlockItem(BlocksPM.ANCIENT_FONT_EARTH.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE).setISTER(() -> AncientManaFontISTER::new)));
-    public static final RegistryObject<BlockItem> ANCIENT_FONT_SEA = ITEMS.register("ancient_font_sea", () -> new BlockItem(BlocksPM.ANCIENT_FONT_SEA.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE).setISTER(() -> AncientManaFontISTER::new)));
-    public static final RegistryObject<BlockItem> ANCIENT_FONT_SKY = ITEMS.register("ancient_font_sky", () -> new BlockItem(BlocksPM.ANCIENT_FONT_SKY.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE).setISTER(() -> AncientManaFontISTER::new)));
-    public static final RegistryObject<BlockItem> ANCIENT_FONT_SUN = ITEMS.register("ancient_font_sun", () -> new BlockItem(BlocksPM.ANCIENT_FONT_SUN.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE).setISTER(() -> AncientManaFontISTER::new)));
-    public static final RegistryObject<BlockItem> ANCIENT_FONT_MOON = ITEMS.register("ancient_font_moon", () -> new BlockItem(BlocksPM.ANCIENT_FONT_MOON.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE).setISTER(() -> AncientManaFontISTER::new)));
+    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_EARTH = ITEMS.register("ancient_font_earth", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_EARTH.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_SEA = ITEMS.register("ancient_font_sea", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_SEA.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_SKY = ITEMS.register("ancient_font_sky", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_SKY.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_SUN = ITEMS.register("ancient_font_sun", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_SUN.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_MOON = ITEMS.register("ancient_font_moon", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_MOON.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
     
     // Register device block items
     public static final RegistryObject<BurnableBlockItem> ARCANE_WORKBENCH = ITEMS.register("arcane_workbench", () -> new BurnableBlockItem(BlocksPM.ARCANE_WORKBENCH.get(), 300, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
