@@ -7,14 +7,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 
 /**
- * Definition of a shield item made of a magical metal.
+ * Base definition of a shield item made of a magical metal.
  * 
  * @author Daedalus4096
  */
-public class TieredShieldItem extends ShieldItem {
+public abstract class AbstractTieredShieldItem extends ShieldItem {
     protected final Tier tier;
     
-    public TieredShieldItem(Tier tier, Item.Properties properties) {
+    public AbstractTieredShieldItem(Tier tier, Item.Properties properties) {
         super(properties.defaultDurability(tier.getUses()));
         this.tier = tier;
     }

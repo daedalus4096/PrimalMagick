@@ -5,7 +5,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
-import com.verdantartifice.primalmagic.common.items.tools.TieredShieldItem;
+import com.verdantartifice.primalmagic.common.items.tools.AbstractTieredShieldItem;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -27,7 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * Custom item stack renderer for magical metal shields.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagic.common.items.tools.TieredShieldItem}
+ * @see {@link com.verdantartifice.primalmagic.common.items.tools.AbstractTieredShieldItem}
  */
 @OnlyIn(Dist.CLIENT)
 public abstract class AbstractTieredShieldISTER extends BlockEntityWithoutLevelRenderer {
@@ -39,7 +39,7 @@ public abstract class AbstractTieredShieldISTER extends BlockEntityWithoutLevelR
     
     @Override
     public void renderByItem(ItemStack stack, TransformType p_239207_2_, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        if (stack.getItem() instanceof TieredShieldItem) {
+        if (stack.getItem() instanceof AbstractTieredShieldItem) {
             boolean hasPattern = stack.getTagElement("BlockEntityTag") != null;
             matrixStack.pushPose();
             matrixStack.scale(1.0F, -1.0F, -1.0F);

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.crafting;
 
-import com.verdantartifice.primalmagic.common.items.tools.TieredShieldItem;
+import com.verdantartifice.primalmagic.common.items.tools.AbstractTieredShieldItem;
 
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BannerItem;
@@ -35,7 +35,7 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
                     }
                     bannerStack = stack;
                 } else {
-                    if (!(stack.getItem() instanceof TieredShieldItem) || !shieldStack.isEmpty() || stack.getTagElement("BlockEntityTag") != null) {
+                    if (!(stack.getItem() instanceof AbstractTieredShieldItem) || !shieldStack.isEmpty() || stack.getTagElement("BlockEntityTag") != null) {
                         return false;
                     }
                     shieldStack = stack;
@@ -56,7 +56,7 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof BannerItem) {
                     bannerStack = stack;
-                } else if (stack.getItem() instanceof TieredShieldItem) {
+                } else if (stack.getItem() instanceof AbstractTieredShieldItem) {
                     shieldStack = stack.copy();
                 }
             }
