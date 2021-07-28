@@ -14,7 +14,6 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'com.palantir.git-version'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 version = gitVersion()
 group = 'com.verdantartifice.primalmagic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
