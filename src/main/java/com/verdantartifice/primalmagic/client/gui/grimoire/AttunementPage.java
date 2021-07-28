@@ -88,21 +88,21 @@ public class AttunementPage extends AbstractPage {
 
             // Render permanent meter bar
             color = baseColor.darker();
-            RenderSystem.color4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
+            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
             this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p, 0, 100)), 0, 10, 10, Mth.clamp(p, 0, 100));
             
             // Render induced meter bar
             color = baseColor;
-            RenderSystem.color4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
+            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
             this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p + i, 0, 100)), 0, 10, 10, Mth.clamp(i, 0, 100 - p));
             
             // Render temporary meter bar
             color = baseColor.brighter();
-            RenderSystem.color4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
+            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
             this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p + i + t, 0, 100)), 0, 10, 10, Mth.clamp(t, 0, 100 - p - i));
 
             // Render meter foreground
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             this.blit(matrixStack, x + 52 + (side * 140), y + 9, 27, 9, 15, 102);
         }
 

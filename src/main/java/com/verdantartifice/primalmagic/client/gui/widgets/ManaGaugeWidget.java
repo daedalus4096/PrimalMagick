@@ -58,17 +58,17 @@ public class ManaGaugeWidget extends AbstractWidget {
         matrixStack.translate(this.x, this.y, 0.0F);
 
         // Render gauge background texture
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         this.blit(matrixStack, 0, 0, 12, 0, this.width, this.height);
         
         // Render colored gauge
         int mana = this.getScaledMana();
         Color manaColor = new Color(this.source.getColor());
-        RenderSystem.color4f(manaColor.getRed() / 255.0F, manaColor.getGreen() / 255.0F, manaColor.getBlue() / 255.0F, 1.0F);
+        RenderSystem.setShaderColor(manaColor.getRed() / 255.0F, manaColor.getGreen() / 255.0F, manaColor.getBlue() / 255.0F, 1.0F);
         this.blit(matrixStack, 1, 51 - mana, 1, 1, 10, mana);
 
         // Render gauge foreground texture
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         this.blit(matrixStack, 0, 0, 24, 0, this.width, this.height);
 
         matrixStack.popPose();

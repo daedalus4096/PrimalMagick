@@ -213,7 +213,6 @@ public class GuiUtils {
         
         RenderSystem.disableTexture();
         RenderSystem.enableBlend();
-        RenderSystem.disableAlphaTest();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.shadeModel(GL11.GL_SMOOTH);
         
@@ -232,7 +231,6 @@ public class GuiUtils {
         if (!blendOn) {
             RenderSystem.disableBlend();
         }
-        RenderSystem.enableAlphaTest();
         RenderSystem.enableTexture();
     }
     

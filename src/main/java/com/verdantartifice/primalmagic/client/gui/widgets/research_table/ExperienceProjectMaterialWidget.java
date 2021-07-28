@@ -49,7 +49,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         matrixStack.pushPose();
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.25F, 0.25F, 0.25F);
-        RenderSystem.color4f(r, g, b, a);
+        RenderSystem.setShaderColor(r, g, b, a);
         this.blit(matrixStack, 0, 0, uMin, vMin, 63, 63);
         matrixStack.popPose();
 
@@ -57,7 +57,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         if (this.material.getLevels() > 1) {
             Component amountText = new TextComponent(Integer.toString(this.material.getLevels()));
             int width = mc.font.width(amountText);
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.pushPose();
             matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
             matrixStack.scale(0.5F, 0.5F, 0.5F);

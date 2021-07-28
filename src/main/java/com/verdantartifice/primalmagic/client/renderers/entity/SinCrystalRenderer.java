@@ -2,40 +2,39 @@ package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 
 public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/end_crystal/end_crystal.png");
     protected static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(TEXTURE);
     protected static final float ANGLE = (float)Math.sin((Math.PI / 4D));
     
-    protected final ModelPart glassModelRenderer;
-    protected final ModelPart runeModelRenderer;
+    protected final ModelPart glass;
+    protected final ModelPart rune;
 
     public SinCrystalRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.shadowRadius = 0.5F;
-        this.glassModelRenderer = new ModelPart(64, 32, 0, 0);
-        this.glassModelRenderer.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
-        this.runeModelRenderer = new ModelPart(64, 32, 32, 0);
-        this.runeModelRenderer.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
+        ModelPart model = context.bakeLayer(ModelLayers.END_CRYSTAL);
+        this.glass = model.getChild("glass");
+        this.rune = model.getChild("rune");
     }
-
+    
     @Override
     public ResourceLocation getTextureLocation(SinCrystalEntity entity) {
         return TEXTURE;
@@ -67,15 +66,15 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f1));
         matrixStackIn.translate(0.0D, (double)(1.5F + deltaY / 2.0F), 0.0D);
         matrixStackIn.mulPose(new Quaternion(new Vector3f(ANGLE, 0.0F, ANGLE), 60.0F, true));
-        this.glassModelRenderer.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
+        this.glass.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
         matrixStackIn.scale(0.875F, 0.875F, 0.875F);
         matrixStackIn.mulPose(new Quaternion(new Vector3f(ANGLE, 0.0F, ANGLE), 60.0F, true));
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f1));
-        this.glassModelRenderer.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
+        this.glass.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
         matrixStackIn.scale(0.875F, 0.875F, 0.875F);
         matrixStackIn.mulPose(new Quaternion(new Vector3f(ANGLE, 0.0F, ANGLE), 60.0F, true));
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f1));
-        this.runeModelRenderer.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
+        this.rune.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
         matrixStackIn.popPose();
         matrixStackIn.popPose();
         BlockPos blockpos = entityIn.getBeamTarget();
