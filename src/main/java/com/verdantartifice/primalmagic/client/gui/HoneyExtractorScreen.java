@@ -40,7 +40,7 @@ public class HoneyExtractorScreen extends AbstractContainerScreen<HoneyExtractor
     @Override
     protected void init() {
         super.init();
-        this.manaGauge = this.addButton(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.SKY, this.menu.getCurrentMana(), this.menu.getMaxMana()));
+        this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.SKY, this.menu.getCurrentMana(), this.menu.getMaxMana()));
     }
 
     @Override

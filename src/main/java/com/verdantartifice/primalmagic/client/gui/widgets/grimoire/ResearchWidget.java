@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -84,5 +85,9 @@ public class ResearchWidget extends AbstractWidget {
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
         // Disable click behavior
         return false;
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput output) {
     }
 }

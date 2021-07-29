@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -86,5 +87,9 @@ public class ManaGaugeWidget extends AbstractWidget {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput output) {
     }
 }

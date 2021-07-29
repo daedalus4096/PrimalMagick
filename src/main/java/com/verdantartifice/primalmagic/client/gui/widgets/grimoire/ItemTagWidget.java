@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -66,5 +67,9 @@ public class ItemTagWidget extends AbstractWidget {
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
         // Disable click behavior
         return false;
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput output) {
     }
 }

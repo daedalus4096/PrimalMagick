@@ -20,22 +20,21 @@ import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.Sta
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.Project;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import net.minecraft.client.gui.components.Button.OnPress;
 
 /**
  * GUI screen for the research table block.
@@ -226,6 +225,10 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         public WaitingWidget(int xIn, int yIn, Component msg) {
             super(xIn, yIn, 154, 20, msg);
             this.active = false;
+        }
+
+        @Override
+        public void updateNarration(NarrationElementOutput output) {
         }
     }
     

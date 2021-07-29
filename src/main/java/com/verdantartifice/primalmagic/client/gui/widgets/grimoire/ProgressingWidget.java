@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -15,5 +16,9 @@ public class ProgressingWidget extends AbstractWidget {
     public ProgressingWidget(int xIn, int yIn, Component msg) {
         super(xIn, yIn, 119, 20, msg);
         this.active = false;
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput output) {
     }
 }
