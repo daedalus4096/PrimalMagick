@@ -3,25 +3,27 @@ package com.verdantartifice.primalmagic.common.items.entities;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CauldronBlock;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
@@ -35,6 +37,24 @@ import net.minecraftforge.common.util.Constants;
 @SuppressWarnings("deprecation")
 public class FlyingCarpetItem extends Item {
     public static final ResourceLocation COLOR_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "color");
+    
+    public static final CauldronInteraction DYED_CARPET = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
+        Item item = stack.getItem();
+        if (!(item instanceof FlyingCarpetItem)) {
+            return InteractionResult.PASS;
+        } else {
+            FlyingCarpetItem carpet = (FlyingCarpetItem)item;
+            if (carpet.getDyeColor(stack) == null) {
+                return InteractionResult.PASS;
+            } else {
+                if (!level.isClientSide) {
+                    carpet.removeDyeColor(stack);
+                    LayeredCauldronBlock.lowerFillLevel(state, level, pos);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+    };
 
     public FlyingCarpetItem(Item.Properties properties) {
         super(properties);
@@ -71,18 +91,7 @@ public class FlyingCarpetItem extends Item {
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         Level world = context.getLevel();
-        BlockPos pos = context.getClickedPos();
-        BlockState state = world.getBlockState(pos);
-        if (!world.isClientSide && state.getBlock() == Blocks.CAULDRON) {
-            int level = state.getValue(CauldronBlock.LEVEL).intValue();
-            if (level > 0) {
-                this.removeDyeColor(stack);
-                ((CauldronBlock)Blocks.CAULDRON).setWaterLevel(world, pos, state, level - 1);
-                return InteractionResult.SUCCESS;
-            } else {
-                return InteractionResult.PASS;
-            }
-        } else if (!world.isClientSide) {
+        if (!world.isClientSide) {
             if (context.getClickedFace() != Direction.UP) {
                 return InteractionResult.PASS;
             }

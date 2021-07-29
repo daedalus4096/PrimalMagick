@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagic.common.init.InitAttunements;
 import com.verdantartifice.primalmagic.common.init.InitCapabilities;
+import com.verdantartifice.primalmagic.common.init.InitCauldron;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
 import com.verdantartifice.primalmagic.common.init.InitResearch;
 import com.verdantartifice.primalmagic.common.init.InitRunes;
@@ -63,6 +64,7 @@ public class ModLifecycleEvents {
         InitSpells.initSpells();
         InitStats.initStats();
         InitRunes.initRuneEnchantments();
+        InitCauldron.initCauldronInteractions();
         
         FeaturesPM.setupFeatures();
         FeaturesPM.setupStructures();
