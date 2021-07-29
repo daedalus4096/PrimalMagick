@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagic.client.renderers.types.ThickLinesRenderType;
 import com.verdantartifice.primalmagic.common.util.LineSegment;
@@ -91,8 +92,9 @@ public class SpellBoltParticle extends Particle {
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
         RenderSystem.disableCull();
 
-        RenderSystem.pushMatrix();
-        RenderSystem.translated(this.x - entityIn.getPosition().x, this.y - entityIn.getPosition().y, this.z - entityIn.getPosition().z);
+        PoseStack stack = RenderSystem.getModelViewStack();
+        stack.pushPose();
+        stack.translate(this.x - entityIn.getPosition().x, this.y - entityIn.getPosition().y, this.z - entityIn.getPosition().z);
 
         MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
         VertexConsumer lineBuilder = buffer.getBuffer(ThickLinesRenderType.THICK_LINES);
@@ -114,7 +116,7 @@ public class SpellBoltParticle extends Particle {
         RenderSystem.disableBlend();
         RenderSystem.depthMask(true);
 
-        RenderSystem.popMatrix();
+        stack.popPose();
     }
 
     @Override
