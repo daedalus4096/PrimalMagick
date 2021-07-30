@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.FlyingCarpetModel;
+import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -40,11 +41,12 @@ public class FlyingCarpetRenderer extends EntityRenderer<FlyingCarpetEntity> {
     private static final ResourceLocation TEXTURE_RED = new ResourceLocation(PrimalMagic.MODID, "textures/entity/flying_carpet/flying_carpet_red.png");
     private static final ResourceLocation TEXTURE_BLACK = new ResourceLocation(PrimalMagic.MODID, "textures/entity/flying_carpet/flying_carpet_black.png");
     
-    protected final FlyingCarpetModel model = new FlyingCarpetModel();
+    protected final FlyingCarpetModel model;
 
     public FlyingCarpetRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.shadowRadius = 0.5F;
+        this.model = new FlyingCarpetModel(context.bakeLayer(ModelLayersPM.FLYING_CARPET));
     }
 
     @Override

@@ -12,6 +12,7 @@ import net.minecraftforge.fmlclient.registry.RenderingRegistry;
  * @author Daedalus4096
  */
 public class ModelLayersPM {
+    public static final ModelLayerLocation FLYING_CARPET = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "flying_carpet"));
     public static final ModelLayerLocation PIXIE_BASIC = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "pixie_basic"));
     public static final ModelLayerLocation PIXIE_ROYAL = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "pixie_royal"));
     public static final ModelLayerLocation SPELL_MINE = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "spell_mine"));
