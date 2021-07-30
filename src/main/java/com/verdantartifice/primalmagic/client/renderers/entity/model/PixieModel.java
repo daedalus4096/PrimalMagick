@@ -1,10 +1,14 @@
 package com.verdantartifice.primalmagic.client.renderers.entity.model;
 
-import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagic.common.entities.companions.pixies.AbstractPixieEntity;
 
-import net.minecraft.client.model.ListModel;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -15,89 +19,44 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class PixieModel extends ListModel<AbstractPixieEntity> {
-    private final ModelPart head;
-    private final ModelPart body;
-    private final ModelPart rightWing;
-    private final ModelPart leftWing;
-    private final ModelPart leftArm;
-    private final ModelPart rightArm;
-    private final ModelPart leftLeg;
-    private final ModelPart rightLeg;
+public class PixieModel extends HierarchicalModel<AbstractPixieEntity> {
+    protected final ModelPart root;
+    protected final ModelPart head;
+    protected final ModelPart body;
+    protected final ModelPart rightWing;
+    protected final ModelPart leftWing;
 
-    public PixieModel(boolean showCrown) {
-        this.texWidth = 64;
-        this.texHeight = 64;
-
-        this.head = new ModelPart(this);
-        this.head.setPos(0.0F, 1.0F, 0.0F);
-        this.head.texOffs(0, 0).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F, 0.0F, true);
-        
-        if (showCrown) {
-            ModelPart crown = new ModelPart(this);
-            crown.setPos(0.0F, 0.0F, 0.0F);
-            this.head.addChild(crown);
-            crown.texOffs(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F, 0.0F, false);
-            crown.texOffs(0, 32).addBox(-1.5F, -4.5F, -3.5F, 3.0F, 1.0F, 1.0F, 0.0F, false);
-            crown.texOffs(1, 29).addBox(-0.5F, -5.5F, -3.5F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-
-            ModelPart rim4 = new ModelPart(this);
-            rim4.setPos(0.0F, 0.0F, 0.0F);
-            crown.addChild(rim4);
-            rim4.yRot = -1.5708F;
-            rim4.texOffs(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F, 0.0F, false);
-
-            ModelPart rim3 = new ModelPart(this);
-            rim3.setPos(0.0F, 0.0F, 0.0F);
-            crown.addChild(rim3);
-            rim3.yRot = 3.1416F;
-            rim3.texOffs(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F, 0.0F, false);
-
-            ModelPart rim2 = new ModelPart(this);
-            rim2.setPos(0.0F, 0.0F, 0.0F);
-            crown.addChild(rim2);
-            rim2.yRot = 1.5708F;
-            rim2.texOffs(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F, 0.0F, false);
+    public PixieModel(ModelPart modelPart) {
+        this.root = modelPart;
+        this.head = modelPart.getChild("head");
+        this.body = modelPart.getChild("body");
+        this.rightWing = this.body.getChild("right_wing");
+        this.leftWing = this.body.getChild("left_wing");
+    }
+    
+    public static LayerDefinition createBodyLayer(boolean includeCrown) {
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition rootPart = mesh.getRoot();
+        PartDefinition headPart = rootPart.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F), PartPose.offset(0.0F, 1.0F, 0.0F));
+        if (includeCrown) {
+            PartDefinition crownPart = headPart.addOrReplaceChild("crown", CubeListBuilder.create().texOffs(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F).texOffs(0, 32).addBox(-1.5F, -4.5F, -3.5F, 3.0F, 1.0F, 1.0F).texOffs(1, 29).addBox(-0.5F, -5.5F, -3.5F, 1.0F, 1.0F, 1.0F), PartPose.ZERO);
+            crownPart.addOrReplaceChild("rim4", CubeListBuilder.create().texOffs(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F), PartPose.rotation(0.0F, -1.5708F, 0.0F));
+            crownPart.addOrReplaceChild("rim3", CubeListBuilder.create().texOffs(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F), PartPose.rotation(0.0F, 3.1416F, 0.0F));
+            crownPart.addOrReplaceChild("rim2", CubeListBuilder.create().texOffs(0, 29).addBox(-3.5F, -3.5F, -3.5F, 6.0F, 1.0F, 1.0F), PartPose.rotation(0.0F, 1.5708F, 0.0F));
         }
-
-        this.body = new ModelPart(this);
-        this.body.setPos(0.0F, 4.0F, 0.0F);
-        this.body.texOffs(0, 13).addBox(-3.0F, 0.0F, -2.0F, 6.0F, 11.0F, 4.0F, 0.0F, true);
-
-        this.rightWing = new ModelPart(this);
-        this.rightWing.setPos(0.0F, -4.0F, 0.0F);
-        this.body.addChild(this.rightWing);
-        this.rightWing.texOffs(22, 15).addBox(2.0F, -10.0F, 2.5F, 18.0F, 35.0F, 1.0F, 0.0F, true);
-
-        this.leftWing = new ModelPart(this);
-        this.leftWing.setPos(0.0F, -4.0F, 0.0F);
-        this.body.addChild(this.leftWing);
-        this.leftWing.texOffs(22, 15).addBox(-20.0F, -10.0F, 2.5F, 18.0F, 35.0F, 1.0F, 0.0F, false);
-
-        this.leftArm = new ModelPart(this);
-        this.leftArm.setPos(-4.0F, 0.0F, 0.0F);
-        this.body.addChild(this.leftArm);
-        this.leftArm.texOffs(25, 0).addBox(-2.0F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F, 0.0F, false);
-
-        this.rightArm = new ModelPart(this);
-        this.rightArm.setPos(4.0F, 0.0F, 0.0F);
-        this.body.addChild(this.rightArm);
-        this.rightArm.texOffs(25, 0).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F, 0.0F, true);
-
-        this.leftLeg = new ModelPart(this);
-        this.leftLeg.setPos(-2.0F, 11.0F, 0.0F);
-        this.body.addChild(this.leftLeg);
-        this.leftLeg.texOffs(38, 0).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 9.0F, 3.0F, 0.0F, false);
-
-        this.rightLeg = new ModelPart(this);
-        this.rightLeg.setPos(2.0F, 11.0F, 0.0F);
-        this.body.addChild(this.rightLeg);
-        this.rightLeg.texOffs(38, 0).addBox(-2.0F, 0.0F, -1.5F, 3.0F, 9.0F, 3.0F, 0.0F, true);
+        PartDefinition bodyPart = rootPart.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 13).addBox(-3.0F, 0.0F, -2.0F, 6.0F, 11.0F, 4.0F), PartPose.offset(0.0F, 4.0F, 0.0F));
+        bodyPart.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(22, 15).mirror().addBox(2.0F, -10.0F, 2.5F, 18.0F, 35.0F, 1.0F), PartPose.offset(0.0F, -4.0F, 0.0F));
+        bodyPart.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(22, 15).addBox(-20.0F, -10.0F, 2.5F, 18.0F, 35.0F, 1.0F), PartPose.offset(0.0F, -4.0F, 0.0F));
+        bodyPart.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(25, 0).addBox(-2.0F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F), PartPose.offset(-4.0F, 0.0F, 0.0F));
+        bodyPart.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(25, 0).mirror().addBox(-1.0F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F), PartPose.offset(4.0F, 0.0F, 0.0F));
+        bodyPart.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(38, 0).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 9.0F, 3.0F), PartPose.offset(-2.0F, 11.0F, 0.0F));
+        bodyPart.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(38, 0).mirror().addBox(-2.0F, 0.0F, -1.5F, 3.0F, 9.0F, 3.0F), PartPose.offset(2.0F, 11.0F, 0.0F));
+        return LayerDefinition.create(mesh, 64, 64);
     }
 
     @Override
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.head, this.body);
+    public ModelPart root() {
+        return this.root;
     }
 
     @Override

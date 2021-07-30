@@ -35,6 +35,8 @@ import com.verdantartifice.primalmagic.client.renderers.entity.SinCrystalRendere
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellMineRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.TreefolkRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.model.PixieModel;
+import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.OfferingPedestalTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualAltarTER;
@@ -85,6 +87,7 @@ public class ClientProxy implements IProxyPM {
         this.registerKeybinds();
         this.registerScreens();
         this.registerTERs();
+        this.registerLayerDefinitions();
         this.registerEntityRenderers(event);
         this.registerItemProperties(event);
         this.setRenderLayers();
@@ -124,6 +127,12 @@ public class ClientProxy implements IProxyPM {
         BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_BELL.get(), RitualBellTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), RunescribingAltarTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTER::new);
+    }
+    
+    private void registerLayerDefinitions() {
+        // Register layer definitions for models
+        RenderingRegistry.registerLayerDefinition(ModelLayersPM.PIXIE_BASIC, () -> PixieModel.createBodyLayer(false));
+        RenderingRegistry.registerLayerDefinition(ModelLayersPM.PIXIE_ROYAL, () -> PixieModel.createBodyLayer(true));
     }
     
     private void registerEntityRenderers(FMLClientSetupEvent event) {
