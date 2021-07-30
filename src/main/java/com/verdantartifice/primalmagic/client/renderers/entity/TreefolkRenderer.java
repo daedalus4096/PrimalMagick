@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
 
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -19,7 +19,7 @@ public class TreefolkRenderer extends HumanoidMobRenderer<TreefolkEntity, Humano
     protected static final ResourceLocation ANGRY_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/treefolk/treefolk_angry.png");
 
     public TreefolkRenderer(EntityRendererProvider.Context context) {
-        super(context, new HumanoidModel<TreefolkEntity>(0.0F), 0.5F);
+        super(context, new HumanoidModel<TreefolkEntity>(context.bakeLayer(ModelLayersPM.TREEFOLK)), 0.5F);
     }
 
     @Override

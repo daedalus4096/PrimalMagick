@@ -6,12 +6,12 @@ import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagic.common.entities.misc.SinCrystalEntity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.client.renderer.entity.EnderDragonRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EnderDragonRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,12 +26,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
     protected static final float SCALE = 2.0F;
     
+    protected final EntityRendererProvider.Context context;
     protected InnerDemonArmorLayer armorLayer;
     protected boolean modelFinalized = false;
     
     public InnerDemonRenderer(EntityRendererProvider.Context context) {
-        super(context, new PlayerModel<InnerDemonEntity>(0.0F, false), 0.5F * SCALE);
-        this.armorLayer = new InnerDemonArmorLayer(this, false);
+        super(context, new PlayerModel<InnerDemonEntity>(context.bakeLayer(ModelLayers.PLAYER), false), 0.5F * SCALE);
+        this.context = context;
+        this.armorLayer = new InnerDemonArmorLayer(this, context.getModelSet(), false);
         this.addLayer(this.armorLayer);
     }
 
@@ -49,10 +51,10 @@ public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, Pl
             Minecraft mc = Minecraft.getInstance();
             boolean slimModel = mc.player.getModelName().equals("slim");
             
-            this.model = new PlayerModel<InnerDemonEntity>(0.0F, slimModel);
+            this.model = new PlayerModel<InnerDemonEntity>(this.context.bakeLayer(slimModel ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER), slimModel);
             
             this.layers.remove(this.armorLayer);
-            this.armorLayer = new InnerDemonArmorLayer(this, slimModel);
+            this.armorLayer = new InnerDemonArmorLayer(this, this.context.getModelSet(), slimModel);
             this.addLayer(this.armorLayer);
             
             this.modelFinalized = true;

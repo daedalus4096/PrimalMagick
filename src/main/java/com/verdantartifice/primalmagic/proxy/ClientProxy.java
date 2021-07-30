@@ -58,6 +58,9 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -139,6 +142,7 @@ public class ClientProxy implements IProxyPM {
         RenderingRegistry.registerLayerDefinition(ModelLayersPM.PIXIE_ROYAL, () -> PixieModel.createBodyLayer(true));
         RenderingRegistry.registerLayerDefinition(ModelLayersPM.SPELL_MINE, SpellMineModel::createBodyLayer);
         RenderingRegistry.registerLayerDefinition(ModelLayersPM.SPELL_PROJECTILE, SpellProjectileModel::createBodyLayer);
+        RenderingRegistry.registerLayerDefinition(ModelLayersPM.TREEFOLK, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
     }
     
     private void registerEntityRenderers(FMLClientSetupEvent event) {

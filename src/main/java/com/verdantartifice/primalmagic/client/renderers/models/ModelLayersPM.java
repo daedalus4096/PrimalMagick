@@ -17,4 +17,5 @@ public class ModelLayersPM {
     public static final ModelLayerLocation PIXIE_ROYAL = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "pixie_royal"));
     public static final ModelLayerLocation SPELL_MINE = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "spell_mine"));
     public static final ModelLayerLocation SPELL_PROJECTILE = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "spell_projectile"));
+    public static final ModelLayerLocation TREEFOLK = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "treefolk"));
 }

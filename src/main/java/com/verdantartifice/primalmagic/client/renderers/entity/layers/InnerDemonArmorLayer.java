@@ -7,6 +7,8 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -21,9 +23,9 @@ public class InnerDemonArmorLayer extends EnergySwirlLayer<InnerDemonEntity, Pla
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/inner_demon/inner_demon_armor.png");
     protected final PlayerModel<InnerDemonEntity> model;
 
-    public InnerDemonArmorLayer(RenderLayerParent<InnerDemonEntity, PlayerModel<InnerDemonEntity>> renderer, boolean slimModel) {
+    public InnerDemonArmorLayer(RenderLayerParent<InnerDemonEntity, PlayerModel<InnerDemonEntity>> renderer, EntityModelSet modelSet, boolean slimModel) {
         super(renderer);
-        this.model = new PlayerModel<InnerDemonEntity>(2.0F, slimModel);
+        this.model = new PlayerModel<InnerDemonEntity>(modelSet.bakeLayer(slimModel ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER), slimModel);
     }
 
     @Override
