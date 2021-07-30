@@ -14,4 +14,6 @@ import net.minecraftforge.fmlclient.registry.RenderingRegistry;
 public class ModelLayersPM {
     public static final ModelLayerLocation PIXIE_BASIC = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "pixie_basic"));
     public static final ModelLayerLocation PIXIE_ROYAL = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "pixie_royal"));
+    public static final ModelLayerLocation SPELL_MINE = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "spell_mine"));
+    public static final ModelLayerLocation SPELL_PROJECTILE = RenderingRegistry.registerMainModelLayer(new ResourceLocation(PrimalMagic.MODID, "spell_projectile"));
 }

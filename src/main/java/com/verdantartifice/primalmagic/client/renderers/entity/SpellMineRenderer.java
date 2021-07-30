@@ -6,7 +6,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.renderers.models.SpellMineModel;
+import com.verdantartifice.primalmagic.client.renderers.entity.model.SpellMineModel;
+import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -29,10 +30,11 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/spell_projectile.png");
     protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
 
-    protected final SpellMineModel model = new SpellMineModel();
+    protected final SpellMineModel model;
 
     public SpellMineRenderer(EntityRendererProvider.Context context) {
         super(context);
+        this.model = new SpellMineModel(context.bakeLayer(ModelLayersPM.SPELL_MINE));
     }
     
     @Override

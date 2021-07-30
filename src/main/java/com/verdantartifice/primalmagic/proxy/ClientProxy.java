@@ -36,6 +36,8 @@ import com.verdantartifice.primalmagic.client.renderers.entity.SpellMineRenderer
 import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.TreefolkRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.PixieModel;
+import com.verdantartifice.primalmagic.client.renderers.entity.model.SpellMineModel;
+import com.verdantartifice.primalmagic.client.renderers.entity.model.SpellProjectileModel;
 import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.OfferingPedestalTER;
@@ -133,6 +135,8 @@ public class ClientProxy implements IProxyPM {
         // Register layer definitions for models
         RenderingRegistry.registerLayerDefinition(ModelLayersPM.PIXIE_BASIC, () -> PixieModel.createBodyLayer(false));
         RenderingRegistry.registerLayerDefinition(ModelLayersPM.PIXIE_ROYAL, () -> PixieModel.createBodyLayer(true));
+        RenderingRegistry.registerLayerDefinition(ModelLayersPM.SPELL_MINE, SpellMineModel::createBodyLayer);
+        RenderingRegistry.registerLayerDefinition(ModelLayersPM.SPELL_PROJECTILE, SpellProjectileModel::createBodyLayer);
     }
     
     private void registerEntityRenderers(FMLClientSetupEvent event) {

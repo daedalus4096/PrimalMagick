@@ -6,7 +6,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.renderers.models.SpellProjectileModel;
+import com.verdantartifice.primalmagic.client.renderers.entity.model.SpellProjectileModel;
+import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntity;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -28,10 +29,11 @@ public class SinCrashRenderer extends EntityRenderer<SinCrashEntity> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/spell_projectile.png");
     protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
 
-    protected final SpellProjectileModel model = new SpellProjectileModel();
+    protected final SpellProjectileModel model;
 
     public SinCrashRenderer(EntityRendererProvider.Context context) {
         super(context);
+        this.model = new SpellProjectileModel(context.bakeLayer(ModelLayersPM.SPELL_PROJECTILE));
     }
 
     @Override
