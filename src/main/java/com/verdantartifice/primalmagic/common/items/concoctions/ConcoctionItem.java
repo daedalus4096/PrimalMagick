@@ -8,35 +8,36 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CauldronBlock;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
+import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.NonNullList;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -47,6 +48,39 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 public class ConcoctionItem extends Item {
+    public static final CauldronInteraction FILL_EMPTY_CAULDRON = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
+        if (PotionUtils.getPotion(stack) == Potions.WATER) {
+            if (!level.isClientSide) {
+                Item item = stack.getItem();
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(ItemsPM.SKYGLASS_FLASK.get())));
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(item));
+                level.setBlockAndUpdate(pos, Blocks.WATER_CAULDRON.defaultBlockState());
+                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else {
+            return InteractionResult.PASS;
+        }
+    };
+    public static final CauldronInteraction FILL_WATER_CAULDRON = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
+        if (state.getValue(LayeredCauldronBlock.LEVEL) < 3 && PotionUtils.getPotion(stack) == Potions.WATER) {
+            if (!level.isClientSide) {
+                Item item = stack.getItem();
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(ItemsPM.SKYGLASS_FLASK.get())));
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(item));
+                level.setBlockAndUpdate(pos, state.cycle(LayeredCauldronBlock.LEVEL));
+                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else {
+            return InteractionResult.PASS;
+        }
+    };
+    
     public ConcoctionItem(Item.Properties properties) {
         super(properties);
     }
@@ -54,30 +88,6 @@ public class ConcoctionItem extends Item {
     @Override
     public ItemStack getDefaultInstance() {
         return ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(super.getDefaultInstance(), Potions.WATER), ConcoctionType.WATER);
-    }
-
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        ItemStack stack = context.getItemInHand();
-        Level world = context.getLevel();
-        BlockPos pos = context.getClickedPos();
-        BlockState blockState = world.getBlockState(pos);
-        if (blockState.getBlock() == Blocks.CAULDRON && PotionUtils.getPotion(stack) == Potions.WATER) {
-            int waterLevel = blockState.getValue(CauldronBlock.LEVEL);
-            if (waterLevel < 3 && !world.isClientSide) {
-                Player player = context.getPlayer();
-                if (!player.getAbilities().instabuild) {
-                    player.setItemInHand(context.getHand(), new ItemStack(ItemsPM.SKYGLASS_FLASK.get()));
-                    if (player instanceof ServerPlayer) {
-                        ((ServerPlayer)player).refreshContainer(player.inventoryMenu);
-                    }
-                }
-                world.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                ((CauldronBlock)Blocks.CAULDRON).setWaterLevel(world, pos, blockState, waterLevel + 1);
-            }
-            return InteractionResult.sidedSuccess(world.isClientSide);
-        }
-        return super.useOn(context);
     }
 
     @Override
