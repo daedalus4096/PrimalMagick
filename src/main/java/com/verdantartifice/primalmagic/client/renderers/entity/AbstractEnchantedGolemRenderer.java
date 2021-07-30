@@ -5,6 +5,7 @@ import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.EnchantedGolemModel;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.AbstractEnchantedGolemEntity;
 
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 
@@ -15,7 +16,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
  */
 public abstract class AbstractEnchantedGolemRenderer<T extends AbstractEnchantedGolemEntity> extends MobRenderer<T, EnchantedGolemModel<T>> {
     public AbstractEnchantedGolemRenderer(EntityRendererProvider.Context context) {
-        super(context, new EnchantedGolemModel<>(), 0.7F);
+        super(context, new EnchantedGolemModel<>(context.bakeLayer(ModelLayers.IRON_GOLEM)), 0.7F);
     }
 
     @Override
