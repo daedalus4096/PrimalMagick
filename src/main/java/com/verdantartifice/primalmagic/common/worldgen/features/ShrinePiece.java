@@ -7,24 +7,24 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -39,27 +39,24 @@ public class ShrinePiece extends TemplateStructurePiece {
     protected final ShrineStructure.Type type;
     
     public ShrinePiece(StructureManager templateManager, ShrineStructure.Type type, BlockPos pos) {
-        super(StructurePieceTypesPM.SHRINE, 0);
+        super(StructurePieceTypesPM.SHRINE, 0, templateManager, TEMPLATE, TEMPLATE.toString(), makePlaceSettings(), pos);
         this.type = type;
-        this.templatePosition = pos;
-        this.setupTemplate(templateManager);
     }
 
-    public ShrinePiece(StructureManager templateManager, CompoundTag nbt) {
-        super(StructurePieceTypesPM.SHRINE, nbt);
+    public ShrinePiece(ServerLevel level, CompoundTag nbt) {
+        super(StructurePieceTypesPM.SHRINE, nbt, level, (dummy) -> {
+            return makePlaceSettings();
+        });
         this.type = ShrineStructure.Type.byName(nbt.getString("Source"));
-        this.setupTemplate(templateManager);
     }
     
-    protected void setupTemplate(StructureManager templateManager) {
-        StructureTemplate template = templateManager.getOrCreate(TEMPLATE);
-        StructurePlaceSettings settings = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
-        this.setup(template, this.templatePosition, settings);
+    protected static StructurePlaceSettings makePlaceSettings() {
+        return new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
     }
     
     @Override
-    protected void addAdditionalSaveData(CompoundTag tagCompound) {
-        super.addAdditionalSaveData(tagCompound);
+    protected void addAdditionalSaveData(ServerLevel level, CompoundTag tagCompound) {
+        super.addAdditionalSaveData(level, tagCompound);
         tagCompound.putString("Source", this.type.getSerializedName());
     }
 
