@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.EquipmentSlot;
 
 /**
  * Definition of a melee damage boosting enchantment for magical staves.
@@ -10,18 +10,18 @@ import net.minecraft.inventory.EquipmentSlotType;
  * @author Daedalus4096
  */
 public class BludgeoningEnchantment extends Enchantment {
-    public BludgeoningEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
+    public BludgeoningEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
         super(rarity, EnchantmentTypesPM.STAFF, slots);
     }
     
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 1 + (enchantmentLevel - 1) * 11;
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 20;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 20;
     }
     
     @Override
@@ -30,7 +30,7 @@ public class BludgeoningEnchantment extends Enchantment {
     }
     
     @Override
-    public float calcDamageByCreature(int level, CreatureAttribute creatureType) {
+    public float getDamageBonus(int level, MobType creatureType) {
         return 1.0F + (float)Math.max(0, level - 1) * 0.5F;
     }
 }

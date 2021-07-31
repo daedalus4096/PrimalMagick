@@ -9,9 +9,9 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.ItemLike;
 
 public class ItemMaterialBuilder {
     protected final ItemStack stack;
@@ -26,15 +26,15 @@ public class ItemMaterialBuilder {
         this.matchNBT = this.stack.hasTag();
     }
     
-    public static ItemMaterialBuilder item(@Nonnull IItemProvider item, boolean consumed) {
+    public static ItemMaterialBuilder item(@Nonnull ItemLike item, boolean consumed) {
         return item(item, 1, null, consumed);
     }
     
-    public static ItemMaterialBuilder item(@Nonnull IItemProvider item, int count, boolean consumed) {
+    public static ItemMaterialBuilder item(@Nonnull ItemLike item, int count, boolean consumed) {
         return item(item, count, null, consumed);
     }
     
-    public static ItemMaterialBuilder item(@Nonnull IItemProvider item, int count, @Nullable CompoundNBT nbt, boolean consumed) {
+    public static ItemMaterialBuilder item(@Nonnull ItemLike item, int count, @Nullable CompoundTag nbt, boolean consumed) {
         ItemStack stack = new ItemStack(item, count);
         if (nbt != null) {
             stack.setTag(nbt);

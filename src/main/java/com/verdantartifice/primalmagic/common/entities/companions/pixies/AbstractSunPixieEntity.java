@@ -7,11 +7,11 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.HealingSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.BoltSpellVehicle;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 /**
  * Base definition for a sun pixie.  In addition to following the player as a companion, heals them
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
  * @author Daedalus4096
  */
 public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
-    public AbstractSunPixieEntity(EntityType<? extends AbstractPixieEntity> type, World worldIn) {
+    public AbstractSunPixieEntity(EntityType<? extends AbstractPixieEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
@@ -48,7 +48,7 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
     }
     
     public void castSpell() {
-        this.getSpellPackage().cast(this.world, this, null);
+        this.getSpellPackage().cast(this.level, this, null);
     }
     
     /**
@@ -74,11 +74,11 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
             this.castIntervalMax = maxCastTime;
             this.castRadius = maxCastDistance;
             this.maxCastDistanceSq = maxCastDistance * maxCastDistance;
-            this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
         }
 
         @Override
-        public boolean shouldExecute() {
+        public boolean canUse() {
             LivingEntity target = this.pixie.getCompanionOwner();
             if (target != null && target.isAlive() && (target.getHealth() / target.getMaxHealth()) < 0.75F) {
                 this.castTarget = target;
@@ -89,12 +89,12 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
         }
 
         @Override
-        public boolean shouldContinueExecuting() {
-            return this.shouldExecute() || !this.pixie.getNavigator().noPath();
+        public boolean canContinueToUse() {
+            return this.canUse() || !this.pixie.getNavigation().isDone();
         }
 
         @Override
-        public void resetTask() {
+        public void stop() {
             this.castTarget = null;
             this.seeTime = 0;
             this.castTime = -1;
@@ -102,8 +102,8 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
 
         @Override
         public void tick() {
-            double distSq = this.pixie.getDistanceSq(this.castTarget);
-            boolean canSee = this.pixie.getEntitySenses().canSee(this.castTarget);
+            float distSq = (float)this.pixie.distanceToSqr(this.castTarget);
+            boolean canSee = this.pixie.getSensing().hasLineOfSight(this.castTarget);
             if (canSee) {
                 this.seeTime++;
             } else {
@@ -111,22 +111,22 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
             }
             
             if (distSq <= this.maxCastDistanceSq && this.seeTime >= 5) {
-                this.pixie.getNavigator().clearPath();
+                this.pixie.getNavigation().stop();
             } else {
-                this.pixie.getNavigator().tryMoveToEntityLiving(this.castTarget, this.moveSpeed);
+                this.pixie.getNavigation().moveTo(this.castTarget, this.moveSpeed);
             }
             
-            this.pixie.getLookController().setLookPositionWithEntity(this.castTarget, 30.0F, 30.0F);
+            this.pixie.getLookControl().setLookAt(this.castTarget, 30.0F, 30.0F);
             if (--this.castTime == 0) {
                 if (!canSee) {
                     return;
                 }
-                float f = MathHelper.sqrt(distSq) / this.castRadius;
+                float f = Mth.sqrt(distSq) / this.castRadius;
                 this.pixie.castSpell();
-                this.castTime = MathHelper.floor(f * (float)(this.castIntervalMax - this.castIntervalMin) + (float)this.castIntervalMin);
+                this.castTime = Mth.floor(f * (float)(this.castIntervalMax - this.castIntervalMin) + (float)this.castIntervalMin);
             } else if (this.castTime < 0) {
-                float f = MathHelper.sqrt(distSq) / this.castRadius;
-                this.castTime = MathHelper.floor(f * (float)(this.castIntervalMax - this.castIntervalMin) + (float)this.castIntervalMin);
+                float f = Mth.sqrt(distSq) / this.castRadius;
+                this.castTime = Mth.floor(f * (float)(this.castIntervalMax - this.castIntervalMin) + (float)this.castIntervalMin);
             }
         }
     }

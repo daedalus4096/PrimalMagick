@@ -9,17 +9,17 @@ import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,28 +30,28 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 public class BloodyFleshItem extends Item {
     public BloodyFleshItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new Food.Builder().hunger(3).saturation(0.3F).meat().setAlwaysEdible().build()));
+        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).meat().alwaysEat().build()));
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isRemote && (entityLiving instanceof PlayerEntity)) {
-            PlayerEntity player = (PlayerEntity)entityLiving;
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+        if (!worldIn.isClientSide && (entityLiving instanceof Player)) {
+            Player player = (Player)entityLiving;
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
             if (knowledge != null && knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
                 // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
                 ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.discover_source.blood").mergeStyle(TextFormatting.GREEN), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
             }
         }
-        return super.onItemUseFinish(stack, worldIn, entityLiving);
+        return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.bloody_flesh.1").mergeStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
-        tooltip.add(new TranslationTextComponent("tooltip.primalmagic.bloody_flesh.2").mergeStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(new TranslatableComponent("tooltip.primalmagic.bloody_flesh.1").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+        tooltip.add(new TranslatableComponent("tooltip.primalmagic.bloody_flesh.2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
     }
 }

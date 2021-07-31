@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -19,7 +19,7 @@ public interface IPageElement {
      * @param x the page-relative X-coordinate at which to render this element
      * @param y the page-relative Y-coordinate at which to render this element
      */
-    public void render(MatrixStack matrixStack, int side, int x, int y);
+    public void render(PoseStack matrixStack, int side, int x, int y);
     
     /**
      * Get the Y-coordinate at which to render the next page element

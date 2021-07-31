@@ -5,26 +5,26 @@ import com.google.common.collect.Multimap;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AbstractTridentEntity;
 import com.google.common.collect.ImmutableMultimap.Builder;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.TridentItem;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TridentItem;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 /**
  * Base class definition of a craftable, repairable trident item made of a magical metal.
@@ -32,94 +32,94 @@ import net.minecraft.world.World;
  * @author Daedalus4096
  */
 public abstract class AbstractTieredTridentItem extends TridentItem {
-    protected final IItemTier tier;
+    protected final Tier tier;
     protected final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
-    public AbstractTieredTridentItem(IItemTier tier, Item.Properties properties) {
-        super(properties.defaultMaxDamage(tier.getMaxUses()));
+    public AbstractTieredTridentItem(Tier tier, Item.Properties properties) {
+        super(properties.defaultDurability(tier.getUses()));
         this.tier = tier;
         Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", 7.0D + tier.getAttackDamage(), AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", (double)-2.9F, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", 7.0D + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", (double)-2.9F, AttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
     
-    public IItemTier getTier() {
+    public Tier getTier() {
         return this.tier;
     }
 
     @Override
-    public int getItemEnchantability() {
-        return this.tier.getEnchantability();
+    public int getEnchantmentValue() {
+        return this.tier.getEnchantmentValue();
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return this.tier.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
+        return equipmentSlot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
     }
     
-    protected abstract AbstractTridentEntity getThrownEntity(World world, LivingEntity thrower, ItemStack stack);
+    protected abstract AbstractTridentEntity getThrownEntity(Level world, LivingEntity thrower, ItemStack stack);
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
-        if (entityLiving instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)entityLiving;
+    public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
+        if (entityLiving instanceof Player) {
+            Player player = (Player)entityLiving;
             int duration = this.getUseDuration(stack) - timeLeft;
             if (duration >= 10) {
-                int riptide = EnchantmentHelper.getRiptideModifier(stack);
-                if (riptide <= 0 || player.isWet()) {
-                    if (!worldIn.isRemote) {
-                        stack.damageItem(1, player, (p) -> {
-                            p.sendBreakAnimation(entityLiving.getActiveHand());
+                int riptide = EnchantmentHelper.getRiptide(stack);
+                if (riptide <= 0 || player.isInWaterOrRain()) {
+                    if (!worldIn.isClientSide) {
+                        stack.hurtAndBreak(1, player, (p) -> {
+                            p.broadcastBreakEvent(entityLiving.getUsedItemHand());
                         });
                         if (riptide == 0) {
                             AbstractTridentEntity trident = this.getThrownEntity(worldIn, player, stack);
-                            trident.setDirectionAndMovement(player, player.rotationPitch, player.rotationYaw, 0.0F, 2.5F + (float)riptide * 0.5F, 1.0F);
-                            if (player.abilities.isCreativeMode) {
-                                trident.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                            trident.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F + (float)riptide * 0.5F, 1.0F);
+                            if (player.getAbilities().instabuild) {
+                                trident.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                             }
                             
-                            worldIn.addEntity(trident);
-                            worldIn.playMovingSound((PlayerEntity)null, trident, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                            if (!player.abilities.isCreativeMode) {
-                                player.inventory.deleteStack(stack);
+                            worldIn.addFreshEntity(trident);
+                            worldIn.playSound((Player)null, trident, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
+                            if (!player.getAbilities().instabuild) {
+                                player.getInventory().removeItem(stack);
                             }
                         }
                     }
                     
-                    player.addStat(Stats.ITEM_USED.get(this));
+                    player.awardStat(Stats.ITEM_USED.get(this));
                     if (riptide > 0) {
-                        float f7 = player.rotationYaw;
-                        float f = player.rotationPitch;
-                        float f1 = -MathHelper.sin(f7 * ((float)Math.PI / 180F)) * MathHelper.cos(f * ((float)Math.PI / 180F));
-                        float f2 = -MathHelper.sin(f * ((float)Math.PI / 180F));
-                        float f3 = MathHelper.cos(f7 * ((float)Math.PI / 180F)) * MathHelper.cos(f * ((float)Math.PI / 180F));
-                        float f4 = MathHelper.sqrt(f1 * f1 + f2 * f2 + f3 * f3);
+                        float f7 = player.getYRot();
+                        float f = player.getXRot();
+                        float f1 = -Mth.sin(f7 * ((float)Math.PI / 180F)) * Mth.cos(f * ((float)Math.PI / 180F));
+                        float f2 = -Mth.sin(f * ((float)Math.PI / 180F));
+                        float f3 = Mth.cos(f7 * ((float)Math.PI / 180F)) * Mth.cos(f * ((float)Math.PI / 180F));
+                        float f4 = Mth.sqrt(f1 * f1 + f2 * f2 + f3 * f3);
                         float f5 = 3.0F * ((1.0F + (float)riptide) / 4.0F);
                         f1 = f1 * (f5 / f4);
                         f2 = f2 * (f5 / f4);
                         f3 = f3 * (f5 / f4);
-                        player.addVelocity((double)f1, (double)f2, (double)f3);
-                        player.startSpinAttack(20);
+                        player.push((double)f1, (double)f2, (double)f3);
+                        player.startAutoSpinAttack(20);
                         if (player.isOnGround()) {
-                            player.move(MoverType.SELF, new Vector3d(0.0D, 1.1999999D, 0.0D));
+                            player.move(MoverType.SELF, new Vec3(0.0D, 1.1999999D, 0.0D));
                         }
                         
                         SoundEvent sound;
                         if (riptide >= 3) {
-                            sound = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
+                            sound = SoundEvents.TRIDENT_RIPTIDE_3;
                         } else if (riptide == 2) {
-                            sound = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
+                            sound = SoundEvents.TRIDENT_RIPTIDE_2;
                         } else {
-                            sound = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
+                            sound = SoundEvents.TRIDENT_RIPTIDE_1;
                         }
                         
-                        worldIn.playMovingSound((PlayerEntity)null, player, sound, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        worldIn.playSound((Player)null, player, sound, SoundSource.PLAYERS, 1.0F, 1.0F);
                     }
                 }
             }

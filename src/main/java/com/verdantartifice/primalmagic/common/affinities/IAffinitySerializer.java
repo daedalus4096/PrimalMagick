@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.affinities;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Primary interface for the serializer of a data-defined affinity entry

@@ -3,25 +3,25 @@ package com.verdantartifice.primalmagic.client.renderers.tile;
 import java.awt.Color;
 import java.util.Random;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.tiles.devices.SanguineCrucibleTileEntity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,39 +32,38 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.SanguineCrucibleBlock}
  */
 @OnlyIn(Dist.CLIENT)
-public class SanguineCrucibleTER extends TileEntityRenderer<SanguineCrucibleTileEntity> {
+public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucibleTileEntity> {
     protected static final ResourceLocation WATER_TEXTURE = new ResourceLocation("block/water_still");
     protected static final Color COLOR = new Color(Source.BLOOD.getColor()).brighter().brighter();
     protected static final float R = COLOR.getRed() / 255.0F;
     protected static final float G = COLOR.getGreen() / 255.0F;
     protected static final float B = COLOR.getBlue() / 255.0F;
     
-    public SanguineCrucibleTER(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+    public SanguineCrucibleTER(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(SanguineCrucibleTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(SanguineCrucibleTileEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
         Minecraft mc = Minecraft.getInstance();
         
-        matrixStackIn.push();
+        matrixStackIn.pushPose();
         matrixStackIn.translate(0.0D, tileEntityIn.getFluidHeight(), 0.0D);
-        matrixStackIn.rotate(Vector3f.XP.rotationDegrees(90.0F));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(90.0F));
         
         @SuppressWarnings("deprecation")
-        TextureAtlasSprite sprite = mc.getModelManager().getAtlasTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getSprite(WATER_TEXTURE);
-        IVertexBuilder builder = bufferIn.getBuffer(RenderType.getTranslucent());
-        Matrix4f matrix = matrixStackIn.getLast().getMatrix();
-        builder.pos(matrix, 0.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMinU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(matrix, 1.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMaxU(), sprite.getMaxV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(matrix, 1.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMaxU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
-        builder.pos(matrix, 0.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).tex(sprite.getMinU(), sprite.getMinV()).lightmap(0, 240).normal(1, 0, 0).endVertex();
+        TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(WATER_TEXTURE);
+        VertexConsumer builder = bufferIn.getBuffer(RenderType.translucent());
+        Matrix4f matrix = matrixStackIn.last().pose();
+        builder.vertex(matrix, 0.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU0(), sprite.getV1()).uv2(0, 240).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, 1.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU1(), sprite.getV1()).uv2(0, 240).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, 1.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU1(), sprite.getV0()).uv2(0, 240).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, 0.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU0(), sprite.getV0()).uv2(0, 240).normal(1, 0, 0).endVertex();
         
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
         
-        World world = tileEntityIn.getWorld();
-        Random rand = world.rand;
-        BlockPos pos = tileEntityIn.getPos();
+        Level world = tileEntityIn.getLevel();
+        Random rand = world.random;
+        BlockPos pos = tileEntityIn.getBlockPos();
         if (tileEntityIn.showBubble(rand)) {
             double x = (double)pos.getX() + 0.2D + (rand.nextDouble() * 0.6D);
             double y = (double)pos.getY() + (double)tileEntityIn.getFluidHeight();

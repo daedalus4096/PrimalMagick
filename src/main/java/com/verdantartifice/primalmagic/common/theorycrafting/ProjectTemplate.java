@@ -17,8 +17,8 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -52,7 +52,7 @@ public class ProjectTemplate {
     }
     
     @Nullable
-    public Project initialize(PlayerEntity player) {
+    public Project initialize(Player player) {
         if (this.requiredResearch != null && !this.requiredResearch.isKnownByStrict(player)) {
             // Fail initialization to prevent use if the player doesn't have the right research unlocked
             return null;
@@ -65,7 +65,7 @@ public class ProjectTemplate {
         WeightedRandomBag<AbstractProjectMaterial> options = this.getMaterialOptions(player);
         while (materials.size() < maxMaterials && attempts < 1000) {
             attempts++;
-            AbstractProjectMaterial material = options.getRandom(player.getRNG()).copy();
+            AbstractProjectMaterial material = options.getRandom(player.getRandom()).copy();
             if (!materials.contains(material)) {
                 materials.add(material);
             }
@@ -75,7 +75,7 @@ public class ProjectTemplate {
         return new Project(this.key, materials, this.getBaseSuccessChance(player), this.getTheoryPointReward(), this.aidBlock);
     }
     
-    protected int getRequiredMaterialCount(PlayerEntity player) {
+    protected int getRequiredMaterialCount(Player player) {
         return this.requiredMaterialCountOverride.orElseGet(() -> {
             // Get projects completed from stats and calculate based on that
             int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
@@ -83,7 +83,7 @@ public class ProjectTemplate {
         });
     }
     
-    protected double getBaseSuccessChance(PlayerEntity player) {
+    protected double getBaseSuccessChance(Player player) {
         return this.baseSuccessChanceOverride.orElseGet(() -> {
             // Get projects completed from stats and calculate based on that
             int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
@@ -92,7 +92,7 @@ public class ProjectTemplate {
     }
     
     @Nonnull
-    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions(PlayerEntity player) {
+    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions(Player player) {
         WeightedRandomBag<AbstractProjectMaterial> retVal = new WeightedRandomBag<>();
         for (AbstractProjectMaterial material : this.materialOptions) {
             if (material.hasRequiredResearch(player)) {

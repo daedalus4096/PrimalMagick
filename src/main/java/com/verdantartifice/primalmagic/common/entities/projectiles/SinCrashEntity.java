@@ -6,77 +6,77 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellTrailPacket;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Entity definition for an inner demon's sin crash projectile.
  * 
  * @author Daedalus4096
  */
-public class SinCrashEntity extends DamagingProjectileEntity {
-    public SinCrashEntity(EntityType<? extends SinCrashEntity> entityType, World world) {
+public class SinCrashEntity extends AbstractHurtingProjectile {
+    public SinCrashEntity(EntityType<? extends SinCrashEntity> entityType, Level world) {
         super(entityType, world);
     }
     
-    public SinCrashEntity(World world, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+    public SinCrashEntity(Level world, LivingEntity shooter, double accelX, double accelY, double accelZ) {
         super(EntityTypesPM.SIN_CRASH.get(), shooter, accelX, accelY, accelZ, world);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!this.world.isRemote && this.isAlive() && this.ticksExisted % 2 == 0) {
+        if (!this.level.isClientSide && this.isAlive() && this.tickCount % 2 == 0) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
-                    new SpellTrailPacket(this.getPositionVec(), Source.VOID.getColor()), 
-                    this.world.getDimensionKey(), 
-                    this.getPosition(), 
+                    new SpellTrailPacket(this.position(), Source.VOID.getColor()), 
+                    this.level.dimension(), 
+                    this.blockPosition(), 
                     64.0D);
         }
     }
 
     @Override
-    protected void func_230299_a_(BlockRayTraceResult result) {
+    protected void onHitBlock(BlockHitResult result) {
         // Only impact when hitting a block
-        super.func_230299_a_(result);
-        if (!this.world.isRemote) {
-            SinCrystalEntity crystal = new SinCrystalEntity(this.world, result.getHitVec().x, result.getHitVec().y, result.getHitVec().z);
-            this.world.addEntity(crystal);
-            this.remove();
+        super.onHitBlock(result);
+        if (!this.level.isClientSide) {
+            SinCrystalEntity crystal = new SinCrystalEntity(this.level, result.getLocation().x, result.getLocation().y, result.getLocation().z);
+            this.level.addFreshEntity(crystal);
+            this.discard();
         }
     }
 
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean isPickable() {
         return false;
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount) {
+    public boolean hurt(DamageSource source, float amount) {
         return false;
     }
 
     @Override
-    protected boolean isFireballFiery() {
+    protected boolean shouldBurn() {
         return false;
     }
 
     @Override
-    protected IParticleData getParticle() {
+    protected ParticleOptions getTrailParticle() {
         return ParticleTypes.DRAGON_BREATH;
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

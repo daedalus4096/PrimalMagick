@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import java.util.Collections;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -10,11 +10,12 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,7 +25,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class ResearchWidget extends Widget {
+public class ResearchWidget extends AbstractWidget {
     protected static final ResourceLocation BAG_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_bag.png");
     protected static final ResourceLocation TUBE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_tube.png");
     protected static final ResourceLocation MAP_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_map.png");
@@ -35,13 +36,13 @@ public class ResearchWidget extends Widget {
     protected boolean isComplete;
     
     public ResearchWidget(SimpleResearchKey key, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, StringTextComponent.EMPTY);
+        super(x, y, 16, 16, TextComponent.EMPTY);
         this.key = key;
         this.isComplete = isComplete;
     }
     
     @Override
-    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Pick the icon to show based on the prefix of the research key
         ResourceLocation loc;
         if (this.key.getRootKey().startsWith("m_")) {
@@ -55,27 +56,27 @@ public class ResearchWidget extends Widget {
         }
         
         // Render the icon
-        matrixStack.push();
+        matrixStack.pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        Minecraft.getInstance().getTextureManager().bindTexture(loc);
+        Minecraft.getInstance().getTextureManager().bindForSetup(loc);
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-        matrixStack.pop();
+        matrixStack.popPose();
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            matrixStack.push();
+            matrixStack.pushPose();
             matrixStack.translate(this.x + 8, this.y, 100.0F);
-            Minecraft.getInstance().getTextureManager().bindTexture(GRIMOIRE_TEXTURE);
+            Minecraft.getInstance().getTextureManager().bindForSetup(GRIMOIRE_TEXTURE);
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-            matrixStack.pop();
+            matrixStack.popPose();
         }
         
         if (this.isHovered()) {
             // Render tooltip
-            ITextComponent text = new TranslationTextComponent("primalmagic.research." + this.key.getRootKey() + ".text");
+            Component text = new TranslatableComponent("primalmagic.research." + this.key.getRootKey() + ".text");
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(text), this.x, this.y);
         }
     }
@@ -84,5 +85,9 @@ public class ResearchWidget extends Widget {
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
         // Disable click behavior
         return false;
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput output) {
     }
 }

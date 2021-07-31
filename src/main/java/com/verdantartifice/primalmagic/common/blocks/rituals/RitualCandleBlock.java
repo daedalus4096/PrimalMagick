@@ -9,28 +9,30 @@ import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualCandleTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.FlintAndSteelItem;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.FlintAndSteelItem;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
@@ -42,7 +44,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class RitualCandleBlock extends Block implements IRitualPropBlock {
+public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/ritual_candle"));
 
@@ -51,7 +53,7 @@ public class RitualCandleBlock extends Block implements IRitualPropBlock {
     public RitualCandleBlock(DyeColor colorIn, Block.Properties properties) {
         super(properties);
         this.color = colorIn;
-        this.setDefaultState(this.getDefaultState().with(LIT, Boolean.FALSE));
+        this.registerDefaultState(this.defaultBlockState().setValue(LIT, Boolean.FALSE));
     }
     
     public DyeColor getColor() {
@@ -59,21 +61,26 @@ public class RitualCandleBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(LIT);
     }
     
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // Show flame particles if lit
-        if (stateIn.get(LIT)) {
+        if (stateIn.getValue(LIT)) {
             double x = pos.getX() + 0.5D;
             double y = pos.getY() + 0.7D;
             double z = pos.getZ() + 0.5D;
@@ -88,19 +95,19 @@ public class RitualCandleBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public PushReaction getPushReaction(BlockState state) {
+    public PushReaction getPistonPushReaction(BlockState state) {
         return PushReaction.DESTROY;
     }
     
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player != null && player.getHeldItem(handIn).getItem() instanceof FlintAndSteelItem && !state.get(LIT)) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player != null && player.getItemInHand(handIn).getItem() instanceof FlintAndSteelItem && !state.getValue(LIT)) {
             // If using a flint-and-steel on an unlit candle, light it
-            worldIn.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
-            if (!worldIn.isRemote) {
-                worldIn.setBlockState(pos, state.with(LIT, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
-                player.getHeldItem(handIn).damageItem(1, player, (p) -> {
-                    p.sendBreakAnimation(handIn);
+            worldIn.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            if (!worldIn.isClientSide) {
+                worldIn.setBlock(pos, state.setValue(LIT, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                player.getItemInHand(handIn).hurtAndBreak(1, player, (p) -> {
+                    p.broadcastBreakEvent(handIn);
                 });
                 
                 // If this block is awaiting activation for an altar, notify it
@@ -108,52 +115,38 @@ public class RitualCandleBlock extends Block implements IRitualPropBlock {
                     this.onPropActivated(state, worldIn, pos);
                 }
             }
-            return ActionResultType.SUCCESS;
-        } else if (player != null && player.getHeldItem(handIn).isEmpty() && state.get(LIT)) {
+            return InteractionResult.SUCCESS;
+        } else if (player != null && player.getItemInHand(handIn).isEmpty() && state.getValue(LIT)) {
             // If using an empty hand on a lit candle, snuff it
-            worldIn.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            if (!worldIn.isRemote) {
-                worldIn.setBlockState(pos, state.with(LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+            worldIn.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!worldIn.isClientSide) {
+                worldIn.setBlock(pos, state.setValue(LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
     }
     
     @SuppressWarnings("deprecation")
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isRemote && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
     
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new RitualCandleTileEntity(pos, state);
     }
     
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new RitualCandleTileEntity();
-    }
-    
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
-        // Pass any received events on to the tile entity and let it decide what to do with it
-        super.eventReceived(state, worldIn, pos, id, param);
-        TileEntity tile = worldIn.getTileEntity(pos);
-        return (tile == null) ? false : tile.receiveClientEvent(id, param);
-    }
-    
-    @Override
-    public boolean isPropActivated(BlockState state, World world, BlockPos pos) {
+    public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
         if (state != null && state.getBlock() instanceof RitualCandleBlock) {
-            return state.get(LIT);
+            return state.getValue(LIT);
         } else {
             return false;
         }
@@ -170,12 +163,12 @@ public class RitualCandleBlock extends Block implements IRitualPropBlock {
     }
     
     @Override
-    public float getStabilityBonus(World world, BlockPos pos) {
+    public float getStabilityBonus(Level world, BlockPos pos) {
         return 0.01F;
     }
     
     @Override
-    public float getSymmetryPenalty(World world, BlockPos pos) {
+    public float getSymmetryPenalty(Level world, BlockPos pos) {
         return 0.01F;
     }
 }

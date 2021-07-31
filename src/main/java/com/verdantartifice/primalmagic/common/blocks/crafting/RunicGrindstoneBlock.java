@@ -3,25 +3,25 @@ package com.verdantartifice.primalmagic.common.blocks.crafting;
 import com.verdantartifice.primalmagic.common.containers.RunicGrindstoneContainer;
 import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.GrindstoneBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.properties.AttachFace;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.GrindstoneBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.AttachFace;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 
 /**
@@ -32,25 +32,25 @@ import net.minecraftforge.common.ToolType;
  */
 public class RunicGrindstoneBlock extends GrindstoneBlock {
     public RunicGrindstoneBlock() {
-        super(Block.Properties.create(Material.ANVIL, MaterialColor.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
+        super(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(2.0F, 6.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
     }
     
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Place the block so that the side facing the player has its rune right side up
         for (Direction dir : context.getNearestLookingDirections()) {
             BlockState state;
             if (dir.getAxis() == Direction.Axis.Y) {
                 if (dir == Direction.UP) {
-                    state = this.getDefaultState().with(FACE, AttachFace.CEILING).with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+                    state = this.defaultBlockState().setValue(FACE, AttachFace.CEILING).setValue(FACING, context.getHorizontalDirection());
                 } else {
-                    state = this.getDefaultState().with(FACE, AttachFace.FLOOR).with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
+                    state = this.defaultBlockState().setValue(FACE, AttachFace.FLOOR).setValue(FACING, context.getHorizontalDirection().getOpposite());
                 }
             } else {
-                state = this.getDefaultState().with(FACE, AttachFace.WALL).with(HORIZONTAL_FACING, dir.getOpposite());
+                state = this.defaultBlockState().setValue(FACE, AttachFace.WALL).setValue(FACING, dir.getOpposite());
             }
             
-            if (state.isValidPosition(context.getWorld(), context.getPos())) {
+            if (state.canSurvive(context.getLevel(), context.getClickedPos())) {
                 return state;
             }
         }
@@ -58,17 +58,17 @@ public class RunicGrindstoneBlock extends GrindstoneBlock {
     }
     
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
-            player.openContainer(state.getContainer(worldIn, pos));
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (!worldIn.isClientSide) {
+            player.openMenu(state.getMenuProvider(worldIn, pos));
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
     
     @Override
-    public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
-        return new SimpleNamedContainerProvider((windowId, playerInv, player) -> {
-            return new RunicGrindstoneContainer(windowId, playerInv, IWorldPosCallable.of(worldIn, pos));
-         }, new TranslationTextComponent(this.getTranslationKey()));
+    public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+        return new SimpleMenuProvider((windowId, playerInv, player) -> {
+            return new RunicGrindstoneContainer(windowId, playerInv, ContainerLevelAccess.create(worldIn, pos));
+         }, new TranslatableComponent(this.getDescriptionId()));
     }
 }

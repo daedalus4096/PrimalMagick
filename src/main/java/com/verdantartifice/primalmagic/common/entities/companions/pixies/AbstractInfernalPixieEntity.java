@@ -8,15 +8,15 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.FlameDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.BoltSpellVehicle;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.MoveTowardsTargetGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.Explosion.Mode;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level;
 
 /**
  * Base definition for an infernal pixie.  In addition to following the player as a companion, attacks with
@@ -25,7 +25,7 @@ import net.minecraft.world.World;
  * @author Daedalus4096
  */
 public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
-    public AbstractInfernalPixieEntity(EntityType<? extends AbstractPixieEntity> type, World worldIn) {
+    public AbstractInfernalPixieEntity(EntityType<? extends AbstractPixieEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
@@ -56,14 +56,14 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
         this.targetSelector.addGoal(1, new CompanionOwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new CompanionOwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::func_233680_b_));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
     }
     
     public void explode() {
         this.dead = true;
-        this.remove();
-        if (!this.world.isRemote) {
-            this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), (float)this.getSpellPower(), true, Mode.BREAK);
+        this.kill();
+        if (!this.level.isClientSide) {
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.getSpellPower(), true, BlockInteraction.BREAK);
         }
     }
     
@@ -77,13 +77,13 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
         }
         
         @Override
-        public boolean shouldExecute() {
-            LivingEntity target = this.pixie.getAttackTarget();
-            return target != null && this.pixie.getDistanceSq(target) <= this.maxRangeSq;
+        public boolean canUse() {
+            LivingEntity target = this.pixie.getTarget();
+            return target != null && this.pixie.distanceToSqr(target) <= this.maxRangeSq;
         }
 
         @Override
-        public void startExecuting() {
+        public void start() {
             this.pixie.explode();
         }
     }

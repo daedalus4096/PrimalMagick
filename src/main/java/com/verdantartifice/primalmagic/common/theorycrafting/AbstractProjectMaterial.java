@@ -5,8 +5,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -14,7 +14,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractProjectMaterial implements INBTSerializable<CompoundNBT> {
+public abstract class AbstractProjectMaterial implements INBTSerializable<CompoundTag> {
     protected boolean selected;
     protected double weight;
     protected CompoundResearchKey requiredResearch;
@@ -24,8 +24,8 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT retVal = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag retVal = new CompoundTag();
         retVal.putString("MaterialType", this.getMaterialType());
         retVal.putBoolean("Selected", this.isSelected());
         retVal.putDouble("Weight", this.getWeight());
@@ -36,7 +36,7 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         this.selected = nbt.getBoolean("Selected");
         this.weight = nbt.getDouble("Weight");
         this.requiredResearch = nbt.contains("RequiredResearch") ? CompoundResearchKey.parse(nbt.getString("RequiredResearch")) : null;
@@ -55,7 +55,7 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
      * @param player the player doing the research project
      * @return true if the requirement is satisfied, false otherwise
      */
-    public abstract boolean isSatisfied(PlayerEntity player);
+    public abstract boolean isSatisfied(Player player);
     
     /**
      * Consume this project material's requirements from the given player.
@@ -63,7 +63,7 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
      * @param player the player doing the research project
      * @return true if the consumption succeeded, false otherwise
      */
-    public abstract boolean consume(PlayerEntity player);
+    public abstract boolean consume(Player player);
     
     /**
      * Determine whether this material should be consumed upon project completion.
@@ -97,7 +97,7 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
         this.requiredResearch = key.copy();
     }
     
-    public boolean hasRequiredResearch(PlayerEntity player) {
+    public boolean hasRequiredResearch(Player player) {
         if (this.requiredResearch == null) {
             return true;
         } else {

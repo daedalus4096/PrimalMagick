@@ -1,18 +1,19 @@
 package com.verdantartifice.primalmagic.client.renderers.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.entity.model.FlyingCarpetModel;
+import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -40,15 +41,16 @@ public class FlyingCarpetRenderer extends EntityRenderer<FlyingCarpetEntity> {
     private static final ResourceLocation TEXTURE_RED = new ResourceLocation(PrimalMagic.MODID, "textures/entity/flying_carpet/flying_carpet_red.png");
     private static final ResourceLocation TEXTURE_BLACK = new ResourceLocation(PrimalMagic.MODID, "textures/entity/flying_carpet/flying_carpet_black.png");
     
-    protected final FlyingCarpetModel model = new FlyingCarpetModel();
+    protected final FlyingCarpetModel model;
 
-    public FlyingCarpetRenderer(EntityRendererManager renderManager) {
-        super(renderManager);
-        this.shadowSize = 0.5F;
+    public FlyingCarpetRenderer(EntityRendererProvider.Context context) {
+        super(context);
+        this.shadowRadius = 0.5F;
+        this.model = new FlyingCarpetModel(context.bakeLayer(ModelLayersPM.FLYING_CARPET));
     }
 
     @Override
-    public ResourceLocation getEntityTexture(FlyingCarpetEntity entity) {
+    public ResourceLocation getTextureLocation(FlyingCarpetEntity entity) {
         DyeColor color = entity.getDyeColor();
         if (color == null) {
             return TEXTURE_WHITE;
@@ -92,17 +94,17 @@ public class FlyingCarpetRenderer extends EntityRenderer<FlyingCarpetEntity> {
     }
 
     @Override
-    public void render(FlyingCarpetEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-        matrixStackIn.push();
+    public void render(FlyingCarpetEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+        matrixStackIn.pushPose();
         matrixStackIn.translate(0.0D, 0.375D, 0.0D);
-        matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
         matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
-        matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90.0F));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90.0F));
         
-        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.getRenderType(this.getEntityTexture(entityIn)));
-        this.model.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        VertexConsumer ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
+        this.model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }
 }

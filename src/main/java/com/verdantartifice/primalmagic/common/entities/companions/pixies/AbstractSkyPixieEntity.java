@@ -7,15 +7,15 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.LightningDamageSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.BoltSpellVehicle;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.MoveTowardsTargetGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.RangedAttackGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 /**
  * Base definition for a sky pixie.  In addition to following the player as a companion, attacks with
@@ -23,8 +23,8 @@ import net.minecraft.world.World;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractSkyPixieEntity extends AbstractPixieEntity implements IRangedAttackMob {
-    public AbstractSkyPixieEntity(EntityType<? extends AbstractPixieEntity> type, World worldIn) {
+public abstract class AbstractSkyPixieEntity extends AbstractPixieEntity implements RangedAttackMob {
+    public AbstractSkyPixieEntity(EntityType<? extends AbstractPixieEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
@@ -53,11 +53,11 @@ public abstract class AbstractSkyPixieEntity extends AbstractPixieEntity impleme
         this.targetSelector.addGoal(1, new CompanionOwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new CompanionOwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::func_233680_b_));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
     }
     
     @Override
-    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-        this.getSpellPackage().cast(this.world, this, null);
+    public void performRangedAttack(LivingEntity target, float distanceFactor) {
+        this.getSpellPackage().cast(this.level, this, null);
     }
 }

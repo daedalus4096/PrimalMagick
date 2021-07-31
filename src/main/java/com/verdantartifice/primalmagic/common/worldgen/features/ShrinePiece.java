@@ -7,66 +7,63 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
-import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a piece of a primal shrine structure.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.gen.feature.structure.DesertPyramidPiece}
+ * @see {@link net.minecraft.world.level.levelgen.structure.DesertPyramidPiece}
  */
 public class ShrinePiece extends TemplateStructurePiece {
     protected static final ResourceLocation TEMPLATE = new ResourceLocation(PrimalMagic.MODID, "shrine");
     
     protected final ShrineStructure.Type type;
     
-    public ShrinePiece(TemplateManager templateManager, ShrineStructure.Type type, BlockPos pos) {
-        super(StructurePieceTypesPM.SHRINE, 0);
+    public ShrinePiece(StructureManager templateManager, ShrineStructure.Type type, BlockPos pos) {
+        super(StructurePieceTypesPM.SHRINE, 0, templateManager, TEMPLATE, TEMPLATE.toString(), makePlaceSettings(), pos);
         this.type = type;
-        this.templatePosition = pos;
-        this.setupTemplate(templateManager);
     }
 
-    public ShrinePiece(TemplateManager templateManager, CompoundNBT nbt) {
-        super(StructurePieceTypesPM.SHRINE, nbt);
+    public ShrinePiece(ServerLevel level, CompoundTag nbt) {
+        super(StructurePieceTypesPM.SHRINE, nbt, level, (dummy) -> {
+            return makePlaceSettings();
+        });
         this.type = ShrineStructure.Type.byName(nbt.getString("Source"));
-        this.setupTemplate(templateManager);
     }
     
-    protected void setupTemplate(TemplateManager templateManager) {
-        Template template = templateManager.getTemplateDefaulted(TEMPLATE);
-        PlacementSettings settings = new PlacementSettings().addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK);
-        this.setup(template, this.templatePosition, settings);
+    protected static StructurePlaceSettings makePlaceSettings() {
+        return new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
     }
     
     @Override
-    protected void readAdditional(CompoundNBT tagCompound) {
-        super.readAdditional(tagCompound);
-        tagCompound.putString("Source", this.type.getString());
+    protected void addAdditionalSaveData(ServerLevel level, CompoundTag tagCompound) {
+        super.addAdditionalSaveData(level, tagCompound);
+        tagCompound.putString("Source", this.type.getSerializedName());
     }
 
     @Override
-    protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand, MutableBoundingBox sbb) {
+    protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, Random rand, BoundingBox sbb) {
         if ("font".equals(function)) {
-            worldIn.setBlockState(pos, this.getFont().getDefaultState(), Constants.BlockFlags.DEFAULT);
+            worldIn.setBlock(pos, this.getFont().defaultBlockState(), Constants.BlockFlags.DEFAULT);
         }
     }
 
@@ -109,25 +106,25 @@ public class ShrinePiece extends TemplateStructurePiece {
     }
     
     @Override
-    public boolean func_230383_a_(ISeedReader worldIn, StructureManager structureManager, ChunkGenerator generator, Random randomIn, MutableBoundingBox structureBoundingBoxIn, ChunkPos chunkPos, BlockPos blockPos) {
-        int i = worldIn.getHeight(Heightmap.Type.WORLD_SURFACE_WG, this.templatePosition.getX(), this.templatePosition.getZ());
+    public boolean postProcess(WorldGenLevel worldIn, StructureFeatureManager structureManager, ChunkGenerator generator, Random randomIn, BoundingBox structureBoundingBoxIn, ChunkPos chunkPos, BlockPos blockPos) {
+        int i = worldIn.getHeight(Heightmap.Types.WORLD_SURFACE_WG, this.templatePosition.getX(), this.templatePosition.getZ());
         this.templatePosition = new BlockPos(this.templatePosition.getX(), i, this.templatePosition.getZ());
         
         // Generate the shrine; must be done first so that the bounding box is updated with the calculated template position
-        boolean success = super.func_230383_a_(worldIn, structureManager, generator, randomIn, structureBoundingBoxIn, chunkPos, blockPos);
+        boolean success = super.postProcess(worldIn, structureManager, generator, randomIn, structureBoundingBoxIn, chunkPos, blockPos);
         
         // Generate infused stone under the shrine
-        BlockState bs = this.getInfusedStone().getDefaultState();
-        BlockPos.Mutable mbp = new BlockPos.Mutable();
+        BlockState bs = this.getInfusedStone().defaultBlockState();
+        BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
         for (int x = 2; x < 11; x++) {
             for (int y = -3; y < 0; y++) {
                 for (int z = 2; z < 11; z++) {
                     // Only replace blocks that aren't air
-                    mbp.setPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
-                    if (!worldIn.isAirBlock(mbp)) {
+                    mbp.set(this.getWorldX(x, z), this.getWorldY(y), this.getWorldZ(x, z));
+                    if (!worldIn.isEmptyBlock(mbp)) {
                         // Only a 30% chance to spawn infused stone at each valid position
                         if (randomIn.nextInt(10) < 3) {
-                            this.setBlockState(worldIn, bs, x, y, z, structureBoundingBoxIn);
+                            this.placeBlock(worldIn, bs, x, y, z, structureBoundingBoxIn);
                         }
                     }
                 }

@@ -1,13 +1,13 @@
 package com.verdantartifice.primalmagic.common.blockstates.properties;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * Representation of a connection, or lack thereof, to a salt trail.
  * 
  * @author Daedalus4096
  */
-public enum SaltSide implements IStringSerializable {
+public enum SaltSide implements StringRepresentable {
     UP("up"),
     SIDE("side"),
     NONE("none");
@@ -19,12 +19,12 @@ public enum SaltSide implements IStringSerializable {
     }
     
     @Override
-    public String getString() {
+    public String getSerializedName() {
         return this.name;
     }
     
     @Override
     public String toString() {
-        return this.getString();
+        return this.getSerializedName();
     }
 }

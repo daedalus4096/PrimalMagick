@@ -10,13 +10,13 @@ import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -41,9 +41,9 @@ public class AmbrosiaItem extends Item {
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isRemote && (entityLiving instanceof PlayerEntity)) {
-            PlayerEntity player = (PlayerEntity)entityLiving;
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+        if (!worldIn.isClientSide && (entityLiving instanceof Player)) {
+            Player player = (Player)entityLiving;
 
             // Only modify attunements if the player has started mod progression
             if (ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS)) {
@@ -58,15 +58,15 @@ public class AmbrosiaItem extends Item {
                             AttunementManager.incrementAttunement(player, source, AttunementType.INDUCED, PENALTY);
                         }
                     }
-                    player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.ambrosia.success").mergeStyle(TextFormatting.GREEN), true);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.ambrosia.success").withStyle(ChatFormatting.GREEN), true);
                 } else {
-                    player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.ambrosia.failure").mergeStyle(TextFormatting.RED), true);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.ambrosia.failure").withStyle(ChatFormatting.RED), true);
                 }
             } else {
-                player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.ambrosia.not_wizard").mergeStyle(TextFormatting.RED), true);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.ambrosia.not_wizard").withStyle(ChatFormatting.RED), true);
             }
         }
-        return super.onItemUseFinish(stack, worldIn, entityLiving);
+        return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     
     @OnlyIn(Dist.CLIENT)

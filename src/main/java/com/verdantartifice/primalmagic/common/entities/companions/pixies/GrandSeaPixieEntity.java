@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagic.common.entities.companions.pixies;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.misc.PixieItem;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition of a grand sea pixie.  Middle of the sea pixies.
@@ -12,7 +12,7 @@ import net.minecraft.world.World;
  * @author Daedalus4096
  */
 public class GrandSeaPixieEntity extends AbstractSeaPixieEntity implements IGrandPixie {
-    public GrandSeaPixieEntity(EntityType<? extends AbstractPixieEntity> type, World worldIn) {
+    public GrandSeaPixieEntity(EntityType<? extends AbstractPixieEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 

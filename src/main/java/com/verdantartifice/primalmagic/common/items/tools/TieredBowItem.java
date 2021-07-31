@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagic.common.items.tools;
 
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of a repairable bow item made of a magical metal.
@@ -12,16 +12,16 @@ import net.minecraft.item.ItemStack;
  * @author Daedalus4096
  */
 public class TieredBowItem extends BowItem {
-    protected final IItemTier tier;
+    protected final Tier tier;
     
-    public TieredBowItem(IItemTier tier, Item.Properties properties) {
-        super(properties.defaultMaxDamage(tier.getMaxUses()));
+    public TieredBowItem(Tier tier, Item.Properties properties) {
+        super(properties.defaultDurability(tier.getUses()));
         this.tier = tier;
     }
 
     @Override
-    public AbstractArrowEntity customArrow(AbstractArrowEntity arrow) {
-        AbstractArrowEntity newArrow = super.customArrow(arrow);
+    public AbstractArrow customArrow(AbstractArrow arrow) {
+        AbstractArrow newArrow = super.customArrow(arrow);
         double damageBonus = 0.0D;
         if (this.tier == ItemTierPM.PRIMALITE) {
             damageBonus = 0.5D;
@@ -30,21 +30,21 @@ public class TieredBowItem extends BowItem {
         } else if (this.tier == ItemTierPM.HALLOWSTEEL) {
             damageBonus = 1.5D;
         }
-        newArrow.setDamage(newArrow.getDamage() + damageBonus);
+        newArrow.setBaseDamage(newArrow.getBaseDamage() + damageBonus);
         return newArrow;
     }
     
-    public IItemTier getTier() {
+    public Tier getTier() {
         return this.tier;
     }
 
     @Override
-    public int getItemEnchantability() {
-        return this.tier.getEnchantability();
+    public int getEnchantmentValue() {
+        return this.tier.getEnchantmentValue();
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return this.tier.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
     }
 }

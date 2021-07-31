@@ -6,15 +6,15 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.EntryButton;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.SectionHeaderWidget;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -57,7 +57,7 @@ public class DisciplinePage extends AbstractPage {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
             this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, this.discipline.getIconLocation());
@@ -70,11 +70,11 @@ public class DisciplinePage extends AbstractPage {
             if (obj instanceof ResearchEntry) {
                 // If the current content object is a research entry, add a button for it to the screen
                 ResearchEntry entry = (ResearchEntry)obj;
-                ITextComponent text = new TranslationTextComponent(entry.getNameTranslationKey());
+                Component text = new TranslatableComponent(entry.getNameTranslationKey());
                 screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, text, screen, entry));
-            } else if (obj instanceof ITextComponent) {
+            } else if (obj instanceof Component) {
                 // If the current content object is a text component, add a section header with that text to the screen
-                screen.addWidgetToScreen(new SectionHeaderWidget(x + 12 + (side * 140), y, (ITextComponent)obj));
+                screen.addWidgetToScreen(new SectionHeaderWidget(x + 12 + (side * 140), y, (Component)obj));
             }
             y += 12;
         }

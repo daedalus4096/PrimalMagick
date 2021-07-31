@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Base class definition for a rune enchantment.  Rune enchantments can only be applied to items by
@@ -13,12 +13,12 @@ import net.minecraft.item.ItemStack;
  * @author Daedalus4096
  */
 public abstract class AbstractRuneEnchantment extends Enchantment {
-    protected AbstractRuneEnchantment(Enchantment.Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+    protected AbstractRuneEnchantment(Enchantment.Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot[] slots) {
         super(rarityIn, typeIn, slots);
     }
     
     @Override
-    public boolean canApply(ItemStack stack) {
+    public boolean canEnchant(ItemStack stack) {
         return stack.canApplyAtEnchantingTable(this);
     }
     

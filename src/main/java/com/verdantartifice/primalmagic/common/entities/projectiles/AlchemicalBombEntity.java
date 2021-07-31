@@ -13,33 +13,33 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.PotionExplosionPacket;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CampfireBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Definition for a thrown alchemcial bomb entity.  Detonates after a short time and applies a loaded
@@ -47,19 +47,19 @@ import net.minecraftforge.fml.network.NetworkHooks;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-public class AlchemicalBombEntity extends ProjectileItemEntity implements IRendersAsItem {
-    public static final Predicate<LivingEntity> WATER_SENSITIVE = LivingEntity::isWaterSensitive;
+@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
+public class AlchemicalBombEntity extends ThrowableItemProjectile implements ItemSupplier {
+    public static final Predicate<LivingEntity> WATER_SENSITIVE = LivingEntity::isSensitiveToWater;
 
-    public AlchemicalBombEntity(EntityType<? extends AlchemicalBombEntity> entityType, World world) {
+    public AlchemicalBombEntity(EntityType<? extends AlchemicalBombEntity> entityType, Level world) {
         super(entityType, world);
     }
     
-    public AlchemicalBombEntity(World world, LivingEntity entity) {
+    public AlchemicalBombEntity(Level world, LivingEntity entity) {
         super(EntityTypesPM.ALCHEMICAL_BOMB.get(), entity, world);
     }
     
-    public AlchemicalBombEntity(World world, double x, double y, double z) {
+    public AlchemicalBombEntity(Level world, double x, double y, double z) {
         super(EntityTypesPM.ALCHEMICAL_BOMB.get(), x, y, z, world);
     }
     
@@ -69,7 +69,7 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
     }
 
     @Override
-    protected float getGravityVelocity() {
+    protected float getGravity() {
         return 0.05F;
     }
 
@@ -77,43 +77,43 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
     public void tick() {
         super.tick();
         FuseType fuse = ConcoctionUtils.getFuseType(this.getItem());
-        if (fuse != null && fuse.hasTimer() && this.ticksExisted >= fuse.getFuseLength()) {
+        if (fuse != null && fuse.hasTimer() && this.tickCount >= fuse.getFuseLength()) {
             this.detonate(null);
         }
     }
 
     @Override
-    protected void func_230299_a_(BlockRayTraceResult result) {
-        super.func_230299_a_(result);
+    protected void onHitBlock(BlockHitResult result) {
+        super.onHitBlock(result);
         FuseType fuse = ConcoctionUtils.getFuseType(this.getItem());
         if (fuse == FuseType.IMPACT) {
             this.detonate(null);
         } else if (fuse != null) {
-            double mx = result.getFace().getXOffset() == 0 ? 1.0D : -1.0D;
-            double my = 0.9D * (result.getFace().getYOffset() == 0 ? 1.0D : -1.0D);
-            double mz = result.getFace().getZOffset() == 0 ? 1.0D : -1.0D;
-            this.setMotion(this.getMotion().scale(0.7D).mul(mx, my, mz));
-            if (!this.world.isRemote) {
-                float volume = MathHelper.clamp((float)this.getMotion().length(), 0.0F, 1.0F);
-                this.playSound(SoundsPM.CLANK.get(), volume, 0.8F + (0.4F * this.world.rand.nextFloat()));
+            double mx = result.getDirection().getStepX() == 0 ? 1.0D : -1.0D;
+            double my = 0.9D * (result.getDirection().getStepY() == 0 ? 1.0D : -1.0D);
+            double mz = result.getDirection().getStepZ() == 0 ? 1.0D : -1.0D;
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.7D).multiply(mx, my, mz));
+            if (!this.level.isClientSide) {
+                float volume = Mth.clamp((float)this.getDeltaMovement().length(), 0.0F, 1.0F);
+                this.playSound(SoundsPM.CLANK.get(), volume, 0.8F + (0.4F * this.level.random.nextFloat()));
             }
         }
     }
 
     @Override
-    protected void onEntityHit(EntityRayTraceResult result) {
-        super.onEntityHit(result);
+    protected void onHitEntity(EntityHitResult result) {
+        super.onHitEntity(result);
         this.detonate(result.getEntity());
     }
     
     private void detonate(@Nullable Entity struckEntity) {
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             ItemStack itemStack = this.getItem();
-            Potion potion = PotionUtils.getPotionFromItem(itemStack);
-            List<EffectInstance> effects = PotionUtils.getEffectsFromStack(itemStack);
+            Potion potion = PotionUtils.getPotion(itemStack);
+            List<MobEffectInstance> effects = PotionUtils.getMobEffects(itemStack);
 
             // Do explosion audio visual effects
-            PacketHandler.sendToAllAround(new PotionExplosionPacket(this.getPositionVec(), PotionUtils.getColor(itemStack), potion.hasInstantEffect()), this.world.getDimensionKey(), this.getPosition(), 32.0D);
+            PacketHandler.sendToAllAround(new PotionExplosionPacket(this.position(), PotionUtils.getColor(itemStack), potion.hasInstantEffects()), this.level.dimension(), this.blockPosition(), 32.0D);
 
             // Apply potion effects
             if (potion == Potions.WATER && effects.isEmpty()) {
@@ -122,43 +122,43 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
                 this.applyPotionEffects(effects, struckEntity);
             }
 
-            this.remove();
+            this.discard();
         }
     }
     
     private void applyWater() {
-        AxisAlignedBB aabb = this.getBoundingBox().grow(4.0D, 2.0D, 4.0D);
-        List<LivingEntity> entities = this.world.getEntitiesWithinAABB(LivingEntity.class, aabb, WATER_SENSITIVE);
+        AABB aabb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+        List<LivingEntity> entities = this.level.getEntitiesOfClass(LivingEntity.class, aabb, WATER_SENSITIVE);
         for (LivingEntity entity : entities) {
-            double distanceSq = this.getDistanceSq(entity);
-            if (distanceSq < 16.0D && entity.isWaterSensitive()) {
-                entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(entity, this.getShooter()), 1.0F);
+            double distanceSq = this.distanceToSqr(entity);
+            if (distanceSq < 16.0D && entity.isSensitiveToWater()) {
+                entity.hurt(DamageSource.indirectMagic(entity, this.getOwner()), 1.0F);
             }
         }
         
-        BlockPos pos = this.getPosition();
+        BlockPos pos = this.blockPosition();
         this.extinguishFire(pos);
         for (Direction dir : Direction.values()) {
-            this.extinguishFire(pos.offset(dir));
+            this.extinguishFire(pos.relative(dir));
         }
     }
 
-    private void applyPotionEffects(List<EffectInstance> effects, @Nullable Entity struckEntity) {
-        AxisAlignedBB aabb = this.getBoundingBox().grow(4.0D, 2.0D, 4.0D);
-        List<LivingEntity> entityList = this.world.getEntitiesWithinAABB(LivingEntity.class, aabb);
+    private void applyPotionEffects(List<MobEffectInstance> effects, @Nullable Entity struckEntity) {
+        AABB aabb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+        List<LivingEntity> entityList = this.level.getEntitiesOfClass(LivingEntity.class, aabb);
         for (LivingEntity entity : entityList) {
-            if (entity.canBeHitWithPotion()) {
-                double distanceSq = this.getDistanceSq(entity);
+            if (entity.isAffectedByPotions()) {
+                double distanceSq = this.distanceToSqr(entity);
                 if (distanceSq < 16.0D) {
                     double multiplier = (entity == struckEntity) ? 1.0D : 1.0D - Math.sqrt(distanceSq) / 4.0D;
-                    for (EffectInstance effectInstance : effects) {
-                        Effect effect = effectInstance.getPotion();
-                        if (effect.isInstant()) {
-                            effect.affectEntity(this, this.getShooter(), entity, effectInstance.getAmplifier(), multiplier);
+                    for (MobEffectInstance effectInstance : effects) {
+                        MobEffect effect = effectInstance.getEffect();
+                        if (effect.isInstantenous()) {
+                            effect.applyInstantenousEffect(this, this.getOwner(), entity, effectInstance.getAmplifier(), multiplier);
                         } else {
                             int scaledDuration = (int)(multiplier * (double)effectInstance.getDuration() + 0.5D);
                             if (scaledDuration > 20) {
-                                entity.addPotionEffect(new EffectInstance(effect, scaledDuration, effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.doesShowParticles()));
+                                entity.addEffect(new MobEffectInstance(effect, scaledDuration, effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible()));
                             }
                         }
                     }
@@ -168,18 +168,18 @@ public class AlchemicalBombEntity extends ProjectileItemEntity implements IRende
     }
     
     private void extinguishFire(BlockPos pos) {
-        BlockState state = this.world.getBlockState(pos);
-        if (state.isIn(BlockTags.FIRE)) {
-            this.world.removeBlock(pos, false);
-        } else if (CampfireBlock.isLit(state)) {
-            this.world.playEvent(null, 1009, pos, 0);
-            CampfireBlock.extinguish(this.world, pos, state);
-            this.world.setBlockState(pos, state.with(CampfireBlock.LIT, false));
+        BlockState state = this.level.getBlockState(pos);
+        if (state.is(BlockTags.FIRE)) {
+            this.level.removeBlock(pos, false);
+        } else if (CampfireBlock.isLitCampfire(state)) {
+            this.level.levelEvent(null, 1009, pos, 0);
+            CampfireBlock.dowse(this.getOwner(), this.level, pos, state);
+            this.level.setBlockAndUpdate(pos, state.setValue(CampfireBlock.LIT, false));
         }
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

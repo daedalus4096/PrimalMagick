@@ -9,8 +9,8 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchF
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EntryButton extends AbstractTopicButton {
     protected ResearchEntry entry;
 
-    public EntryButton(int widthIn, int heightIn, ITextComponent text, GrimoireScreen screen, ResearchEntry entry) {
+    public EntryButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, ResearchEntry entry) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());
         this.entry = entry;
     }
@@ -32,7 +32,7 @@ public class EntryButton extends AbstractTopicButton {
         return this.entry;
     }
     
-    private static class Handler implements IPressable {
+    private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
             if (button instanceof EntryButton) {
@@ -40,8 +40,8 @@ public class EntryButton extends AbstractTopicButton {
                 EntryButton geb = (EntryButton)button;
                 
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(geb.getScreen().getContainer().getTopic());
-                geb.getScreen().getContainer().setTopic(geb.getEntry());
+                GrimoireScreen.HISTORY.add(geb.getScreen().getMenu().getTopic());
+                geb.getScreen().getMenu().setTopic(geb.getEntry());
                 if (geb.getEntry().getKey().isKnownBy(mc.player)) {
                     // If the research entry has been flagged as new or updated, clear those flags
                     IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(mc.player);
@@ -55,8 +55,8 @@ public class EntryButton extends AbstractTopicButton {
                 }
                 
                 // Set the new grimoire topic and open a new screen for it
-                geb.getScreen().getMinecraft().displayGuiScreen(new GrimoireScreen(
-                    geb.getScreen().getContainer(),
+                geb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
+                    geb.getScreen().getMenu(),
                     geb.getScreen().getPlayerInventory(),
                     geb.getScreen().getTitle()
                 ));

@@ -7,10 +7,10 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Data object identifying a specific research entry, or a specific stage in that research entry.
@@ -110,7 +110,7 @@ public class SimpleResearchKey {
         return new SimpleResearchKey(this.rootKey, null);
     }
     
-    public boolean isKnownBy(@Nullable PlayerEntity player) {
+    public boolean isKnownBy(@Nullable Player player) {
         if (player == null) {
             return false;
         }
@@ -124,7 +124,7 @@ public class SimpleResearchKey {
         }
     }
     
-    public boolean isKnownByStrict(@Nullable PlayerEntity player) {
+    public boolean isKnownByStrict(@Nullable Player player) {
         if (player == null) {
             return false;
         }

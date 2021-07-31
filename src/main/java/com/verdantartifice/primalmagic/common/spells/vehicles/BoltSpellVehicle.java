@@ -9,10 +9,10 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition of a bolt spell vehicle.  Bolts are mid-range, instant spell vehicles that are not
@@ -51,12 +51,12 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     }
     
     @Override
-    protected void drawFx(World world, SpellPackage spell, Vector3d source, Vector3d target) {
+    protected void drawFx(Level world, SpellPackage spell, Vec3 source, Vec3 target) {
         if (spell.getPayload() != null) {
             // Show a bolt particle effect to every player in range
             PacketHandler.sendToAllAround(
                     new SpellBoltPacket(source, target, spell.getPayload().getSource().getColor()), 
-                    world.getDimensionKey(), 
+                    world.dimension(), 
                     new BlockPos(source), 
                     64.0D);
         }

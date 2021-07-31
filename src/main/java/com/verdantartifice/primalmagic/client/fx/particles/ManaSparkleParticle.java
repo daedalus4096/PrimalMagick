@@ -1,13 +1,13 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -17,8 +17,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class ManaSparkleParticle extends SpriteTexturedParticle {
-    protected final IAnimatedSprite spriteSet;
+public class ManaSparkleParticle extends TextureSheetParticle {
+    protected final SpriteSet spriteSet;
     protected final double initX;
     protected final double initY;
     protected final double initZ;
@@ -32,40 +32,40 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
     protected final double loops = 2.0D;
     protected double dist = 1.0D;
 
-    protected ManaSparkleParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite spriteSet) {
+    protected ManaSparkleParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
         this.initX = x;
         this.initY = y;
         this.initZ = z;
-        this.motionX = this.initXSpeed = xSpeed;
-        this.motionY = this.initYSpeed = ySpeed;
-        this.motionZ = this.initZSpeed = zSpeed;
-        this.particleScale = 0.125F;
+        this.xd = this.initXSpeed = xSpeed;
+        this.yd = this.initYSpeed = ySpeed;
+        this.zd = this.initZSpeed = zSpeed;
+        this.quadSize = 0.125F;
         this.spriteSet = spriteSet;
-        this.selectSpriteWithAge(this.spriteSet);
+        this.setSpriteFromAge(this.spriteSet);
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
     
     @Override
-    public void setMaxAge(int particleLifeTime) {
-        super.setMaxAge(particleLifeTime);
+    public void setLifetime(int particleLifeTime) {
+        super.setLifetime(particleLifeTime);
         
         // Now that we have the max age back in hand, solve for the destination of the particle vector
-        double x2 = (this.initXSpeed * (double)this.maxAge) + this.initX;
-        double y2 = (this.initYSpeed * (double)this.maxAge) + this.initY;
-        double z2 = (this.initZSpeed * (double)this.maxAge) + this.initZ;
+        double x2 = (this.initXSpeed * (double)this.lifetime) + this.initX;
+        double y2 = (this.initYSpeed * (double)this.lifetime) + this.initY;
+        double z2 = (this.initZSpeed * (double)this.lifetime) + this.initZ;
         
         // Compute the distance the particle travels
-        Vector3d start = new Vector3d(this.initX, this.initY, this.initZ);
-        Vector3d end = new Vector3d(x2, y2, z2);
+        Vec3 start = new Vec3(this.initX, this.initY, this.initZ);
+        Vec3 end = new Vec3(x2, y2, z2);
         this.dist = end.subtract(start).length();
 
         // Solve for pitch and yaw of the particle vector
-        Vector3d unitPath = end.subtract(start).normalize();
+        Vec3 unitPath = end.subtract(start).normalize();
         double pitch = Math.asin(unitPath.y);
         double yaw = (Math.PI / 2.0D) - Math.atan2(unitPath.x, unitPath.z);
         this.sinYaw = Math.sin(yaw);
@@ -76,35 +76,35 @@ public class ManaSparkleParticle extends SpriteTexturedParticle {
 
     @Override
     public void tick() {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        if (this.age >= this.maxAge) {
-            this.setExpired();
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age >= this.lifetime) {
+            this.remove();
         } else {
-            double t = (double)this.age / (double)this.maxAge;
+            double t = (double)this.age / (double)this.lifetime;
             double tpl = 2 * Math.PI * this.loops;
             double theta = tpl * t;
             double radius = 0.5D * Math.sin(Math.PI * t);
             this.age++;
             
             // Compute position along spiral path 
-            this.posX = this.initX + (this.dist * this.cosYaw * this.cosPitch * t) + (radius * this.cosYaw * this.sinPitch * Math.sin(theta)) + (radius * this.sinYaw * this.cosPitch * Math.sin(theta));
-            this.posY = this.initY + (radius * this.cosPitch * Math.cos(theta)) + (this.dist * this.sinPitch * t);
-            this.posZ = this.initZ - (radius * this.cosYaw * this.cosPitch * Math.sin(theta)) - (radius * this.cosYaw * this.sinPitch * Math.cos(theta)) + (this.dist * this.sinYaw * this.cosPitch * t);
+            this.x = this.initX + (this.dist * this.cosYaw * this.cosPitch * t) + (radius * this.cosYaw * this.sinPitch * Math.sin(theta)) + (radius * this.sinYaw * this.cosPitch * Math.sin(theta));
+            this.y = this.initY + (radius * this.cosPitch * Math.cos(theta)) + (this.dist * this.sinPitch * t);
+            this.z = this.initZ - (radius * this.cosYaw * this.cosPitch * Math.sin(theta)) - (radius * this.cosYaw * this.sinPitch * Math.cos(theta)) + (this.dist * this.sinYaw * this.cosPitch * t);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        protected final IAnimatedSprite spriteSet;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        protected final SpriteSet spriteSet;
         
-        public Factory(IAnimatedSprite spriteSet) {
+        public Factory(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new ManaSparkleParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
         }
     }

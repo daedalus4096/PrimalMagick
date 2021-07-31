@@ -7,10 +7,10 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent from the server to trigger an offering channel particle effect on the client.
@@ -42,17 +42,17 @@ public class OfferingChannelPacket implements IMessageToClient {
         this(x1, y1, z1, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, stack);
     }
     
-    public static void encode(OfferingChannelPacket message, PacketBuffer buf) {
+    public static void encode(OfferingChannelPacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
         buf.writeDouble(message.z1);
         buf.writeDouble(message.x2);
         buf.writeDouble(message.y2);
         buf.writeDouble(message.z2);
-        buf.writeItemStack(message.stack);
+        buf.writeItem(message.stack);
     }
     
-    public static OfferingChannelPacket decode(PacketBuffer buf) {
+    public static OfferingChannelPacket decode(FriendlyByteBuf buf) {
         OfferingChannelPacket message = new OfferingChannelPacket();
         message.x1 = buf.readDouble();
         message.y1 = buf.readDouble();
@@ -60,7 +60,7 @@ public class OfferingChannelPacket implements IMessageToClient {
         message.x2 = buf.readDouble();
         message.y2 = buf.readDouble();
         message.z2 = buf.readDouble();
-        message.stack = buf.readItemStack();
+        message.stack = buf.readItem();
         return message;
     }
     

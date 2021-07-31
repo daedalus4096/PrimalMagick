@@ -7,9 +7,9 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a project material that requires one or more observations, which may or may not be consumed as part
@@ -39,15 +39,15 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = super.serializeNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = super.serializeNBT();
         tag.putInt("Count", this.count);
         tag.putBoolean("Consumed", this.consumed);
         return tag;
     }
     
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
         this.count = nbt.getInt("Count");
         this.consumed = nbt.getBoolean("Consumed");
@@ -59,13 +59,13 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(PlayerEntity player) {
+    public boolean isSatisfied(Player player) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
         return (knowledge != null && knowledge.getKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION) >= this.count);
     }
 
     @Override
-    public boolean consume(PlayerEntity player) {
+    public boolean consume(Player player) {
         // Deduct observation level(s) from the player's knowledge pool
         return ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.OBSERVATION, -1 * this.count * IPlayerKnowledge.KnowledgeType.OBSERVATION.getProgression());
     }

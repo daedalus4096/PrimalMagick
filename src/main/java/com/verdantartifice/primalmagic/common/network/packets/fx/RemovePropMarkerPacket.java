@@ -8,10 +8,10 @@ import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent from the server to remove a prop marker particle effect on the client.
@@ -27,11 +27,11 @@ public class RemovePropMarkerPacket implements IMessageToClient {
         this.pos = pos;
     }
     
-    public static void encode(RemovePropMarkerPacket message, PacketBuffer buf) {
+    public static void encode(RemovePropMarkerPacket message, FriendlyByteBuf buf) {
         buf.writeBlockPos(message.pos);
     }
     
-    public static RemovePropMarkerPacket decode(PacketBuffer buf) {
+    public static RemovePropMarkerPacket decode(FriendlyByteBuf buf) {
         RemovePropMarkerPacket message = new RemovePropMarkerPacket();
         message.pos = buf.readBlockPos();
         return message;
@@ -43,10 +43,10 @@ public class RemovePropMarkerPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
             	Minecraft mc = Minecraft.getInstance();
-                World world = mc.world;
+                Level world = mc.level;
                 // Only process positions that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
-                if (world != null && world.isBlockLoaded(message.pos)) {
+                if (world != null && world.hasChunkAt(message.pos)) {
                     FxDispatcher.INSTANCE.removePropMarker(message.pos);
                 }
             });

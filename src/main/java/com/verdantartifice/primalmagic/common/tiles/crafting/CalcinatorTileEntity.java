@@ -13,8 +13,10 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of a proper calcinator tile entity.  Provides the melting functionality for the corresponding
@@ -24,8 +26,8 @@ import net.minecraft.item.ItemStack;
  * @author Daedalus4096
  */
 public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
-    public CalcinatorTileEntity() {
-        super(TileEntityTypesPM.CALCINATOR.get());
+    public CalcinatorTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.CALCINATOR.get(), pos, state);
     }
     
     @Override
@@ -37,7 +39,7 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
     @Nonnull
     protected List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs) {
         List<ItemStack> output = new ArrayList<>();
-        SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.world);
+        SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.level);
         EssenceType maxEssenceType = this.getMaxOutputEssenceType();
         if (sources != null && !sources.isEmpty()) {
             for (Source source : Source.SORTED_SOURCES) {
@@ -57,7 +59,7 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
                             currentEssenceType = currentEssenceType.getDowngrade();
                         }
                     }
-                    if (currentEssenceType == null && amount > 0 && (alwaysGenerateDregs || this.world.rand.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
+                    if (currentEssenceType == null && amount > 0 && (alwaysGenerateDregs || this.level.random.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
                         // If the item's affinity is too low for guaranteed essence, give a random chance of generating a dust anyway
                         ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, 1);
                         if (!stack.isEmpty()) {

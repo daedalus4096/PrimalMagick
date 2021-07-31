@@ -9,10 +9,10 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.mods.ForkSpellMod;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition of a projectile spell vehicle.  Projectiles are long range vehicles that have a travel
@@ -34,24 +34,24 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     }
 
     @Override
-    public void execute(SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
+    public void execute(SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
         if (spell.getPayload() != null) {
             ForkSpellMod forkMod = spell.getMod(ForkSpellMod.class, "forks");
-            Vector3d baseLookVector = caster.getLook(1.0F);
-            List<Vector3d> lookVectors;
+            Vec3 baseLookVector = caster.getViewVector(1.0F);
+            List<Vec3> lookVectors;
             if (forkMod == null) {
                 // If no Fork mod is in the spell package, use the caster's line of sight for the direction vector
                 lookVectors = Arrays.asList(baseLookVector.normalize());
             } else {
                 // If a Fork mod is in the spell package, calculate a direction vector for each fork, based on the caster's line of sight
-                lookVectors = forkMod.getDirectionUnitVectors(baseLookVector, world.rand);
+                lookVectors = forkMod.getDirectionUnitVectors(baseLookVector, world.random);
             }
             
-            for (Vector3d lookVector : lookVectors) {
+            for (Vec3 lookVector : lookVectors) {
                 // Instantiate the projectile entity and launch it into the world
                 SpellProjectileEntity projectile = new SpellProjectileEntity(world, caster, spell, spellSource);
                 projectile.shoot(lookVector.x, lookVector.y, lookVector.z, 1.5F, 0.0F);
-                world.addEntity(projectile);
+                world.addFreshEntity(projectile);
             }
         }
     }

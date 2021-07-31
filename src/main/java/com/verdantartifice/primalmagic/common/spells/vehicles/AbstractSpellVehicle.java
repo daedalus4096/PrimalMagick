@@ -9,9 +9,9 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Base class for a spell vehicle.  Handles property management and serialization.
@@ -33,8 +33,8 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
     protected abstract String getVehicleType();
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
         nbt.putString("VehicleType", this.getVehicleType());
         for (Map.Entry<String, SpellProperty> entry : this.properties.entrySet()) {
             nbt.putInt(entry.getKey(), entry.getValue().getValue());
@@ -43,7 +43,7 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
     }
     
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         for (Map.Entry<String, SpellProperty> entry : this.properties.entrySet()) {
             entry.getValue().setValue(nbt.getInt(entry.getKey()));
         }
@@ -55,13 +55,13 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
     }
 
     @Override
-    public ITextComponent getTypeName() {
-        return new TranslationTextComponent("primalmagic.spell.vehicle.type." + this.getVehicleType());
+    public Component getTypeName() {
+        return new TranslatableComponent("primalmagic.spell.vehicle.type." + this.getVehicleType());
     }
     
     @Override
-    public ITextComponent getDefaultNamePiece() {
-        return new TranslationTextComponent("primalmagic.spell.vehicle.default_name." + this.getVehicleType());
+    public Component getDefaultNamePiece() {
+        return new TranslatableComponent("primalmagic.spell.vehicle.default_name." + this.getVehicleType());
     }
     
     @Override

@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagic.proxy.ClientProxy;
 import com.verdantartifice.primalmagic.proxy.IProxyPM;
 import com.verdantartifice.primalmagic.proxy.ServerProxy;
 
-import net.minecraft.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod(PrimalMagic.MODID)
 public class PrimalMagic {
     public static final String MODID = "primalmagic";
-    public static final ItemGroup ITEM_GROUP = new ItemGroupPM();
+    public static final CreativeModeTab ITEM_GROUP = new ItemGroupPM();
     
     public static IProxyPM proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
     

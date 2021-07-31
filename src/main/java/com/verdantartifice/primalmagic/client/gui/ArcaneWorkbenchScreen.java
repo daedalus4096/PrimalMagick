@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagic.common.containers.ArcaneWorkbenchContainer;
@@ -10,11 +10,11 @@ import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,55 +24,54 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class ArcaneWorkbenchScreen extends ContainerScreen<ArcaneWorkbenchContainer> {
+public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkbenchContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/arcane_workbench.png");
 
-    public ArcaneWorkbenchScreen(ArcaneWorkbenchContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public ArcaneWorkbenchScreen(ArcaneWorkbenchContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
-        this.ySize = 183;
+        this.imageHeight = 183;
     }
     
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.initWidgets();
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
+        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
     
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
-        IArcaneRecipe activeArcaneRecipe = this.container.getActiveArcaneRecipe();
+        IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe == null || activeArcaneRecipe.getManaCosts() == null || activeArcaneRecipe.getManaCosts().isEmpty()) {
-            ITextComponent text = new TranslationTextComponent("primalmagic.crafting.no_mana");
-            int width = this.font.getStringWidth(text.getString());
+            Component text = new TranslatableComponent("primalmagic.crafting.no_mana");
+            int width = this.font.width(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
-            int y = 10 + (16 - this.font.FONT_HEIGHT) / 2;
-            this.font.drawText(matrixStack, text, x, y, Color.BLACK.getRGB());
+            int y = 10 + (16 - this.font.lineHeight) / 2;
+            this.font.draw(matrixStack, text, x, y, Color.BLACK.getRGB());
         }
     }
 
     protected void initWidgets() {
-        this.buttons.clear();
-        this.children.clear();
+        this.clearWidgets();
         
         // Show mana cost widgets, if the active recipe has a mana cost
-        IArcaneRecipe activeArcaneRecipe = this.container.getActiveArcaneRecipe();
+        IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe != null) {
             SourceList manaCosts = activeArcaneRecipe.getManaCosts();
             if (!manaCosts.isEmpty()) {
                 int widgetSetWidth = manaCosts.getSourcesSorted().size() * 18;
-                int x = this.guiLeft + 1 + (this.getXSize() - widgetSetWidth) / 2;
-                int y = this.guiTop + 10;
+                int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
+                int y = this.topPos + 10;
                 for (Source source : manaCosts.getSourcesSorted()) {
-                    this.addButton(new ManaCostWidget(source, manaCosts.getAmount(source), x, y));
+                    this.addRenderableWidget(new ManaCostWidget(source, manaCosts.getAmount(source), x, y));
                     x += 18;
                 }
             }

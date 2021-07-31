@@ -7,10 +7,10 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet to sync cooldown capability data from the server to the client.
@@ -18,24 +18,24 @@ import net.minecraftforge.fml.network.NetworkEvent;
  * @author Daedalus4096
  */
 public class SyncCooldownsPacket implements IMessageToClient {
-    protected CompoundNBT data;
+    protected CompoundTag data;
 
     public SyncCooldownsPacket() {
         this.data = null;
     }
     
-    public SyncCooldownsPacket(PlayerEntity player) {
+    public SyncCooldownsPacket(Player player) {
         IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
         this.data = (cooldowns != null) ? cooldowns.serializeNBT() : null;
     }
     
-    public static void encode(SyncCooldownsPacket message, PacketBuffer buf) {
-        buf.writeCompoundTag(message.data);
+    public static void encode(SyncCooldownsPacket message, FriendlyByteBuf buf) {
+        buf.writeNbt(message.data);
     }
     
-    public static SyncCooldownsPacket decode(PacketBuffer buf) {
+    public static SyncCooldownsPacket decode(FriendlyByteBuf buf) {
         SyncCooldownsPacket message = new SyncCooldownsPacket();
-        message.data = buf.readCompoundTag();
+        message.data = buf.readNbt();
         return message;
     }
     
@@ -44,7 +44,7 @@ public class SyncCooldownsPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
             	Minecraft mc = Minecraft.getInstance();
-                PlayerEntity player = mc.player;
+                Player player = mc.player;
                 IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
                 if (cooldowns != null) {
                     cooldowns.deserializeNBT(message.data);

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.tiles.base;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Interface marking a tile entity as one that can have an owner.  This may involved specific
@@ -17,7 +17,7 @@ public interface IOwnedTileEntity {
      * 
      * @param owner the new owning player
      */
-    public void setTileOwner(@Nullable PlayerEntity owner);
+    public void setTileOwner(@Nullable Player owner);
     
     /**
      * Get the owning player of the tile entity.
@@ -25,5 +25,5 @@ public interface IOwnedTileEntity {
      * @return the owning player of the tile entity
      */
     @Nullable
-    public PlayerEntity getTileOwner();
+    public Player getTileOwner();
 }

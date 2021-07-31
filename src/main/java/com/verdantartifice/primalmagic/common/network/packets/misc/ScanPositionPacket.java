@@ -11,15 +11,15 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.items.IItemHandler;
 
 /**
@@ -39,13 +39,13 @@ public class ScanPositionPacket implements IMessageToServer {
         this.pos = pos;
     }
     
-    public static void encode(ScanPositionPacket message, PacketBuffer buf) {
-        buf.writeLong(message.pos.toLong());
+    public static void encode(ScanPositionPacket message, FriendlyByteBuf buf) {
+        buf.writeLong(message.pos.asLong());
     }
     
-    public static ScanPositionPacket decode(PacketBuffer buf) {
+    public static ScanPositionPacket decode(FriendlyByteBuf buf) {
         ScanPositionPacket message = new ScanPositionPacket();
-        message.pos = BlockPos.fromLong(buf.readLong());
+        message.pos = BlockPos.of(buf.readLong());
         return message;
     }
     
@@ -53,12 +53,12 @@ public class ScanPositionPacket implements IMessageToServer {
         public static void onMessage(ScanPositionPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                ServerPlayerEntity player = ctx.get().getSender();
-                World world = player.getEntityWorld();
+                ServerPlayer player = ctx.get().getSender();
+                Level world = player.getCommandSenderWorld();
 
                 // Only process blocks that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
-                if (message.pos != null && world.isBlockPresent(message.pos)) {
+                if (message.pos != null && world.isLoaded(message.pos)) {
                     IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                     if (knowledge == null) {
                         return;
@@ -82,7 +82,7 @@ public class ScanPositionPacket implements IMessageToServer {
                             if (chestStack != null && !chestStack.isEmpty()) {
                                 // Limit how much of an inventory can be scanned
                                 if (scanCount >= AffinityManager.MAX_SCAN_COUNT) {
-                                    player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.toobig").mergeStyle(TextFormatting.RED), true);
+                                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.toobig").withStyle(ChatFormatting.RED), true);
                                     break;
                                 }
                                 if (ResearchManager.setScanned(chestStack, player, false)) {
@@ -96,10 +96,10 @@ public class ScanPositionPacket implements IMessageToServer {
                     
                     // If at least one unscanned item was processed, send a success message
                     if (found) {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").mergeStyle(TextFormatting.GREEN), true);
+                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.success").withStyle(ChatFormatting.GREEN), true);
                         knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
                     } else {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").mergeStyle(TextFormatting.RED), true);
+                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.repeat").withStyle(ChatFormatting.RED), true);
                     }
                 }
             });

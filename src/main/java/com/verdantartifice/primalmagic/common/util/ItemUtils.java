@@ -6,11 +6,11 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -46,7 +46,7 @@ public class ItemUtils {
             // Strip the stack's NBT data if requested
             temp.setTag(null);
         }
-        return temp.write(new CompoundNBT()).toString().hashCode();
+        return temp.save(new CompoundTag()).toString().hashCode();
     }
     
     /**
@@ -89,7 +89,7 @@ public class ItemUtils {
             if (item != null) {
                 stack = new ItemStack(item, count);
                 if (nbt != null) {
-                    stack.setTag(JsonToNBT.getTagFromJson(nbt));
+                    stack.setTag(TagParser.parseTag(nbt));
                 }
             }
         } catch (Exception e) {}
@@ -149,7 +149,7 @@ public class ItemUtils {
         
         // First, scan for existing stacks that can be added to
         for (ItemStack outStack : output) {
-            if (outStack.isItemEqual(stack)) {
+            if (outStack.sameItem(stack)) {
                 if (stack.getCount() + outStack.getCount() <= outStack.getMaxStackSize()) {
                     // If the output stack can fully absorb the input, grow it and return
                     outStack.grow(stack.getCount());

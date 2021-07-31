@@ -9,25 +9,25 @@ import com.verdantartifice.primalmagic.common.entities.projectiles.AlchemicalBom
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectType;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.Util;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.Util;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition of an alchemical bomb.  Similar to a splash potion, but a single bomb has multiple
@@ -42,35 +42,35 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public ItemStack getDefaultInstance() {
-        return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(super.getDefaultInstance(), Potions.WATER), ConcoctionType.BOMB), FuseType.MEDIUM);
+        return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(super.getDefaultInstance(), Potions.WATER), ConcoctionType.BOMB), FuseType.MEDIUM);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack stack = playerIn.getHeldItem(handIn);
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack stack = playerIn.getItemInHand(handIn);
         if (playerIn.isSecondaryUseActive()) {
             // Set bomb fuse
             FuseType fuse = ConcoctionUtils.getFuseType(stack);
-            if (!worldIn.isRemote && fuse != null && fuse.getNext() != null) {
-                playerIn.setHeldItem(handIn, ConcoctionUtils.setFuseType(stack, fuse.getNext()));
-                ITextComponent fuseText = new TranslationTextComponent(fuse.getNext().getTranslationKey());
-                playerIn.sendMessage(new TranslationTextComponent("concoctions.primalmagic.fuse_set", fuseText), Util.DUMMY_UUID);
+            if (!worldIn.isClientSide && fuse != null && fuse.getNext() != null) {
+                playerIn.setItemInHand(handIn, ConcoctionUtils.setFuseType(stack, fuse.getNext()));
+                Component fuseText = new TranslatableComponent(fuse.getNext().getTranslationKey());
+                playerIn.sendMessage(new TranslatableComponent("concoctions.primalmagic.fuse_set", fuseText), Util.NIL_UUID);
             }
         } else {
-            worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
-            worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
+            worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
             
             // Throw bomb entity
             AlchemicalBombEntity entity = new AlchemicalBombEntity(worldIn, playerIn);
             entity.setItem(stack);
-            entity.setDirectionAndMovement(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
-            worldIn.addEntity(entity);
+            entity.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), -20.0F, 0.5F, 1.0F);
+            worldIn.addFreshEntity(entity);
             
             // Increment stat
             StatsManager.incrementValue(playerIn, StatsPM.CONCOCTIONS_USED);
 
             // Deduct charge
-            if (!playerIn.abilities.isCreativeMode) {
+            if (!playerIn.getAbilities().instabuild) {
                 int charges = ConcoctionUtils.getCurrentDoses(stack);
                 if (charges <= 1) {
                     stack.shrink(1);
@@ -79,45 +79,45 @@ public class AlchemicalBombItem extends Item {
                 }
             }
         }
-        return ActionResult.func_233538_a_(stack, worldIn.isRemote());
+        return InteractionResultHolder.sidedSuccess(stack, worldIn.isClientSide());
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack) {
-        Potion potion = PotionUtils.getPotionFromItem(stack);
+    public String getDescriptionId(ItemStack stack) {
+        Potion potion = PotionUtils.getPotion(stack);
         ConcoctionType type = ConcoctionUtils.getConcoctionType(stack);
         if (type == null) {
             potion = Potions.EMPTY;
             type = ConcoctionType.WATER;
         }
-        return potion.getNamePrefixed(this.getTranslationKey() + "." + type.getString() + ".effect.");
+        return potion.getName(this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
     }
 
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
-        tooltip.add(new TranslationTextComponent("concoctions.primalmagic.charges_remaining", ConcoctionUtils.getCurrentDoses(stack)).mergeStyle(EffectType.BENEFICIAL.getColor()));
+        tooltip.add(new TranslatableComponent("concoctions.primalmagic.charges_remaining", ConcoctionUtils.getCurrentDoses(stack)).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
         FuseType fuse = ConcoctionUtils.getFuseType(stack);
         if (fuse == null) {
             fuse = FuseType.MEDIUM;
         }
-        ITextComponent fuseText = new TranslationTextComponent(fuse.getTranslationKey()).mergeStyle(EffectType.BENEFICIAL.getColor());
-        tooltip.add(new TranslationTextComponent("concoctions.primalmagic.fuse_length", fuseText).mergeStyle(EffectType.BENEFICIAL.getColor()));
+        Component fuseText = new TranslatableComponent(fuse.getTranslationKey()).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting());
+        tooltip.add(new TranslatableComponent("concoctions.primalmagic.fuse_length", fuseText).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
-        return super.hasEffect(stack) || !PotionUtils.getEffectsFromStack(stack).isEmpty();
+    public boolean isFoil(ItemStack stack) {
+        return super.isFoil(stack) || !PotionUtils.getMobEffects(stack).isEmpty();
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (this.isInGroup(group)) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+        if (this.allowdedIn(group)) {
             items.add(this.getDefaultInstance());   // Add basic water bomb separately
             for (Potion potion : Registry.POTION) {
                 if (!potion.getEffects().isEmpty()) {
-                    items.add(ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(this), potion), ConcoctionType.BOMB), FuseType.MEDIUM));
+                    items.add(ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(this), potion), ConcoctionType.BOMB), FuseType.MEDIUM));
                 }
             }
         }

@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.capabilities;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -10,14 +9,13 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagic.common.stats.Stat;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.LongArrayNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.LongArrayTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.Constants;
@@ -33,14 +31,14 @@ public class PlayerStats implements IPlayerStats {
     private final Set<Long> discoveredShrines = ConcurrentHashMap.newKeySet();      // Set of long-encoded block positions of shrine locations
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT rootTag = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag rootTag = new CompoundTag();
         
         // Serialize recorded stat values
-        ListNBT statList = new ListNBT();
+        ListTag statList = new ListTag();
         for (Map.Entry<ResourceLocation, Integer> entry : stats.entrySet()) {
             if (entry != null && entry.getKey() != null && entry.getValue() != null) {
-                CompoundNBT tag = new CompoundNBT();
+                CompoundTag tag = new CompoundTag();
                 tag.putString("Key", entry.getKey().toString());
                 tag.putInt("Value", entry.getValue().intValue());
                 statList.add(tag);
@@ -54,13 +52,13 @@ public class PlayerStats implements IPlayerStats {
         for (Long loc : this.discoveredShrines) {
             locs[index++] = loc.longValue();
         }
-        rootTag.put("ShrineLocations", new LongArrayNBT(locs));
+        rootTag.put("ShrineLocations", new LongArrayTag(locs));
         
         return rootTag;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         if (nbt == null) {
             return;
         }
@@ -68,9 +66,9 @@ public class PlayerStats implements IPlayerStats {
         this.clear();
         
         // Deserialize recorded stat values
-        ListNBT statList = nbt.getList("Stats", Constants.NBT.TAG_COMPOUND);
+        ListTag statList = nbt.getList("Stats", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < statList.size(); index++) {
-            CompoundNBT tag = statList.getCompound(index);
+            CompoundTag tag = statList.getCompound(index);
             ResourceLocation loc = new ResourceLocation(tag.getString("Key"));
             Integer value = Integer.valueOf(tag.getInt("Value"));
             this.stats.put(loc, value);
@@ -110,19 +108,19 @@ public class PlayerStats implements IPlayerStats {
         if (pos == null) {
             return false;
         } else {
-            return this.discoveredShrines.contains(Long.valueOf(pos.toLong()));
+            return this.discoveredShrines.contains(Long.valueOf(pos.asLong()));
         }
     }
 
     @Override
     public void setLocationDiscovered(BlockPos pos) {
         if (pos != null) {
-            this.discoveredShrines.add(Long.valueOf(pos.toLong()));
+            this.discoveredShrines.add(Long.valueOf(pos.asLong()));
         }
     }
 
     @Override
-    public void sync(ServerPlayerEntity player) {
+    public void sync(ServerPlayer player) {
         if (player != null) {
             PacketHandler.sendToPlayer(new SyncStatsPacket(player), player);
         }
@@ -134,10 +132,10 @@ public class PlayerStats implements IPlayerStats {
      * @author Daedalus4096
      * @see {@link com.verdantartifice.primalmagic.common.events.CapabilityEvents}
      */
-    public static class Provider implements ICapabilitySerializable<CompoundNBT> {
+    public static class Provider implements ICapabilitySerializable<CompoundTag> {
         public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_stats");
         
-        private final IPlayerStats instance = PrimalMagicCapabilities.STATS.getDefaultInstance();
+        private final IPlayerStats instance = new PlayerStats();
         private final LazyOptional<IPlayerStats> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
         
         @Override
@@ -150,46 +148,13 @@ public class PlayerStats implements IPlayerStats {
         }
 
         @Override
-        public CompoundNBT serializeNBT() {
+        public CompoundTag serializeNBT() {
             return instance.serializeNBT();
         }
 
         @Override
-        public void deserializeNBT(CompoundNBT nbt) {
+        public void deserializeNBT(CompoundTag nbt) {
             instance.deserializeNBT(nbt);
-        }
-    }
-    
-    /**
-     * Storage manager for the player statistics capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Storage implements Capability.IStorage<IPlayerStats> {
-        @Override
-        public INBT writeNBT(Capability<IPlayerStats> capability, IPlayerStats instance, Direction side) {
-            // Use the instance's pre-defined serialization
-            return instance.serializeNBT();
-        }
-
-        @Override
-        public void readNBT(Capability<IPlayerStats> capability, IPlayerStats instance, Direction side, INBT nbt) {
-            // Use the instance's pre-defined deserialization
-            instance.deserializeNBT((CompoundNBT)nbt);
-        }
-    }
-    
-    /**
-     * Factory for the player statistics capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Factory implements Callable<IPlayerStats> {
-        @Override
-        public IPlayerStats call() throws Exception {
-            return new PlayerStats();
         }
     }
 }

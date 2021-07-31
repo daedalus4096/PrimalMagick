@@ -11,8 +11,8 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemAffinityBuilder {
@@ -22,11 +22,11 @@ public class ItemAffinityBuilder {
     protected SourceList addValues;
     protected SourceList removeValues;
 
-    protected ItemAffinityBuilder(@Nonnull IItemProvider item) {
+    protected ItemAffinityBuilder(@Nonnull ItemLike item) {
         this.targetId = item.asItem().getRegistryName();
     }
     
-    public static ItemAffinityBuilder itemAffinity(@Nonnull IItemProvider item) {
+    public static ItemAffinityBuilder itemAffinity(@Nonnull ItemLike item) {
         return new ItemAffinityBuilder(item);
     }
     
@@ -34,7 +34,7 @@ public class ItemAffinityBuilder {
         return itemAffinity(essence).set(essence.getSource(), essence.getEssenceType().getAffinity());
     }
     
-    public ItemAffinityBuilder base(@Nonnull IItemProvider baseItem) {
+    public ItemAffinityBuilder base(@Nonnull ItemLike baseItem) {
         this.baseId = baseItem.asItem().getRegistryName();
         return this;
     }

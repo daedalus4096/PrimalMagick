@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.spells;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Definition of a spell property.  Spell components have zero to two properties that determine their
@@ -31,8 +31,8 @@ public class SpellProperty {
         return this.name;
     }
     
-    public ITextComponent getDescription() {
-        return new TranslationTextComponent(this.translationKey);
+    public Component getDescription() {
+        return new TranslatableComponent(this.translationKey);
     }
     
     public int getMin() {
@@ -49,6 +49,6 @@ public class SpellProperty {
     
     public void setValue(int newValue) {
         // Ensure that the given value respects this property's bounds
-        this.value = MathHelper.clamp(newValue, this.min, this.max);
+        this.value = Mth.clamp(newValue, this.min, this.max);
     }
 }

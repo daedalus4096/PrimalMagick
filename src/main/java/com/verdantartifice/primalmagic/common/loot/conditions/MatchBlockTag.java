@@ -4,45 +4,45 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.Serializer;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a loot condition that matches when the block is in the given tag.
  * 
  * @author Daedalus4096
  */
-public class MatchBlockTag implements ILootCondition {
-    protected final ITag.INamedTag<Block> tag;
+public class MatchBlockTag implements LootItemCondition {
+    protected final Tag.Named<Block> tag;
     
-    public MatchBlockTag(ITag.INamedTag<Block> tag) {
+    public MatchBlockTag(Tag.Named<Block> tag) {
         this.tag = tag;
     }
 
-    public static ILootCondition.IBuilder builder(ITag.INamedTag<Block> tag) {
+    public static LootItemCondition.Builder builder(Tag.Named<Block> tag) {
         return () -> new MatchBlockTag(tag);
     }
     
     @Override
     public boolean test(LootContext context) {
-        BlockState state = context.get(LootParameters.BLOCK_STATE);
-        return state != null && state.getBlock().isIn(this.tag);
+        BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+        return state != null && this.tag.contains(state.getBlock());
     }
 
     @Override
-    public LootConditionType getConditionType() {
+    public LootItemConditionType getType() {
         return LootConditionTypesPM.MATCH_BLOCK_TAG;
     }
     
-    public static class Serializer implements ILootSerializer<MatchBlockTag> {
+    public static class ConditionSerializer implements Serializer<MatchBlockTag> {
         @Override
         public void serialize(JsonObject obj, MatchBlockTag condition, JsonSerializationContext context) {
             obj.addProperty("tag", condition.tag.getName().toString());

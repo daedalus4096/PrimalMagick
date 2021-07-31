@@ -2,14 +2,14 @@ package com.verdantartifice.primalmagic.common.concoctions;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * Definition of a type of alchemical bomb fuse.  Determines how long it takes for the bomb to go off.
  * 
  * @author Daedalus4096
  */
-public enum FuseType implements IStringSerializable {
+public enum FuseType implements StringRepresentable {
     IMPACT(-1, "impact"),
     SHORT(20, "short"),
     MEDIUM(60, "medium"),
@@ -28,7 +28,7 @@ public enum FuseType implements IStringSerializable {
     }
 
     @Override
-    public String getString() {
+    public String getSerializedName() {
         return this.tag;
     }
 
@@ -59,7 +59,7 @@ public enum FuseType implements IStringSerializable {
     @Nullable
     public static FuseType fromName(@Nullable String name) {
         for (FuseType type : FuseType.values()) {
-            if (type.getString().equals(name)) {
+            if (type.getSerializedName().equals(name)) {
                 return type;
             }
         }

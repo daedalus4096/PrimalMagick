@@ -8,15 +8,15 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -39,33 +39,33 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(RayTraceResult target, Vector3d burstPoint, SpellPackage spell, World world, LivingEntity caster, ItemStack spellSource) {
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
         if (target != null) {
-            if (target.getType() == RayTraceResult.Type.BLOCK) {
+            if (target.getType() == HitResult.Type.BLOCK) {
                 // If the target is a block, place fields in the two blocks adjacent to the target in
                 // the direction determined by the raytrace result
-                BlockRayTraceResult blockTarget = (BlockRayTraceResult)target;
-                if (world.getBlockState(blockTarget.getPos()).isSolid()) {
+                BlockHitResult blockTarget = (BlockHitResult)target;
+                if (world.getBlockState(blockTarget.getBlockPos()).canOcclude()) {
                     for (int offset = 1; offset <= 2; offset++) {
-                        BlockPos targetPos = blockTarget.getPos().offset(blockTarget.getFace(), offset);
+                        BlockPos targetPos = blockTarget.getBlockPos().relative(blockTarget.getDirection(), offset);
                         this.placeField(world, targetPos);
                     }
                 } else {
-                    this.placeField(world, blockTarget.getPos());
-                    this.placeField(world, blockTarget.getPos().offset(blockTarget.getFace()));
+                    this.placeField(world, blockTarget.getBlockPos());
+                    this.placeField(world, blockTarget.getBlockPos().relative(blockTarget.getDirection()));
                 }
-            } else if (target.getType() == RayTraceResult.Type.ENTITY) {
+            } else if (target.getType() == HitResult.Type.ENTITY) {
                 // If the target is an entity, place fields at the entity's position and the position above that
-                BlockPos hitPos = new BlockPos(target.getHitVec());
+                BlockPos hitPos = new BlockPos(target.getLocation());
                 this.placeField(world, hitPos);
-                this.placeField(world, hitPos.up());
+                this.placeField(world, hitPos.above());
             }
         }
     }
     
-    protected void placeField(@Nonnull World world, @Nonnull BlockPos pos) {
-        if (world.isAirBlock(pos) && world.getBlockState(pos) != BlocksPM.CONSECRATION_FIELD.get().getDefaultState()) {
-            world.setBlockState(pos, BlocksPM.CONSECRATION_FIELD.get().getDefaultState(), Constants.BlockFlags.DEFAULT);
+    protected void placeField(@Nonnull Level world, @Nonnull BlockPos pos) {
+        if (world.isEmptyBlock(pos) && world.getBlockState(pos) != BlocksPM.CONSECRATION_FIELD.get().defaultBlockState()) {
+            world.setBlock(pos, BlocksPM.CONSECRATION_FIELD.get().defaultBlockState(), Constants.BlockFlags.DEFAULT);
         }
     }
 
@@ -80,8 +80,8 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, BlockPos origin) {
-        world.playSound(null, origin, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(Level world, BlockPos origin) {
+        world.playSound(null, origin, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
     @Override

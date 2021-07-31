@@ -4,11 +4,11 @@ import java.util.EnumSet;
 
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * AI goal for a companion to target its owner's last target.
@@ -24,19 +24,19 @@ public class CompanionOwnerHurtTargetGoal extends TargetGoal {
     public CompanionOwnerHurtTargetGoal(AbstractCompanionEntity entity) {
         super(entity, false);
         this.entity = entity;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
+        this.setFlags(EnumSet.of(Goal.Flag.TARGET));
     }
 
     @Override
-    public boolean shouldExecute() {
+    public boolean canUse() {
         if (this.entity.hasCompanionOwner() && !this.entity.isCompanionStaying()) {
-            PlayerEntity owner = this.entity.getCompanionOwner();
+            Player owner = this.entity.getCompanionOwner();
             if (owner == null) {
                 return false;
             } else {
-                this.attacked = owner.getLastAttackedEntity();
-                int time = owner.getLastAttackedEntityTime();
-                return time != this.timestamp && this.isSuitableTarget(this.attacked, EntityPredicate.DEFAULT) && this.entity.shouldAttackEntity(this.attacked, owner);
+                this.attacked = owner.getLastHurtMob();
+                int time = owner.getLastHurtMobTimestamp();
+                return time != this.timestamp && this.canAttack(this.attacked, TargetingConditions.DEFAULT) && this.entity.shouldAttackEntity(this.attacked, owner);
             }
         } else {
             return false;
@@ -44,12 +44,12 @@ public class CompanionOwnerHurtTargetGoal extends TargetGoal {
     }
 
     @Override
-    public void startExecuting() {
-        this.goalOwner.setAttackTarget(this.attacked);
-        PlayerEntity owner = this.entity.getCompanionOwner();
+    public void start() {
+        this.mob.setTarget(this.attacked);
+        Player owner = this.entity.getCompanionOwner();
         if (owner != null) {
-            this.timestamp = owner.getLastAttackedEntityTime();
+            this.timestamp = owner.getLastHurtMobTimestamp();
         }
-        super.startExecuting();
+        super.start();
     }
 }

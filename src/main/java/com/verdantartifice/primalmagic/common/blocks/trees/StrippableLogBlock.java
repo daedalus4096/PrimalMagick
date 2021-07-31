@@ -1,17 +1,17 @@
 package com.verdantartifice.primalmagic.common.blocks.trees;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -28,23 +28,23 @@ public class StrippableLogBlock extends RotatedPillarBlock {
     }
     
     protected BlockState getDefaultStrippedState(BlockState originalState) {
-        return this.strippedVersion.getDefaultState().with(RotatedPillarBlock.AXIS, originalState.get(RotatedPillarBlock.AXIS));
+        return this.strippedVersion.defaultBlockState().setValue(RotatedPillarBlock.AXIS, originalState.getValue(RotatedPillarBlock.AXIS));
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (this.strippedVersion != null && player != null && player.getHeldItem(handIn).getItem() instanceof AxeItem) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (this.strippedVersion != null && player != null && player.getItemInHand(handIn).getItem() instanceof AxeItem) {
             // If the player right-clicks on the log with an axe, replace this block with its stripped version
-            worldIn.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            if (!worldIn.isRemote) {
-                worldIn.setBlockState(pos, this.getDefaultStrippedState(state), Constants.BlockFlags.DEFAULT_AND_RERENDER);
-                player.getHeldItem(handIn).damageItem(1, player, (p) -> {
-                    p.sendBreakAnimation(handIn);
+            worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!worldIn.isClientSide) {
+                worldIn.setBlock(pos, this.getDefaultStrippedState(state), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                player.getItemInHand(handIn).hurtAndBreak(1, player, (p) -> {
+                    p.broadcastBreakEvent(handIn);
                 });
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
     }
 }

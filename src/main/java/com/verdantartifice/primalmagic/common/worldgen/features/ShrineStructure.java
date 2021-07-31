@@ -5,62 +5,63 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 /**
  * Definition of a primal shrine structure.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.gen.feature.structure.DesertPyramidStructure}
+ * @see {@link net.minecraft.world.level.levelgen.feature.DesertPyramidFeature}
  */
-public class ShrineStructure extends Structure<ShrineConfig> {
+public class ShrineStructure extends StructureFeature<ShrineConfig> {
     public ShrineStructure(Codec<ShrineConfig> codec) {
         super(codec);
     }
 
     @Override
-    public Structure.IStartFactory<ShrineConfig> getStartFactory() {
+    public StructureFeature.StructureStartFactory<ShrineConfig> getStartFactory() {
         return ShrineStructure.Start::new;
     }
     
     @Override
-    public GenerationStage.Decoration getDecorationStage() {
-        return GenerationStage.Decoration.SURFACE_STRUCTURES;
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 
     @Override
-    public String getStructureName() {
-        return "primalmagic:shrine";
+    public String getFeatureName() {
+        return PrimalMagic.MODID + ":shrine";
     }
 
     public static class Start extends StructureStart<ShrineConfig> {
-        public Start(Structure<ShrineConfig> structure, int chunkX, int chunkZ, MutableBoundingBox boundsIn, int referenceIn, long seed) {
-            super(structure, chunkX, chunkZ, boundsIn, referenceIn, seed);
+        public Start(StructureFeature<ShrineConfig> structure, ChunkPos chunkPos, int referenceIn, long seed) {
+            super(structure, chunkPos, referenceIn, seed);
         }
 
         @Override
-        public void func_230364_a_(DynamicRegistries dynamicRegistryManager, ChunkGenerator generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, ShrineConfig config) {
-        	int x = (chunkX << 4) + 7;
-            int z = (chunkZ << 4) + 7;
-            int surfaceY = generator.getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
+        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator generator, StructureManager templateManagerIn, ChunkPos chunkPos, Biome biomeIn, ShrineConfig config, LevelHeightAccessor levelHeightAccessor) {
+        	int x = (chunkPos.x << 4) + 7;
+            int z = (chunkPos.z << 4) + 7;
+            int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
         	BlockPos pos = new BlockPos(x, surfaceY, z);
-            this.components.add(new ShrinePiece(templateManagerIn, config.type, pos));
-            this.recalculateStructureSize();
+            this.addPiece(new ShrinePiece(templateManagerIn, config.type, pos));
         }
     }
     
-    public static enum Type implements IStringSerializable {
+    public static enum Type implements StringRepresentable {
     	EARTH("earth"),
     	SEA("sea"),
     	SKY("sky"),
@@ -69,8 +70,8 @@ public class ShrineStructure extends Structure<ShrineConfig> {
     	
     	private final String name;
 
-    	public static final Codec<ShrineStructure.Type> CODEC = IStringSerializable.createEnumCodec(ShrineStructure.Type::values, ShrineStructure.Type::byName);
-        private static final Map<String, ShrineStructure.Type> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(ShrineStructure.Type::getString, (type) -> {
+    	public static final Codec<ShrineStructure.Type> CODEC = StringRepresentable.fromEnum(ShrineStructure.Type::values, ShrineStructure.Type::byName);
+        private static final Map<String, ShrineStructure.Type> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(ShrineStructure.Type::getSerializedName, (type) -> {
             return type;
         }));
 
@@ -82,7 +83,7 @@ public class ShrineStructure extends Structure<ShrineConfig> {
     		return BY_NAME.get(name);
     	}
     	
-    	public String getString() {
+    	public String getSerializedName() {
     		return this.name;
     	}
     }

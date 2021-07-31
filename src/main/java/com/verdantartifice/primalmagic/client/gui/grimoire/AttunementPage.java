@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -19,8 +19,8 @@ import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -60,7 +60,7 @@ public class AttunementPage extends AbstractPage {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         // Draw title page if applicable
         if (this.isFirstPage() && side == 0) {
             this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
@@ -77,7 +77,7 @@ public class AttunementPage extends AbstractPage {
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             Minecraft mc = Minecraft.getInstance();
-            mc.getTextureManager().bindTexture(TEXTURE);
+            mc.getTextureManager().bindForSetup(TEXTURE);
             
             // Render meter background
             this.blit(matrixStack, x + 51 + (side * 140), y, 12, 0, 14, 120);
@@ -88,21 +88,21 @@ public class AttunementPage extends AbstractPage {
 
             // Render permanent meter bar
             color = baseColor.darker();
-            RenderSystem.color4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
-            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - MathHelper.clamp(p, 0, 100)), 0, 10, 10, MathHelper.clamp(p, 0, 100));
+            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
+            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p, 0, 100)), 0, 10, 10, Mth.clamp(p, 0, 100));
             
             // Render induced meter bar
             color = baseColor;
-            RenderSystem.color4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
-            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - MathHelper.clamp(p + i, 0, 100)), 0, 10, 10, MathHelper.clamp(i, 0, 100 - p));
+            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
+            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p + i, 0, 100)), 0, 10, 10, Mth.clamp(i, 0, 100 - p));
             
             // Render temporary meter bar
             color = baseColor.brighter();
-            RenderSystem.color4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
-            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - MathHelper.clamp(p + i + t, 0, 100)), 0, 10, 10, MathHelper.clamp(t, 0, 100 - p - i));
+            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
+            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p + i + t, 0, 100)), 0, 10, 10, Mth.clamp(t, 0, 100 - p - i));
 
             // Render meter foreground
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             this.blit(matrixStack, x + 52 + (side * 140), y + 9, 27, 9, 15, 102);
         }
 

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.items.armor;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Interface describing a piece of gear that gives a discount to mana expenditures from wands.
@@ -16,5 +16,5 @@ public interface IManaDiscountGear {
      * @param player the player wearing the item stack
      * @return the mana discount for the given stack and player, in whole percentage points
      */
-    public int getManaDiscount(ItemStack stack, PlayerEntity player);
+    public int getManaDiscount(ItemStack stack, Player player);
 }

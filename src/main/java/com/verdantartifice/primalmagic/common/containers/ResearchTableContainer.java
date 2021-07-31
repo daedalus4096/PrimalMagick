@@ -7,35 +7,35 @@ import com.verdantartifice.primalmagic.common.containers.slots.PaperSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementSlot;
 import com.verdantartifice.primalmagic.common.theorycrafting.IWritingImplement;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.IInventoryChangedListener;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerListener;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.DataSlot;
 
 /**
  * Server data container for the research table GUI.
  * 
  * @author Daedalus4096
  */
-public class ResearchTableContainer extends Container implements IInventoryChangedListener {
-    protected final IWorldPosCallable worldPosCallable;
-    protected final PlayerEntity player;
-    protected final Inventory writingInv = new Inventory(2);
+public class ResearchTableContainer extends AbstractContainerMenu implements ContainerListener {
+    protected final ContainerLevelAccess worldPosCallable;
+    protected final Player player;
+    protected final SimpleContainer writingInv = new SimpleContainer(2);
     protected final Slot paperSlot;
     protected final Slot pencilSlot;
-    protected final IntReferenceHolder writingReady = IntReferenceHolder.single();
+    protected final DataSlot writingReady = DataSlot.standalone();
 
-    public ResearchTableContainer(int windowId, PlayerInventory inv) {
-        this(windowId, inv, IWorldPosCallable.DUMMY);
+    public ResearchTableContainer(int windowId, Inventory inv) {
+        this(windowId, inv, ContainerLevelAccess.NULL);
     }
 
-    public ResearchTableContainer(int windowId, PlayerInventory inv, IWorldPosCallable callable) {
+    public ResearchTableContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
         super(ContainersPM.RESEARCH_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
@@ -59,98 +59,93 @@ public class ResearchTableContainer extends Container implements IInventoryChang
             this.addSlot(new Slot(inv, i, 35 + (i * 18), 198));
         }
         
-        this.trackInt(this.writingReady).set(0);
+        this.addDataSlot(this.writingReady).set(0);
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(this.worldPosCallable, playerIn, BlocksPM.RESEARCH_TABLE.get());
+    public boolean stillValid(Player playerIn) {
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.RESEARCH_TABLE.get());
     }
 
     @Override
-    public void onInventoryChanged(IInventory invBasic) {
+    public void containerChanged(Container invBasic) {
         // Set whether the container has writing tools ready; 1 for yes, 0 for no
         boolean ready = (!this.getWritingImplementStack().isEmpty() && !this.getPaperStack().isEmpty());
         this.writingReady.set(ready ? 1 : 0);
     }
 
     @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
+    public void removed(Player playerIn) {
         // Return input pencil and paper to the player's inventory when the GUI is closed
-        super.onContainerClosed(playerIn);
-        this.worldPosCallable.consume((world, blockPos) -> {
-            this.clearContainer(playerIn, world, this.writingInv);
-        });
+        super.removed(playerIn);
+        this.clearContainer(playerIn, this.writingInv);
     }
     
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index >= 2 && index < 29) {
                 // If transferring from the backpack, move paper and writing implements to the appropriate slots, and everything else to the hotbar
-                if (this.pencilSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                if (this.pencilSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.paperSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                } else if (this.paperSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 29, 38, false)) {
+                    if (!this.moveItemStackTo(slotStack, 29, 38, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
             } else if (index >= 29 && index < 38) {
                 // If transferring from the hotbar, move paper and writing implements to the appropriate slots, and everything else to the backpack
-                if (this.pencilSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                if (this.pencilSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.paperSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                } else if (this.paperSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 2, 29, false)) {
+                    if (!this.moveItemStackTo(slotStack, 2, 29, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.mergeItemStack(slotStack, 2, 38, false)) {
+            } else if (!this.moveItemStackTo(slotStack, 2, 38, false)) {
                 // Move all other transfers to the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
             
             if (slotStack.getCount() == stack.getCount()) {
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 0) {
-                playerIn.dropItem(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }
     
     @Nonnull
     protected ItemStack getWritingImplementStack() {
-        return this.writingInv.getStackInSlot(0);
+        return this.writingInv.getItem(0);
     }
     
     @Nonnull
     protected ItemStack getPaperStack() {
-        return this.writingInv.getStackInSlot(1);
+        return this.writingInv.getItem(1);
     }
     
     public boolean isWritingReady() {
@@ -159,20 +154,20 @@ public class ResearchTableContainer extends Container implements IInventoryChang
     
     public void consumeWritingImplements() {
         // Don't consume if in creative mode
-        if (!this.player.abilities.isCreativeMode) {
+        if (!this.player.getAbilities().instabuild) {
             // Consume ink, if applicable
             ItemStack inkStack = this.getWritingImplementStack();
             if (!inkStack.isEmpty() && inkStack.getItem() instanceof IWritingImplement && ((IWritingImplement)inkStack.getItem()).isDamagedOnUse()) {
-                inkStack.damageItem(1, this.player, (player) -> {});
+                inkStack.hurtAndBreak(1, this.player, (player) -> {});
             }
 
             // Consume paper
-            this.writingInv.decrStackSize(1, 1);
+            this.writingInv.removeItem(1, 1);
         }
     }
     
     @Nonnull
-    public IWorldPosCallable getWorldPosCallable() {
+    public ContainerLevelAccess getWorldPosCallable() {
         return this.worldPosCallable;
     }
 }

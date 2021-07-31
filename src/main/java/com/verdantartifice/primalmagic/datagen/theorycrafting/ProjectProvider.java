@@ -23,17 +23,17 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.DataProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.resources.ResourceLocation;
 
-public class ProjectProvider implements IDataProvider {
+public class ProjectProvider implements DataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
     private static final Logger LOGGER = LogManager.getLogger();
     protected final DataGenerator generator;
@@ -43,7 +43,7 @@ public class ProjectProvider implements IDataProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(HashCache cache) throws IOException {
         Path path = this.generator.getOutputFolder();
         Map<ResourceLocation, IFinishedProject> map = new HashMap<>();
         this.registerProjects((project) -> {
@@ -56,17 +56,17 @@ public class ProjectProvider implements IDataProvider {
         }
     }
 
-    private void saveProject(DirectoryCache cache, JsonObject json, Path path) {
+    private void saveProject(HashCache cache, JsonObject json, Path path) {
         try {
             String jsonStr = GSON.toJson((JsonElement)json);
-            String hash = HASH_FUNCTION.hashUnencodedChars(jsonStr).toString();
-            if (!Objects.equals(cache.getPreviousHash(path), hash) || !Files.exists(path)) {
+            String hash = SHA1.hashUnencodedChars(jsonStr).toString();
+            if (!Objects.equals(cache.getHash(path), hash) || !Files.exists(path)) {
                 Files.createDirectories(path.getParent());
                 try (BufferedWriter writer = Files.newBufferedWriter(path)) {
                     writer.write(jsonStr);
                 }
             }
-            cache.recordHash(path, hash);
+            cache.putNew(path, hash);
         } catch (IOException e) {
             LOGGER.error("Couldn't save theorycrafting project {}", path, e);
         }
@@ -149,7 +149,7 @@ public class ProjectProvider implements IDataProvider {
             .material(ItemMaterialBuilder.item(Items.CARTOGRAPHY_TABLE, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.TORCH, 32, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BREAD, 8, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.SLOW_FALLING), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag("forge", "ender_pearls", 4, true).weight(3).build())
             .material(ItemMaterialBuilder.item(Items.ENDER_EYE, true).weight(1).build())
             .build(consumer);
@@ -232,7 +232,7 @@ public class ProjectProvider implements IDataProvider {
             .material(ItemMaterialBuilder.item(Items.CARTOGRAPHY_TABLE, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.TORCH, 16, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BREAD, 4, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true).weight(4).build())
+            .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true).weight(4).build())
             .material(ItemMaterialBuilder.item(Items.MILK_BUCKET, true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag("forge", "obsidian", 10, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.FLINT_AND_STEEL, false).weight(1).build())

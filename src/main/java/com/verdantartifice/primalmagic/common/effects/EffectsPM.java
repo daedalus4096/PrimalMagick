@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagic.common.effects;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -16,20 +16,20 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class EffectsPM {
-    private static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, PrimalMagic.MODID);
+    private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, PrimalMagic.MODID);
     
     public static void init() {
         EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<Effect> FLYING = EFFECTS.register("flying", () -> new FlyingEffect(EffectType.BENEFICIAL, Source.SKY.getColor()));
-    public static final RegistryObject<Effect> POLYMORPH = EFFECTS.register("polymorph", () -> new EffectPM(EffectType.HARMFUL, Source.MOON.getColor()));
-    public static final RegistryObject<Effect> BLEEDING = EFFECTS.register("bleeding", () -> new BleedingEffect(EffectType.HARMFUL, Source.BLOOD.getColor()));
-    public static final RegistryObject<Effect> WEAKENED_SOUL = EFFECTS.register("weakened_soul", () -> new EffectPM(EffectType.HARMFUL, Source.HALLOWED.getColor()));
-    public static final RegistryObject<Effect> MANAFRUIT = EFFECTS.register("manafruit", () -> new EffectPM(EffectType.BENEFICIAL, 0x27E1C7));
-    public static final RegistryObject<Effect> DRAIN_SOUL = EFFECTS.register("drain_soul", () -> new EffectPM(EffectType.HARMFUL, Source.INFERNAL.getColor()));
-    public static final RegistryObject<Effect> MANA_IMPEDANCE = EFFECTS.register("mana_impedance", () -> new EffectPM(EffectType.HARMFUL, 0x808080));
-    public static final RegistryObject<Effect> ENDERLOCK = EFFECTS.register("enderlock", () -> new EffectPM(EffectType.HARMFUL, Source.VOID.getColor()));
-    public static final RegistryObject<Effect> SOULPIERCED = EFFECTS.register("soulpierced", () -> new EffectPM(EffectType.NEUTRAL, 0x808080));
-    public static final RegistryObject<Effect> STOLEN_ESSENCE = EFFECTS.register("stolen_essence", () -> new EffectPM(EffectType.HARMFUL, Source.VOID.getColor()));
+    public static final RegistryObject<MobEffect> FLYING = EFFECTS.register("flying", () -> new FlyingEffect(MobEffectCategory.BENEFICIAL, Source.SKY.getColor()));
+    public static final RegistryObject<MobEffect> POLYMORPH = EFFECTS.register("polymorph", () -> new EffectPM(MobEffectCategory.HARMFUL, Source.MOON.getColor()));
+    public static final RegistryObject<MobEffect> BLEEDING = EFFECTS.register("bleeding", () -> new BleedingEffect(MobEffectCategory.HARMFUL, Source.BLOOD.getColor()));
+    public static final RegistryObject<MobEffect> WEAKENED_SOUL = EFFECTS.register("weakened_soul", () -> new EffectPM(MobEffectCategory.HARMFUL, Source.HALLOWED.getColor()));
+    public static final RegistryObject<MobEffect> MANAFRUIT = EFFECTS.register("manafruit", () -> new EffectPM(MobEffectCategory.BENEFICIAL, 0x27E1C7));
+    public static final RegistryObject<MobEffect> DRAIN_SOUL = EFFECTS.register("drain_soul", () -> new EffectPM(MobEffectCategory.HARMFUL, Source.INFERNAL.getColor()));
+    public static final RegistryObject<MobEffect> MANA_IMPEDANCE = EFFECTS.register("mana_impedance", () -> new EffectPM(MobEffectCategory.HARMFUL, 0x808080));
+    public static final RegistryObject<MobEffect> ENDERLOCK = EFFECTS.register("enderlock", () -> new EffectPM(MobEffectCategory.HARMFUL, Source.VOID.getColor()));
+    public static final RegistryObject<MobEffect> SOULPIERCED = EFFECTS.register("soulpierced", () -> new EffectPM(MobEffectCategory.NEUTRAL, 0x808080));
+    public static final RegistryObject<MobEffect> STOLEN_ESSENCE = EFFECTS.register("stolen_essence", () -> new EffectPM(MobEffectCategory.HARMFUL, Source.VOID.getColor()));
 }

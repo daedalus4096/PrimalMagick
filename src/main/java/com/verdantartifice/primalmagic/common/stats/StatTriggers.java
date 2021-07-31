@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 /**
  * Collection of triggers which grant a player research when they meet or exceed a given threshold
@@ -38,7 +38,7 @@ public class StatTriggers {
         }
     }
     
-    public static void checkTriggers(@Nullable ServerPlayerEntity player, @Nullable Stat stat, int value) {
+    public static void checkTriggers(@Nullable ServerPlayer player, @Nullable Stat stat, int value) {
         if (player != null && stat != null) {
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
             if (knowledge != null) {

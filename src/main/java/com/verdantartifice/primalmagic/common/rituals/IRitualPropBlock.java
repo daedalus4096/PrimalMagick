@@ -7,12 +7,12 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.PropMarkerPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.RemovePropMarkerPacket;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 /**
  * Interface indicating whether a block can serve as a prop for magical rituals.
@@ -20,41 +20,41 @@ import net.minecraft.world.World;
  * @author Daedalus4096
  */
 public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
-    public boolean isPropActivated(BlockState state, World world, BlockPos pos);
+    public boolean isPropActivated(BlockState state, Level world, BlockPos pos);
     
-    public default void onPropActivated(BlockState state, World world, BlockPos pos) {
-        TileEntity tile = world.getTileEntity(pos);
+    public default void onPropActivated(BlockState state, Level world, BlockPos pos) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity) {
             ((IRitualPropTileEntity)tile).notifyAltarOfPropActivation();
         }
     }
     
-    public default boolean isPropOpen(BlockState state, World world, BlockPos pos) {
-        TileEntity tile = world.getTileEntity(pos);
+    public default boolean isPropOpen(BlockState state, Level world, BlockPos pos) {
+        BlockEntity tile = world.getBlockEntity(pos);
         return (tile instanceof IRitualPropTileEntity) && ((IRitualPropTileEntity)tile).getAltarPos() != null;
     }
     
-    public default void openProp(BlockState state, World world, BlockPos pos, @Nullable PlayerEntity player, BlockPos altarPos) {
-        TileEntity tile = world.getTileEntity(pos);
+    public default void openProp(BlockState state, Level world, BlockPos pos, @Nullable Player player, BlockPos altarPos) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity) {
             ((IRitualPropTileEntity)tile).setAltarPos(altarPos);
-            PacketHandler.sendToAllAround(new PropMarkerPacket(pos), world.getDimensionKey(), pos, 32.0D);
+            PacketHandler.sendToAllAround(new PropMarkerPacket(pos), world.dimension(), pos, 32.0D);
             if (player != null) {
                 this.sendPropStatusMessage(player);
             }
         }
     }
     
-    public default void closeProp(BlockState state, World world, BlockPos pos) {
-        TileEntity tile = world.getTileEntity(pos);
+    public default void closeProp(BlockState state, Level world, BlockPos pos) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity) {
             ((IRitualPropTileEntity)tile).setAltarPos(null);
-            PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), world.getDimensionKey(), pos, 32.0D);
+            PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), world.dimension(), pos, 32.0D);
         }
     }
     
-    public default void sendPropStatusMessage(@Nonnull PlayerEntity player) {
-        player.sendStatusMessage(new TranslationTextComponent(this.getPropTranslationKey()), false);
+    public default void sendPropStatusMessage(@Nonnull Player player) {
+        player.displayClientMessage(new TranslatableComponent(this.getPropTranslationKey()), false);
     }
     
     public String getPropTranslationKey();

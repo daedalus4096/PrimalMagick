@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 import java.awt.Color;
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
@@ -18,11 +18,11 @@ import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -57,7 +57,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Init obtain requirement widgets
         if (!this.stage.getMustObtain().isEmpty()) {
-            y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
+            y += mc.font.lineHeight;   // Make room for section header
             List<Boolean> completion = this.stage.getObtainRequirementCompletion(mc.player);
             for (int index = 0; index < this.stage.getMustObtain().size(); index++) {
                 Object obj = this.stage.getMustObtain().get(index);
@@ -76,7 +76,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Init craft requirement widgets
         if (!this.stage.getMustCraft().isEmpty()) {
-            y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
+            y += mc.font.lineHeight;   // Make room for section header
             List<Boolean> completion = this.stage.getCraftRequirementCompletion(mc.player);
             for (int index = 0; index < this.stage.getMustCraft().size(); index++) {
                 Object obj = this.stage.getMustCraft().get(index);
@@ -95,7 +95,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Init knowledge requirement widgets
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
-            y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
+            y += mc.font.lineHeight;   // Make room for section header
             List<Boolean> completion = this.stage.getKnowledgeRequirementCompletion(mc.player);
             for (int index = 0; index < this.stage.getRequiredKnowledge().size(); index++) {
                 Knowledge know = this.stage.getRequiredKnowledge().get(index);
@@ -108,7 +108,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Init research requirement widgets
         if (this.stage.getRequiredResearch() != null) {
-            y += mc.fontRenderer.FONT_HEIGHT;   // Make room for section header
+            y += mc.font.lineHeight;   // Make room for section header
             List<Boolean> completion = this.stage.getResearchRequirementCompletion(mc.player);
             for (int index = 0; index < this.stage.getRequiredResearch().getKeys().size(); index++) {
                 SimpleResearchKey key = this.stage.getRequiredResearch().getKeys().get(index);
@@ -122,21 +122,21 @@ public class RequirementsPage extends AbstractPage {
         // Init progress button if applicable
         y = startY + 141;
         if (screen.isProgressing()) {
-            ITextComponent text = new TranslationTextComponent("primalmagic.grimoire.completing_text");
+            Component text = new TranslatableComponent("primalmagic.grimoire.completing_text");
             screen.addWidgetToScreen(new ProgressingWidget(startX + 16 + (side * 136), y, text));
         } else if (this.stage.arePrerequisitesMet(mc.player)) {
-            ITextComponent text = new TranslationTextComponent("primalmagic.grimoire.complete_button");
+            Component text = new TranslatableComponent("primalmagic.grimoire.complete_button");
             screen.addWidgetToScreen(new ProgressButton(this.stage, startX + 16 + (side * 136), y, text, screen));
         }
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         // Render page title
         this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
         y += 53;
         
-        matrixStack.push();
+        matrixStack.pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
@@ -144,36 +144,36 @@ public class RequirementsPage extends AbstractPage {
         
         // Render obtain requirement section
         if (!this.stage.getMustObtain().isEmpty()) {
-            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_obtain_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
-            y += mc.fontRenderer.FONT_HEIGHT;
+            Component leadComponent = new TranslatableComponent("primalmagic.grimoire.must_obtain_header").withStyle(ChatFormatting.UNDERLINE);
+            mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            y += mc.font.lineHeight;
             y += 18;    // Make room for obtain widgets
         }
         
         // Render craft requirement section
         if (!this.stage.getMustCraft().isEmpty()) {
-            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.must_craft_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
-            y += mc.fontRenderer.FONT_HEIGHT;
+            Component leadComponent = new TranslatableComponent("primalmagic.grimoire.must_craft_header").withStyle(ChatFormatting.UNDERLINE);
+            mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            y += mc.font.lineHeight;
             y += 18;    // Make room for craft widgets
         }
         
         // Render knowledge requirement section
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
-            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_knowledge_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
-            y += mc.fontRenderer.FONT_HEIGHT;
+            Component leadComponent = new TranslatableComponent("primalmagic.grimoire.required_knowledge_header").withStyle(ChatFormatting.UNDERLINE);
+            mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            y += mc.font.lineHeight;
             y += 18;    // Make room for knowledge widgets
         }
         
         // Render research requirement section
         if (this.stage.getRequiredResearch() != null) {
-            ITextComponent leadComponent = new TranslationTextComponent("primalmagic.grimoire.required_research_header").mergeStyle(TextFormatting.UNDERLINE);
-            mc.fontRenderer.drawText(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
-            y += mc.fontRenderer.FONT_HEIGHT;
+            Component leadComponent = new TranslatableComponent("primalmagic.grimoire.required_research_header").withStyle(ChatFormatting.UNDERLINE);
+            mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            y += mc.font.lineHeight;
             y += 18;    // Make room for research widgets
         }
         
-        matrixStack.pop();
+        matrixStack.popPose();
     }
 }

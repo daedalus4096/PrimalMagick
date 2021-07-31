@@ -5,17 +5,17 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * Definition of an essence type, e.g. the quality of an essence item.
  * 
  * @author Daedalus4096
  */
-public enum EssenceType implements IStringSerializable {
+public enum EssenceType implements StringRepresentable {
     DUST("dust", Rarity.COMMON, 5),
     SHARD("shard", Rarity.UNCOMMON, 20),
     CRYSTAL("crystal", Rarity.RARE, 50),
@@ -33,7 +33,7 @@ public enum EssenceType implements IStringSerializable {
 
     @Override
     @Nonnull
-    public String getString() {
+    public String getSerializedName() {
         return this.name;
     }
     

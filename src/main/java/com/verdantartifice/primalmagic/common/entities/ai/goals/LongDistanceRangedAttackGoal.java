@@ -2,18 +2,18 @@ package com.verdantartifice.primalmagic.common.entities.ai.goals;
 
 import java.util.EnumSet;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.util.Mth;
 
 /**
  * AI goal for a creature to attack with ranged attacks if it's out of range of melee attacks.
  * 
  * @author Daedalus4096
  */
-public class LongDistanceRangedAttackGoal<T extends CreatureEntity & IRangedAttackMob> extends Goal {
+public class LongDistanceRangedAttackGoal<T extends PathfinderMob & RangedAttackMob> extends Goal {
     protected final T entity;
     protected final double moveSpeed;
     protected final int minAttackTime;
@@ -39,13 +39,13 @@ public class LongDistanceRangedAttackGoal<T extends CreatureEntity & IRangedAtta
         this.maxDistanceSq = maxDistance * maxDistance;
         this.maxDistance = maxDistance;
         this.advanceToMelee = advanceToMelee;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override
-    public boolean shouldExecute() {
-        LivingEntity target = this.entity.getAttackTarget();
-        if (target != null && target.isAlive() && this.entity.getDistanceSq(target) > this.minDistanceSq) {
+    public boolean canUse() {
+        LivingEntity target = this.entity.getTarget();
+        if (target != null && target.isAlive() && this.entity.distanceToSqr(target) > this.minDistanceSq) {
             this.attackTarget = target;
             return true;
         } else {
@@ -54,12 +54,12 @@ public class LongDistanceRangedAttackGoal<T extends CreatureEntity & IRangedAtta
     }
 
     @Override
-    public boolean shouldContinueExecuting() {
-        return this.shouldExecute() || !this.entity.getNavigator().noPath();
+    public boolean canContinueToUse() {
+        return this.canUse() || !this.entity.getNavigation().isDone();
     }
 
     @Override
-    public void resetTask() {
+    public void stop() {
         this.attackTarget = null;
         this.seeTime = 0;
         this.rangedAttackTime = -1;
@@ -67,8 +67,8 @@ public class LongDistanceRangedAttackGoal<T extends CreatureEntity & IRangedAtta
 
     @Override
     public void tick() {
-        double distSq = this.entity.getDistanceSq(this.attackTarget);
-        boolean canSee = this.entity.getEntitySenses().canSee(this.attackTarget);
+        float distSq = (float)this.entity.distanceToSqr(this.attackTarget);
+        boolean canSee = this.entity.getSensing().hasLineOfSight(this.attackTarget);
         if (canSee) {
             this.seeTime++;
         } else {
@@ -76,22 +76,22 @@ public class LongDistanceRangedAttackGoal<T extends CreatureEntity & IRangedAtta
         }
         
         if (this.seeTime < 5 || distSq > this.maxDistanceSq || (distSq > this.minDistanceSq && this.advanceToMelee)) {
-            this.entity.getNavigator().tryMoveToEntityLiving(this.attackTarget, this.moveSpeed);
+            this.entity.getNavigation().moveTo(this.attackTarget, this.moveSpeed);
         } else {
-            this.entity.getNavigator().clearPath();
+            this.entity.getNavigation().stop();
         }
         
-        this.entity.getLookController().setLookPositionWithEntity(this.attackTarget, 30.0F, 30.0F);
+        this.entity.getLookControl().setLookAt(this.attackTarget, 30.0F, 30.0F);
         if (--this.rangedAttackTime == 0) {
             if (!canSee) {
                 return;
             }
-            float f = MathHelper.sqrt(distSq) / this.maxDistance;
-            this.entity.attackEntityWithRangedAttack(this.attackTarget, MathHelper.clamp(f, 0.1F, 1.0F));
-            this.rangedAttackTime = MathHelper.floor(f * (float)(this.maxAttackTime - this.minAttackTime) + (float)this.minAttackTime);
+            float f = Mth.sqrt(distSq) / this.maxDistance;
+            this.entity.performRangedAttack(this.attackTarget, Mth.clamp(f, 0.1F, 1.0F));
+            this.rangedAttackTime = Mth.floor(f * (float)(this.maxAttackTime - this.minAttackTime) + (float)this.minAttackTime);
         } else if (this.rangedAttackTime < 0) {
-            float f = MathHelper.sqrt(distSq) / this.maxDistance;
-            this.rangedAttackTime = MathHelper.floor(f * (float)(this.maxAttackTime - this.minAttackTime) + (float)this.minAttackTime);
+            float f = Mth.sqrt(distSq) / this.maxDistance;
+            this.rangedAttackTime = Mth.floor(f * (float)(this.maxAttackTime - this.minAttackTime) + (float)this.minAttackTime);
         }
     }
 }

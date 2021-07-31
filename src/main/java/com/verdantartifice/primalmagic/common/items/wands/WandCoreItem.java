@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.items.wands;
 
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 
 /**
  * Item definition for a wand core.  May be used to construct modular wands.

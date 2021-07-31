@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.MetaParticle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -13,12 +13,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-public class NoteEmitterParticle extends MetaParticle {
+public class NoteEmitterParticle extends NoRenderParticle {
     protected int timeSinceStart;
     protected final int maximumTime;
     protected final double hue;
     
-    protected NoteEmitterParticle(ClientWorld world, double x, double y, double z, double hue, int duration) {
+    protected NoteEmitterParticle(ClientLevel world, double x, double y, double z, double hue, int duration) {
         super(world, x, y, z, 0.0D, 0.0D, 0.0D);
         this.hue = hue;
         this.maximumTime = duration;
@@ -27,21 +27,21 @@ public class NoteEmitterParticle extends MetaParticle {
     @Override
     public void tick() {
         if (this.timeSinceStart % 5 == 0) {
-            double x = this.posX + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
-            double y = this.posY + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
-            double z = this.posZ + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
-            this.world.addParticle(ParticleTypes.NOTE, x, y, z, this.hue, 0.0D, 0.0D);
+            double x = this.x + (this.random.nextDouble() - this.random.nextDouble()) * 0.5D;
+            double y = this.y + (this.random.nextDouble() - this.random.nextDouble()) * 0.5D;
+            double z = this.z + (this.random.nextDouble() - this.random.nextDouble()) * 0.5D;
+            this.level.addParticle(ParticleTypes.NOTE, x, y, z, this.hue, 0.0D, 0.0D);
         }
         
         if (++this.timeSinceStart >= this.maximumTime) {
-            this.setExpired();
+            this.remove();
         }
     }
     
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<NoteEmitterParticleData> {
+    public static class Factory implements ParticleProvider<NoteEmitterParticleData> {
         @Override
-        public Particle makeParticle(NoteEmitterParticleData typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(NoteEmitterParticleData typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new NoteEmitterParticle(worldIn, x, y, z, typeIn.getHue(), typeIn.getDuration());
         }
     }

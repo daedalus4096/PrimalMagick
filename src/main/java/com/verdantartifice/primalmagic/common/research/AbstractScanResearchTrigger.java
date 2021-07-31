@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.research;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 /**
  * Definition of a trigger that grants a specified research entry upon finding a scan match.
@@ -19,7 +19,7 @@ public abstract class AbstractScanResearchTrigger implements IScanTrigger {
     }
 
     @Override
-    public void onMatch(ServerPlayerEntity player, Object obj) {
+    public void onMatch(ServerPlayer player, Object obj) {
         if (this.unlockScansPage) {
             ResearchManager.completeResearch(player, SCANS_KEY);
         }

@@ -4,24 +4,24 @@ import java.util.Random;
 
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IForgeShearable;
@@ -36,12 +36,12 @@ import net.minecraftforge.common.util.Constants;
  */
 public abstract class AbstractPhasingLeavesBlock extends Block implements IForgeShearable {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
-    public static final IntegerProperty DISTANCE = BlockStateProperties.DISTANCE_1_7;
+    public static final IntegerProperty DISTANCE = BlockStateProperties.DISTANCE;
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
 
     public AbstractPhasingLeavesBlock(Block.Properties properties) {
         super(properties);
-        this.setDefaultState(this.getDefaultState().with(PHASE, TimePhase.FULL).with(DISTANCE, Integer.valueOf(7)).with(PERSISTENT, Boolean.valueOf(false)));
+        this.registerDefaultState(this.defaultBlockState().setValue(PHASE, TimePhase.FULL).setValue(DISTANCE, Integer.valueOf(7)).setValue(PERSISTENT, Boolean.valueOf(false)));
     }
     
     /**
@@ -50,84 +50,84 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
      * @param world the game world
      * @return the block's current phase
      */
-    public abstract TimePhase getCurrentPhase(IWorld world);
+    public abstract TimePhase getCurrentPhase(LevelAccessor world);
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         builder.add(DISTANCE, PERSISTENT, PHASE);
     }
     
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Set the block's phase upon placement
-        TimePhase phase = this.getCurrentPhase(context.getWorld());
-        return updateDistance(this.getDefaultState().with(PHASE, phase).with(PERSISTENT, Boolean.valueOf(true)), context.getWorld(), context.getPos());
+        TimePhase phase = this.getCurrentPhase(context.getLevel());
+        return updateDistance(this.defaultBlockState().setValue(PHASE, phase).setValue(PERSISTENT, Boolean.valueOf(true)), context.getLevel(), context.getClickedPos());
     }
     
     @Override
-    public boolean ticksRandomly(BlockState state) {
-        return state.get(DISTANCE) == 7 && !state.get(PERSISTENT);
+    public boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(DISTANCE) == 7 && !state.getValue(PERSISTENT);
     }
     
     @Override
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
         // Remove the leaves if too far from a log
-        if (!state.get(PERSISTENT) && state.get(DISTANCE) == 7) {
-            spawnDrops(state, worldIn, pos);
+        if (!state.getValue(PERSISTENT) && state.getValue(DISTANCE) == 7) {
+            dropResources(state, worldIn, pos);
             worldIn.removeBlock(pos, false);
         }
 
         // Periodically check to see if the block's phase needs to be updated
         TimePhase newPhase = this.getCurrentPhase(worldIn);
-        if (newPhase != state.get(PHASE)) {
-            worldIn.setBlockState(pos, state.with(PHASE, newPhase), Constants.BlockFlags.DEFAULT);
+        if (newPhase != state.getValue(PHASE)) {
+            worldIn.setBlock(pos, state.setValue(PHASE, newPhase), Constants.BlockFlags.DEFAULT);
         }
     }
     
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-        worldIn.setBlockState(pos, updateDistance(state, worldIn, pos), Constants.BlockFlags.DEFAULT);
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
+        worldIn.setBlock(pos, updateDistance(state, worldIn, pos), Constants.BlockFlags.DEFAULT);
     }
     
     @Override
-    public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
         return 1;
     }
     
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         // Determine if the blockstate needs to be updated with a new distance
         int i = getDistance(facingState) + 1;
-        if (i != 1 || stateIn.get(DISTANCE) != i) {
-            worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, 1);
+        if (i != 1 || stateIn.getValue(DISTANCE) != i) {
+            worldIn.getBlockTicks().scheduleTick(currentPos, this, 1);
         }
 
         // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes
         TimePhase newPhase = this.getCurrentPhase(worldIn);
-        if (newPhase != stateIn.get(PHASE)) {
-            stateIn = stateIn.with(PHASE, newPhase);
+        if (newPhase != stateIn.getValue(PHASE)) {
+            stateIn = stateIn.setValue(PHASE, newPhase);
         }
         return stateIn;
     }
     
-    private static BlockState updateDistance(BlockState state, IWorld world, BlockPos pos) {
+    private static BlockState updateDistance(BlockState state, LevelAccessor world, BlockPos pos) {
         int dist = 7;
-        BlockPos.Mutable mbp = new BlockPos.Mutable();
+        BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
         for (Direction dir : Direction.values()) {
-            mbp.setPos(pos).move(dir);
+            mbp.set(pos).move(dir);
             dist = Math.min(dist, getDistance(world.getBlockState(mbp)) + 1);
             if (dist == 1) {
                 break;
             }
         }
-        return state.with(DISTANCE, Integer.valueOf(dist));
+        return state.setValue(DISTANCE, Integer.valueOf(dist));
     }
     
     private static int getDistance(BlockState neighbor) {
         if (BlockTags.LOGS.contains(neighbor.getBlock())) {
             return 0;
         } else if (neighbor.getBlock() instanceof AbstractPhasingLeavesBlock || neighbor.getBlock() instanceof LeavesBlock) {
-            return neighbor.get(DISTANCE);
+            return neighbor.getValue(DISTANCE);
         } else {
             return 7;
         }
@@ -135,12 +135,12 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
     
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (worldIn.isRainingAt(pos.up())) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+        if (worldIn.isRainingAt(pos.above())) {
             if (rand.nextInt(15) == 1) {
-                BlockPos blockpos = pos.down();
+                BlockPos blockpos = pos.below();
                 BlockState blockstate = worldIn.getBlockState(blockpos);
-                if (!blockstate.isSolid() || !blockstate.isSolidSide(worldIn, blockpos, Direction.UP)) {
+                if (!blockstate.canOcclude() || !blockstate.isFaceSturdy(worldIn, blockpos, Direction.UP)) {
                     double x = (double)pos.getX() + rand.nextDouble();
                     double y = (double)pos.getY() - 0.05D;
                     double z = (double)pos.getZ() + rand.nextDouble();
@@ -150,7 +150,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
         }
     }
 
-    protected static Boolean allowsSpawnOnLeaves(BlockState state, IBlockReader reader, BlockPos pos, EntityType<?> entity) {
+    protected static Boolean allowsSpawnOnLeaves(BlockState state, BlockGetter reader, BlockPos pos, EntityType<?> entity) {
        return entity == EntityType.OCELOT || entity == EntityType.PARROT;
     }
 }

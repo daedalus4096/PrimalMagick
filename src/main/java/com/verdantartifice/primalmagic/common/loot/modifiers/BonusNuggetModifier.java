@@ -5,14 +5,14 @@ import java.util.List;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -25,7 +25,7 @@ public class BonusNuggetModifier extends LootModifier {
     protected final float chance;
     protected final Item nugget;
     
-    public BonusNuggetModifier(ILootCondition[] conditions, float chance, Item nugget) {
+    public BonusNuggetModifier(LootItemCondition[] conditions, float chance, Item nugget) {
         super(conditions);
         this.chance = chance;
         this.nugget = nugget;
@@ -34,7 +34,7 @@ public class BonusNuggetModifier extends LootModifier {
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
         int count = 0;
-        int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.LUCKY_STRIKE.get(), context.get(LootParameters.TOOL));
+        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.LUCKY_STRIKE.get(), context.getParamOrNull(LootContextParams.TOOL));
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < this.chance) {
                 count++;
@@ -48,9 +48,9 @@ public class BonusNuggetModifier extends LootModifier {
 
     public static class Serializer extends GlobalLootModifierSerializer<BonusNuggetModifier> {
         @Override
-        public BonusNuggetModifier read(ResourceLocation location, JsonObject object, ILootCondition[] ailootcondition) {
+        public BonusNuggetModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
             float chance = object.getAsJsonPrimitive("chance").getAsFloat();
-            Item nugget = JSONUtils.getItem(object, "nugget");
+            Item nugget = GsonHelper.getAsItem(object, "nugget");
             return new BonusNuggetModifier(ailootcondition, chance, nugget);
         }
 

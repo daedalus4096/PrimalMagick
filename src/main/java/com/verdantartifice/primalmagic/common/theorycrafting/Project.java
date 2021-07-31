@@ -6,12 +6,12 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -23,7 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class Project implements INBTSerializable<CompoundNBT> {
+public class Project implements INBTSerializable<CompoundTag> {
     protected ResourceLocation templateKey;
     protected List<AbstractProjectMaterial> activeMaterials = new ArrayList<>();
     protected double baseSuccessChance;
@@ -41,8 +41,8 @@ public class Project implements INBTSerializable<CompoundNBT> {
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT retVal = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag retVal = new CompoundTag();
         retVal.putString("TemplateKey", this.templateKey.toString());
         retVal.putDouble("BaseSuccessChance", this.baseSuccessChance);
         retVal.putInt("RewardPoints", this.rewardPoints);
@@ -50,7 +50,7 @@ public class Project implements INBTSerializable<CompoundNBT> {
             retVal.putString("AidBlock", this.aidBlock.toString());
         }
         
-        ListNBT materialList = new ListNBT();
+        ListTag materialList = new ListTag();
         for (AbstractProjectMaterial material : this.activeMaterials) {
             materialList.add(material.serializeNBT());
         }
@@ -60,7 +60,7 @@ public class Project implements INBTSerializable<CompoundNBT> {
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         this.templateKey = new ResourceLocation(nbt.getString("TemplateKey"));
         this.baseSuccessChance = nbt.getDouble("BaseSuccessChance");
         this.rewardPoints = nbt.getInt("RewardPoints");
@@ -71,7 +71,7 @@ public class Project implements INBTSerializable<CompoundNBT> {
         }
         
         this.activeMaterials.clear();
-        ListNBT materialList = nbt.getList("Materials", Constants.NBT.TAG_COMPOUND);
+        ListTag materialList = nbt.getList("Materials", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < materialList.size(); index++) {
             AbstractProjectMaterial material = ProjectFactory.getMaterialFromNBT(materialList.getCompound(index));
             if (material != null) {
@@ -113,10 +113,10 @@ public class Project implements INBTSerializable<CompoundNBT> {
                 chance += per;
             }
         }
-        return MathHelper.clamp(chance, 0.0D, 1.0D);
+        return Mth.clamp(chance, 0.0D, 1.0D);
     }
     
-    public boolean isSatisfied(PlayerEntity player) {
+    public boolean isSatisfied(Player player) {
         // Determine satisfaction from selected materials
         for (AbstractProjectMaterial material : this.getMaterials()) {
             if (material.isSelected() && !material.isSatisfied(player)) {
@@ -126,7 +126,7 @@ public class Project implements INBTSerializable<CompoundNBT> {
         return true;
     }
     
-    public boolean consumeSelectedMaterials(PlayerEntity player) {
+    public boolean consumeSelectedMaterials(Player player) {
         for (AbstractProjectMaterial material : this.getMaterials()) {
             if (material.isSelected()) {
                 if (!material.consume(player)) {

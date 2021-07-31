@@ -8,11 +8,11 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -23,7 +23,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface ISpellVehicle extends INBTSerializable<CompoundNBT> {
+public interface ISpellVehicle extends INBTSerializable<CompoundTag> {
     /**
      * Execute this spell vehicle to determine the target of the spell, then execute the spell package's
      * payload if one is found.
@@ -33,7 +33,7 @@ public interface ISpellVehicle extends INBTSerializable<CompoundNBT> {
      * @param caster the entity that originally casted the spell
      * @param spellSource the wand or scroll that originally contained the spell
      */
-    public void execute(@Nonnull SpellPackage spell, @Nonnull World world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource);
+    public void execute(@Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource);
 
     /**
      * Determine whether this vehicle has an effect that should be executed.  Should be true for all but
@@ -49,7 +49,7 @@ public interface ISpellVehicle extends INBTSerializable<CompoundNBT> {
      * @return the spell vehicle type name
      */
     @Nonnull
-    public ITextComponent getTypeName();
+    public Component getTypeName();
     
     /**
      * Get a display text component containing the human-friendly text to be used to identify the
@@ -58,7 +58,7 @@ public interface ISpellVehicle extends INBTSerializable<CompoundNBT> {
      * @return the spell vehicle's default name
      */
     @Nonnull
-    public ITextComponent getDefaultNamePiece();
+    public Component getDefaultNamePiece();
     
     /**
      * Get the additive modifier to be applied to the spell vehicle's package's base cost.

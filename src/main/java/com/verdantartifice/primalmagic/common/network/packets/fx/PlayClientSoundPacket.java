@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -33,15 +33,15 @@ public class PlayClientSoundPacket implements IMessageToClient {
         this.pitch = pitch;
     }
     
-    public static void encode(PlayClientSoundPacket message, PacketBuffer buf) {
-        buf.writeString(message.eventLoc);
+    public static void encode(PlayClientSoundPacket message, FriendlyByteBuf buf) {
+        buf.writeUtf(message.eventLoc);
         buf.writeFloat(message.volume);
         buf.writeFloat(message.pitch);
     }
     
-    public static PlayClientSoundPacket decode(PacketBuffer buf) {
+    public static PlayClientSoundPacket decode(FriendlyByteBuf buf) {
         PlayClientSoundPacket message = new PlayClientSoundPacket();
-        message.eventLoc = buf.readString();
+        message.eventLoc = buf.readUtf();
         message.volume = buf.readFloat();
         message.pitch = buf.readFloat();
         return message;
@@ -52,7 +52,7 @@ public class PlayClientSoundPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
         	Minecraft mc = Minecraft.getInstance();
             ctx.get().enqueueWork(() -> {
-                ResourceLocation eventLoc = ResourceLocation.tryCreate(message.eventLoc);
+                ResourceLocation eventLoc = ResourceLocation.tryParse(message.eventLoc);
                 if (eventLoc != null && ForgeRegistries.SOUND_EVENTS.containsKey(eventLoc)) {
                     mc.player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(eventLoc), message.volume, message.pitch);
                 }

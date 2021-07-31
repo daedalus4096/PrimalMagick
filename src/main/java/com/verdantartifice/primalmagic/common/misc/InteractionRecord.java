@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagic.common.misc;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
 
 /**
  * Data structure recording player interactions with blocks, per PlayerInteractEvent events.
@@ -11,23 +11,23 @@ import net.minecraft.util.math.BlockPos;
  * @author Daedalus4096
  */
 public class InteractionRecord {
-    protected final PlayerEntity player;
-    protected final Hand hand;
+    protected final Player player;
+    protected final InteractionHand hand;
     protected final BlockPos pos;
     protected final Direction face;
     
-    public InteractionRecord(PlayerEntity player, Hand hand, BlockPos pos, Direction face) {
+    public InteractionRecord(Player player, InteractionHand hand, BlockPos pos, Direction face) {
         this.player = player;
         this.hand = hand;
         this.pos = pos;
         this.face = face;
     }
     
-    public PlayerEntity getPlayer() {
+    public Player getPlayer() {
         return this.player;
     }
     
-    public Hand getHand() {
+    public InteractionHand getHand() {
         return this.hand;
     }
     

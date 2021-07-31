@@ -3,16 +3,16 @@ package com.verdantartifice.primalmagic.common.containers;
 import com.verdantartifice.primalmagic.common.containers.slots.GenericResultSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -21,23 +21,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-public class ConcocterContainer extends Container {
-    protected final IInventory concocterInv;
-    protected final IIntArray concocterData;
-    protected final World world;
+public class ConcocterContainer extends AbstractContainerMenu {
+    protected final Container concocterInv;
+    protected final ContainerData concocterData;
+    protected final Level world;
     protected final Slot wandSlot;
     
-    public ConcocterContainer(int id, PlayerInventory playerInv) {
-        this(id, playerInv, new Inventory(11), new IntArray(4));
+    public ConcocterContainer(int id, Inventory playerInv) {
+        this(id, playerInv, new SimpleContainer(11), new SimpleContainerData(4));
     }
     
-    public ConcocterContainer(int id, PlayerInventory playerInv, IInventory concocterInv, IIntArray concocterData) {
+    public ConcocterContainer(int id, Inventory playerInv, Container concocterInv, ContainerData concocterData) {
         super(ContainersPM.CONCOCTER.get(), id);
-        assertInventorySize(concocterInv, 11);
-        assertIntArraySize(concocterData, 4);
+        checkContainerSize(concocterInv, 11);
+        checkContainerDataCount(concocterData, 4);
         this.concocterInv = concocterInv;
         this.concocterData = concocterData;
-        this.world = playerInv.player.world;
+        this.world = playerInv.player.level;
         
         // Slots 0-8: Input slots
         int i, j;
@@ -65,68 +65,65 @@ public class ConcocterContainer extends Container {
             this.addSlot(new Slot(playerInv, i, 8 + i * 18, 142));
         }
         
-        this.trackIntArray(this.concocterData);
+        this.addDataSlots(this.concocterData);
     }
     
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.concocterInv.isUsableByPlayer(playerIn);
+    public boolean stillValid(Player playerIn) {
+        return this.concocterInv.stillValid(playerIn);
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 10) {
                 // If transferring the output item, move it into the player's backpack or hotbar
-                if (!this.mergeItemStack(slotStack, 11, 47, true)) {
+                if (!this.moveItemStackTo(slotStack, 11, 47, true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onSlotChange(slotStack, stack);
+                slot.onQuickCraft(slotStack, stack);
             } else if (index >= 11 && index < 38) {
                 // If transferring from the player's backpack, put wands in the wand slot and everything else into the input slots
-                if (this.wandSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 9, 10, false)) {
+                if (this.wandSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 9, 10, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 0, 9, false)) {
+                    if (!this.moveItemStackTo(slotStack, 0, 9, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
             } else if (index >= 38 && index < 47) {
                 // If transferring from the player's hotbar, put wands in the wand slot and everything else into the input slots
-                if (this.wandSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 9, 10, false)) {
+                if (this.wandSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 9, 10, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 0, 9, false)) {
+                    if (!this.moveItemStackTo(slotStack, 0, 9, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.mergeItemStack(slotStack, 11, 47, false)) {
+            } else if (!this.moveItemStackTo(slotStack, 11, 47, false)) {
                 // Move all other transfers into the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
             
             if (slotStack.getCount() == stack.getCount()) {
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 10) {
-                playerIn.dropItem(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }

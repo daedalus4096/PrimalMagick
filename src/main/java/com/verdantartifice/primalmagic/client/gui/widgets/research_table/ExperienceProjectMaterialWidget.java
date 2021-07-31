@@ -4,15 +4,15 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.common.theorycrafting.ExperienceProjectMaterial;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -33,7 +33,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
     }
     
     @Override
-    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw experience orb
@@ -45,28 +45,28 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         float g = 1.0F;
         float b = (float)(Math.sin(approxTicks + 4.1887903F) + 1.0F) * 0.1F;
         float a = 0.5F;
-        Minecraft.getInstance().getTextureManager().bindTexture(EXPERIENCE_ORB_TEXTURES);
-        matrixStack.push();
+        Minecraft.getInstance().getTextureManager().bindForSetup(EXPERIENCE_ORB_TEXTURES);
+        matrixStack.pushPose();
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.25F, 0.25F, 0.25F);
-        RenderSystem.color4f(r, g, b, a);
+        RenderSystem.setShaderColor(r, g, b, a);
         this.blit(matrixStack, 0, 0, uMin, vMin, 63, 63);
-        matrixStack.pop();
+        matrixStack.popPose();
 
         // If applicable, draw level count string
         if (this.material.getLevels() > 1) {
-            ITextComponent amountText = new StringTextComponent(Integer.toString(this.material.getLevels()));
-            int width = mc.fontRenderer.getStringPropertyWidth(amountText);
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            matrixStack.push();
+            Component amountText = new TextComponent(Integer.toString(this.material.getLevels()));
+            int width = mc.font.width(amountText);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            matrixStack.pushPose();
             matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
             matrixStack.scale(0.5F, 0.5F, 0.5F);
-            mc.fontRenderer.drawTextWithShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-            matrixStack.pop();
+            mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
+            matrixStack.popPose();
         }
 
         // Draw base class stuff
-        super.renderWidget(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     protected int getTextureIndexByXP(int xpValue) {
@@ -94,7 +94,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
     }
     
     @Override
-    protected List<ITextComponent> getHoverText() {
-        return Collections.singletonList(new TranslationTextComponent("argument.entity.options.level.description"));
+    protected List<Component> getHoverText() {
+        return Collections.singletonList(new TranslatableComponent("argument.entity.options.level.description"));
     }
 }

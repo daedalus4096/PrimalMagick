@@ -9,11 +9,11 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 
 /**
  * Base interface for a wand.  Wands store mana for use in crafting and, optionally, casting spells.
@@ -70,7 +70,7 @@ public interface IWand {
      * @param amount the amount of centimana to be consumed
      * @return true if sufficient centimana was present in the wand and successfully removed, false otherwise
      */
-    public boolean consumeMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
+    public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount);
     
     /**
      * Consume the given amounts of centimana from the given wand stack for the given player.  Takes into account any
@@ -81,7 +81,7 @@ public interface IWand {
      * @param sources the amount of each type of centimana to be consumed
      * @return true if sufficient centimana was present in the wand and successfully removed, false otherwise
      */
-    public boolean consumeMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
+    public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources);
     
     /**
      * Consume the given amount of the given type of mana from the given wand stack for the given player.  Takes
@@ -93,7 +93,7 @@ public interface IWand {
      * @param amount the amount of mana to be consumed
      * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
      */
-    public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
+    public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount);
     
     /**
      * Consume the given amounts of mana from the given wand stack for the given player.  Takes into account any
@@ -104,7 +104,7 @@ public interface IWand {
      * @param sources the amount of each type of mana to be consumed
      * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
      */
-    public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
+    public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources);
     
     /**
      * Determine if the given wand stack contains the given amount of the given type of centimana for the given player.  Takes
@@ -116,7 +116,7 @@ public interface IWand {
      * @param amount the amount of centimana required
      * @return true if sufficient centimana is present, false otherwise
      */
-    public boolean containsMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
+    public boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount);
     
     /**
      * Determine if the given wand stack contains the given amounts of centimana for the given player.  Takes into account
@@ -127,7 +127,7 @@ public interface IWand {
      * @param sources the amount of each type of centimana required
      * @return true if sufficient centimana is present, false otherwise
      */
-    public boolean containsMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
+    public boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources);
     
     /**
      * Determine if the given wand stack contains the given amount of the given type of mana for the given player.  Takes
@@ -139,7 +139,7 @@ public interface IWand {
      * @param amount the amount of mana required
      * @return true if sufficient mana is present, false otherwise
      */
-    public boolean containsRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source, int amount);
+    public boolean containsRealMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount);
     
     /**
      * Determine if the given wand stack contains the given amounts of mana for the given player.  Takes into account
@@ -150,7 +150,7 @@ public interface IWand {
      * @param sources the amount of each type of mana required
      * @return true if sufficient mana is present, false otherwise
      */
-    public boolean containsRealMana(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable SourceList sources);
+    public boolean containsRealMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources);
     
     /**
      * Get the base mana cost modifier to be applied to mana consumption, as determined by the cap of the wand, if any.
@@ -168,7 +168,7 @@ public interface IWand {
      * @param source the type of mana being consumed
      * @return the total mana cost modifier to be applied to mana consumption
      */
-    public double getTotalCostModifier(@Nullable ItemStack stack, @Nullable PlayerEntity player, @Nullable Source source);
+    public double getTotalCostModifier(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source);
 
     /**
      * Clear any stored position data for the last interacted-with tile.
@@ -183,7 +183,7 @@ public interface IWand {
      * @param wandStack the wand stack to be modified
      * @param tile the tile whose position data is to be stored
      */
-    public <T extends TileEntity & IInteractWithWand> void setTileInUse(@Nonnull ItemStack wandStack, @Nonnull T tile);
+    public <T extends BlockEntity & IInteractWithWand> void setTileInUse(@Nonnull ItemStack wandStack, @Nonnull T tile);
 
     /**
      * Get the tile currently being interacted with by the given wand stack.
@@ -193,7 +193,7 @@ public interface IWand {
      * @return the tile currently being interacted with, or null if none was found
      */
     @Nullable
-    public IInteractWithWand getTileInUse(@Nonnull ItemStack wandStack, @Nonnull World world);
+    public IInteractWithWand getTileInUse(@Nonnull ItemStack wandStack, @Nonnull Level world);
     
     /**
      * Get the list of spell packages currently inscribed on the given wand stack.
@@ -218,7 +218,7 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the text for the spell capacity
      */
-    public ITextComponent getSpellCapacityText(@Nullable ItemStack stack);
+    public Component getSpellCapacityText(@Nullable ItemStack stack);
     
     /**
      * Get the index of the currently selected inscribed spell package on the given wand stack.

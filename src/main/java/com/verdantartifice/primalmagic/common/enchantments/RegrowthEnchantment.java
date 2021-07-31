@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
 
 /**
  * Definition of an enchantment that slowly mends equipment over time.
@@ -10,18 +10,18 @@ import net.minecraft.inventory.EquipmentSlotType;
  * @author Daedalus4096
  */
 public class RegrowthEnchantment extends AbstractRuneEnchantment {
-    public RegrowthEnchantment(Enchantment.Rarity rarityIn, EquipmentSlotType... slots) {
-        super(rarityIn, EnchantmentType.BREAKABLE, slots);
+    public RegrowthEnchantment(Enchantment.Rarity rarityIn, EquipmentSlot... slots) {
+        super(rarityIn, EnchantmentCategory.BREAKABLE, slots);
     }
     
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return enchantmentLevel * 30;
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 60;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 60;
     }
     
     @Override

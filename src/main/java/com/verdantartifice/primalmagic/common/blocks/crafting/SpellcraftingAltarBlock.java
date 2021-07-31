@@ -2,25 +2,25 @@ package com.verdantartifice.primalmagic.common.blocks.crafting;
 
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Block definition for the spellcrafting altar.  A spellcrafting altar allows a player to define a spell
@@ -31,25 +31,25 @@ import net.minecraftforge.fml.network.NetworkHooks;
  */
 public class SpellcraftingAltarBlock extends Block {
     public SpellcraftingAltarBlock() {
-        super(Block.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE));
+        super(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(1.5F, 6.0F).sound(SoundType.STONE));
     }
     
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the spellcrafting altar
-            NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
+            NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
                 @Override
-                public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-                    return new SpellcraftingAltarContainer(windowId, inv, IWorldPosCallable.of(worldIn, pos));
+                public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
+                    return new SpellcraftingAltarContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
                 }
 
                 @Override
-                public ITextComponent getDisplayName() {
-                    return new TranslationTextComponent(SpellcraftingAltarBlock.this.getTranslationKey());
+                public Component getDisplayName() {
+                    return new TranslatableComponent(SpellcraftingAltarBlock.this.getDescriptionId());
                 }
             });
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 }

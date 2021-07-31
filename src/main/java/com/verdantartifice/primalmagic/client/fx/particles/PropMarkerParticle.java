@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,46 +16,46 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class PropMarkerParticle extends SpriteTexturedParticle {
-    protected final IAnimatedSprite spriteSet;
+public class PropMarkerParticle extends TextureSheetParticle {
+    protected final SpriteSet spriteSet;
     protected final double initY;
     
-    public PropMarkerParticle(ClientWorld world, double x, double y, double z, IAnimatedSprite spriteSet) {
+    public PropMarkerParticle(ClientLevel world, double x, double y, double z, SpriteSet spriteSet) {
         super(world, x, y, z);
         this.initY = y;
-        this.particleScale = 0.33F;
-        this.maxAge = 6000;
+        this.quadSize = 0.33F;
+        this.lifetime = 6000;
         this.spriteSet = spriteSet;
-        this.selectSpriteWithAge(this.spriteSet);
+        this.setSpriteFromAge(this.spriteSet);
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     @Override
     public void tick() {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        if (this.age++ >= this.maxAge) {
-            this.setExpired();
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         } else {
-            this.posY = this.initY + Math.abs(Math.cos(this.age * (Math.PI / 20.0D)));
+            this.y = this.initY + Math.abs(Math.cos(this.age * (Math.PI / 20.0D)));
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        protected final IAnimatedSprite spriteSet;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        protected final SpriteSet spriteSet;
         
-        public Factory(IAnimatedSprite spriteSet) {
+        public Factory(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             PropMarkerParticle particle = new PropMarkerParticle(worldIn, x, y, z, this.spriteSet);
             return particle;
         }

@@ -6,12 +6,12 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition of a holy damage spell.  Deals standard damage to the target, or double standard damage
@@ -41,14 +41,14 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    public void playSounds(World world, BlockPos origin) {
-        world.playSound(null, origin, SoundsPM.ANGELS.get(), SoundCategory.PLAYERS, 1.0F, 1.0F + (float)(world.rand.nextGaussian() * 0.05D));
+    public void playSounds(Level world, BlockPos origin) {
+        world.playSound(null, origin, SoundsPM.ANGELS.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
     @Override
     protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
         int damage = 3 + this.getModdedPropertyValue("power", spell, spellSource);
-        if (target instanceof LivingEntity && ((LivingEntity)target).isEntityUndead()) {
+        if (target instanceof LivingEntity && ((LivingEntity)target).isInvertedHealAndHarm()) {
             // Deal double damage to undead entities
             damage *= 2;
         }

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.datagen.research;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public interface IFinishedResearchEntry {
     ResourceLocation getId();

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
@@ -10,8 +10,8 @@ import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWid
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.crafting.IShapedRecipe;
@@ -49,12 +49,12 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         }
         
         // Render output stack
-        ItemStack output = this.recipe.getRecipeOutput();
+        ItemStack output = this.recipe.getResultItem();
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
     }
     
     @Override
-    public void render(MatrixStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         super.render(matrixStack, side, x, y, mouseX, mouseY);
         y += 53;
         
@@ -64,15 +64,15 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        Minecraft.getInstance().getTextureManager().bindTexture(OVERLAY);
+        Minecraft.getInstance().getTextureManager().bindForSetup(OVERLAY);
         
         // Render overlay background
-        matrixStack.push();
+        matrixStack.pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.translate(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);
         matrixStack.scale(2.0F, 2.0F, 1.0F);
         this.blit(matrixStack, -(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight);
-        matrixStack.pop();
+        matrixStack.popPose();
     }
 }

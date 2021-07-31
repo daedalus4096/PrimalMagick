@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.capabilities;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
@@ -11,13 +10,12 @@ import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.Constants;
@@ -33,16 +31,16 @@ public class PlayerAttunements implements IPlayerAttunements {
     private final Map<Source, Map<AttunementType, Integer>> attunements = new ConcurrentHashMap<>();
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT rootTag = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag rootTag = new CompoundTag();
         
         // Serialize recorded attunement values
-        ListNBT attunementList = new ListNBT();
+        ListTag attunementList = new ListTag();
         for (Map.Entry<Source, Map<AttunementType, Integer>> sourceEntry : this.attunements.entrySet()) {
             if (sourceEntry != null) {
                 for (Map.Entry<AttunementType, Integer> typeEntry : sourceEntry.getValue().entrySet()) {
                     if (typeEntry != null && sourceEntry.getKey() != null && typeEntry.getKey() != null && typeEntry.getValue() != null) {
-                        CompoundNBT tag = new CompoundNBT();
+                        CompoundTag tag = new CompoundTag();
                         tag.putString("Source", sourceEntry.getKey().getTag());
                         tag.putString("Type", typeEntry.getKey().name());
                         tag.putInt("Value", typeEntry.getValue().intValue());
@@ -57,7 +55,7 @@ public class PlayerAttunements implements IPlayerAttunements {
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         if (nbt == null) {
             return;
         }
@@ -65,9 +63,9 @@ public class PlayerAttunements implements IPlayerAttunements {
         this.clear();
         
         // Deserialize attunement values
-        ListNBT attunementList = nbt.getList("Attunements", Constants.NBT.TAG_COMPOUND);
+        ListTag attunementList = nbt.getList("Attunements", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < attunementList.size(); index++) {
-            CompoundNBT tag = attunementList.getCompound(index);
+            CompoundTag tag = attunementList.getCompound(index);
             Source source = Source.getSource(tag.getString("Source"));
             AttunementType type = null;
             try {
@@ -96,7 +94,7 @@ public class PlayerAttunements implements IPlayerAttunements {
             Map<AttunementType, Integer> typeMap = this.attunements.computeIfAbsent(source, k -> new ConcurrentHashMap<>());
             
             // Determine if the value to be set must be capped
-            int toSet = type.isCapped() ? MathHelper.clamp(value, 0, type.getMaximum()) : Math.max(0, value);
+            int toSet = type.isCapped() ? Mth.clamp(value, 0, type.getMaximum()) : Math.max(0, value);
             
             // Add the given value to the type map
             typeMap.put(type, Integer.valueOf(toSet));
@@ -104,7 +102,7 @@ public class PlayerAttunements implements IPlayerAttunements {
     }
 
     @Override
-    public void sync(ServerPlayerEntity player) {
+    public void sync(ServerPlayer player) {
         if (player != null) {
             PacketHandler.sendToPlayer(new SyncAttunementsPacket(player), player);
         }
@@ -116,10 +114,10 @@ public class PlayerAttunements implements IPlayerAttunements {
      * @author Daedalus4096
      * @see {@link com.verdantartifice.primalmagic.common.events.CapabilityEvents}
      */
-    public static class Provider implements ICapabilitySerializable<CompoundNBT> {
+    public static class Provider implements ICapabilitySerializable<CompoundTag> {
         public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_attunements");
         
-        private final IPlayerAttunements instance = PrimalMagicCapabilities.ATTUNEMENTS.getDefaultInstance();
+        private final IPlayerAttunements instance = new PlayerAttunements();
         private final LazyOptional<IPlayerAttunements> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
         
         @Override
@@ -132,46 +130,13 @@ public class PlayerAttunements implements IPlayerAttunements {
         }
 
         @Override
-        public CompoundNBT serializeNBT() {
+        public CompoundTag serializeNBT() {
             return instance.serializeNBT();
         }
 
         @Override
-        public void deserializeNBT(CompoundNBT nbt) {
+        public void deserializeNBT(CompoundTag nbt) {
             instance.deserializeNBT(nbt);
-        }
-    }
-    
-    /**
-     * Storage manager for the player attunements capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Storage implements Capability.IStorage<IPlayerAttunements> {
-        @Override
-        public INBT writeNBT(Capability<IPlayerAttunements> capability, IPlayerAttunements instance, Direction side) {
-            // Use the instance's pre-defined serialization
-            return instance.serializeNBT();
-        }
-
-        @Override
-        public void readNBT(Capability<IPlayerAttunements> capability, IPlayerAttunements instance, Direction side, INBT nbt) {
-            // Use the instance's pre-defined deserialization
-            instance.deserializeNBT((CompoundNBT)nbt);
-        }
-    }
-    
-    /**
-     * Factory for the player attunements capability.  Used to register the capability.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagic.common.init.InitCapabilities}
-     */
-    public static class Factory implements Callable<IPlayerAttunements> {
-        @Override
-        public IPlayerAttunements call() throws Exception {
-            return new PlayerAttunements();
         }
     }
 }

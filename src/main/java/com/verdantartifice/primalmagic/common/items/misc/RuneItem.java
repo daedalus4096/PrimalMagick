@@ -10,13 +10,13 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.runes.Rune;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,7 +31,7 @@ public class RuneItem extends Item {
     protected final Rune rune;
     
     public RuneItem(@Nonnull Rune rune) {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).rarity(rune.getRarity()));
+        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(rune.getRarity()));
         this.rune = rune;
         register(rune, this);
     }
@@ -41,20 +41,20 @@ public class RuneItem extends Item {
     }
     
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         if (stack != null && stack.getItem() instanceof RuneItem) {
             return ((RuneItem)stack.getItem()).rune.hasGlint();
         } else {
-            return super.hasEffect(stack);
+            return super.isFoil(stack);
         }
     }
     
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack != null && stack.getItem() instanceof RuneItem) {
             String key = ((RuneItem)stack.getItem()).rune.getTooltipTranslationKey();
-            tooltip.add(new TranslationTextComponent(key).mergeStyle(TextFormatting.ITALIC, TextFormatting.GRAY));
+            tooltip.add(new TranslatableComponent(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         }
     }
     

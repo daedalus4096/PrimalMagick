@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RuneEnchantmentIndexPage;
 
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,23 +15,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 @OnlyIn(Dist.CLIENT)
 public class RuneEnchantmentIndexButton extends AbstractTopicButton {
-    public RuneEnchantmentIndexButton(int widthIn, int heightIn, ITextComponent text, GrimoireScreen screen) {
+    public RuneEnchantmentIndexButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());
     }
     
-    private static class Handler implements IPressable {
+    private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
             if (button instanceof RuneEnchantmentIndexButton) {
                 RuneEnchantmentIndexButton greb = (RuneEnchantmentIndexButton)button;
                 
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(greb.getScreen().getContainer().getTopic());
+                GrimoireScreen.HISTORY.add(greb.getScreen().getMenu().getTopic());
                 
                 // Set the new grimoire topic and open a new screen for it
-                greb.getScreen().getContainer().setTopic(RuneEnchantmentIndexPage.TOPIC);
-                greb.getScreen().getMinecraft().displayGuiScreen(new GrimoireScreen(
-                    greb.getScreen().getContainer(),
+                greb.getScreen().getMenu().setTopic(RuneEnchantmentIndexPage.TOPIC);
+                greb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
+                    greb.getScreen().getMenu(),
                     greb.getScreen().getPlayerInventory(),
                     greb.getScreen().getTitle()
                 ));

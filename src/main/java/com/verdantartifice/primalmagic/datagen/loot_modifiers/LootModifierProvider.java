@@ -12,19 +12,19 @@ import com.verdantartifice.primalmagic.common.loot.modifiers.LootModifierSeriali
 import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
 
-import net.minecraft.advancements.criterion.EnchantmentPredicate;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.critereon.EnchantmentPredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Items;
-import net.minecraft.loot.FishingPredicate;
-import net.minecraft.loot.LootContext.EntityTarget;
-import net.minecraft.loot.conditions.EntityHasProperty;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.conditions.KilledByPlayer;
-import net.minecraft.loot.conditions.MatchTool;
-import net.minecraft.loot.conditions.RandomChanceWithLooting;
+import net.minecraft.world.item.Items;
+import net.minecraft.advancements.critereon.FishingHookPredicate;
+import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
@@ -41,35 +41,35 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         this.add("bloody_flesh", LootModifierSerializersPM.BLOODY_FLESH.get(), new BloodyFleshModifier(
-                new ILootCondition[] {
-                        EntityHasProperty.builder(EntityTarget.THIS, EntityPredicate.Builder.create().type(EntityTypeTagsPM.DROPS_BLOODY_FLESH)).build(),
-                        KilledByPlayer.builder().build(),
-                        RandomChanceWithLooting.builder(0.5F, 0.1F).build()
+                new LootItemCondition[] {
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOODY_FLESH)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.1F).build()
                 }));
         this.add("bounty_farming", LootModifierSerializersPM.BOUNTY_FARMING.get(), new BountyFarmingModifier(
-                new ILootCondition[] {
+                new LootItemCondition[] {
                         MatchBlockTag.builder(BlockTagsPM.BOUNTY_CROPS).build(),
-                        MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.IntBound.atLeast(1)))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.25F));
         this.add("bounty_fishing", LootModifierSerializersPM.BOUNTY_FISHING.get(), new BountyFishingModifier(
-                new ILootCondition[] {
-                        EntityHasProperty.builder(EntityTarget.THIS, EntityPredicate.Builder.create().fishing(FishingPredicate.func_234640_a_(false))).build(),
-                        MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.IntBound.atLeast(1)))).build()
+                new LootItemCondition[] {
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().fishingHook(FishingHookPredicate.inOpenWater(false))).build(),
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.25F));
         this.add("bonus_nugget_iron", LootModifierSerializersPM.BONUS_NUGGET.get(), new BonusNuggetModifier(
-                new ILootCondition[] {
+                new LootItemCondition[] {
                         MatchBlockTag.builder(Tags.Blocks.ORES_IRON).build(),
-                        MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.IntBound.atLeast(1)))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.5F, Items.IRON_NUGGET));
         this.add("bonus_nugget_gold", LootModifierSerializersPM.BONUS_NUGGET.get(), new BonusNuggetModifier(
-                new ILootCondition[] {
+                new LootItemCondition[] {
                         MatchBlockTag.builder(Tags.Blocks.ORES_GOLD).build(),
-                        MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.IntBound.atLeast(1)))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.5F, Items.GOLD_NUGGET));
         this.add("bonus_nugget_quartz", LootModifierSerializersPM.BONUS_NUGGET.get(), new BonusNuggetModifier(
-                new ILootCondition[] {
+                new LootItemCondition[] {
                         MatchBlockTag.builder(Tags.Blocks.ORES_QUARTZ).build(),
-                        MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.IntBound.atLeast(1)))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.5F, ItemsPM.QUARTZ_NUGGET.get()));
     }
 }

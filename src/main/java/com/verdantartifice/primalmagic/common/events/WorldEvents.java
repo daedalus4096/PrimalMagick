@@ -6,13 +6,13 @@ import java.util.Map;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
-import net.minecraft.world.World;
-import net.minecraft.world.gen.FlatChunkGenerator;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.settings.DimensionStructuresSettings;
-import net.minecraft.world.gen.settings.StructureSeparationSettings;
-import net.minecraft.world.server.ServerChunkProvider;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.FlatLevelSource;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
+import net.minecraft.server.level.ServerChunkCache;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,19 +26,19 @@ import net.minecraftforge.fml.common.Mod;
 public class WorldEvents {
 	@SubscribeEvent
 	public static void onWorldLoad(WorldEvent.Load event) {
-		if (event.getWorld() instanceof ServerWorld) {
-			ServerWorld serverWorld = (ServerWorld)event.getWorld();
-			ServerChunkProvider chunkProvider = serverWorld.getChunkProvider();
+		if (event.getWorld() instanceof ServerLevel) {
+			ServerLevel serverWorld = (ServerLevel)event.getWorld();
+			ServerChunkCache chunkProvider = serverWorld.getChunkSource();
 			
 			// Prevent spawning structures in vanilla superflat
-			if (chunkProvider.getChunkGenerator() instanceof FlatChunkGenerator && serverWorld.getDimensionKey().equals(World.OVERWORLD)) {
+			if (chunkProvider.getGenerator() instanceof FlatLevelSource && serverWorld.dimension().equals(Level.OVERWORLD)) {
 				return;
 			}
 			
 			// Add structure spacing to the world's chunk generator
-            Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(chunkProvider.generator.func_235957_b_().func_236195_a_());
-            tempMap.putIfAbsent(FeaturesPM.SHRINE.get(), DimensionStructuresSettings.field_236191_b_.get(FeaturesPM.SHRINE.get()));
-            chunkProvider.generator.func_235957_b_().field_236193_d_ = tempMap;
+            Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(chunkProvider.generator.getSettings().structureConfig());
+            tempMap.putIfAbsent(FeaturesPM.SHRINE.get(), StructureSettings.DEFAULTS.get(FeaturesPM.SHRINE.get()));
+            chunkProvider.generator.getSettings().structureConfig = tempMap;
 		}
 	}
 }

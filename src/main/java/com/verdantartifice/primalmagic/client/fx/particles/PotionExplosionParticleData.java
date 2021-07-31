@@ -7,9 +7,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class PotionExplosionParticleData implements IParticleData {
+public class PotionExplosionParticleData implements ParticleOptions {
     public static final Codec<PotionExplosionParticleData> CODEC = RecordCodecBuilder.create((instance) -> {
         return instance.group(Codec.BOOL.fieldOf("instant").forGetter((data) -> {
             return data.isInstant;
@@ -25,16 +25,16 @@ public class PotionExplosionParticleData implements IParticleData {
     });
     
     @SuppressWarnings("deprecation")
-    public static final IParticleData.IDeserializer<PotionExplosionParticleData> DESERIALIZER = new IParticleData.IDeserializer<PotionExplosionParticleData>() {
+    public static final ParticleOptions.Deserializer<PotionExplosionParticleData> DESERIALIZER = new ParticleOptions.Deserializer<PotionExplosionParticleData>() {
         @Override
-        public PotionExplosionParticleData deserialize(ParticleType<PotionExplosionParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
+        public PotionExplosionParticleData fromCommand(ParticleType<PotionExplosionParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
             reader.expect(' ');
             boolean instant = reader.readBoolean();
             return new PotionExplosionParticleData(instant);
         }
 
         @Override
-        public PotionExplosionParticleData read(ParticleType<PotionExplosionParticleData> particleTypeIn, PacketBuffer buffer) {
+        public PotionExplosionParticleData fromNetwork(ParticleType<PotionExplosionParticleData> particleTypeIn, FriendlyByteBuf buffer) {
             return new PotionExplosionParticleData(buffer.readBoolean());
         }
     };
@@ -51,12 +51,12 @@ public class PotionExplosionParticleData implements IParticleData {
     }
 
     @Override
-    public void write(PacketBuffer buffer) {
+    public void writeToNetwork(FriendlyByteBuf buffer) {
         buffer.writeBoolean(this.isInstant);
     }
 
     @Override
-    public String getParameters() {
+    public String writeToString() {
         return String.format(Locale.ROOT, "%s %b", ForgeRegistries.PARTICLE_TYPES.getKey(this.getType()), this.isInstant);
     }
 

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire;
 
-import net.minecraft.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

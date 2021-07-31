@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagic.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 /**
  * Collection of factory methods for creating spell component data structures.
@@ -24,7 +24,7 @@ public class SpellFactory {
     }
     
     @Nullable
-    public static ISpellVehicle getVehicleFromNBT(@Nullable CompoundNBT tag) {
+    public static ISpellVehicle getVehicleFromNBT(@Nullable CompoundTag tag) {
         // Deserialize a spell vehicle component from the given NBT data
         ISpellVehicle retVal = tag == null ? null : getVehicleFromType(tag.getString("VehicleType"));
         if (retVal != null) {
@@ -41,7 +41,7 @@ public class SpellFactory {
     }
     
     @Nullable
-    public static ISpellPayload getPayloadFromNBT(@Nullable CompoundNBT tag) {
+    public static ISpellPayload getPayloadFromNBT(@Nullable CompoundTag tag) {
         // Deserialize a spell payload component from the given NBT data
         ISpellPayload retVal = tag == null ? null : getPayloadFromType(tag.getString("PayloadType"));
         if (retVal != null) {
@@ -58,7 +58,7 @@ public class SpellFactory {
     }
     
     @Nullable
-    public static ISpellMod getModFromNBT(@Nullable CompoundNBT tag) {
+    public static ISpellMod getModFromNBT(@Nullable CompoundTag tag) {
         // Deserialize a spell mod component from the given NBT data
         ISpellMod retVal = tag == null ? null : getModFromType(tag.getString("ModType"));
         if (retVal != null) {

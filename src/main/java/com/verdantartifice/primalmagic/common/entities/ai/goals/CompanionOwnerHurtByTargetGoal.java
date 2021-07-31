@@ -4,11 +4,11 @@ import java.util.EnumSet;
 
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * AI goal for a companion to target any entities that attack their owner.
@@ -24,19 +24,19 @@ public class CompanionOwnerHurtByTargetGoal extends TargetGoal {
     public CompanionOwnerHurtByTargetGoal(AbstractCompanionEntity defendingCompanion) {
         super(defendingCompanion, false);
         this.entity = defendingCompanion;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
+        this.setFlags(EnumSet.of(Goal.Flag.TARGET));
     }
 
     @Override
-    public boolean shouldExecute() {
+    public boolean canUse() {
         if (this.entity.hasCompanionOwner() && !this.entity.isCompanionStaying()) {
-            PlayerEntity owner = this.entity.getCompanionOwner();
+            Player owner = this.entity.getCompanionOwner();
             if (owner == null) {
                 return false;
             } else {
-                this.attacker = owner.getRevengeTarget();
-                int time = owner.getRevengeTimer();
-                return time != this.timestamp && this.isSuitableTarget(this.attacker, EntityPredicate.DEFAULT) && this.entity.shouldAttackEntity(this.attacker, owner);
+                this.attacker = owner.getLastHurtByMob();
+                int time = owner.getLastHurtByMobTimestamp();
+                return time != this.timestamp && this.canAttack(this.attacker, TargetingConditions.DEFAULT) && this.entity.shouldAttackEntity(this.attacker, owner);
             }
         } else {
             return false;
@@ -44,12 +44,12 @@ public class CompanionOwnerHurtByTargetGoal extends TargetGoal {
     }
 
     @Override
-    public void startExecuting() {
-        this.goalOwner.setAttackTarget(this.attacker);
-        PlayerEntity owner = this.entity.getCompanionOwner();
+    public void start() {
+        this.mob.setTarget(this.attacker);
+        Player owner = this.entity.getCompanionOwner();
         if (owner != null) {
-            this.timestamp = owner.getRevengeTimer();
+            this.timestamp = owner.getLastHurtByMobTimestamp();
         }
-        super.startExecuting();
+        super.start();
     }
 }

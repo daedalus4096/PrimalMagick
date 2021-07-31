@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -31,13 +31,13 @@ public class ScanEntityPacket implements IMessageToServer {
         this.type = type;
     }
     
-    public static void encode(ScanEntityPacket message, PacketBuffer buf) {
-        buf.writeString(message.type.getRegistryName().toString());
+    public static void encode(ScanEntityPacket message, FriendlyByteBuf buf) {
+        buf.writeUtf(message.type.getRegistryName().toString());
     }
     
-    public static ScanEntityPacket decode(PacketBuffer buf) {
+    public static ScanEntityPacket decode(FriendlyByteBuf buf) {
         ScanEntityPacket message = new ScanEntityPacket();
-        message.type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(buf.readString()));
+        message.type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(buf.readUtf()));
         return message;
     }
     
@@ -46,13 +46,13 @@ public class ScanEntityPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (message.type != null) {
-                    ServerPlayerEntity player = ctx.get().getSender();
+                    ServerPlayer player = ctx.get().getSender();
                     if (ResearchManager.isScanned(message.type, player)) {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").mergeStyle(TextFormatting.RED), true);
+                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.repeat").withStyle(ChatFormatting.RED), true);
                     } else if (ResearchManager.setScanned(message.type, player)) {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").mergeStyle(TextFormatting.GREEN), true);
+                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.success").withStyle(ChatFormatting.GREEN), true);
                     } else {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.fail").mergeStyle(TextFormatting.RED), true);
+                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.fail").withStyle(ChatFormatting.RED), true);
                     }
                 }
             });

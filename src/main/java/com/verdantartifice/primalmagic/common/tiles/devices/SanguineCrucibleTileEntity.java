@@ -15,17 +15,17 @@ import com.verdantartifice.primalmagic.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -34,7 +34,7 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITickableTileEntity {
+public class SanguineCrucibleTileEntity extends TileInventoryPM {
     protected static final int FLUID_CAPACITY = 1000;
     protected static final int FLUID_DRAIN = 200;
     protected static final int CHARGE_MAX = 100;
@@ -45,8 +45,8 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
     protected int charge;
     protected int counter = 0;
     
-    public SanguineCrucibleTileEntity() {
-        super(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), 1);
+    public SanguineCrucibleTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), pos, state, 1);
     }
 
     @Override
@@ -56,81 +56,80 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
     }
     
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.souls = compound.getInt("Souls");
         this.fluidAmount = compound.getInt("FluidAmount");
         this.charge = compound.getInt("Charge");
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.putInt("Souls", this.souls);
         compound.putInt("FluidAmount", this.fluidAmount);
         compound.putInt("Charge", this.charge);
-        return super.write(compound);
+        return super.save(compound);
     }
 
-    @Override
-    public void tick() {
-        this.counter++;
-        if (this.fluidAmount < FLUID_CAPACITY) {
-            this.fluidAmount++;
+    public static void tick(Level level, BlockPos pos, BlockState state, SanguineCrucibleTileEntity entity) {
+        entity.counter++;
+        if (entity.fluidAmount < FLUID_CAPACITY) {
+            entity.fluidAmount++;
         }
-        if (this.hasCore() && this.fluidAmount >= FLUID_DRAIN) {
-            SanguineCoreItem core = this.getCoreItem();
-            if (core != null && this.souls >= core.getSoulsPerSpawn()) {
-                this.charge++;
-                if (this.charge >= CHARGE_MAX) {
-                    this.charge = 0;
-                    this.fluidAmount -= FLUID_DRAIN;
-                    this.souls -= core.getSoulsPerSpawn();
+        if (entity.hasCore() && entity.fluidAmount >= FLUID_DRAIN) {
+            SanguineCoreItem core = entity.getCoreItem();
+            if (core != null && entity.souls >= core.getSoulsPerSpawn()) {
+                entity.charge++;
+                if (entity.charge >= CHARGE_MAX) {
+                    entity.charge = 0;
+                    entity.fluidAmount -= FLUID_DRAIN;
+                    entity.souls -= core.getSoulsPerSpawn();
                     
-                    if (!this.world.isRemote) {
-                        if (!this.getStackInSlot(0).isDamageable() || this.getStackInSlot(0).attemptDamageItem(1, this.world.rand, null)) {
-                            this.getStackInSlot(0).shrink(1);
-                            this.world.setBlockState(this.pos, this.world.getBlockState(pos).with(SanguineCrucibleBlock.LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                    if (!level.isClientSide) {
+                        if (!entity.getItem(0).isDamageableItem() || entity.getItem(0).hurt(1, level.random, null)) {
+                            entity.getItem(0).shrink(1);
+                            level.setBlock(pos, state.setValue(SanguineCrucibleBlock.LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
                         }
                         
                         int attempts = 0;
                         boolean success = false;
                         while (attempts++ < 50 && !success) {
-                            success = this.attemptSpawn(core.getEntityType());
+                            success = entity.attemptSpawn(core.getEntityType());
                         }
                         
-                        PacketHandler.sendToAllAround(new WandPoofPacket(this.pos.up(), Color.WHITE.getRGB(), true, Direction.UP), this.world.getDimensionKey(), this.pos, 32.0D);
+                        PacketHandler.sendToAllAround(new WandPoofPacket(pos.above(), Color.WHITE.getRGB(), true, Direction.UP), level.dimension(), pos, 32.0D);
                     }
                     
-                    this.markDirty();
-                    this.syncTile(true);
+                    entity.setChanged();
+                    entity.syncTile(true);
                 }
             }
         }
     }
     
     protected boolean attemptSpawn(EntityType<?> entityType) {
-        if (this.world.isRemote) {
+        if (this.level.isClientSide) {
             return false;
         }
         
-        double x = (double)this.pos.getX() + (SPAWN_RANGE * (this.world.rand.nextDouble() - this.world.rand.nextDouble())) + 0.5D;
-        double y = (double)this.pos.getY() + this.world.rand.nextInt(3) - 1;
-        double z = (double)this.pos.getZ() + (SPAWN_RANGE * (this.world.rand.nextDouble() - this.world.rand.nextDouble())) + 0.5D;
+        double x = (double)this.worldPosition.getX() + (SPAWN_RANGE * (this.level.random.nextDouble() - this.level.random.nextDouble())) + 0.5D;
+        double y = (double)this.worldPosition.getY() + this.level.random.nextInt(3) - 1;
+        double z = (double)this.worldPosition.getZ() + (SPAWN_RANGE * (this.level.random.nextDouble() - this.level.random.nextDouble())) + 0.5D;
         BlockPos spawnPos = new BlockPos(x, y, z);
         
-        if (this.world.hasNoCollisions(entityType.getBoundingBoxWithSizeApplied(x, y, z))) {
-            ServerWorld serverWorld = (ServerWorld)this.world;
-            Entity entity = entityType.spawn(serverWorld, null, null, spawnPos, SpawnReason.SPAWNER, true, !Objects.equals(this.pos, spawnPos));
+        if (this.level.noCollision(entityType.getAABB(x, y, z))) {
+            ServerLevel serverWorld = (ServerLevel)this.level;
+            Entity entity = entityType.spawn(serverWorld, null, null, spawnPos, MobSpawnType.SPAWNER, true, !Objects.equals(this.worldPosition, spawnPos));
             if (entity == null) {
                 return false;
             }
-            entity.setLocationAndAngles(entity.getPosX(), entity.getPosY(), entity.getPosZ(), this.world.rand.nextFloat() * 360.0F, 0.0F);
+            entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), this.level.random.nextFloat() * 360.0F, 0.0F);
             
-            if (entity instanceof MobEntity) {
-                ((MobEntity)entity).onInitialSpawn(serverWorld, this.world.getDifficultyForLocation(entity.getPosition()), SpawnReason.SPAWNER, null, null);
+            if (entity instanceof Mob) {
+                ((Mob)entity).finalizeSpawn(serverWorld, this.level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null, null);
             }
             
-            PacketHandler.sendToAllAround(new WandPoofPacket(x, y, z, Color.WHITE.getRGB(), true, Direction.UP), this.world.getDimensionKey(), entity.getPosition(), 32.0D);
+            PacketHandler.sendToAllAround(new WandPoofPacket(x, y, z, Color.WHITE.getRGB(), true, Direction.UP), this.level.dimension(), entity.blockPosition(), 32.0D);
             return true;
         }
         
@@ -138,12 +137,12 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        super.setInventorySlotContents(index, stack);
-        if (index == 0 && (stack.isEmpty() || !stack.isItemEqual(slotStack) || !ItemStack.areItemStackTagsEqual(stack, slotStack))) {
+        super.setItem(index, stack);
+        if (index == 0 && (stack.isEmpty() || !stack.sameItem(slotStack) || !ItemStack.tagMatches(stack, slotStack))) {
             this.charge = 0;
-            this.markDirty();
+            this.setChanged();
             this.syncTile(false);
         }
     }
@@ -154,7 +153,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
     
     public void addSouls(int count) {
         this.souls += count;
-        this.markDirty();
+        this.setChanged();
         this.syncTile(false);
     }
     
@@ -184,7 +183,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM implements ITick
     
     @Nullable
     protected SanguineCoreItem getCoreItem() {
-        ItemStack stack = this.world.isRemote ? this.getSyncedStackInSlot(0) : this.getStackInSlot(0);
+        ItemStack stack = this.level.isClientSide ? this.getSyncedStackInSlot(0) : this.getItem(0);
         if (stack.getItem() instanceof SanguineCoreItem) {
             return ((SanguineCoreItem)stack.getItem());
         } else {

@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent to trigger a server-side scan of a given item stack.  Used by the arcanometer for
@@ -29,13 +29,13 @@ public class ScanItemPacket implements IMessageToServer {
         this.stack = stack;
     }
     
-    public static void encode(ScanItemPacket message, PacketBuffer buf) {
-        buf.writeItemStack(message.stack);
+    public static void encode(ScanItemPacket message, FriendlyByteBuf buf) {
+        buf.writeItem(message.stack);
     }
     
-    public static ScanItemPacket decode(PacketBuffer buf) {
+    public static ScanItemPacket decode(FriendlyByteBuf buf) {
         ScanItemPacket message = new ScanItemPacket();
-        message.stack = buf.readItemStack();
+        message.stack = buf.readItem();
         return message;
     }
 
@@ -44,13 +44,13 @@ public class ScanItemPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (message.stack != null && !message.stack.isEmpty()) {
-                    ServerPlayerEntity player = ctx.get().getSender();
+                    ServerPlayer player = ctx.get().getSender();
                     if (ResearchManager.isScanned(message.stack, player)) {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.repeat").mergeStyle(TextFormatting.RED), true);
+                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.repeat").withStyle(ChatFormatting.RED), true);
                     } else if (ResearchManager.setScanned(message.stack, player)) {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.success").mergeStyle(TextFormatting.GREEN), true);
+                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.success").withStyle(ChatFormatting.GREEN), true);
                     } else {
-                        player.sendStatusMessage(new TranslationTextComponent("event.primalmagic.scan.fail").mergeStyle(TextFormatting.RED), true);
+                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.fail").withStyle(ChatFormatting.RED), true);
                     }
                 }
             });

@@ -12,8 +12,8 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -23,7 +23,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public class SourceList implements INBTSerializable<CompoundNBT> {
+public class SourceList implements INBTSerializable<CompoundTag> {
     protected Map<Source, Integer> sources = new HashMap<>();
     
     public SourceList() {}
@@ -200,12 +200,12 @@ public class SourceList implements INBTSerializable<CompoundNBT> {
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = new CompoundNBT();
-        ListNBT tagList = new ListNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = new CompoundTag();
+        ListTag tagList = new ListTag();
         for (Source source : this.getSources()) {
             if (source != null) {
-                CompoundNBT singleTag = new CompoundNBT();
+                CompoundTag singleTag = new CompoundTag();
                 singleTag.putString("key", source.getTag());
                 singleTag.putInt("amount", this.getAmount(source));
                 tagList.add(singleTag);
@@ -216,11 +216,11 @@ public class SourceList implements INBTSerializable<CompoundNBT> {
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         this.sources.clear();
-        ListNBT tagList = nbt.getList("Sources", Constants.NBT.TAG_COMPOUND);
+        ListTag tagList = nbt.getList("Sources", Constants.NBT.TAG_COMPOUND);
         for (int index = 0; index < tagList.size(); index++) {
-            CompoundNBT singleTag = tagList.getCompound(index);
+            CompoundTag singleTag = tagList.getCompound(index);
             if (singleTag.contains("key")) {
                 this.add(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
             }

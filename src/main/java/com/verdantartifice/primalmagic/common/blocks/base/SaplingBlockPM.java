@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.blocks.base;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.trees.Tree;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 
 /**
  * Extension of the vanilla sapling with a public constructor.
@@ -10,7 +10,7 @@ import net.minecraft.block.trees.Tree;
  * @author Daedalus4096
  */
 public class SaplingBlockPM extends SaplingBlock {
-    public SaplingBlockPM(Tree tree, Block.Properties properties) {
+    public SaplingBlockPM(AbstractTreeGrower tree, Block.Properties properties) {
         // Super constructor is protected, so expose it
         super(tree, properties);
     }

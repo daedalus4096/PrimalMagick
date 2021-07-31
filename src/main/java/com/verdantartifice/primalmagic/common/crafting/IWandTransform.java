@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.crafting;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * Base interface for a wand transformation that turns one thing into another.
@@ -18,7 +18,7 @@ public interface IWandTransform {
      * @param pos the position of the thing to be transformed
      * @return true if the player may proceed with the transform, false otherwise
      */
-    public boolean isValid(World world, PlayerEntity player, BlockPos pos);
+    public boolean isValid(Level world, Player player, BlockPos pos);
     
     /**
      * Execute the defined transformation.
@@ -27,5 +27,5 @@ public interface IWandTransform {
      * @param player the player attempting to perform the transformation
      * @param pos the position of the thing to be transformed
      */
-    public void execute(World world, PlayerEntity player, BlockPos pos);
+    public void execute(Level world, Player player, BlockPos pos);
 }

@@ -9,16 +9,16 @@ import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.Container;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 
 /**
  * Server data container for the grimoire GUI.
  * 
  * @author Daedalus4096
  */
-public class GrimoireContainer extends Container {
+public class GrimoireContainer extends AbstractContainerMenu {
     protected Object topic;
     
     public GrimoireContainer(int windowId) {
@@ -27,7 +27,7 @@ public class GrimoireContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return true;
     }
     

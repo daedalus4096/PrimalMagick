@@ -2,16 +2,17 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -21,35 +22,35 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractProjectMaterialWidget extends Widget {
+public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/research_table_overlay.png");
 
     protected boolean complete;
     protected boolean consumed;
     
     public AbstractProjectMaterialWidget(AbstractProjectMaterial material, int x, int y) {
-        super(x, y, 16, 16, StringTextComponent.EMPTY);
+        super(x, y, 16, 16, TextComponent.EMPTY);
         Minecraft mc = Minecraft.getInstance();
         this.consumed = material.isConsumed();
         this.complete = material.isSatisfied(mc.player);
     }
     
     @Override
-    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
+    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        Minecraft.getInstance().getTextureManager().bindForSetup(TEXTURE);
         if (this.complete) {
             // Render completion checkmark if appropriate
-            matrixStack.push();
+            matrixStack.pushPose();
             matrixStack.translate(this.x + 8, this.y, 200.0F);
             this.blit(matrixStack, 0, 0, 162, 0, 10, 10);
-            matrixStack.pop();
+            matrixStack.popPose();
         }
         if (this.consumed) {
             // Render consumption exclamation point if appropriate
-            matrixStack.push();
+            matrixStack.pushPose();
             matrixStack.translate(this.x - 3, this.y, 200.0F);
             this.blit(matrixStack, 0, 0, 172, 0, 10, 10);
-            matrixStack.pop();
+            matrixStack.popPose();
         }
         if (this.isHovered()) {
             // Render tooltip
@@ -62,11 +63,15 @@ public abstract class AbstractProjectMaterialWidget extends Widget {
      * 
      * @return the text component to show in a tooltip
      */
-    protected abstract List<ITextComponent> getHoverText();
+    protected abstract List<Component> getHoverText();
     
     @Override
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
         // Disable click behavior
         return false;
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput output) {
     }
 }

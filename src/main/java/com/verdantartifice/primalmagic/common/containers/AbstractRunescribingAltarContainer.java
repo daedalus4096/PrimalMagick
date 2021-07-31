@@ -11,42 +11,42 @@ import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagic.common.runes.Rune;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.world.World;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.world.level.Level;
 
 /**
  * Base server data container for the runescribing altar GUIs.
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractRunescribingAltarContainer extends Container {
-    protected final CraftingInventory altarInv = new CraftingInventory(this, 4, 3) {
+public abstract class AbstractRunescribingAltarContainer extends AbstractContainerMenu {
+    protected final CraftingContainer altarInv = new CraftingContainer(this, 4, 3) {
         @Override
-        public int getInventoryStackLimit() {
+        public int getMaxStackSize() {
             return 1;
         }
     };
-    protected final IInventory resultInv = new Inventory(1);
-    protected final PlayerEntity player;
-    protected final World world;
+    protected final Container resultInv = new SimpleContainer(1);
+    protected final Player player;
+    protected final Level world;
     protected final Slot runeSlot;
 
-    public AbstractRunescribingAltarContainer(@Nonnull ContainerType<?> type, int id, @Nonnull PlayerInventory playerInv) {
+    public AbstractRunescribingAltarContainer(@Nonnull MenuType<?> type, int id, @Nonnull Inventory playerInv) {
         super(type, id);
         this.player = playerInv.player;
-        this.world = this.player.world;
+        this.world = this.player.level;
         
         // Slot 0: runescribing output
         this.addSlot(new RunescribingResultSlot(this.player, this.altarInv, this.resultInv, 0, 138, 35));
@@ -84,86 +84,83 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
     protected abstract Slot addRuneSlots();
     
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.altarInv.isUsableByPlayer(playerIn);
+    public boolean stillValid(Player playerIn) {
+        return this.altarInv.stillValid(playerIn);
     }
     
     @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
-        super.onContainerClosed(playerIn);
-        this.clearContainer(playerIn, this.world, this.altarInv);
+    public void removed(Player playerIn) {
+        super.removed(playerIn);
+        this.clearContainer(playerIn, this.altarInv);
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
                 // If transferring the output item, move it into the player's backpack or hotbar
-                if (!this.mergeItemStack(slotStack, this.getRuneCapacity() + 2, this.getRuneCapacity() + 38, true)) {
+                if (!this.moveItemStackTo(slotStack, this.getRuneCapacity() + 2, this.getRuneCapacity() + 38, true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onSlotChange(slotStack, stack);
+                slot.onQuickCraft(slotStack, stack);
             } else if (index >= (this.getRuneCapacity() + 2) && index < (this.getRuneCapacity() + 38)) {
                 // If transferring from the player's backpack or hotbar, put runes in the rune section and everything else into the input slot
-                if (this.runeSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 2, this.getRuneCapacity() + 2, false)) {
+                if (this.runeSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 2, this.getRuneCapacity() + 2, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.mergeItemStack(slotStack, this.getRuneCapacity() + 2, this.getRuneCapacity() + 38, false)) {
+            } else if (!this.moveItemStackTo(slotStack, this.getRuneCapacity() + 2, this.getRuneCapacity() + 38, false)) {
                 // Move all other transfers into the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
             
             if (slotStack.getCount() == stack.getCount()) {
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 0) {
-                playerIn.dropItem(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }
     
     @Override
-    public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-        return slotIn.inventory != this.resultInv && super.canMergeSlot(stack, slotIn);
+    public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+        return slotIn.container != this.resultInv && super.canTakeItemForPickAll(stack, slotIn);
     }
     
     @Override
-    public void onCraftMatrixChanged(IInventory inventoryIn) {
-        super.onCraftMatrixChanged(inventoryIn);
+    public void slotsChanged(Container inventoryIn) {
+        super.slotsChanged(inventoryIn);
         this.slotChangedCraftingGrid();
     }
     
     protected void slotChangedCraftingGrid() {
-        if (!this.world.isRemote && this.player instanceof ServerPlayerEntity) {
-            ServerPlayerEntity spe = (ServerPlayerEntity)this.player;
+        if (!this.world.isClientSide && this.player instanceof ServerPlayer) {
+            ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            ItemStack baseStack = this.altarInv.getStackInSlot(0);
+            ItemStack baseStack = this.altarInv.getItem(0);
             
             // Don't allow application to items that already have runes
             if (!RuneManager.hasRunes(baseStack)) {
                 // Get the list of runes in the input
                 List<Rune> runes = new ArrayList<>();
-                for (int index = 1; index < this.altarInv.getSizeInventory(); index++) {
-                    ItemStack inputStack = this.altarInv.getStackInSlot(index);
+                for (int index = 1; index < this.altarInv.getContainerSize(); index++) {
+                    ItemStack inputStack = this.altarInv.getItem(index);
                     if (inputStack != null && inputStack.getItem() instanceof RuneItem) {
                         runes.add(((RuneItem)inputStack.getItem()).getRune());
                     }
@@ -180,8 +177,8 @@ public abstract class AbstractRunescribingAltarContainer extends Container {
             }
             
             // Send a packet to the client to update its GUI with the shown output
-            this.resultInv.setInventorySlotContents(0, stack);
-            spe.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, stack));
+            this.resultInv.setItem(0, stack);
+            spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 0, stack));
         }
     }
 }

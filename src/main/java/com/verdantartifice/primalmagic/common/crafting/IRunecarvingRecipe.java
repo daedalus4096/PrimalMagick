@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagic.common.crafting;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 
 /**
  * Crafting recipe interface for a runecarving recipe.  A runecarving recipe is like a stonecutting
@@ -14,7 +14,7 @@ import net.minecraft.item.crafting.IRecipeType;
  *  
  * @author Daedalus4096
  */
-public interface IRunecarvingRecipe extends IRecipe<IInventory> {
+public interface IRunecarvingRecipe extends Recipe<Container> {
     /**
      * Get the required research for the recipe.
      * 
@@ -22,17 +22,17 @@ public interface IRunecarvingRecipe extends IRecipe<IInventory> {
      */
     public SimpleResearchKey getRequiredResearch();
     
-    default IRecipeType<?> getType() {
+    default RecipeType<?> getType() {
         return RecipeTypesPM.RUNECARVING;
     }
     
     @Override
-    default boolean isDynamic() {
+    default boolean isSpecial() {
         // Return true to keep runecarving recipes from showing up in the vanilla recipe book
         return true;
     }
     
-    default ItemStack getIcon() {
+    default ItemStack getToastSymbol() {
         return new ItemStack(BlocksPM.RUNECARVING_TABLE.get());
     }
 }

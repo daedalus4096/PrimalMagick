@@ -2,14 +2,14 @@ package com.verdantartifice.primalmagic.common.concoctions;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * Definition of a type of alchemical concoction.  Determines the maximum dosage of the vial.
  * 
  * @author Daedalus4096
  */
-public enum ConcoctionType implements IStringSerializable {
+public enum ConcoctionType implements StringRepresentable {
     WATER(1, "water"),
     TINCTURE(3, "tincture"),
     PHILTER(6, "philter"),
@@ -29,7 +29,7 @@ public enum ConcoctionType implements IStringSerializable {
     }
 
     @Override
-    public String getString() {
+    public String getSerializedName() {
         return this.tag;
     }
     
@@ -40,7 +40,7 @@ public enum ConcoctionType implements IStringSerializable {
     @Nullable
     public static ConcoctionType fromName(@Nullable String name) {
         for (ConcoctionType type : ConcoctionType.values()) {
-            if (type.getString().equals(name)) {
+            if (type.getSerializedName().equals(name)) {
                 return type;
             }
         }

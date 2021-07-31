@@ -7,9 +7,9 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet to update research entry flag data on the server (e.g. when a user clicks an "updated" entry
@@ -30,7 +30,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         this.isPopup = false;
     }
     
-    public SyncResearchFlagsPacket(PlayerEntity player, SimpleResearchKey key) {
+    public SyncResearchFlagsPacket(Player player, SimpleResearchKey key) {
         this();
         this.key = key;
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
@@ -41,16 +41,16 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         }
     }
     
-    public static void encode(SyncResearchFlagsPacket message, PacketBuffer buf) {
-        buf.writeString(message.key.getRootKey());
+    public static void encode(SyncResearchFlagsPacket message, FriendlyByteBuf buf) {
+        buf.writeUtf(message.key.getRootKey());
         buf.writeBoolean(message.isNew);
         buf.writeBoolean(message.isUpdated);
         buf.writeBoolean(message.isPopup);
     }
     
-    public static SyncResearchFlagsPacket decode(PacketBuffer buf) {
+    public static SyncResearchFlagsPacket decode(FriendlyByteBuf buf) {
         SyncResearchFlagsPacket message = new SyncResearchFlagsPacket();
-        message.key = SimpleResearchKey.parse(buf.readString());
+        message.key = SimpleResearchKey.parse(buf.readUtf());
         message.isNew = buf.readBoolean();
         message.isUpdated = buf.readBoolean();
         message.isPopup = buf.readBoolean();
@@ -62,7 +62,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (message.key != null) {
-                    PlayerEntity player = ctx.get().getSender();
+                    Player player = ctx.get().getSender();
                     IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                     if (knowledge != null) {
                         // Add or remove each flag from the research entry as appropriate

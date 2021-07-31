@@ -13,19 +13,19 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition of the Burst spell mod.  This mod causes the spell package to explode outward from its
@@ -77,18 +77,17 @@ public class BurstSpellMod extends AbstractSpellMod {
         return TYPE;
     }
 
-    @SuppressWarnings("deprecation")
     @Nonnull
-    public Set<RayTraceResult> getBurstTargets(RayTraceResult origin, SpellPackage spell, @Nullable ItemStack spellSource, World world) {
-        Set<RayTraceResult> retVal = new HashSet<>();
+    public Set<HitResult> getBurstTargets(HitResult origin, SpellPackage spell, @Nullable ItemStack spellSource, Level world) {
+        Set<HitResult> retVal = new HashSet<>();
         Set<BlockPos> affectedBlocks = new HashSet<>();
-        Vector3d hitVec = origin.getHitVec();
+        Vec3 hitVec = origin.getLocation();
         BlockPos hitPos = new BlockPos(hitVec);
         int radius = this.getPropertyValue("radius");
         int power = this.getModdedPropertyValue("power", spell, spellSource);
         double sqRadius = (double)(radius * radius);
         int searchRadius = radius + 1;
-        Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.Mode.NONE);
+        Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.BlockInteraction.NONE);
         
         // Calculate blasted blocks
         for (int i = 0; i < 16; i++) {
@@ -96,23 +95,23 @@ public class BurstSpellMod extends AbstractSpellMod {
                 for (int k = 0; k < 16; k++) {
                     if (i == 0 || i == 15 || j == 0 || j == 15 || k == 0 || k == 15) {
                         // Calculate a direction vector for the burst
-                    	Vector3d dirVec = new Vector3d((double)i / 15.0D * 2.0D - 1.0D, (double)j / 15.0D * 2.0D - 1.0D, (double)k / 15.0D * 2.0D - 1.0D).normalize();
-                    	Vector3d curVec = new Vector3d(hitVec.x, hitVec.y, hitVec.z);
+                    	Vec3 dirVec = new Vec3((double)i / 15.0D * 2.0D - 1.0D, (double)j / 15.0D * 2.0D - 1.0D, (double)k / 15.0D * 2.0D - 1.0D).normalize();
+                    	Vec3 curVec = new Vec3(hitVec.x, hitVec.y, hitVec.z);
                         float remainingPower = (float)power;
                         
-                        while (remainingPower >= 0.0F && curVec.squareDistanceTo(hitVec) < sqRadius) {
+                        while (remainingPower >= 0.0F && curVec.distanceToSqr(hitVec) < sqRadius) {
                             // Add the current block to the result set if it hasn't already been hit
                             BlockPos curPos = new BlockPos(curVec);
                             if (affectedBlocks.add(curPos)) {
-                            	Vector3d relVec = hitVec.subtract(curVec);
-                                Direction dir = Direction.getFacingFromVector(relVec.x, relVec.y, relVec.z);
-                                retVal.add(new BlockRayTraceResult(curVec, dir, curPos, false));
+                            	Vec3 relVec = hitVec.subtract(curVec);
+                                Direction dir = Direction.getNearest(relVec.x, relVec.y, relVec.z);
+                                retVal.add(new BlockHitResult(curVec, dir, curPos, false));
                             }
                             
                             // Decrement the remaining power based on the block's explosion resistance
                             BlockState blockState = world.getBlockState(curPos);
                             FluidState fluidState = world.getFluidState(curPos);
-                            if (!blockState.isAir(world, curPos) || !fluidState.isEmpty()) {
+                            if (!blockState.isAir() || !fluidState.isEmpty()) {
                                 float resistance = Math.max(blockState.getExplosionResistance(world, curPos, explosion), fluidState.getExplosionResistance(world, curPos, explosion));
                                 remainingPower -= (resistance + 0.3F) * 0.3F;
                             }
@@ -126,11 +125,11 @@ public class BurstSpellMod extends AbstractSpellMod {
         }
         
         // Calculate blasted entities
-        AxisAlignedBB aabb = new AxisAlignedBB(hitPos).grow(searchRadius);
-        List<Entity> entities = world.getEntitiesInAABBexcluding(null, aabb, e -> !e.isSpectator());
+        AABB aabb = new AABB(hitPos).inflate(searchRadius);
+        List<Entity> entities = world.getEntities((Entity)null, aabb, e -> !e.isSpectator());
         for (Entity entity : entities) {
-            if (origin.getHitVec().squareDistanceTo(entity.getPositionVec()) <= sqRadius) {
-                retVal.add(new EntityRayTraceResult(entity));
+            if (origin.getLocation().distanceToSqr(entity.position()) <= sqRadius) {
+                retVal.add(new EntityHitResult(entity));
             }
         }
         

@@ -3,14 +3,14 @@ package com.verdantartifice.primalmagic.common.rituals;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * Enum describing a type of ritual step.
  * 
  * @author Daedalus4096
  */
-public enum RitualStepType implements IStringSerializable {
+public enum RitualStepType implements StringRepresentable {
     OFFERING("offering"),
     PROP("prop");
     
@@ -22,14 +22,14 @@ public enum RitualStepType implements IStringSerializable {
 
     @Override
     @Nonnull
-    public String getString() {
+    public String getSerializedName() {
         return this.name;
     }
     
     @Nullable
     public static RitualStepType fromName(@Nullable String name) {
         for (RitualStepType step : values()) {
-            if (step.getString().equals(name)) {
+            if (step.getSerializedName().equals(name)) {
                 return step;
             }
         }

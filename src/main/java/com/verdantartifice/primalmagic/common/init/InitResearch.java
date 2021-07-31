@@ -15,7 +15,7 @@ import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
 /**

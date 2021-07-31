@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.EquipmentSlot;
 
 /**
  * Definition of a wand enchantment that mimics and stacks with the effect of the Amplify spell mod.
@@ -10,18 +10,18 @@ import net.minecraft.inventory.EquipmentSlotType;
  * @see {@link com.verdantartifice.primalmagic.common.spells.mods.AmplifySpellMod}
  */
 public class SpellPowerEnchantment extends Enchantment {
-    public SpellPowerEnchantment(Enchantment.Rarity rarity, EquipmentSlotType... slots) {
+    public SpellPowerEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
         super(rarity, EnchantmentTypesPM.WAND, slots);
     }
     
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 10 + ((enchantmentLevel - 1) * 10);
     }
     
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 25;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 25;
     }
     
     @Override

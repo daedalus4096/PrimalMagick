@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -28,21 +28,21 @@ public class PageString implements IPageElement {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int side, int x, int y) {
+    public void render(PoseStack matrixStack, int side, int x, int y) {
         // Render this element's string to the screen
     	Minecraft mc = Minecraft.getInstance();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        mc.fontRenderer.drawString(matrixStack, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB());
+        mc.font.draw(matrixStack, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB());
     }
 
     @Override
     public int getNextY(int y) {
         Minecraft mc = Minecraft.getInstance();
-        y += mc.fontRenderer.FONT_HEIGHT;
+        y += mc.font.lineHeight;
         if (this.str.endsWith("~B")) {
             // If this element ends with a <BR> tag, leave some extra vertical space after it
-            y += (int)(mc.fontRenderer.FONT_HEIGHT * 0.66D);
+            y += (int)(mc.font.lineHeight * 0.66D);
         }
         return y;
     }

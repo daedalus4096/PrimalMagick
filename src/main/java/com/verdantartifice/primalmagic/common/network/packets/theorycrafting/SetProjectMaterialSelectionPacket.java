@@ -7,9 +7,9 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.theorycrafting.Project;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent to update the selection status of a research project's materials in the research table GUI.
@@ -30,12 +30,12 @@ public class SetProjectMaterialSelectionPacket implements IMessageToServer {
         this.selected = selected;
     }
     
-    public static void encode(SetProjectMaterialSelectionPacket message, PacketBuffer buf) {
+    public static void encode(SetProjectMaterialSelectionPacket message, FriendlyByteBuf buf) {
         buf.writeInt(message.index);
         buf.writeBoolean(message.selected);
     }
     
-    public static SetProjectMaterialSelectionPacket decode(PacketBuffer buf) {
+    public static SetProjectMaterialSelectionPacket decode(FriendlyByteBuf buf) {
         SetProjectMaterialSelectionPacket message = new SetProjectMaterialSelectionPacket();
         message.index = buf.readInt();
         message.selected = buf.readBoolean();
@@ -46,7 +46,7 @@ public class SetProjectMaterialSelectionPacket implements IMessageToServer {
         public static void onMessage(SetProjectMaterialSelectionPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                ServerPlayerEntity player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                 if (knowledge != null) {
                     Project project = knowledge.getActiveResearchProject();

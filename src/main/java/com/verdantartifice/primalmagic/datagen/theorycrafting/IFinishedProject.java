@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.datagen.theorycrafting;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public interface IFinishedProject {
     ResourceLocation getId();

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.common.spells.vehicles;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.ForgeMod;
 
 /**

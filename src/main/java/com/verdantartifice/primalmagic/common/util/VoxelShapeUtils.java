@@ -16,12 +16,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
 
 /**
  * Collection of utility methods pertaining to VoxelShapes.
@@ -53,18 +53,18 @@ public class VoxelShapeUtils {
     @Nonnull
     protected static VoxelShape fromModel(@Nullable ResourceLocation location, @Nonnull List<ResourceLocation> history) {
         if (location == null) {
-            return VoxelShapes.empty();
+            return Shapes.empty();
         }
         
         // Prevent cycles in model search
         if (history.contains(location)) {
             LOGGER.warn("Cycle detected while getting VoxelShape from model file: {}", location.toString());
-            return VoxelShapes.empty();
+            return Shapes.empty();
         }
         history.add(location);
         if (history.size() >= HISTORY_LIMIT) {
             LOGGER.warn("History limit exceeded while getting VoxelShape from model file: {}", location.toString());
-            return VoxelShapes.empty();
+            return Shapes.empty();
         }
         
         // Load the specified model file as a stream
@@ -87,27 +87,27 @@ public class VoxelShapeUtils {
                     
                     // Combine the parsed shapes
                     if (shapes.isEmpty()) {
-                        return VoxelShapes.empty();
+                        return Shapes.empty();
                     } else if (shapes.size() == 1) {
                         return shapes.get(0);
                     } else {
                         VoxelShape firstShape = shapes.remove(0);
-                        return VoxelShapes.or(firstShape, shapes.toArray(new VoxelShape[shapes.size()]));
+                        return Shapes.or(firstShape, shapes.toArray(new VoxelShape[shapes.size()]));
                     }
                 } else if (obj.has("parent")) {
                     // Attempt to load and parse the parent model file
                     return fromModel(new ResourceLocation(obj.getAsJsonPrimitive("parent").getAsString()), history);
                 } else {
                     LOGGER.warn("No elements or parent found in VoxelShape model file: {}", location.toString());
-                    return VoxelShapes.empty();
+                    return Shapes.empty();
                 }
             } catch (Exception e) {
                 LOGGER.warn("Invalid VoxelShape model file: {}", location.toString());
-                return VoxelShapes.empty();
+                return Shapes.empty();
             }
         } else {
             LOGGER.warn("VoxelShape model file not found: {}", location.toString());
-            return VoxelShapes.empty();
+            return Shapes.empty();
         }
     }
     
@@ -123,7 +123,7 @@ public class VoxelShapeUtils {
         try {
             JsonArray fromArray = obj.getAsJsonArray("from");
             JsonArray toArray = obj.getAsJsonArray("to");
-            return Block.makeCuboidShape(
+            return Block.box(
                 fromArray.get(0).getAsDouble(), 
                 fromArray.get(1).getAsDouble(), 
                 fromArray.get(2).getAsDouble(), 
@@ -133,7 +133,7 @@ public class VoxelShapeUtils {
             );
         } catch (Exception e) {
             LOGGER.warn("Invalid element in VoxelShape model file: {}", location.toString());
-            return VoxelShapes.empty();
+            return Shapes.empty();
         }
     }
     
@@ -148,34 +148,34 @@ public class VoxelShapeUtils {
     @Nonnull
     public static VoxelShape rotate(@Nullable VoxelShape shape, @Nullable Direction.Axis axis, @Nullable Rotation rot) {
         if (shape == null) {
-            return VoxelShapes.empty();
+            return Shapes.empty();
         } else if (axis == null || rot == null) {
             return shape;
         }
         
-        VoxelShape[] buffer = new VoxelShape[] { shape, VoxelShapes.empty() };
+        VoxelShape[] buffer = new VoxelShape[] { shape, Shapes.empty() };
         
         int ccwRotations = (4 - rot.ordinal()) % 4;
         for (int index = 0; index < ccwRotations; index++) {
-            buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> {
+            buffer[0].forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> {
                 VoxelShape newBox;
                 switch (axis) {
                 case X:
-                    newBox = VoxelShapes.create(minX, minZ, 1-maxY, maxX, maxZ, 1-minY);
+                    newBox = Shapes.box(minX, minZ, 1-maxY, maxX, maxZ, 1-minY);
                     break;
                 case Y:
-                    newBox = VoxelShapes.create(1-maxZ, minY, minX, 1-minZ, maxY, maxX);
+                    newBox = Shapes.box(1-maxZ, minY, minX, 1-minZ, maxY, maxX);
                     break;
                 case Z:
-                    newBox = VoxelShapes.create(minY, 1-maxX, minZ, maxY, 1-minX, maxZ);
+                    newBox = Shapes.box(minY, 1-maxX, minZ, maxY, 1-minX, maxZ);
                     break;
                 default:
                     throw new Error("Invalid axis in voxel shape rotation!");
                 }
-                buffer[1] = VoxelShapes.or(buffer[1], newBox);
+                buffer[1] = Shapes.or(buffer[1], newBox);
             });
             buffer[0] = buffer[1];
-            buffer[1] = VoxelShapes.empty();
+            buffer[1] = Shapes.empty();
         }
         
         return buffer[0];

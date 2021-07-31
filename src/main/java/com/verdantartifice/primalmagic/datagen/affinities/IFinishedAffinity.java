@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagic.datagen.affinities;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.affinities.AffinityType;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public interface IFinishedAffinity {
     AffinityType getType();
@@ -14,7 +14,7 @@ public interface IFinishedAffinity {
     
     default JsonObject getAffinityJson() {
         JsonObject json = new JsonObject();
-        json.addProperty("type", this.getType().getString());
+        json.addProperty("type", this.getType().getSerializedName());
         this.serialize(json);
         return json;
     }

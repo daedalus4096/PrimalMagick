@@ -2,21 +2,22 @@ package com.verdantartifice.primalmagic.client.renderers.entity;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.client.renderers.models.SpellProjectileModel;
+import com.verdantartifice.primalmagic.client.renderers.entity.model.SpellProjectileModel;
+import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -28,47 +29,48 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntity> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/spell_projectile.png");
-    protected static final RenderType TRANSLUCENT_TYPE = RenderType.getEntityTranslucent(TEXTURE);
+    protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
 
-    protected final SpellProjectileModel model = new SpellProjectileModel();
+    protected final SpellProjectileModel model;
 
-    public SpellProjectileRenderer(EntityRendererManager renderManager) {
-        super(renderManager);
+    public SpellProjectileRenderer(EntityRendererProvider.Context context) {
+        super(context);
+        this.model = new SpellProjectileModel(context.bakeLayer(ModelLayersPM.SPELL_PROJECTILE));
     }
     
     @Override
-    protected int getBlockLight(SpellProjectileEntity entityIn, BlockPos blockPos) {
+    protected int getBlockLightLevel(SpellProjectileEntity entityIn, BlockPos blockPos) {
         return 15;
     }
     
     @Override
-    public void render(SpellProjectileEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight) {
+    public void render(SpellProjectileEntity entity, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
         @SuppressWarnings("deprecation")
-        float yaw = MathHelper.rotLerp(entity.prevRotationYaw, entity.rotationYaw, partialTicks);
-        float pitch = MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch);
-        float ticks = (float)entity.ticksExisted + partialTicks;
+        float yaw = Mth.rotlerp(entity.yRotO, entity.getYRot(), partialTicks);
+        float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
+        float ticks = (float)entity.tickCount + partialTicks;
         Color c = new Color(entity.getColor());
         float r = (float)c.getRed() / 255.0F;
         float g = (float)c.getGreen() / 255.0F;
         float b = (float)c.getBlue() / 255.0F;
-        matrixStack.push();
+        matrixStack.pushPose();
         matrixStack.translate(0.0D, 0.15D, 0.0D);
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.sin(ticks * 0.1F) * 180.0F)); // Spin the projectile like a shulker bullet
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(MathHelper.cos(ticks * 0.1F) * 180.0F));
-        matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.sin(ticks * 0.15F) * 360.0F));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the projectile like a shulker bullet
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(Mth.cos(ticks * 0.1F) * 180.0F));
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(ticks * 0.15F) * 360.0F));
         matrixStack.scale(-0.5F, -0.5F, 0.5F);
-        this.model.setRotationAngles(entity, 0.0F, 0.0F, 0.0F, yaw, pitch);
-        IVertexBuilder coreVertexBuilder = buffer.getBuffer(this.model.getRenderType(TEXTURE));
-        this.model.render(matrixStack, coreVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);    // Render the core of the projectile
+        this.model.setupAnim(entity, 0.0F, 0.0F, 0.0F, yaw, pitch);
+        VertexConsumer coreVertexBuilder = buffer.getBuffer(this.model.renderType(TEXTURE));
+        this.model.renderToBuffer(matrixStack, coreVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);    // Render the core of the projectile
         matrixStack.scale(1.5F, 1.5F, 1.5F);
-        IVertexBuilder glowVertexBuilder = buffer.getBuffer(TRANSLUCENT_TYPE);
-        this.model.render(matrixStack, glowVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 0.5F);    // Render the transparent glow of the projectile
-        matrixStack.pop();
+        VertexConsumer glowVertexBuilder = buffer.getBuffer(TRANSLUCENT_TYPE);
+        this.model.renderToBuffer(matrixStack, glowVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 0.5F);    // Render the transparent glow of the projectile
+        matrixStack.popPose();
         super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(SpellProjectileEntity entity) {
+    public ResourceLocation getTextureLocation(SpellProjectileEntity entity) {
         return TEXTURE;
     }
 }

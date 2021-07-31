@@ -5,10 +5,10 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
 
 /**
  * Helper methods for handling concoctions.
@@ -17,11 +17,11 @@ import net.minecraft.potion.PotionUtils;
  */
 public class ConcoctionUtils {
     public static ItemStack newConcoction(Potion potion, ConcoctionType type) {
-        return setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.CONCOCTION.get()), potion), type);
+        return setConcoctionType(PotionUtils.setPotion(new ItemStack(ItemsPM.CONCOCTION.get()), potion), type);
     }
     
     public static ItemStack newBomb(Potion potion, FuseType fuse) {
-        return setFuseType(setConcoctionType(PotionUtils.addPotionToItemStack(new ItemStack(ItemsPM.ALCHEMICAL_BOMB.get()), potion), ConcoctionType.BOMB), fuse);
+        return setFuseType(setConcoctionType(PotionUtils.setPotion(new ItemStack(ItemsPM.ALCHEMICAL_BOMB.get()), potion), ConcoctionType.BOMB), fuse);
     }
     
     @Nullable
@@ -32,7 +32,7 @@ public class ConcoctionUtils {
     @Nonnull
     public static ItemStack setConcoctionType(@Nonnull ItemStack stack, @Nullable ConcoctionType concoctionType) {
         if (concoctionType != null) {
-            stack.getOrCreateTag().putString("ConcoctionType", concoctionType.getString());
+            stack.getOrCreateTag().putString("ConcoctionType", concoctionType.getSerializedName());
             setCurrentDoses(stack, concoctionType.getMaxDoses());
         }
         return stack;
@@ -57,14 +57,14 @@ public class ConcoctionUtils {
     @Nonnull
     public static ItemStack setFuseType(@Nonnull ItemStack stack, @Nullable FuseType fuseType) {
         if (fuseType != null) {
-            stack.getOrCreateTag().putString("BombFuse", fuseType.getString());
+            stack.getOrCreateTag().putString("BombFuse", fuseType.getSerializedName());
         }
         return stack;
     }
     
     public static boolean hasBeneficialEffect(@Nonnull Potion potion) {
-        for (EffectInstance instance : potion.getEffects()) {
-            if (instance.getPotion().isBeneficial()) {
+        for (MobEffectInstance instance : potion.getEffects()) {
+            if (instance.getEffect().isBeneficial()) {
                 return true;
             }
         }

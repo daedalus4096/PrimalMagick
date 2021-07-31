@@ -5,9 +5,9 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet sent from the server to trigger a potion explosion particle effect on the client.
@@ -31,11 +31,11 @@ public class PotionExplosionPacket implements IMessageToClient {
         this.isInstant = isInstant;
     }
     
-    public PotionExplosionPacket(Vector3d vec, int color, boolean isInstant) {
+    public PotionExplosionPacket(Vec3 vec, int color, boolean isInstant) {
         this(vec.x, vec.y, vec.z, color, isInstant);
     }
     
-    public static void encode(PotionExplosionPacket message, PacketBuffer buf) {
+    public static void encode(PotionExplosionPacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
         buf.writeDouble(message.z);
@@ -43,7 +43,7 @@ public class PotionExplosionPacket implements IMessageToClient {
         buf.writeBoolean(message.isInstant);
     }
     
-    public static PotionExplosionPacket decode(PacketBuffer buf) {
+    public static PotionExplosionPacket decode(FriendlyByteBuf buf) {
         PotionExplosionPacket message = new PotionExplosionPacket();
         message.x = buf.readDouble();
         message.y = buf.readDouble();

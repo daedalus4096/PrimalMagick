@@ -11,17 +11,17 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -51,17 +51,17 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inv, World worldIn) {
-        RecipeItemHelper helper = new RecipeItemHelper();
+    public boolean matches(CraftingContainer inv, Level worldIn) {
+        StackedContents helper = new StackedContents();
         List<ItemStack> inputs = new ArrayList<>();
         int count = 0;
         
-        for (int index = 0; index < inv.getSizeInventory(); index++) {
-            ItemStack stack = inv.getStackInSlot(index);
+        for (int index = 0; index < inv.getContainerSize(); index++) {
+            ItemStack stack = inv.getItem(index);
             if (!stack.isEmpty()) {
                 count++;
                 if (this.isSimple) {
-                    helper.func_221264_a(stack, 1);
+                    helper.accountStack(stack, 1);
                 } else {
                     inputs.add(stack);
                 }
@@ -72,17 +72,17 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(CraftingInventory inv) {
+    public ItemStack assemble(CraftingContainer inv) {
         return this.recipeOutput.copy();
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return (width * height) >= this.recipeItems.size();
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return this.recipeOutput;
     }
     
@@ -97,7 +97,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return RecipeSerializersPM.ARCANE_CRAFTING_SHAPELESS.get();
     }
 
@@ -111,14 +111,14 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         return this.manaCosts;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapelessArcaneRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ShapelessArcaneRecipe> {
         @Override
-        public ShapelessArcaneRecipe read(ResourceLocation recipeId, JsonObject json) {
-            String group = JSONUtils.getString(json, "group", "");
-            SimpleResearchKey research = SimpleResearchKey.parse(JSONUtils.getString(json, "research", ""));
-            SourceList manaCosts = JsonUtils.toSourceList(JSONUtils.getJsonObject(json, "mana", new JsonObject()));
-            ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-            NonNullList<Ingredient> ingredients = this.readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
+        public ShapelessArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            String group = GsonHelper.getAsString(json, "group", "");
+            SimpleResearchKey research = SimpleResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
+            SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
+            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
+            NonNullList<Ingredient> ingredients = this.readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
             if (ingredients.isEmpty()) {
                 throw new JsonParseException("No ingredients for shapeless arcane recipe");
             } else if (ingredients.size() > 9) {
@@ -131,8 +131,8 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         protected NonNullList<Ingredient> readIngredients(JsonArray jsonArray) {
             NonNullList<Ingredient> retVal = NonNullList.create();
             for (int i = 0; i < jsonArray.size(); ++i) {
-                Ingredient ingredient = Ingredient.deserialize(jsonArray.get(i));
-                if (!ingredient.hasNoMatchingItems()) {
+                Ingredient ingredient = Ingredient.fromJson(jsonArray.get(i));
+                if (!ingredient.isEmpty()) {
                     retVal.add(ingredient);
                 }
             }
@@ -140,9 +140,9 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         }
         
         @Override
-        public ShapelessArcaneRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-            String group = buffer.readString(32767);
-            SimpleResearchKey research = SimpleResearchKey.parse(buffer.readString(32767));
+        public ShapelessArcaneRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+            String group = buffer.readUtf(32767);
+            SimpleResearchKey research = SimpleResearchKey.parse(buffer.readUtf(32767));
             
             SourceList manaCosts = new SourceList();
             for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
@@ -152,25 +152,25 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
             int count = buffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(count, Ingredient.EMPTY);
             for (int index = 0; index < ingredients.size(); index++) {
-                ingredients.set(index, Ingredient.read(buffer));
+                ingredients.set(index, Ingredient.fromNetwork(buffer));
             }
             
-            ItemStack result = buffer.readItemStack();
+            ItemStack result = buffer.readItem();
             return new ShapelessArcaneRecipe(recipeId, group, research, manaCosts, result, ingredients);
         }
 
         @Override
-        public void write(PacketBuffer buffer, ShapelessArcaneRecipe recipe) {
-            buffer.writeString(recipe.group);
-            buffer.writeString(recipe.research.toString());
+        public void toNetwork(FriendlyByteBuf buffer, ShapelessArcaneRecipe recipe) {
+            buffer.writeUtf(recipe.group);
+            buffer.writeUtf(recipe.research.toString());
             for (Source source : Source.SORTED_SOURCES) {
                 buffer.writeVarInt(recipe.manaCosts.getAmount(source));
             }
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {
-                ingredient.write(buffer);
+                ingredient.toNetwork(buffer);
             }
-            buffer.writeItemStack(recipe.recipeOutput);
+            buffer.writeItem(recipe.recipeOutput);
         }
     }
 }

@@ -7,10 +7,10 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet to sync companion capability data from the server to the client.
@@ -18,24 +18,24 @@ import net.minecraftforge.fml.network.NetworkEvent;
  * @author Daedalus4096
  */
 public class SyncCompanionsPacket implements IMessageToClient {
-    protected CompoundNBT data;
+    protected CompoundTag data;
 
     public SyncCompanionsPacket() {
         this.data = null;
     }
     
-    public SyncCompanionsPacket(PlayerEntity player) {
+    public SyncCompanionsPacket(Player player) {
         IPlayerCompanions companions = PrimalMagicCapabilities.getCompanions(player);
         this.data = (companions != null) ? companions.serializeNBT() : null;
     }
     
-    public static void encode(SyncCompanionsPacket message, PacketBuffer buf) {
-        buf.writeCompoundTag(message.data);
+    public static void encode(SyncCompanionsPacket message, FriendlyByteBuf buf) {
+        buf.writeNbt(message.data);
     }
     
-    public static SyncCompanionsPacket decode(PacketBuffer buf) {
+    public static SyncCompanionsPacket decode(FriendlyByteBuf buf) {
         SyncCompanionsPacket message = new SyncCompanionsPacket();
-        message.data = buf.readCompoundTag();
+        message.data = buf.readNbt();
         return message;
     }
     
@@ -44,7 +44,7 @@ public class SyncCompanionsPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 Minecraft mc = Minecraft.getInstance();
-                PlayerEntity player = mc.player;
+                Player player = mc.player;
                 IPlayerCompanions companions = PrimalMagicCapabilities.getCompanions(player);
                 if (companions != null) {
                     companions.deserializeNBT(message.data);

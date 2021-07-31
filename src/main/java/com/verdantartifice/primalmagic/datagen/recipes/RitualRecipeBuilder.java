@@ -13,15 +13,15 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.block.Block;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -49,7 +49,7 @@ public class RitualRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(IItemProvider result, int count) {
+    public static RitualRecipeBuilder ritualRecipe(ItemLike result, int count) {
         return new RitualRecipeBuilder(new ItemStack(result, count));
     }
     
@@ -59,7 +59,7 @@ public class RitualRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(IItemProvider result) {
+    public static RitualRecipeBuilder ritualRecipe(ItemLike result) {
         return ritualRecipe(result, 1);
     }
     
@@ -104,8 +104,8 @@ public class RitualRecipeBuilder {
      * @param quantity the number of the item to add
      * @return the modified builder
      */
-    public RitualRecipeBuilder addIngredient(IItemProvider item, int quantity) {
-        return this.addIngredient(Ingredient.fromItems(item), quantity);
+    public RitualRecipeBuilder addIngredient(ItemLike item, int quantity) {
+        return this.addIngredient(Ingredient.of(item), quantity);
     }
     
     /**
@@ -114,7 +114,7 @@ public class RitualRecipeBuilder {
      * @param item the item to be added
      * @return the modified builder
      */
-    public RitualRecipeBuilder addIngredient(IItemProvider item) {
+    public RitualRecipeBuilder addIngredient(ItemLike item) {
         return this.addIngredient(item, 1);
     }
     
@@ -125,8 +125,8 @@ public class RitualRecipeBuilder {
      * @param quantity the number of the tag to add
      * @return the modified builder
      */
-    public RitualRecipeBuilder addIngredient(ITag<Item> tag, int quantity) {
-        return this.addIngredient(Ingredient.fromTag(tag), quantity);
+    public RitualRecipeBuilder addIngredient(Tag<Item> tag, int quantity) {
+        return this.addIngredient(Ingredient.of(tag), quantity);
     }
     
     /**
@@ -135,7 +135,7 @@ public class RitualRecipeBuilder {
      * @param tag the tag of items to be added
      * @return the modified builder
      */
-    public RitualRecipeBuilder addIngredient(ITag<Item> tag) {
+    public RitualRecipeBuilder addIngredient(Tag<Item> tag) {
         return this.addIngredient(tag, 1);
     }
     
@@ -191,7 +191,7 @@ public class RitualRecipeBuilder {
      * @param quantity the number of the tag to add
      * @return the modified builder
      */
-    public RitualRecipeBuilder addProp(ITag<Block> tag, int quantity) {
+    public RitualRecipeBuilder addProp(Tag<Block> tag, int quantity) {
         return this.addProp(BlockIngredient.fromTag(tag), quantity);
     }
     
@@ -201,7 +201,7 @@ public class RitualRecipeBuilder {
      * @param tag the tag of blocks to be added
      * @return the modified builder
      */
-    public RitualRecipeBuilder addProp(ITag<Block> tag) {
+    public RitualRecipeBuilder addProp(Tag<Block> tag) {
         return this.addProp(tag, 1);
     }
     
@@ -255,7 +255,7 @@ public class RitualRecipeBuilder {
      * @param consumer a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
+    public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
         consumer.accept(new RitualRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.ingredients, this.props, this.research, this.manaCosts, this.instability));
     }
@@ -267,7 +267,7 @@ public class RitualRecipeBuilder {
      * @param consumer a consumer for the finished recipe
      * @param save custom ID for the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer, String save) {
+    public void build(Consumer<FinishedRecipe> consumer, String save) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
         ResourceLocation saveLoc = new ResourceLocation(save);
         if (saveLoc.equals(id)) {
@@ -282,7 +282,7 @@ public class RitualRecipeBuilder {
      * 
      * @param consumer a consumer for the finished recipe
      */
-    public void build(Consumer<IFinishedRecipe> consumer) {
+    public void build(Consumer<FinishedRecipe> consumer) {
         this.build(consumer, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
     }
     
@@ -303,7 +303,7 @@ public class RitualRecipeBuilder {
         }
     }
     
-    public static class Result implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         protected final ResourceLocation id;
         protected final ItemStack result;
         protected final String group;
@@ -325,7 +325,7 @@ public class RitualRecipeBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
             // Serialize the recipe group, if present
             if (this.group != null && !this.group.isEmpty()) {
                 json.addProperty("group", this.group);
@@ -351,7 +351,7 @@ public class RitualRecipeBuilder {
             // Serialize the recipe ingredient list
             JsonArray ingredientsJson = new JsonArray();
             for (Ingredient ingredient : this.ingredients) {
-                ingredientsJson.add(ingredient.serialize());
+                ingredientsJson.add(ingredient.toJson());
             }
             json.add("ingredients", ingredientsJson);
             
@@ -377,23 +377,23 @@ public class RitualRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
             return this.id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public RecipeSerializer<?> getType() {
             return RecipeSerializersPM.RITUAL.get();
         }
 
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
             // Ritual recipes don't use the vanilla advancement unlock system, so return null
             return null;
         }
 
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
             return new ResourceLocation("");
         }
     }

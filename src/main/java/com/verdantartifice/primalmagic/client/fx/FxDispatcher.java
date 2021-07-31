@@ -12,14 +12,14 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -34,9 +34,9 @@ public class FxDispatcher {
     
     protected static final Map<BlockPos, Particle> PROP_MARKER_PARTICLES = new HashMap<>();
     
-    protected World getWorld() {
+    protected Level getWorld() {
     	Minecraft mc = Minecraft.getInstance();
-        return mc.world;
+        return mc.level;
     }
     
     public void wandPoof(double x, double y, double z, int color, boolean sound, Direction side) {
@@ -50,21 +50,21 @@ public class FxDispatcher {
     public void wandPoof(double x, double y, double z, float r, float g, float b, boolean sound, Direction side) {
         // Release a cluster of poof clouds when transforming a block with a wand
     	Minecraft mc = Minecraft.getInstance();
-    	World world = this.getWorld();
-        Random rng = world.rand;
+    	Level world = this.getWorld();
+        Random rng = world.random;
         if (sound) {
-            this.getWorld().playSound(x, y, z, SoundsPM.POOF.get(), SoundCategory.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
+            this.getWorld().playLocalSound(x, y, z, SoundsPM.POOF.get(), SoundSource.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
         }
         for (int index = 0; index < 8 + rng.nextInt(3); index++) {
             double dx = (rng.nextFloat() * 0.05D) * (rng.nextBoolean() ? 1 : -1);
             double dy = (rng.nextFloat() * 0.05D) * (rng.nextBoolean() ? 1 : -1);
             double dz = (rng.nextFloat() * 0.05D) * (rng.nextBoolean() ? 1 : -1);
             if (side != null) {
-                dx += (side.getXOffset() * 0.1D);
-                dy += (side.getYOffset() * 0.1D);
-                dz += (side.getZOffset() * 0.1D);
+                dx += (side.getStepX() * 0.1D);
+                dy += (side.getStepY() * 0.1D);
+                dz += (side.getStepZ() * 0.1D);
             }
-            Particle p = mc.particles.addParticle(ParticleTypesPM.WAND_POOF.get(), x + dx * 2.0D, y + dy * 2.0D, z + dz * 2.0D, dx / 2.0D, dy / 2.0D, dz / 2.0D);
+            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.WAND_POOF.get(), x + dx * 2.0D, y + dy * 2.0D, z + dz * 2.0D, dx / 2.0D, dy / 2.0D, dz / 2.0D);
             if (p != null) {
                 p.setColor(r, g, b);
             }
@@ -85,10 +85,10 @@ public class FxDispatcher {
         double vx = (x2 - x1) / (double)maxAge;
         double vy = (y2 - y1) / (double)maxAge;
         double vz = (z2 - z1) / (double)maxAge;
-        Particle p = mc.particles.addParticle(ParticleTypesPM.MANA_SPARKLE.get(), x1, y1, z1, vx, vy, vz);
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.MANA_SPARKLE.get(), x1, y1, z1, vx, vy, vz);
         if (p != null) {
             p.setColor(r, g, b);
-            p.setMaxAge(maxAge);
+            p.setLifetime(maxAge);
         }
     }
     
@@ -103,7 +103,7 @@ public class FxDispatcher {
     public void spellTrail(double x, double y, double z, float r, float g, float b) {
         // Show a particle trailing behind a spell projectile
     	Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particles.addParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, 0.0D, 0.0D);
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
         }
@@ -120,14 +120,14 @@ public class FxDispatcher {
     public void spellImpact(double x, double y, double z, int radius, float r, float g, float b) {
         // Show a cluster of particles at the impact point of a spell
     	Minecraft mc = Minecraft.getInstance();
-    	World world = this.getWorld();
-        Random rng = world.rand;
+    	Level world = this.getWorld();
+        Random rng = world.random;
         int count = (15 + rng.nextInt(11)) * radius;
         for (int index = 0; index < count; index++) {
             double dx = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
             double dy = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
             double dz = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
-            Particle p = mc.particles.addParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, dx, dy, dz);
+            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, dx, dy, dz);
             if (p != null) {
                 p.setColor(r, g, b);
             }
@@ -136,9 +136,9 @@ public class FxDispatcher {
     
     public void teleportArrival(double x, double y, double z) {
         // Show a cluster of particles at the point where a player arrives from a teleport spell; similar to Ender Pearl effect
-        World world = getWorld();
+        Level world = getWorld();
         for (int i = 0; i < 32; i++) {
-            world.addParticle(ParticleTypes.PORTAL, x, y + world.rand.nextDouble() * 2.0D, z, world.rand.nextGaussian(), 0.0D, world.rand.nextGaussian());
+            world.addParticle(ParticleTypes.PORTAL, x, y + world.random.nextDouble() * 2.0D, z, world.random.nextGaussian(), 0.0D, world.random.nextGaussian());
         }
     }
     
@@ -153,7 +153,7 @@ public class FxDispatcher {
     public void spellBolt(double sx, double sy, double sz, double tx, double ty, double tz, float r, float g, float b) {
         // Show a spell bolt "particle"
     	Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particles.addParticle(new SpellBoltParticleData(tx, ty, tz), sx, sy, sz, 0.0D, 0.0D, 0.0D);
+        Particle p = mc.particleEngine.createParticle(new SpellBoltParticleData(tx, ty, tz), sx, sy, sz, 0.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
         }
@@ -162,13 +162,13 @@ public class FxDispatcher {
     public void offeringChannel(double sx, double sy, double sz, double tx, double ty, double tz, ItemStack stack) {
         // Show a trail of particles between the ritual offering and the altar
     	Minecraft mc = Minecraft.getInstance();
-        mc.particles.addParticle(new ItemParticleData(ParticleTypesPM.OFFERING.get(), stack), sx, sy, sz, tx, ty, tz);
+        mc.particleEngine.createParticle(new ItemParticleOption(ParticleTypesPM.OFFERING.get(), stack), sx, sy, sz, tx, ty, tz);
     }
     
     public void propMarker(BlockPos pos) {
         // Show a marker above a ritual prop's position and save it for later manual canceling
     	Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particles.addParticle(ParticleTypesPM.PROP_MARKER.get(), pos.getX() + 0.5D, pos.getY() + 1.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.PROP_MARKER.get(), pos.getX() + 0.5D, pos.getY() + 1.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
         this.removePropMarker(pos);
         PROP_MARKER_PARTICLES.put(pos, p);
     }
@@ -177,7 +177,7 @@ public class FxDispatcher {
         // Expire and remove the marker particle for the given position
         if (PROP_MARKER_PARTICLES.containsKey(pos)) {
             Particle oldParticle = PROP_MARKER_PARTICLES.remove(pos);
-            oldParticle.setExpired();
+            oldParticle.remove();
         }
     }
     
@@ -191,7 +191,7 @@ public class FxDispatcher {
     
     public void pixieDust(double x, double y, double z, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particles.addParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, -0.1D, 0.0D);
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, -0.1D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
         }
@@ -207,7 +207,7 @@ public class FxDispatcher {
     
     public void crucibleBubble(double x, double y, double z, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particles.addParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
+        Particle p = mc.particleEngine.createParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
         }
@@ -223,10 +223,10 @@ public class FxDispatcher {
     
     public void potionExplosion(double x, double y, double z, float r, float g, float b, boolean isInstant) {
         Minecraft mc = Minecraft.getInstance();
-        World world = this.getWorld();
-        world.playSound(x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F, false);
+        Level world = this.getWorld();
+        world.playLocalSound(x, y, z, SoundEvents.GENERIC_EXPLODE, SoundSource.NEUTRAL, 4.0F, (1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.2F) * 0.7F, false);
         world.addParticle(ParticleTypes.EXPLOSION_EMITTER, x, y, z, 1.0D, 0.0D, 0.0D);
-        Particle p = mc.particles.addParticle(new PotionExplosionParticleData(isInstant), x, y, z, 1.0D, 0.0D, 0.0D);
+        Particle p = mc.particleEngine.createParticle(new PotionExplosionParticleData(isInstant), x, y, z, 1.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
         }

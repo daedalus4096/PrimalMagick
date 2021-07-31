@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,60 +16,60 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class WandPoofParticle extends SpriteTexturedParticle {
-    protected final IAnimatedSprite spriteSet;
+public class WandPoofParticle extends TextureSheetParticle {
+    protected final SpriteSet spriteSet;
     
-    public WandPoofParticle(ClientWorld world, double x, double y, double z, IAnimatedSprite spriteSet) {
+    public WandPoofParticle(ClientLevel world, double x, double y, double z, SpriteSet spriteSet) {
         this(world, x, y, z, 0.0D, 0.0D, 0.0D, spriteSet);
     }
     
-    public WandPoofParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite spriteSet) {
+    public WandPoofParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.motionX = xSpeed;
-        this.motionY = ySpeed;
-        this.motionZ = zSpeed;
-        this.particleScale = 1.0F;
-        this.maxAge = 10;
+        this.xd = xSpeed;
+        this.yd = ySpeed;
+        this.zd = zSpeed;
+        this.quadSize = 1.0F;
+        this.lifetime = 10;
         this.spriteSet = spriteSet;
-        this.selectSpriteWithAge(this.spriteSet);
+        this.setSpriteFromAge(this.spriteSet);
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
     
     @Override
     public void tick() {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        if (this.age++ >= this.maxAge) {
-            this.setExpired();
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         } else {
-            this.selectSpriteWithAge(this.spriteSet);
-            this.motionY += 0.004D; // Poof clouds should float up, rather than be affected by gravity
-            this.move(this.motionX, this.motionY, this.motionZ);
-            this.motionX *= 0.9D;
-            this.motionY *= 0.9D;
-            this.motionZ *= 0.9D;
+            this.setSpriteFromAge(this.spriteSet);
+            this.yd += 0.004D; // Poof clouds should float up, rather than be affected by gravity
+            this.move(this.xd, this.yd, this.zd);
+            this.xd *= 0.9D;
+            this.yd *= 0.9D;
+            this.zd *= 0.9D;
             if (this.onGround) {
-                this.motionX *= 0.7D;
-                this.motionZ *= 0.7D;
+                this.xd *= 0.7D;
+                this.zd *= 0.7D;
             }
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        protected final IAnimatedSprite spriteSet;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        protected final SpriteSet spriteSet;
         
-        public Factory(IAnimatedSprite spriteSet) {
+        public Factory(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             WandPoofParticle particle = new WandPoofParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
             return particle;
         }

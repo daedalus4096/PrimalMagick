@@ -16,12 +16,12 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 /**
  * Primary access point for statistics-related methods.  Also stores the sorted list of stat definitions
@@ -36,17 +36,17 @@ public class StatsManager {
     // Set of unique IDs of players that need their research synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
     
-    public static boolean isSyncScheduled(@Nullable PlayerEntity player) {
+    public static boolean isSyncScheduled(@Nullable Player player) {
         if (player == null) {
             return false;
         } else {
-            return SYNC_SET.remove(player.getUniqueID());
+            return SYNC_SET.remove(player.getUUID());
         }
     }
     
-    public static void scheduleSync(@Nullable PlayerEntity player) {
+    public static void scheduleSync(@Nullable Player player) {
         if (player != null) {
-            SYNC_SET.add(player.getUniqueID());
+            SYNC_SET.add(player.getUUID());
         }
     }
     
@@ -75,7 +75,7 @@ public class StatsManager {
         return REGISTRY.get(loc);
     }
     
-    public static int getValue(@Nullable PlayerEntity player, @Nullable Stat stat) {
+    public static int getValue(@Nullable Player player, @Nullable Stat stat) {
         if (player != null) {
             IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
             if (stats != null) {
@@ -87,21 +87,21 @@ public class StatsManager {
     }
     
     @Nonnull
-    public static ITextComponent getFormattedValue(@Nullable PlayerEntity player, @Nullable Stat stat) {
-        return new StringTextComponent(stat.getFormatter().format(getValue(player, stat)));
+    public static Component getFormattedValue(@Nullable Player player, @Nullable Stat stat) {
+        return new TextComponent(stat.getFormatter().format(getValue(player, stat)));
     }
     
-    public static void incrementValue(@Nullable PlayerEntity player, @Nullable Stat stat) {
+    public static void incrementValue(@Nullable Player player, @Nullable Stat stat) {
         incrementValue(player, stat, 1);
     }
     
-    public static void incrementValue(@Nullable PlayerEntity player, @Nullable Stat stat, int delta) {
+    public static void incrementValue(@Nullable Player player, @Nullable Stat stat, int delta) {
         setValue(player, stat, delta + getValue(player, stat));
     }
     
-    public static void setValue(@Nullable PlayerEntity player, @Nullable Stat stat, int value) {
-        if (player instanceof ServerPlayerEntity) {
-            ServerPlayerEntity spe = (ServerPlayerEntity)player;
+    public static void setValue(@Nullable Player player, @Nullable Stat stat, int value) {
+        if (player instanceof ServerPlayer) {
+            ServerPlayer spe = (ServerPlayer)player;
             IPlayerStats stats = PrimalMagicCapabilities.getStats(spe);
             if (stats != null) {
                 // Set the new value into the player capability
@@ -114,16 +114,16 @@ public class StatsManager {
         }
     }
     
-    public static void setValueIfMax(@Nullable PlayerEntity player, @Nullable Stat stat, int newVal) {
+    public static void setValueIfMax(@Nullable Player player, @Nullable Stat stat, int newVal) {
         if (newVal > getValue(player, stat)) {
             setValue(player, stat, newVal);
         }
     }
     
-    public static void discoverShrine(@Nullable PlayerEntity player, @Nullable Source shrineSource, @Nullable BlockPos shrinePos) {
-        if (player instanceof ServerPlayerEntity && shrineSource != null && shrinePos != null) {
+    public static void discoverShrine(@Nullable Player player, @Nullable Source shrineSource, @Nullable BlockPos shrinePos) {
+        if (player instanceof ServerPlayer && shrineSource != null && shrinePos != null) {
             Stat stat = getShrineStatForSource(shrineSource);
-            ServerPlayerEntity spe = (ServerPlayerEntity)player;
+            ServerPlayer spe = (ServerPlayer)player;
             IPlayerStats stats = PrimalMagicCapabilities.getStats(spe);
             if (stat != null && stats != null && !stats.isLocationDiscovered(shrinePos)) {
                 // If the location has not yet been discovered, mark it as such and increment the appropriate stat

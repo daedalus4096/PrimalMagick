@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagic.common.capabilities;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 
@@ -38,37 +38,37 @@ public class PrimalMagicCapabilities {
     public static final Capability<IManaStorage> MANA_STORAGE = null;
     
     @Nullable
-    public static IPlayerKnowledge getKnowledge(@Nonnull PlayerEntity player) {
+    public static IPlayerKnowledge getKnowledge(@Nonnull Player player) {
         return player.getCapability(KNOWLEDGE, null).orElse(null);
     }
     
     @Nullable
-    public static IPlayerCooldowns getCooldowns(@Nonnull PlayerEntity player) {
+    public static IPlayerCooldowns getCooldowns(@Nonnull Player player) {
         return player.getCapability(COOLDOWNS, null).orElse(null);
     }
     
     @Nullable
-    public static IPlayerStats getStats(@Nonnull PlayerEntity player) {
+    public static IPlayerStats getStats(@Nonnull Player player) {
         return player.getCapability(STATS, null).orElse(null);
     }
     
     @Nullable
-    public static IPlayerAttunements getAttunements(@Nonnull PlayerEntity player) {
+    public static IPlayerAttunements getAttunements(@Nonnull Player player) {
         return player.getCapability(ATTUNEMENTS, null).orElse(null);
     }
     
     @Nullable
-    public static IPlayerCompanions getCompanions(@Nonnull PlayerEntity player) {
+    public static IPlayerCompanions getCompanions(@Nonnull Player player) {
         return player.getCapability(COMPANIONS, null).orElse(null);
     }
     
     @Nullable
-    public static IWorldEntitySwappers getEntitySwappers(@Nonnull World world) {
+    public static IWorldEntitySwappers getEntitySwappers(@Nonnull Level world) {
         return world.getCapability(ENTITY_SWAPPERS, null).orElse(null);
     }
     
     @Nullable
-    public static IManaStorage getManaStorage(@Nonnull TileEntity tile) {
+    public static IManaStorage getManaStorage(@Nonnull BlockEntity tile) {
         return tile.getCapability(MANA_STORAGE, null).orElse(null);
     }
 }

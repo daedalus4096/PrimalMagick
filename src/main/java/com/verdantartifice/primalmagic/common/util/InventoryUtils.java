@@ -7,18 +7,19 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.TagCollectionManager;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -41,7 +42,7 @@ public class InventoryUtils {
      * @param matchNBT whether the test should consider the stacks' NBT data
      * @return true if the player is carrying at least that many of the given item, false otherwise
      */
-    public static boolean isPlayerCarrying(@Nullable PlayerEntity player, @Nullable ItemStack stack, boolean matchNBT) {
+    public static boolean isPlayerCarrying(@Nullable Player player, @Nullable ItemStack stack, boolean matchNBT) {
         if (player == null) {
             return false;
         }
@@ -49,11 +50,11 @@ public class InventoryUtils {
             return true;
         }
         int count = stack.getCount();
-        for (ItemStack searchStack : player.inventory.mainInventory) {
+        for (ItemStack searchStack : player.getInventory().items) {
             // Determine if the stack items, and optionally NBT, match
             boolean areEqual = matchNBT ?
-                    ItemStack.areItemStacksEqual(stack, searchStack) :
-                    ItemStack.areItemsEqual(stack, searchStack);
+                    ItemStack.matches(stack, searchStack) :
+                    ItemStack.isSame(stack, searchStack);
             if (areEqual) {
                 count -= searchStack.getCount();
                 if (count <= 0) {
@@ -76,7 +77,7 @@ public class InventoryUtils {
      * @param stack the itemstack being searched for
      * @return true if the player is carrying at least that many of the given item, false otherwise
      */
-    public static boolean isPlayerCarrying(@Nullable PlayerEntity player, @Nullable ItemStack stack) {
+    public static boolean isPlayerCarrying(@Nullable Player player, @Nullable ItemStack stack) {
         return isPlayerCarrying(player, stack, false);
     }
     
@@ -93,15 +94,15 @@ public class InventoryUtils {
      * @param amount the minimum number of items the player must be carrying for success
      * @return true if the player is carrying at least that many of the given tag's items, false otherwise
      */
-    public static boolean isPlayerCarrying(@Nullable PlayerEntity player, @Nullable ResourceLocation tagName, int amount) {
+    public static boolean isPlayerCarrying(@Nullable Player player, @Nullable ResourceLocation tagName, int amount) {
         if (player == null) {
             return false;
         }
         if (tagName == null) {
             return true;
         }
-        ITag<Item> tag = TagCollectionManager.getManager().getItemTags().get(tagName);
-        for (ItemStack searchStack : player.inventory.mainInventory) {
+        Tag<Item> tag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(tagName);
+        for (ItemStack searchStack : player.getInventory().items) {
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
                 amount -= searchStack.getCount();
@@ -125,7 +126,7 @@ public class InventoryUtils {
      * @param matchNBT whether the test should consider the stacks' NBT data
      * @return true if the given item was removed in the given quantity, false otherwise
      */
-    public static boolean consumeItem(@Nullable PlayerEntity player, @Nullable ItemStack stack, boolean matchNBT) {
+    public static boolean consumeItem(@Nullable Player player, @Nullable ItemStack stack, boolean matchNBT) {
         if (player == null) {
             return false;
         }
@@ -137,19 +138,19 @@ public class InventoryUtils {
             return false;
         }
         int count = stack.getCount();
-        for (int index = 0; index < player.inventory.mainInventory.size(); index++) {
-            ItemStack searchStack = player.inventory.mainInventory.get(index);
+        for (int index = 0; index < player.getInventory().items.size(); index++) {
+            ItemStack searchStack = player.getInventory().items.get(index);
             // Determine if the stack items, and optionally NBT, match
             boolean areEqual = matchNBT ?
-                    ItemStack.areItemStacksEqual(stack, searchStack) :
-                    ItemStack.areItemsEqual(stack, searchStack);
+                    ItemStack.matches(stack, searchStack) :
+                    ItemStack.isSame(stack, searchStack);
             if (areEqual) {
                 if (searchStack.getCount() > count) {
                     searchStack.shrink(count);
                     count = 0;
                 } else {
                     count -= searchStack.getCount();
-                    player.inventory.mainInventory.set(index, ItemStack.EMPTY);
+                    player.getInventory().items.set(index, ItemStack.EMPTY);
                 }
                 if (count <= 0) {
                     // Once a sufficient number of the given item are removed, return true
@@ -171,7 +172,7 @@ public class InventoryUtils {
      * @param stack the item and quantity to be removed
      * @return true if the given item was removed in the given quantity, false otherwise
      */
-    public static boolean consumeItem(@Nullable PlayerEntity player, @Nullable ItemStack stack) {
+    public static boolean consumeItem(@Nullable Player player, @Nullable ItemStack stack) {
         return consumeItem(player, stack, false);
     }
     
@@ -188,7 +189,7 @@ public class InventoryUtils {
      * @param amount the quantity of items to be removed
      * @return true if the given tag's items were removed in the given quantity, false otherwise
      */
-    public static boolean consumeItem(@Nullable PlayerEntity player, @Nullable ResourceLocation tagName, int amount) {
+    public static boolean consumeItem(@Nullable Player player, @Nullable ResourceLocation tagName, int amount) {
         if (player == null) {
             return false;
         }
@@ -199,9 +200,9 @@ public class InventoryUtils {
             // If the player is not carrying enough of the given items, return false immediately
             return false;
         }
-        ITag<Item> tag = TagCollectionManager.getManager().getItemTags().get(tagName);
-        for (int index = 0; index < player.inventory.mainInventory.size(); index++) {
-            ItemStack searchStack = player.inventory.mainInventory.get(index);
+        Tag<Item> tag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(tagName);
+        for (int index = 0; index < player.getInventory().items.size(); index++) {
+            ItemStack searchStack = player.getInventory().items.get(index);
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
                 if (searchStack.getCount() > amount) {
@@ -209,7 +210,7 @@ public class InventoryUtils {
                     amount = 0;
                 } else {
                     amount -= searchStack.getCount();
-                    player.inventory.mainInventory.set(index, ItemStack.EMPTY);
+                    player.getInventory().items.set(index, ItemStack.EMPTY);
                 }
                 if (amount <= 0) {
                     // Once a sufficient number of the given items are removed, return true
@@ -231,17 +232,17 @@ public class InventoryUtils {
      * @return the item handler of the tile entity, or null if no such capability could be found
      */
     @Nullable
-    public static IItemHandler getItemHandler(@Nonnull World world, @Nonnull BlockPos pos, @Nullable Direction side) {
+    public static IItemHandler getItemHandler(@Nonnull Level world, @Nonnull BlockPos pos, @Nullable Direction side) {
         Optional<Pair<IItemHandler, Object>> optional = VanillaInventoryCodeHooks.getItemHandler(world, pos.getX(), pos.getY(), pos.getZ(), side);
         Pair<IItemHandler, Object> pair = optional.orElse(null);
         if (pair != null && pair.getLeft() != null) {
             // If the tile entity directly provides an item handler capability, return that
             return pair.getLeft();
         } else {
-            TileEntity tile = world.getTileEntity(pos);
-            if (tile != null && tile instanceof IInventory) {
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (tile != null && tile instanceof Container) {
                 // If the tile entity does not provide an item handler but does have an inventory, return a wrapper around that
-                return wrapInventory((IInventory)tile, side);
+                return wrapInventory((Container)tile, side);
             } else {
                 // If the tile entity does not have an inventory at all, return null
                 return null;
@@ -257,10 +258,10 @@ public class InventoryUtils {
      * @return an item handler capability compliant wrapper of the given inventory
      */
     @Nonnull
-    public static IItemHandler wrapInventory(@Nonnull IInventory inv, @Nullable Direction side) {
-        if (inv instanceof ISidedInventory) {
+    public static IItemHandler wrapInventory(@Nonnull Container inv, @Nullable Direction side) {
+        if (inv instanceof WorldlyContainer) {
             // Return a sided wrapper for the given side if the inventory is sided
-            return new SidedInvWrapper((ISidedInventory)inv, side);
+            return new SidedInvWrapper((WorldlyContainer)inv, side);
         } else {
             return new InvWrapper(inv);
         }

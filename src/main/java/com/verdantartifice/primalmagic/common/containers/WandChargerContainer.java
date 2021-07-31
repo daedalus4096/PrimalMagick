@@ -3,15 +3,15 @@ package com.verdantartifice.primalmagic.common.containers;
 import com.verdantartifice.primalmagic.common.containers.slots.EssenceSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,20 +20,20 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-public class WandChargerContainer extends Container {
-    protected final IInventory chargerInv;
-    protected final IIntArray chargerData;
+public class WandChargerContainer extends AbstractContainerMenu {
+    protected final Container chargerInv;
+    protected final ContainerData chargerData;
     protected final Slot essenceSlot;
     protected final Slot wandSlot;
     
-    public WandChargerContainer(int id, PlayerInventory playerInv) {
-        this(id, playerInv, new Inventory(2), new IntArray(2));
+    public WandChargerContainer(int id, Inventory playerInv) {
+        this(id, playerInv, new SimpleContainer(2), new SimpleContainerData(2));
     }
     
-    public WandChargerContainer(int id, PlayerInventory playerInv, IInventory chargerInv, IIntArray chargerData) {
+    public WandChargerContainer(int id, Inventory playerInv, Container chargerInv, ContainerData chargerData) {
         super(ContainersPM.WAND_CHARGER.get(), id);
-        assertInventorySize(chargerInv, 2);
-        assertIntArraySize(chargerData, 2);
+        checkContainerSize(chargerInv, 2);
+        checkContainerDataCount(chargerData, 2);
         this.chargerInv = chargerInv;
         this.chargerData = chargerData;
         
@@ -55,70 +55,67 @@ public class WandChargerContainer extends Container {
             this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
         }
 
-        this.trackIntArray(this.chargerData);
+        this.addDataSlots(this.chargerData);
     }
     
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.chargerInv.isUsableByPlayer(playerIn);
+    public boolean stillValid(Player playerIn) {
+        return this.chargerInv.stillValid(playerIn);
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index >= 2 && index < 29) {
                 // If transferring from the backpack, move wands and essences to the appropriate slots, and everything else to the hotbar
-                if (this.wandSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                if (this.wandSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.essenceSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                } else if (this.essenceSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 29, 38, false)) {
+                    if (!this.moveItemStackTo(slotStack, 29, 38, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
             } else if (index >= 29 && index < 38) {
                 // If transferring from the hotbar, move wands and essences to the appropriate slots, and everything else to the backpack
-                if (this.wandSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                if (this.wandSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.essenceSlot.isItemValid(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                } else if (this.essenceSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 2, 29, false)) {
+                    if (!this.moveItemStackTo(slotStack, 2, 29, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.mergeItemStack(slotStack, 2, 38, false)) {
+            } else if (!this.moveItemStackTo(slotStack, 2, 38, false)) {
                 // Move all other transfers to the backpack or hotbar
                 return ItemStack.EMPTY;
             }
             
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
             
             if (slotStack.getCount() == stack.getCount()) {
                 return ItemStack.EMPTY;
             }
             
-            ItemStack taken = slot.onTake(playerIn, slotStack);
-            if (index == 0) {
-                playerIn.dropItem(taken, false);
-            }
+            slot.onTake(playerIn, slotStack);
         }
         return stack;
     }

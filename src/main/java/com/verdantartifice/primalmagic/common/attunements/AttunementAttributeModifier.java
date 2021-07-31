@@ -7,10 +7,10 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 
 /**
  * Definition of an attunement-linked attribute modifier.  Used to modify entity attributes when
@@ -56,18 +56,18 @@ public class AttunementAttributeModifier {
     }
     
     public void applyToEntity(@Nullable LivingEntity entity) {
-        if (entity != null && !entity.world.isRemote) {
-        	ModifiableAttributeInstance instance = entity.getAttribute(this.getAttribute());
+        if (entity != null && !entity.level.isClientSide) {
+        	AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
                 instance.removeModifier(this.getModifier());
-                instance.applyPersistentModifier(this.getModifier());
+                instance.addPermanentModifier(this.getModifier());
             }
         }
     }
     
     public void removeFromEntity(@Nullable LivingEntity entity) {
-        if (entity != null && !entity.world.isRemote) {
-        	ModifiableAttributeInstance instance = entity.getAttribute(this.getAttribute());
+        if (entity != null && !entity.level.isClientSide) {
+        	AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
                 instance.removeModifier(this.getModifier());
             }

@@ -1,15 +1,15 @@
 package com.verdantartifice.primalmagic.client.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.ManaGaugeWidget;
 import com.verdantartifice.primalmagic.common.containers.HoneyExtractorContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,43 +19,43 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  */
 @OnlyIn(Dist.CLIENT)
-public class HoneyExtractorScreen extends ContainerScreen<HoneyExtractorContainer> {
+public class HoneyExtractorScreen extends AbstractContainerScreen<HoneyExtractorContainer> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/honey_extractor.png");
     
     protected ManaGaugeWidget manaGauge;
 
-    public HoneyExtractorScreen(HoneyExtractorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public HoneyExtractorScreen(HoneyExtractorContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.manaGauge.setCurrentMana(this.container.getCurrentMana());
-        this.manaGauge.setMaxMana(this.container.getMaxMana());
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.manaGauge.setCurrentMana(this.menu.getCurrentMana());
+        this.manaGauge.setMaxMana(this.menu.getMaxMana());
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
     
     @Override
     protected void init() {
         super.init();
-        this.manaGauge = this.addButton(new ManaGaugeWidget(this.guiLeft + 10, this.guiTop + 6, Source.SKY, this.container.getCurrentMana(), this.container.getMaxMana()));
+        this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.SKY, this.menu.getCurrentMana(), this.menu.getMaxMana()));
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
         // Don't draw title text
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
         // Render background texture
-        this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
+        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // Animate spin progress indicator
-        int cook = this.container.getSpinProgressionScaled();
-        this.blit(matrixStack, this.guiLeft + 75, this.guiTop + 34, 176, 0, cook + 1, 16);
+        int cook = this.menu.getSpinProgressionScaled();
+        this.blit(matrixStack, this.leftPos + 75, this.topPos + 34, 176, 0, cook + 1, 16);
     }
 }

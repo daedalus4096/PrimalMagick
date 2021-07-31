@@ -21,28 +21,29 @@ import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class ConcocterTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider, IOwnedTileEntity, IManaContainer {
+public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer {
     protected static final int MAX_INPUT_ITEMS = 9;
     protected static final int WAND_SLOT_INDEX = 9;
     protected static final int OUTPUT_SLOT_INDEX = 10;
@@ -50,13 +51,13 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
     protected int cookTime;
     protected int cookTimeTotal;
     protected ManaStorage manaStorage;
-    protected PlayerEntity owner;
+    protected Player owner;
     protected UUID ownerUUID;
 
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     
     // Define a container-trackable representation of this tile's relevant data
-    protected final IIntArray concocterData = new IIntArray() {
+    protected final ContainerData concocterData = new ContainerData() {
         @Override
         public int get(int index) {
             switch (index) {
@@ -87,19 +88,19 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
         }
 
         @Override
-        public int size() {
+        public int getCount() {
             return 4;
         }
     };
     
-    public ConcocterTileEntity() {
-        super(TileEntityTypesPM.CONCOCTER.get(), MAX_INPUT_ITEMS + 2);
+    public ConcocterTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.CONCOCTER.get(), pos, state, MAX_INPUT_ITEMS + 2);
         this.manaStorage = new ManaStorage(10000, 1000, 1000, Source.INFERNAL);
     }
     
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
@@ -108,37 +109,37 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
         this.owner = null;
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
-            this.ownerUUID = compound.getUniqueId("OwnerUUID");
+            this.ownerUUID = compound.getUUID("OwnerUUID");
         }
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
         if (this.ownerUUID != null) {
-            compound.putUniqueId("OwnerUUID", this.ownerUUID);
+            compound.putUUID("OwnerUUID", this.ownerUUID);
         }
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInv, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
         return new ConcocterContainer(windowId, playerInv, this, this.concocterData);
     }
 
     @Override
-    public void setTileOwner(PlayerEntity owner) {
+    public void setTileOwner(Player owner) {
         this.owner = owner;
-        this.ownerUUID = owner.getUniqueID();
+        this.ownerUUID = owner.getUUID();
     }
 
     @Override
-    public PlayerEntity getTileOwner() {
-        if (this.owner == null && this.ownerUUID != null && this.hasWorld() && this.world instanceof ServerWorld) {
+    public Player getTileOwner() {
+        if (this.owner == null && this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel) {
             // If the owner cache is empty, find the entity matching the owner's unique ID
-            ServerPlayerEntity player = ((ServerWorld)this.world).getServer().getPlayerList().getPlayerByUUID(this.ownerUUID);
+            ServerPlayer player = ((ServerLevel)this.level).getServer().getPlayerList().getPlayer(this.ownerUUID);
             if (player != null) {
                 this.owner = player;
             } else {
@@ -149,60 +150,59 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+    public Component getDisplayName() {
+        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 
-    @Override
-    public void tick() {
+    public static void tick(Level level, BlockPos pos, BlockState state, ConcocterTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        if (!this.world.isRemote) {
+        if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
-            ItemStack wandStack = this.items.get(WAND_SLOT_INDEX);
+            ItemStack wandStack = entity.items.get(WAND_SLOT_INDEX);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
-                int centimanaMissing = this.manaStorage.getMaxManaStored(Source.INFERNAL) - this.manaStorage.getManaStored(Source.INFERNAL);
-                int centimanaToTransfer = MathHelper.clamp(centimanaMissing, 0, 100);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.INFERNAL) - entity.manaStorage.getManaStored(Source.INFERNAL);
+                int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
                 if (wand.consumeMana(wandStack, null, Source.INFERNAL, centimanaToTransfer)) {
-                    this.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
+                    entity.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
 
-            Inventory realInv = new Inventory(MAX_INPUT_ITEMS);
-            Inventory testInv = new Inventory(MAX_INPUT_ITEMS);
+            SimpleContainer realInv = new SimpleContainer(MAX_INPUT_ITEMS);
+            SimpleContainer testInv = new SimpleContainer(MAX_INPUT_ITEMS);
             for (int index = 0; index < MAX_INPUT_ITEMS; index++) {
-                ItemStack invStack = this.items.get(index);
-                realInv.setInventorySlotContents(index, invStack);
+                ItemStack invStack = entity.items.get(index);
+                realInv.setItem(index, invStack);
                 // Don't consider fuse length when testing item inputs for recipe determination
-                testInv.setInventorySlotContents(index, ConcoctionUtils.isBomb(invStack) ? ConcoctionUtils.setFuseType(invStack.copy(), FuseType.MEDIUM) : invStack);
+                testInv.setItem(index, ConcoctionUtils.isBomb(invStack) ? ConcoctionUtils.setFuseType(invStack.copy(), FuseType.MEDIUM) : invStack);
             }
-            IConcoctingRecipe recipe = this.world.getServer().getRecipeManager().getRecipe(RecipeTypesPM.CONCOCTING, testInv, this.world).orElse(null);
-            if (this.canConcoct(realInv, recipe)) {
-                this.cookTime++;
-                if (this.cookTime >= this.cookTimeTotal) {
-                    this.cookTime = 0;
-                    this.cookTimeTotal = this.getCookTimeTotal();
-                    this.doConcoction(realInv, recipe);
+            IConcoctingRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING, testInv, level).orElse(null);
+            if (entity.canConcoct(realInv, recipe)) {
+                entity.cookTime++;
+                if (entity.cookTime >= entity.cookTimeTotal) {
+                    entity.cookTime = 0;
+                    entity.cookTimeTotal = entity.getCookTimeTotal();
+                    entity.doConcoction(realInv, recipe);
                     shouldMarkDirty = true;
                 }
             } else {
-                this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
+                entity.cookTime = Mth.clamp(entity.cookTime - 2, 0, entity.cookTimeTotal);
             }
             
-            this.world.setBlockState(this.getPos(), this.world.getBlockState(this.getPos()).with(ConcocterBlock.HAS_BOTTLE, this.showBottle()), Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(pos, state.setValue(ConcocterBlock.HAS_BOTTLE, entity.showBottle()), Constants.BlockFlags.BLOCK_UPDATE);
         }
 
         if (shouldMarkDirty) {
-            this.markDirty();
-            this.syncTile(true);
+            entity.setChanged();
+            entity.syncTile(true);
         }
     }
     
-    protected boolean canConcoct(IInventory inputInv, @Nullable IConcoctingRecipe recipe) {
+    protected boolean canConcoct(Container inputInv, @Nullable IConcoctingRecipe recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
-            ItemStack output = recipe.getRecipeOutput();
+            ItemStack output = recipe.getResultItem();
             if (output.isEmpty()) {
                 return false;
             } else if (this.getMana(Source.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Source.INFERNAL))) {
@@ -213,9 +213,9 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
                 ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
                 if (currentOutput.isEmpty()) {
                     return true;
-                } else if (!currentOutput.isItemEqual(output)) {
+                } else if (!currentOutput.sameItem(output)) {
                     return false;
-                } else if (currentOutput.getCount() + output.getCount() <= this.getInventoryStackLimit() && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
+                } else if (currentOutput.getCount() + output.getCount() <= this.getMaxStackSize() && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
                     return true;
                 } else {
                     return currentOutput.getCount() + output.getCount() <= output.getMaxStackSize();
@@ -226,18 +226,18 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
         }
     }
     
-    protected void doConcoction(IInventory inputInv, @Nullable IConcoctingRecipe recipe) {
+    protected void doConcoction(Container inputInv, @Nullable IConcoctingRecipe recipe) {
         if (recipe != null && this.canConcoct(inputInv, recipe)) {
-            ItemStack recipeOutput = recipe.getCraftingResult(inputInv);
+            ItemStack recipeOutput = recipe.assemble(inputInv);
             ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
             if (currentOutput.isEmpty()) {
                 this.items.set(OUTPUT_SLOT_INDEX, recipeOutput);
-            } else if (recipeOutput.getItem() == currentOutput.getItem() && ItemStack.areItemStackTagsEqual(recipeOutput, currentOutput)) {
+            } else if (recipeOutput.getItem() == currentOutput.getItem() && ItemStack.tagMatches(recipeOutput, currentOutput)) {
                 currentOutput.grow(recipeOutput.getCount());
             }
             
-            for (int index = 0; index < inputInv.getSizeInventory(); index++) {
-                ItemStack stack = inputInv.getStackInSlot(index);
+            for (int index = 0; index < inputInv.getContainerSize(); index++) {
+                ItemStack stack = inputInv.getItem(index);
                 if (!stack.isEmpty()) {
                     stack.shrink(1);
                 }
@@ -262,7 +262,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.removed && cap == PrimalMagicCapabilities.MANA_STORAGE) {
+        if (!this.remove && cap == PrimalMagicCapabilities.MANA_STORAGE) {
             return this.manaStorageOpt.cast();
         }
         return super.getCapability(cap, side);
@@ -294,26 +294,26 @@ public class ConcocterTileEntity extends TileInventoryPM implements ITickableTil
     @Override
     public void setMana(Source source, int amount) {
         this.manaStorage.setMana(source, amount);
-        this.markDirty();
+        this.setChanged();
         this.syncTile(true);
     }
 
     @Override
     public void setMana(SourceList mana) {
         this.manaStorage.setMana(mana);
-        this.markDirty();
+        this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        super.setInventorySlotContents(index, stack);
-        boolean flag = !stack.isEmpty() && stack.isItemEqual(slotStack) && ItemStack.areItemStackTagsEqual(stack, slotStack);
+        super.setItem(index, stack);
+        boolean flag = !stack.isEmpty() && stack.sameItem(slotStack) && ItemStack.tagMatches(stack, slotStack);
         if (index >= 0 && index < MAX_INPUT_ITEMS && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;
-            this.markDirty();
+            this.setChanged();
         }
     }
 }

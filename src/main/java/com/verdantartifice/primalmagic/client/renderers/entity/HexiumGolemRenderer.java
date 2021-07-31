@@ -4,8 +4,8 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.entity.layers.HexiumGolemCracksLayer;
 import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumGolemEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -18,13 +18,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class HexiumGolemRenderer extends AbstractEnchantedGolemRenderer<HexiumGolemEntity> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/hexium_golem/hexium_golem.png");
     
-    public HexiumGolemRenderer(EntityRendererManager rendererManager) {
-        super(rendererManager);
+    public HexiumGolemRenderer(EntityRendererProvider.Context context) {
+        super(context);
         this.addLayer(new HexiumGolemCracksLayer(this));
     }
 
     @Override
-    public ResourceLocation getEntityTexture(HexiumGolemEntity entity) {
+    public ResourceLocation getTextureLocation(HexiumGolemEntity entity) {
         return TEXTURE;
     }
 }

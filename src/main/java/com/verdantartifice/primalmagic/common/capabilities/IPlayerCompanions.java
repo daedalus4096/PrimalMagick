@@ -6,9 +6,9 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.StringRepresentable;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -16,7 +16,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerCompanions extends INBTSerializable<CompoundNBT> {
+public interface IPlayerCompanions extends INBTSerializable<CompoundTag> {
     /**
      * Adds the given entity ID for the given companion type to the player's data.  Removes and returns
      * the oldest companion ID for the given type if the new ID would put the player over the limit for
@@ -64,9 +64,9 @@ public interface IPlayerCompanions extends INBTSerializable<CompoundNBT> {
      * 
      * @param player the player whose client should receive the data
      */
-    public void sync(@Nullable ServerPlayerEntity player);
+    public void sync(@Nullable ServerPlayer player);
     
-    public enum CompanionType implements IStringSerializable {
+    public enum CompanionType implements StringRepresentable {
         GOLEM("golem", 1),
         PIXIE("pixie", 3);
         
@@ -79,7 +79,7 @@ public interface IPlayerCompanions extends INBTSerializable<CompoundNBT> {
         }
 
         @Override
-        public String getString() {
+        public String getSerializedName() {
             return this.name;
         }
         

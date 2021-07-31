@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagic.common.capabilities;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerCooldowns extends INBTSerializable<CompoundNBT> {
+public interface IPlayerCooldowns extends INBTSerializable<CompoundTag> {
     /**
      * Determine if the given cooldown type is active, rendering that ability unusable.
      * 
@@ -46,7 +46,7 @@ public interface IPlayerCooldowns extends INBTSerializable<CompoundNBT> {
      * 
      * @param player the player whose client should receive the data
      */
-    public void sync(@Nullable ServerPlayerEntity player);
+    public void sync(@Nullable ServerPlayer player);
     
     public enum CooldownType {
         SPELL,

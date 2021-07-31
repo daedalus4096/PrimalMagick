@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagic.client.renderers.entity;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.projectiles.AbstractTridentEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -17,12 +17,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PrimaliteTridentRenderer extends AbstractTridentRenderer {
     public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/trident/primalite_trident.png");
 
-    public PrimaliteTridentRenderer(EntityRendererManager renderManager) {
-        super(renderManager);
+    public PrimaliteTridentRenderer(EntityRendererProvider.Context context) {
+        super(context);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(AbstractTridentEntity entity) {
+    public ResourceLocation getTextureLocation(AbstractTridentEntity entity) {
         return TEXTURE;
     }
 }

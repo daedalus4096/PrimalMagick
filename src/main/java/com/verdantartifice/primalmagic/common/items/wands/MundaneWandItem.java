@@ -2,15 +2,18 @@ package com.verdantartifice.primalmagic.common.items.wands;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.MundaneWandISTER;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.IItemRenderProperties;
 
 /**
  * Item definition for a mundane wand.  Unlike modular wands, mundane wands cannot be inscribed with
@@ -20,7 +23,7 @@ import net.minecraft.util.text.StringTextComponent;
  */
 public class MundaneWandItem extends AbstractWandItem {
     public MundaneWandItem() {
-        super(new Item.Properties().group(PrimalMagic.ITEM_GROUP).maxStackSize(1).setISTER(() -> MundaneWandISTER::new));
+        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1));
     }
 
     @Override
@@ -48,9 +51,9 @@ public class MundaneWandItem extends AbstractWandItem {
     }
     
     @Override
-    public ITextComponent getSpellCapacityText(ItemStack stack) {
+    public Component getSpellCapacityText(ItemStack stack) {
         // Mundane wands can't carry spells
-        return new StringTextComponent("0");
+        return new TextComponent("0");
     }
 
     @Override
@@ -81,5 +84,17 @@ public class MundaneWandItem extends AbstractWandItem {
     public boolean addSpell(ItemStack stack, SpellPackage spell) {
         // Mundane wands can't carry spells
         return false;
+    }
+
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            final BlockEntityWithoutLevelRenderer renderer = new MundaneWandISTER();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                return renderer;
+            }
+        });
     }
 }

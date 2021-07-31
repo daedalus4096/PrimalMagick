@@ -4,16 +4,16 @@ import com.verdantartifice.primalmagic.common.containers.slots.CalcinatorFuelSlo
 import com.verdantartifice.primalmagic.common.containers.slots.CalcinatorResultSlot;
 import com.verdantartifice.primalmagic.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -22,22 +22,22 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-public class CalcinatorContainer extends Container {
-    protected final IInventory calcinatorInv;
-    protected final IIntArray calcinatorData;
-    protected final World world;
+public class CalcinatorContainer extends AbstractContainerMenu {
+    protected final Container calcinatorInv;
+    protected final ContainerData calcinatorData;
+    protected final Level world;
     
-    public CalcinatorContainer(int id, PlayerInventory playerInv) {
-        this(id, playerInv, new Inventory(11), new IntArray(4));
+    public CalcinatorContainer(int id, Inventory playerInv) {
+        this(id, playerInv, new SimpleContainer(11), new SimpleContainerData(4));
     }
     
-    public CalcinatorContainer(int id, PlayerInventory playerInv, IInventory calcinatorInv, IIntArray calcinatorData) {
+    public CalcinatorContainer(int id, Inventory playerInv, Container calcinatorInv, ContainerData calcinatorData) {
         super(ContainersPM.CALCINATOR.get(), id);
-        assertInventorySize(calcinatorInv, 11);
-        assertIntArraySize(calcinatorData, 4);
+        checkContainerSize(calcinatorInv, 11);
+        checkContainerDataCount(calcinatorData, 4);
         this.calcinatorInv = calcinatorInv;
         this.calcinatorData = calcinatorData;
-        this.world = playerInv.player.world;
+        this.world = playerInv.player.level;
         
         // Slot 0: calcinator input
         this.addSlot(new Slot(this.calcinatorInv, 0, 34, 17));
@@ -62,12 +62,12 @@ public class CalcinatorContainer extends Container {
             this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
         }
         
-        this.trackIntArray(this.calcinatorData);
+        this.addDataSlots(this.calcinatorData);
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.calcinatorInv.isUsableByPlayer(playerIn);
+    public boolean stillValid(Player playerIn) {
+        return this.calcinatorInv.stillValid(playerIn);
     }
 
     public boolean isFuel(ItemStack stack) {
@@ -75,42 +75,42 @@ public class CalcinatorContainer extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+        Slot slot = this.slots.get(index);
         
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             
             if (index >= 2 && index < 11) {
                 // If transferring calcinator output, move it to the player's backpack or hotbar
-                if (!this.mergeItemStack(slotStack, 11, 47, true)) {
+                if (!this.moveItemStackTo(slotStack, 11, 47, true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onSlotChange(slotStack, stack);
+                slot.onQuickCraft(slotStack, stack);
             } else if (index != 0 && index != 1) {
                 // If transferring from the backpack or hotbar, move fuel to the fuel slot and anything else to the input slot
                 if (this.isFuel(slotStack)) {
-                    if (!this.mergeItemStack(slotStack, 1, 2, false)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    if (!this.mergeItemStack(slotStack, 0, 1, false)) {
+                    if (!this.moveItemStackTo(slotStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
             } else {
                 // Move all other transfers to the player's backpack or hotbar
-                if (!this.mergeItemStack(slotStack, 11, 47, false)) {
+                if (!this.moveItemStackTo(slotStack, 11, 47, false)) {
                     return ItemStack.EMPTY;
                 }
             }
             
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
             
             if (slotStack.getCount() == stack.getCount()) {

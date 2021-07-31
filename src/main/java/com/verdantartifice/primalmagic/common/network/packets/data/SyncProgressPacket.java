@@ -16,11 +16,11 @@ import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet to progress a research entry to its next stage on the server.
@@ -49,16 +49,16 @@ public class SyncProgressPacket implements IMessageToServer {
         this.noFlags = noFlags;
     }
     
-    public static void encode(SyncProgressPacket message, PacketBuffer buf) {
-        buf.writeString(message.key.getRootKey());
+    public static void encode(SyncProgressPacket message, FriendlyByteBuf buf) {
+        buf.writeUtf(message.key.getRootKey());
         buf.writeBoolean(message.firstSync);
         buf.writeBoolean(message.runChecks);
         buf.writeBoolean(message.noFlags);
     }
     
-    public static SyncProgressPacket decode(PacketBuffer buf) {
+    public static SyncProgressPacket decode(FriendlyByteBuf buf) {
         SyncProgressPacket message = new SyncProgressPacket();
-        message.key = SimpleResearchKey.parse(buf.readString());
+        message.key = SimpleResearchKey.parse(buf.readUtf());
         message.firstSync = buf.readBoolean();
         message.runChecks = buf.readBoolean();
         message.noFlags = buf.readBoolean();
@@ -70,7 +70,7 @@ public class SyncProgressPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (message.key != null) {
-                    PlayerEntity player = ctx.get().getSender();
+                    Player player = ctx.get().getSender();
                     if (message.firstSync != message.key.isKnownBy(player)) {
                         // If called for, ensure that prerequisites for the next stage are checked and consumed
                         if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {
@@ -87,7 +87,7 @@ public class SyncProgressPacket implements IMessageToServer {
             ctx.get().setPacketHandled(true);
         }
         
-        protected static boolean checkAndConsumePrerequisites(PlayerEntity player, SimpleResearchKey key) {
+        protected static boolean checkAndConsumePrerequisites(Player player, SimpleResearchKey key) {
             ResearchEntry entry = ResearchEntries.getEntry(key);
             if (entry == null || entry.getStages().isEmpty()) {
                 return true;

@@ -3,13 +3,13 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 import java.util.Collections;
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -28,21 +28,21 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     }
     
     @Override
-    public void renderWidget(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw observation icon
-        Minecraft.getInstance().getTextureManager().bindTexture(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
-        matrixStack.push();
+        Minecraft.getInstance().getTextureManager().bindForSetup(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
+        matrixStack.pushPose();
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-        matrixStack.pop();
+        matrixStack.popPose();
         
         // Draw base class stuff
-        super.renderWidget(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     @Override
-    protected List<ITextComponent> getHoverText() {
-        return Collections.singletonList(new TranslationTextComponent(IPlayerKnowledge.KnowledgeType.OBSERVATION.getNameTranslationKey()));
+    protected List<Component> getHoverText() {
+        return Collections.singletonList(new TranslatableComponent(IPlayerKnowledge.KnowledgeType.OBSERVATION.getNameTranslationKey()));
     }
 }

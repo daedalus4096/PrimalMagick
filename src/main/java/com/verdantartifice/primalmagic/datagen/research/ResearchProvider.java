@@ -22,12 +22,12 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.DataProvider;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
 
-public class ResearchProvider implements IDataProvider {
+public class ResearchProvider implements DataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
     private static final Logger LOGGER = LogManager.getLogger();
     protected final DataGenerator generator;
@@ -37,7 +37,7 @@ public class ResearchProvider implements IDataProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(HashCache cache) throws IOException {
         Path path = this.generator.getOutputFolder();
         Map<ResourceLocation, IFinishedResearchEntry> map = new HashMap<>();
         this.registerEntries((research) -> {
@@ -51,17 +51,17 @@ public class ResearchProvider implements IDataProvider {
         }
     }
 
-    private void saveEntry(DirectoryCache cache, JsonObject json, Path path) {
+    private void saveEntry(HashCache cache, JsonObject json, Path path) {
         try {
             String jsonStr = GSON.toJson((JsonElement)json);
-            String hash = HASH_FUNCTION.hashUnencodedChars(jsonStr).toString();
-            if (!Objects.equals(cache.getPreviousHash(path), hash) || !Files.exists(path)) {
+            String hash = SHA1.hashUnencodedChars(jsonStr).toString();
+            if (!Objects.equals(cache.getHash(path), hash) || !Files.exists(path)) {
                 Files.createDirectories(path.getParent());
                 try (BufferedWriter writer = Files.newBufferedWriter(path)) {
                     writer.write(jsonStr);
                 }
             }
-            cache.recordHash(path, hash);
+            cache.putNew(path, hash);
         } catch (IOException e) {
             LOGGER.error("Couldn't save research entry {}", path, e);
         }

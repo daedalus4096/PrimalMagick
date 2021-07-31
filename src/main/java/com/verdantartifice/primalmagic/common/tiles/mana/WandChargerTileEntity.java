@@ -10,18 +10,19 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Definition of a wand charger tile entity.  Provides the recharge and wand interaction functionality
@@ -30,12 +31,12 @@ import net.minecraft.util.text.TranslationTextComponent;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
  */
-public class WandChargerTileEntity extends TileInventoryPM implements ITickableTileEntity, INamedContainerProvider {
+public class WandChargerTileEntity extends TileInventoryPM implements MenuProvider {
     protected int chargeTime;
     protected int chargeTimeTotal;
     
     // Define a container-trackable representation of this tile's relevant data
-    protected final IIntArray chargerData = new IIntArray() {
+    protected final ContainerData chargerData = new ContainerData() {
         @Override
         public int get(int index) {
             switch (index) {
@@ -61,13 +62,13 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
         }
 
         @Override
-        public int size() {
+        public int getCount() {
             return 2;
         }
     };
     
-    public WandChargerTileEntity() {
-        super(TileEntityTypesPM.WAND_CHARGER.get(), 2);
+    public WandChargerTileEntity(BlockPos pos, BlockState state) {
+        super(TileEntityTypesPM.WAND_CHARGER.get(), pos, state, 2);
     }
     
     @Override
@@ -77,58 +78,57 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
     }
     
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
     }
     
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInv, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
         return new WandChargerContainer(windowId, playerInv, this, this.chargerData);
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+    public Component getDisplayName() {
+        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 
-    @Override
-    public void tick() {
+    public static void tick(Level level, BlockPos pos, BlockState state, WandChargerTileEntity entity) {
         boolean shouldMarkDirty = false;
 
-        if (!this.world.isRemote) {
-            ItemStack inputStack = this.items.get(0);
-            ItemStack wandStack = this.items.get(1);
+        if (!level.isClientSide) {
+            ItemStack inputStack = entity.items.get(0);
+            ItemStack wandStack = entity.items.get(1);
             if (!inputStack.isEmpty() && !wandStack.isEmpty()) {
-                if (this.canCharge()) {
+                if (entity.canCharge()) {
                     // If there's an essence in the input slot and the slotted wand isn't full, do the charge
-                    this.chargeTime++;
-                    if (this.chargeTime >= this.chargeTimeTotal) {
-                        this.chargeTime = 0;
-                        this.chargeTimeTotal = this.getChargeTimeTotal();
-                        this.doCharge();
+                    entity.chargeTime++;
+                    if (entity.chargeTime >= entity.chargeTimeTotal) {
+                        entity.chargeTime = 0;
+                        entity.chargeTimeTotal = entity.getChargeTimeTotal();
+                        entity.doCharge();
                         shouldMarkDirty = true;
                     }
                 } else {
-                    this.chargeTime = 0;
+                    entity.chargeTime = 0;
                 }
-            } else if (this.chargeTime > 0) {
+            } else if (entity.chargeTime > 0) {
                 // Decay any charging progress if the charger isn't populated
-                this.chargeTime = MathHelper.clamp(this.chargeTime - 2, 0, this.chargeTimeTotal);
+                entity.chargeTime = Mth.clamp(entity.chargeTime - 2, 0, entity.chargeTimeTotal);
             }
         }
         
         if (shouldMarkDirty) {
-            this.markDirty();
-            this.syncTile(true);
+            entity.setChanged();
+            entity.syncTile(true);
         }
     }
     
@@ -177,14 +177,14 @@ public class WandChargerTileEntity extends TileInventoryPM implements ITickableT
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        super.setInventorySlotContents(index, stack);
-        boolean flag = !stack.isEmpty() && stack.isItemEqual(slotStack) && ItemStack.areItemStackTagsEqual(stack, slotStack);
+        super.setItem(index, stack);
+        boolean flag = !stack.isEmpty() && stack.sameItem(slotStack) && ItemStack.tagMatches(stack, slotStack);
         if (index == 0 && !flag) {
             this.chargeTimeTotal = this.getChargeTimeTotal();
             this.chargeTime = 0;
-            this.markDirty();
+            this.setChanged();
         }
     }
 }

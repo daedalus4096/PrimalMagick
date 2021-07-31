@@ -8,9 +8,9 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a project material that requires an item stack from a given tag, which may or may not be
@@ -45,8 +45,8 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     }
     
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = super.serializeNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = super.serializeNBT();
         if (this.tagName != null) {
             tag.putString("TagName", this.tagName.toString());
         }
@@ -56,7 +56,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     }
     
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
         if (nbt.contains("TagName")) {
             this.tagName = new ResourceLocation(nbt.getString("TagName"));
@@ -73,12 +73,12 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(PlayerEntity player) {
+    public boolean isSatisfied(Player player) {
         return InventoryUtils.isPlayerCarrying(player, this.tagName, this.quantity);
     }
 
     @Override
-    public boolean consume(PlayerEntity player) {
+    public boolean consume(Player player) {
         // Remove items matching this material's tag from the player's inventory if it's supposed to be consumed
         if (this.consumed) {
             return InventoryUtils.consumeItem(player, this.tagName, this.quantity);
