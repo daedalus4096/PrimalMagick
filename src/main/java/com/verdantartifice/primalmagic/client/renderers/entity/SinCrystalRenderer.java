@@ -25,14 +25,14 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
     protected static final float ANGLE = (float)Math.sin((Math.PI / 4D));
     
     protected final ModelPart glass;
-    protected final ModelPart rune;
+    protected final ModelPart cube;
 
     public SinCrystalRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.shadowRadius = 0.5F;
         ModelPart model = context.bakeLayer(ModelLayers.END_CRYSTAL);
         this.glass = model.getChild("glass");
-        this.rune = model.getChild("rune");
+        this.cube = model.getChild("cube");
     }
     
     @Override
@@ -74,7 +74,7 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
         matrixStackIn.scale(0.875F, 0.875F, 0.875F);
         matrixStackIn.mulPose(new Quaternion(new Vector3f(ANGLE, 0.0F, ANGLE), 60.0F, true));
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f1));
-        this.rune.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
+        this.cube.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
         matrixStackIn.popPose();
         matrixStackIn.popPose();
         BlockPos blockpos = entityIn.getBeamTarget();
