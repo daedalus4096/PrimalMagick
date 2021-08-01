@@ -6,15 +6,12 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.HexiumG
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Entity renderer for a hexium golem.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class HexiumGolemRenderer extends AbstractEnchantedGolemRenderer<HexiumGolemEntity> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/hexium_golem/hexium_golem.png");
     

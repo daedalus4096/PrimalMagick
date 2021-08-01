@@ -17,15 +17,12 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Entity renderer for a spell mine.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/spell_projectile.png");
     protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);

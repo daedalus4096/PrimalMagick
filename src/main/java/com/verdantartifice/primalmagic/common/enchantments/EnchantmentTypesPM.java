@@ -4,8 +4,8 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.wands.IStaff;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Definition of extended enchantment types for the mod.

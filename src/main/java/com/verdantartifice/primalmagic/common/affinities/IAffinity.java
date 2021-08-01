@@ -4,8 +4,8 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeManager;
 
 /**
  * Primary interface for a data-defined affinity entry.

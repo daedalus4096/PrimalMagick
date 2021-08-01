@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagic.client.gui.widgets;
 import java.awt.Color;
 import java.util.Collections;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -12,10 +12,10 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Class for display widgets which show a gauge of a mana pool.

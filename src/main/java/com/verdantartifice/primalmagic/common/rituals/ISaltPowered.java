@@ -2,10 +2,10 @@ package com.verdantartifice.primalmagic.common.rituals;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Interface indicating whether a block can send or receive salt power for rituals.

@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Definition of an enchantment that causes the target to drop soul slivers when struck.

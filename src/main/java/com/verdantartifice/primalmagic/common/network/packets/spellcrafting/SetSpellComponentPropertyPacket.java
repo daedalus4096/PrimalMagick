@@ -9,8 +9,8 @@ import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarConta
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.spells.SpellComponent;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**

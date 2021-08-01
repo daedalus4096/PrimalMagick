@@ -5,8 +5,8 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**

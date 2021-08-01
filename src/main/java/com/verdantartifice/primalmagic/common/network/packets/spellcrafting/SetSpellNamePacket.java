@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**

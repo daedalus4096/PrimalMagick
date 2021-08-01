@@ -2,10 +2,10 @@ package com.verdantartifice.primalmagic.common.research;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.ItemLike;
 
 /**
  * Subtype of research scan trigger that grants the required research for a primal source.  In addition

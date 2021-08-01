@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagic.common.crafting;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 /**

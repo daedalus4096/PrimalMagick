@@ -47,30 +47,27 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.Stat;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Tuple;
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * GUI screen for the grimoire research browser.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");

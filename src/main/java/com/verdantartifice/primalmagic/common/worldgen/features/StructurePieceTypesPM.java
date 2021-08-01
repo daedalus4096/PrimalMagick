@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagic.common.worldgen.features;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 
 /**

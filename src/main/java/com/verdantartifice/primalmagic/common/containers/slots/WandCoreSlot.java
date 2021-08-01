@@ -5,10 +5,10 @@ import com.verdantartifice.primalmagic.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagic.common.items.wands.WandCoreItem;
 
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Custom GUI slot for wand core inputs.

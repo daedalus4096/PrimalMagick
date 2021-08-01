@@ -34,8 +34,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -71,7 +69,6 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
         builder.add(LIT);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // Show flame particles if lit

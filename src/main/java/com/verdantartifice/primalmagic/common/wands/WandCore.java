@@ -14,8 +14,8 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Rarity;
 
 /**
  * Definition of a wand core data structure.  Wand cores determine the number of spells that may be

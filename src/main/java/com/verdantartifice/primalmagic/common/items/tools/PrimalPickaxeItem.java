@@ -3,13 +3,13 @@ package com.verdantartifice.primalmagic.common.items.tools;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Item;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
  * Definition of a pickaxe that comes pre-enchanted with Lucky Strike.

@@ -30,13 +30,13 @@ import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
-import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
 import net.minecraft.commands.synchronization.ArgumentTypes;
-import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.SpawnPlacements.Type;
+import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnPlacements.Type;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;

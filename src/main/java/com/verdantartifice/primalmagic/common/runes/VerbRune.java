@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagic.common.runes;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Rarity;
 
 /**
  * Definition of a verb rune data structure.  One of three rune types needed to imbue an enchantment.

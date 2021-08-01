@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagic.common.runes;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Rarity;
 
 /**
  * Definition of a power rune data structure.  An optional rune to boost imbued enchantments.

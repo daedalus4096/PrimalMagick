@@ -5,11 +5,11 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Constants;
 
 /**

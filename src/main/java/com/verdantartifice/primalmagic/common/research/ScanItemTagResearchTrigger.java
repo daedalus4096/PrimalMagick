@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.research;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
 import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 
 /**

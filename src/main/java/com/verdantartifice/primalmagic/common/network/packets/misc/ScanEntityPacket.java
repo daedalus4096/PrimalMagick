@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 

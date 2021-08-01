@@ -7,10 +7,10 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * Data object identifying a specific research entry, or a specific stage in that research entry.

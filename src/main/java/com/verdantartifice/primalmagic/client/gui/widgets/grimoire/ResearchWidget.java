@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import java.util.Collections;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -12,19 +12,16 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Display widget for showing a specific required research entry on the requirements page.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class ResearchWidget extends AbstractWidget {
     protected static final ResourceLocation BAG_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_bag.png");
     protected static final ResourceLocation TUBE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_tube.png");

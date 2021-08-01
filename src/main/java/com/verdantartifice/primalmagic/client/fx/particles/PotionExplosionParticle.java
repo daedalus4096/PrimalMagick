@@ -1,13 +1,11 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Meta particle shown when detonating an alchemical bomb.
@@ -42,7 +40,6 @@ public class PotionExplosionParticle extends NoRenderParticle {
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public static class Factory implements ParticleProvider<PotionExplosionParticleData> {
         @Override
         public Particle createParticle(PotionExplosionParticleData typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {

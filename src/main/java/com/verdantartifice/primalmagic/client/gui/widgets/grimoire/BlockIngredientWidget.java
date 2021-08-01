@@ -6,15 +6,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 /**
  * Display widget for showing all the possible blocks for a given block ingredient.  Used on
@@ -22,7 +20,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class BlockIngredientWidget extends AbstractWidget {
     protected final BlockIngredient ingredient;
     

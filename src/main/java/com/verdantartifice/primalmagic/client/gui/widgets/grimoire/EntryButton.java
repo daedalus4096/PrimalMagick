@@ -11,15 +11,12 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI button to view the grimoire page for a given research entry.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class EntryButton extends AbstractTopicButton {
     protected ResearchEntry entry;
 

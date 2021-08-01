@@ -12,15 +12,12 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI button to go back to the last-viewed topic in the grimoire.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class BackButton extends Button {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
 

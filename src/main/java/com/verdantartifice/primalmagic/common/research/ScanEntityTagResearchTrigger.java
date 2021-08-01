@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.research;
 
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.Tag;
+import net.minecraft.world.entity.EntityType;
 
 /**
  * Definition of a trigger that grants a specified research entry upon scanning an entity type in a

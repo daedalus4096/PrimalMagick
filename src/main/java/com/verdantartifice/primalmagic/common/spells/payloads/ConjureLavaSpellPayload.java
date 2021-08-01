@@ -4,11 +4,11 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluids;
 
 /**
  * Definition for a lava conjuration spell.  Creates a source block of lava at the designated point.

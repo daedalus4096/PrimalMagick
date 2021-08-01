@@ -2,13 +2,13 @@ package com.verdantartifice.primalmagic.common.misc;
 
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 
-import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.DispenserBlock;
 
 /**
  * Dispenser behavior for lazy spawn egg items.

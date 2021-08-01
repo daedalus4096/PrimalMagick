@@ -5,15 +5,12 @@ import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI button to view the grimoire page for a given research discipline.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class DisciplineButton extends AbstractTopicButton {
     protected ResearchDiscipline discipline;
 

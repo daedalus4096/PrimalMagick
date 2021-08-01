@@ -6,18 +6,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.common.containers.AbstractRunescribingAltarContainer;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
 /**
  * Base GUI screen for runescribing altar blocks.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescribingAltarContainer> extends AbstractContainerScreen<T> {
     public AbstractRunescribingAltarScreen(T screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);

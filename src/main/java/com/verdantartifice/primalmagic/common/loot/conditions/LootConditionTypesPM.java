@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagic.common.loot.conditions;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.world.level.storage.loot.Serializer;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.Serializer;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 /**
  * Registration for the mod's loot condition types.

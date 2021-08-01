@@ -5,10 +5,10 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.StringRepresentable;
 
 /**
  * Definition of an essence type, e.g. the quality of an essence item.

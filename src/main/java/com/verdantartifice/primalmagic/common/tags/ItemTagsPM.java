@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.tags;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
 /**

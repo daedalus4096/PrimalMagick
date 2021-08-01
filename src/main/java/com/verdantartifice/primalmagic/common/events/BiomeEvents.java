@@ -7,8 +7,8 @@ import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;

@@ -17,8 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * A proper calcinator, one of four tiers.  Generates essence by melting other items.
@@ -48,7 +46,6 @@ public class CalcinatorBlock extends AbstractCalcinatorBlock implements ITieredD
         return createTickerHelper(type, TileEntityTypesPM.CALCINATOR.get(), CalcinatorTileEntity::tick);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         if (stateIn.getValue(LIT)) {

@@ -8,9 +8,9 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Definition of a project material that requires an item stack from a given tag, which may or may not be

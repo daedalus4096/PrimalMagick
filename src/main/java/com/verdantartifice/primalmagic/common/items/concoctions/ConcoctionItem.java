@@ -38,8 +38,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Definition of an alchemical concoction.  Similar to a brewed potion, but a single vial contains
@@ -145,7 +143,6 @@ public class ConcoctionItem extends Item {
         return potion.getName(this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);

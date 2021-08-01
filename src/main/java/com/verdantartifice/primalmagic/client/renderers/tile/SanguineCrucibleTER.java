@@ -22,8 +22,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Custom tile entity renderer for sanguine crucible blocks.
@@ -31,7 +29,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.SanguineCrucibleBlock}
  */
-@OnlyIn(Dist.CLIENT)
 public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucibleTileEntity> {
     protected static final ResourceLocation WATER_TEXTURE = new ResourceLocation("block/water_still");
     protected static final Color COLOR = new Color(Source.BLOOD.getColor()).brighter().brighter();

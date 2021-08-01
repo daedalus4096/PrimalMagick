@@ -8,12 +8,12 @@ import com.verdantartifice.primalmagic.common.spells.payloads.LunarDamageSpellPa
 import com.verdantartifice.primalmagic.common.spells.vehicles.BoltSpellVehicle;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 

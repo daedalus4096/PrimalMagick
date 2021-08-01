@@ -3,12 +3,12 @@ package com.verdantartifice.primalmagic.common.items.tools;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
  * Definition of a fishing rod that comes pre-enchanted with Bounty.

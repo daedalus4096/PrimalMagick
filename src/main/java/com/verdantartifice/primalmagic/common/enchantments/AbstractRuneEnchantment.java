@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Base class definition for a rune enchantment.  Rune enchantments can only be applied to items by

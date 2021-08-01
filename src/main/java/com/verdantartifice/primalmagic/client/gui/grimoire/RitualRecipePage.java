@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.BlockIngredientWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWidget;
@@ -13,22 +13,19 @@ import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ManaCostSumma
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagic.common.crafting.RitualRecipe;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.util.Mth;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Grimoire page showing a ritual recipe.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class RitualRecipePage extends AbstractRecipePage {
     protected static final int ITEMS_PER_ROW = 7;
     

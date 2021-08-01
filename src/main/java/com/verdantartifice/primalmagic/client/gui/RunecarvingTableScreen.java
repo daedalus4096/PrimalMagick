@@ -9,23 +9,20 @@ import com.verdantartifice.primalmagic.common.containers.RunecarvingTableContain
 import com.verdantartifice.primalmagic.common.crafting.IRunecarvingRecipe;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GUI screen for runecarving table block.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingTableContainer> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/runecarving_table.png");
     

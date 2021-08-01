@@ -5,18 +5,15 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.containers.WandChargerContainer;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
 /**
  * GUI screen for wand charger block.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class WandChargerScreen extends AbstractContainerScreen<WandChargerContainer> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/wand_charger.png");
 

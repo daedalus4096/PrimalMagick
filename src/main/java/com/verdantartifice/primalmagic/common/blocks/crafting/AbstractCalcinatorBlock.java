@@ -28,8 +28,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Base block definition for the essence furnace and calcinators.  These are like furnaces, but instead of smelting items
@@ -115,7 +113,6 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public abstract void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand);
 }

@@ -19,22 +19,22 @@ import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import net.minecraft.data.recipes.SpecialRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.Tags;
 
 /**

@@ -15,18 +15,15 @@ import com.verdantartifice.primalmagic.common.runes.Rune;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * Grimoire page showing the page elements for a rune enchantment.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class RuneEnchantmentPage extends AbstractPage {
     protected static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire_overlay.png");
     

@@ -13,15 +13,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Display widget for an item research project material.  Used on the research table screen.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget {
     protected ItemProjectMaterial material;
     

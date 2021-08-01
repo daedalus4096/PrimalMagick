@@ -2,16 +2,16 @@ package com.verdantartifice.primalmagic.common.enchantments;
 
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Definition of an enchantment that prevents entities from teleporting for a brief time.

@@ -4,11 +4,11 @@ import com.verdantartifice.primalmagic.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Constants;
 
 /**

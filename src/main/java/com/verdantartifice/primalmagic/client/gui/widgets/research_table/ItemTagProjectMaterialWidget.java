@@ -20,15 +20,12 @@ import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Display widget for an item tag research project material.  Used on the research table screen.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget {
     protected ItemTagProjectMaterial material;
     

@@ -5,17 +5,15 @@ import com.verdantartifice.primalmagic.common.containers.slots.GenericResultSlot
 import com.verdantartifice.primalmagic.common.containers.slots.HoneycombSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Server data container for the honey extractor GUI.
@@ -136,7 +134,6 @@ public class HoneyExtractorContainer extends AbstractContainerMenu {
         return stack;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getSpinProgressionScaled() {
         // Determine how much of the progress arrow to show
         int i = this.extractorData.get(0);
@@ -144,12 +141,10 @@ public class HoneyExtractorContainer extends AbstractContainerMenu {
         return j != 0 && i != 0 ? i * 24 / j : 0;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getCurrentMana() {
         return this.extractorData.get(2);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getMaxMana() {
         return this.extractorData.get(3);
     }

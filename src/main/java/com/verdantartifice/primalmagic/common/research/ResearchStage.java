@@ -18,9 +18,9 @@ import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a research stage, a portion of a research entry.  A research stage contains text to be

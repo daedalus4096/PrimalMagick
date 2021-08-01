@@ -8,11 +8,11 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of a project material that requires a specific item stack, which may or may not be

@@ -8,15 +8,11 @@ import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
 /**
  * Factory for creating widgets to display research project materials.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class ProjectMaterialWidgetFactory {
     @Nullable
     public static AbstractProjectMaterialWidget create(AbstractProjectMaterial material, int x, int y) {

@@ -2,21 +2,19 @@ package com.verdantartifice.primalmagic.common.entities.projectiles;
 
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
@@ -42,7 +40,6 @@ public class AppleEntity extends ThrowableItemProjectile {
         return Items.APPLE;
     }
 
-    @OnlyIn(Dist.CLIENT)
     private ParticleOptions makeParticle() {
         return new ItemParticleOption(ParticleTypes.ITEM, this.getItem());
     }
@@ -50,7 +47,6 @@ public class AppleEntity extends ThrowableItemProjectile {
     /**
      * Handler for {@link World#setEntityState}
      */
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {

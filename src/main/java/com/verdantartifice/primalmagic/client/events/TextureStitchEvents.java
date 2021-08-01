@@ -21,7 +21,6 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -31,7 +30,6 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class TextureStitchEvents {
     @SuppressWarnings("deprecation")

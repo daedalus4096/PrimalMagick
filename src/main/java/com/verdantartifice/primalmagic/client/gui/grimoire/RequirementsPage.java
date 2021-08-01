@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 import java.awt.Color;
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemTagWidget;
@@ -17,21 +17,18 @@ import com.verdantartifice.primalmagic.common.research.Knowledge;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Grimoire page showing the requirements needed to advance a research entry to its next stage.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class RequirementsPage extends AbstractPage {
     protected ResearchStage stage;
     

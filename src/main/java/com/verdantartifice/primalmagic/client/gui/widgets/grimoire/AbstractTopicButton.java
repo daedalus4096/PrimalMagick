@@ -13,15 +13,12 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Base class for research topic selector buttons (e.g. research disciplines).
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public abstract class AbstractTopicButton extends Button {
     protected GrimoireScreen screen;
     

@@ -8,9 +8,9 @@ import com.verdantartifice.primalmagic.common.spells.mods.ForkSpellMod;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.level.Level;
 
 /**
  * Definition of a self-targetting spell vehicle.  No direction vectors or special targeting are

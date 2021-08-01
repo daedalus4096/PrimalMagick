@@ -4,10 +4,10 @@ import java.util.EnumSet;
 
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 
 /**

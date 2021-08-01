@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagic.common.items.tools;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.Tier;
 
 /**
  * Base definition of a shield item made of a magical metal.

@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagic.common.blocks.trees;
 
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Block definition for sunwood slabs.  They are decorative blocks that fade out of existence and become indestructable at night.

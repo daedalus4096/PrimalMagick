@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Definition of an enchantment that grants bonus rolls when fishing or harvesting crops.  Note

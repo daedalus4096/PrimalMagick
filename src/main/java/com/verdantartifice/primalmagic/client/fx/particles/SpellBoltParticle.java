@@ -14,24 +14,21 @@ import com.verdantartifice.primalmagic.client.renderers.types.ThickLinesRenderTy
 import com.verdantartifice.primalmagic.common.util.LineSegment;
 import com.verdantartifice.primalmagic.common.util.VectorUtils;
 
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.Camera;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Particle type shown when casting a bolt-vehicle spell.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class SpellBoltParticle extends Particle {
     protected static final float WIDTH = 6F;
     protected static final double MAX_DISPLACEMENT = 0.5D;
@@ -124,7 +121,6 @@ public class SpellBoltParticle extends Particle {
         return ParticleRenderType.CUSTOM;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static class Factory implements ParticleProvider<SpellBoltParticleData> {
         public Factory(SpriteSet spriteSet) {}
         

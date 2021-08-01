@@ -10,12 +10,12 @@ import com.verdantartifice.primalmagic.common.runes.RuneManager;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * Custom GUI slot for runescribing results.

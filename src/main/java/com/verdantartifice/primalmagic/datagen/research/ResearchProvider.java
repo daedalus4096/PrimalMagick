@@ -22,10 +22,10 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
 import net.minecraft.data.DataProvider;
-import net.minecraft.world.item.Items;
+import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 
 public class ResearchProvider implements DataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();

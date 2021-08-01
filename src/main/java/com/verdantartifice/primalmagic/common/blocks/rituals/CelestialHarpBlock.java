@@ -40,8 +40,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 
 /**
@@ -150,7 +148,6 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // Show spell sparkles if receiving salt power

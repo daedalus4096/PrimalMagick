@@ -3,18 +3,16 @@ package com.verdantartifice.primalmagic.common.containers;
 import com.verdantartifice.primalmagic.common.containers.slots.GenericResultSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Server data container for the concocter GUI.
@@ -128,7 +126,6 @@ public class ConcocterContainer extends AbstractContainerMenu {
         return stack;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getCookProgressionScaled() {
         // Determine how much of the cook arrow to show
         int i = this.concocterData.get(0);
@@ -136,12 +133,10 @@ public class ConcocterContainer extends AbstractContainerMenu {
         return j != 0 && i != 0 ? i * 24 / j : 0;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getCurrentMana() {
         return this.concocterData.get(2);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getMaxMana() {
         return this.concocterData.get(3);
     }

@@ -8,21 +8,21 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.Util;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
 
 /**
  * Definition for an animal conjuration spell.  Spawns a random passive animal at the target location.

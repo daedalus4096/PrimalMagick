@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.spells;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 
 /**
  * Definition of a spell property.  Spell components have zero to two properties that determine their

@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**

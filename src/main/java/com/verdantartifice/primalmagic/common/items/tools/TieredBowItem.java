@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.items.tools;
 
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 
 /**
  * Definition of a repairable bow item made of a magical metal.

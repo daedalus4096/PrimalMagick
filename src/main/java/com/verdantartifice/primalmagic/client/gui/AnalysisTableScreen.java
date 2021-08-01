@@ -14,23 +14,20 @@ import com.verdantartifice.primalmagic.common.network.packets.misc.AnalysisActio
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI screen for analysis table block.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_table.png");
     private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_button.png");

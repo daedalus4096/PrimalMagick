@@ -3,17 +3,15 @@ package com.verdantartifice.primalmagic.common.containers;
 import com.verdantartifice.primalmagic.common.containers.slots.EssenceSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Server data container for the wand charger GUI.
@@ -120,7 +118,6 @@ public class WandChargerContainer extends AbstractContainerMenu {
         return stack;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getChargeProgressionScaled() {
         // Determine how much of the charge arrow to show
         int i = this.chargerData.get(0);

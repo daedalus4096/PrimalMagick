@@ -2,12 +2,12 @@ package com.verdantartifice.primalmagic.common.crafting;
 
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.NonNullList;
 
 /**
  * Special crafting inventory for holding a wand.

@@ -5,8 +5,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**

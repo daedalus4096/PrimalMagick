@@ -10,8 +10,8 @@ import com.verdantartifice.primalmagic.common.affinities.AffinityType;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class PotionBonusAffinityBuilder {

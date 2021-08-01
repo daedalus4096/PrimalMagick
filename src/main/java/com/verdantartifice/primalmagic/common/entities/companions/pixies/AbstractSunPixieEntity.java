@@ -7,10 +7,10 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.payloads.HealingSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.BoltSpellVehicle;
 
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
 /**

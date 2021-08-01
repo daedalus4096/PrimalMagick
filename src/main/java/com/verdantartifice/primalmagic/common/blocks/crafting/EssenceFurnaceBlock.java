@@ -21,8 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * The most rudimentary type of calcinator, it doesn't even warrant the name.  It works slower and only
@@ -48,7 +46,6 @@ public class EssenceFurnaceBlock extends AbstractCalcinatorBlock {
         return createTickerHelper(type, TileEntityTypesPM.ESSENCE_FURNACE.get(), EssenceFurnaceTileEntity::tick);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         if (stateIn.getValue(LIT)) {

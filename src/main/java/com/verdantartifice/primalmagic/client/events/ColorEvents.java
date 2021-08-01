@@ -10,13 +10,12 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,7 +25,6 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ColorEvents {
     @SubscribeEvent

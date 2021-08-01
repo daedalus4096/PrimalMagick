@@ -5,15 +5,12 @@ import com.verdantartifice.primalmagic.common.entities.companions.golems.Abstrac
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Definition of a 3D model for a primalite golem.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class EnchantedGolemModel<T extends AbstractEnchantedGolemEntity> extends HierarchicalModel<T> {
     protected final ModelPart root;
     protected final ModelPart golemHead;

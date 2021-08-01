@@ -29,8 +29,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.RenderProperties;
 
 /**
@@ -38,7 +36,6 @@ import net.minecraftforge.client.RenderProperties;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class GuiUtils {
     public static boolean renderItemStack(PoseStack matrixStack, ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
         boolean retVal = false;

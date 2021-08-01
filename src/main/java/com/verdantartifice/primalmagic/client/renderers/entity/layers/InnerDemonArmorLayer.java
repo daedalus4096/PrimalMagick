@@ -3,22 +3,19 @@ package com.verdantartifice.primalmagic.client.renderers.entity.layers;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.misc.InnerDemonEntity;
 
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Layer renderer for the energy field surrounding an inner demon.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class InnerDemonArmorLayer extends EnergySwirlLayer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/inner_demon/inner_demon_armor.png");
     protected final PlayerModel<InnerDemonEntity> model;

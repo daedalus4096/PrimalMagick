@@ -2,10 +2,10 @@ package com.verdantartifice.primalmagic.common.blocks.trees;
 
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.LevelAccessor;
 
 /**
  * Block definition for sunwood leaves.  They are decorative blocks that fade out of existence and become indestructable at night.

@@ -14,15 +14,12 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Entity renderer for a flying carpet.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class FlyingCarpetRenderer extends EntityRenderer<FlyingCarpetEntity> {
     private static final ResourceLocation TEXTURE_WHITE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/flying_carpet/flying_carpet_white.png");
     private static final ResourceLocation TEXTURE_ORANGE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/flying_carpet/flying_carpet_orange.png");

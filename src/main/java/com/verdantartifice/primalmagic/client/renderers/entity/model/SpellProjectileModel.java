@@ -9,8 +9,6 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Entity model for a spell projectile.  Used by the entity renderer.
@@ -18,7 +16,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer}
  */
-@OnlyIn(Dist.CLIENT)
 public class SpellProjectileModel extends HierarchicalModel<SpellProjectileEntity> {
     protected final ModelPart root;
     

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * Definition of a wand enchantment that mimics and stacks with the effect of the Amplify spell mod.

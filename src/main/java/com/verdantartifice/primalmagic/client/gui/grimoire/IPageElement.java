@@ -2,15 +2,11 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
 /**
  * Rendering interface for an element of a grimoire page
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public interface IPageElement {
     /**
      * Render this page element

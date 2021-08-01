@@ -13,9 +13,9 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.stats.Stat;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.ChatFormatting;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Definition of a primal source.  Each source represents a different type of magic in the mod, and

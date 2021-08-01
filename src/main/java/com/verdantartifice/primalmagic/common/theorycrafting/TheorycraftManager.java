@@ -12,10 +12,10 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Primary access point for theorycraft-related methods.  Also stores defined research projects in a

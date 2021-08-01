@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
  * Helper methods for dealing with mod enchantments.

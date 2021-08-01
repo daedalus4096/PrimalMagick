@@ -2,23 +2,20 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Display widget to mark a new section of research entries (e.g. "Updated") in the grimoire index.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class SectionHeaderWidget extends AbstractWidget {
     public SectionHeaderWidget(int xIn, int yIn, Component msg) {
         super(xIn, yIn, 123, 12, msg);

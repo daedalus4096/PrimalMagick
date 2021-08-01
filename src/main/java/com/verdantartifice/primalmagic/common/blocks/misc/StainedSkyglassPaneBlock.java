@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.blocks.misc;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.block.BeaconBeamBlock;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Block definition for a stained skyglass pane.  Like normal stained glass panes, except that it

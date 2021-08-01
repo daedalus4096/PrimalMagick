@@ -9,8 +9,8 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemProjectMaterial;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
 public class ItemMaterialBuilder {

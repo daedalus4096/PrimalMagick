@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;

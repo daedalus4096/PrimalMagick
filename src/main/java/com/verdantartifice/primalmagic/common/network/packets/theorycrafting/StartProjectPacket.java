@@ -8,8 +8,8 @@ import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**

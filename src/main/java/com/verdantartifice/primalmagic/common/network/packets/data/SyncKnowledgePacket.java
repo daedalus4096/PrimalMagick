@@ -11,9 +11,9 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**

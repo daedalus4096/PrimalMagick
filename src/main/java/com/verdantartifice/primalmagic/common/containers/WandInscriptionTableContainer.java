@@ -8,20 +8,20 @@ import com.verdantartifice.primalmagic.common.containers.slots.SpellScrollFilled
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagic.common.crafting.WandInscriptionRecipe;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 /**

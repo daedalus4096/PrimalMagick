@@ -7,9 +7,9 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Definition of a project material that requires one or more observations, which may or may not be consumed as part

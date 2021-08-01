@@ -9,16 +9,12 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
 /**
  * Grimoire page showing the player's mod-relevant statistics (e.g. the number of times they cast
  * a spell).
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class StatisticsPage extends AbstractPage {
     public static final String TOPIC = "stats";
     

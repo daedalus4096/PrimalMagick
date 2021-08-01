@@ -15,8 +15,6 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Custom item stack renderer for magical metal tridents.
@@ -24,7 +22,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.items.tools.AbstractTieredTridentItem}
  */
-@OnlyIn(Dist.CLIENT)
 public abstract class AbstractTieredTridentISTER extends BlockEntityWithoutLevelRenderer {
     protected TridentModel model;
     

@@ -2,20 +2,17 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * A string element to be rendered on a grimoire page.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class PageString implements IPageElement {
     protected String str;
     

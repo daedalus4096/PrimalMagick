@@ -32,15 +32,12 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI screen for the spellcrafting altar block.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class SpellcraftingAltarScreen extends AbstractContainerScreen<SpellcraftingAltarContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/spellcrafting_altar.png");
     

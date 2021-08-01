@@ -4,15 +4,15 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.AnalysisResultSlot;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 
 /**
  * Server data container for the analysis table GUI.

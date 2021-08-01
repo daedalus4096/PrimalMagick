@@ -4,9 +4,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Definition of a project material that requires experience levels, which may or may not be consumed as part

@@ -5,15 +5,12 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.StatisticsPage;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI button to view the grimoire statistics page.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class StatisticsButton extends AbstractTopicButton {
     public StatisticsButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());

@@ -7,8 +7,8 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantmentBonusAffinity extends AbstractAffinity {

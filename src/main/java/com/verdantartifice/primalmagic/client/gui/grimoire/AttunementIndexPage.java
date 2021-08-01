@@ -8,15 +8,12 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Grimoire page showing the list of discovered attunements.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class AttunementIndexPage extends AbstractPage {
     public static final String TOPIC = "attunements";
 

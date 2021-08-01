@@ -14,15 +14,12 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Entity renderer for an inner demon.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
     protected static final float SCALE = 2.0F;
     

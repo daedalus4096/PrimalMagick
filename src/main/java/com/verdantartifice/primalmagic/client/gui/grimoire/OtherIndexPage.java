@@ -14,15 +14,12 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Grimoire page showing a list of topics not directly tied to research entries.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class OtherIndexPage extends AbstractPage {
     @Override
     public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {

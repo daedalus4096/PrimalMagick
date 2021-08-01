@@ -7,9 +7,9 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.AttunementThresholdWidget;
@@ -21,15 +21,12 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Grimoire page showing the details of a discovered attunement.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class AttunementPage extends AbstractPage {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/attunement_meter.png");
 

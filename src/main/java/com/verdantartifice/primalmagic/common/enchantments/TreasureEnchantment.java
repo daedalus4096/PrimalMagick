@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagic.common.enchantments;
 
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.LootBonusEnchantment;
-import net.minecraft.world.entity.EquipmentSlot;
 
 /**
  * Definition of a loot bonus enchantment that can be applied to wands and staves.

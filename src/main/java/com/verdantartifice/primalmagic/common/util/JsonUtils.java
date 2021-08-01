@@ -11,9 +11,9 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Collection of utility methods pertaining to JSON parsing.

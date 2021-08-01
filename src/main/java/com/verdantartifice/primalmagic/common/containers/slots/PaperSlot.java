@@ -3,11 +3,11 @@ package com.verdantartifice.primalmagic.common.containers.slots;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Custom GUI slot for paper inputs.

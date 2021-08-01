@@ -10,15 +10,13 @@ import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Item definition for ambrosia.  Magical food that induces attunement to a primal source in the eater, to a limit.
@@ -69,7 +67,6 @@ public class AmbrosiaItem extends Item {
         return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getColor(int tintIndex) {
         return tintIndex == 0 ? 0xFFFFFF : this.source.getColor();
     }

@@ -16,25 +16,23 @@ import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
 
 /**
@@ -53,10 +51,8 @@ public class ArcanometerItem extends Item {
     
     public static ItemPropertyFunction getScanStateProperty() {
     	return new ItemPropertyFunction() {
-            @OnlyIn(Dist.CLIENT)
             protected float scanState = 0;
 
-            @OnlyIn(Dist.CLIENT)
             @Override
             public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) {
                 if (entity == null || !(entity instanceof Player)) {
@@ -72,12 +68,10 @@ public class ArcanometerItem extends Item {
                 }
             }
             
-            @OnlyIn(Dist.CLIENT)
             protected void incrementScanState() {
                 this.scanState = Math.min(4.0F, this.scanState + 0.25F);
             }
             
-            @OnlyIn(Dist.CLIENT)
             protected void decrementScanState() {
                 this.scanState = Math.max(0.0F, this.scanState - 0.25F);
             }

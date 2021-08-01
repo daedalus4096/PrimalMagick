@@ -10,18 +10,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RuneEnchantmentButton;
 
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * Grimoire page showing the list of discovered rune enchantments.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class RuneEnchantmentIndexPage extends AbstractPage {
     public static final String TOPIC = "rune_enchantments";
 

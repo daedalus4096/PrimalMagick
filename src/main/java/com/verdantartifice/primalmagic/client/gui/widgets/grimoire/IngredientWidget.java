@@ -7,11 +7,9 @@ import com.verdantartifice.primalmagic.client.util.GuiUtils;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Display widget for showing all the possible itemstacks for a given crafting ingredient.  Used
@@ -19,7 +17,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class IngredientWidget extends AbstractWidget {
     protected Ingredient ingredient;
 

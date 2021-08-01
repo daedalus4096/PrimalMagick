@@ -10,8 +10,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Rarity;
 
 /**
  * Base definition of a rune data structure.  Runes come in different types and can be combined on items

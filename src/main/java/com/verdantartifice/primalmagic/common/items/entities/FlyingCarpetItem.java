@@ -24,8 +24,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -62,7 +60,6 @@ public class FlyingCarpetItem extends Item {
     
     public static ItemPropertyFunction getColorProperty() {
         return new ItemPropertyFunction() {
-            @OnlyIn(Dist.CLIENT)
             @Override
             public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) {
                 DyeColor color = null;

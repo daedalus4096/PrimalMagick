@@ -44,8 +44,6 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.Constants;
 
@@ -149,7 +147,6 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // Show spell sparkles if receiving salt power

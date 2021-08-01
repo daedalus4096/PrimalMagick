@@ -9,9 +9,9 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerLevel;
 
 /**
  * Primary access point for companion-related methods.  Companions are entities that follow a

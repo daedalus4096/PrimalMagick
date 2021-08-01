@@ -7,8 +7,8 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**

@@ -5,8 +5,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 

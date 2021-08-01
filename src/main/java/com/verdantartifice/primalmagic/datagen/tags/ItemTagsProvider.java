@@ -7,13 +7,13 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 

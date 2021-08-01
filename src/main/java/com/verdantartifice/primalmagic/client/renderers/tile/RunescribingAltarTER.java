@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Custom tile entity renderer for runescribing altar blocks.
@@ -21,7 +19,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.crafting.RunescribingAltarBlock}
  */
-@OnlyIn(Dist.CLIENT)
 public class RunescribingAltarTER implements BlockEntityRenderer<RunescribingAltarTileEntity> {
     protected ItemStack runeStack = null;
     protected Level level;

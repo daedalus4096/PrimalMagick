@@ -4,17 +4,17 @@ import java.util.EnumSet;
 
 import com.verdantartifice.primalmagic.common.entities.companions.AbstractCompanionEntity;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.LevelReader;
 
 /**
  * AI goal for a companion to follow its owner.

@@ -2,19 +2,17 @@ package com.verdantartifice.primalmagic.client.gui.grimoire;
 
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.item.crafting.Recipe;
 
 /**
  * Base class for grimoire shapeless recipe pages.
@@ -22,7 +20,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @param <T> type of recipe, e.g. ShapelessArcaneRecipe
  */
-@OnlyIn(Dist.CLIENT)
 public abstract class AbstractShapelessRecipePage<T extends Recipe<?>> extends AbstractRecipePage {
     protected T recipe;
     

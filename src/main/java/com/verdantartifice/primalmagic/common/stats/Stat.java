@@ -4,8 +4,8 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.stats.StatFormatter;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.StatFormatter;
 
 /**
  * Definition of a statistic tracked by the mod, such as how many times the grimoire is opened.  Does

@@ -18,8 +18,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Custom tile entity renderer for ritual altar tile entities.
@@ -28,7 +26,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity}
  */
 @SuppressWarnings("deprecation")
-@OnlyIn(Dist.CLIENT)
 public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity> {
     protected Level level;
     

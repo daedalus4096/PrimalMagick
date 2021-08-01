@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagic.client.gui.widgets;
 import java.awt.Color;
 import java.util.Collections;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
@@ -15,15 +15,12 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Base class for display widgets which show a source icon with amount.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public abstract class AbstractSourceWidget extends AbstractWidget {
     protected Source source;
     protected int amount;

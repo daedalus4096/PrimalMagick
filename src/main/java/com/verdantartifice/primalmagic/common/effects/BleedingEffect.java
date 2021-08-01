@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.effects;
 
 import com.verdantartifice.primalmagic.common.misc.DamageSourcesPM;
 
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 
 /**
  * Definition for a potion effect type that does armor-ignoring damage over time.  Not effective

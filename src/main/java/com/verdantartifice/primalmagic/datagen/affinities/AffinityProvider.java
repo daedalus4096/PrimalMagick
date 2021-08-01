@@ -24,13 +24,13 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
 import net.minecraft.data.DataProvider;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.data.HashCache;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantments;
 
 public class AffinityProvider implements DataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();

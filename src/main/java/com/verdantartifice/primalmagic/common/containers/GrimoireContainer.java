@@ -9,9 +9,9 @@ import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * Server data container for the grimoire GUI.

@@ -1,21 +1,18 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
-import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Particle type shown during spell trails and impacts.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class SpellSparkleParticle extends TextureSheetParticle {
     protected final SpriteSet spriteSet;
 
@@ -46,7 +43,6 @@ public class SpellSparkleParticle extends TextureSheetParticle {
         this.setSpriteFromAge(this.spriteSet);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         protected final SpriteSet spriteSet;
         

@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagic.common.crafting;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.core.NonNullList;
 
 /**
  * Crafting recipe interface for a ritual recipe.  Ritual recipes are performed across multiple

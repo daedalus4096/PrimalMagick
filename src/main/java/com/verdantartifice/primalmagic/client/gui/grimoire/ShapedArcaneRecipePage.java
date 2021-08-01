@@ -4,15 +4,11 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagic.common.crafting.ShapedArcaneRecipe;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
 /**
  * Grimoire page showing a shaped arcane recipe.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class ShapedArcaneRecipePage extends AbstractShapedRecipePage<ShapedArcaneRecipe> {
     public ShapedArcaneRecipePage(ShapedArcaneRecipe recipe) {
         super(recipe);

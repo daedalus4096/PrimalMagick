@@ -5,15 +5,12 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.RuneEnchantmentIndexP
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI button to view the grimoire rune enchantment index page.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class RuneEnchantmentIndexButton extends AbstractTopicButton {
     public RuneEnchantmentIndexButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
         super(widthIn, heightIn, 123, 12, text, screen, new Handler());

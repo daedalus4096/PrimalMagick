@@ -7,13 +7,13 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 

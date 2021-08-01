@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 

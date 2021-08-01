@@ -8,8 +8,8 @@ import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 

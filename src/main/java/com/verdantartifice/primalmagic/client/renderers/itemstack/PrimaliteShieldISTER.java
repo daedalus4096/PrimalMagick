@@ -1,17 +1,14 @@
 package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Custom item stack renderer for a primalite shield.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class PrimaliteShieldISTER extends AbstractTieredShieldISTER {
     public static final ResourceLocation TEXTURE_SHIELD_BASE = new ResourceLocation("primalmagic:entity/shield/primalite_shield_base");
     public static final ResourceLocation TEXTURE_SHIELD_NO_PATTERN = new ResourceLocation("primalmagic:entity/shield/primalite_shield_base_nopattern");

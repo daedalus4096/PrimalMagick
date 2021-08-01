@@ -12,15 +12,12 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI button to navigate to the next or previous page of the current grimoire entry.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class PageButton extends Button {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
 

@@ -16,8 +16,6 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Custom tile entity renderer for ritual bell blocks.
@@ -26,7 +24,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.rituals.RitualBellBlock}
  */
 @SuppressWarnings("deprecation")
-@OnlyIn(Dist.CLIENT)
 public class RitualBellTER implements BlockEntityRenderer<RitualBellTileEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/ritual_bell_body");
     public static final Material BODY_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, TEXTURE);

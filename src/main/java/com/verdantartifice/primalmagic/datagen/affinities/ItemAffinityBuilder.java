@@ -11,8 +11,8 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemAffinityBuilder {

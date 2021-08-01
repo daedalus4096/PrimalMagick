@@ -10,15 +10,12 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Definition of a 3D model for a basic earth pixie.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class PixieModel extends HierarchicalModel<AbstractPixieEntity> {
     protected final ModelPart root;
     protected final ModelPart head;

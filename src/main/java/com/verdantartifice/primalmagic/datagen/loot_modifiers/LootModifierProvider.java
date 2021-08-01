@@ -14,17 +14,17 @@ import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
 
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.FishingHookPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
-import net.minecraft.advancements.critereon.FishingHookPredicate;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
-import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 

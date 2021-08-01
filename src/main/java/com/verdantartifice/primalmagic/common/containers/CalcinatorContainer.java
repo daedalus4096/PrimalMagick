@@ -4,18 +4,16 @@ import com.verdantartifice.primalmagic.common.containers.slots.CalcinatorFuelSlo
 import com.verdantartifice.primalmagic.common.containers.slots.CalcinatorResultSlot;
 import com.verdantartifice.primalmagic.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Server data container for the calcinator GUI.
@@ -123,7 +121,6 @@ public class CalcinatorContainer extends AbstractContainerMenu {
         return stack;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getCookProgressionScaled() {
         // Determine how much of the cook arrow to show
         int i = this.calcinatorData.get(2);
@@ -131,7 +128,6 @@ public class CalcinatorContainer extends AbstractContainerMenu {
         return j != 0 && i != 0 ? i * 24 / j : 0;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getBurnLeftScaled() {
         // Determine how much of the fuel burn timer to show
         int total = this.calcinatorData.get(1);
@@ -141,7 +137,6 @@ public class CalcinatorContainer extends AbstractContainerMenu {
         return this.calcinatorData.get(0) * 13 / total;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public boolean isBurning() {
         return this.calcinatorData.get(0) > 0;
     }

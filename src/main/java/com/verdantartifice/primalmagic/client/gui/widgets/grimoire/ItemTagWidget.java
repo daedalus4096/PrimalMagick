@@ -10,14 +10,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.tags.Tag;
-import net.minecraft.tags.SerializationTags;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Display widget for showing all the possible itemstacks for a given tag.  Used
@@ -25,7 +23,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class ItemTagWidget extends AbstractWidget {
     protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
 

@@ -1,25 +1,22 @@
 package com.verdantartifice.primalmagic.client.fx.particles;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Particle type shown when a ritual offering is being drawn into the altar.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class OfferingParticle extends TextureSheetParticle {
     protected final float uVal;
     protected final float vVal;
@@ -124,7 +121,6 @@ public class OfferingParticle extends TextureSheetParticle {
                 (Mth.floor(this.z) == Mth.floor(this.targetZ));
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static class Factory implements ParticleProvider<ItemParticleOption> {
         public Factory(SpriteSet spriteSet) {}
 

@@ -24,18 +24,18 @@ import com.verdantartifice.primalmagic.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagic.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.Level;
 
 /**
  * Primary access point for spell-related methods.  Also stores defined spell component data in static registries.

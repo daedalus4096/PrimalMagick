@@ -47,10 +47,10 @@ import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntit
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellProjectileEntity;
 
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 

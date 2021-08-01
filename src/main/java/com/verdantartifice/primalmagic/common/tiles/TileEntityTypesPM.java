@@ -22,8 +22,8 @@ import com.verdantartifice.primalmagic.common.tiles.rituals.RitualLecternTileEnt
 import com.verdantartifice.primalmagic.common.tiles.rituals.SoulAnvilTileEntity;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 

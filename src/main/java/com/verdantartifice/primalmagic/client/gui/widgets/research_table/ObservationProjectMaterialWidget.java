@@ -10,15 +10,12 @@ import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectM
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Display widget for an observation research project material.  Used on the research table screen.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWidget {
     protected ObservationProjectMaterial material;
     

@@ -23,15 +23,15 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.HashCache;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 
 public class ProjectProvider implements DataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();

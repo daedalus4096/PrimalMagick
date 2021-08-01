@@ -12,23 +12,20 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Create client-side special effects, usually involving particles.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class FxDispatcher {
     public static final FxDispatcher INSTANCE = new FxDispatcher();
     

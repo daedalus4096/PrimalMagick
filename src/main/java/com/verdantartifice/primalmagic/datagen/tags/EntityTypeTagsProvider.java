@@ -6,11 +6,11 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
 
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 /**

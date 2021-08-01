@@ -15,15 +15,12 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Grimoire page showing the list of available research entries in a discipline.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class DisciplinePage extends AbstractPage {
     protected ResearchDiscipline discipline;
     protected List<Object> contents = new ArrayList<>();

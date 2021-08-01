@@ -5,15 +5,12 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * GUI button to view the grimoire page for a given source attunement.
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class AttunementButton extends AbstractTopicButton {
     protected Source source;
     

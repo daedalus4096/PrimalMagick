@@ -9,8 +9,8 @@ import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
 import net.minecraft.Util;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 
 /**
  * Definition for a moonwood tree.  Used by moonwood saplings to spawn the moonwood tree worldgen feature.

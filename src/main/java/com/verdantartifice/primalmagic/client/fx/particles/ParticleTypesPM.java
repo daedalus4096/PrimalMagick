@@ -3,13 +3,11 @@ package com.verdantartifice.primalmagic.client.fx.particles;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagic.PrimalMagic;
 
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -18,7 +16,6 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
 public class ParticleTypesPM {
     private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PrimalMagic.MODID);
 

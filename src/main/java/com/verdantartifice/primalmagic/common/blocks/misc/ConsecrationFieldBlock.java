@@ -5,26 +5,24 @@ import java.util.Random;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Block definition for the consecration field.  Consecration fields prevent entry by non-player mobs
@@ -38,7 +36,6 @@ public class ConsecrationFieldBlock extends Block {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // Show glittering particles
         super.animateTick(stateIn, worldIn, pos, rand);

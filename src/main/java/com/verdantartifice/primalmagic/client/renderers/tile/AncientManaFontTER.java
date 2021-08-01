@@ -18,8 +18,6 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Custom tile entity renderer for ancient mana font blocks.
@@ -27,7 +25,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock}
  */
-@OnlyIn(Dist.CLIENT)
 public class AncientManaFontTER implements BlockEntityRenderer<AncientManaFontTileEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/mana_font_core");
     

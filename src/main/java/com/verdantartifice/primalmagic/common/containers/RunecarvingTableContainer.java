@@ -10,21 +10,19 @@ import com.verdantartifice.primalmagic.common.containers.slots.StoneSlabSlot;
 import com.verdantartifice.primalmagic.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Server data container for the runecarving table GUI.
@@ -118,22 +116,18 @@ public class RunecarvingTableContainer extends AbstractContainerMenu {
         this.addDataSlot(this.selectedRecipe);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getSelectedRecipe() {
         return this.selectedRecipe.get();
     }
 
-    @OnlyIn(Dist.CLIENT)
     public List<IRunecarvingRecipe> getRecipeList() {
         return this.recipes;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getRecipeListSize() {
         return this.recipes.size();
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean hasItemsInInputSlot() {
         return this.inputSlabSlot.hasItem() && this.inputLapisSlot.hasItem() && !this.recipes.isEmpty();
     }
@@ -183,7 +177,6 @@ public class RunecarvingTableContainer extends AbstractContainerMenu {
         this.broadcastChanges();
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void setInventoryUpdateListener(Runnable listenerIn) {
         this.inventoryUpdateListener = listenerIn;
     }
