@@ -34,7 +34,8 @@ public class AncientManaFontISTER extends BlockEntityWithoutLevelRenderer {
     private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
     
     public AncientManaFontISTER() {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
+                Minecraft.getInstance() == null ? null : Minecraft.getInstance().getEntityModels());
     }
     
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {

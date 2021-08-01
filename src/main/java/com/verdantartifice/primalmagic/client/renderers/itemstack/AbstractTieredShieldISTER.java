@@ -33,7 +33,8 @@ public abstract class AbstractTieredShieldISTER extends BlockEntityWithoutLevelR
     protected ShieldModel model;
     
     public AbstractTieredShieldISTER() {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
+                Minecraft.getInstance() == null ? null : Minecraft.getInstance().getEntityModels());
     }
     
     @Override

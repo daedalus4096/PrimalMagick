@@ -26,7 +26,8 @@ public abstract class AbstractTieredTridentISTER extends BlockEntityWithoutLevel
     protected TridentModel model;
     
     public AbstractTieredTridentISTER() {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
+                Minecraft.getInstance() == null ? null : Minecraft.getInstance().getEntityModels());
     }
     
     @Override

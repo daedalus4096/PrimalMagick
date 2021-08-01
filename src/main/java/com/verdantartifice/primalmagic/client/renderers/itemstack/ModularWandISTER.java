@@ -24,7 +24,8 @@ import net.minecraft.world.item.ItemStack;
  */
 public class ModularWandISTER extends BlockEntityWithoutLevelRenderer {
     public ModularWandISTER() {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
+                Minecraft.getInstance() == null ? null : Minecraft.getInstance().getEntityModels());
     }
 
     @Override

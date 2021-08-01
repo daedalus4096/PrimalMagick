@@ -24,7 +24,8 @@ import net.minecraft.world.item.ItemStack;
  */
 public class ModularStaffISTER extends BlockEntityWithoutLevelRenderer {
     public ModularStaffISTER() {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
+                Minecraft.getInstance() == null ? null : Minecraft.getInstance().getEntityModels());
     }
     
     @Override
