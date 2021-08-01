@@ -9,7 +9,7 @@
       "type": "forge:nbt",
       "item": "primalmagic:concoction",
       "count": 1,
-      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\",ConcoctionDoses:1}"
+      "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
       "item": "primalmagic:essence_dust_sea"
@@ -30,6 +30,6 @@
   "result": {
     "item": "primalmagic:concoction",
     "count": 1,
-    "nbt": "{ConcoctionType:\"tincture\",Potion:\"minecraft:long_water_breathing\",ConcoctionDoses:3}"
+    "nbt": "{ConcoctionDoses:3,ConcoctionType:\"tincture\",Potion:\"minecraft:long_water_breathing\"}"
   }
 }

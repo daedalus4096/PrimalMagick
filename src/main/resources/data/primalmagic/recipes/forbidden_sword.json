@@ -35,6 +35,6 @@
   ],
   "result": {
     "item": "primalmagic:forbidden_sword",
-    "nbt": "{Damage:0,Enchantments:[{lvl:2s,id:\"primalmagic:essence_thief\"}]}"
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:essence_thief\",lvl:2s}]}"
   }
 }

@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:grass_path",
+  "target": "minecraft:dirt_path",
   "base": "minecraft:grass_block"
 }

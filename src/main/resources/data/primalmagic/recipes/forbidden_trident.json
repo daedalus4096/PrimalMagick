@@ -35,6 +35,6 @@
   ],
   "result": {
     "item": "primalmagic:forbidden_trident",
-    "nbt": "{Damage:0,Enchantments:[{lvl:2s,id:\"primalmagic:rending\"}]}"
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:rending\",lvl:2s}]}"
   }
 }

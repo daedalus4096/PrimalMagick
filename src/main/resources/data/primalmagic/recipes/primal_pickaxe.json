@@ -35,6 +35,6 @@
   ],
   "result": {
     "item": "primalmagic:primal_pickaxe",
-    "nbt": "{Damage:0,Enchantments:[{lvl:2s,id:\"primalmagic:lucky_strike\"}]}"
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:lucky_strike\",lvl:2s}]}"
   }
 }

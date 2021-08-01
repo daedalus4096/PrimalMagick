@@ -9,7 +9,7 @@
       "type": "forge:nbt",
       "item": "primalmagic:alchemical_bomb",
       "count": 1,
-      "nbt": "{ConcoctionType:\"bomb\",Potion:\"minecraft:water\",BombFuse:\"medium\",ConcoctionDoses:6}"
+      "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
     },
     {
       "item": "primalmagic:essence_shard_moon"
@@ -30,6 +30,6 @@
   "result": {
     "item": "primalmagic:alchemical_bomb",
     "count": 1,
-    "nbt": "{BombFuse:\"medium\",ConcoctionType:\"bomb\",Potion:\"minecraft:long_invisibility\",ConcoctionDoses:6}"
+    "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:long_invisibility\"}"
   }
 }

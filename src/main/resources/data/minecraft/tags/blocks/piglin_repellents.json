@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "primalmagic:spirit_lantern",
     "primalmagic:soul_glow_field"
   ]
 }

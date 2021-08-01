@@ -9,7 +9,7 @@
       "type": "forge:nbt",
       "item": "primalmagic:concoction",
       "count": 1,
-      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\",ConcoctionDoses:1}"
+      "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
       "item": "primalmagic:essence_crystal_moon"
@@ -27,6 +27,6 @@
   "result": {
     "item": "primalmagic:concoction",
     "count": 1,
-    "nbt": "{ConcoctionType:\"elixir\",Potion:\"minecraft:long_night_vision\",ConcoctionDoses:9}"
+    "nbt": "{ConcoctionDoses:9,ConcoctionType:\"elixir\",Potion:\"minecraft:long_night_vision\"}"
   }
 }

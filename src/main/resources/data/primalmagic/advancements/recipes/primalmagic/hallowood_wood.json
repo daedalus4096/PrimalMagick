@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "primalmagic:hallowood_log"
+            "items": [
+              "primalmagic:hallowood_log"
+            ]
           }
         ]
       }

@@ -35,6 +35,6 @@
   ],
   "result": {
     "item": "primalmagic:primal_axe",
-    "nbt": "{Damage:0,Enchantments:[{lvl:2s,id:\"primalmagic:disintegration\"}]}"
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:disintegration\",lvl:2s}]}"
   }
 }

@@ -35,6 +35,6 @@
   ],
   "result": {
     "item": "primalmagic:forbidden_bow",
-    "nbt": "{Damage:0,Enchantments:[{lvl:2s,id:\"primalmagic:soulpiercing\"}]}"
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:soulpiercing\",lvl:2s}]}"
   }
 }

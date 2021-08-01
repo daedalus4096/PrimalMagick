@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "primalmagic:sunwood_log"
+            "items": [
+              "primalmagic:sunwood_log"
+            ]
           }
         ]
       }
@@ -21,7 +23,9 @@
       "conditions": {
         "items": [
           {
-            "item": "primalmagic:stripped_sunwood_log"
+            "items": [
+              "primalmagic:stripped_sunwood_log"
+            ]
           }
         ]
       }

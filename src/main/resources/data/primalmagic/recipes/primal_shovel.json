@@ -35,6 +35,6 @@
   ],
   "result": {
     "item": "primalmagic:primal_shovel",
-    "nbt": "{Damage:0,Enchantments:[{lvl:2s,id:\"primalmagic:reverberation\"}]}"
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:reverberation\",lvl:2s}]}"
   }
 }

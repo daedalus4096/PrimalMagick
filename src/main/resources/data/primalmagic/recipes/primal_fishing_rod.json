@@ -35,6 +35,6 @@
   ],
   "result": {
     "item": "primalmagic:primal_fishing_rod",
-    "nbt": "{Damage:0,Enchantments:[{lvl:2s,id:\"primalmagic:bounty\"}]}"
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:bounty\",lvl:2s}]}"
   }
 }
