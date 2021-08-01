@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.client.fx.particles.PropMarkerParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.WandPoofParticle;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -20,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -66,5 +68,16 @@ public class ClientRegistrationEvents {
         for (int index = 0; index <= 4; index++) {
             ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_" + index), ""));
         }
+    }
+    
+    @SubscribeEvent
+    public static void onClientReloadListenerRegister(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.FORBIDDEN_TRIDENT.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getItemStackRenderer());
     }
 }

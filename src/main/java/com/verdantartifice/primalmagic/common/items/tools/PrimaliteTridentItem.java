@@ -19,8 +19,11 @@ import net.minecraftforge.client.IItemRenderProperties;
  * @author Daedalus4096
  */
 public class PrimaliteTridentItem extends AbstractTieredTridentItem {
+    protected final RenderProperties renderProperties;
+    
     public PrimaliteTridentItem(Item.Properties properties) {
         super(ItemTierPM.PRIMALITE, properties);
+        this.renderProperties = new RenderProperties();
     }
 
     @Override
@@ -30,13 +33,23 @@ public class PrimaliteTridentItem extends AbstractTieredTridentItem {
 
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
-            final BlockEntityWithoutLevelRenderer renderer = new PrimaliteTridentISTER();
+        consumer.accept(this.getRenderProperties());
+    }
+    
+    public RenderProperties getRenderProperties() {
+        return this.renderProperties;
+    }
+    
+    public static class RenderProperties implements IItemRenderProperties {
+        protected final BlockEntityWithoutLevelRenderer renderer;
+        
+        public RenderProperties() {
+            this.renderer = new PrimaliteTridentISTER();
+        }
 
-            @Override
-            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-                return renderer;
-            }
-        });
+        @Override
+        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+            return renderer;
+        }
     }
 }

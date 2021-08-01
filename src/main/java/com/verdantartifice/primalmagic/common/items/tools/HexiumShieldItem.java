@@ -14,19 +14,32 @@ import net.minecraftforge.client.IItemRenderProperties;
  * @author Daedalus4096
  */
 public class HexiumShieldItem extends AbstractTieredShieldItem {
+    protected final RenderProperties renderProperties;
+    
     public HexiumShieldItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);
+        this.renderProperties = new RenderProperties();
     }
 
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
-            final BlockEntityWithoutLevelRenderer renderer = new HexiumShieldISTER();
+        consumer.accept(this.getRenderProperties());
+    }
+    
+    public RenderProperties getRenderProperties() {
+        return this.renderProperties;
+    }
+    
+    public static class RenderProperties implements IItemRenderProperties {
+        protected final BlockEntityWithoutLevelRenderer renderer;
+        
+        public RenderProperties() {
+            this.renderer = new HexiumShieldISTER();
+        }
 
-            @Override
-            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-                return renderer;
-            }
-        });
+        @Override
+        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+            return renderer;
+        }
     }
 }

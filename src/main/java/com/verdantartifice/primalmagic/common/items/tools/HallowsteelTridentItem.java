@@ -19,8 +19,11 @@ import net.minecraftforge.client.IItemRenderProperties;
  * @author Daedalus4096
  */
 public class HallowsteelTridentItem extends AbstractTieredTridentItem {
+    protected final RenderProperties renderProperties;
+    
     public HallowsteelTridentItem(Item.Properties properties) {
         super(ItemTierPM.HALLOWSTEEL, properties);
+        this.renderProperties = new RenderProperties();
     }
 
     @Override
@@ -30,13 +33,23 @@ public class HallowsteelTridentItem extends AbstractTieredTridentItem {
 
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
-            final BlockEntityWithoutLevelRenderer renderer = new HallowsteelTridentISTER();
+        consumer.accept(this.getRenderProperties());
+    }
+    
+    public RenderProperties getRenderProperties() {
+        return this.renderProperties;
+    }
+    
+    public static class RenderProperties implements IItemRenderProperties {
+        protected final BlockEntityWithoutLevelRenderer renderer;
+        
+        public RenderProperties() {
+            this.renderer = new HallowsteelTridentISTER();
+        }
 
-            @Override
-            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-                return renderer;
-            }
-        });
+        @Override
+        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+            return renderer;
+        }
     }
 }

@@ -14,19 +14,32 @@ import net.minecraftforge.client.IItemRenderProperties;
  * @author Daedalus4096
  */
 public class PrimaliteShieldItem extends AbstractTieredShieldItem {
+    protected final RenderProperties renderProperties;
+    
     public PrimaliteShieldItem(Item.Properties properties) {
         super(ItemTierPM.PRIMALITE, properties);
+        this.renderProperties = new RenderProperties();
     }
 
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
-            final BlockEntityWithoutLevelRenderer renderer = new PrimaliteShieldISTER();
+        consumer.accept(this.getRenderProperties());
+    }
+    
+    public RenderProperties getRenderProperties() {
+        return this.renderProperties;
+    }
+    
+    public static class RenderProperties implements IItemRenderProperties {
+        protected final BlockEntityWithoutLevelRenderer renderer;
+        
+        public RenderProperties() {
+            this.renderer = new PrimaliteShieldISTER();
+        }
 
-            @Override
-            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-                return renderer;
-            }
-        });
+        @Override
+        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+            return renderer;
+        }
     }
 }
