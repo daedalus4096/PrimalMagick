@@ -30,7 +30,6 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -40,8 +39,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class EntityRendererEvents {
     @SubscribeEvent
     public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
