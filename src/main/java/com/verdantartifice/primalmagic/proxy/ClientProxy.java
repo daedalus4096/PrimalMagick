@@ -18,28 +18,6 @@ import com.verdantartifice.primalmagic.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagic.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagic.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
-import com.verdantartifice.primalmagic.client.renderers.entity.BasicPixieRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.FlyingCarpetRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.ForbiddenTridentRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.GrandPixieRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelGolemRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.HallowsteelTridentRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.HexiumGolemRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.HexiumTridentRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.InnerDemonRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.MajesticPixieRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteGolemRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteTridentRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.SinCrashRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.SinCrystalRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.SpellMineRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.SpellProjectileRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.TreefolkRenderer;
-import com.verdantartifice.primalmagic.client.renderers.entity.model.FlyingCarpetModel;
-import com.verdantartifice.primalmagic.client.renderers.entity.model.PixieModel;
-import com.verdantartifice.primalmagic.client.renderers.entity.model.SpellMineModel;
-import com.verdantartifice.primalmagic.client.renderers.entity.model.SpellProjectileModel;
-import com.verdantartifice.primalmagic.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.OfferingPedestalTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualAltarTER;
@@ -50,7 +28,6 @@ import com.verdantartifice.primalmagic.client.renderers.tile.SanguineCrucibleTER
 import com.verdantartifice.primalmagic.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
-import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
@@ -58,14 +35,10 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
@@ -74,7 +47,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fmlclient.registry.RenderingRegistry;
 
 /**
  * Client sided proxy.  Handles client setup issues and provides side-dependent utility methods.
@@ -93,8 +65,6 @@ public class ClientProxy implements IProxyPM {
         this.registerKeybinds();
         this.registerScreens();
         this.registerTERs();
-        this.registerLayerDefinitions();
-        this.registerEntityRenderers(event);
         this.registerItemProperties(event);
         this.setRenderLayers();
     }
@@ -133,63 +103,6 @@ public class ClientProxy implements IProxyPM {
         BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_BELL.get(), RitualBellTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), RunescribingAltarTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTER::new);
-    }
-    
-    private void registerLayerDefinitions() {
-        // Register layer definitions for models
-        RenderingRegistry.registerLayerDefinition(ModelLayersPM.FLYING_CARPET, FlyingCarpetModel::createBodyLayer);
-        RenderingRegistry.registerLayerDefinition(ModelLayersPM.PIXIE_BASIC, () -> PixieModel.createBodyLayer(false));
-        RenderingRegistry.registerLayerDefinition(ModelLayersPM.PIXIE_ROYAL, () -> PixieModel.createBodyLayer(true));
-        RenderingRegistry.registerLayerDefinition(ModelLayersPM.SPELL_MINE, SpellMineModel::createBodyLayer);
-        RenderingRegistry.registerLayerDefinition(ModelLayersPM.SPELL_PROJECTILE, SpellProjectileModel::createBodyLayer);
-        RenderingRegistry.registerLayerDefinition(ModelLayersPM.TREEFOLK, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
-    }
-    
-    private void registerEntityRenderers(FMLClientSetupEvent event) {
-        // Register renderers for each entity type
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SIN_CRASH.get(), SinCrashRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.SIN_CRYSTAL.get(), SinCrystalRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.APPLE.get(), ThrownItemRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.ALCHEMICAL_BOMB.get(), ThrownItemRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.FORBIDDEN_TRIDENT.get(), ForbiddenTridentRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.FLYING_CARPET.get(), FlyingCarpetRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.INNER_DEMON.get(), InnerDemonRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_EARTH_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_EARTH_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), MajesticPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_SEA_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_SEA_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), MajesticPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_SKY_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_SKY_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), MajesticPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_SUN_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_SUN_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), MajesticPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_MOON_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_MOON_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), MajesticPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_BLOOD_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_BLOOD_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), MajesticPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get(), MajesticPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_VOID_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_VOID_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), MajesticPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), BasicPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), GrandPixieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), MajesticPixieRenderer::new);
     }
     
     private void registerItemProperties(FMLClientSetupEvent event) {
