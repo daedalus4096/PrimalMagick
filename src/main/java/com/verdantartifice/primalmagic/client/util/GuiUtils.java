@@ -29,7 +29,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraftforge.client.RenderProperties;
 
 /**
  * Utility methods for dealing with GUI rendering.
@@ -62,13 +61,13 @@ public class GuiUtils {
     public static void renderItemTooltip(PoseStack matrixStack, ItemStack stack, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
         List<Component> lines = stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
-        net.minecraftforge.fmlclient.gui.GuiUtils.drawHoveringText(stack, matrixStack, lines, x, y, mc.screen.width, mc.screen.height, -1, RenderProperties.get(stack).getFont(stack));
+        net.minecraftforge.fmlclient.gui.GuiUtils.drawHoveringText(stack, matrixStack, lines, x, y, mc.screen.width, mc.screen.height, -1, mc.font);
     }
     
     public static void renderCustomTooltip(PoseStack matrixStack, List<Component> textList, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = ItemStack.EMPTY;
-        net.minecraftforge.fmlclient.gui.GuiUtils.drawHoveringText(stack, matrixStack, textList, x, y, mc.screen.width, mc.screen.height, -1, RenderProperties.get(stack).getFont(stack));
+        net.minecraftforge.fmlclient.gui.GuiUtils.drawHoveringText(stack, matrixStack, textList, x, y, mc.screen.width, mc.screen.height, -1, mc.font);
     }
     
     public static void renderSourcesForPlayer(PoseStack matrixStack, @Nullable SourceList sources, @Nullable Player player, int startX, int startY) {
