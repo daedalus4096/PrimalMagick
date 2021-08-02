@@ -50,7 +50,7 @@ public class ArcanometerItem extends Item {
     }
     
     public static ItemPropertyFunction getScanStateProperty() {
-    	return new ItemPropertyFunction() {
+        return new ItemPropertyFunction() {
             protected float scanState = 0;
 
             @Override

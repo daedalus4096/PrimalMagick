@@ -32,7 +32,7 @@ public class FxDispatcher {
     protected static final Map<BlockPos, Particle> PROP_MARKER_PARTICLES = new HashMap<>();
     
     protected Level getWorld() {
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         return mc.level;
     }
     
@@ -46,8 +46,8 @@ public class FxDispatcher {
     
     public void wandPoof(double x, double y, double z, float r, float g, float b, boolean sound, Direction side) {
         // Release a cluster of poof clouds when transforming a block with a wand
-    	Minecraft mc = Minecraft.getInstance();
-    	Level world = this.getWorld();
+        Minecraft mc = Minecraft.getInstance();
+        Level world = this.getWorld();
         Random rng = world.random;
         if (sound) {
             this.getWorld().playLocalSound(x, y, z, SoundsPM.POOF.get(), SoundSource.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
@@ -78,7 +78,7 @@ public class FxDispatcher {
     
     public void manaSparkle(double x1, double y1, double z1, double x2, double y2, double z2, int maxAge, float r, float g, float b) {
         // Show a particle when draining a mana font with a wand
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         double vx = (x2 - x1) / (double)maxAge;
         double vy = (y2 - y1) / (double)maxAge;
         double vz = (z2 - z1) / (double)maxAge;
@@ -99,7 +99,7 @@ public class FxDispatcher {
     
     public void spellTrail(double x, double y, double z, float r, float g, float b) {
         // Show a particle trailing behind a spell projectile
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
@@ -116,8 +116,8 @@ public class FxDispatcher {
     
     public void spellImpact(double x, double y, double z, int radius, float r, float g, float b) {
         // Show a cluster of particles at the impact point of a spell
-    	Minecraft mc = Minecraft.getInstance();
-    	Level world = this.getWorld();
+        Minecraft mc = Minecraft.getInstance();
+        Level world = this.getWorld();
         Random rng = world.random;
         int count = (15 + rng.nextInt(11)) * radius;
         for (int index = 0; index < count; index++) {
@@ -149,7 +149,7 @@ public class FxDispatcher {
     
     public void spellBolt(double sx, double sy, double sz, double tx, double ty, double tz, float r, float g, float b) {
         // Show a spell bolt "particle"
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particleEngine.createParticle(new SpellBoltParticleData(tx, ty, tz), sx, sy, sz, 0.0D, 0.0D, 0.0D);
         if (p != null) {
             p.setColor(r, g, b);
@@ -158,13 +158,13 @@ public class FxDispatcher {
     
     public void offeringChannel(double sx, double sy, double sz, double tx, double ty, double tz, ItemStack stack) {
         // Show a trail of particles between the ritual offering and the altar
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         mc.particleEngine.createParticle(new ItemParticleOption(ParticleTypesPM.OFFERING.get(), stack), sx, sy, sz, tx, ty, tz);
     }
     
     public void propMarker(BlockPos pos) {
         // Show a marker above a ritual prop's position and save it for later manual canceling
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particleEngine.createParticle(ParticleTypesPM.PROP_MARKER.get(), pos.getX() + 0.5D, pos.getY() + 1.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
         this.removePropMarker(pos);
         PROP_MARKER_PARTICLES.put(pos, p);

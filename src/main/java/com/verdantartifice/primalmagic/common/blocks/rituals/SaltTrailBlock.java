@@ -141,11 +141,11 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     
     @Override
     public void updateIndirectNeighbourShapes(BlockState state, LevelAccessor world, BlockPos pos, int flags, int recursionLeft) {
-    	BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
+        BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
         for (Direction dir : Direction.Plane.HORIZONTAL) {
             SaltSide saltSide = state.getValue(FACING_PROPERTY_MAP.get(dir));
             if (saltSide != SaltSide.NONE && world.getBlockState(mbp.set(pos).move(dir)).getBlock() != this) {
-            	mbp.move(Direction.DOWN);
+                mbp.move(Direction.DOWN);
                 BlockState downState = world.getBlockState(mbp);
                 BlockPos oppDownPos = mbp.relative(dir.getOpposite());
                 BlockState newDownState = downState.updateShape(dir.getOpposite(), world.getBlockState(oppDownPos), world, mbp, oppDownPos);

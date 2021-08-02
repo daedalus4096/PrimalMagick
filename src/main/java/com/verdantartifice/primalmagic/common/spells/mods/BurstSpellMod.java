@@ -95,15 +95,15 @@ public class BurstSpellMod extends AbstractSpellMod {
                 for (int k = 0; k < 16; k++) {
                     if (i == 0 || i == 15 || j == 0 || j == 15 || k == 0 || k == 15) {
                         // Calculate a direction vector for the burst
-                    	Vec3 dirVec = new Vec3((double)i / 15.0D * 2.0D - 1.0D, (double)j / 15.0D * 2.0D - 1.0D, (double)k / 15.0D * 2.0D - 1.0D).normalize();
-                    	Vec3 curVec = new Vec3(hitVec.x, hitVec.y, hitVec.z);
+                        Vec3 dirVec = new Vec3((double)i / 15.0D * 2.0D - 1.0D, (double)j / 15.0D * 2.0D - 1.0D, (double)k / 15.0D * 2.0D - 1.0D).normalize();
+                        Vec3 curVec = new Vec3(hitVec.x, hitVec.y, hitVec.z);
                         float remainingPower = (float)power;
                         
                         while (remainingPower >= 0.0F && curVec.distanceToSqr(hitVec) < sqRadius) {
                             // Add the current block to the result set if it hasn't already been hit
                             BlockPos curPos = new BlockPos(curVec);
                             if (affectedBlocks.add(curPos)) {
-                            	Vec3 relVec = hitVec.subtract(curVec);
+                                Vec3 relVec = hitVec.subtract(curVec);
                                 Direction dir = Direction.getNearest(relVec.x, relVec.y, relVec.z);
                                 retVal.add(new BlockHitResult(curVec, dir, curPos, false));
                             }

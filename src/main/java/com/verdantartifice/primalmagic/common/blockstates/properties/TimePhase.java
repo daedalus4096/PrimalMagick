@@ -9,10 +9,10 @@ import net.minecraft.world.level.LevelAccessor;
  * @author Daedalus4096
  */
 public enum TimePhase implements StringRepresentable {
-    FULL("full", 10),		// The block is fully phased in; use full light
-    WAXING("waxing", 5),	// The block is mostly phased in; half light
+    FULL("full", 10),        // The block is fully phased in; use full light
+    WAXING("waxing", 5),    // The block is mostly phased in; half light
     WANING("waning", 0),    // The block is mostly phased out; no light
-    FADED("faded", 0);		// The block is fully phased out; no light
+    FADED("faded", 0);        // The block is fully phased out; no light
     
     private final String name;
     private final int light;

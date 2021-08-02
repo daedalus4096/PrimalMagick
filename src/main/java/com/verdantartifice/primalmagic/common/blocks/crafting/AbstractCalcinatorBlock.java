@@ -41,8 +41,8 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     
     public AbstractCalcinatorBlock() {
         super(Block.Properties.of(Material.STONE).strength(3.5F).lightLevel((state) -> { 
-        	return state.getValue(BlockStateProperties.LIT) ? 13 : 0; 
-    	}).sound(SoundType.STONE));
+            return state.getValue(BlockStateProperties.LIT) ? 13 : 0; 
+        }).sound(SoundType.STONE));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
     }
     
@@ -69,7 +69,7 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     }
     
     @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }

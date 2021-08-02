@@ -24,21 +24,21 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class WorldEvents {
-	@SubscribeEvent
-	public static void onWorldLoad(WorldEvent.Load event) {
-		if (event.getWorld() instanceof ServerLevel) {
-			ServerLevel serverWorld = (ServerLevel)event.getWorld();
-			ServerChunkCache chunkProvider = serverWorld.getChunkSource();
-			
-			// Prevent spawning structures in vanilla superflat
-			if (chunkProvider.getGenerator() instanceof FlatLevelSource && serverWorld.dimension().equals(Level.OVERWORLD)) {
-				return;
-			}
-			
-			// Add structure spacing to the world's chunk generator
+    @SubscribeEvent
+    public static void onWorldLoad(WorldEvent.Load event) {
+        if (event.getWorld() instanceof ServerLevel) {
+            ServerLevel serverWorld = (ServerLevel)event.getWorld();
+            ServerChunkCache chunkProvider = serverWorld.getChunkSource();
+            
+            // Prevent spawning structures in vanilla superflat
+            if (chunkProvider.getGenerator() instanceof FlatLevelSource && serverWorld.dimension().equals(Level.OVERWORLD)) {
+                return;
+            }
+            
+            // Add structure spacing to the world's chunk generator
             Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(chunkProvider.generator.getSettings().structureConfig());
             tempMap.putIfAbsent(FeaturesPM.SHRINE.get(), StructureSettings.DEFAULTS.get(FeaturesPM.SHRINE.get()));
             chunkProvider.generator.getSettings().structureConfig = tempMap;
-		}
-	}
+        }
+    }
 }

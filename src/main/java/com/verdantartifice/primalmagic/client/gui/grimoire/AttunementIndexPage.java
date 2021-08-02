@@ -47,7 +47,7 @@ public class AttunementIndexPage extends AbstractPage {
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each discovered source
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         for (Source source : Source.SORTED_SOURCES) {
             if (source.isDiscovered(mc.player)) {
                 Component text = new TranslatableComponent(source.getNameTranslationKey());

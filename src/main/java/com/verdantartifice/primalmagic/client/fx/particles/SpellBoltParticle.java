@@ -60,7 +60,7 @@ public class SpellBoltParticle extends Particle {
         for (int gen = 0; gen < GENERATIONS; gen++) {
             List<LineSegment> tempList = new ArrayList<>();
             for (LineSegment segment : retVal) {
-            	Vec3 midpoint = segment.getMiddle();
+                Vec3 midpoint = segment.getMiddle();
                 midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), this.level.random).scale(curDisplacement));
                 tempList.add(new LineSegment(segment.getStart(), midpoint));
                 tempList.add(new LineSegment(midpoint, segment.getEnd()));

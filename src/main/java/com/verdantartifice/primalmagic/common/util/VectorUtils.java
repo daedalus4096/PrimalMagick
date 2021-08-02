@@ -31,10 +31,10 @@ public class VectorUtils {
      */
     public static Vec3 getRandomOrthogonalUnitVector(@Nonnull Vec3 vec, @Nonnull Random rng) {
         // Generate a random other vector
-    	Vec3 other = getRandomUnitVector(rng);
+        Vec3 other = getRandomUnitVector(rng);
         
         // Ensure that the given vector and the other vector are not co-linear
-    	Vec3 normVec = vec.normalize();
+        Vec3 normVec = vec.normalize();
         if (other.equals(normVec) || other.equals(normVec.scale(-1.0D))) {
             other = (other.y == 0.0D && other.z == 0.0D) ? other.add(0, 1, 0) : other.add(1, 0, 0);
         }

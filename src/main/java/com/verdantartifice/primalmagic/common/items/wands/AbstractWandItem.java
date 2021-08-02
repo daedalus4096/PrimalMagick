@@ -406,7 +406,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         // Only process on server side
-    	Level world = context.getLevel();
+        Level world = context.getLevel();
         if (world.isClientSide) {
             return InteractionResult.PASS;
         }

@@ -17,9 +17,9 @@ public class MoonwoodLeavesBlock extends AbstractPhasingLeavesBlock {
         super(Block.Properties.of(Material.LEAVES).strength(0.2F).randomTicks().noOcclusion().sound(SoundType.GRASS).lightLevel((state) -> {
             return state.getValue(PHASE).getLightLevel();
         }).isSuffocating((state, blockReader, pos) -> {
-        	return false;
+            return false;
         }).isViewBlocking((state, blockReader, pos) -> {
-        	return false;
+            return false;
         }).isValidSpawn(AbstractPhasingLeavesBlock::allowsSpawnOnLeaves));
     }
 

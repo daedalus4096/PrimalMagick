@@ -65,7 +65,7 @@ public class AnalysisTableBlock extends Block {
     }
     
     @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }

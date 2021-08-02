@@ -53,38 +53,38 @@ public class ShrineStructure extends StructureFeature<ShrineConfig> {
 
         @Override
         public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator generator, StructureManager templateManagerIn, ChunkPos chunkPos, Biome biomeIn, ShrineConfig config, LevelHeightAccessor levelHeightAccessor) {
-        	int x = (chunkPos.x << 4) + 7;
+            int x = (chunkPos.x << 4) + 7;
             int z = (chunkPos.z << 4) + 7;
             int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
-        	BlockPos pos = new BlockPos(x, surfaceY, z);
+            BlockPos pos = new BlockPos(x, surfaceY, z);
             this.addPiece(new ShrinePiece(templateManagerIn, config.type, pos));
         }
     }
     
     public static enum Type implements StringRepresentable {
-    	EARTH("earth"),
-    	SEA("sea"),
-    	SKY("sky"),
-    	SUN("sun"),
-    	MOON("moon");
-    	
-    	private final String name;
+        EARTH("earth"),
+        SEA("sea"),
+        SKY("sky"),
+        SUN("sun"),
+        MOON("moon");
+        
+        private final String name;
 
-    	public static final Codec<ShrineStructure.Type> CODEC = StringRepresentable.fromEnum(ShrineStructure.Type::values, ShrineStructure.Type::byName);
+        public static final Codec<ShrineStructure.Type> CODEC = StringRepresentable.fromEnum(ShrineStructure.Type::values, ShrineStructure.Type::byName);
         private static final Map<String, ShrineStructure.Type> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(ShrineStructure.Type::getSerializedName, (type) -> {
             return type;
         }));
 
-    	private Type(String name) {
-    		this.name = name;
-    	}
-    	
-    	public static ShrineStructure.Type byName(String name) {
-    		return BY_NAME.get(name);
-    	}
-    	
-    	public String getSerializedName() {
-    		return this.name;
-    	}
+        private Type(String name) {
+            this.name = name;
+        }
+        
+        public static ShrineStructure.Type byName(String name) {
+            return BY_NAME.get(name);
+        }
+        
+        public String getSerializedName() {
+            return this.name;
+        }
     }
 }

@@ -57,6 +57,6 @@ public class ItemTagsPM {
     public static final IOptionalNamedTag<Item> STORAGE_BLOCKS_HALLOWSTEEL = tag("storage_blocks/hallowsteel");
 
     private static IOptionalNamedTag<Item> tag(String name) {
-    	return ItemTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
+        return ItemTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
     }
 }

@@ -309,7 +309,7 @@ public class PlayerEvents {
     }
 
     protected static void handleDoubleJump(Player player) {
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         boolean jumpPressed = mc.options.keyJump.consumeClick();
         if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
             DOUBLE_JUMP_ALLOWED.put(player.getUUID(), Boolean.TRUE);
@@ -360,7 +360,7 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void playerJoinEvent(EntityJoinWorldEvent event) {
-    	Level world = event.getWorld();
+        Level world = event.getWorld();
         if (!world.isClientSide && (event.getEntity() instanceof ServerPlayer)) {
             // When a player first joins a world, sync that player's capabilities to their client
             ServerPlayer player = (ServerPlayer)event.getEntity();

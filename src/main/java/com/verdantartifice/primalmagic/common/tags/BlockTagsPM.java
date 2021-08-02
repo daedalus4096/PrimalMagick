@@ -35,6 +35,6 @@ public class BlockTagsPM {
     public static final IOptionalNamedTag<Block> SUNWOOD_LOGS = tag("sunwood_logs");
     
     private static IOptionalNamedTag<Block> tag(String name) {
-    	return BlockTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
+        return BlockTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
     }
 }

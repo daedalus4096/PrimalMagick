@@ -56,7 +56,7 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
             double reachDistance = this.getReachDistance(caster);
             Vec3 eyePos = caster.getEyePosition(1.0F);
             for (Vec3 lookVector : lookVectors) {
-            	Vec3 reachPos = eyePos.add(lookVector.scale(reachDistance));
+                Vec3 reachPos = eyePos.add(lookVector.scale(reachDistance));
                 AABB aabb = caster.getBoundingBox().expandTowards(lookVector.scale(reachDistance)).inflate(1.0D, 1.0D, 1.0D);
                 
                 // Determine if an entity hit was found by the raycast

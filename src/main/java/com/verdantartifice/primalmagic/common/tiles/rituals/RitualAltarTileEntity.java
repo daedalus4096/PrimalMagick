@@ -242,7 +242,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         compound.putInt("NextCheckCount", this.nextCheckCount);
         compound.putFloat("Stability", this.stability);
         if (this.activePlayerId != null) {
-        	compound.putUUID("ActivePlayer", this.activePlayerId);
+            compound.putUUID("ActivePlayer", this.activePlayerId);
         }
         if (this.activeRecipeId != null) {
             compound.putString("ActiveRecipeId", this.activeRecipeId.toString());

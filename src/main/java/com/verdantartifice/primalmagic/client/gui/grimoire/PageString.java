@@ -27,7 +27,7 @@ public class PageString implements IPageElement {
     @Override
     public void render(PoseStack matrixStack, int side, int x, int y) {
         // Render this element's string to the screen
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         mc.font.draw(matrixStack, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB());

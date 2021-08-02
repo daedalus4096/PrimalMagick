@@ -63,7 +63,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
     @Override
     protected void init() {
         super.init();
-    	Minecraft mc = this.getMinecraft();
+        Minecraft mc = this.getMinecraft();
         this.knowledge = PrimalMagicCapabilities.getKnowledge(mc.player);
         if (this.knowledge == null) {
             throw new IllegalStateException("No knowledge provider found for player");

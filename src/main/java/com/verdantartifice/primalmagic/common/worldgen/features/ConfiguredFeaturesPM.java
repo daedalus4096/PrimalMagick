@@ -14,13 +14,13 @@ import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
  * @author Daedalus4096
  */
 public class ConfiguredFeaturesPM {
-	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_EARTH_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.EARTH));
-	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_SEA_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.SEA));
-	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_SKY_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.SKY));
-	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_SUN_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.SUN));
-	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_MOON_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.MOON));
-	
-	public static void registerConfiguredStructures() {
+    public static final ConfiguredStructureFeature<?, ?> CONFIGURED_EARTH_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.EARTH));
+    public static final ConfiguredStructureFeature<?, ?> CONFIGURED_SEA_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.SEA));
+    public static final ConfiguredStructureFeature<?, ?> CONFIGURED_SKY_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.SKY));
+    public static final ConfiguredStructureFeature<?, ?> CONFIGURED_SUN_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.SUN));
+    public static final ConfiguredStructureFeature<?, ?> CONFIGURED_MOON_SHRINE = FeaturesPM.SHRINE.get().configured(new ShrineConfig(ShrineStructure.Type.MOON));
+    
+    public static void registerConfiguredStructures() {
         Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
         registerConfiguredStructure(registry, "configured_earth_shrine", CONFIGURED_EARTH_SHRINE);
         registerConfiguredStructure(registry, "configured_sea_shrine", CONFIGURED_SEA_SHRINE);
@@ -28,9 +28,9 @@ public class ConfiguredFeaturesPM {
         registerConfiguredStructure(registry, "configured_sun_shrine", CONFIGURED_SUN_SHRINE);
         registerConfiguredStructure(registry, "configured_moon_shrine", CONFIGURED_MOON_SHRINE);
         FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(FeaturesPM.SHRINE.get(), CONFIGURED_EARTH_SHRINE);
-	}
-	
-	protected static void registerConfiguredStructure(Registry<ConfiguredStructureFeature<?, ?>> registry, String key, ConfiguredStructureFeature<?, ?> value) {
-		Registry.register(registry, new ResourceLocation(PrimalMagic.MODID, key), value);
-	}
+    }
+    
+    protected static void registerConfiguredStructure(Registry<ConfiguredStructureFeature<?, ?>> registry, String key, ConfiguredStructureFeature<?, ?> value) {
+        Registry.register(registry, new ResourceLocation(PrimalMagic.MODID, key), value);
+    }
 }

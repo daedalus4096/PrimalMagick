@@ -43,7 +43,7 @@ public class SyncStatsPacket implements IMessageToClient {
         public static void onMessage(SyncStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-            	Minecraft mc = Minecraft.getInstance();
+                Minecraft mc = Minecraft.getInstance();
                 Player player = mc.player;
                 IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
                 if (stats != null) {

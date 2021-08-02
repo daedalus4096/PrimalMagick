@@ -48,8 +48,8 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
 
     public IncenseBrazierBlock() {
         super(Block.Properties.of(Material.METAL).strength(1.5F, 6.0F).sound(SoundType.METAL).lightLevel((state) -> { 
-        	return state.getValue(BlockStateProperties.LIT) ? 7 : 0; 
-    	}));
+            return state.getValue(BlockStateProperties.LIT) ? 7 : 0; 
+        }));
         this.registerDefaultState(this.defaultBlockState().setValue(LIT, Boolean.FALSE));
     }
     

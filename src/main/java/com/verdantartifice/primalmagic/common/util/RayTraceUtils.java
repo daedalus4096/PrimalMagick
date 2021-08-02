@@ -185,8 +185,8 @@ public class RayTraceUtils {
     }
     
     protected static BlockHitResult createMiss(EntitylessRayTraceContext context) {
-    	Vec3 endVec = context.getEndVec();
-    	Vec3 delta = context.getStartVec().subtract(endVec);
+        Vec3 endVec = context.getEndVec();
+        Vec3 delta = context.getStartVec().subtract(endVec);
         return BlockHitResult.miss(endVec, Direction.getNearest(delta.x, delta.y, delta.z), new BlockPos(endVec));
     }
     
@@ -209,8 +209,8 @@ public class RayTraceUtils {
      * @see {@link net.minecraft.world.IBlockReader#traverseBlocks(RayTraceContext, BiFunction, Function)}
      */
     protected static BlockHitResult iterateRayTrace(EntitylessRayTraceContext context, BiFunction<EntitylessRayTraceContext, BlockPos, BlockHitResult> checkFunc, Function<EntitylessRayTraceContext, BlockHitResult> missFunc) {
-    	Vec3 startVec = context.getStartVec();
-    	Vec3 endVec = context.getEndVec();
+        Vec3 startVec = context.getStartVec();
+        Vec3 endVec = context.getEndVec();
         if (startVec.equals(endVec)) {
             return missFunc.apply(context);
         } else {

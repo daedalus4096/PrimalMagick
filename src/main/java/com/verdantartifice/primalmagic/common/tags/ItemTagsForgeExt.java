@@ -17,6 +17,6 @@ public class ItemTagsForgeExt {
     public static final IOptionalNamedTag<Item> NUGGETS_QUARTZ = tag("nuggets/quartz");
 
     private static IOptionalNamedTag<Item> tag(String name) {
-    	return ItemTags.createOptional(new ResourceLocation("forge", name));
+        return ItemTags.createOptional(new ResourceLocation("forge", name));
     }
 }

@@ -142,7 +142,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         super.init();
         this.scaledLeft = (int)(this.width - this.imageWidth * SCALE) / 2;
         this.scaledTop = (int)(this.height - this.imageHeight * SCALE) / 2;
-    	Minecraft mc = this.getMinecraft();
+        Minecraft mc = this.getMinecraft();
         this.knowledge = PrimalMagicCapabilities.getKnowledge(mc.player);
         if (this.knowledge == null) {
             throw new IllegalStateException("No knowledge provider found for player");
@@ -796,7 +796,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.currentStageIndex = 0;
         int heightRemaining = 137;
         RuneEnchantmentIndexPage tempPage = new RuneEnchantmentIndexPage(true);
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
 
         for (Enchantment enchant : RuneManager.getRuneEnchantmentsSorted()) {
             if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parseRuneEnchantment(enchant))) {

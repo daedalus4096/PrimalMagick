@@ -42,7 +42,7 @@ public class AncientManaFontTER implements BlockEntityRenderer<AncientManaFontTi
     
     @Override
     public void render(AncientManaFontTileEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-    	Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         Block block = tileEntityIn.getBlockState().getBlock();
         if (tileEntityIn != null && block instanceof AncientManaFontBlock) {
             // Color the tile entity core according to the block's source

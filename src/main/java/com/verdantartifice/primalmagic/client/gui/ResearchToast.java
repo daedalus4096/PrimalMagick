@@ -30,8 +30,8 @@ public class ResearchToast implements Toast {
     
     @Override
     public Visibility render(PoseStack matrixStack, ToastComponent toastGui, long delta) {
-    	Minecraft mc = toastGui.getMinecraft();
-    	
+        Minecraft mc = toastGui.getMinecraft();
+        
         // Render the toast background
         RenderSystem.setShaderTexture(0, TEXTURE);
         toastGui.blit(matrixStack, 0, 0, 0, 224, 160, 32);
@@ -52,7 +52,7 @@ public class ResearchToast implements Toast {
             mc.font.draw(matrixStack, descText, 0, 0, Color.BLACK.getRGB());
             matrixStack.popPose();
         } else {
-        	mc.font.draw(matrixStack, descText, 6, 18, Color.BLACK.getRGB());
+            mc.font.draw(matrixStack, descText, 6, 18, Color.BLACK.getRGB());
         }
         
         // If the toast has been open long enough, hide it

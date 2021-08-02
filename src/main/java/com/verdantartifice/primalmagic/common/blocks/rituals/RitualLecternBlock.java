@@ -108,7 +108,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     }
     
     @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }

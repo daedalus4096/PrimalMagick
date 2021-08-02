@@ -33,7 +33,7 @@ public class EntryButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof EntryButton) {
-            	Minecraft mc = Minecraft.getInstance();
+                Minecraft mc = Minecraft.getInstance();
                 EntryButton geb = (EntryButton)button;
                 
                 // Push the current grimoire topic onto the history stack

@@ -77,7 +77,7 @@ public class ForkSpellMod extends AbstractSpellMod {
         
         for (int index = 0; index < forks; index++) {
             // Scale the offest vector to provide a degree displacement *up to* the computed degree value
-        	Vec3 offset = VectorUtils.getRandomOrthogonalUnitVector(normDir, rng).scale(offsetMagnitude * rng.nextDouble());
+            Vec3 offset = VectorUtils.getRandomOrthogonalUnitVector(normDir, rng).scale(offsetMagnitude * rng.nextDouble());
             retVal.add(normDir.add(offset));
         }
         
