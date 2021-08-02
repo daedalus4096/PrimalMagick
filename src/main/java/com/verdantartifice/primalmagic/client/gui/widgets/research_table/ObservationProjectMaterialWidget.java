@@ -3,11 +3,11 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 import java.util.Collections;
 import java.util.List;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectMaterial;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
@@ -27,7 +27,7 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw observation icon
-        Minecraft.getInstance().getTextureManager().bindForSetup(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
+        RenderSystem.setShaderTexture(0, IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
         matrixStack.pushPose();
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);

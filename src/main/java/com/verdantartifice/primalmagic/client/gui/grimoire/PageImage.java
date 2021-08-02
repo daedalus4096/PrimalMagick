@@ -6,7 +6,6 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 
@@ -53,7 +52,7 @@ public class PageImage extends GuiComponent implements IPageElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.pushPose();
-        Minecraft.getInstance().getTextureManager().bindForSetup(this.location);
+        RenderSystem.setShaderTexture(0, this.location);
         matrixStack.translate(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
         matrixStack.scale(this.scale, this.scale, this.scale);
         this.blit(matrixStack, 0, 0, this.x, this.y, this.width, this.height);

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.common.containers.AbstractRunescribingAltarContainer;
 
@@ -33,7 +34,7 @@ public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescri
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
-        this.minecraft.getTextureManager().bindForSetup(this.getTextureLocation());
+        RenderSystem.setShaderTexture(0, this.getTextureLocation());
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

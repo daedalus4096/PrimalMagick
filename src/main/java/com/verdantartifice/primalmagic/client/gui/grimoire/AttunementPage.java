@@ -74,7 +74,7 @@ public class AttunementPage extends AbstractPage {
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             Minecraft mc = Minecraft.getInstance();
-            mc.getTextureManager().bindForSetup(TEXTURE);
+            RenderSystem.setShaderTexture(0, TEXTURE);
             
             // Render meter background
             this.blit(matrixStack, x + 51 + (side * 140), y, 12, 0, 14, 120);

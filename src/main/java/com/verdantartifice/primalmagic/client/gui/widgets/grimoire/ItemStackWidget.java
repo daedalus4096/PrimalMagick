@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.grimoire;
 
 import java.awt.Color;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -53,7 +54,7 @@ public class ItemStackWidget extends AbstractWidget {
             // Render completion checkmark if appropriate
             matrixStack.pushPose();
             matrixStack.translate(this.x + 8, this.y, 200.0F);
-            Minecraft.getInstance().getTextureManager().bindForSetup(GRIMOIRE_TEXTURE);
+            RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();
         }

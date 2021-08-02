@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.ResearchTableScreen;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -39,8 +39,7 @@ public class ProjectMaterialSelectionCheckbox extends Button {
     
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bindForSetup(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         this.blit(matrixStack, this.x, this.y, this.selected ? 16 : 0, this.isHovered() ? 16 : 0, this.width, this.height);
     }
     

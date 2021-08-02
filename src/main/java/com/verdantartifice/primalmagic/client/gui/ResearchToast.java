@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
@@ -32,7 +33,7 @@ public class ResearchToast implements Toast {
     	Minecraft mc = toastGui.getMinecraft();
     	
         // Render the toast background
-    	mc.getTextureManager().bindForSetup(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         toastGui.blit(matrixStack, 0, 0, 0, 224, 160, 32);
         
         // Render the toast title text

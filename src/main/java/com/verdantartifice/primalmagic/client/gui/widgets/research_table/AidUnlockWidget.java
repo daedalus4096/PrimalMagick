@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -38,7 +39,7 @@ public class AidUnlockWidget extends AbstractWidget {
         
         // Draw padlock icon
         matrixStack.pushPose();
-        mc.getTextureManager().bindForSetup(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         matrixStack.translate(this.x, this.y, 0.0F);
         this.blit(matrixStack, 0, 0, 198, 0, 8, 8);
         matrixStack.popPose();

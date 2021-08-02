@@ -53,7 +53,7 @@ public class ManaGaugeWidget extends AbstractWidget {
     @Override
     public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bindForSetup(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         
         matrixStack.pushPose();
         matrixStack.translate(this.x, this.y, 0.0F);

@@ -8,8 +8,6 @@ import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWid
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagic.common.crafting.RunecarvingRecipe;
 
-import net.minecraft.client.Minecraft;
-
 /**
  * Grimoire page showing a runecarving recipe.
  * 
@@ -51,7 +49,7 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        Minecraft.getInstance().getTextureManager().bindForSetup(OVERLAY);
+        RenderSystem.setShaderTexture(0, OVERLAY);
         
         // Render overlay background
         matrixStack.pushPose();

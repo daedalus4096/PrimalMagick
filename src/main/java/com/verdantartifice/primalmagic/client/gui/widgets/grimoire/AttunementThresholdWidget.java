@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -59,7 +60,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
         } else {
             // Render the icon appropriate for this widget's source and threshold
             matrixStack.pushPose();
-            mc.getTextureManager().bindForSetup(this.texture);
+            RenderSystem.setShaderTexture(0, this.texture);
             matrixStack.translate(this.x, this.y, 0.0F);
             matrixStack.scale(0.0703125F, 0.0703125F, 0.0703125F);
             this.blit(matrixStack, 0, 0, 0, 0, 255, 255);

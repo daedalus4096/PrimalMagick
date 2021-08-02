@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.IShapedRecipe;
@@ -61,7 +60,7 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        Minecraft.getInstance().getTextureManager().bindForSetup(OVERLAY);
+        RenderSystem.setShaderTexture(0, OVERLAY);
         
         // Render overlay background
         matrixStack.pushPose();

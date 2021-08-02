@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
 import java.util.List;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -34,7 +35,7 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
     
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        Minecraft.getInstance().getTextureManager().bindForSetup(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         if (this.complete) {
             // Render completion checkmark if appropriate
             matrixStack.pushPose();

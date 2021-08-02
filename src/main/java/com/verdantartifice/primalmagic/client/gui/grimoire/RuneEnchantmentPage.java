@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
@@ -14,7 +15,6 @@ import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagic.common.runes.Rune;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -70,7 +70,7 @@ public class RuneEnchantmentPage extends AbstractPage {
             this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
             y += 77;
             
-            Minecraft.getInstance().getTextureManager().bindForSetup(OVERLAY);
+            RenderSystem.setShaderTexture(0, OVERLAY);
             matrixStack.pushPose();
             matrixStack.translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
             this.blit(matrixStack, 0, 0, 0, 51, overlayWidth, overlayHeight);

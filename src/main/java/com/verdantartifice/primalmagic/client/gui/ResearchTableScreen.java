@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.AidUnlockWidget;
@@ -130,12 +131,12 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         // Render the GUI background
-        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // If a research project is ready to go, render the page overlay
         if (this.isProjectReady()) {
-            this.minecraft.getTextureManager().bindForSetup(OVERLAY);
+            RenderSystem.setShaderTexture(0, OVERLAY);
             this.blit(matrixStack, this.leftPos + 34, this.topPos + 7, 0, 0, 162, 128);
         }
     }

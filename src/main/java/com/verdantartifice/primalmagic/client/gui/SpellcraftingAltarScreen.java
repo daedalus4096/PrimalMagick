@@ -202,7 +202,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        this.minecraft.getTextureManager().bindForSetup(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         
         // Render the GUI background
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
@@ -316,8 +316,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         
         @Override
         public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-            Minecraft mc = Minecraft.getInstance();
-            mc.getTextureManager().bindForSetup(TEXTURE);
+            RenderSystem.setShaderTexture(0, TEXTURE);
             this.blit(matrixStack, this.x, this.y, this.isIncrement ? 230 : 237, this.isHovered() ? 11 : 0, this.width, this.height);
         }
         

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 import java.awt.Color;
 import java.util.Collections;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -41,7 +42,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         
         // Draw knowledge type icon
         matrixStack.pushPose();
-        mc.getTextureManager().bindForSetup(this.type.getIconLocation());
+        RenderSystem.setShaderTexture(0, this.type.getIconLocation());
         matrixStack.translate(this.x, this.y, 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);        
@@ -49,7 +50,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         
         // Draw progress bar background
         matrixStack.pushPose();
-        mc.getTextureManager().bindForSetup(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         matrixStack.translate(this.x, this.y + 17, 0.0F);
         this.blit(matrixStack, 0, 0, 182, 2, 16, 2);
         matrixStack.popPose();
@@ -70,7 +71,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             int levelPoints = rawPoints % this.type.getProgression();
             int px = (int)(16.0D * ((double)levelPoints / (double)this.type.getProgression()));
             matrixStack.pushPose();
-            mc.getTextureManager().bindForSetup(TEXTURE);
+            RenderSystem.setShaderTexture(0, TEXTURE);
             matrixStack.translate(this.x, this.y + 17, 1.0F);
             this.blit(matrixStack, 0, 0, 182, 0, px, 2);
             matrixStack.popPose();
