@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -52,7 +51,6 @@ public class ManaGaugeWidget extends AbstractWidget {
 
     @Override
     public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        Minecraft mc = Minecraft.getInstance();
         RenderSystem.setShaderTexture(0, TEXTURE);
         
         matrixStack.pushPose();
