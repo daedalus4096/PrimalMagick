@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 /**
  * Custom tile entity renderer for runescribing altar blocks.
@@ -21,10 +20,8 @@ import net.minecraft.world.level.Level;
  */
 public class RunescribingAltarTER implements BlockEntityRenderer<RunescribingAltarTileEntity> {
     protected ItemStack runeStack = null;
-    protected Level level;
     
     public RunescribingAltarTER(BlockEntityRendererProvider.Context context) {
-        this.level = context.getBlockEntityRenderDispatcher().level;
     }
     
     protected ItemStack getRuneStack() {
@@ -39,7 +36,7 @@ public class RunescribingAltarTER implements BlockEntityRenderer<RunescribingAlt
         ItemStack stack = this.getRuneStack();
         if (!stack.isEmpty()) {
             // Render the rune stack above the altar
-            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 1.1D, 0.5D);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis

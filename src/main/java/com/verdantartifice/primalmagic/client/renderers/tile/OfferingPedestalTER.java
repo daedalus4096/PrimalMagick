@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 /**
  * Custom tile entity renderer for offering pedestal blocks.
@@ -19,10 +18,7 @@ import net.minecraft.world.level.Level;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.rituals.OfferingPedestalBlock}
  */
 public class OfferingPedestalTER implements BlockEntityRenderer<OfferingPedestalTileEntity> {
-    protected Level level;
-    
     public OfferingPedestalTER(BlockEntityRendererProvider.Context context) {
-        this.level = context.getBlockEntityRenderDispatcher().level;
     }
 
     @Override
@@ -30,7 +26,7 @@ public class OfferingPedestalTER implements BlockEntityRenderer<OfferingPedestal
         ItemStack stack = tileEntityIn.getSyncedStackInSlot(0).copy();
         if (!stack.isEmpty()) {
             // Render the held item stack above the pedestal
-            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 1.5D, 0.5D);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis

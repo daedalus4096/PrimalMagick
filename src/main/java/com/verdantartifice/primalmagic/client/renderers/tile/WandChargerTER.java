@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 /**
  * Custom tile entity renderer for wand charger blocks.
@@ -19,10 +18,7 @@ import net.minecraft.world.level.Level;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
  */
 public class WandChargerTER implements BlockEntityRenderer<WandChargerTileEntity> {
-    protected Level level;
-    
     public WandChargerTER(BlockEntityRendererProvider.Context context) {
-        this.level = context.getBlockEntityRenderDispatcher().level;
     }
     
     @Override
@@ -31,7 +27,7 @@ public class WandChargerTER implements BlockEntityRenderer<WandChargerTileEntity
         if (!wandStack.isEmpty()) {
             // Render the wand in the center of the charger
             wandStack.setCount(1);
-            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 0.5D, 0.5D);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the wand around its Y-axis

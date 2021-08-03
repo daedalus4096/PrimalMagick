@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 /**
  * Custom tile entity renderer for ritual altar tile entities.
@@ -25,12 +24,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity}
  */
-@SuppressWarnings("deprecation")
 public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity> {
-    protected Level level;
-    
     public RitualAltarTER(BlockEntityRendererProvider.Context context) {
-        this.level = context.getBlockEntityRenderDispatcher().level;
     }
     
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
@@ -90,7 +85,7 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = tileEntityIn.getSyncedStackInSlot(0).copy();
         if (!stack.isEmpty()) {
-            int rot = (int)(this.level.getLevelData().getGameTime() % 360);
+            int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 1.5D, 0.5D);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis
@@ -108,6 +103,7 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
             float ds = 0.1875F;
             float ticks = (float)tileEntityIn.getActiveCount() + partialTicks;
 
+            @SuppressWarnings("deprecation")
             TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(AncientManaFontTER.TEXTURE);
             VertexConsumer builder = buffer.getBuffer(RenderType.translucent());
             
