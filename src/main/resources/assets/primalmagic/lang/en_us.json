@@ -1189,7 +1189,7 @@
     
     "primalmagic.research.wand_cap_iron.title": "Wand Cap: Iron",
     "primalmagic.research.wand_cap_iron.text.stage.1": "After another round of Grimoire study, I think I'm going to start by making wand caps out of iron.  I have some concerns, but it's what I've got.",
-    "primalmagic.research.wand_cap_iron.text.stage.2": "I'll call this a partial success.<BR>The caps will fit, certainly, but they aren't as conductive as I'd hoped.  A wand capped with iron with incur a ten percent penalty on all mana costs.<BR>That may sound bad, but it's still an improvement!  By my calculations, an uncapped wand such as my current one incurs a *twenty* percent penalty.  So hey, I'll take it.<BR>Just remember, self, you'll need to make two caps, one for each end of the wand.",
+    "primalmagic.research.wand_cap_iron.text.stage.2": "I'll call this a partial success.<BR>The caps will fit, certainly, but they aren't as conductive as I'd hoped.  A wand capped with iron will incur a ten percent penalty on all mana costs.<BR>That may sound bad, but it's still an improvement!  By my calculations, an uncapped wand such as my current one incurs a *twenty* percent penalty.  So hey, I'll take it.<BR>Just remember, self, you'll need to make two caps, one for each end of the wand.",
     
     "primalmagic.research.wand_gem_apprentice.title": "Wand Gem: Apprentice",
     "primalmagic.research.wand_gem_apprentice.text.stage.1": "Further study suggests that to hold larger amounts of mana, I want something with a regular crystalline structure.  This has the nice side effect of getting to add a little bling to my new wand.",
