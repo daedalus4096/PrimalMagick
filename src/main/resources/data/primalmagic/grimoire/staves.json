@@ -5,7 +5,8 @@
   "parents": [
     "EXPERT_MANAWEAVING",
     "ADVANCED_WANDMAKING",
-    "WAND_INSCRIPTION"
+    "WAND_INSCRIPTION",
+    "SHARD_SYNTHESIS"
   ],
   "stages": [
     {
