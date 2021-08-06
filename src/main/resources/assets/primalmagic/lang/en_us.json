@@ -1409,7 +1409,7 @@
     
     "primalmagic.research.manafruit.title": "Manafruit",
     "primalmagic.research.manafruit.text.stage.1": "My first real ritual!  I'm so excited.<BR>I'm piecing together the props and offerings I'll need from my Grimoire's hints.  I'll be ready to try it soon!",
-    "primalmagic.research.manafruit.text.stage.2": "Fruit?  Huh, okay then.<BR>It looks like it's not just any old fruit, though.  In addition to being nourishing, this Manafruit will temporarily allow me to channel mana more efficiently, resulting in a slight discount in all my mana costs.<BR>May I can find some other use for it as well?",
+    "primalmagic.research.manafruit.text.stage.2": "Fruit?  Huh, okay then.<BR>It looks like it's not just any old fruit, though.  In addition to being nourishing, this Manafruit will temporarily allow me to channel mana more efficiently, resulting in a slight discount in all my mana costs.<BR>Maybe I can find some other use for it as well?",
     
     "primalmagic.research.ritual_lectern.title": "Ritual Lectern",
     "primalmagic.research.ritual_lectern.text.stage.1": "More advanced rituals will require more advanced props to drive them.<BR>Books are symbolic of knowledge and are important in mundane enchanting.  Perhaps they can be of use in rituals as well?",
@@ -1565,7 +1565,7 @@
     "primalmagic.research.arcanometer.text.stage.2": "I'm feeling very proud of myself right now.  Behold, the Arcanometer!<BR>Rather than spending an afternoon hunched over an analysis table, I can simply take the Arcanometer, point it at a block, and trigger it.  Presto, one detailed scan result.<BR>I can even use it to scan creatures now!  For obvious reasons, they'd never let me take them apart under a magnifying glass, but now I don't have to.  I should just make sure not to let them eat me while I'm scanning them.",
     
     "primalmagic.research.primalite_golem.title": "Primalite Golem",
-    "primalmagic.research.primalite_golem.text.stage.1": "Golems are fascinating creatures.  They're animated, but clearly not alive.  Magical, they don't seem to use mana.<BR>Is this a result that I can replicate with magitech?",
+    "primalmagic.research.primalite_golem.text.stage.1": "Golems are fascinating creatures.  They're animated, but clearly not alive.  Magical, but they don't seem to use mana.<BR>Is this a result that I can replicate with magitech?",
     "primalmagic.research.primalite_golem.text.stage.2": "I've succeeded in creating my own version of an iron golem out of Primalite.  The resulting entity is tougher, faster, and smarter than a conventional iron golem.<BR>To create the golem, I must take a golem controller, place it atop a T-shape of Primalite blocks, and then activate the controller with a wand.  The resulting golem will recognize me as its master, following me around and defending me from attack.  If I want it to stop following me, for whatever reason, I can command it to stay by right-clicking on it.<BR>Should my golem become severely damaged, I can repair it by using an ingot of Primalite on it.<BR>The magic that binds the golem to me is tenuous, and I can only have a single golem servant at a time.  Should I attempt to create a second one, the first will be destroyed.",
     
     "primalmagic.research.hexium_golem.title": "Hexium Golem",
