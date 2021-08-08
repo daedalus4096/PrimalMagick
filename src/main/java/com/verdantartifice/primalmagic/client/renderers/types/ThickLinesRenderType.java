@@ -11,7 +11,7 @@ public class ThickLinesRenderType extends RenderType {
     private static final LineStateShard THICK_LINE_STATE = new LineStateShard(OptionalDouble.of(6.0D));
     
     public static final RenderType THICK_LINES = create("thick_lines", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.LINES, 256, false, false,
-            RenderType.CompositeState.builder().setLineState(THICK_LINE_STATE).setLayeringState(VIEW_OFFSET_Z_LAYERING).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setWriteMaskState(COLOR_WRITE).createCompositeState(false));
+            RenderType.CompositeState.builder().setShaderState(RENDERTYPE_LINES_SHADER).setLineState(THICK_LINE_STATE).setLayeringState(VIEW_OFFSET_Z_LAYERING).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setWriteMaskState(COLOR_WRITE).createCompositeState(false));
 
     protected ThickLinesRenderType(String p_i225992_1_, VertexFormat p_i225992_2_, VertexFormat.Mode p_i225992_3_, int p_i225992_4_, boolean p_i225992_5_, boolean p_i225992_6_, Runnable p_i225992_7_, Runnable p_i225992_8_) {
         // Dummy constructor, never instantiated
