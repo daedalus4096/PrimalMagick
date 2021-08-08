@@ -41,6 +41,8 @@ import com.verdantartifice.primalmagic.common.rituals.Mishap;
 import com.verdantartifice.primalmagic.common.rituals.RitualStep;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
@@ -437,6 +439,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         }
         if (this.getActivePlayer() != null) {
             this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.info.complete"), false);
+            StatsManager.incrementValue(this.getActivePlayer(), StatsPM.RITUALS_COMPLETED);
         }
         this.spawnSuccessParticles();
         this.reset();
