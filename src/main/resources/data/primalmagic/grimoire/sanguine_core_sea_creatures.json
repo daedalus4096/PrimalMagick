@@ -18,9 +18,11 @@
         "sea": 2
       },
       "recipes": [
+        "primalmagic:sanguine_core_axolotl",
         "primalmagic:sanguine_core_cod",
         "primalmagic:sanguine_core_dolphin",
         "primalmagic:sanguine_core_elder_guardian",
+        "primalmagic:sanguine_core_glow_squid",
         "primalmagic:sanguine_core_guardian",
         "primalmagic:sanguine_core_polar_bear",
         "primalmagic:sanguine_core_pufferfish",

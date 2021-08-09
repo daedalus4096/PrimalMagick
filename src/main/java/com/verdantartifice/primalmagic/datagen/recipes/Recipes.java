@@ -3362,6 +3362,12 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CRUCIBLE")))
             .manaCost(new SourceList().add(Source.BLOOD, 50).add(Source.INFERNAL, 50))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_AXOLOTL.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.TROPICAL_FISH_BUCKET)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.FEATHERS)
@@ -3469,6 +3475,18 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GLOW_SQUID.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.GLOW_INK_SAC)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GOAT.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.MILK_BUCKET)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GUARDIAN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
