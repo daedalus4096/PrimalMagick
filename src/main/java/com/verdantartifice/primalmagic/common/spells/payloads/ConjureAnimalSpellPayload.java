@@ -41,6 +41,7 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
         bag.add(EntityType.COW, 10);
         bag.add(EntityType.DONKEY, 2);
         bag.add(EntityType.FOX, 5);
+        bag.add(EntityType.GOAT, 5);
         bag.add(EntityType.HORSE, 2);
         bag.add(EntityType.MOOSHROOM, 1);
         bag.add(EntityType.OCELOT, 5);
@@ -51,7 +52,9 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
         bag.add(EntityType.TURTLE, 5);
     });
     protected static final WeightedRandomBag<EntityType<?>> WATER_ANIMALS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(EntityType.AXOLOTL, 2);
         bag.add(EntityType.COD, 10);
+        bag.add(EntityType.GLOW_SQUID, 2);
         bag.add(EntityType.PUFFERFISH, 10);
         bag.add(EntityType.SALMON, 10);
         bag.add(EntityType.SQUID, 5);
