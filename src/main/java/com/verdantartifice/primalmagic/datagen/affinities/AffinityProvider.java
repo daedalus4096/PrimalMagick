@@ -659,6 +659,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get()).build(consumer);
         
         // Define vanilla entity type affinities
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.AXOLOTL).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.BAT).value(Source.SKY, 10).value(Source.MOON, 10).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.BEE).value(Source.SKY, 10).value(Source.SUN, 5).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.BLAZE).value(Source.SKY, 10).value(Source.INFERNAL, 20).build(consumer);
@@ -678,6 +679,8 @@ public class AffinityProvider implements DataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityType.EVOKER).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).value(Source.VOID, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.FOX).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.GHAST).value(Source.SKY, 10).value(Source.BLOOD, 10).value(Source.INFERNAL, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.GLOW_SQUID).value(Source.SEA, 10).value(Source.SUN, 10).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.GOAT).value(Source.SKY, 5).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.GUARDIAN).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.HOGLIN).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.HORSE).value(Source.BLOOD, 10).build(consumer);
