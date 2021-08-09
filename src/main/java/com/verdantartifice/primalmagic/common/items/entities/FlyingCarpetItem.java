@@ -86,12 +86,13 @@ public class FlyingCarpetItem extends Item {
     }
 
     @Override
-    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
         if (!world.isClientSide) {
             if (context.getClickedFace() != Direction.UP) {
                 return InteractionResult.PASS;
             }
+            ItemStack stack = context.getItemInHand();
             double posX = context.getClickLocation().x;
             double posY = context.getClickLocation().y;
             double posZ = context.getClickLocation().z;
