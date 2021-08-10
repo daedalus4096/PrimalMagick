@@ -24,11 +24,10 @@ import net.minecraftforge.client.IItemRenderProperties;
  * @author Daedalus4096
  */
 public class ForbiddenTridentItem extends AbstractTieredTridentItem {
-    protected final RenderProperties renderProperties;
+    protected IItemRenderProperties renderProps;
     
     public ForbiddenTridentItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);
-        this.renderProperties = new RenderProperties();
     }
 
     @Override
@@ -56,20 +55,17 @@ public class ForbiddenTridentItem extends AbstractTieredTridentItem {
         consumer.accept(this.getRenderProperties());
     }
     
-    public RenderProperties getRenderProperties() {
-        return this.renderProperties;
-    }
-    
-    public static class RenderProperties implements IItemRenderProperties {
-        protected final BlockEntityWithoutLevelRenderer renderer;
-        
-        public RenderProperties() {
-            this.renderer = new ForbiddenTridentISTER();
-        }
+    public IItemRenderProperties getRenderProperties() {
+        if (this.renderProps == null) {
+            this.renderProps = new IItemRenderProperties() {
+                final BlockEntityWithoutLevelRenderer renderer = new ForbiddenTridentISTER();
 
-        @Override
-        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-            return renderer;
+                @Override
+                public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                    return renderer;
+                }
+            };
         }
+        return this.renderProps;
     }
 }
