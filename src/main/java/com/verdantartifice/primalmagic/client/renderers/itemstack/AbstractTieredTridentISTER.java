@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -38,11 +39,24 @@ public abstract class AbstractTieredTridentISTER extends BlockEntityWithoutLevel
     @Override
     public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (stack.getItem() instanceof AbstractTieredTridentItem) {
-            matrixStack.pushPose();
-            matrixStack.scale(1.0F, -1.0F, -1.0F);
-            VertexConsumer ivertexbuilder1 = ItemRenderer.getFoilBufferDirect(buffer, this.model.renderType(this.getTextureLocation()), false, stack.hasFoil());
-            this.model.renderToBuffer(matrixStack, ivertexbuilder1, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-            matrixStack.popPose();
+            Minecraft mc = Minecraft.getInstance();
+            ItemRenderer itemRenderer = mc.getItemRenderer();
+            
+            boolean render2d = (transformType == ItemTransforms.TransformType.GUI ||
+                                transformType == ItemTransforms.TransformType.GROUND ||
+                                transformType == ItemTransforms.TransformType.FIXED);
+            if (render2d) {
+                BakedModel bakedModel = mc.getModelManager().getModel(this.getModelResourceLocation());
+                matrixStack.pushPose();
+                itemRenderer.render(stack, transformType, true, matrixStack, buffer, combinedLight, combinedOverlay, bakedModel);
+                matrixStack.popPose();
+            } else {
+                matrixStack.pushPose();
+                matrixStack.scale(1.0F, -1.0F, -1.0F);
+                VertexConsumer ivertexbuilder1 = ItemRenderer.getFoilBufferDirect(buffer, this.model.renderType(this.getTextureLocation()), false, stack.hasFoil());
+                this.model.renderToBuffer(matrixStack, ivertexbuilder1, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                matrixStack.popPose();
+            }
         }
     }
     
