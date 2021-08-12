@@ -168,7 +168,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (stack == null || sources == null) {
             return false;
         }
-        if (this.containsRealMana(stack, player, sources)) {
+        if (this.containsMana(stack, player, sources)) {
             // If the wand stack contains enough mana, process the consumption and return success
             boolean isInfinite = (this.getMaxMana(stack) == -1);
             SourceList attunementDeltas = new SourceList();
