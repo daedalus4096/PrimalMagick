@@ -10,7 +10,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.SerializationTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.Container;
@@ -148,9 +150,15 @@ public class InventoryUtils {
                 if (searchStack.getCount() > count) {
                     searchStack.shrink(count);
                     count = 0;
+                    if (player instanceof ServerPlayer) {
+                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, searchStack));
+                    }
                 } else {
                     count -= searchStack.getCount();
                     player.getInventory().items.set(index, ItemStack.EMPTY);
+                    if (player instanceof ServerPlayer) {
+                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, ItemStack.EMPTY));
+                    }
                 }
                 if (count <= 0) {
                     // Once a sufficient number of the given item are removed, return true
@@ -208,9 +216,15 @@ public class InventoryUtils {
                 if (searchStack.getCount() > amount) {
                     searchStack.shrink(amount);
                     amount = 0;
+                    if (player instanceof ServerPlayer) {
+                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, searchStack));
+                    }
                 } else {
                     amount -= searchStack.getCount();
                     player.getInventory().items.set(index, ItemStack.EMPTY);
+                    if (player instanceof ServerPlayer) {
+                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, ItemStack.EMPTY));
+                    }
                 }
                 if (amount <= 0) {
                     // Once a sufficient number of the given items are removed, return true
