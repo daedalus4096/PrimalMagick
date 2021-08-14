@@ -1,11 +1,16 @@
 package com.verdantartifice.primalmagic.common.entities.projectiles;
 
+import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
+
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
@@ -14,13 +19,18 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
  * 
  * @author Daedalus4096
  */
-public class FishingHookEntity extends FishingHook {
-    public FishingHookEntity(EntityType<? extends FishingHookEntity> type, Level level) {
-        super(type, level);
+public class FishingHookEntity extends FishingHook implements IEntityAdditionalSpawnData {
+    public FishingHookEntity(FMLPlayMessages.SpawnEntity spawnPacket, Level level) {
+        super(level.getPlayerByUUID(spawnPacket.getAdditionalData().readUUID()), level, 0, 0);
     }
     
     public FishingHookEntity(Player player, Level level, int luck, int lureSpeed) {
         super(player, level, luck, lureSpeed);
+    }
+
+    @Override
+    public EntityType<?> getType() {
+        return EntityTypesPM.FISHING_HOOK.get();
     }
 
     @Override
@@ -38,5 +48,18 @@ public class FishingHookEntity extends FishingHook {
     @Override
     public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    @Override
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        Player player = this.getPlayerOwner();
+        if (player != null) {
+            buffer.writeUUID(player.getUUID());
+        }
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        // Do nothing
     }
 }
