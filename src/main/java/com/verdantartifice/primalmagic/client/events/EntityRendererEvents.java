@@ -28,6 +28,7 @@ import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.renderer.entity.FishingHookRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -50,6 +51,7 @@ public class EntityRendererEvents {
         event.registerEntityRenderer(EntityTypesPM.SIN_CRYSTAL.get(), SinCrystalRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.APPLE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.ALCHEMICAL_BOMB.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityTypesPM.FISHING_HOOK.get(), FishingHookRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentRenderer::new);

@@ -5,9 +5,9 @@ import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
@@ -15,9 +15,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
  * 
  * @author Daedalus4096
  */
-public class PrimalFishingRodItem extends FishingRodItem {
-    public PrimalFishingRodItem(Item.Properties builder) {
-        super(builder);
+public class PrimalFishingRodItem extends TieredFishingRodItem {
+    public PrimalFishingRodItem(Tier tier, Item.Properties builder) {
+        super(tier, builder);
     }
 
     @Override
