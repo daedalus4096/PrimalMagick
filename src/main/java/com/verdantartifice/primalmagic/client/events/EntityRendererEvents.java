@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.entity.BasicPixieRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.FishingHookRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.FlyingCarpetRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.ForbiddenTridentRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.GrandPixieRenderer;
@@ -28,7 +29,6 @@ import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.renderer.entity.FishingHookRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
