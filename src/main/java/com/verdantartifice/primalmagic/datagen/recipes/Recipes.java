@@ -1574,12 +1574,22 @@ public class Recipes extends RecipeProvider {
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(Tags.Items.ORES_IRON)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_earthshatter_hammer"));
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_ore"));
+        ShapelessRecipeBuilder.shapeless(ItemsPM.IRON_GRIT.get(), 2)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(Items.RAW_IRON)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_raw_metal"));
         ShapelessRecipeBuilder.shapeless(ItemsPM.GOLD_GRIT.get(), 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(Tags.Items.ORES_GOLD)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_earthshatter_hammer"));
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_ore"));
+        ShapelessRecipeBuilder.shapeless(ItemsPM.GOLD_GRIT.get(), 2)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(Items.RAW_GOLD)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_raw_metal"));
     }
 
     protected void registerMineralRecipes(Consumer<FinishedRecipe> consumer) {
