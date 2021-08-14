@@ -308,6 +308,7 @@ public class ItemsPM {
     // Register mineral items
     public static final RegistryObject<Item> IRON_GRIT = ITEMS.register("iron_grit", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> GOLD_GRIT = ITEMS.register("gold_grit", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<Item> COPPER_GRIT = ITEMS.register("copper_grit", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> PRIMALITE_INGOT = ITEMS.register("primalite_ingot", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> HEXIUM_INGOT = ITEMS.register("hexium_ingot", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> HALLOWSTEEL_INGOT = ITEMS.register("hallowsteel_ingot", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));

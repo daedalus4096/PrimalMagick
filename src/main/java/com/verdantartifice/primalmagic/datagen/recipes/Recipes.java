@@ -1590,6 +1590,16 @@ public class Recipes extends RecipeProvider {
             .requires(Items.RAW_GOLD)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_raw_metal"));
+        ShapelessRecipeBuilder.shapeless(ItemsPM.COPPER_GRIT.get(), 2)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(Items.COPPER_ORE)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_ore"));
+        ShapelessRecipeBuilder.shapeless(ItemsPM.COPPER_GRIT.get(), 2)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(Items.RAW_COPPER)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_raw_metal"));
     }
 
     protected void registerMineralRecipes(Consumer<FinishedRecipe> consumer) {
@@ -1605,6 +1615,12 @@ public class Recipes extends RecipeProvider {
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemsPM.GOLD_GRIT.get()), Items.GOLD_INGOT, 0.7F, 100)
             .unlockedBy("has_grit", has(ItemsPM.GOLD_GRIT.get()))
             .save(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_ingot_from_grit_blasting"));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.COPPER_GRIT.get()), Items.COPPER_INGOT, 0.7F, 200)
+            .unlockedBy("has_grit", has(ItemsPM.COPPER_GRIT.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "copper_ingot_from_grit_smelting"));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemsPM.COPPER_GRIT.get()), Items.COPPER_INGOT, 0.7F, 100)
+            .unlockedBy("has_grit", has(ItemsPM.COPPER_GRIT.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "copper_ingot_from_grit_blasting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(BlocksPM.QUARTZ_ORE.get()), Items.QUARTZ, 0.2F, 200)
             .unlockedBy("has_quartz_ore", has(BlocksPM.QUARTZ_ORE.get()))
             .save(consumer, new ResourceLocation(PrimalMagic.MODID, "quartz_from_smelting"));

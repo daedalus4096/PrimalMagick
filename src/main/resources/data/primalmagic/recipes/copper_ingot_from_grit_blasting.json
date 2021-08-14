@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "primalmagic:copper_grit"
+  },
+  "result": "minecraft:copper_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}
