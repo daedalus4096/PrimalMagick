@@ -262,7 +262,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("EARTHSHATTER_HAMMER", discipline).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "ores/iron").requiredItemTag("forge", "ores/gold").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.RAW_IRON).requiredItemStack(Items.RAW_GOLD).requiredItemStack(Items.RAW_COPPER).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.EARTHSHATTER_HAMMER.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUNLAMP", discipline).parent("EXPERT_MANAWEAVING").parent("PRIMALITE")
