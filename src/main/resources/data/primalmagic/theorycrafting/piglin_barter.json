@@ -19,6 +19,13 @@
     },
     {
       "type": "item",
+      "stack": "minecraft:raw_gold_block",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 0.5
+    },
+    {
+      "type": "item",
       "stack": "minecraft:clock",
       "consumed": true,
       "match_nbt": false,
@@ -39,18 +46,18 @@
       "weight": 2.0
     },
     {
+      "type": "item",
+      "stack": "minecraft:raw_gold",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 2.0
+    },
+    {
       "type": "tag",
       "name": "forge:ingots/gold",
       "quantity": 1,
       "consumed": true,
       "weight": 5.0
-    },
-    {
-      "type": "tag",
-      "name": "forge:ores/gold",
-      "quantity": 1,
-      "consumed": true,
-      "weight": 2.0
     },
     {
       "type": "item",
@@ -142,13 +149,6 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
-    },
-    {
-      "type": "item",
-      "stack": "minecraft:nether_gold_ore",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 2.0
     }
   ]
 }
