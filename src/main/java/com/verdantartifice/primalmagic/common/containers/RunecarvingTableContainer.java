@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.containers.slots.GenericResultSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.LapisLazuliSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.StoneSlabSlot;
 import com.verdantartifice.primalmagic.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -77,12 +80,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu {
         this.inputLapisSlot = this.addSlot(new LapisLazuliSlot(this.inputInventory, 1, 20, 46));
         
         // Slot 2: runecarving output
-        this.outputSlot = this.addSlot(new Slot(this.outputInventory, 0, 143, 33) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-            
+        this.outputSlot = this.addSlot(new GenericResultSlot(this.player, this.outputInventory, 0, 143, 33) {
             @Override
             public void onTake(Player thePlayer, ItemStack stack) {
                 RunecarvingTableContainer.this.inputSlabSlot.remove(1);
@@ -97,7 +95,13 @@ public class RunecarvingTableContainer extends AbstractContainerMenu {
                         RunecarvingTableContainer.this.lastOnTake = time;
                     }
                 });
+                
                 super.onTake(thePlayer, stack);
+            }
+
+            @Override
+            protected void checkTakeAchievements(ItemStack stack) {
+                StatsManager.incrementValue(this.player, StatsPM.CRAFTED_RUNEWORKING, stack.getCount());
             }
         });
         

@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import com.verdantartifice.primalmagic.common.containers.slots.GenericResultSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -49,7 +51,13 @@ public class ConcocterContainer extends AbstractContainerMenu {
         this.wandSlot = this.addSlot(new WandSlot(this.concocterInv, 9, 8, 62, false));
         
         // Slot 10: Output slot
-        this.addSlot(new GenericResultSlot(playerInv.player, this.concocterInv, 10, 138, 35));
+        this.addSlot(new GenericResultSlot(playerInv.player, this.concocterInv, 10, 138, 35) {
+            @Override
+            protected void checkTakeAchievements(ItemStack stack) {
+                super.checkTakeAchievements(stack);
+                StatsManager.incrementValue(this.player, StatsPM.CRAFTED_MAGITECH, stack.getCount());
+            }
+        });
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {

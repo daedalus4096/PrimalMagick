@@ -440,6 +440,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         if (this.getActivePlayer() != null) {
             this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.info.complete"), false);
             StatsManager.incrementValue(this.getActivePlayer(), StatsPM.RITUALS_COMPLETED);
+            StatsManager.incrementValue(this.getActivePlayer(), StatsPM.CRAFTED_RITUAL);
         }
         this.spawnSuccessParticles();
         this.reset();
