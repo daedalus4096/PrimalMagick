@@ -115,7 +115,7 @@ public class AncientManaFontTileEntity extends TilePM implements IInteractWithWa
                 Source source = ((AncientManaFontBlock)this.getBlockState().getBlock()).getSource();
                 if (source != null) {
                     // Transfer mana from the font to the wand
-                    int tap = 1;
+                    int tap = Math.min(this.mana, wand.getSiphonAmount(wandStack));
                     int leftover = wand.addRealMana(wandStack, source, tap);
                     if (leftover < tap) {
                         this.mana -= (tap - leftover);
