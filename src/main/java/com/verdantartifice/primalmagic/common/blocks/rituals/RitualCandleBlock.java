@@ -83,6 +83,9 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
             double z = pos.getZ() + 0.5D;
             worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.0D, 0.0D);
             worldIn.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
+            if (rand.nextFloat() < 0.17F) {
+                worldIn.playLocalSound(x, y, z, SoundEvents.CANDLE_AMBIENT, SoundSource.BLOCKS, 1.0F + rand.nextFloat(), 0.3F + rand.nextFloat() * 0.7F, false);
+            }
         }
         
         // Show spell sparkles if receiving salt power
@@ -115,7 +118,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
             return InteractionResult.SUCCESS;
         } else if (player != null && player.getItemInHand(handIn).isEmpty() && state.getValue(LIT)) {
             // If using an empty hand on a lit candle, snuff it
-            worldIn.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            worldIn.playSound(player, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
             }
