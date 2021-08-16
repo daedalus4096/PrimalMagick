@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
@@ -36,7 +36,7 @@ public class RitualRecipe implements IRitualRecipe {
     
     protected final ResourceLocation id;
     protected final String group;
-    protected final SimpleResearchKey research;
+    protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     protected final int instability;
     protected final ItemStack recipeOutput;
@@ -44,7 +44,7 @@ public class RitualRecipe implements IRitualRecipe {
     protected final NonNullList<BlockIngredient> recipeProps;
     protected final boolean isSimple;
 
-    public RitualRecipe(ResourceLocation id, String group, SimpleResearchKey research, SourceList manaCosts, int instability, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props) {
+    public RitualRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, int instability, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props) {
         this.id = id;
         this.group = group;
         this.research = research;
@@ -110,7 +110,7 @@ public class RitualRecipe implements IRitualRecipe {
     }
 
     @Override
-    public SimpleResearchKey getRequiredResearch() {
+    public CompoundResearchKey getRequiredResearch() {
         return this.research;
     }
 
@@ -133,7 +133,7 @@ public class RitualRecipe implements IRitualRecipe {
         @Override
         public RitualRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
-            SimpleResearchKey research = SimpleResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
+            CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
             SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
             int instability = GsonHelper.getAsInt(json, "instability", 0);
             ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
@@ -171,7 +171,7 @@ public class RitualRecipe implements IRitualRecipe {
         @Override
         public RitualRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
-            SimpleResearchKey research = SimpleResearchKey.parse(buffer.readUtf(32767));
+            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             int instability = buffer.readVarInt();
             
             SourceList manaCosts = new SourceList();

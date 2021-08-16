@@ -1,15 +1,18 @@
 package com.verdantartifice.primalmagic.common.containers.slots;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.crafting.WandInventory;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
-import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.Stat;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
@@ -87,14 +90,21 @@ public class ArcaneCraftingResultSlot extends Slot {
                 
                 // Increment the craft counter for the recipe's discipline
                 if (this.player instanceof ServerPlayer) {
-                    SimpleResearchKey key = ((IArcaneRecipe)holder.getRecipeUsed()).getRequiredResearch();
-                    ResearchEntry entry = ResearchEntries.getEntry(key);
-                    if (entry != null) {
-                        ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
-                        if (disc != null) {
-                            Stat craftingStat = disc.getCraftingStat();
-                            if (craftingStat != null) {
-                                StatsManager.incrementValue((ServerPlayer)this.player, craftingStat, stack.getCount());
+                    CompoundResearchKey key = ((IArcaneRecipe)holder.getRecipeUsed()).getRequiredResearch();
+                    List<ResearchEntry> entryList = ResearchEntries.getEntries(key);
+                    Set<String> recordedDisciplines = new HashSet<>();
+                    for (ResearchEntry entry : entryList) {
+                        if (entry != null) {
+                            ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
+                            if (disc != null) {
+                                String discKey = disc.getKey();
+                                if (!recordedDisciplines.contains(discKey)) {   // Only increment the stat for each discipline once
+                                    recordedDisciplines.add(discKey);
+                                    Stat craftingStat = disc.getCraftingStat();
+                                    if (craftingStat != null) {
+                                        StatsManager.incrementValue((ServerPlayer)this.player, craftingStat, stack.getCount());
+                                    }
+                                }
                             }
                         }
                     }

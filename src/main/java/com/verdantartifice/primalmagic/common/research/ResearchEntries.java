@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagic.common.research;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -23,6 +25,18 @@ public class ResearchEntries {
             }
         }
         return null;
+    }
+    
+    @Nonnull
+    public static List<ResearchEntry> getEntries(CompoundResearchKey key) {
+        List<ResearchEntry> retVal = new ArrayList<>();
+        for (SimpleResearchKey simpleKey : key.getKeys()) {
+            ResearchEntry entry = getEntry(simpleKey);
+            if (entry != null) {
+                retVal.add(entry);
+            }
+        }
+        return retVal;
     }
     
     @Nonnull

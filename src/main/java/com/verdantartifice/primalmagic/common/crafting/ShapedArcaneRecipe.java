@@ -10,7 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
@@ -41,10 +41,10 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     protected final ItemStack recipeOutput;
     protected final ResourceLocation id;
     protected final String group;
-    protected final SimpleResearchKey research;
+    protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     
-    public ShapedArcaneRecipe(ResourceLocation id, String group, SimpleResearchKey research, SourceList manaCosts, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
+    public ShapedArcaneRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
         this.id = id;
         this.group = group;
         this.research = research;
@@ -125,7 +125,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     }
 
     @Override
-    public SimpleResearchKey getRequiredResearch() {
+    public CompoundResearchKey getRequiredResearch() {
         return this.research;
     }
     
@@ -260,7 +260,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         @Override
         public ShapedArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
-            SimpleResearchKey research = SimpleResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
+            CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
             SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
             Map<String, Ingredient> map = ShapedArcaneRecipe.deserializeKey(GsonHelper.getAsJsonObject(json, "key"));
             String[] patternStrs = ShapedArcaneRecipe.shrink(ShapedArcaneRecipe.patternFromJson(GsonHelper.getAsJsonArray(json, "pattern")));
@@ -276,7 +276,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             int width = buffer.readVarInt();
             int height = buffer.readVarInt();
             String group = buffer.readUtf(32767);
-            SimpleResearchKey research = SimpleResearchKey.parse(buffer.readUtf(32767));
+            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             SourceList manaCosts = new SourceList();
             for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
                 manaCosts.add(Source.SORTED_SOURCES.get(index), buffer.readVarInt());

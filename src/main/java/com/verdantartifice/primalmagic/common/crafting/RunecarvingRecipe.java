@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.crafting;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -25,12 +25,12 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class RunecarvingRecipe implements IRunecarvingRecipe {
     protected final ResourceLocation id;
     protected final String group;
-    protected final SimpleResearchKey research;
+    protected final CompoundResearchKey research;
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
     protected final ItemStack result;
     
-    public RunecarvingRecipe(ResourceLocation id, String group, SimpleResearchKey research, Ingredient ingredient1, Ingredient ingredient2, ItemStack result) {
+    public RunecarvingRecipe(ResourceLocation id, String group, CompoundResearchKey research, Ingredient ingredient1, Ingredient ingredient2, ItemStack result) {
         this.id = id;
         this.group = group;
         this.research = research;
@@ -83,7 +83,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     }
 
     @Override
-    public SimpleResearchKey getRequiredResearch() {
+    public CompoundResearchKey getRequiredResearch() {
         return this.research;
     }
 
@@ -91,7 +91,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
         @Override
         public RunecarvingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
-            SimpleResearchKey research = SimpleResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
+            CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
             ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
             Ingredient ing1 = GsonHelper.isArrayNode(json, "ingredient1") ?
                     Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "ingredient1")) :
@@ -109,7 +109,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
         @Override
         public RunecarvingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
-            SimpleResearchKey research = SimpleResearchKey.parse(buffer.readUtf(32767));
+            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             Ingredient ing1 = Ingredient.fromNetwork(buffer);
             Ingredient ing2 = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();

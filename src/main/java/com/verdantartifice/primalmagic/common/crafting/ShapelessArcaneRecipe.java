@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
@@ -34,13 +34,13 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class ShapelessArcaneRecipe implements IArcaneRecipe {
     protected final ResourceLocation id;
     protected final String group;
-    protected final SimpleResearchKey research;
+    protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     protected final ItemStack recipeOutput;
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
     
-    public ShapelessArcaneRecipe(ResourceLocation id, String group, SimpleResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
+    public ShapelessArcaneRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
         this.id = id;
         this.group = group;
         this.research = research;
@@ -102,7 +102,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     }
 
     @Override
-    public SimpleResearchKey getRequiredResearch() {
+    public CompoundResearchKey getRequiredResearch() {
         return this.research;
     }
     
@@ -115,7 +115,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         @Override
         public ShapelessArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
-            SimpleResearchKey research = SimpleResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
+            CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
             SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
             ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
             NonNullList<Ingredient> ingredients = this.readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
@@ -142,7 +142,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         @Override
         public ShapelessArcaneRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
-            SimpleResearchKey research = SimpleResearchKey.parse(buffer.readUtf(32767));
+            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             
             SourceList manaCosts = new SourceList();
             for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {

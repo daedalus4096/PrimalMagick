@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.crafting;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +14,7 @@ public interface IConcoctingRecipe extends Recipe<Container>, IHasManaCost {
      * 
      * @return the required research for the recipe
      */
-    public SimpleResearchKey getRequiredResearch();
+    public CompoundResearchKey getRequiredResearch();
 
     default RecipeType<?> getType() {
         return RecipeTypesPM.CONCOCTING;
