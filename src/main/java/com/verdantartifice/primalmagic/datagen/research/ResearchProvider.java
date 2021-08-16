@@ -917,7 +917,7 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 2).recipe(ItemsPM.BASIC_VOID_PIXIE.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_PIXIE.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("GRAND_PIXIES", discipline).parent("MASTER_RITUAL").parent("PIXIES").parent("CRYSTAL_SYNTHESIS").parent("RUNE_POWER").parent("BLOODLETTER")
+        ResearchEntryBuilder.entry("GRAND_PIXIES", discipline).parent("MASTER_RITUAL").parent("PIXIES").parent("CRYSTAL_SYNTHESIS").parent("RUNE_POWER").parent("SOUL_ANVIL")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_POWER.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).attunement(Source.SEA, 3).attunement(Source.SKY, 3).attunement(Source.SUN, 3).attunement(Source.MOON, 3)
                     .recipe(ItemsPM.GRAND_EARTH_PIXIE.get()).recipe(ItemsPM.GRAND_SEA_PIXIE.get()).recipe(ItemsPM.GRAND_SKY_PIXIE.get()).recipe(ItemsPM.GRAND_SUN_PIXIE.get())
@@ -927,7 +927,7 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 3).recipe(ItemsPM.GRAND_VOID_PIXIE.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 3).recipe(ItemsPM.GRAND_HALLOWED_PIXIE.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("MAJESTIC_PIXIES", discipline).parent("SUPREME_RITUAL").parent("GRAND_PIXIES").parent("CLUSTER_SYNTHESIS").parent("SOUL_ANVIL")
+        ResearchEntryBuilder.entry("MAJESTIC_PIXIES", discipline).parent("SUPREME_RITUAL").parent("GRAND_PIXIES").parent("CLUSTER_SYNTHESIS").parent("CELESTIAL_HARP")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 4).attunement(Source.SEA, 4).attunement(Source.SKY, 4).attunement(Source.SUN, 4).attunement(Source.MOON, 4)
                     .recipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get()).recipe(ItemsPM.MAJESTIC_SEA_PIXIE.get()).recipe(ItemsPM.MAJESTIC_SKY_PIXIE.get()).recipe(ItemsPM.MAJESTIC_SUN_PIXIE.get())
@@ -958,7 +958,7 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).attunement(Source.VOID, 3).recipe(ItemsPM.GREATER_VOID_AMBROSIA.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 3).recipe(ItemsPM.GREATER_HALLOWED_AMBROSIA.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_AMBROSIA", discipline).parent("SUPREME_RITUAL").parent("GREATER_AMBROSIA").parent("CLUSTER_SYNTHESIS").parent("SOUL_ANVIL")
+        ResearchEntryBuilder.entry("SUPREME_AMBROSIA", discipline).parent("SUPREME_RITUAL").parent("GREATER_AMBROSIA").parent("CLUSTER_SYNTHESIS").parent("CELESTIAL_HARP")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 4).attunement(Source.SEA, 4).attunement(Source.SKY, 4).attunement(Source.SUN, 4).attunement(Source.MOON, 4)
                     .recipe(ItemsPM.SUPREME_EARTH_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SEA_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SKY_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SUN_AMBROSIA.get())
