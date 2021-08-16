@@ -796,6 +796,7 @@ public class AffinityProvider implements DataProvider {
         
         // Define mod entity type affinities
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.TREEFOLK.get()).value(Source.EARTH, 10).value(Source.SUN, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.INNER_DEMON.get()).value(Source.BLOOD, 50).value(Source.INFERNAL, 50).value(Source.VOID, 50).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.PRIMALITE_GOLEM.get()).value(Source.EARTH, 30).value(Source.SEA, 10).value(Source.SKY, 10).value(Source.SUN, 10).value(Source.MOON, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.HEXIUM_GOLEM.get()).value(Source.EARTH, 20).value(Source.BLOOD, 10).value(Source.INFERNAL, 10).value(Source.VOID, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.HALLOWSTEEL_GOLEM.get()).value(Source.EARTH, 20).value(Source.HALLOWED, 10).build(consumer);

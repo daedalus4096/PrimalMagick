@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "primalmagic:inner_demon",
+  "values": {
+    "blood": 50,
+    "infernal": 50,
+    "void": 50
+  }
+}
