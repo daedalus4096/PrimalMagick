@@ -104,7 +104,7 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
             float ticks = (float)tileEntityIn.getActiveCount() + partialTicks;
 
             @SuppressWarnings("deprecation")
-            TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(AncientManaFontTER.TEXTURE);
+            TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(ManaFontTER.TEXTURE);
             VertexConsumer builder = buffer.getBuffer(RenderType.translucent());
             
             matrixStack.pushPose();

@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.HallowsteelShieldISTER;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.HexiumShieldISTER;
 import com.verdantartifice.primalmagic.client.renderers.itemstack.PrimaliteShieldISTER;
-import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
+import com.verdantartifice.primalmagic.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagic.common.containers.slots.BottleSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.HoneycombSlot;
@@ -50,7 +50,7 @@ public class TextureStitchEvents {
             event.addSprite(BottleSlot.TEXTURE);
 
             // Add other sprites to the block atlas texture
-            event.addSprite(AncientManaFontTER.TEXTURE);
+            event.addSprite(ManaFontTER.TEXTURE);
             event.addSprite(RitualBellTER.TEXTURE);
             event.addSprite(PrimaliteShieldISTER.TEXTURE_SHIELD_BASE);
             event.addSprite(PrimaliteShieldISTER.TEXTURE_SHIELD_NO_PATTERN);

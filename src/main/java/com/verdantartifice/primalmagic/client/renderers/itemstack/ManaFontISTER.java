@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.client.renderers.tile;
+package com.verdantartifice.primalmagic.client.renderers.itemstack;
 
 import java.awt.Color;
 
@@ -6,29 +6,36 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
-import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
+import com.verdantartifice.primalmagic.client.renderers.tile.ManaFontTER;
+import com.verdantartifice.primalmagic.common.blocks.mana.AbstractManaFontBlock;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /**
- * Custom tile entity renderer for ancient mana font blocks.
+ * Custom item stack renderer for ancient mana fonts.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock}
+ * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AbstractManaFontBlock}
  */
-public class AncientManaFontTER implements BlockEntityRenderer<AncientManaFontTileEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/mana_font_core");
+public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
+    private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
     
-    public AncientManaFontTER(BlockEntityRendererProvider.Context context) {
+    public ManaFontISTER() {
+        super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
+                Minecraft.getInstance() == null ? null : Minecraft.getInstance().getEntityModels());
     }
     
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
@@ -41,29 +48,31 @@ public class AncientManaFontTER implements BlockEntityRenderer<AncientManaFontTi
     }
     
     @Override
-    public void render(AncientManaFontTileEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        Minecraft mc = Minecraft.getInstance();
-        Block block = tileEntityIn.getBlockState().getBlock();
-        if (tileEntityIn != null && block instanceof AncientManaFontBlock) {
-            // Color the tile entity core according to the block's source
-            Color sourceColor = new Color(((AncientManaFontBlock)block).getSource().getColor());
+    public void renderByItem(ItemStack itemStack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+        Item item = itemStack.getItem();
+        if (item instanceof BlockItem && ((BlockItem)item).getBlock() instanceof AbstractManaFontBlock) {
+            Minecraft mc = Minecraft.getInstance();
+            ItemRenderer itemRenderer = mc.getItemRenderer();
+            
+            Color sourceColor = new Color(((AbstractManaFontBlock)((BlockItem)item).getBlock()).getSource().getColor());
             float r = sourceColor.getRed() / 255.0F;
             float g = sourceColor.getGreen() / 255.0F;
             float b = sourceColor.getBlue() / 255.0F;
             float ds = 0.1875F;
-            int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
-            float scale = (float)tileEntityIn.getMana() / (float)tileEntityIn.getManaCapacity();    // Shrink the core as it holds less mana
-            
+
             @SuppressWarnings("deprecation")
-            TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(AncientManaFontTER.TEXTURE);
+            TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(ManaFontTER.TEXTURE);
             VertexConsumer builder = buffer.getBuffer(RenderType.solid());
             
+            // Draw the font base
+            BakedModel model = mc.getModelManager().getModel(MRL);
+            itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
+            
+            // Draw the font core
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 0.5D, 0.5D);
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the core around its Y-axis
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
-            matrixStack.scale(scale, scale, scale);
             
             // Draw the south face of the core
             this.addVertex(builder, matrixStack, -ds, ds, ds, r, g, b, sprite.getU0(), sprite.getV1());

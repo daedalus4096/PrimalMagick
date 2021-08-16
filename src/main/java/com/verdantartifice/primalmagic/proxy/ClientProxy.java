@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagic.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagic.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagic.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
-import com.verdantartifice.primalmagic.client.renderers.tile.AncientManaFontTER;
+import com.verdantartifice.primalmagic.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.OfferingPedestalTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualAltarTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualBellTER;
@@ -95,7 +95,8 @@ public class ClientProxy implements IProxyPM {
     
     private void registerTERs() {
         // Register tile entity renderers for those tile entities that need them
-        BlockEntityRenderers.register(TileEntityTypesPM.ANCIENT_MANA_FONT.get(), AncientManaFontTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.ANCIENT_MANA_FONT.get(), ManaFontTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.ARTIFICIAL_MANA_FONT.get(), ManaFontTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.WAND_CHARGER.get(), WandChargerTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_ALTAR.get(), RitualAltarTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.OFFERING_PEDESTAL.get(), OfferingPedestalTER::new);

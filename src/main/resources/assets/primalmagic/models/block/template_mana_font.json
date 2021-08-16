@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/marble_enchanted",
-		"particle": "primalmagic:block/marble_enchanted"
+		"0": "#base",
+		"particle": "#base"
 	},
 	"elements": [
 		{

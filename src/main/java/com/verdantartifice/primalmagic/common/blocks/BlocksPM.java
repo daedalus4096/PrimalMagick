@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagic.common.blocks.golems.HallowsteelGolemCont
 import com.verdantartifice.primalmagic.common.blocks.golems.HexiumGolemControllerBlock;
 import com.verdantartifice.primalmagic.common.blocks.golems.PrimaliteGolemControllerBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
+import com.verdantartifice.primalmagic.common.blocks.mana.ArtificialManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagic.common.blocks.minerals.QuartzOreBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock;
@@ -246,11 +247,16 @@ public class BlocksPM {
     public static final RegistryObject<RitualCandleBlock> RITUAL_CANDLE_YELLOW = BLOCKS.register("ritual_candle_yellow", () -> new RitualCandleBlock(DyeColor.YELLOW, Block.Properties.of(Material.GRASS).strength(0.0F).lightLevel((state) -> { return 7; }).sound(SoundType.WOOL).noOcclusion()));
 
     // Register mana fonts
-    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_EARTH = BLOCKS.register("ancient_font_earth", () -> new AncientManaFontBlock(Source.EARTH));
-    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_SEA = BLOCKS.register("ancient_font_sea", () -> new AncientManaFontBlock(Source.SEA));
-    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_SKY = BLOCKS.register("ancient_font_sky", () -> new AncientManaFontBlock(Source.SKY));
-    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_SUN = BLOCKS.register("ancient_font_sun", () -> new AncientManaFontBlock(Source.SUN));
-    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_MOON = BLOCKS.register("ancient_font_moon", () -> new AncientManaFontBlock(Source.MOON));
+    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_EARTH = BLOCKS.register("ancient_font_earth", () -> new AncientManaFontBlock(Source.EARTH, Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; }).noDrops()));
+    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_SEA = BLOCKS.register("ancient_font_sea", () -> new AncientManaFontBlock(Source.SEA, Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; }).noDrops()));
+    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_SKY = BLOCKS.register("ancient_font_sky", () -> new AncientManaFontBlock(Source.SKY, Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; }).noDrops()));
+    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_SUN = BLOCKS.register("ancient_font_sun", () -> new AncientManaFontBlock(Source.SUN, Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; }).noDrops()));
+    public static final RegistryObject<AncientManaFontBlock> ANCIENT_FONT_MOON = BLOCKS.register("ancient_font_moon", () -> new AncientManaFontBlock(Source.MOON, Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; }).noDrops()));
+    public static final RegistryObject<ArtificialManaFontBlock> ARTIFICIAL_FONT_EARTH = BLOCKS.register("artificial_font_earth", () -> new ArtificialManaFontBlock(Source.EARTH, DeviceTier.ENCHANTED, Block.Properties.of(Material.STONE).strength(3.0F, 12.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; })));
+    public static final RegistryObject<ArtificialManaFontBlock> ARTIFICIAL_FONT_SEA = BLOCKS.register("artificial_font_sea", () -> new ArtificialManaFontBlock(Source.SEA, DeviceTier.ENCHANTED, Block.Properties.of(Material.STONE).strength(3.0F, 12.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; })));
+    public static final RegistryObject<ArtificialManaFontBlock> ARTIFICIAL_FONT_SKY = BLOCKS.register("artificial_font_sky", () -> new ArtificialManaFontBlock(Source.SKY, DeviceTier.ENCHANTED, Block.Properties.of(Material.STONE).strength(3.0F, 12.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; })));
+    public static final RegistryObject<ArtificialManaFontBlock> ARTIFICIAL_FONT_SUN = BLOCKS.register("artificial_font_sun", () -> new ArtificialManaFontBlock(Source.SUN, DeviceTier.ENCHANTED, Block.Properties.of(Material.STONE).strength(3.0F, 12.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; })));
+    public static final RegistryObject<ArtificialManaFontBlock> ARTIFICIAL_FONT_MOON = BLOCKS.register("artificial_font_moon", () -> new ArtificialManaFontBlock(Source.MOON, DeviceTier.ENCHANTED, Block.Properties.of(Material.STONE).strength(3.0F, 12.0F).sound(SoundType.STONE).lightLevel((state) -> { return 15; })));
 
     // Register devices
     public static final RegistryObject<ArcaneWorkbenchBlock> ARCANE_WORKBENCH = BLOCKS.register("arcane_workbench", ArcaneWorkbenchBlock::new);

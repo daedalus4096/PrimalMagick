@@ -1,3 +1,6 @@
 {
-	"parent": "primalmagic:block/mana_font_ancient"
+    "parent": "primalmagic:block/template_mana_font",
+    "textures": {
+       "base": "primalmagic:block/marble_enchanted"
+    }
 }

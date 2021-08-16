@@ -15,7 +15,7 @@ import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagic.common.items.food.BloodyFleshItem;
 import com.verdantartifice.primalmagic.common.items.food.ManafruitItem;
-import com.verdantartifice.primalmagic.common.items.misc.AncientManaFontBlockItem;
+import com.verdantartifice.primalmagic.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagic.common.items.misc.EarthshatterHammerItem;
@@ -240,11 +240,16 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> RITUAL_CANDLE_YELLOW = ITEMS.register("ritual_candle_yellow", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_YELLOW.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
 
     // Register mana font block items
-    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_EARTH = ITEMS.register("ancient_font_earth", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_EARTH.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
-    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_SEA = ITEMS.register("ancient_font_sea", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_SEA.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
-    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_SKY = ITEMS.register("ancient_font_sky", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_SKY.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
-    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_SUN = ITEMS.register("ancient_font_sun", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_SUN.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
-    public static final RegistryObject<AncientManaFontBlockItem> ANCIENT_FONT_MOON = ITEMS.register("ancient_font_moon", () -> new AncientManaFontBlockItem(BlocksPM.ANCIENT_FONT_MOON.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<ManaFontBlockItem> ANCIENT_FONT_EARTH = ITEMS.register("ancient_font_earth", () -> new ManaFontBlockItem(BlocksPM.ANCIENT_FONT_EARTH.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<ManaFontBlockItem> ANCIENT_FONT_SEA = ITEMS.register("ancient_font_sea", () -> new ManaFontBlockItem(BlocksPM.ANCIENT_FONT_SEA.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<ManaFontBlockItem> ANCIENT_FONT_SKY = ITEMS.register("ancient_font_sky", () -> new ManaFontBlockItem(BlocksPM.ANCIENT_FONT_SKY.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<ManaFontBlockItem> ANCIENT_FONT_SUN = ITEMS.register("ancient_font_sun", () -> new ManaFontBlockItem(BlocksPM.ANCIENT_FONT_SUN.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<ManaFontBlockItem> ANCIENT_FONT_MOON = ITEMS.register("ancient_font_moon", () -> new ManaFontBlockItem(BlocksPM.ANCIENT_FONT_MOON.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<ManaFontBlockItem> ARTIFICIAL_FONT_EARTH = ITEMS.register("artificial_font_earth", () -> new ManaFontBlockItem(BlocksPM.ARTIFICIAL_FONT_EARTH.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ManaFontBlockItem> ARTIFICIAL_FONT_SEA = ITEMS.register("artificial_font_sea", () -> new ManaFontBlockItem(BlocksPM.ARTIFICIAL_FONT_SEA.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ManaFontBlockItem> ARTIFICIAL_FONT_SKY = ITEMS.register("artificial_font_sky", () -> new ManaFontBlockItem(BlocksPM.ARTIFICIAL_FONT_SKY.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ManaFontBlockItem> ARTIFICIAL_FONT_SUN = ITEMS.register("artificial_font_sun", () -> new ManaFontBlockItem(BlocksPM.ARTIFICIAL_FONT_SUN.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ManaFontBlockItem> ARTIFICIAL_FONT_MOON = ITEMS.register("artificial_font_moon", () -> new ManaFontBlockItem(BlocksPM.ARTIFICIAL_FONT_MOON.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
     
     // Register device block items
     public static final RegistryObject<BurnableBlockItem> ARCANE_WORKBENCH = ITEMS.register("arcane_workbench", () -> new BurnableBlockItem(BlocksPM.ARCANE_WORKBENCH.get(), 300, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
