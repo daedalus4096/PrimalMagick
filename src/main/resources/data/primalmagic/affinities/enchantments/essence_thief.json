@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "target": "primalmagic:essence_thief",
+  "multiplier": {
+    "void": 1
+  }
+}

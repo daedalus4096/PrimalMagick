@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "target": "primalmagic:bulwark",
+  "multiplier": {
+    "hallowed": 1
+  }
+}
