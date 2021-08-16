@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:deepslate_coal_ore",
+  "base": "minecraft:deepslate",
+  "add": {
+    "earth": 5,
+    "infernal": 5
+  }
+}

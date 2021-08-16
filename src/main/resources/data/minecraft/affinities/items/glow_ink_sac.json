@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:glow_ink_sac",
+  "base": "minecraft:ink_sac",
+  "add": {
+    "sun": 2
+  }
+}

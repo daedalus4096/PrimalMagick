@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:sculk_sensor",
+  "set": {
+    "earth": 5,
+    "void": 20
+  }
+}

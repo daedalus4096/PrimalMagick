@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:infested_deepslate",
+  "base": "minecraft:deepslate",
+  "add": {
+    "blood": 2
+  }
+}

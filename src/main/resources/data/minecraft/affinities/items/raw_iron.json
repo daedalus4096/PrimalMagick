@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:raw_iron",
+  "set": {
+    "earth": 10
+  }
+}

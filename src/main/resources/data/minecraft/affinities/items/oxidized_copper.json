@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:oxidized_copper",
+  "base": "minecraft:copper_block"
+}

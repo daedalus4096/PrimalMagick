@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:spore_blossom",
+  "set": {
+    "earth": 5,
+    "moon": 5
+  }
+}

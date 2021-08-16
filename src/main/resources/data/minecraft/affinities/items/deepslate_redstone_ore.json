@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:deepslate_redstone_ore",
+  "base": "minecraft:deepslate",
+  "add": {
+    "earth": 5
+  }
+}

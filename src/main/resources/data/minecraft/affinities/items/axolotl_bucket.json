@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "target": "minecraft:axolotl_bucket",
+  "base": "minecraft:bucket",
+  "add": {
+    "sea": 5,
+    "blood": 5
+  }
+}

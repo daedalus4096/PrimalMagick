@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:deepslate_copper_ore",
+  "base": "minecraft:deepslate",
+  "add": {
+    "earth": 10
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "minecraft:copper_ingot",
+  "set": {
+    "earth": 10
+  }
+}

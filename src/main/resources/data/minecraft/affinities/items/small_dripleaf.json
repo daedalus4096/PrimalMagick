@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:small_dripleaf",
+  "set": {
+    "earth": 2,
+    "moon": 2
+  }
+}

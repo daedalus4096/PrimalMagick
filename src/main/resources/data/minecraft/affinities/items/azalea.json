@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:azalea",
+  "set": {
+    "earth": 5,
+    "sun": 5
+  }
+}

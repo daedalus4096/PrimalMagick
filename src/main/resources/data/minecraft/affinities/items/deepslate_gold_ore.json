@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "minecraft:deepslate_gold_ore",
+  "base": "minecraft:deepslate",
+  "add": {
+    "earth": 10
+  }
+}
