@@ -1,0 +1,29 @@
+{
+  "key": "ARTIFICIAL_MANA_FONTS",
+  "name": "primalmagic.research.artificial_mana_fonts.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "EXPERT_MANAWEAVING",
+    "SHARD_SYNTHESIS",
+    "PRIMALITE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.artificial_mana_fonts.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.artificial_mana_fonts.text.stage.2",
+      "recipes": [
+        "primalmagic:artificial_font_earth",
+        "primalmagic:artificial_font_sea",
+        "primalmagic:artificial_font_sky",
+        "primalmagic:artificial_font_sun",
+        "primalmagic:artificial_font_moon"
+      ]
+    }
+  ],
+  "addenda": []
+}

@@ -79,6 +79,7 @@ public class Recipes extends RecipeProvider {
         this.registerAlchemicalBombRecipes(consumer);
         this.registerClothRecipes(consumer);
         this.registerPrimalToolRecipes(consumer);
+        this.registerManaFontRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -5110,6 +5111,59 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_SWORD")))
             .manaCost(new SourceList().add(Source.VOID, 40))
             .instability(3)
+            .build(consumer);
+    }
+    
+    protected void registerManaFontRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_EARTH.get())
+            .patternLine("IMI")
+            .patternLine(" E ")
+            .patternLine("IMI")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
+            .key('E', ItemsPM.ESSENCE_SHARD_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .manaCost(new SourceList().add(Source.EARTH, 75))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SEA.get())
+            .patternLine("IMI")
+            .patternLine(" E ")
+            .patternLine("IMI")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
+            .key('E', ItemsPM.ESSENCE_SHARD_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .manaCost(new SourceList().add(Source.SEA, 75))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SKY.get())
+            .patternLine("IMI")
+            .patternLine(" E ")
+            .patternLine("IMI")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
+            .key('E', ItemsPM.ESSENCE_SHARD_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .manaCost(new SourceList().add(Source.SKY, 75))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SUN.get())
+            .patternLine("IMI")
+            .patternLine(" E ")
+            .patternLine("IMI")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
+            .key('E', ItemsPM.ESSENCE_SHARD_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .manaCost(new SourceList().add(Source.SUN, 75))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_MOON.get())
+            .patternLine("IMI")
+            .patternLine(" E ")
+            .patternLine("IMI")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
+            .key('E', ItemsPM.ESSENCE_SHARD_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .manaCost(new SourceList().add(Source.MOON, 75))
             .build(consumer);
     }
 }

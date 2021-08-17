@@ -1,0 +1,26 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "ARTIFICIAL_MANA_FONTS",
+  "mana": {
+    "sun": 75
+  },
+  "pattern": [
+    "IMI",
+    " E ",
+    "IMI"
+  ],
+  "key": {
+    "I": {
+      "tag": "primalmagic:ingots/primalite"
+    },
+    "M": {
+      "item": "primalmagic:marble_enchanted_slab"
+    },
+    "E": {
+      "item": "primalmagic:essence_shard_sun"
+    }
+  },
+  "result": {
+    "item": "primalmagic:artificial_font_sun"
+  }
+}

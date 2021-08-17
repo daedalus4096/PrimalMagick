@@ -359,6 +359,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SAINTSWOOL.get()).recipe(ItemsPM.SAINTSWOOL_HEAD.get()).recipe(ItemsPM.SAINTSWOOL_CHEST.get())
                     .recipe(ItemsPM.SAINTSWOOL_LEGS.get()).recipe(ItemsPM.SAINTSWOOL_FEET.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("ARTIFICIAL_MANA_FONTS", discipline).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS").parent("PRIMALITE")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARTIFICIAL_FONT_EARTH.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SEA.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SKY.get())
+                    .recipe(ItemsPM.ARTIFICIAL_FONT_SUN.get()).recipe(ItemsPM.ARTIFICIAL_FONT_MOON.get()).build())
+            .build(consumer);
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
