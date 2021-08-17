@@ -8,6 +8,7 @@ import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagic.common.blocks.mana.AbstractManaFontBlock;
+import com.verdantartifice.primalmagic.common.misc.DeviceTier;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -31,7 +32,8 @@ import net.minecraft.world.item.ItemStack;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AbstractManaFontBlock}
  */
 public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
+    private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
+    private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "artificial_font_earth"), "");
     
     public ManaFontISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
@@ -47,14 +49,26 @@ public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
                 .endVertex();
     }
     
+    protected ModelResourceLocation getModelResourceLocation(DeviceTier tier) {
+        switch (tier) {
+        case BASIC:
+            return MRL_BASIC;
+        case ENCHANTED:
+            return MRL_ENCHANTED;
+        default:
+            return MRL_BASIC;
+        }
+    }
+    
     @Override
     public void renderByItem(ItemStack itemStack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         Item item = itemStack.getItem();
         if (item instanceof BlockItem && ((BlockItem)item).getBlock() instanceof AbstractManaFontBlock) {
+            AbstractManaFontBlock block = (AbstractManaFontBlock)((BlockItem)item).getBlock();
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             
-            Color sourceColor = new Color(((AbstractManaFontBlock)((BlockItem)item).getBlock()).getSource().getColor());
+            Color sourceColor = new Color(block.getSource().getColor());
             float r = sourceColor.getRed() / 255.0F;
             float g = sourceColor.getGreen() / 255.0F;
             float b = sourceColor.getBlue() / 255.0F;
@@ -65,7 +79,7 @@ public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
             VertexConsumer builder = buffer.getBuffer(RenderType.solid());
             
             // Draw the font base
-            BakedModel model = mc.getModelManager().getModel(MRL);
+            BakedModel model = mc.getModelManager().getModel(this.getModelResourceLocation(block.getDeviceTier()));
             itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             
             // Draw the font core
