@@ -25,5 +25,42 @@
       ]
     }
   ],
-  "addenda": []
+  "addenda": [
+    {
+      "text": "primalmagic.research.artificial_mana_fonts.text.addenda.1",
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "recipes": [
+        "primalmagic:artificial_font_blood"
+      ]
+    },
+    {
+      "text": "primalmagic.research.artificial_mana_fonts.text.addenda.2",
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "recipes": [
+        "primalmagic:artificial_font_infernal"
+      ]
+    },
+    {
+      "text": "primalmagic.research.artificial_mana_fonts.text.addenda.3",
+      "required_research": [
+        "t_discover_void"
+      ],
+      "recipes": [
+        "primalmagic:artificial_font_void"
+      ]
+    },
+    {
+      "text": "primalmagic.research.artificial_mana_fonts.text.addenda.4",
+      "required_research": [
+        "t_discover_hallowed"
+      ],
+      "recipes": [
+        "primalmagic:artificial_font_hallowed"
+      ]
+    }
+  ]
 }
