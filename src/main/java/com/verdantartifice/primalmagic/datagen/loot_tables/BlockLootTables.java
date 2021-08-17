@@ -32,6 +32,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerInfusedStoneLootTables();
         this.registerSkyglassLootTables();
         this.registerRitualCandleLootTables();
+        this.registerManaFontLootTables();
         
         // Register device loot tables
         this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH.get());
@@ -249,6 +250,18 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.RITUAL_CANDLE_RED.get());
         this.registerBasicTable(BlocksPM.RITUAL_CANDLE_WHITE.get());
         this.registerBasicTable(BlocksPM.RITUAL_CANDLE_YELLOW.get());
+    }
+
+    private void registerManaFontLootTables() {
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_EARTH.get());
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_SEA.get());
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_SKY.get());
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_SUN.get());
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_MOON.get());
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_BLOOD.get());
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_INFERNAL.get());
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_VOID.get());
+        this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_HALLOWED.get());
     }
 
     @Override
