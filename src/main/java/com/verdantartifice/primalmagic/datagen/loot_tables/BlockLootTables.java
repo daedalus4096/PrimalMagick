@@ -262,6 +262,15 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_INFERNAL.get());
         this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_VOID.get());
         this.registerBasicTable(BlocksPM.ARTIFICIAL_FONT_HALLOWED.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_EARTH.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_SEA.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_SKY.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_SUN.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_MOON.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_BLOOD.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_INFERNAL.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_VOID.get());
+        this.registerBasicTable(BlocksPM.FORBIDDEN_FONT_HALLOWED.get());
     }
 
     @Override

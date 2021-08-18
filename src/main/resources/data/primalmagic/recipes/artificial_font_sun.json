@@ -2,7 +2,7 @@
   "type": "primalmagic:arcane_crafting_shaped",
   "research": "ARTIFICIAL_MANA_FONTS",
   "mana": {
-    "sun": 75
+    "sun": 250
   },
   "pattern": [
     "IMI",

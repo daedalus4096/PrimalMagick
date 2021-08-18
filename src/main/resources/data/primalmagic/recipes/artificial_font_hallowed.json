@@ -2,7 +2,7 @@
   "type": "primalmagic:arcane_crafting_shaped",
   "research": "ARTIFICIAL_MANA_FONTS\u0026\u0026t_discover_hallowed",
   "mana": {
-    "hallowed": 75
+    "hallowed": 250
   },
   "pattern": [
     "IMI",

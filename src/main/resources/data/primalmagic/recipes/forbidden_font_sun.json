@@ -1,0 +1,29 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "FORBIDDEN_MANA_FONTS",
+  "mana": {
+    "sun": 750
+  },
+  "pattern": [
+    "IMI",
+    "EFE",
+    "IMI"
+  ],
+  "key": {
+    "I": {
+      "tag": "primalmagic:ingots/hexium"
+    },
+    "M": {
+      "item": "primalmagic:marble_smoked_slab"
+    },
+    "E": {
+      "item": "primalmagic:essence_crystal_sun"
+    },
+    "F": {
+      "item": "primalmagic:artificial_font_sun"
+    }
+  },
+  "result": {
+    "item": "primalmagic:forbidden_font_sun"
+  }
+}

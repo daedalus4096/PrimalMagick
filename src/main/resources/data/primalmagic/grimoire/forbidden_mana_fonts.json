@@ -1,0 +1,67 @@
+{
+  "key": "FORBIDDEN_MANA_FONTS",
+  "name": "primalmagic.research.forbidden_mana_fonts.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "ARTIFICIAL_MANA_FONTS",
+    "MASTER_MANAWEAVING",
+    "CRYSTAL_SYNTHESIS",
+    "HEXIUM"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.forbidden_mana_fonts.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagic.research.forbidden_mana_fonts.text.stage.2",
+      "recipes": [
+        "primalmagic:forbidden_font_earth",
+        "primalmagic:forbidden_font_sea",
+        "primalmagic:forbidden_font_sky",
+        "primalmagic:forbidden_font_sun",
+        "primalmagic:forbidden_font_moon"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.forbidden_mana_fonts.text.addenda.1",
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "recipes": [
+        "primalmagic:forbidden_font_blood"
+      ]
+    },
+    {
+      "text": "primalmagic.research.forbidden_mana_fonts.text.addenda.2",
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "recipes": [
+        "primalmagic:forbidden_font_infernal"
+      ]
+    },
+    {
+      "text": "primalmagic.research.forbidden_mana_fonts.text.addenda.3",
+      "required_research": [
+        "t_discover_void"
+      ],
+      "recipes": [
+        "primalmagic:forbidden_font_void"
+      ]
+    },
+    {
+      "text": "primalmagic.research.forbidden_mana_fonts.text.addenda.4",
+      "required_research": [
+        "t_discover_hallowed"
+      ],
+      "recipes": [
+        "primalmagic:forbidden_font_hallowed"
+      ]
+    }
+  ]
+}

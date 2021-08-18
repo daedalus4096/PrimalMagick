@@ -368,6 +368,15 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.ARTIFICIAL_FONT_VOID.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.ARTIFICIAL_FONT_HALLOWED.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("FORBIDDEN_MANA_FONTS", discipline).parent("ARTIFICIAL_MANA_FONTS").parent("MASTER_MANAWEAVING").parent("CRYSTAL_SYNTHESIS").parent("HEXIUM")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_FONT_EARTH.get()).recipe(ItemsPM.FORBIDDEN_FONT_SEA.get()).recipe(ItemsPM.FORBIDDEN_FONT_SKY.get())
+                    .recipe(ItemsPM.FORBIDDEN_FONT_SUN.get()).recipe(ItemsPM.FORBIDDEN_FONT_MOON.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_HALLOWED.get()).build())
+            .build(consumer);
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
