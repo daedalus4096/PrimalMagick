@@ -1,0 +1,29 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "HEAVENLY_MANA_FONTS",
+  "mana": {
+    "infernal": 2500
+  },
+  "pattern": [
+    "IMI",
+    "EFE",
+    "IMI"
+  ],
+  "key": {
+    "I": {
+      "tag": "primalmagic:ingots/hallowsteel"
+    },
+    "M": {
+      "item": "primalmagic:marble_hallowed_slab"
+    },
+    "E": {
+      "item": "primalmagic:essence_cluster_infernal"
+    },
+    "F": {
+      "item": "primalmagic:forbidden_font_infernal"
+    }
+  },
+  "result": {
+    "item": "primalmagic:heavenly_font_infernal"
+  }
+}

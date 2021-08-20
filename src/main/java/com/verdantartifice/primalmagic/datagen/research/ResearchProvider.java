@@ -377,6 +377,15 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_VOID.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_HALLOWED.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("HEAVENLY_MANA_FONTS", discipline).parent("FORBIDDEN_MANA_FONTS").parent("SUPREME_MANAWEAVING").parent("CLUSTER_SYNTHESIS").parent("HALLOWSTEEL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEAVENLY_FONT_EARTH.get()).recipe(ItemsPM.HEAVENLY_FONT_SEA.get()).recipe(ItemsPM.HEAVENLY_FONT_SKY.get())
+                    .recipe(ItemsPM.HEAVENLY_FONT_SUN.get()).recipe(ItemsPM.HEAVENLY_FONT_MOON.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_HALLOWED.get()).build())
+            .build(consumer);
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
