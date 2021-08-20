@@ -167,7 +167,22 @@ public class ModularWandItem extends AbstractWandItem {
         if (gem != null && gem.getRarity().compareTo(retVal) > 0) {
             retVal = gem.getRarity();
         }
-        return retVal;
+        
+        // Increase rarity if enchanted
+        if (stack.isEnchanted()) {
+            switch (retVal) {
+            case COMMON:
+            case UNCOMMON:
+                return Rarity.RARE;
+            case RARE:
+                return Rarity.EPIC;
+            case EPIC:
+            default:
+                return retVal;
+            }
+        } else {
+            return retVal;
+        }
     }
     
     @Override
