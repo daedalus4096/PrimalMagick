@@ -40,7 +40,7 @@ public class ModularWandISTER extends BlockEntityWithoutLevelRenderer {
             WandCap cap = wand.getWandCap(itemStack);
             WandGem gem = wand.getWandGem(itemStack);
             
-            VertexConsumer builder = buffer.getBuffer(RenderType.solid());
+            VertexConsumer builder = ItemRenderer.getFoilBufferDirect(buffer, RenderType.solid(), false, itemStack.hasFoil());
             if (core != null) {
                 // Render the wand core
                 BakedModel model = mc.getModelManager().getModel(core.getWandModelResourceLocation());

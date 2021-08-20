@@ -38,7 +38,7 @@ public class MundaneWandISTER extends BlockEntityWithoutLevelRenderer {
 
             // Render the wand core
             BakedModel model = mc.getModelManager().getModel(CORE_MRL);
-            VertexConsumer builder = buffer.getBuffer(RenderType.solid());
+            VertexConsumer builder = ItemRenderer.getFoilBufferDirect(buffer, RenderType.solid(), false, itemStack.hasFoil());
             itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
         }
     }
