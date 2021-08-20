@@ -35,6 +35,7 @@ public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
     private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
     private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "artificial_font_earth"), "");
     private static final ModelResourceLocation MRL_FORBIDDEN = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "forbidden_font_earth"), "");
+    private static final ModelResourceLocation MRL_HEAVENLY = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "heavenly_font_earth"), "");
     
     public ManaFontISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
@@ -58,6 +59,8 @@ public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
             return MRL_ENCHANTED;
         case FORBIDDEN:
             return MRL_FORBIDDEN;
+        case HEAVENLY:
+            return MRL_HEAVENLY;
         default:
             return MRL_BASIC;
         }
