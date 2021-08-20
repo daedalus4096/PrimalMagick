@@ -1,35 +1,12 @@
 {
-    "multipart": [
-        {
-            "apply": {
-                "model": "primalmagic:block/concocter"
-            }
-        },
-        {
-            "when": {
-                "has_bottle_0": "true"
-            },
-            "apply": {
-                "model": "primalmagic:block/concocter_bottle0"
-            }
-        },
-        {
-            "when": {
-                "has_bottle_0": "false"
-            },
-            "apply": {
-                "model": "primalmagic:block/concocter_empty0"
-            }
-        },
-        {
-            "apply": {
-                "model": "primalmagic:block/concocter_empty1"
-            }
-        },
-        {
-            "apply": {
-                "model": "primalmagic:block/concocter_empty2"
-            }
-        }
-    ]
+    "variants": {
+        "facing=north,has_bottle_0=false": { "model": "primalmagic:block/concocter" },
+        "facing=south,has_bottle_0=false": { "model": "primalmagic:block/concocter", "y": 180 },
+        "facing=west,has_bottle_0=false":  { "model": "primalmagic:block/concocter", "y": 270 },
+        "facing=east,has_bottle_0=false":  { "model": "primalmagic:block/concocter", "y": 90 },
+        "facing=north,has_bottle_0=true": { "model": "primalmagic:block/concocter_bottle" },
+        "facing=south,has_bottle_0=true": { "model": "primalmagic:block/concocter_bottle", "y": 180 },
+        "facing=west,has_bottle_0=true":  { "model": "primalmagic:block/concocter_bottle", "y": 270 },
+        "facing=east,has_bottle_0=true":  { "model": "primalmagic:block/concocter_bottle", "y": 90 }
+    }
 }

@@ -3807,9 +3807,10 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CONCOCTER.get())
-            .patternLine(" P ")
+            .patternLine("CPC")
             .patternLine("PBP")
             .patternLine("MMM")
+            .key('C', Items.COPPER_INGOT)
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
             .key('B', Items.BREWING_STAND)
             .key('M', ItemsPM.MARBLE_ENCHANTED.get())

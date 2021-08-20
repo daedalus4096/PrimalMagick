@@ -5,11 +5,14 @@
     "infernal": 40
   },
   "pattern": [
-    " P ",
+    "CPC",
     "PBP",
     "MMM"
   ],
   "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
     "P": {
       "item": "primalmagic:magitech_parts_enchanted"
     },
