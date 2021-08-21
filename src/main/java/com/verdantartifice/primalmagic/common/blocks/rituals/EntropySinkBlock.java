@@ -2,6 +2,9 @@ package com.verdantartifice.primalmagic.common.blocks.rituals;
 
 import java.util.Random;
 
+import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
+import com.verdantartifice.primalmagic.common.tiles.rituals.EntropySinkTileEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -26,7 +29,7 @@ import net.minecraft.world.level.material.Material;
  * 
  * @author Daedalus4096
  */
-public class EntropySinkBlock extends BaseEntityBlock {
+public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     
@@ -67,13 +70,39 @@ public class EntropySinkBlock extends BaseEntityBlock {
     
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        // TODO Auto-generated method stub
-        return null;
+        return new EntropySinkTileEntity(pos, state);
     }
 
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         // TODO Auto-generated method stub
         super.animateTick(stateIn, worldIn, pos, rand);
+    }
+
+    @Override
+    public float getStabilityBonus(Level world, BlockPos pos) {
+        return 0.02F;
+    }
+
+    @Override
+    public float getSymmetryPenalty(Level world, BlockPos pos) {
+        return 0.02F;
+    }
+
+    @Override
+    public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
+        BlockEntity tile = world.getBlockEntity(pos);
+        return (tile instanceof EntropySinkTileEntity && ((EntropySinkTileEntity)tile).isGlowing());
+    }
+
+    @Override
+    public String getPropTranslationKey() {
+        return "primalmagic.ritual.prop.entropy_sink";
+    }
+
+    @Override
+    public float getUsageStabilityBonus() {
+        // TODO Determine amount based on type of essence used
+        return 5.0F;
     }
 }
