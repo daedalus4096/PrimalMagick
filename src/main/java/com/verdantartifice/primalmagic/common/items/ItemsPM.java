@@ -309,6 +309,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> SANGUINE_CRUCIBLE = ITEMS.register("sanguine_crucible", () -> new BlockItem(BlocksPM.SANGUINE_CRUCIBLE.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> CONCOCTER = ITEMS.register("concocter", () -> new BlockItem(BlocksPM.CONCOCTER.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BurnableBlockItem> CELESTIAL_HARP = ITEMS.register("celestial_harp", () -> new BurnableBlockItem(BlocksPM.CELESTIAL_HARP.get(), 300, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> ENTROPY_SINK = ITEMS.register("entropy_sink", () -> new BlockItem(BlocksPM.ENTROPY_SINK.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
 
     // Register miscellaneous block items
     public static final RegistryObject<ItemNameBlockItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));

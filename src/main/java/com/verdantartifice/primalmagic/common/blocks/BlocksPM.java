@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassPaneBlo
 import com.verdantartifice.primalmagic.common.blocks.misc.WoodTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.BloodletterBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.CelestialHarpBlock;
+import com.verdantartifice.primalmagic.common.blocks.rituals.EntropySinkBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.IncenseBrazierBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.OfferingPedestalBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualAltarBlock;
@@ -316,6 +317,7 @@ public class BlocksPM {
     public static final RegistryObject<SanguineCrucibleBlock> SANGUINE_CRUCIBLE = BLOCKS.register("sanguine_crucible", SanguineCrucibleBlock::new);
     public static final RegistryObject<ConcocterBlock> CONCOCTER = BLOCKS.register("concocter", ConcocterBlock::new);
     public static final RegistryObject<CelestialHarpBlock> CELESTIAL_HARP = BLOCKS.register("celestial_harp", CelestialHarpBlock::new);
+    public static final RegistryObject<EntropySinkBlock> ENTROPY_SINK = BLOCKS.register("entropy_sink", EntropySinkBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
