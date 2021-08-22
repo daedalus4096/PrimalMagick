@@ -38,8 +38,11 @@ import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.rituals.Mishap;
-import com.verdantartifice.primalmagic.common.rituals.RitualStep;
+import com.verdantartifice.primalmagic.common.rituals.AbstractRitualStep;
+import com.verdantartifice.primalmagic.common.rituals.RecipeRitualStep;
+import com.verdantartifice.primalmagic.common.rituals.RitualStepFactory;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
+import com.verdantartifice.primalmagic.common.rituals.UniversalRitualStep;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
@@ -103,8 +106,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     protected UUID activePlayerId = null;
     protected Player activePlayerCache = null;
     protected ResourceLocation activeRecipeId = null;
-    protected RitualStep currentStep = null;
-    protected Queue<RitualStep> remainingSteps = new LinkedList<>();
+    protected AbstractRitualStep currentStep = null;
+    protected Queue<AbstractRitualStep> remainingSteps = new LinkedList<>();
     protected BlockPos awaitedPropPos = null;
     protected BlockPos channeledOfferingPos = null;
     
@@ -213,17 +216,14 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         
         this.currentStep = null;
         if (compound.contains("CurrentStep", Constants.NBT.TAG_COMPOUND)) {
-            this.currentStep = new RitualStep();
-            this.currentStep.deserializeNBT(compound.getCompound("CurrentStep"));
+            this.currentStep = RitualStepFactory.deserializeNBT(compound.getCompound("CurrentStep"));
         }
                 
         this.remainingSteps.clear();
         if (compound.contains("RemainingSteps", Constants.NBT.TAG_LIST)) {
             ListTag stepList = compound.getList("RemainingSteps", Constants.NBT.TAG_COMPOUND);
             for (int index = 0; index < stepList.size(); index++) {
-                RitualStep step = new RitualStep();
-                step.deserializeNBT(stepList.getCompound(index));
-                this.remainingSteps.offer(step);
+                this.remainingSteps.offer(RitualStepFactory.deserializeNBT(stepList.getCompound(index)));
             }
         }
         
@@ -254,7 +254,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         }
         if (this.remainingSteps != null && !this.remainingSteps.isEmpty()) {
             ListTag stepList = new ListTag();
-            for (RitualStep step : this.remainingSteps) {
+            for (AbstractRitualStep step : this.remainingSteps) {
                 stepList.add(step.serializeNBT());
             }
             compound.put("RemainingSteps", stepList);
@@ -417,12 +417,20 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     
     protected boolean generateRitualSteps(@Nonnull IRitualRecipe recipe) {
         // Add steps for the recipe offerings and props
-        LinkedList<RitualStep> newSteps = new LinkedList<>();
+        LinkedList<AbstractRitualStep> newSteps = new LinkedList<>();
         for (int index = 0; index < recipe.getIngredients().size(); index++) {
-            newSteps.add(new RitualStep(RitualStepType.OFFERING, index));
+            newSteps.add(new RecipeRitualStep(RitualStepType.OFFERING, index));
         }
         for (int index = 0; index < recipe.getProps().size(); index++) {
-            newSteps.add(new RitualStep(RitualStepType.PROP, index));
+            newSteps.add(new RecipeRitualStep(RitualStepType.PROP, index));
+        }
+        
+        // Add steps for any universal props that were detected when scanning surroundings
+        for (BlockPos propPos : this.propPositions) {
+            Block block = this.level.getBlockState(propPos).getBlock();
+            if (block instanceof IRitualPropBlock && ((IRitualPropBlock)block).isUniversal()) {
+                newSteps.add(new UniversalRitualStep(propPos));
+            }
         }
         
         // Randomize and save the generated steps
@@ -566,7 +574,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         return retVal;
     }
 
-    protected boolean doStep(@Nonnull RitualStep step) {
+    protected boolean doStep(@Nonnull AbstractRitualStep step) {
         IRitualRecipe recipe = this.getActiveRecipe();
         if (recipe == null) {
             LOGGER.warn("No recipe found when trying to do ritual step");
@@ -574,9 +582,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         }
         
         if (step.getType() == RitualStepType.OFFERING) {
-            return this.doOfferingStep(recipe, step.getIndex());
+            return this.doOfferingStep(recipe, ((RecipeRitualStep)step).getIndex());
         } else if (step.getType() == RitualStepType.PROP) {
-            return this.doPropStep(recipe, step.getIndex());
+            return this.doPropStep(recipe, ((RecipeRitualStep)step).getIndex());
+        } else if (step.getType() == RitualStepType.UNIVERSAL_PROP) {
+            return this.doUniversalPropStep(((UniversalRitualStep)step).getPos());
         } else {
             LOGGER.warn("Invalid ritual step type {}", step.getType());
             return false;
@@ -689,6 +699,10 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             }
             this.nextCheckCount = this.activeCount + 20;
         }
+        return false;
+    }
+    
+    protected boolean doUniversalPropStep(BlockPos propPos) {
         return false;
     }
     

@@ -8,43 +8,34 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public class RitualStep implements INBTSerializable<CompoundTag> {
+public abstract class AbstractRitualStep implements INBTSerializable<CompoundTag> {
     protected RitualStepType type;
-    protected int index;
     
-    public RitualStep() {
+    public AbstractRitualStep() {
         this.type = null;
-        this.index = -1;
     }
     
-    public RitualStep(RitualStepType type, int index) {
+    public AbstractRitualStep(RitualStepType type) {
         this.type = type;
-        this.index = index;
     }
     
     public boolean isValid() {
-        return this.type != null && this.index >= 0;
+        return this.type != null;
     }
     
     public RitualStepType getType() {
         return this.type;
     }
     
-    public int getIndex() {
-        return this.index;
-    }
-    
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag retVal = new CompoundTag();
         retVal.putString("Type", this.type.getSerializedName());
-        retVal.putInt("Index", this.index);
         return retVal;
     }
     
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         this.type = RitualStepType.fromName(nbt.getString("Type"));
-        this.index = nbt.getInt("Index");
     }
 }

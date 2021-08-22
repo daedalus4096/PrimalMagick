@@ -60,4 +60,14 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
     public String getPropTranslationKey();
     
     public float getUsageStabilityBonus();
+    
+    /**
+     * Indicated whether the block is a universal ritual prop that can and will be used by any
+     * ritual started in range.
+     * 
+     * @return whether the block is a universal ritual prop
+     */
+    public default boolean isUniversal() {
+        return false;
+    }
 }

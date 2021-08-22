@@ -163,4 +163,9 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return createTickerHelper(type, TileEntityTypesPM.ENTROPY_SINK.get(), EntropySinkTileEntity::tick);
     }
+
+    @Override
+    public boolean isUniversal() {
+        return true;
+    }
 }

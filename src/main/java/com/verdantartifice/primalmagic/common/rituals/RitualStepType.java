@@ -12,7 +12,8 @@ import net.minecraft.util.StringRepresentable;
  */
 public enum RitualStepType implements StringRepresentable {
     OFFERING("offering"),
-    PROP("prop");
+    PROP("prop"),
+    UNIVERSAL_PROP("universal_prop");
     
     private final String name;
     
