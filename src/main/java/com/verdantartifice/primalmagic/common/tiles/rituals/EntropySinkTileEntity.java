@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagic.common.tiles.rituals;
 
+import com.verdantartifice.primalmagic.common.blocks.rituals.EntropySinkBlock;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of an entropy sink tile entity.
@@ -28,6 +30,7 @@ public class EntropySinkTileEntity extends AbstractRitualPropTileEntity {
         if (entity.glowTicks >= TICKS_PER_GLOW) {
             entity.isGlowing = false;
             entity.glowTicks = 0;
+            level.setBlock(pos, state.setValue(EntropySinkBlock.LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
         }
     }
     
