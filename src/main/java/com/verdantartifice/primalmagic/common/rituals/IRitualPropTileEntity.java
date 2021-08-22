@@ -15,5 +15,5 @@ public interface IRitualPropTileEntity {
 
     public void setAltarPos(@Nullable BlockPos pos);
 
-    public void notifyAltarOfPropActivation();
+    public void notifyAltarOfPropActivation(float stabilityBonus);
 }

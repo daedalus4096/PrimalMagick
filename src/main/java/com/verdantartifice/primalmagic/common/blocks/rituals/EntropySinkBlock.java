@@ -114,10 +114,9 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
         return "primalmagic.ritual.prop.entropy_sink";
     }
 
-    @Override
-    public float getUsageStabilityBonus() {
-        // TODO Determine amount based on type of essence used
-        return 5.0F;
+    public float getUsageStabilityBonus(EssenceItem item) {
+        // Determine amount based on type of essence used
+        return (float)item.getEssenceType().getAffinity();
     }
 
     @Override
@@ -132,7 +131,7 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
-                    this.onPropActivated(state, worldIn, pos);
+                    this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus((EssenceItem)stack.getItem()));
                 }
                 
                 // Consume the used essence

@@ -76,7 +76,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
-                    this.onPropActivated(state, worldIn, pos);
+                    this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus());
                 }
             }
             return InteractionResult.SUCCESS;
@@ -137,7 +137,6 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
         return "primalmagic.ritual.prop.bloodletter";
     }
 
-    @Override
     public float getUsageStabilityBonus() {
         return 15.0F;
     }

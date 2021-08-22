@@ -750,7 +750,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         this.addStability(Mth.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
     }
     
-    public void onPropActivation(BlockPos propPos) {
+    public void onPropActivation(BlockPos propPos, float stabilityBonus) {
         if (this.awaitedPropPos != null && this.awaitedPropPos.equals(propPos)) {
             // If the activated prop is the one we're waiting for, close it and mark the step as complete
             BlockState propState = this.level.getBlockState(propPos);
@@ -758,7 +758,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             if (block instanceof IRitualPropBlock) {
                 IRitualPropBlock propBlock = (IRitualPropBlock)block;
                 propBlock.closeProp(propState, this.level, propPos);
-                this.addStability(propBlock.getUsageStabilityBonus());
+                this.addStability(stabilityBonus);
             }
             this.currentStepComplete = true;
             this.nextCheckCount = this.activeCount;

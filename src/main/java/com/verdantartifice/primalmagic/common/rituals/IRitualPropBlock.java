@@ -22,10 +22,10 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
     public boolean isPropActivated(BlockState state, Level world, BlockPos pos);
     
-    public default void onPropActivated(BlockState state, Level world, BlockPos pos) {
+    public default void onPropActivated(BlockState state, Level world, BlockPos pos, float stabilityBonus) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity) {
-            ((IRitualPropTileEntity)tile).notifyAltarOfPropActivation();
+            ((IRitualPropTileEntity)tile).notifyAltarOfPropActivation(stabilityBonus);
         }
     }
     
@@ -58,8 +58,6 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
     }
     
     public String getPropTranslationKey();
-    
-    public float getUsageStabilityBonus();
     
     /**
      * Indicated whether the block is a universal ritual prop that can and will be used by any

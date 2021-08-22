@@ -51,11 +51,11 @@ public abstract class AbstractRitualPropTileEntity extends TilePM implements IRi
     }
     
     @Override
-    public void notifyAltarOfPropActivation() {
+    public void notifyAltarOfPropActivation(float stabilityBonus) {
         if (this.altarPos != null) {
             BlockEntity tile = this.level.getBlockEntity(this.altarPos);
             if (tile instanceof RitualAltarTileEntity) {
-                ((RitualAltarTileEntity)tile).onPropActivation(this.worldPosition);
+                ((RitualAltarTileEntity)tile).onPropActivation(this.worldPosition, stabilityBonus);
             }
         }
     }

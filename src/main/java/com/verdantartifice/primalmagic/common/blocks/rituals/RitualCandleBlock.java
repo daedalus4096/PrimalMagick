@@ -112,7 +112,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
-                    this.onPropActivated(state, worldIn, pos);
+                    this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus());
                 }
             }
             return InteractionResult.SUCCESS;
@@ -157,7 +157,6 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
         return "primalmagic.ritual.prop.ritual_candle";
     }
     
-    @Override
     public float getUsageStabilityBonus() {
         return 5.0F;
     }
