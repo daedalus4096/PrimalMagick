@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -659,17 +660,13 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             if (this.awaitedPropPos == null) {
                 // Search for the required prop block
                 for (BlockPos propPos : this.propPositions) {
+                    // Open the prop block if it's valid
                     BlockState propState = this.level.getBlockState(propPos);
                     Block block = propState.getBlock();
-                    if (block instanceof IRitualPropBlock && requiredProp.test(block)) {
-                        IRitualPropBlock propBlock = (IRitualPropBlock)block;
-                        if (!propBlock.isPropActivated(propState, this.level, propPos) && propBlock.isBlockSaltPowered(this.level, propPos)) {
-                            // Upon finding a match, open the found prop for activation
-                            propBlock.openProp(propState, this.level, propPos, this.getActivePlayer(), this.worldPosition);
-                            this.awaitedPropPos = propPos;
-                            this.nextCheckCount = this.activeCount + 20;
-                            return true;
-                        }
+                    if (requiredProp.test(block) && this.openProp(propPos, (b) -> {
+                        return !b.isPropActivated(propState, this.level, propPos) && b.isBlockSaltPowered(this.level, propPos);
+                    })) {
+                        return true;
                     }
                 }
                 
@@ -684,17 +681,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 if ( !(block instanceof IRitualPropBlock) || 
                      !requiredProp.test(block) ||
                      !((IRitualPropBlock)block).isBlockSaltPowered(this.level, this.awaitedPropPos) ) {
-                    // If contact with the prop was lost, add an instability spike and start looking again
-                    if (this.getActivePlayer() != null) {
-                        this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.prop_interrupt"), false);
-                        this.skipWarningMessage = true;
-                    }
-                    if (block instanceof IRitualPropBlock) {
-                        // If the block still exists (i.e. salt was broken), then close it to activation
-                        ((IRitualPropBlock)block).closeProp(propState, this.level, this.awaitedPropPos);
-                    }
-                    this.awaitedPropPos = null;
-                    this.addStability(Mth.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
+                    this.onPropInterrupted(block, propState);
                 }
             }
             this.nextCheckCount = this.activeCount + 20;
@@ -703,7 +690,64 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     }
     
     protected boolean doUniversalPropStep(BlockPos propPos) {
+        if (this.activeCount >= this.nextCheckCount) {
+            if (this.awaitedPropPos == null) {
+                // Open the prop block if it's valid
+                BlockState propState = this.level.getBlockState(propPos);
+                if (this.openProp(propPos, (b) -> {
+                    return b.isUniversal() && !b.isPropActivated(propState, this.level, propPos) && b.isBlockSaltPowered(this.level, propPos);
+                })) {
+                    return true;
+                }
+                
+                // If no match was found, warn the player the first time
+                if (!this.skipWarningMessage && this.getActivePlayer() != null) {
+                    this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_prop"), false);
+                    this.skipWarningMessage = true;
+                }
+            } else {
+                BlockState propState = this.level.getBlockState(this.awaitedPropPos);
+                Block block = propState.getBlock();
+                if ( !(block instanceof IRitualPropBlock) ||
+                     !((IRitualPropBlock)block).isUniversal() ||
+                     !((IRitualPropBlock)block).isBlockSaltPowered(this.level, this.awaitedPropPos) ) {
+                    this.onPropInterrupted(block, propState);
+                }
+            }
+            this.nextCheckCount = this.activeCount + 20;
+        }
         return false;
+    }
+    
+    protected boolean openProp(BlockPos propPos, Predicate<IRitualPropBlock> isPropValid) {
+        // Validate the prop block
+        BlockState propState = this.level.getBlockState(propPos);
+        Block block = propState.getBlock();
+        if (block instanceof IRitualPropBlock) {
+            IRitualPropBlock propBlock = (IRitualPropBlock)block;
+            if (isPropValid.test(propBlock)) {
+                // Upon confirmation, open the prop for activation
+                propBlock.openProp(propState, this.level, propPos, this.getActivePlayer(), this.worldPosition);
+                this.awaitedPropPos = propPos;
+                this.nextCheckCount = this.activeCount + 20;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    protected void onPropInterrupted(Block block, BlockState propState) {
+        // If contact with the prop was lost, add an instability spike and start looking again
+        if (this.getActivePlayer() != null) {
+            this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.prop_interrupt"), false);
+            this.skipWarningMessage = true;
+        }
+        if (block instanceof IRitualPropBlock) {
+            // If the block still exists (i.e. salt was broken), then close it to activation
+            ((IRitualPropBlock)block).closeProp(propState, this.level, this.awaitedPropPos);
+        }
+        this.awaitedPropPos = null;
+        this.addStability(Mth.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
     }
     
     public void onPropActivation(BlockPos propPos) {
