@@ -453,6 +453,18 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SKY, 100))
             .instability(6)
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ENTROPY_SINK.get())
+            .patternLine("PSP")
+            .patternLine("TRT")
+            .patternLine("MMM")
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .key('S', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
+            .key('T', ItemsPM.REFINED_SALT.get())
+            .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .key('M', ItemsPM.MARBLE_ENCHANTED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ENTROPY_SINK")))
+            .manaCost(new SourceList().add(Source.EARTH, 75).add(Source.SEA, 75).add(Source.SKY, 75).add(Source.SUN, 75).add(Source.MOON, 75))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

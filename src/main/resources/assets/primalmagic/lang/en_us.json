@@ -1657,6 +1657,10 @@
     "primalmagic.research.concocting_bombs.text.addenda.2": "Some bomb recipes requires the use of Infernal essence.",
     "primalmagic.research.concocting_bombs.text.addenda.3": "Some bomb recipes requires the use of Void essence.",
     
+    "primalmagic.research.entropy_sink.title": "Entropy Sink",
+    "primalmagic.research.entropy_sink.text.stage.1": "Ritual magic is dangerous stuff, I've learned.  Even the simplest ritual can destabilize quickly.  Perhaps I can design a device to make them safer?",
+    "primalmagic.research.entropy_sink.text.stage.2": "I've designed a machine that will capture stray magical energies in the environment and convert them to harmless light.<BR>The machine functions like a normal ritual prop, but one that can be used with any ritual.  To activate it, I must use a unit of magical essence on the device when the ritual calls for it; if I do it before then, the machine will have no effect.  Once activated, it will generate a burst of stability and allow the ritual to progress, with more potent essence yielding greater stability gains.<BR>Unlike most props, the entropy sink does not have to be manually reset.  It does, however, require a minute to cool back down after use and cannot be used in a ritual again until then.",
+    
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble is a lovely variety of stone, but that's not what makes it so special.  It synergizes with magic, reflecting, absorbing, or redirecting it at the will of the mage.<BR>I can see why the ancients used marble to build their shrines.  It will be very important in many of my workings.",
     
