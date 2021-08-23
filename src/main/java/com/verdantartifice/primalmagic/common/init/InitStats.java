@@ -47,6 +47,7 @@ public class InitStats {
         StatTriggers.register(StatsPM.RITUALS_COMPLETED, 5, SimpleResearchKey.parse("t_rituals_completed_expert"));
         StatTriggers.register(StatsPM.RITUALS_COMPLETED, 25, SimpleResearchKey.parse("t_rituals_completed_master"));
         StatTriggers.register(StatsPM.RITUALS_COMPLETED, 100, SimpleResearchKey.parse("t_rituals_completed_supreme"));
+        StatTriggers.register(StatsPM.RITUAL_MISHAPS, 1, SimpleResearchKey.parse("t_ritual_mishaps_basic"));
         StatTriggers.register(StatsPM.CRAFTED_MAGITECH, 10, SimpleResearchKey.parse("b_crafted_magitech_expert"));
         StatTriggers.register(StatsPM.CRAFTED_MAGITECH, 50, SimpleResearchKey.parse("b_crafted_magitech_master"));
         StatTriggers.register(StatsPM.CRAFTED_MAGITECH, 250, SimpleResearchKey.parse("b_crafted_magitech_supreme"));

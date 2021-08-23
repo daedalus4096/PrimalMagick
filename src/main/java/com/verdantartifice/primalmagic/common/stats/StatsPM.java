@@ -27,6 +27,7 @@ public class StatsPM {
     public static final Stat SPELLS_CRAFTED_MAX_COST = Stat.create("spells_crafted_max_cost", StatFormatter.DEFAULT, false);
     public static final Stat ITEMS_RUNESCRIBED = Stat.create("items_runescribed", StatFormatter.DEFAULT, false);
     public static final Stat RITUALS_COMPLETED = Stat.create("rituals_completed", StatFormatter.DEFAULT, false);
+    public static final Stat RITUAL_MISHAPS = Stat.create("ritual_mishaps", StatFormatter.DEFAULT, false);
     public static final Stat CONCOCTIONS_USED = Stat.create("concoctions_used", StatFormatter.DEFAULT, false);
     public static final Stat DISTANCE_TELEPORTED_CM = Stat.create("distance_teleported_cm", StatFormatter.DISTANCE, false);
     public static final Stat MANA_SPENT_EARTH = Stat.create("mana_spent_earth", StatFormatter.DEFAULT, false);

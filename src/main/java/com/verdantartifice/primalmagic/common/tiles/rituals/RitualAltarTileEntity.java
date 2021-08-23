@@ -861,6 +861,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             Mishap mishap = this.mishaps.getRandom(this.level.random);
             if (mishap != null && mishap.execute(this.stability)) {
                 this.addStability(5.0F + (5.0F * this.level.random.nextFloat()));
+                StatsManager.incrementValue(this.getActivePlayer(), StatsPM.RITUAL_MISHAPS);
                 break;
             }
         }
