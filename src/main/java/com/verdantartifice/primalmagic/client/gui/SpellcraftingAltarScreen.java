@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.client.gui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -25,6 +27,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
@@ -42,6 +45,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/spellcrafting_altar.png");
     
     private final Map<Vec3i, Component> texts = new HashMap<>();
+    private final List<GuiEventListener> localWidgets = new ArrayList<>();
     
     private EditBox nameField;
 
@@ -66,6 +70,8 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         this.nameField.setMaxLength(50);
         this.nameField.setResponder(this::updateName);
         this.nameField.setValue(this.menu.getDefaultSpellName().getString());
+        this.addWidget(this.nameField);
+        this.setInitialFocus(this.nameField);
     }
     
     @Override
@@ -93,12 +99,22 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         return !this.nameField.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) && !this.nameField.canConsumeInput() ? super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) : true;
     }
     
-    protected void initWidgets() {
-        this.clearWidgets();
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        this.nameField.tick();
+    }
+
+    protected void regenerateWidgets() {
+        for (GuiEventListener widget : this.localWidgets) {
+            this.removeWidget(widget);
+        }
+        this.localWidgets.clear();
         this.texts.clear();
         
-        this.addWidget(this.nameField);
-        this.setInitialFocus(this.nameField);
+        if (!this.nameField.isFocused()) {
+            this.setInitialFocus(this.nameField);
+        }
         
         int startX = this.leftPos + 7;
         int startY = this.topPos + 32;
@@ -113,23 +129,23 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         SourceList manaCost = this.menu.getSpellPackage().getManaCost();
         if (manaCost != null && !manaCost.isEmpty()) {
             Source source = manaCost.getSourcesSorted().get(0);
-            this.addRenderableWidget(new ManaCostWidget(source, manaCost.getAmount(source), this.leftPos + 28, this.topPos + 8));
+            this.localWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, manaCost.getAmount(source), this.leftPos + 28, this.topPos + 8)));
         }
         
         this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagic.spell.vehicle.header"));
         
         // Init spell vehicle type selector
         y += 12;
-        this.addRenderableWidget(new CyclicBoundedSpinnerButton(x, y, false, 0, vehicleMax, this.menu::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex));
+        this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x, y, false, 0, vehicleMax, this.menu::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex)));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.menu.getSpellPackage().getVehicle().getTypeName());
-        this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, vehicleMax, this.menu::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex));
+        this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, vehicleMax, this.menu::getSpellVehicleTypeIndex, this::updateSpellVehicleTypeIndex)));
         
         // Init spell vehicle property selectors, if any
         for (SpellProperty property : this.menu.getSpellPackage().getVehicle().getProperties()) {
             y += 12;
-            this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v)));
+            this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v))));
             this.texts.put(new Vec3i(x + 18, y + 2, 7), new TextComponent(Integer.toString(property.getValue())));
-            this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v)));
+            this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v))));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.width(property.getDescription().getString()))), property.getDescription());
         }
         
@@ -138,16 +154,16 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         
         // Init spell payload type selector
         y += 12;
-        this.addRenderableWidget(new CyclicBoundedSpinnerButton(x, y, false, 0, payloadMax, this.menu::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
+        this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x, y, false, 0, payloadMax, this.menu::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex)));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.menu.getSpellPackage().getPayload().getTypeName());
-        this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, payloadMax, this.menu::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex));
+        this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, payloadMax, this.menu::getSpellPayloadTypeIndex, this::updateSpellPayloadTypeIndex)));
         
         // Init spell payload property selectors, if any
         for (SpellProperty property : this.menu.getSpellPackage().getPayload().getProperties()) {
             y += 12;
-            this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v)));
+            this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 18, y + 2, 7), new TextComponent(Integer.toString(property.getValue())));
-            this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v)));
+            this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.width(property.getDescription().getString()))), property.getDescription());
         }
         
@@ -158,16 +174,16 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         
         // Init primary spell mod type selector
         y += 12;
-        this.addRenderableWidget(new CyclicBoundedSpinnerButton(x, y, false, 0, modMax, this.menu::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
+        this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x, y, false, 0, modMax, this.menu::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex)));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.menu.getSpellPackage().getPrimaryMod().getTypeName());
-        this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, modMax, this.menu::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex));
+        this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, modMax, this.menu::getSpellPrimaryModTypeIndex, this::updateSpellPrimaryModTypeIndex)));
         
         // Init primary spell mod property selectors, if any
         for (SpellProperty property : this.menu.getSpellPackage().getPrimaryMod().getProperties()) {
             y += 12;
-            this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v)));
+            this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 18, y + 2, 7), new TextComponent(Integer.toString(property.getValue())));
-            this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v)));
+            this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.width(property.getDescription().getString()))), property.getDescription());
         }
         
@@ -176,23 +192,23 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         
         // Init secondary spell mod type selector
         y += 12;
-        this.addRenderableWidget(new CyclicBoundedSpinnerButton(x, y, false, 0, modMax, this.menu::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
+        this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x, y, false, 0, modMax, this.menu::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex)));
         this.texts.put(new Vec3i(x + 8, y + 2, 90), this.menu.getSpellPackage().getSecondaryMod().getTypeName());
-        this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, modMax, this.menu::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex));
+        this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 99, y, true, 0, modMax, this.menu::getSpellSecondaryModTypeIndex, this::updateSpellSecondaryModTypeIndex)));
         
         // Init secondary spell mod property selectors, if any
         for (SpellProperty property : this.menu.getSpellPackage().getSecondaryMod().getProperties()) {
             y += 12;
-            this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v)));
+            this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 18, y + 2, 7), new TextComponent(Integer.toString(property.getValue())));
-            this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v)));
+            this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.width(property.getDescription().getString()))), property.getDescription());
         }
     }
 
     @Override
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.initWidgets();
+        this.regenerateWidgets();
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
