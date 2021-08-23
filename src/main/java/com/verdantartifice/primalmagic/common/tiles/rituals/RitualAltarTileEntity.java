@@ -521,6 +521,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             this.scanPosition(pos, toScan, scanHistory);
         }
         this.symmetryDelta = this.calculateSymmetryDelta();
+        
+        Collections.shuffle(this.pedestalPositions, this.level.random);
+        Collections.shuffle(this.propPositions, this.level.random);
     }
     
     protected void scanPosition(BlockPos pos, Queue<BlockPos> toScan, Set<BlockPos> history) {
