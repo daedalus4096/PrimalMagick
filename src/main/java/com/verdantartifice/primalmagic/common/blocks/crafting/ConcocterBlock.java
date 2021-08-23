@@ -16,6 +16,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -42,6 +43,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Block definition for a concocter.  Used to craft multi-dose potions.
@@ -134,12 +136,11 @@ public class ConcocterBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the concocter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof ConcocterTileEntity) {
-                player.openMenu((ConcocterTileEntity)tile);
-                return InteractionResult.SUCCESS;
+                NetworkHooks.openGui((ServerPlayer)player, (ConcocterTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;

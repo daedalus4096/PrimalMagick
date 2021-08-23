@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Block definition for a runic grindstone.  Works just like a regular grindstone, except it also
@@ -59,8 +61,8 @@ public class RunicGrindstoneBlock extends GrindstoneBlock {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
-            player.openMenu(state.getMenuProvider(worldIn, pos));
+        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+            NetworkHooks.openGui((ServerPlayer)player, state.getMenuProvider(worldIn, pos));
         }
         return InteractionResult.SUCCESS;
     }

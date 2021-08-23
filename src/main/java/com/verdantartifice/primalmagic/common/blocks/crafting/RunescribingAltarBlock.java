@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Block definition for the runescribing altar.  May be used to apply combinations of runes to
@@ -65,11 +67,11 @@ public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDe
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the altar
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunescribingAltarTileEntity) {
-                player.openMenu((RunescribingAltarTileEntity)tile);
+                NetworkHooks.openGui((ServerPlayer)player, (RunescribingAltarTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;

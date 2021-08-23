@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Block definition for a honey extractor.  Uses sky mana to spin the honey out of honeycombs.
@@ -96,7 +97,7 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
             // Open the GUI for the honey extractor
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof HoneyExtractorTileEntity) {
-                player.openMenu((HoneyExtractorTileEntity)tile);
+                NetworkHooks.openGui((ServerPlayer)player, (HoneyExtractorTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;

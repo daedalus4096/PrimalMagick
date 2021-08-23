@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Block definition for the wand charger.  A wand charger allows a player to charge a wand with mana by
@@ -63,11 +65,11 @@ public class WandChargerBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the wand charger
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof WandChargerTileEntity) {
-                player.openMenu((WandChargerTileEntity)tile);
+                NetworkHooks.openGui((ServerPlayer)player, (WandChargerTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.tiles.crafting.AbstractCalcinatorT
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -28,6 +29,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Base block definition for the essence furnace and calcinators.  These are like furnaces, but instead of smelting items
@@ -76,11 +78,11 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the calcinator
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AbstractCalcinatorTileEntity) {
-                player.openMenu((AbstractCalcinatorTileEntity)tile);
+                NetworkHooks.openGui((ServerPlayer)player, (AbstractCalcinatorTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;
