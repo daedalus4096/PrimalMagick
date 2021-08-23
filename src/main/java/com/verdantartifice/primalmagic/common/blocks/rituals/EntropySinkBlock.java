@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.tiles.rituals.EntropySinkTileEntit
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -90,6 +91,14 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
         // Show spell sparkles if receiving salt power
         if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
+        }
+        
+        // Show redstone particles if glowing
+        if (stateIn.getValue(LIT)) {
+            double x = (double)pos.getX() + (0.625D * rand.nextDouble()) + 0.1875D;
+            double y = (double)pos.getY() + 1.0D;
+            double z = (double)pos.getZ() + (0.625D * rand.nextDouble()) + 0.1875D;
+            worldIn.addParticle(DustParticleOptions.REDSTONE, x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
 
