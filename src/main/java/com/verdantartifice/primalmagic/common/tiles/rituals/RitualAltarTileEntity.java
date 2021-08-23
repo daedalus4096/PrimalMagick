@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,11 +36,11 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
+import com.verdantartifice.primalmagic.common.rituals.AbstractRitualStep;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.rituals.Mishap;
-import com.verdantartifice.primalmagic.common.rituals.AbstractRitualStep;
 import com.verdantartifice.primalmagic.common.rituals.RecipeRitualStep;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepFactory;
 import com.verdantartifice.primalmagic.common.rituals.RitualStepType;
@@ -417,27 +418,58 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     }
     
     protected boolean generateRitualSteps(@Nonnull IRitualRecipe recipe) {
-        // Add steps for the recipe offerings and props
+        LinkedList<AbstractRitualStep> offeringSteps = new LinkedList<>();
+        LinkedList<AbstractRitualStep> propSteps = new LinkedList<>();
         LinkedList<AbstractRitualStep> newSteps = new LinkedList<>();
+
+        // Add steps for the recipe offerings and props
         for (int index = 0; index < recipe.getIngredients().size(); index++) {
-            newSteps.add(new RecipeRitualStep(RitualStepType.OFFERING, index));
+            offeringSteps.add(new RecipeRitualStep(RitualStepType.OFFERING, index));
         }
         for (int index = 0; index < recipe.getProps().size(); index++) {
-            newSteps.add(new RecipeRitualStep(RitualStepType.PROP, index));
+            propSteps.add(new RecipeRitualStep(RitualStepType.PROP, index));
         }
         
         // Add steps for any universal props that were detected when scanning surroundings
         for (BlockPos propPos : this.propPositions) {
-            Block block = this.level.getBlockState(propPos).getBlock();
-            if (block instanceof IRitualPropBlock && ((IRitualPropBlock)block).isUniversal()) {
-                newSteps.add(new UniversalRitualStep(propPos));
+            BlockState propState = this.level.getBlockState(propPos);
+            Block block = propState.getBlock();
+            if (block instanceof IRitualPropBlock) {
+                IRitualPropBlock propBlock = (IRitualPropBlock)block;
+                if (propBlock.isUniversal() && !propBlock.isPropActivated(propState, this.level, propPos)) {
+                    propSteps.add(new UniversalRitualStep(propPos));
+                }
             }
         }
         
-        // Randomize and save the generated steps
-        Collections.shuffle(newSteps, this.level.random);
-        this.remainingSteps = newSteps;
+        // Randomize the generated steps, trying to space props evenly between batches of offerings
+        Collections.shuffle(offeringSteps, this.level.random);
+        Collections.shuffle(propSteps, this.level.random);
+        int numOfferings = offeringSteps.size();
+        int numProps = propSteps.size();
+        int[] offeringBuckets = new int[numProps + 1];
+        Arrays.fill(offeringBuckets, (numOfferings / (numProps + 1)));
+        int leftoverOfferings = numOfferings % (numProps + 1);
+        if (leftoverOfferings > 0) {
+            List<Integer> leftoverBuckets = new ArrayList<>();
+            for (int index = 0; index < numProps + 1; index++) {
+                leftoverBuckets.add(index < leftoverOfferings ? 1 : 0);
+            }
+            Collections.shuffle(leftoverBuckets, this.level.random);
+            for (int index = 0; index < offeringBuckets.length; index++) {
+                offeringBuckets[index] += leftoverBuckets.get(index);
+            }
+        }
+        for (int index = 0; index < offeringBuckets.length; index++) {
+            if (index > 0) {
+                newSteps.add(propSteps.poll());
+            }
+            for (int bucketIndex = 0; bucketIndex < offeringBuckets[index]; bucketIndex++) {
+                newSteps.add(offeringSteps.poll());
+            }
+        }
         
+        this.remainingSteps = newSteps;
         return true;
     }
     
