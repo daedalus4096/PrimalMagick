@@ -48,7 +48,7 @@ public class PotionBonusAffinity extends AbstractAffinity {
             }
             
             ResourceLocation targetId = new ResourceLocation(target);
-            if (!ForgeRegistries.POTION_TYPES.containsKey(targetId)) {
+            if (!ForgeRegistries.MOB_EFFECTS.containsKey(targetId)) {
                 throw new JsonSyntaxException("Unknown target potion type " + target + " in affinity JSON for " + affinityId.toString());
             }
             

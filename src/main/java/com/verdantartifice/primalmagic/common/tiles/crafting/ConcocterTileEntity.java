@@ -255,7 +255,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     }
 
     @Override
-    protected void invalidateCaps() {
+    public void invalidateCaps() {
         super.invalidateCaps();
         this.manaStorageOpt.invalidate();
     }

@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class EffectsPM {
-    private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, PrimalMagic.MODID);
+    private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, PrimalMagic.MODID);
     
     public static void init() {
         EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());

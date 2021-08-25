@@ -215,7 +215,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     }
 
     @Override
-    protected void invalidateCaps() {
+    public void invalidateCaps() {
         super.invalidateCaps();
         this.manaStorageOpt.invalidate();
     }

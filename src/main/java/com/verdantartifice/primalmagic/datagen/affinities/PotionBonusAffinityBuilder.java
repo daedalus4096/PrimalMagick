@@ -43,7 +43,7 @@ public class PotionBonusAffinityBuilder {
         if (this.targetId == null) {
             throw new IllegalStateException("No target potion for affinity " + id.toString());
         }
-        if (!ForgeRegistries.POTION_TYPES.containsKey(this.targetId)) {
+        if (!ForgeRegistries.MOB_EFFECTS.containsKey(this.targetId)) {
             throw new IllegalStateException("Unknown target potion " + this.targetId.toString() + " for affinity " + id.toString());
         }
     }
