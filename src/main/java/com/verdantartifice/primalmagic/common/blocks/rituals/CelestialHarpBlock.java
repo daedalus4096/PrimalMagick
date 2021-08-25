@@ -5,7 +5,6 @@ import java.util.Random;
 
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.client.fx.particles.NoteEmitterParticleData;
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
@@ -40,7 +39,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 
 /**
  * Block definition for a celestial harp.  Celestial harps serve as props in magical rituals;
@@ -54,7 +52,7 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
     protected static final VoxelShape SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.box(7.0D, 0.0D, 0.0D, 9.0D, 16.0D, 16.0D));
     
     public CelestialHarpBlock() {
-        super(Block.Properties.of(Material.WOOD, MaterialColor.GOLD).strength(2.5F).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(HarvestLevel.NONE.getLevel()));
+        super(Block.Properties.of(Material.WOOD, MaterialColor.GOLD).strength(2.5F).sound(SoundType.WOOD));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 

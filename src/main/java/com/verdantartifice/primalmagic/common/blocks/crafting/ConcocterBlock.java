@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.common.blocks.crafting;
 import java.util.List;
 import java.util.Random;
 
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -42,7 +41,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
@@ -55,7 +53,7 @@ public class ConcocterBlock extends BaseEntityBlock {
     public static final BooleanProperty HAS_BOTTLE = BlockStateProperties.HAS_BOTTLE_0;
 
     public ConcocterBlock() {
-        super(Block.Properties.of(Material.METAL).strength(0.5F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()).lightLevel(state -> {
+        super(Block.Properties.of(Material.METAL).strength(0.5F).lightLevel(state -> {
             return 1;
         }).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(HAS_BOTTLE, false));

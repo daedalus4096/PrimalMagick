@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualBellTileEntity;
@@ -57,7 +56,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 
 /**
  * Block definition for a ritual bell.  Ritual bells serve as props in magical rituals; ringing them
@@ -102,7 +100,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     });
     
     public RitualBellBlock() {
-        super(Block.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).strength(5.0F).sound(SoundType.ANVIL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
+        super(Block.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).strength(5.0F).sound(SoundType.ANVIL));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ATTACHMENT, BellAttachType.FLOOR));
     }
     

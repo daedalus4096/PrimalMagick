@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualLecternTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
@@ -44,7 +43,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -68,7 +66,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     });
     
     public RitualLecternBlock() {
-        super(Block.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(HarvestLevel.NONE.getLevel()));
+        super(Block.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(HAS_BOOK, Boolean.FALSE));
     }
     

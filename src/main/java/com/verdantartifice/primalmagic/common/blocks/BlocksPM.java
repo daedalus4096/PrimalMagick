@@ -61,7 +61,6 @@ import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodSlabBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodStairsBlock;
 import com.verdantartifice.primalmagic.common.blocks.trees.SunwoodTree;
 import com.verdantartifice.primalmagic.common.misc.DeviceTier;
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.core.BlockPos;
@@ -78,7 +77,6 @@ import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -324,11 +322,11 @@ public class BlocksPM {
     public static final RegistryObject<GlowFieldBlock> GLOW_FIELD = BLOCKS.register("glow_field", GlowFieldBlock::new);
     public static final RegistryObject<GlowFieldBlock> SOUL_GLOW_FIELD = BLOCKS.register("soul_glow_field", GlowFieldBlock::new);
     public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = BLOCKS.register("salt_trail", SaltTrailBlock::new);
-    public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.of(Material.STONE).strength(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
-    public static final RegistryObject<QuartzOreBlock> QUARTZ_ORE = BLOCKS.register("quartz_ore", () -> new QuartzOreBlock(Block.Properties.of(Material.STONE).strength(3.0F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
-    public static final RegistryObject<Block> PRIMALITE_BLOCK = BLOCKS.register("primalite_block", () -> new Block(Block.Properties.of(Material.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.STONE.getLevel())));
-    public static final RegistryObject<Block> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new Block(Block.Properties.of(Material.METAL).strength(7.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.IRON.getLevel())));
-    public static final RegistryObject<Block> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new Block(Block.Properties.of(Material.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.DIAMOND.getLevel())));
+    public static final RegistryObject<Block> ROCK_SALT_ORE = BLOCKS.register("rock_salt_ore", () -> new Block(Block.Properties.of(Material.STONE).strength(3.0F, 3.0F)));
+    public static final RegistryObject<QuartzOreBlock> QUARTZ_ORE = BLOCKS.register("quartz_ore", () -> new QuartzOreBlock(Block.Properties.of(Material.STONE).strength(3.0F, 3.0F)));
+    public static final RegistryObject<Block> PRIMALITE_BLOCK = BLOCKS.register("primalite_block", () -> new Block(Block.Properties.of(Material.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistryObject<Block> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new Block(Block.Properties.of(Material.METAL).strength(7.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistryObject<Block> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new Block(Block.Properties.of(Material.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<PyramidBlock> PYRAMID = BLOCKS.register("pyramid", PyramidBlock::new);
 
     // Helper functions for block properties

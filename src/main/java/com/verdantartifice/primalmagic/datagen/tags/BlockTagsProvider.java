@@ -45,6 +45,11 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.tag(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL.get(), BlocksPM.MARBLE_BRICK_WALL.get(), BlocksPM.MARBLE_ENCHANTED_WALL.get(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), BlocksPM.MARBLE_SMOKED_WALL.get(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.get());
         this.tag(BlockTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.HALLOWOOD_SLAB.get());
         this.tag(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.get(), BlocksPM.SUNWOOD_STAIRS.get(), BlocksPM.HALLOWOOD_STAIRS.get());
+        this.tag(BlockTags.MINEABLE_WITH_AXE).add(BlocksPM.CELESTIAL_HARP.get(), BlocksPM.RITUAL_LECTERN.get());
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BlocksPM.ROCK_SALT_ORE.get(), BlocksPM.QUARTZ_ORE.get(), BlocksPM.PRIMALITE_BLOCK.get(), BlocksPM.HEXIUM_BLOCK.get(), BlocksPM.HALLOWSTEEL_BLOCK.get(), BlocksPM.CONCOCTER.get(), BlocksPM.RITUAL_BELL.get(), BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), BlocksPM.RUNIC_GRINDSTONE.get(), BlocksPM.SANGUINE_CRUCIBLE.get(), BlocksPM.SOUL_ANVIL.get());
+        this.tag(BlockTags.NEEDS_STONE_TOOL).add(BlocksPM.ROCK_SALT_ORE.get(), BlocksPM.QUARTZ_ORE.get(), BlocksPM.PRIMALITE_BLOCK.get());
+        this.tag(BlockTags.NEEDS_IRON_TOOL).add(BlocksPM.HEXIUM_BLOCK.get(), BlocksPM.SANGUINE_CRUCIBLE.get());
+        this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(BlocksPM.HALLOWSTEEL_BLOCK.get());
         
         // Add entries to Forge tags
         this.tag(Tags.Blocks.ORES_QUARTZ).add(BlocksPM.QUARTZ_ORE.get());

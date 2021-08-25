@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.misc.SanguineCoreItem;
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.devices.SanguineCrucibleTileEntity;
 
@@ -42,7 +41,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -59,7 +57,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
     public SanguineCrucibleBlock() {
         super(Block.Properties.of(Material.METAL).strength(7.0F, 6.0F).lightLevel((state) -> { 
             return state.getValue(BlockStateProperties.LIT) ? 13 : 0; 
-        }).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.IRON.getLevel()));
+        }).sound(SoundType.METAL));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
     }
 
