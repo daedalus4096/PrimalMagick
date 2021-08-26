@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "primalmagic:celestial_harp",
+    "primalmagic:ritual_lectern",
+    "primalmagic:sunwood_pillar",
+    "primalmagic:moonwood_pillar",
+    "primalmagic:hallowood_pillar"
+  ]
+}

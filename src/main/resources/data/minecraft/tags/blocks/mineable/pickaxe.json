@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "primalmagic:rock_salt_ore",
+    "primalmagic:quartz_ore",
+    "primalmagic:primalite_block",
+    "primalmagic:hexium_block",
+    "primalmagic:hallowsteel_block",
+    "primalmagic:concocter",
+    "primalmagic:ritual_bell",
+    "primalmagic:runescribing_altar_basic",
+    "primalmagic:runescribing_altar_enchanted",
+    "primalmagic:runescribing_altar_forbidden",
+    "primalmagic:runescribing_altar_heavenly",
+    "primalmagic:runic_grindstone",
+    "primalmagic:sanguine_crucible",
+    "primalmagic:soul_anvil",
+    "primalmagic:marble_raw",
+    "primalmagic:marble_slab",
+    "primalmagic:marble_stairs",
+    "primalmagic:marble_wall",
+    "primalmagic:marble_bricks",
+    "primalmagic:marble_brick_slab",
+    "primalmagic:marble_brick_stairs",
+    "primalmagic:marble_brick_wall",
+    "primalmagic:marble_pillar",
+    "primalmagic:marble_chiseled",
+    "primalmagic:marble_runed"
+  ]
+}
