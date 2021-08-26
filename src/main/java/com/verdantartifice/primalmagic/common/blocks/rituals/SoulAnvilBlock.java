@@ -8,7 +8,6 @@ import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagic.common.tiles.rituals.SoulAnvilTileEntity;
@@ -44,7 +43,6 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -66,7 +64,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     });
     
     public SoulAnvilBlock() {
-        super(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F).sound(SoundType.ANVIL).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
+        super(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(DIRTY, Boolean.FALSE));
     }
     

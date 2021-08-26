@@ -22,7 +22,7 @@ public enum ItemTierPM implements Tier {
     HEXIUM(HarvestLevel.DIAMOND.getLevel(), 1600, 9.5F, 4.0F, 23, () -> {
         return Ingredient.of(ItemTagsPM.INGOTS_HEXIUM);
     }),
-    HALLOWSTEEL(HarvestLevel.HALLOWSTEEL.getLevel(), 2400, 11.5F, 5.5F, 28, () -> {
+    HALLOWSTEEL(HarvestLevel.DIAMOND.getLevel(), 2400, 11.5F, 5.5F, 28, () -> {
         return Ingredient.of(ItemTagsPM.INGOTS_HALLOWSTEEL);
     });
 

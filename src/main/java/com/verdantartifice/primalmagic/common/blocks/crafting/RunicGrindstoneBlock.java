@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagic.common.blocks.crafting;
 
 import com.verdantartifice.primalmagic.common.containers.RunicGrindstoneContainer;
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +22,6 @@ import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
@@ -34,7 +32,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
  */
 public class RunicGrindstoneBlock extends GrindstoneBlock {
     public RunicGrindstoneBlock() {
-        super(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(2.0F, 6.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
+        super(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(2.0F, 6.0F).sound(SoundType.STONE));
     }
     
     @Override

@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.blocks.crafting;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.misc.DeviceTier;
-import com.verdantartifice.primalmagic.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagic.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
@@ -41,7 +39,7 @@ public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDe
     protected final DeviceTier tier;
 
     public RunescribingAltarBlock(DeviceTier tier) {
-        super(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(1.5F, 6.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(HarvestLevel.WOOD.getLevel()));
+        super(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(1.5F, 6.0F).sound(SoundType.STONE));
         this.tier = tier;
     }
     
