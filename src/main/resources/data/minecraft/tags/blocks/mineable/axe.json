@@ -1,10 +1,16 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:celestial_harp",
-    "primalmagic:ritual_lectern",
     "primalmagic:sunwood_pillar",
     "primalmagic:moonwood_pillar",
-    "primalmagic:hallowood_pillar"
+    "primalmagic:hallowood_pillar",
+    "primalmagic:arcane_workbench",
+    "primalmagic:wood_table",
+    "primalmagic:analysis_table",
+    "primalmagic:wand_inscription_table",
+    "primalmagic:research_table",
+    "primalmagic:ritual_lectern",
+    "primalmagic:runecarving_table",
+    "primalmagic:celestial_harp"
   ]
 }
