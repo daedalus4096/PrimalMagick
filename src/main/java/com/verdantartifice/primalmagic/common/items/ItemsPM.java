@@ -318,7 +318,6 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> PRIMALITE_BLOCK = ITEMS.register("primalite_block", () -> new BlockItem(BlocksPM.PRIMALITE_BLOCK.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> HEXIUM_BLOCK = ITEMS.register("hexium_block", () -> new BlockItem(BlocksPM.HEXIUM_BLOCK.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> HALLOWSTEEL_BLOCK = ITEMS.register("hallowsteel_block", () -> new BlockItem(BlocksPM.HALLOWSTEEL_BLOCK.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
-    public static final RegistryObject<BlockItem> PYRAMID = ITEMS.register("pyramid", () -> new BlockItem(BlocksPM.PYRAMID.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     
     // Register salted food items
     public static final RegistryObject<Item> SALTED_BAKED_POTATO = ITEMS.register("salted_baked_potato", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).build())));
