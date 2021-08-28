@@ -33,6 +33,13 @@ import net.minecraftforge.event.entity.EntityTeleportEvent;
  * @author Daedalus4096
  */
 public class EntityUtils {
+    /**
+     * Gets the current client-side player.
+     * 
+     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
+     * 
+     * @return the current client-side player
+     */
     @Nullable
     public static Player getCurrentPlayer() {
         Minecraft mc = Minecraft.getInstance();

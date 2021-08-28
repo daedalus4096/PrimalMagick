@@ -4,13 +4,15 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagic.common.util.LevelUtils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
@@ -50,8 +52,7 @@ public class TileToClientPacket implements IMessageToClient {
         public static void onMessage(TileToClientPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                Minecraft mc = Minecraft.getInstance();
-                Level world = mc.level;
+                Level world = (FMLEnvironment.dist == Dist.CLIENT) ? LevelUtils.getCurrentLevel() : null;
                 // Only process tile entities that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
                 if (world != null && world.hasChunkAt(message.pos)) {
