@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagic.common.init;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
 import com.verdantartifice.primalmagic.common.crafting.RecipeSerializersPM;
@@ -31,6 +31,6 @@ public class InitRegistries {
         FeaturesPM.init();
         EnchantmentsPM.init();
         LootModifierSerializersPM.init();
-        PrimalMagic.proxy.initDeferredRegistries();
+        ParticleTypesPM.init();
     }
 }

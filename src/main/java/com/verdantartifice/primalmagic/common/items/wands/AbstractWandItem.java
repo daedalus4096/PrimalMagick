@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
@@ -286,7 +285,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         
-        if (PrimalMagic.proxy.isShiftDown()) {
+        if (player.isShiftKeyDown()) {
             // Add detailed mana information
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the listing if it's been discovered
