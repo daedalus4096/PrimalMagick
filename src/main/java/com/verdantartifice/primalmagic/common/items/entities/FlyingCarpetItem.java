@@ -3,8 +3,6 @@ package com.verdantartifice.primalmagic.common.items.entities;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.entities.misc.FlyingCarpetEntity;
 
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -14,7 +12,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
@@ -32,7 +29,6 @@ import net.minecraftforge.common.util.Constants;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
 public class FlyingCarpetItem extends Item {
     public static final ResourceLocation COLOR_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "color");
     
@@ -56,23 +52,6 @@ public class FlyingCarpetItem extends Item {
 
     public FlyingCarpetItem(Item.Properties properties) {
         super(properties);
-    }
-    
-    public static ItemPropertyFunction getColorProperty() {
-        return new ItemPropertyFunction() {
-            @Override
-            public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) {
-                DyeColor color = null;
-                if (stack != null && stack.getItem() instanceof FlyingCarpetItem) {
-                    color = ((FlyingCarpetItem)stack.getItem()).getDyeColor(stack);
-                }
-                if (color == null) {
-                    // Default to white if no dye color is applied
-                    color = DyeColor.WHITE;
-                }
-                return ((float)color.getId() / 16.0F);
-            }
-        };
     }
     
     public static ItemStack dyeCarpet(ItemStack carpetStack, DyeItem dye) {

@@ -15,16 +15,13 @@ import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,41 +38,11 @@ import net.minecraftforge.client.IItemRenderProperties;
  *  
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
 public class ArcanometerItem extends Item {
     public static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "scan_state");
 
     public ArcanometerItem() {
         super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON));
-    }
-    
-    public static ItemPropertyFunction getScanStateProperty() {
-        return new ItemPropertyFunction() {
-            protected float scanState = 0;
-
-            @Override
-            public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) {
-                if (entity == null || !(entity instanceof Player)) {
-                    return 0.0F;
-                } else {
-                    // If the currently moused-over block/item has not yet been scanned, raise the antennae
-                    if (isMouseOverScannable(RayTraceUtils.getMouseOver(), world, (Player)entity)) {
-                        this.incrementScanState();
-                    } else {
-                        this.decrementScanState();
-                    }
-                    return scanState;
-                }
-            }
-            
-            protected void incrementScanState() {
-                this.scanState = Math.min(4.0F, this.scanState + 0.25F);
-            }
-            
-            protected void decrementScanState() {
-                this.scanState = Math.max(0.0F, this.scanState - 0.25F);
-            }
-        };
     }
     
     public static boolean isMouseOverScannable(@Nullable HitResult result, @Nullable Level world, @Nullable Player player) {

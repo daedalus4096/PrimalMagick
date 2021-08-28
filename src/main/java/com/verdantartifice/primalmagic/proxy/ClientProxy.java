@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagic.common.util.RayTraceUtils;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
@@ -44,6 +45,7 @@ import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -109,8 +111,44 @@ public class ClientProxy implements IProxyPM {
     private void registerItemProperties(FMLClientSetupEvent event) {
         // Register properties for items on the main thread in a thread-safe fashion
         event.enqueueWork(() -> {
-            ItemProperties.register(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, ArcanometerItem.getScanStateProperty());
-            ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, FlyingCarpetItem.getColorProperty());
+            ItemProperties.register(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, new ItemPropertyFunction() {
+                protected float scanState = 0;
+
+                @Override
+                public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int seed) {
+                    if (entity == null || !(entity instanceof Player)) {
+                        return 0.0F;
+                    } else {
+                        // If the currently moused-over block/item has not yet been scanned, raise the antennae
+                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(), world, (Player)entity)) {
+                            this.incrementScanState();
+                        } else {
+                            this.decrementScanState();
+                        }
+                        return scanState;
+                    }
+                }
+                
+                protected void incrementScanState() {
+                    this.scanState = Math.min(4.0F, this.scanState + 0.25F);
+                }
+                
+                protected void decrementScanState() {
+                    this.scanState = Math.max(0.0F, this.scanState - 0.25F);
+                }
+            });
+            
+            ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
+                DyeColor color = null;
+                if (stack != null && stack.getItem() instanceof FlyingCarpetItem) {
+                    color = ((FlyingCarpetItem)stack.getItem()).getDyeColor(stack);
+                }
+                if (color == null) {
+                    // Default to white if no dye color is applied
+                    color = DyeColor.WHITE;
+                }
+                return ((float)color.getId() / 16.0F);
+            });
             
             ItemPropertyFunction castProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 if (entity == null) {
