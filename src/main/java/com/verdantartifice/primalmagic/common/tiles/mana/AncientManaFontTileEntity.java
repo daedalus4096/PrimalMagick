@@ -34,7 +34,7 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
         if (!level.isClientSide && entity.ticksExisted % 10 == 0) {
             // Have players in range discover this font's shrine
             SimpleResearchKey research = SimpleResearchKey.parse("m_found_shrine");
-            List<? extends Player> players = EntityUtils.getEntitiesInRange(level, pos, null, Player.class, 5.0D);
+            List<Player> players = EntityUtils.getEntitiesInRange(level, pos, null, Player.class, 5.0D);
             for (Player player : players) {
                 if (!ResearchManager.isResearchComplete(player, research) && !ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS)) {
                     ResearchManager.completeResearch(player, research);

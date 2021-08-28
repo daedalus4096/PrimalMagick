@@ -57,7 +57,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     protected final ServerBossEvent bossInfo = (ServerBossEvent)(new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
     protected boolean isSuffocating = false;
-    protected List<? extends SinCrystalEntity> crystalsInRange = new ArrayList<>();
+    protected List<SinCrystalEntity> crystalsInRange = new ArrayList<>();
 
     public InnerDemonEntity(EntityType<? extends InnerDemonEntity> type, Level worldIn) {
         super(type, worldIn);

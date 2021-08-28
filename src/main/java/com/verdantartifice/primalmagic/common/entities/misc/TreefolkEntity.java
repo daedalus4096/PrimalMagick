@@ -156,7 +156,7 @@ public class TreefolkEntity extends PathfinderMob implements NeutralMob, RangedA
     public void setCustomName(Component name) {
         super.setCustomName(name);
         if (!this.level.isClientSide && DREADED_NAME.equals(name.getString())) {
-            List<? extends Player> nearby = EntityUtils.getEntitiesInRange(this.level, this.position(), null, Player.class, 6.0D);
+            List<Player> nearby = EntityUtils.getEntitiesInRange(this.level, this.position(), null, Player.class, 6.0D);
             for (Player player : nearby) {
                 StatsManager.incrementValue(player, StatsPM.TREANTS_NAMED);
             }

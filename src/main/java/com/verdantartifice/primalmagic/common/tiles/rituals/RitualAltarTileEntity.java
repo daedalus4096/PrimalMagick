@@ -921,7 +921,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     
     protected void mishapDamage(boolean allTargets) {
         // Damage one or all living entities in range and afflict them with mana impedance
-        List<? extends LivingEntity> targets = EntityUtils.getEntitiesInRange(this.level, this.worldPosition, null, LivingEntity.class, 10.0D);
+        List<LivingEntity> targets = EntityUtils.getEntitiesInRange(this.level, this.worldPosition, null, LivingEntity.class, 10.0D);
         if (targets != null && !targets.isEmpty()) {
             for (int index = 0; index < targets.size(); index++) {
                 LivingEntity target = targets.get(index);
