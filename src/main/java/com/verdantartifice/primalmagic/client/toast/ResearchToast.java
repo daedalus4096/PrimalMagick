@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.client.gui;
+package com.verdantartifice.primalmagic.client.toast;
 
 import java.awt.Color;
 

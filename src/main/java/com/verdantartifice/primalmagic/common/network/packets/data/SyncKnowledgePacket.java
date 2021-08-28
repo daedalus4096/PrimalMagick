@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.network.packets.data;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagic.client.gui.ResearchToast;
+import com.verdantartifice.primalmagic.client.toast.ToastManager;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -60,8 +59,8 @@ public class SyncKnowledgePacket implements IMessageToClient {
                         // Show a research completion toast for any research entries so flagged
                         if (knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {
                             ResearchEntry entry = ResearchEntries.getEntry(key);
-                            if (entry != null) {
-                                Minecraft.getInstance().getToasts().addToast(new ResearchToast(entry));
+                            if (entry != null && FMLEnvironment.dist == Dist.CLIENT) {
+                                ToastManager.showResearchToast(entry);
                             }
                             knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
                         }
