@@ -9,11 +9,14 @@ import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
@@ -49,8 +52,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
         public static void onMessage(SyncKnowledgePacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                Minecraft mc = Minecraft.getInstance();
-                Player player = mc.player;
+                Player player = (FMLEnvironment.dist == Dist.CLIENT) ? EntityUtils.getCurrentPlayer() : null;
                 IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
                 if (knowledge != null) {
                     knowledge.deserializeNBT(message.data);

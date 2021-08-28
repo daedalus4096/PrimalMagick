@@ -5,11 +5,13 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
@@ -43,8 +45,7 @@ public class SyncStatsPacket implements IMessageToClient {
         public static void onMessage(SyncStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                Minecraft mc = Minecraft.getInstance();
-                Player player = mc.player;
+                Player player = (FMLEnvironment.dist == Dist.CLIENT) ? EntityUtils.getCurrentPlayer() : null;
                 IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
                 if (stats != null) {
                     stats.deserializeNBT(message.data);

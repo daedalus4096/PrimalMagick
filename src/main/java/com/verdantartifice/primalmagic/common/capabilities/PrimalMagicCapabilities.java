@@ -38,28 +38,28 @@ public class PrimalMagicCapabilities {
     public static final Capability<IManaStorage> MANA_STORAGE = null;
     
     @Nullable
-    public static IPlayerKnowledge getKnowledge(@Nonnull Player player) {
-        return player.getCapability(KNOWLEDGE, null).orElse(null);
+    public static IPlayerKnowledge getKnowledge(@Nullable Player player) {
+        return player == null ? null : player.getCapability(KNOWLEDGE, null).orElse(null);
     }
     
     @Nullable
-    public static IPlayerCooldowns getCooldowns(@Nonnull Player player) {
-        return player.getCapability(COOLDOWNS, null).orElse(null);
+    public static IPlayerCooldowns getCooldowns(@Nullable Player player) {
+        return player == null ? null : player.getCapability(COOLDOWNS, null).orElse(null);
     }
     
     @Nullable
-    public static IPlayerStats getStats(@Nonnull Player player) {
-        return player.getCapability(STATS, null).orElse(null);
+    public static IPlayerStats getStats(@Nullable Player player) {
+        return player == null ? null : player.getCapability(STATS, null).orElse(null);
     }
     
     @Nullable
-    public static IPlayerAttunements getAttunements(@Nonnull Player player) {
-        return player.getCapability(ATTUNEMENTS, null).orElse(null);
+    public static IPlayerAttunements getAttunements(@Nullable Player player) {
+        return player == null ? null : player.getCapability(ATTUNEMENTS, null).orElse(null);
     }
     
     @Nullable
-    public static IPlayerCompanions getCompanions(@Nonnull Player player) {
-        return player.getCapability(COMPANIONS, null).orElse(null);
+    public static IPlayerCompanions getCompanions(@Nullable Player player) {
+        return player == null ? null : player.getCapability(COMPANIONS, null).orElse(null);
     }
     
     @Nullable

@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
@@ -18,10 +19,10 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.util.EntityUtils;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
@@ -42,6 +43,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * Base item definition for a wand.  Wands store mana for use in crafting and, optionally, casting spells.
@@ -235,7 +238,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public double getTotalCostModifier(ItemStack stack, Player player, Source source) {
+    public double getTotalCostModifier(ItemStack stack, @Nullable Player player, Source source) {
         // Start with the base modifier, as determined by wand cap
         double modifier = this.getBaseCostModifier(stack);
         
@@ -282,10 +285,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         
-        Minecraft mc = Minecraft.getInstance();
-        Player player = mc.player;
-        
-        if (player.isShiftKeyDown()) {
+        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? EntityUtils.getCurrentPlayer() : null;
+        if (player != null && player.isShiftKeyDown()) {
             // Add detailed mana information
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the listing if it's been discovered
