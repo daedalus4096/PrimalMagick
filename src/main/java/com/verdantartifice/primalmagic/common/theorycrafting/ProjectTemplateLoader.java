@@ -32,8 +32,14 @@ public class ProjectTemplateLoader extends SimpleJsonResourceReloadListener {
 
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
-        INSTANCE = new ProjectTemplateLoader();
-        event.addListener(INSTANCE);
+        event.addListener(createInstance());
+    }
+    
+    public static ProjectTemplateLoader createInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ProjectTemplateLoader();
+        }
+        return INSTANCE;
     }
     
     public static ProjectTemplateLoader getInstance() {

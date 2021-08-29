@@ -74,8 +74,14 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
 
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
-        INSTANCE = new AffinityManager();
-        event.addListener(INSTANCE);
+        event.addListener(createInstance());
+    }
+    
+    public static AffinityManager createInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new AffinityManager();
+        }
+        return INSTANCE;
     }
     
     public static AffinityManager getInstance() {

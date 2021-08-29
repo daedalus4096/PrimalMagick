@@ -32,8 +32,14 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
     
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
-        INSTANCE = new ResearchLoader();
-        event.addListener(INSTANCE);
+        event.addListener(createInstance());
+    }
+    
+    public static ResearchLoader createInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ResearchLoader();
+        }
+        return INSTANCE;
     }
     
     public static ResearchLoader getInstance() {

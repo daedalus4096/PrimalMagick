@@ -10,7 +10,10 @@ import com.verdantartifice.primalmagic.client.fx.particles.PropMarkerParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.WandPoofParticle;
+import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.research.ResearchLoader;
+import com.verdantartifice.primalmagic.common.theorycrafting.ProjectTemplateLoader;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -72,6 +75,10 @@ public class ClientRegistrationEvents {
     
     @SubscribeEvent
     public static void onClientReloadListenerRegister(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(AffinityManager.createInstance());
+        event.registerReloadListener(ResearchLoader.createInstance());
+        event.registerReloadListener(ProjectTemplateLoader.createInstance());
+        
         event.registerReloadListener(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getItemStackRenderer());
