@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagic.common.network.packets.data;
 
 import java.util.function.Supplier;
 
+import com.verdantartifice.primalmagic.client.util.ClientUtils;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
-import com.verdantartifice.primalmagic.common.util.LevelUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -52,7 +52,7 @@ public class TileToClientPacket implements IMessageToClient {
         public static void onMessage(TileToClientPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                Level world = (FMLEnvironment.dist == Dist.CLIENT) ? LevelUtils.getCurrentLevel() : null;
+                Level world = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentLevel() : null;
                 // Only process tile entities that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
                 if (world != null && world.hasChunkAt(message.pos)) {

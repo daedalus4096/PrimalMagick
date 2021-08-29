@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagic.client.util.ClientUtils;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
-import com.verdantartifice.primalmagic.common.util.LevelUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -44,7 +44,7 @@ public class PropMarkerPacket implements IMessageToClient {
         public static void onMessage(PropMarkerPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                Level world = (FMLEnvironment.dist == Dist.CLIENT) ? LevelUtils.getCurrentLevel() : null;
+                Level world = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentLevel() : null;
                 // Only process positions that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
                 if (world != null && world.hasChunkAt(message.pos)) {

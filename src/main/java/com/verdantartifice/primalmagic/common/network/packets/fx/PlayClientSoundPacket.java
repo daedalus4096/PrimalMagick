@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagic.common.network.packets.fx;
 
 import java.util.function.Supplier;
 
+import com.verdantartifice.primalmagic.client.util.ClientUtils;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
-import com.verdantartifice.primalmagic.common.util.EntityUtils;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -53,7 +53,7 @@ public class PlayClientSoundPacket implements IMessageToClient {
     public static class Handler {
         public static void onMessage(PlayClientSoundPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
-            Player player = (FMLEnvironment.dist == Dist.CLIENT) ? EntityUtils.getCurrentPlayer() : null;
+            Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
             ctx.get().enqueueWork(() -> {
                 ResourceLocation eventLoc = ResourceLocation.tryParse(message.eventLoc);
                 if (eventLoc != null && ForgeRegistries.SOUND_EVENTS.containsKey(eventLoc)) {

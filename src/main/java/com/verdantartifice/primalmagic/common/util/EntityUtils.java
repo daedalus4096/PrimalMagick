@@ -10,14 +10,12 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -33,19 +31,6 @@ import net.minecraftforge.event.entity.EntityTeleportEvent;
  * @author Daedalus4096
  */
 public class EntityUtils {
-    /**
-     * Gets the current client-side player.
-     * 
-     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
-     * 
-     * @return the current client-side player
-     */
-    @Nullable
-    public static Player getCurrentPlayer() {
-        Minecraft mc = Minecraft.getInstance();
-        return mc.player;
-    }
-    
     /**
      * Get the itemstack with which a non-living entity is placed (e.g. boats).  For item entities,
      * returns whatever itemstack the entity contains.
