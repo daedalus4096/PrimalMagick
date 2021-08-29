@@ -52,6 +52,7 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
+        LOGGER.info("Loading JSON resource data with {} elements", objectIn.size());
         ResearchManager.clearCraftingReferences();
         ResearchDisciplines.clearAllResearch();
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {

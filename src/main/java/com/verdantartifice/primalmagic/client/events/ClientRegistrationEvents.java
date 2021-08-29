@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagic.client.events;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.NoteEmitterParticle;
@@ -36,6 +39,8 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrationEvents {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @SubscribeEvent
     public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
         Minecraft mc = Minecraft.getInstance();
@@ -75,6 +80,7 @@ public class ClientRegistrationEvents {
     
     @SubscribeEvent
     public static void onClientReloadListenerRegister(RegisterClientReloadListenersEvent event) {
+        LOGGER.info("Registering client-side reload listeners");
         event.registerReloadListener(AffinityManager.createInstance());
         event.registerReloadListener(ResearchLoader.createInstance());
         event.registerReloadListener(ProjectTemplateLoader.createInstance());
