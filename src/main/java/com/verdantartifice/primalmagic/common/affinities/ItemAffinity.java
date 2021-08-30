@@ -8,6 +8,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -100,6 +101,34 @@ public class ItemAffinity extends AbstractAffinity {
             }
 
             return entry;
+        }
+
+        @Override
+        public ItemAffinity fromNetwork(FriendlyByteBuf buf) {
+            ItemAffinity affinity = new ItemAffinity(buf.readResourceLocation());
+            boolean isSet = buf.readBoolean();
+            if (isSet) {
+                affinity.setValues = SourceList.fromNetwork(buf);
+            } else {
+                affinity.baseEntryId = buf.readResourceLocation();
+                affinity.addValues = SourceList.fromNetwork(buf);
+                affinity.removeValues = SourceList.fromNetwork(buf);
+            }
+            return affinity;
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, ItemAffinity affinity) {
+            buf.writeResourceLocation(affinity.targetId);
+            if (affinity.setValues != null) {
+                buf.writeBoolean(true);
+                SourceList.toNetwork(buf, affinity.setValues);
+            } else {
+                buf.writeBoolean(false);
+                buf.writeResourceLocation(affinity.baseEntryId);
+                SourceList.toNetwork(buf, affinity.addValues);
+                SourceList.toNetwork(buf, affinity.removeValues);
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -27,6 +28,21 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     protected Map<Source, Integer> sources = new HashMap<>();
     
     public SourceList() {}
+    
+    @Nonnull
+    public static SourceList fromNetwork(FriendlyByteBuf buf) {
+        SourceList retVal = new SourceList();
+        for (Source source : Source.SORTED_SOURCES) {
+            retVal.add(source, buf.readVarInt());
+        }
+        return retVal;
+    }
+    
+    public static void toNetwork(FriendlyByteBuf buf, SourceList sources) {
+        for (Source source : Source.SORTED_SOURCES) {
+            buf.writeVarInt(sources.getAmount(source));
+        }
+    }
     
     public int getAmount(@Nullable Source source) {
         // Return zero if the given source is not present in this list

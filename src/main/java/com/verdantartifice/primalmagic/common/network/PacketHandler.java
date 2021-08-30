@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.network.packets.data.SyncResearchF
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerPacket;
+import com.verdantartifice.primalmagic.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.UpdateResearchPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
@@ -98,6 +99,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, ScanEntityPacket.class, ScanEntityPacket::encode, ScanEntityPacket::decode, ScanEntityPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, PotionExplosionPacket.class, PotionExplosionPacket::encode, PotionExplosionPacket::decode, PotionExplosionPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, UpdateResearchPacket.class, UpdateResearchPacket::encode, UpdateResearchPacket::decode, UpdateResearchPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, UpdateAffinitiesPacket.class, UpdateAffinitiesPacket::encode, UpdateAffinitiesPacket::decode, UpdateAffinitiesPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

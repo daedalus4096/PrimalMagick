@@ -7,6 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -60,6 +61,19 @@ public class PotionBonusAffinity extends AbstractAffinity {
             }
             
             return entry;
+        }
+
+        @Override
+        public PotionBonusAffinity fromNetwork(FriendlyByteBuf buf) {
+            PotionBonusAffinity affinity = new PotionBonusAffinity(buf.readResourceLocation());
+            affinity.bonusValues = SourceList.fromNetwork(buf);
+            return affinity;
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, PotionBonusAffinity affinity) {
+            buf.writeResourceLocation(affinity.targetId);
+            SourceList.toNetwork(buf, affinity.bonusValues);
         }
     }
 }

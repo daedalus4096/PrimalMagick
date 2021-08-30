@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.UpdateResearchPacket;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 
@@ -29,6 +31,7 @@ public class DataEvents {
     }
     
     protected static void syncToPlayer(ServerPlayer player) {
+        PacketHandler.sendToPlayer(new UpdateAffinitiesPacket(AffinityManager.getInstance().getAllAffinities()), player);
         PacketHandler.sendToPlayer(new UpdateResearchPacket(ResearchEntries.getAllEntries()), player);
     }
 }

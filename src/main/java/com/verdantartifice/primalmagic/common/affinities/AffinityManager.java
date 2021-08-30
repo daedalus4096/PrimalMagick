@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.affinities;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -92,6 +93,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
     }
     
+    public static IAffinitySerializer<?> getSerializer(AffinityType type) {
+        return SERIALIZERS.get(type);
+    }
+    
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
         this.affinities.clear();
@@ -115,6 +120,16 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
         for (Map.Entry<AffinityType, Map<ResourceLocation, IAffinity>> entry : this.affinities.entrySet()) {
             LOGGER.info("Loaded {} {} affinity definitions", entry.getValue().size(), entry.getKey().getSerializedName());
+        }
+    }
+    
+    public void replaceAffinities(List<IAffinity> affinities) {
+        this.affinities.clear();
+        for (IAffinity affinity : affinities) {
+            this.registerAffinity(affinity);
+        }
+        for (Map.Entry<AffinityType, Map<ResourceLocation, IAffinity>> entry : this.affinities.entrySet()) {
+            LOGGER.info("Updated {} {} affinity definitions", entry.getValue().size(), entry.getKey().getSerializedName());
         }
     }
     
@@ -144,6 +159,13 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         } else {
             return this.generateItemAffinity(id, recipeManager, new ArrayList<>());
         }
+    }
+    
+    @Nonnull
+    public Collection<IAffinity> getAllAffinities() {
+        return this.affinities.values().stream().flatMap((typeMap) -> {
+            return typeMap.values().stream();
+        }).collect(Collectors.toSet());
     }
     
     protected void registerAffinity(@Nullable IAffinity affinity) {
