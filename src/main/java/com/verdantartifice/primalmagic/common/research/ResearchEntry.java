@@ -11,6 +11,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import net.minecraft.network.FriendlyByteBuf;
+
 /**
  * Definition of a research entry, the primary component of the research system.  A research entry
  * represents a single node in the mod research tree and a single named entry in the grimoire.  A
@@ -78,6 +80,42 @@ public class ResearchEntry {
         }
         
         return entry;
+    }
+    
+    @Nonnull
+    public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
+        ResearchEntry entry = create(
+            SimpleResearchKey.parse(buf.readUtf()),
+            buf.readUtf(),
+            buf.readUtf()
+        );
+        entry.hidden = buf.readBoolean();
+        entry.parentResearch = CompoundResearchKey.parse(buf.readUtf());
+        int stageCount = buf.readVarInt();
+        for (int index = 0; index < stageCount; index++) {
+            entry.stages.add(ResearchStage.fromNetwork(buf, entry));
+        }
+        int addendumCount = buf.readVarInt();
+        for (int index = 0; index < addendumCount; index++) {
+            entry.addenda.add(ResearchAddendum.fromNetwork(buf, entry));
+        }
+        return entry;
+    }
+    
+    public static void toNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
+        buf.writeUtf(entry.key.toString());
+        buf.writeUtf(entry.disciplineKey);
+        buf.writeUtf(entry.nameTranslationKey);
+        buf.writeBoolean(entry.hidden);
+        buf.writeUtf(entry.parentResearch == null ? "" : entry.parentResearch.toString());
+        buf.writeVarInt(entry.stages.size());
+        for (ResearchStage stage : entry.stages) {
+            ResearchStage.toNetwork(buf, stage);
+        }
+        buf.writeVarInt(entry.addenda.size());
+        for (ResearchAddendum addendum : entry.addenda) {
+            ResearchAddendum.toNetwork(buf, addendum);
+        }
     }
     
     @Nonnull

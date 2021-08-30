@@ -13,11 +13,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 import com.verdantartifice.primalmagic.common.util.JsonUtils;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -92,6 +94,78 @@ public class ResearchStage {
             stage.attunements = JsonUtils.toSourceList(obj.get("attunements").getAsJsonObject());
         }
         return stage;
+    }
+    
+    @Nonnull
+    public static ResearchStage fromNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
+        ResearchStage stage = create(entry, buf.readUtf(32767));
+        int recipeSize = buf.readVarInt();
+        for (int index = 0; index < recipeSize; index++) {
+            stage.recipes.add(new ResourceLocation(buf.readUtf(32767)));
+        }
+        int obtainSize = buf.readVarInt();
+        for (int index = 0; index < obtainSize; index++) {
+            stage.mustObtain.add(buf.readBoolean() ? buf.readItem() : new ResourceLocation(buf.readUtf()));
+        }
+        int craftSize = buf.readVarInt();
+        for (int index = 0; index < craftSize; index++) {
+            stage.mustCraft.add(buf.readBoolean() ? buf.readItem() : new ResourceLocation(buf.readUtf()));
+        }
+        int refSize = buf.readVarInt();
+        for (int index = 0; index < refSize; index++) {
+            int ref = buf.readVarInt();
+            stage.craftReference.add(ref);
+            ResearchManager.addCraftingReference(ref);
+        }
+        int knowSize = buf.readVarInt();
+        for (int index = 0; index < knowSize; index++) {
+            stage.requiredKnowledge.add(Knowledge.parse(buf.readUtf()));
+        }
+        stage.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
+        for (Source source : Source.SORTED_SOURCES) {
+            stage.attunements.add(source, buf.readVarInt());
+        }
+        return stage;
+    }
+    
+    public static void toNetwork(FriendlyByteBuf buf, ResearchStage stage) {
+        buf.writeUtf(stage.textTranslationKey);
+        buf.writeVarInt(stage.recipes.size());
+        for (ResourceLocation recipe : stage.recipes) {
+            buf.writeUtf(recipe.toString());
+        }
+        buf.writeVarInt(stage.mustObtain.size());
+        for (Object obj : stage.mustObtain) {
+            if (obj instanceof ItemStack) {
+                buf.writeBoolean(true);
+                buf.writeItem((ItemStack)obj);
+            } else {
+                buf.writeBoolean(false);
+                buf.writeUtf(obj.toString());
+            }
+        }
+        buf.writeVarInt(stage.mustCraft.size());
+        for (Object obj : stage.mustCraft) {
+            if (obj instanceof ItemStack) {
+                buf.writeBoolean(true);
+                buf.writeItem((ItemStack)obj);
+            } else {
+                buf.writeBoolean(false);
+                buf.writeUtf(obj.toString());
+            }
+        }
+        buf.writeVarInt(stage.craftReference.size());
+        for (Integer ref : stage.craftReference) {
+            buf.writeVarInt(ref);
+        }
+        buf.writeVarInt(stage.requiredKnowledge.size());
+        for (Knowledge know : stage.requiredKnowledge) {
+            buf.writeUtf(know.toString());
+        }
+        buf.writeUtf(stage.requiredResearch == null ? "" : stage.requiredResearch.toString());
+        for (Source source : Source.SORTED_SOURCES) {
+            buf.writeVarInt(stage.attunements.getAmount(source));
+        }
     }
     
     @Nonnull
