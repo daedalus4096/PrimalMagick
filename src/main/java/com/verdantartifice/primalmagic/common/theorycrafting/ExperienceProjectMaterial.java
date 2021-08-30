@@ -5,6 +5,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
@@ -131,6 +132,25 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
             }
             
             return retVal;
+        }
+
+        @Override
+        public ExperienceProjectMaterial fromNetwork(FriendlyByteBuf buf) {
+            ExperienceProjectMaterial material = new ExperienceProjectMaterial(buf.readVarInt(), buf.readBoolean());
+            material.setWeight(buf.readDouble());
+            CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
+            if (research != null) {
+                material.setRequiredResearch(research);
+            }
+            return material;
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, ExperienceProjectMaterial material) {
+            buf.writeVarInt(material.levels);
+            buf.writeBoolean(material.consumed);
+            buf.writeDouble(material.weight);
+            buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
         }
     }
 }

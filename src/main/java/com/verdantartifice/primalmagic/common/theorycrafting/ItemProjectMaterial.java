@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -165,6 +166,26 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
             }
             
             return retVal;
+        }
+
+        @Override
+        public ItemProjectMaterial fromNetwork(FriendlyByteBuf buf) {
+            ItemProjectMaterial material = new ItemProjectMaterial(buf.readItem(), buf.readBoolean(), buf.readBoolean());
+            material.setWeight(buf.readDouble());
+            CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
+            if (research != null) {
+                material.setRequiredResearch(research);
+            }
+            return material;
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, ItemProjectMaterial material) {
+            buf.writeItem(material.stack);
+            buf.writeBoolean(material.consumed);
+            buf.writeBoolean(material.matchNBT);
+            buf.writeDouble(material.weight);
+            buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
         }
     }
 }

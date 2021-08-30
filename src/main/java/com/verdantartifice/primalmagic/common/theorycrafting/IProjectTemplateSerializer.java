@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.theorycrafting;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -13,4 +14,14 @@ public interface IProjectTemplateSerializer {
      * Read a project template from JSON
      */
     ProjectTemplate read(ResourceLocation templateId, JsonObject json);
+    
+    /**
+     * Read a project template from the network
+     */
+    ProjectTemplate fromNetwork(FriendlyByteBuf buf);
+
+    /**
+     * Write a project template to the network
+     */
+    void toNetwork(FriendlyByteBuf buf, ProjectTemplate template);
 }

@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -154,6 +155,48 @@ public class ProjectTemplate {
             }
             
             return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlock);
+        }
+
+        @Override
+        public ProjectTemplate fromNetwork(FriendlyByteBuf buf) {
+            ResourceLocation key = buf.readResourceLocation();
+            SimpleResearchKey requiredResearch = buf.readBoolean() ? SimpleResearchKey.parse(buf.readUtf()) : null;
+            Optional<Integer> materialCountOverride = buf.readBoolean() ? Optional.of(buf.readVarInt()) : Optional.empty();
+            Optional<Double> baseSuccessChanceOverride = buf.readBoolean() ? Optional.of(buf.readDouble()) : Optional.empty();
+            double rewardMultiplier = buf.readDouble();
+            ResourceLocation aidBlock = buf.readBoolean() ? buf.readResourceLocation() : null;
+            // TODO Read material options
+            List<AbstractProjectMaterial> materials = new ArrayList<>();
+            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlock);
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, ProjectTemplate template) {
+            buf.writeResourceLocation(template.key);
+            if (template.requiredResearch != null) {
+                buf.writeBoolean(true);
+                buf.writeUtf(template.requiredResearch.toString());
+            } else {
+                buf.writeBoolean(false);
+            }
+            template.requiredMaterialCountOverride.ifPresentOrElse((val) -> {
+                buf.writeBoolean(true);
+                buf.writeVarInt(val);
+            }, () -> {
+                buf.writeBoolean(false);
+            });
+            template.baseSuccessChanceOverride.ifPresentOrElse((val) -> {
+                buf.writeBoolean(true);
+                buf.writeDouble(val);
+            }, () -> {
+                buf.writeBoolean(false);
+            });
+            buf.writeDouble(template.rewardMultiplier);
+            if (template.aidBlock != null) {
+                buf.writeBoolean(true);
+                buf.writeResourceLocation(template.aidBlock);
+            }
+            // TODO Write material options
         }
     }
 }

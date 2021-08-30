@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
@@ -131,6 +132,25 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
             }
             
             return retVal;
+        }
+
+        @Override
+        public ObservationProjectMaterial fromNetwork(FriendlyByteBuf buf) {
+            ObservationProjectMaterial material = new ObservationProjectMaterial(buf.readVarInt(), buf.readBoolean());
+            material.setWeight(buf.readDouble());
+            CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
+            if (research != null) {
+                material.setRequiredResearch(research);
+            }
+            return material;
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, ObservationProjectMaterial material) {
+            buf.writeVarInt(material.count);
+            buf.writeBoolean(material.consumed);
+            buf.writeDouble(material.weight);
+            buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
         }
     }
 }
