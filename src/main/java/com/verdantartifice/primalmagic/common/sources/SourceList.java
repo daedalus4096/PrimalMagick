@@ -30,7 +30,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     public SourceList() {}
     
     @Nonnull
-    public static SourceList fromNetwork(FriendlyByteBuf buf) {
+    public static SourceList fromNetwork(@Nonnull FriendlyByteBuf buf) {
         SourceList retVal = new SourceList();
         for (Source source : Source.SORTED_SOURCES) {
             retVal.add(source, buf.readVarInt());
@@ -38,7 +38,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
         return retVal;
     }
     
-    public static void toNetwork(FriendlyByteBuf buf, SourceList sources) {
+    public static void toNetwork(@Nonnull FriendlyByteBuf buf, @Nonnull SourceList sources) {
         for (Source source : Source.SORTED_SOURCES) {
             buf.writeVarInt(sources.getAmount(source));
         }

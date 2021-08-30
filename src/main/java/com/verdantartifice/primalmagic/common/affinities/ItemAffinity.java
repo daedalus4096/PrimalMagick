@@ -111,8 +111,12 @@ public class ItemAffinity extends AbstractAffinity {
                 affinity.setValues = SourceList.fromNetwork(buf);
             } else {
                 affinity.baseEntryId = buf.readResourceLocation();
-                affinity.addValues = SourceList.fromNetwork(buf);
-                affinity.removeValues = SourceList.fromNetwork(buf);
+                if (buf.readBoolean()) {
+                    affinity.addValues = SourceList.fromNetwork(buf);
+                }
+                if (buf.readBoolean()) {
+                    affinity.removeValues = SourceList.fromNetwork(buf);
+                }
             }
             return affinity;
         }
@@ -126,8 +130,18 @@ public class ItemAffinity extends AbstractAffinity {
             } else {
                 buf.writeBoolean(false);
                 buf.writeResourceLocation(affinity.baseEntryId);
-                SourceList.toNetwork(buf, affinity.addValues);
-                SourceList.toNetwork(buf, affinity.removeValues);
+                if (affinity.addValues != null) {
+                    buf.writeBoolean(true);
+                    SourceList.toNetwork(buf, affinity.addValues);
+                } else {
+                    buf.writeBoolean(false);
+                }
+                if (affinity.removeValues != null) {
+                    buf.writeBoolean(true);
+                    SourceList.toNetwork(buf, affinity.removeValues);
+                } else {
+                    buf.writeBoolean(false);
+                }
             }
         }
     }
