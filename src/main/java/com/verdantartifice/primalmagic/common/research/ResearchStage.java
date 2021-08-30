@@ -115,7 +115,6 @@ public class ResearchStage {
         for (int index = 0; index < refSize; index++) {
             int ref = buf.readVarInt();
             stage.craftReference.add(ref);
-            ResearchManager.addCraftingReference(ref);
         }
         int knowSize = buf.readVarInt();
         for (int index = 0; index < knowSize; index++) {

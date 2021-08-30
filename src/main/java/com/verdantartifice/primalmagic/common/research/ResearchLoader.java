@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.research;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -75,6 +76,29 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
         for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
             if (!discipline.getEntries().isEmpty()) {
                 LOGGER.info("Loaded {} research entries for discipline {}", discipline.getEntries().size(), discipline.getKey().toLowerCase());
+            }
+        }
+    }
+    
+    public void replaceResearch(List<ResearchEntry> entries) {
+        LOGGER.info("Updating JSON resource data with {} elements", entries.size());
+        ResearchManager.clearCraftingReferences();
+        ResearchDisciplines.clearAllResearch();
+        for (ResearchEntry researchEntry : entries) {
+            ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(researchEntry.getDisciplineKey());
+            if (discipline == null || !discipline.addEntry(researchEntry)) {
+                LOGGER.error("Could not update invalid research entry");
+            } else {
+                for (ResearchStage stage : researchEntry.getStages()) {
+                    for (int craftRef : stage.getCraftReference()) {
+                        ResearchManager.addCraftingReference(craftRef);
+                    }
+                }
+            }
+        }
+        for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
+            if (!discipline.getEntries().isEmpty()) {
+                LOGGER.info("Updated {} research entries for discipline {}", discipline.getEntries().size(), discipline.getKey().toLowerCase());
             }
         }
     }
