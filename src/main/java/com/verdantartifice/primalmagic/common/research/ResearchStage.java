@@ -98,10 +98,10 @@ public class ResearchStage {
     
     @Nonnull
     public static ResearchStage fromNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
-        ResearchStage stage = create(entry, buf.readUtf(32767));
+        ResearchStage stage = create(entry, buf.readUtf());
         int recipeSize = buf.readVarInt();
         for (int index = 0; index < recipeSize; index++) {
-            stage.recipes.add(new ResourceLocation(buf.readUtf(32767)));
+            stage.recipes.add(new ResourceLocation(buf.readUtf()));
         }
         int obtainSize = buf.readVarInt();
         for (int index = 0; index < obtainSize; index++) {

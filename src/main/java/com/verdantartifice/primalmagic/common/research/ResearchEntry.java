@@ -84,11 +84,10 @@ public class ResearchEntry {
     
     @Nonnull
     public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
-        ResearchEntry entry = create(
-            SimpleResearchKey.parse(buf.readUtf()),
-            buf.readUtf(),
-            buf.readUtf()
-        );
+        SimpleResearchKey key = SimpleResearchKey.parse(buf.readUtf());
+        String discipline = buf.readUtf();
+        String name = buf.readUtf();
+        ResearchEntry entry = create(key, discipline, name);
         entry.hidden = buf.readBoolean();
         entry.parentResearch = CompoundResearchKey.parse(buf.readUtf());
         int stageCount = buf.readVarInt();

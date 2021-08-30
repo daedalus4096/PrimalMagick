@@ -33,9 +33,7 @@ public class UpdateResearchPacket implements IMessageToClient {
     }
     
     public static void encode(UpdateResearchPacket message, FriendlyByteBuf buf) {
-        for (ResearchEntry entry : message.entries) {
-            ResearchEntry.toNetwork(buf, entry);
-        }
+        buf.writeCollection(message.entries, ResearchEntry::toNetwork);
     }
     
     public static UpdateResearchPacket decode(FriendlyByteBuf buf) {
