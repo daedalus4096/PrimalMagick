@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagic.client.events;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.NoteEmitterParticle;
@@ -13,10 +10,7 @@ import com.verdantartifice.primalmagic.client.fx.particles.PropMarkerParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.WandPoofParticle;
-import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
-import com.verdantartifice.primalmagic.common.research.ResearchLoader;
-import com.verdantartifice.primalmagic.common.theorycrafting.ProjectTemplateLoader;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
 import com.verdantartifice.primalmagic.common.wands.WandGem;
@@ -39,8 +33,6 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrationEvents {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     @SubscribeEvent
     public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
         Minecraft mc = Minecraft.getInstance();
@@ -80,11 +72,6 @@ public class ClientRegistrationEvents {
     
     @SubscribeEvent
     public static void onClientReloadListenerRegister(RegisterClientReloadListenersEvent event) {
-        LOGGER.info("Registering client-side reload listeners");
-        event.registerReloadListener(AffinityManager.createInstance());
-        event.registerReloadListener(ResearchLoader.createInstance());
-        event.registerReloadListener(ProjectTemplateLoader.createInstance());
-        
         event.registerReloadListener(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getItemStackRenderer());
