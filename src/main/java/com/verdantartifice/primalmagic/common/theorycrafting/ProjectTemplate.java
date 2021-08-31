@@ -204,6 +204,8 @@ public class ProjectTemplate {
             if (template.aidBlock != null) {
                 buf.writeBoolean(true);
                 buf.writeResourceLocation(template.aidBlock);
+            } else {
+                buf.writeBoolean(false);
             }
             buf.writeVarInt(template.materialOptions.size());
             for (AbstractProjectMaterial material : template.materialOptions) {
