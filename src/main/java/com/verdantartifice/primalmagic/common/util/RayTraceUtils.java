@@ -42,7 +42,7 @@ public class RayTraceUtils {
      * @return a raytrace result containing the first block/entity being moused over by the player
      */
     @Nullable
-    public static HitResult getMouseOver() {
+    public static HitResult getMouseOver(Level level) {
         Minecraft mc = Minecraft.getInstance();
         Entity viewEntity = mc.getCameraEntity();
         double reachDistance = mc.gameMode.hasFarPickRange() ? 6.0D : (double)mc.gameMode.getPickRange();
@@ -56,7 +56,7 @@ public class RayTraceUtils {
         AABB aabb = viewEntity.getBoundingBox().expandTowards(lookVector.scale(reachDistance)).inflate(1.0D, 1.0D, 1.0D);
         
         // Determine if there's an entity closer than the current mouseover block
-        EntityHitResult entityResult = RayTraceUtils.rayTraceEntities(mc.level, viewEntity, eyePos, reachPos, aabb, (testEntity) -> {
+        EntityHitResult entityResult = RayTraceUtils.rayTraceEntities(level, viewEntity, eyePos, reachPos, aabb, (testEntity) -> {
             return !testEntity.isSpectator();
         }, sqReachDistance);
         

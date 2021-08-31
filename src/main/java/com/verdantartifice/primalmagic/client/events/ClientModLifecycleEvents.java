@@ -118,7 +118,7 @@ public class ClientModLifecycleEvents {
                         return 0.0F;
                     } else {
                         // If the currently moused-over block/item has not yet been scanned, raise the antennae
-                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(), world, (Player)entity)) {
+                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(world), world, (Player)entity)) {
                             this.incrementScanState();
                         } else {
                             this.decrementScanState();

@@ -62,7 +62,7 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
             if (!isRenderingScreen.getAndSet(true)) {
                 // Determine what to show on the screen
                 ItemStack screenStack = ItemStack.EMPTY;
-                HitResult result = RayTraceUtils.getMouseOver();
+                HitResult result = RayTraceUtils.getMouseOver(mc.level);
                 if (result != null) {
                     if (result.getType() == HitResult.Type.ENTITY) {
                         Entity entity = ((EntityHitResult)result).getEntity();
