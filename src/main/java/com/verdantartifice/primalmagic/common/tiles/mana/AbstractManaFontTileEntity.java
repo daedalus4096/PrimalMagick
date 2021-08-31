@@ -83,13 +83,15 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
                         this.syncTile(true);
                         
                         // Show fancy sparkles
-                        Vec3 playerPos = player.position();
-                        double targetY = playerPos.y + (player.getEyeHeight() / 2.0D);
-                        PacketHandler.sendToAllAround(
-                                new ManaSparklePacket(this.worldPosition, playerPos.x, targetY, playerPos.z, 20, source.getColor()), 
-                                this.level.dimension(), 
-                                this.worldPosition, 
-                                32.0D);
+                        if (!player.level.isClientSide) {
+                            Vec3 playerPos = player.position();
+                            double targetY = playerPos.y + (player.getEyeHeight() / 2.0D);
+                            PacketHandler.sendToAllAround(
+                                    new ManaSparklePacket(this.worldPosition, playerPos.x, targetY, playerPos.z, 20, source.getColor()), 
+                                    this.level.dimension(), 
+                                    this.worldPosition, 
+                                    32.0D);
+                        }
                     }
                 }
             }
