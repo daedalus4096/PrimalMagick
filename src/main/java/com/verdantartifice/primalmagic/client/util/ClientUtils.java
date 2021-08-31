@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.util;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -36,5 +37,16 @@ public class ClientUtils {
     public static Level getCurrentLevel() {
         Minecraft mc = Minecraft.getInstance();
         return mc.level;
+    }
+    
+    /**
+     * Gets whether the player has the shift key held down.
+     * 
+     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
+     * 
+     * @return whether the shift key is down
+     */
+    public static boolean hasShiftDown() {
+        return Screen.hasShiftDown();
     }
 }

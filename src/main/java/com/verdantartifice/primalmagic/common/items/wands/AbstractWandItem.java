@@ -286,7 +286,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-        if (player != null && player.isShiftKeyDown()) {
+        boolean showDetails = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.hasShiftDown() : false;
+        if (showDetails) {
             // Add detailed mana information
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the listing if it's been discovered
