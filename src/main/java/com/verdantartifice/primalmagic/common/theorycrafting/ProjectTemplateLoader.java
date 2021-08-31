@@ -71,4 +71,14 @@ public class ProjectTemplateLoader extends SimpleJsonResourceReloadListener {
         }
         LOGGER.info("Loaded {} theorycrafting project templates", TheorycraftManager.getAllTemplates().size());
     }
+    
+    public void replaceTemplates(Map<ResourceLocation, ProjectTemplate> templates) {
+        TheorycraftManager.clearAllTemplates();
+        for (Map.Entry<ResourceLocation, ProjectTemplate> entry : templates.entrySet()) {
+            if (entry.getValue() == null || !TheorycraftManager.registerTemplate(entry.getKey(), entry.getValue())) {
+                LOGGER.error("Failed to update theorycrafting project template {}", entry.getKey());
+            }
+        }
+        LOGGER.info("Updated {} theorycrafting project templates", TheorycraftManager.getAllTemplates().size());
+    }
 }

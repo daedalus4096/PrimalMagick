@@ -5,7 +5,9 @@ import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.UpdateResearchPacket;
+import com.verdantartifice.primalmagic.common.network.packets.data.UpdateTheorycraftingPacket;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
+import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.OnDatapackSyncEvent;
@@ -33,5 +35,6 @@ public class DataEvents {
     protected static void syncToPlayer(ServerPlayer player) {
         PacketHandler.sendToPlayer(new UpdateAffinitiesPacket(AffinityManager.getInstance().getAllAffinities()), player);
         PacketHandler.sendToPlayer(new UpdateResearchPacket(ResearchEntries.getAllEntries()), player);
+        PacketHandler.sendToPlayer(new UpdateTheorycraftingPacket(TheorycraftManager.getAllTemplates()), player);
     }
 }
