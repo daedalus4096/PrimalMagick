@@ -103,6 +103,11 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
+    public void toNetwork(FriendlyByteBuf buf) {
+        SERIALIZER.toNetwork(buf, this);
+    }
+
+    @Override
     public AbstractProjectMaterial copy() {
         ItemTagProjectMaterial material = new ItemTagProjectMaterial();
         material.tagName = new ResourceLocation(this.tagName.toString());

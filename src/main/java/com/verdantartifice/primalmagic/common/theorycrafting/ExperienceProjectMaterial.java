@@ -77,6 +77,11 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
+    public void toNetwork(FriendlyByteBuf buf) {
+        SERIALIZER.toNetwork(buf, this);
+    }
+
+    @Override
     public AbstractProjectMaterial copy() {
         ExperienceProjectMaterial retVal = new ExperienceProjectMaterial();
         retVal.levels = this.levels;

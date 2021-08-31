@@ -165,8 +165,17 @@ public class ProjectTemplate {
             Optional<Double> baseSuccessChanceOverride = buf.readBoolean() ? Optional.of(buf.readDouble()) : Optional.empty();
             double rewardMultiplier = buf.readDouble();
             ResourceLocation aidBlock = buf.readBoolean() ? buf.readResourceLocation() : null;
-            // TODO Read material options
             List<AbstractProjectMaterial> materials = new ArrayList<>();
+            int materialCount = buf.readVarInt();
+            for (int index = 0; index < materialCount; index++) {
+                String materialType = buf.readUtf();
+                IProjectMaterialSerializer<?> serializer = TheorycraftManager.getMaterialSerializer(materialType);
+                if (serializer != null) {
+                    materials.add(serializer.fromNetwork(buf));
+                } else {
+                    throw new IllegalArgumentException("Unknown theorycrafting project material type " + materialType);
+                }
+            }
             return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlock);
         }
 
@@ -196,7 +205,11 @@ public class ProjectTemplate {
                 buf.writeBoolean(true);
                 buf.writeResourceLocation(template.aidBlock);
             }
-            // TODO Write material options
+            buf.writeVarInt(template.materialOptions.size());
+            for (AbstractProjectMaterial material : template.materialOptions) {
+                buf.writeUtf(material.getMaterialType());
+                material.toNetwork(buf);
+            }
         }
     }
 }

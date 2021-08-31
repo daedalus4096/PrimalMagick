@@ -77,6 +77,11 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
     }
     
     @Override
+    public void toNetwork(FriendlyByteBuf buf) {
+        SERIALIZER.toNetwork(buf, this);
+    }
+
+    @Override
     public AbstractProjectMaterial copy() {
         ObservationProjectMaterial material = new ObservationProjectMaterial();
         material.count = this.count;

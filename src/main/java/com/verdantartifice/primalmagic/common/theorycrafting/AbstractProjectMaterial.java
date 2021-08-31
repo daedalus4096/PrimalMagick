@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -71,6 +72,13 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
      * @return whether this material should be consumed upon project completion
      */
     public abstract boolean isConsumed();
+    
+    /**
+     * Write this material to the network using its defined serializer.
+     * 
+     * @param buf the network buffer to be written to
+     */
+    public abstract void toNetwork(FriendlyByteBuf buf);
     
     public boolean isSelected() {
         return this.selected;

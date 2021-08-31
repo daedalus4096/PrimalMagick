@@ -103,6 +103,11 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
     }
     
     @Override
+    public void toNetwork(FriendlyByteBuf buf) {
+        SERIALIZER.toNetwork(buf, this);
+    }
+
+    @Override
     public AbstractProjectMaterial copy() {
         ItemProjectMaterial material = new ItemProjectMaterial();
         material.stack = this.stack.copy();
