@@ -4,9 +4,9 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.wands.IStaff;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -20,10 +20,9 @@ public class WandSlot extends Slot {
     
     protected final boolean allowStaves;
     
-    @SuppressWarnings("deprecation")
     public WandSlot(Container inventoryIn, int index, int xPosition, int yPosition, boolean allowStaves) {
         super(inventoryIn, index, xPosition, yPosition);
-        this.setBackground(TextureAtlas.LOCATION_BLOCKS, TEXTURE);
+        this.setBackground(InventoryMenu.BLOCK_ATLAS, TEXTURE);
         this.allowStaves = allowStaves;
     }
 
