@@ -2714,7 +2714,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
-            .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .addIngredient(ItemsPM.RUNE_SUMMON.get())
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
@@ -2831,7 +2831,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
-            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.INGOTS_IRON)
             .addIngredient(ItemsPM.RUNE_SUMMON.get())
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
@@ -2963,7 +2963,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
-            .addIngredient(ItemsPM.ESSENCE_CLUSTER_INFERNAL.get())
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(Tags.Items.INGOTS_GOLD)
             .addIngredient(ItemsPM.RUNE_SUMMON.get())
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
