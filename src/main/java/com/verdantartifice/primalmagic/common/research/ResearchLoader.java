@@ -53,7 +53,6 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
-        LOGGER.info("Loading JSON resource data with {} elements", objectIn.size());
         ResearchManager.clearCraftingReferences();
         ResearchDisciplines.clearAllResearch();
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {
@@ -81,7 +80,6 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
     }
     
     public void replaceResearch(List<ResearchEntry> entries) {
-        LOGGER.info("Updating JSON resource data with {} elements", entries.size());
         ResearchManager.clearCraftingReferences();
         ResearchDisciplines.clearAllResearch();
         for (ResearchEntry researchEntry : entries) {
