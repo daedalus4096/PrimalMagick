@@ -3,7 +3,8 @@
   "name": "primalmagic.research.primalite_golem.title",
   "discipline": "MAGITECH",
   "parents": [
-    "EXPERT_MAGITECH"
+    "EXPERT_MAGITECH",
+    "PRIMALITE"
   ],
   "stages": [
     {

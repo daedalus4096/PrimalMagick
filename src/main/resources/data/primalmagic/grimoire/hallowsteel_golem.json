@@ -4,7 +4,8 @@
   "discipline": "MAGITECH",
   "parents": [
     "SUPREME_MAGITECH",
-    "HEXIUM_GOLEM"
+    "HEXIUM_GOLEM",
+    "HALLOWSTEEL"
   ],
   "stages": [
     {

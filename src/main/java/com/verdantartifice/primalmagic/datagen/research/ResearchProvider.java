@@ -1078,15 +1078,15 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("t_items_analyzed").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARCANOMETER.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("PRIMALITE_GOLEM", discipline).parent("EXPERT_MAGITECH")
+        ResearchEntryBuilder.entry("PRIMALITE_GOLEM", discipline).parent("EXPERT_MAGITECH").parent("PRIMALITE")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_golem").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("HEXIUM_GOLEM", discipline).parent("MASTER_MAGITECH").parent("PRIMALITE_GOLEM")
+        ResearchEntryBuilder.entry("HEXIUM_GOLEM", discipline).parent("MASTER_MAGITECH").parent("PRIMALITE_GOLEM").parent("HEXIUM")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("HALLOWSTEEL_GOLEM", discipline).parent("SUPREME_MAGITECH").parent("HEXIUM_GOLEM")
+        ResearchEntryBuilder.entry("HALLOWSTEEL_GOLEM", discipline).parent("SUPREME_MAGITECH").parent("HEXIUM_GOLEM").parent("HALLOWSTEEL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get()).build())
             .build(consumer);
