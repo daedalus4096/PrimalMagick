@@ -46,7 +46,7 @@ public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
         renderer.vertex(stack.last().pose(), x, y, z)
                 .color(r, g, b, 1.0F)
                 .uv(u, v)
-                .uv2(0, 240)
+                .uv2(240, 240)
                 .normal(1, 0, 0)
                 .endVertex();
     }

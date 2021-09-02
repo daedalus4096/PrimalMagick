@@ -32,7 +32,7 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
         renderer.vertex(stack.last().pose(), x, y, z)
                 .color(r, g, b, a)
                 .uv(u, v)
-                .uv2(0, 240)
+                .uv2(240, 240)
                 .normal(1, 0, 0)
                 .endVertex();
     }
