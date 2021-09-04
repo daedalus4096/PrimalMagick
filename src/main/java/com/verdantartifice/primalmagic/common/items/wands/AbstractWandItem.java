@@ -123,16 +123,21 @@ public abstract class AbstractWandItem extends Item implements IWand {
 
     @Override
     public int addRealMana(ItemStack stack, Source source, int amount) {
+        int leftoverCentimana = this.addMana(stack, source, amount * 100, this.getMaxMana(stack));
+        return (int)(leftoverCentimana / 100.0D);
+    }
+    
+    protected int addMana(ItemStack stack, Source source, int amount, int max) {
         // If the parameters are invalid or the given wand stack has infinite mana, do nothing
         if (stack == null || source == null || this.getMaxMana(stack) == -1) {
             return 0;
         }
-        
-        // Otherwise, increment and set the new real mana total for the source into the wand's data, returning
-        // any leftover real mana that wouldn't fit
-        int toStore = this.getMana(stack, source) + (amount * 100);
-        int leftover = Math.max(toStore - this.getMaxMana(stack), 0);
-        this.setMana(stack, source, Math.min(toStore, this.getMaxMana(stack)));
+
+        // Otherwise, increment and set the new centimana total for the source into the wand's data, up to
+        // the given centimana threshold, returning any leftover centimana that wouldn't fit
+        int toStore = this.getMana(stack, source) + amount;
+        int leftover = Math.max(toStore - max, 0);
+        this.setMana(stack, source, Math.min(toStore, max));
         return leftover;
     }
 

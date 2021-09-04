@@ -226,7 +226,7 @@ public class ModularWandItem extends AbstractWandItem {
                 for (Source alignedSource : core.getAlignedSources()) {
                     int curMana = this.getMana(stack, alignedSource);
                     if (curMana < (0.1D * maxMana)) {
-                        this.addRealMana(stack, alignedSource, 1);
+                        this.addMana(stack, alignedSource, 100, (int)(0.1D * maxMana));
                     }
                 }
             }
