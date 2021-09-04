@@ -1047,6 +1047,12 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_SWORD.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").build())
             .build(consumer);
+        ResearchEntryBuilder.entry("SACRED_SHIELD", discipline).parent(Source.HALLOWED.getDiscoverKey()).parent("SUPREME_RITUAL").parent("HALLOWSTEEL").parent("SHARD_SYNTHESIS").parent("MANA_SALTS")
+            .parent("RUNE_HALLOWED").parent("CELESTIAL_HARP")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SACRED_SHIELD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {

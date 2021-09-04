@@ -5125,6 +5125,17 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.VOID, 40))
             .instability(3)
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.SACRED_SHIELD.get().getDefaultInstance())
+            .addIngredient(ItemsPM.HALLOWSTEEL_SHIELD.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_HALLOWED.get(), 2)
+            .addIngredient(ItemsPM.RUNE_HALLOWED.get())
+            .addIngredient(ItemsPM.MANA_PRISM.get())
+            .addIngredient(ItemsPM.MANA_SALTS.get())
+            .addProp(BlocksPM.CELESTIAL_HARP.get(), 2)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SACRED_SHIELD")))
+            .manaCost(new SourceList().add(Source.HALLOWED, 40))
+            .instability(3)
+            .build(consumer);
     }
     
     protected void registerManaFontRecipes(Consumer<FinishedRecipe> consumer) {
