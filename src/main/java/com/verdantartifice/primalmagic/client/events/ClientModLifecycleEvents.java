@@ -175,6 +175,7 @@ public class ClientModLifecycleEvents {
             ItemProperties.register(ItemsPM.PRIMALITE_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
             ItemProperties.register(ItemsPM.HEXIUM_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
             ItemProperties.register(ItemsPM.HALLOWSTEEL_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.SACRED_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
             
             ItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 if (entity == null) {

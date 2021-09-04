@@ -37,4 +37,13 @@ public abstract class AbstractTieredShieldItem extends ShieldItem {
     public boolean isShield(ItemStack stack, LivingEntity entity) {
         return true;
     }
+    
+    /**
+     * Return true if a banner can be applied to this item to decorate it.
+     * 
+     * @return whether a banner can be applied to this item to decorate it
+     */
+    public boolean canDecorate() {
+        return true;
+    }
 }

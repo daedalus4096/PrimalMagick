@@ -35,7 +35,7 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
                     }
                     bannerStack = stack;
                 } else {
-                    if (!(stack.getItem() instanceof AbstractTieredShieldItem) || !shieldStack.isEmpty() || stack.getTagElement("BlockEntityTag") != null) {
+                    if (!(stack.getItem() instanceof AbstractTieredShieldItem) || !((AbstractTieredShieldItem)stack.getItem()).canDecorate() || !shieldStack.isEmpty() || stack.getTagElement("BlockEntityTag") != null) {
                         return false;
                     }
                     shieldStack = stack;
@@ -56,7 +56,7 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof BannerItem) {
                     bannerStack = stack;
-                } else if (stack.getItem() instanceof AbstractTieredShieldItem) {
+                } else if (stack.getItem() instanceof AbstractTieredShieldItem && ((AbstractTieredShieldItem)stack.getItem()).canDecorate()) {
                     shieldStack = stack.copy();
                 }
             }
