@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
@@ -343,6 +344,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     new TranslatableComponent("tooltip.primalmagic.none") :
                     activeSpell.getName();
             tooltip.add(new TranslatableComponent("primalmagic.spells.short_wand_header", activeSpellName));
+            
+            // Add more info tooltip
+            tooltip.add(new TranslatableComponent("tooltip.primalmagic.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         }
     }
     
