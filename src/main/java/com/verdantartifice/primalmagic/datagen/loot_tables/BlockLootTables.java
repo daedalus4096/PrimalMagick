@@ -153,7 +153,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_LOG.get());
         this.registerBasicTable(BlocksPM.SUNWOOD_WOOD.get());
         this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
-        this.registerLeavesTable(BlocksPM.SUNWOOD_LEAVES.get(), BlocksPM.SUNWOOD_SAPLING.get());
+        this.registerLeavesTable(BlocksPM.SUNWOOD_LEAVES.get(), BlocksPM.SUNWOOD_SAPLING.get(), new float[] { 0.1F, 0.125F, 0.16666667F, 0.2F });
         this.registerBasicTable(BlocksPM.SUNWOOD_SAPLING.get());
         this.registerBasicTable(BlocksPM.SUNWOOD_PLANKS.get());
         this.registerSlabTable(BlocksPM.SUNWOOD_SLAB.get());
@@ -166,7 +166,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.STRIPPED_MOONWOOD_LOG.get());
         this.registerBasicTable(BlocksPM.MOONWOOD_WOOD.get());
         this.registerBasicTable(BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
-        this.registerLeavesTable(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.MOONWOOD_SAPLING.get());
+        this.registerLeavesTable(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.MOONWOOD_SAPLING.get(), new float[] { 0.1F, 0.125F, 0.16666667F, 0.2F });
         this.registerBasicTable(BlocksPM.MOONWOOD_SAPLING.get());
         this.registerBasicTable(BlocksPM.MOONWOOD_PLANKS.get());
         this.registerSlabTable(BlocksPM.MOONWOOD_SLAB.get());
@@ -179,7 +179,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.STRIPPED_HALLOWOOD_LOG.get());
         this.registerBasicTable(BlocksPM.HALLOWOOD_WOOD.get());
         this.registerBasicTable(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get());
-        this.registerLeavesTable(BlocksPM.HALLOWOOD_LEAVES.get(), BlocksPM.HALLOWOOD_SAPLING.get());
+        this.registerLeavesTable(BlocksPM.HALLOWOOD_LEAVES.get(), BlocksPM.HALLOWOOD_SAPLING.get(), new float[] { 0.15F, 0.1875F, 0.25F, 0.3F });
         this.registerBasicTable(BlocksPM.HALLOWOOD_SAPLING.get());
         this.registerBasicTable(BlocksPM.HALLOWOOD_PLANKS.get());
         this.registerSlabTable(BlocksPM.HALLOWOOD_SLAB.get());

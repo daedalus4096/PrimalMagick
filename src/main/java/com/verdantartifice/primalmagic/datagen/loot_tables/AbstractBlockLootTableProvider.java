@@ -100,8 +100,7 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
         this.registerLootTableBuiler(block, tableBuilder);
     }
     
-    protected void registerLeavesTable(Block leavesBlock, Block saplingBlock) {
-        float[] saplingFortuneChances = new float[] { 0.05F, 0.0625F, 0.083333336F, 0.1F };
+    protected void registerLeavesTable(Block leavesBlock, Block saplingBlock, float[] saplingFortuneChances) {
         float[] stickFortuneChances = new float[] { 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F };
         LootItemCondition.Builder shearsOrSilkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
                 .or(MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1)))));
