@@ -4,6 +4,8 @@ import com.verdantartifice.primalmagic.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TilePM;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
@@ -79,6 +81,7 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
                     int leftover = wand.addRealMana(wandStack, source, tap);
                     if (leftover < tap) {
                         this.mana -= (tap - leftover);
+                        StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, tap - leftover);
                         this.setChanged();
                         this.syncTile(true);
                         

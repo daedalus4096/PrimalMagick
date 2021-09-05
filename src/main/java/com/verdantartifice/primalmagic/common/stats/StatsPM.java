@@ -13,6 +13,7 @@ public class StatsPM {
     public static final Stat GRIMOIRE_READ = Stat.create("grimoire_read", StatFormatter.DEFAULT, false);
     public static final Stat ITEMS_ANALYZED = Stat.create("items_analyzed", StatFormatter.DEFAULT, false);
     public static final Stat ENTITIES_ANALYZED = Stat.create("entities_analyzed", StatFormatter.DEFAULT, false);
+    public static final Stat MANA_SIPHONED = Stat.create("mana_siphoned", StatFormatter.DEFAULT, false);
     public static final Stat OBSERVATIONS_MADE = Stat.create("observations_made", StatFormatter.DEFAULT, false);
     public static final Stat RESEARCH_PROJECTS_COMPLETED = Stat.create("research_projects_completed", StatFormatter.DEFAULT, false);
     public static final Stat THEORIES_FORMED = Stat.create("theories_formed", StatFormatter.DEFAULT, false);

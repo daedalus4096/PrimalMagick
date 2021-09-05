@@ -82,6 +82,7 @@ public class ResearchProvider implements DataProvider {
         String discipline = "BASICS";
         ResearchEntryBuilder.entry("FIRST_STEPS", discipline)
             .stage(ResearchStageBuilder.stage().requiredCraftStack(ItemsPM.ARCANE_WORKBENCH.get()).recipe(ItemsPM.MUNDANE_WAND.get()).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_mana_siphoned_basics").recipe(ItemsPM.MUNDANE_WAND.get()).build())
             .stage(ResearchStageBuilder.stage().requiredResearch("t_observations_made_basics").recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get())
                     .recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).build())
@@ -360,7 +361,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.SAINTSWOOL_LEGS.get()).recipe(ItemsPM.SAINTSWOOL_FEET.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("ARTIFICIAL_MANA_FONTS", discipline).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS").parent("PRIMALITE")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredResearch("t_mana_siphoned_expert").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARTIFICIAL_FONT_EARTH.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SEA.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SKY.get())
                     .recipe(ItemsPM.ARTIFICIAL_FONT_SUN.get()).recipe(ItemsPM.ARTIFICIAL_FONT_MOON.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).recipe(ItemsPM.ARTIFICIAL_FONT_BLOOD.get()).build())
