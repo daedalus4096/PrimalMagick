@@ -5,6 +5,7 @@ v0.0.4-alpha
 * Made several tutorial changes
 * Increase drop rate of magical saplings from leaves
 * Eliminated mana cost for Spellcrafting Altar
+* Improve raw marble scan entry
 
 v0.0.3-alpha
 ------------

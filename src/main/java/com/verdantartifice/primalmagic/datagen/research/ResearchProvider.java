@@ -1188,7 +1188,9 @@ public class ResearchProvider implements DataProvider {
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "SCANS";
         ResearchEntryBuilder.entry("RAW_MARBLE", discipline).hidden().parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_SLAB.get()).recipe(ItemsPM.MARBLE_STAIRS.get()).recipe(ItemsPM.MARBLE_WALL.get()).recipe(ItemsPM.MARBLE_BRICKS.get())
+                    .recipe(ItemsPM.MARBLE_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_BRICK_STAIRS.get()).recipe(ItemsPM.MARBLE_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_PILLAR.get())
+                    .recipe(ItemsPM.MARBLE_CHISELED.get()).recipe(ItemsPM.MARBLE_RUNED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("HALLOWED_ORB", discipline).hidden().parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWOOD_SAPLING.get()).build())

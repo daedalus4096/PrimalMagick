@@ -43,6 +43,16 @@ public class InitResearch {
     private static void initScanResearch() {
         ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Source.HALLOWED));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RAW.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_SLAB.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_STAIRS.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_WALL.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_BRICKS.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_BRICK_SLAB.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_BRICK_STAIRS.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_BRICK_WALL.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_PILLAR.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_CHISELED.get(), SimpleResearchKey.parse("RAW_MARBLE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RUNED.get(), SimpleResearchKey.parse("RAW_MARBLE")));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWED_ORB.get(), SimpleResearchKey.parse("HALLOWED_ORB")));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.HALLOWOOD_LOGS, SimpleResearchKey.parse("HALLOWOOD_TREES")));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWOOD_LEAVES.get(), SimpleResearchKey.parse("HALLOWOOD_TREES")));
