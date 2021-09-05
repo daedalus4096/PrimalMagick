@@ -12,6 +12,9 @@
       "text": "primalmagic.research.artificial_mana_fonts.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
+      ],
+      "required_research": [
+        "t_mana_siphoned_expert"
       ]
     },
     {

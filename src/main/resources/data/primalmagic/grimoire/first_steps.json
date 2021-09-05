@@ -16,6 +16,15 @@
     {
       "text": "primalmagic.research.first_steps.text.stage.2",
       "required_research": [
+        "t_mana_siphoned_basics"
+      ],
+      "recipes": [
+        "primalmagic:mundane_wand"
+      ]
+    },
+    {
+      "text": "primalmagic.research.first_steps.text.stage.3",
+      "required_research": [
         "t_observations_made_basics"
       ],
       "recipes": [
@@ -26,7 +35,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.first_steps.text.stage.3",
+      "text": "primalmagic.research.first_steps.text.stage.4",
       "recipes": [
         "primalmagic:mundane_wand",
         "primalmagic:wood_table",
