@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.items.wands;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -21,6 +23,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 /**
@@ -30,6 +33,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SpellScrollItem extends Item {
+    protected static final Component TOOLTIP = new TranslatableComponent("tooltip.primalmagic.spell_scroll").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
+    
     public SpellScrollItem() {
         super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP));
     }
@@ -57,6 +62,12 @@ public class SpellScrollItem extends Item {
         return new TranslatableComponent(this.getDescriptionId(stack), spellName).withStyle(ChatFormatting.ITALIC);
     }
     
+    @Override
+    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        tooltip.add(TOOLTIP);
+    }
+
     @Override
     public Rarity getRarity(ItemStack stack) {
         // A scroll's rarity is determined by that of its held spell
