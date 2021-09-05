@@ -4,6 +4,7 @@ v0.0.4-alpha
 * Fixed bug in aligned wand core mana regen
 * Made several tutorial changes
 * Increase drop rate of magical saplings from leaves
+* Eliminated mana cost for Spellcrafting Altar
 
 v0.0.3-alpha
 ------------

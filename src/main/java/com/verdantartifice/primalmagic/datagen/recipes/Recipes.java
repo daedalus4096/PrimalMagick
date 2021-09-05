@@ -203,7 +203,6 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_RAW.get())
             .key('S', ItemsPM.SPELL_SCROLL_BLANK.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY")))
-            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.WAND_ASSEMBLY_TABLE.get())
             .patternLine("MM")
