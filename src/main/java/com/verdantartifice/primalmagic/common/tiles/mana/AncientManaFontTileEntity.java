@@ -33,6 +33,12 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, AncientManaFontTileEntity entity) {
+        if (!level.isClientSide && entity.ticksExisted == 0) {
+            // TODO Move this code to onLoad once Forge is fixed to call it again
+            entity.mana = entity.getManaCapacity();
+            entity.setChanged();
+            entity.syncTile(true);
+        }
         entity.ticksExisted++;
         if (!level.isClientSide && entity.ticksExisted % 10 == 0) {
             // Have players in range discover this font's shrine

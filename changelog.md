@@ -7,6 +7,7 @@ v0.0.4-alpha
 * Eliminated mana cost for Spellcrafting Altar
 * Improve raw marble scan entry
 * Improve grimoire navigation
+* Start ancient mana fonts at full mana capacity
 
 v0.0.3-alpha
 ------------
