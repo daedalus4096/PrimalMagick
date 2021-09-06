@@ -31,6 +31,7 @@ public class StatsPM {
     public static final Stat RITUAL_MISHAPS = Stat.create("ritual_mishaps", StatFormatter.DEFAULT, false);
     public static final Stat CONCOCTIONS_USED = Stat.create("concoctions_used", StatFormatter.DEFAULT, false);
     public static final Stat DISTANCE_TELEPORTED_CM = Stat.create("distance_teleported_cm", StatFormatter.DISTANCE, false);
+    public static final Stat MANA_SPENT_TOTAL = Stat.create("mana_spent_total", StatFormatter.DEFAULT, false);
     public static final Stat MANA_SPENT_EARTH = Stat.create("mana_spent_earth", StatFormatter.DEFAULT, false);
     public static final Stat MANA_SPENT_SEA = Stat.create("mana_spent_sea", StatFormatter.DEFAULT, false);
     public static final Stat MANA_SPENT_SKY = Stat.create("mana_spent_sky", StatFormatter.DEFAULT, false);

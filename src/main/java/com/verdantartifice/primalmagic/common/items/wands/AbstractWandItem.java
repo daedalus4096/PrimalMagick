@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
@@ -158,6 +159,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 int realAmount = amount / 100;
                 
                 // Record the spent mana statistic change with pre-discount mana
+                StatsManager.incrementValue(player, StatsPM.MANA_SPENT_TOTAL, realAmount);
                 StatsManager.incrementValue(player, source.getManaSpentStat(), realAmount);
                 
                 // Update temporary attunement value
@@ -190,6 +192,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 
                 if (player != null) {
                     // Record the spent mana statistic change with pre-discount mana
+                    StatsManager.incrementValue(player, StatsPM.MANA_SPENT_TOTAL, realAmount);
                     StatsManager.incrementValue(player, source.getManaSpentStat(), realAmount);
                 }
                 

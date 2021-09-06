@@ -2034,6 +2034,7 @@
     "stat.primalmagic.ritual_mishaps": "Ritual mishaps endured",
     "stat.primalmagic.concoctions_used": "Concoctions used",
     "stat.primalmagic.distance_teleported_cm": "Distance teleported",
+    "stat.primalmagic.mana_spent_total": "Total mana spent",
     "stat.primalmagic.mana_spent_earth": "Earth mana spent",
     "stat.primalmagic.mana_spent_sea": "Sea mana spent",
     "stat.primalmagic.mana_spent_sky": "Sky mana spent",
