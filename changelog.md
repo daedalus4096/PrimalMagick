@@ -6,6 +6,7 @@ v0.0.4-alpha
 * Increase drop rate of magical saplings from leaves
 * Eliminated mana cost for Spellcrafting Altar
 * Improve raw marble scan entry
+* Improve grimoire navigation
 
 v0.0.3-alpha
 ------------

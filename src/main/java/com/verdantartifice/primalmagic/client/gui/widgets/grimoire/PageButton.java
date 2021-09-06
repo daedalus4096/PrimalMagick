@@ -43,20 +43,18 @@ public class PageButton extends Button {
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         RenderSystem.setShaderTexture(0, TEXTURE);
-        if (this.isHovered()) {
-            // When hovered, scale the button up and down to create a pulsing effect
-            float scaleMod = Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F;
-            matrixStack.pushPose();
-            int dx = this.width / 2;
-            int dy = this.height / 2;
-            matrixStack.translate(this.x + dx, this.y + dy, 0.0F);
-            matrixStack.scale(1.0F + scaleMod, 1.0F + scaleMod, 1.0F);
-            this.blit(matrixStack, -dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
-            matrixStack.popPose();
-        } else {
-            this.blit(matrixStack, this.x, this.y, this.isNext ? 12 : 0, 185, this.width, this.height);
-        }
-    }
+        matrixStack.pushPose();
+
+        // When hovered, scale the button up and down to create a pulsing effect
+        float scaleMod = this.isHovered() ? Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F : 0.0F;
+        int dx = this.width / 2;
+        int dy = this.height / 2;
+        matrixStack.translate(this.x + dx, this.y + dy, 0.0F);
+        matrixStack.scale(1.5F + scaleMod, 1.5F + scaleMod, 1.0F);
+        this.blit(matrixStack, -dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
+
+        matrixStack.popPose();
+}
     
     @Override
     public void playDownSound(SoundManager handler) {

@@ -43,6 +43,7 @@ import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.ResearchStage;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.runes.RuneManager;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.Stat;
@@ -53,6 +54,7 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -814,27 +816,33 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         }
     }
     
-    public void nextPage() {
+    public boolean nextPage() {
         if (this.currentPage < this.pages.size() - 2) {
             this.currentPage += 2;
             this.initButtons();
+            return true;
         }
+        return false;
     }
     
-    public void prevPage() {
+    public boolean prevPage() {
         if (this.currentPage >= 2) {
             this.currentPage -= 2;
             this.initButtons();
+            return true;
         }
+        return false;
     }
     
-    public void goBack() {
+    public boolean goBack() {
         // Pop the last viewed topic off the history stack and open a new screen for it
         if (!HISTORY.isEmpty()) {
             Object lastTopic = HISTORY.remove(HISTORY.size() - 1);
             this.menu.setTopic(lastTopic);
             this.getMinecraft().setScreen(new GrimoireScreen(this.menu, this.inventory, this.title));
+            return true;
         }
+        return false;
     }
     
     protected void updateNavButtonVisibility() {
@@ -844,12 +852,24 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     @Override
-    public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
-        // Clear the topic history when closing the screen
-        if (p_keyPressed_1_ == GLFW.GLFW_KEY_ESCAPE) {
+    public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            // Clear the topic history when closing the screen
             HISTORY.clear();
+        } else if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
+            if (this.goBack()) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+            }
+        } else if (keyCode == GLFW.GLFW_KEY_LEFT) {
+            if (this.prevPage()) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+            }
+        } else if (keyCode == GLFW.GLFW_KEY_RIGHT) {
+            if (this.nextPage()) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+            }
         }
-        return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
+        return super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_);
     }
     
     protected static class DisciplinePageProperties {
