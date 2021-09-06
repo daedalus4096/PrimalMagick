@@ -392,6 +392,7 @@ public class ResearchProvider implements DataProvider {
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "ALCHEMY";
         ResearchEntryBuilder.entry("BASIC_ALCHEMY", discipline).parent("UNLOCK_ALCHEMY")
+            .stage(ResearchStageBuilder.stage().requiredCraftStack(ItemsPM.ESSENCE_FURNACE.get()).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("EXPERT_ALCHEMY", discipline).parent("BASIC_ALCHEMY")

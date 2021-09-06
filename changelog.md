@@ -1,3 +1,7 @@
+v0.0.5-alpha
+------------
+* Rework Basic Alchemy requirements
+
 v0.0.4-alpha
 ------------
 * Added Shield of the Sacred Oath, a ritually empowered shield that reduces all damage you take when blocking
