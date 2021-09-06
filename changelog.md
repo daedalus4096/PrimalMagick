@@ -1,6 +1,7 @@
 v0.0.5-alpha
 ------------
 * Rework Basic Alchemy requirements
+* Reformat recipe pages to make result name more prominent
 
 v0.0.4-alpha
 ------------

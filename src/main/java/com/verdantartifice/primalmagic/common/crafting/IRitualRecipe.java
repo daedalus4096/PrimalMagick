@@ -47,6 +47,7 @@ public interface IRitualRecipe extends CraftingRecipe, IHasManaCost {
         return true;
     }
     
+    @Override
     default ItemStack getToastSymbol() {
         return new ItemStack(BlocksPM.RITUAL_ALTAR.get());
     }

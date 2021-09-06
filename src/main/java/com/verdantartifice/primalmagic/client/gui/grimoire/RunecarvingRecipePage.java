@@ -6,7 +6,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagic.common.crafting.RunecarvingRecipe;
+
+import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Grimoire page showing a runecarving recipe.
@@ -19,9 +22,14 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
     public RunecarvingRecipePage(RunecarvingRecipe recipe) {
         this.recipe = recipe;
     }
-    
+
     @Override
     protected String getTitleTranslationKey() {
+        return this.recipe.getResultItem().getDescriptionId();
+    }
+
+    @Override
+    protected String getRecipeTypeTranslationKey() {
         return "primalmagic.grimoire.runecarving_recipe_header";
     }
 
@@ -36,6 +44,9 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
 
         // Render output stack
         screen.addWidgetToScreen(new ItemStackWidget(this.recipe.getResultItem(), x + 29 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
+        
+        // Render recipe type widget
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, new TranslatableComponent(this.getRecipeTypeTranslationKey())));
     }
 
     @Override

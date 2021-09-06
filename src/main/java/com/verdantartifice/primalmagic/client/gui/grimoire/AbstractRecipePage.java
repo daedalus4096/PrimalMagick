@@ -22,4 +22,6 @@ public abstract class AbstractRecipePage extends AbstractPage {
     protected boolean renderTopTitleBar() {
         return false;
     }
+    
+    protected abstract String getRecipeTypeTranslationKey();
 }

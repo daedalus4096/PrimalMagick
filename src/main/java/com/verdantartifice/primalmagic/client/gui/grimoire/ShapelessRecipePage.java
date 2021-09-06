@@ -13,7 +13,7 @@ public class ShapelessRecipePage extends AbstractShapelessRecipePage<ShapelessRe
     }
 
     @Override
-    protected String getTitleTranslationKey() {
+    protected String getRecipeTypeTranslationKey() {
         return "primalmagic.grimoire.shapeless_recipe_header";
     }
 }

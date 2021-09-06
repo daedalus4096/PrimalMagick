@@ -8,7 +8,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RecipeTypeWidget;
 
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.IShapedRecipe;
@@ -24,6 +26,11 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
     
     public AbstractShapedRecipePage(T recipe) {
         this.recipe = recipe;
+    }
+
+    @Override
+    protected String getTitleTranslationKey() {
+        return this.recipe.getResultItem().getDescriptionId();
     }
 
     @Override
@@ -47,6 +54,9 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         // Render output stack
         ItemStack output = this.recipe.getResultItem();
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
+        
+        // Render recipe type widget
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, new TranslatableComponent(this.getRecipeTypeTranslationKey())));
     }
     
     @Override

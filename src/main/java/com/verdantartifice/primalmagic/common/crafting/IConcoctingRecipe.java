@@ -26,8 +26,8 @@ public interface IConcoctingRecipe extends Recipe<Container>, IHasManaCost {
         return true;
     }
     
+    @Override
     default ItemStack getToastSymbol() {
-        // FIXME Use concocter icon
-        return new ItemStack(BlocksPM.ARCANE_WORKBENCH.get());
+        return new ItemStack(BlocksPM.CONCOCTER.get());
     }
 }

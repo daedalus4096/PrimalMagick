@@ -31,6 +31,7 @@ public interface IArcaneRecipe extends CraftingRecipe, IHasManaCost {
         return true;
     }
     
+    @Override
     default ItemStack getToastSymbol() {
         return new ItemStack(BlocksPM.ARCANE_WORKBENCH.get());
     }

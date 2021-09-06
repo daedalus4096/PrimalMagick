@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.BlockIngredie
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.ManaCostSummaryWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagic.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagic.common.crafting.RitualRecipe;
 
@@ -34,9 +35,14 @@ public class RitualRecipePage extends AbstractRecipePage {
     public RitualRecipePage(RitualRecipe recipe) {
         this.recipe = recipe;
     }
-    
+
     @Override
     protected String getTitleTranslationKey() {
+        return this.recipe.getResultItem().getDescriptionId();
+    }
+
+    @Override
+    protected String getRecipeTypeTranslationKey() {
         return "primalmagic.grimoire.ritual_recipe_header";
     }
 
@@ -55,6 +61,9 @@ public class RitualRecipePage extends AbstractRecipePage {
         
         // Add mana cost summary widget
         screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
+        
+        // Render recipe type widget
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y, new TranslatableComponent(this.getRecipeTypeTranslationKey())));
         
         y += 28;
         

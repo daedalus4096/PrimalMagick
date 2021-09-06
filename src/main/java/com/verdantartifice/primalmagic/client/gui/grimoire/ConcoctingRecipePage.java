@@ -13,11 +13,6 @@ public class ConcoctingRecipePage extends AbstractShapelessRecipePage<Concocting
     public ConcoctingRecipePage(ConcoctingRecipe recipe) {
         super(recipe);
     }
-
-    @Override
-    protected String getTitleTranslationKey() {
-        return "primalmagic.grimoire.concocting_recipe_header";
-    }
     
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
@@ -28,5 +23,10 @@ public class ConcoctingRecipePage extends AbstractShapelessRecipePage<Concocting
         int indent = 124;
         int overlayWidth = 52;
         screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
+    }
+
+    @Override
+    protected String getRecipeTypeTranslationKey() {
+        return "primalmagic.grimoire.concocting_recipe_header";
     }
 }

@@ -32,6 +32,7 @@ public interface IRunecarvingRecipe extends Recipe<Container> {
         return true;
     }
     
+    @Override
     default ItemStack getToastSymbol() {
         return new ItemStack(BlocksPM.RUNECARVING_TABLE.get());
     }
