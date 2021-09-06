@@ -42,7 +42,7 @@ public class BiomeEvents {
         }
         
         // Add sea shrines to wet biomes
-        if (Biome.BiomeCategory.RIVER.equals(cat) || Biome.BiomeCategory.BEACH.equals(cat) || Biome.BiomeCategory.SWAMP.equals(cat)) {
+        if (Biome.BiomeCategory.RIVER.equals(cat) || Biome.BiomeCategory.BEACH.equals(cat) || Biome.BiomeCategory.SWAMP.equals(cat) || Biome.BiomeCategory.ICY.equals(cat)) {
             event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_SEA_SHRINE);
         }
         

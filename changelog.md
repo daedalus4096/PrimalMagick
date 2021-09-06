@@ -2,6 +2,7 @@ v0.0.5-alpha
 ------------
 * Rework Basic Alchemy requirements
 * Reformat recipe pages to make result name more prominent
+* Add Sea shrines to icy biomes
 
 v0.0.4-alpha
 ------------
