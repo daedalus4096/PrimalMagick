@@ -241,7 +241,7 @@ public class ResearchProvider implements DataProvider {
                     .requiredItemStack(ItemsPM.ESSENCE_DUST_SUN.get()).requiredItemStack(ItemsPM.ESSENCE_DUST_MOON.get()).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_SALTS.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("ADVANCED_WANDMAKING", discipline).parent("BASIC_MANAWEAVING")
+        ResearchEntryBuilder.entry("ADVANCED_WANDMAKING", discipline).parent("BASIC_MANAWEAVING").parent("t_mana_spent_total_basics")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_ASSEMBLY_TABLE.get()).build())
             .build(consumer);

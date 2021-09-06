@@ -62,5 +62,6 @@ public class InitStats {
         StatTriggers.register(StatsPM.DISTANCE_TELEPORTED_CM, 10000, SimpleResearchKey.parse("m_teleport_a_lot"));
         StatTriggers.register(StatsPM.MANA_SIPHONED, 10, SimpleResearchKey.parse("t_mana_siphoned_basics"));
         StatTriggers.register(StatsPM.MANA_SIPHONED, 1000, SimpleResearchKey.parse("t_mana_siphoned_expert"));
+        StatTriggers.register(StatsPM.MANA_SPENT_TOTAL, 20, SimpleResearchKey.parse("t_mana_spent_total_basics"));
     }
 }
