@@ -5,9 +5,6 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -15,7 +12,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.Containers;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -29,8 +25,6 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class TileInventoryPM extends TilePM implements WorldlyContainer {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
     protected NonNullList<ItemStack> items;         // The tile's inventory
     protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
@@ -230,13 +224,5 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
             nbt.putBoolean("RequestSync", true);
             this.sendMessageToServer(nbt);
         }
-    }
-    
-    @Override
-    public void setRemoved() {
-        BlockState state = this.level.getBlockState(this.worldPosition);
-        LOGGER.info("Dropping contents of {} tile entity at {}", state.getBlock().getRegistryName().toString(), this.worldPosition.toString());
-        Containers.dropContents(this.level, this.worldPosition, this);
-        super.setRemoved();
     }
 }

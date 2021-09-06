@@ -82,7 +82,6 @@ public class WandChargerBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof WandChargerTileEntity) {
-                LOGGER.info("Dropping contents of {} block at {}", state.getBlock().getRegistryName().toString(), pos.toString());
                 Containers.dropContents(worldIn, pos, (WandChargerTileEntity)tile);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }

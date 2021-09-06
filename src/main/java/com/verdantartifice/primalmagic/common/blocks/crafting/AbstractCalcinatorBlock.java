@@ -108,7 +108,6 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AbstractCalcinatorTileEntity) {
-                LOGGER.info("Dropping contents of {} block at {}", state.getBlock().getRegistryName().toString(), pos.toString());
                 Containers.dropContents(worldIn, pos, (AbstractCalcinatorTileEntity)tile);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
