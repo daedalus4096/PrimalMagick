@@ -5,6 +5,9 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -26,6 +29,8 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class TileInventoryPM extends TilePM implements WorldlyContainer {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected NonNullList<ItemStack> items;         // The tile's inventory
     protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
@@ -229,6 +234,8 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
     
     @Override
     public void setRemoved() {
+        BlockState state = this.level.getBlockState(this.worldPosition);
+        LOGGER.debug("Dropping contents of {} tile entity at {}", state.getBlock().getRegistryName().toString(), this.worldPosition.toString());
         Containers.dropContents(this.level, this.worldPosition, this);
         super.setRemoved();
     }
