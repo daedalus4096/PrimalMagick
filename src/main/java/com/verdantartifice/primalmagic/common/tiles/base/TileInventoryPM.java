@@ -235,7 +235,7 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
     @Override
     public void setRemoved() {
         BlockState state = this.level.getBlockState(this.worldPosition);
-        LOGGER.debug("Dropping contents of {} tile entity at {}", state.getBlock().getRegistryName().toString(), this.worldPosition.toString());
+        LOGGER.info("Dropping contents of {} tile entity at {}", state.getBlock().getRegistryName().toString(), this.worldPosition.toString());
         Containers.dropContents(this.level, this.worldPosition, this);
         super.setRemoved();
     }
