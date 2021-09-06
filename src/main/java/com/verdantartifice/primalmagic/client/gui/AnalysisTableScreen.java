@@ -107,7 +107,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
         ItemStack lastScannedStack = this.menu.getLastScannedStack();
         if (lastScannedStack != null && !lastScannedStack.isEmpty()) {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world);
-            if (!sources.isEmpty()) {
+            if (sources != null && !sources.isEmpty()) {
                 int widgetSetWidth = sources.getSourcesSorted().size() * 18;
                 int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
                 int y = this.topPos + 10;

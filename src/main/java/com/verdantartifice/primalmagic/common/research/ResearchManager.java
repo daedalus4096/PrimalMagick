@@ -519,7 +519,7 @@ public class ResearchManager {
         return getObservationPoints(affinities);
     }
     
-    private static int getObservationPoints(@Nonnull SourceList affinities) {
+    private static int getObservationPoints(@Nullable SourceList affinities) {
         if (affinities == null || affinities.isEmpty()) {
             return 0;
         }
