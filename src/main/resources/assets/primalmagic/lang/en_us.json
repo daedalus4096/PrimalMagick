@@ -664,6 +664,10 @@
     "item.primalmagic.forbidden_sword": "Sword of the Hungering Void",
     "item.primalmagic.sacred_shield": "Shield of the Sacred Oath",
     "item.primalmagic.mana_arrow_earth": "Earth-Tinged Arrow",
+    "item.primalmagic.mana_arrow_sea": "Sea-Tinged Arrow",
+    "item.primalmagic.mana_arrow_sky": "Sky-Tinged Arrow",
+    "item.primalmagic.mana_arrow_sun": "Sun-Tinged Arrow",
+    "item.primalmagic.mana_arrow_moon": "Moon-Tinged Arrow",
     
     "entity.primalmagic.treefolk": "Treefolk",
     "entity.primalmagic.inner_demon": "Inner Demon",

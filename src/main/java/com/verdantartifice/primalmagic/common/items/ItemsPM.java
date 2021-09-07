@@ -385,6 +385,10 @@ public class ItemsPM {
     
     // Register mana arrow items
     public static final RegistryObject<ManaArrowItem> MANA_ARROW_EARTH = ITEMS.register("mana_arrow_earth", () -> new ManaArrowItem(Source.EARTH, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SEA = ITEMS.register("mana_arrow_sea", () -> new ManaArrowItem(Source.SEA, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SKY = ITEMS.register("mana_arrow_sky", () -> new ManaArrowItem(Source.SKY, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SUN = ITEMS.register("mana_arrow_sun", () -> new ManaArrowItem(Source.SUN, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_MOON = ITEMS.register("mana_arrow_moon", () -> new ManaArrowItem(Source.MOON, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     
     // Register armor items
     public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = ITEMS.register("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlot.HEAD, 1, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));

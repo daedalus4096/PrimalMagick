@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:mana_arrow_earth"
+    "primalmagic:mana_arrow_earth",
+    "primalmagic:mana_arrow_sea",
+    "primalmagic:mana_arrow_sky",
+    "primalmagic:mana_arrow_sun",
+    "primalmagic:mana_arrow_moon"
   ]
 }
