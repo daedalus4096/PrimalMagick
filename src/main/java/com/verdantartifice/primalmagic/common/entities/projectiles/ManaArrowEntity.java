@@ -12,8 +12,11 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -48,6 +51,11 @@ public class ManaArrowEntity extends AbstractArrow {
 
     public void setSource(Source source) {
         this.entityData.set(SOURCE_TAG, source.getTag());
+        if (source == Source.EARTH) {
+            this.setKnockback(this.getKnockback() + 1);
+        } else if (source == Source.SKY) {
+            this.setNoGravity(true);
+        }
     }
     
     @Nullable
@@ -64,6 +72,9 @@ public class ManaArrowEntity extends AbstractArrow {
     @Override
     public void tick() {
         super.tick();
+        if (this.getSource() == Source.SKY && this.isNoGravity() && this.isInWater()) {
+            this.setNoGravity(false);
+        }
         if (this.level.isClientSide) {
             if (this.inGround) {
                 if (this.inGroundTime % 5 == 0) {
@@ -88,5 +99,26 @@ public class ManaArrowEntity extends AbstractArrow {
                 FxDispatcher.INSTANCE.manaArrowTrail(this.getX(), this.getY(), this.getZ(), dx, dy, dz, color);
             }
         }
+    }
+
+    @Override
+    protected void doPostHurtEffects(LivingEntity target) {
+        super.doPostHurtEffects(target);
+        Source source = this.getSource();
+        if (source == Source.SEA) {
+            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40));
+        } else if (source == Source.SUN) {
+            target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40));
+            if (target.getMobType() == MobType.UNDEAD) {
+                target.setSecondsOnFire(2);
+            }
+        } else if (source == Source.MOON) {
+            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40));
+        }
+    }
+
+    @Override
+    protected float getWaterInertia() {
+        return this.getSource() == Source.SEA ? 0.99F : super.getWaterInertia();
     }
 }
