@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -125,5 +126,19 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
     @Override
     public float getSymmetryPenalty(Level world, BlockPos pos) {
         return 0.01F;
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Drop the tile entity's inventory into the world when the block is replaced
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof OfferingPedestalTileEntity) {
+                Containers.dropContents(worldIn, pos, (OfferingPedestalTileEntity)tile);
+                worldIn.updateNeighbourForOutputSignal(pos, this);
+            }
+            super.onRemove(state, worldIn, pos, newState, isMoving);
+        }
     }
 }

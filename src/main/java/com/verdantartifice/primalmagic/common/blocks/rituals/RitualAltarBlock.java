@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -68,6 +69,12 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
         if (!isMoving) {
             for (Direction dir : Direction.values()) {
                 worldIn.updateNeighborsAt(pos.relative(dir), this);
+            }
+        }
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof RitualAltarTileEntity) {
+                Containers.dropContents(worldIn, pos, (RitualAltarTileEntity)tile);
             }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

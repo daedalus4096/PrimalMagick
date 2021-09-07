@@ -1,3 +1,7 @@
+v0.0.6-alpha
+------------
+* Potential fix for dupe bug in inventory block entities
+
 v0.0.5-alpha
 ------------
 * Rework Basic Alchemy requirements

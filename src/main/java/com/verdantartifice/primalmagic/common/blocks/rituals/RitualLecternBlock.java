@@ -15,6 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -163,6 +164,13 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
         // Close out any pending ritual activity if replaced
         if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
+        }
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof RitualLecternTileEntity) {
+                Containers.dropContents(worldIn, pos, (RitualLecternTileEntity)tile);
+                worldIn.updateNeighbourForOutputSignal(pos, this);
+            }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
