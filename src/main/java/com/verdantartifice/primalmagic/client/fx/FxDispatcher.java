@@ -228,4 +228,20 @@ public class FxDispatcher {
             p.setColor(r, g, b);
         }
     }
+    
+    public void manaArrowTrail(double x, double y, double z, double dx, double dy, double dz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.manaArrowTrail(x, y, z, dx, dy, dz, r, g, b);
+    }
+    
+    public void manaArrowTrail(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, dx, dy, dz);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
 }

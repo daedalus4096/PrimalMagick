@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.blocks.misc.StainedSkyglassPaneBlo
 import com.verdantartifice.primalmagic.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagic.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 
@@ -102,5 +103,11 @@ public class ColorEvents {
         event.getItemColors().register((stack, color) -> {
             return color > 0 ? -1 : PotionUtils.getColor(stack);
         }, ItemsPM.CONCOCTION.get(), ItemsPM.ALCHEMICAL_BOMB.get());
+        
+        for (ManaArrowItem arrow : ManaArrowItem.getManaArrows()) {
+            event.getItemColors().register((stack, tintIndex) -> {
+                return arrow.getColor(tintIndex);
+            }, arrow);
+        }
     }
 }

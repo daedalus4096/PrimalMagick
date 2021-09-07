@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.items.concoctions.BombCasingItem;
 import com.verdantartifice.primalmagic.common.items.concoctions.ConcoctionItem;
 import com.verdantartifice.primalmagic.common.items.concoctions.SkyglassFlaskItem;
 import com.verdantartifice.primalmagic.common.items.entities.FlyingCarpetItem;
+import com.verdantartifice.primalmagic.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.items.food.AmbrosiaItem;
@@ -381,6 +382,9 @@ public class ItemsPM {
     public static final RegistryObject<ForbiddenBowItem> FORBIDDEN_BOW = ITEMS.register("forbidden_bow", () -> new ForbiddenBowItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<ForbiddenSwordItem> FORBIDDEN_SWORD = ITEMS.register("forbidden_sword", () -> new ForbiddenSwordItem(ItemTierPM.HEXIUM, 3, -2.4F, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<SacredShieldItem> SACRED_SHIELD = ITEMS.register("sacred_shield", () -> new SacredShieldItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.EPIC)));
+    
+    // Register mana arrow items
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_EARTH = ITEMS.register("mana_arrow_earth", () -> new ManaArrowItem(Source.EARTH, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     
     // Register armor items
     public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = ITEMS.register("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlot.HEAD, 1, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));

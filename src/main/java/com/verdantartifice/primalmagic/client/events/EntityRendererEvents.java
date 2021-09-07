@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.client.renderers.entity.HexiumGolemRender
 import com.verdantartifice.primalmagic.client.renderers.entity.HexiumTridentRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.InnerDemonRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.MajesticPixieRenderer;
+import com.verdantartifice.primalmagic.client.renderers.entity.ManaArrowRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteGolemRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.PrimaliteTridentRenderer;
 import com.verdantartifice.primalmagic.client.renderers.entity.SinCrashRenderer;
@@ -51,6 +52,7 @@ public class EntityRendererEvents {
         event.registerEntityRenderer(EntityTypesPM.SIN_CRYSTAL.get(), SinCrystalRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.APPLE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.ALCHEMICAL_BOMB.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityTypesPM.MANA_ARROW.get(), ManaArrowRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.FISHING_HOOK.get(), FishingHookRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
