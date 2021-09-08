@@ -1,0 +1,67 @@
+{
+  "key": "MANA_ARROWS",
+  "name": "primalmagic.research.mana_arrows.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "BASIC_MANAWEAVING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.mana_arrows.text.stage.1",
+      "required_craft": [
+        "minecraft:arrow"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.mana_arrows.text.stage.2",
+      "recipes": [
+        "primalmagic:mana_arrow_earth",
+        "primalmagic:mana_arrow_sea",
+        "primalmagic:mana_arrow_sky",
+        "primalmagic:mana_arrow_sun",
+        "primalmagic:mana_arrow_moon"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagic.research.mana_arrows.text.addenda.1",
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "recipes": [
+        "primalmagic:mana_arrow_blood"
+      ]
+    },
+    {
+      "text": "primalmagic.research.mana_arrows.text.addenda.2",
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "recipes": [
+        "primalmagic:mana_arrow_infernal"
+      ]
+    },
+    {
+      "text": "primalmagic.research.mana_arrows.text.addenda.3",
+      "required_research": [
+        "t_discover_void"
+      ],
+      "recipes": [
+        "primalmagic:mana_arrow_void"
+      ]
+    },
+    {
+      "text": "primalmagic.research.mana_arrows.text.addenda.4",
+      "required_research": [
+        "t_discover_hallowed"
+      ],
+      "recipes": [
+        "primalmagic:mana_arrow_hallowed"
+      ]
+    }
+  ]
+}

@@ -80,6 +80,7 @@ public class Recipes extends RecipeProvider {
         this.registerClothRecipes(consumer);
         this.registerPrimalToolRecipes(consumer);
         this.registerManaFontRecipes(consumer);
+        this.registerManaArrowRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -5425,6 +5426,90 @@ public class Recipes extends RecipeProvider {
             .key('F', ItemsPM.FORBIDDEN_FONT_HALLOWED.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
             .manaCost(new SourceList().add(Source.HALLOWED, 2500))
+            .build(consumer);
+    }
+    
+    protected void registerManaArrowRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_EARTH.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.EARTH, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SEA.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.SEA, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SKY.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.SKY, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SUN.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.SUN, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_MOON.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.MOON, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_BLOOD.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_BLOOD.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.BLOOD, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_INFERNAL.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_VOID.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_VOID.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.VOID, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_HALLOWED.get(), 4)
+            .patternLine(" A ")
+            .patternLine("ADA")
+            .patternLine(" A ")
+            .key('A', Items.ARROW)
+            .key('D', ItemsPM.ESSENCE_DUST_HALLOWED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .manaCost(new SourceList().add(Source.HALLOWED, 5))
             .build(consumer);
     }
 }

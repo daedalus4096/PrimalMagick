@@ -1,0 +1,24 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "MANA_ARROWS",
+  "mana": {
+    "sea": 5
+  },
+  "pattern": [
+    " A ",
+    "ADA",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:arrow"
+    },
+    "D": {
+      "item": "primalmagic:essence_dust_sea"
+    }
+  },
+  "result": {
+    "item": "primalmagic:mana_arrow_sea",
+    "count": 4
+  }
+}

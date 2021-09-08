@@ -1,0 +1,24 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "MANA_ARROWS",
+  "mana": {
+    "earth": 5
+  },
+  "pattern": [
+    " A ",
+    "ADA",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:arrow"
+    },
+    "D": {
+      "item": "primalmagic:essence_dust_earth"
+    }
+  },
+  "result": {
+    "item": "primalmagic:mana_arrow_earth",
+    "count": 4
+  }
+}

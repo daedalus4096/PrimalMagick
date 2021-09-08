@@ -387,6 +387,15 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_VOID.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_HALLOWED.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("MANA_ARROWS", discipline).parent("BASIC_MANAWEAVING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).requiredCraftStack(Items.ARROW).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_ARROW_EARTH.get()).recipe(ItemsPM.MANA_ARROW_SEA.get()).recipe(ItemsPM.MANA_ARROW_SKY.get()).recipe(ItemsPM.MANA_ARROW_SUN.get())
+                    .recipe(ItemsPM.MANA_ARROW_MOON.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_HALLOWED.get()).build())
+            .build(consumer);
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
