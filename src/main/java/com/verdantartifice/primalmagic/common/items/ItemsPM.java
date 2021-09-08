@@ -389,6 +389,10 @@ public class ItemsPM {
     public static final RegistryObject<ManaArrowItem> MANA_ARROW_SKY = ITEMS.register("mana_arrow_sky", () -> new ManaArrowItem(Source.SKY, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<ManaArrowItem> MANA_ARROW_SUN = ITEMS.register("mana_arrow_sun", () -> new ManaArrowItem(Source.SUN, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<ManaArrowItem> MANA_ARROW_MOON = ITEMS.register("mana_arrow_moon", () -> new ManaArrowItem(Source.MOON, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_BLOOD = ITEMS.register("mana_arrow_blood", () -> new ManaArrowItem(Source.BLOOD, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_INFERNAL = ITEMS.register("mana_arrow_infernal", () -> new ManaArrowItem(Source.INFERNAL, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_VOID = ITEMS.register("mana_arrow_void", () -> new ManaArrowItem(Source.VOID, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_HALLOWED = ITEMS.register("mana_arrow_hallowed", () -> new ManaArrowItem(Source.HALLOWED, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     
     // Register armor items
     public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = ITEMS.register("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, EquipmentSlot.HEAD, 1, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.COMMON)));

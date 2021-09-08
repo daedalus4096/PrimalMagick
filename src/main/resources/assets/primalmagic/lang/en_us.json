@@ -668,6 +668,10 @@
     "item.primalmagic.mana_arrow_sky": "Sky-Tinged Arrow",
     "item.primalmagic.mana_arrow_sun": "Sun-Tinged Arrow",
     "item.primalmagic.mana_arrow_moon": "Moon-Tinged Arrow",
+    "item.primalmagic.mana_arrow_blood": "Blood-Tinged Arrow",
+    "item.primalmagic.mana_arrow_infernal": "Infernal-Tinged Arrow",
+    "item.primalmagic.mana_arrow_void": "Void-Tinged Arrow",
+    "item.primalmagic.mana_arrow_hallowed": "Hallowed-Tinged Arrow",
     
     "entity.primalmagic.treefolk": "Treefolk",
     "entity.primalmagic.inner_demon": "Inner Demon",

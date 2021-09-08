@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -55,6 +56,10 @@ public class ManaArrowEntity extends AbstractArrow {
             this.setKnockback(this.getKnockback() + 1);
         } else if (source == Source.SKY) {
             this.setNoGravity(true);
+        } else if (source == Source.INFERNAL) {
+            this.setSecondsOnFire(100);
+        } else if (source == Source.HALLOWED) {
+            this.setBaseDamage(this.getBaseDamage() + 1);
         }
     }
     
@@ -106,19 +111,28 @@ public class ManaArrowEntity extends AbstractArrow {
         super.doPostHurtEffects(target);
         Source source = this.getSource();
         if (source == Source.SEA) {
-            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40));
+            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 50));
         } else if (source == Source.SUN) {
-            target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40));
+            target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 50));
             if (target.getMobType() == MobType.UNDEAD) {
-                target.setSecondsOnFire(2);
+                target.setSecondsOnFire(3);
             }
         } else if (source == Source.MOON) {
-            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40));
+            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 50));
+        } else if (source == Source.BLOOD) {
+            target.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 50));
+        } else if (source == Source.VOID) {
+            target.addEffect(new MobEffectInstance(MobEffects.WITHER, 50));
+        } else if (source == Source.HALLOWED) {
+            if (target.getMobType() == MobType.UNDEAD) {
+                target.setSecondsOnFire(3);
+            }
         }
     }
 
     @Override
     protected float getWaterInertia() {
-        return this.getSource() == Source.SEA ? 0.99F : super.getWaterInertia();
+        Source source = this.getSource();
+        return source == Source.SEA || source == Source.BLOOD ? 0.99F : super.getWaterInertia();
     }
 }

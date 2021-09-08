@@ -5,6 +5,10 @@
     "primalmagic:mana_arrow_sea",
     "primalmagic:mana_arrow_sky",
     "primalmagic:mana_arrow_sun",
-    "primalmagic:mana_arrow_moon"
+    "primalmagic:mana_arrow_moon",
+    "primalmagic:mana_arrow_blood",
+    "primalmagic:mana_arrow_infernal",
+    "primalmagic:mana_arrow_void",
+    "primalmagic:mana_arrow_hallowed"
   ]
 }
