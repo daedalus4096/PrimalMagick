@@ -372,6 +372,9 @@ public class PlayerEvents {
     public static void playerCloneEvent(PlayerEvent.Clone event) {
         // Preserve player capability data between deaths
         if (event.isWasDeath()) {
+            // FIXME Workaround for a Forge issue
+            event.getOriginal().revive();
+            
             try {
                 CompoundTag nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).serializeNBT();
                 PrimalMagicCapabilities.getKnowledge(event.getPlayer()).deserializeNBT(nbtKnowledge);
