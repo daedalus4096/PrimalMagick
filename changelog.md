@@ -1,3 +1,7 @@
+v0.0.7-alpha
+------------
+* Add Mana-tinged Arrows, an early-game improvement to ammunition
+
 v0.0.6-alpha
 ------------
 * Potential fix for dupe bug in inventory block entities
