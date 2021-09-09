@@ -3,7 +3,8 @@
   "name": "primalmagic.research.expert_manaweaving.title",
   "discipline": "MANAWEAVING",
   "parents": [
-    "BASIC_MANAWEAVING"
+    "MANA_ARROWS",
+    "WAND_CHARGER"
   ],
   "stages": [
     {

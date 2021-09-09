@@ -3,7 +3,7 @@
   "name": "primalmagic.research.cryotreatment.title",
   "discipline": "ALCHEMY",
   "parents": [
-    "BASIC_ALCHEMY"
+    "STONEMELDING"
   ],
   "stages": [
     {

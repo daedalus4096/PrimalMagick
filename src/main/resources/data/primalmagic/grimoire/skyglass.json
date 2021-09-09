@@ -3,7 +3,7 @@
   "name": "primalmagic.research.skyglass.title",
   "discipline": "ALCHEMY",
   "parents": [
-    "BASIC_ALCHEMY"
+    "STONEMELDING"
   ],
   "stages": [
     {

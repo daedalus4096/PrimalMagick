@@ -3,7 +3,7 @@
   "name": "primalmagic.research.unlock_sorcery.title",
   "discipline": "BASICS",
   "parents": [
-    "UNLOCK_MANAWEAVING"
+    "WAND_CHARGER"
   ],
   "stages": [
     {

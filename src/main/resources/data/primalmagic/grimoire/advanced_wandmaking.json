@@ -3,7 +3,7 @@
   "name": "primalmagic.research.advanced_wandmaking.title",
   "discipline": "MANAWEAVING",
   "parents": [
-    "BASIC_MANAWEAVING",
+    "WAND_CHARGER",
     "t_mana_spent_total_basics"
   ],
   "stages": [

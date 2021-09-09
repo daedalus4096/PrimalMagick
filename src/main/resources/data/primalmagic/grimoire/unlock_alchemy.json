@@ -3,7 +3,7 @@
   "name": "primalmagic.research.unlock_alchemy.title",
   "discipline": "BASICS",
   "parents": [
-    "UNLOCK_MANAWEAVING"
+    "MANA_ARROWS"
   ],
   "stages": [
     {

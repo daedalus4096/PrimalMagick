@@ -3,7 +3,7 @@
   "name": "primalmagic.research.rune_sun.title",
   "discipline": "RUNEWORKING",
   "parents": [
-    "BASIC_RUNEWORKING"
+    "RUNE_SKY"
   ],
   "stages": [
     {

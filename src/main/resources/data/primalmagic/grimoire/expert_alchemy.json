@@ -3,7 +3,8 @@
   "name": "primalmagic.research.expert_alchemy.title",
   "discipline": "ALCHEMY",
   "parents": [
-    "BASIC_ALCHEMY"
+    "CALCINATOR_BASIC",
+    "STONEMELDING"
   ],
   "stages": [
     {

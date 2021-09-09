@@ -3,8 +3,8 @@
   "name": "primalmagic.research.unlock_ritual.title",
   "discipline": "BASICS",
   "parents": [
-    "UNLOCK_SORCERY",
-    "UNLOCK_RUNEWORKING"
+    "WAND_INSCRIPTION",
+    "RUNE_PROJECT"
   ],
   "stages": [
     {

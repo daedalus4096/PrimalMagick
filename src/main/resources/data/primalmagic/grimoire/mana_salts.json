@@ -3,7 +3,7 @@
   "name": "primalmagic.research.mana_salts.title",
   "discipline": "MANAWEAVING",
   "parents": [
-    "BASIC_MANAWEAVING"
+    "WAND_CHARGER"
   ],
   "stages": [
     {

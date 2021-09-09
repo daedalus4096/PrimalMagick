@@ -2,6 +2,7 @@ v0.0.7-alpha
 ------------
 * Add Mana-tinged Arrows, an early-game improvement to ammunition
 * Fix failure to clone player mod data upon death
+* Rearrange basic tier research
 
 v0.0.6-alpha
 ------------

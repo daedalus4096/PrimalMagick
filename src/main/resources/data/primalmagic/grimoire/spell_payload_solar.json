@@ -3,7 +3,7 @@
   "name": "primalmagic.research.spell_payload_solar.title",
   "discipline": "SORCERY",
   "parents": [
-    "BASIC_SORCERY"
+    "SPELL_PAYLOAD_LIGHTNING"
   ],
   "stages": [
     {

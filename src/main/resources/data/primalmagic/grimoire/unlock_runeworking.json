@@ -3,7 +3,7 @@
   "name": "primalmagic.research.unlock_runeworking.title",
   "discipline": "BASICS",
   "parents": [
-    "UNLOCK_ALCHEMY"
+    "CALCINATOR_BASIC"
   ],
   "stages": [
     {

@@ -3,7 +3,8 @@
   "name": "primalmagic.research.expert_ritual.title",
   "discipline": "RITUAL",
   "parents": [
-    "BASIC_RITUAL"
+    "RITUAL_CANDLES",
+    "INCENSE_BRAZIER"
   ],
   "stages": [
     {

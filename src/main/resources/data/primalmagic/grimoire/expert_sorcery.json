@@ -3,7 +3,8 @@
   "name": "primalmagic.research.expert_sorcery.title",
   "discipline": "SORCERY",
   "parents": [
-    "BASIC_SORCERY"
+    "SPELL_PAYLOAD_LIGHTNING",
+    "SPELL_PAYLOAD_FROST"
   ],
   "stages": [
     {

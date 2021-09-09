@@ -3,7 +3,7 @@
   "name": "primalmagic.research.imbued_wool.title",
   "discipline": "MANAWEAVING",
   "parents": [
-    "BASIC_MANAWEAVING"
+    "MANA_ARROWS"
   ],
   "stages": [
     {

@@ -3,7 +3,8 @@
   "name": "primalmagic.research.expert_magitech.title",
   "discipline": "MAGITECH",
   "parents": [
-    "BASIC_MAGITECH"
+    "HONEY_EXTRACTOR",
+    "SEASCRIBE_PEN"
   ],
   "stages": [
     {
