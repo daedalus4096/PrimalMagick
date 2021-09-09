@@ -3,7 +3,8 @@
   "name": "primalmagic.research.master_sorcery.title",
   "discipline": "SORCERY",
   "parents": [
-    "EXPERT_SORCERY"
+    "SPELL_VEHICLE_PROJECTILE",
+    "SPELL_MOD_AMPLIFY"
   ],
   "stages": [
     {

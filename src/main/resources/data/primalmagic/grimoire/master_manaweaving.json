@@ -3,7 +3,8 @@
   "name": "primalmagic.research.master_manaweaving.title",
   "discipline": "MANAWEAVING",
   "parents": [
-    "EXPERT_MANAWEAVING"
+    "WAND_CAP_GOLD",
+    "WAND_GEM_ADEPT"
   ],
   "stages": [
     {

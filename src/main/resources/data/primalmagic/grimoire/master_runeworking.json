@@ -3,7 +3,8 @@
   "name": "primalmagic.research.master_runeworking.title",
   "discipline": "RUNEWORKING",
   "parents": [
-    "EXPERT_RUNEWORKING"
+    "RUNE_ABSORB",
+    "RUNE_CREATURE"
   ],
   "stages": [
     {

@@ -5,7 +5,8 @@
   "parents": [
     "EXPERT_MANAWEAVING",
     "SHARD_SYNTHESIS",
-    "PRIMALITE"
+    "PRIMALITE",
+    "SUNLAMP"
   ],
   "stages": [
     {

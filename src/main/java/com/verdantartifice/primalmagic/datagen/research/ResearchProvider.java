@@ -218,14 +218,14 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.MARBLE_ENCHANTED_PILLAR.get()).recipe(ItemsPM.MARBLE_ENCHANTED_RUNED.get()).recipe(ItemsPM.MARBLE_ENCHANTED_SLAB.get())
                     .recipe(ItemsPM.MARBLE_ENCHANTED_STAIRS.get()).recipe(ItemsPM.MARBLE_ENCHANTED_WALL.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_MANAWEAVING", discipline).parent("EXPERT_MANAWEAVING")
+        ResearchEntryBuilder.entry("MASTER_MANAWEAVING", discipline).parent("WAND_CAP_GOLD").parent("WAND_GEM_ADEPT")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_manaweaving_master").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_SMOKED.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICK_STAIRS.get())
                     .recipe(ItemsPM.MARBLE_SMOKED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICKS.get()).recipe(ItemsPM.MARBLE_SMOKED_CHISELED.get())
                     .recipe(ItemsPM.MARBLE_SMOKED_PILLAR.get()).recipe(ItemsPM.MARBLE_SMOKED_RUNED.get()).recipe(ItemsPM.MARBLE_SMOKED_SLAB.get())
                     .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_MANAWEAVING", discipline).parent("MASTER_MANAWEAVING")
+        ResearchEntryBuilder.entry("SUPREME_MANAWEAVING", discipline).parent("WAND_CAP_HEXIUM").parent("WAND_GEM_WIZARD")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_manaweaving_supreme").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
@@ -245,7 +245,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_ASSEMBLY_TABLE.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("STAVES", discipline).parent("EXPERT_MANAWEAVING").parent("ADVANCED_WANDMAKING").parent("WAND_INSCRIPTION").parent("SHARD_SYNTHESIS")
+        ResearchEntryBuilder.entry("STAVES", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_GEM_ADEPT").parent("WAND_INSCRIPTION").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
@@ -304,22 +304,22 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_CORE_CORAL", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+        ResearchEntryBuilder.entry("WAND_CORE_CORAL", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_OBSIDIAN")
             .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "coral_blocks").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 2).recipe(ItemsPM.CORAL_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.CORAL_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_CORE_BAMBOO", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+        ResearchEntryBuilder.entry("WAND_CORE_BAMBOO", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_OBSIDIAN")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.BAMBOO).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 2).recipe(ItemsPM.BAMBOO_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BAMBOO_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_CORE_SUNWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+        ResearchEntryBuilder.entry("WAND_CORE_SUNWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_BAMBOO")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.SUNWOOD_LOG.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 2).recipe(ItemsPM.SUNWOOD_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.SUNWOOD_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_CORE_MOONWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+        ResearchEntryBuilder.entry("WAND_CORE_MOONWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("EXPERT_MANAWEAVING")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.MOONWOOD_LOG.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 2).recipe(ItemsPM.MOONWOOD_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.MOONWOOD_STAFF_CORE_ITEM.get()).build())
@@ -344,7 +344,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.IMBUED_WOOL_HEAD.get()).recipe(ItemsPM.IMBUED_WOOL_CHEST.get()).recipe(ItemsPM.IMBUED_WOOL_LEGS.get())
                     .recipe(ItemsPM.IMBUED_WOOL_FEET.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SPELLCLOTH", discipline).parent("EXPERT_MANAWEAVING").parent("IMBUED_WOOL")
+        ResearchEntryBuilder.entry("SPELLCLOTH", discipline).parent("EXPERT_MANAWEAVING").parent("IMBUED_WOOL").parent("EARTHSHATTER_HAMMER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SPELLCLOTH.get()).recipe(ItemsPM.SPELLCLOTH_HEAD.get()).recipe(ItemsPM.SPELLCLOTH_CHEST.get())
                     .recipe(ItemsPM.SPELLCLOTH_LEGS.get()).recipe(ItemsPM.SPELLCLOTH_FEET.get()).build())
@@ -360,7 +360,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SAINTSWOOL.get()).recipe(ItemsPM.SAINTSWOOL_HEAD.get()).recipe(ItemsPM.SAINTSWOOL_CHEST.get())
                     .recipe(ItemsPM.SAINTSWOOL_LEGS.get()).recipe(ItemsPM.SAINTSWOOL_FEET.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("ARTIFICIAL_MANA_FONTS", discipline).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS").parent("PRIMALITE")
+        ResearchEntryBuilder.entry("ARTIFICIAL_MANA_FONTS", discipline).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS").parent("PRIMALITE").parent("SUNLAMP")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredResearch("t_mana_siphoned_expert").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARTIFICIAL_FONT_EARTH.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SEA.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SKY.get())
                     .recipe(ItemsPM.ARTIFICIAL_FONT_SUN.get()).recipe(ItemsPM.ARTIFICIAL_FONT_MOON.get()).build())
@@ -408,11 +408,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_alchemy_expert").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_ALCHEMY", discipline).parent("EXPERT_ALCHEMY")
+        ResearchEntryBuilder.entry("MASTER_ALCHEMY", discipline).parent("CALCINATOR_ENCHANTED").parent("PRIMALITE")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_alchemy_master").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_ALCHEMY", discipline).parent("MASTER_ALCHEMY")
+        ResearchEntryBuilder.entry("SUPREME_ALCHEMY", discipline).parent("CALCINATOR_FORBIDDEN").parent("HEXIUM")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_alchemy_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
@@ -658,11 +658,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("t_spells_crafted_expert").requiredResearch("t_spells_cast_expert").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_SORCERY", discipline).parent("EXPERT_SORCERY")
+        ResearchEntryBuilder.entry("MASTER_SORCERY", discipline).parent("SPELL_VEHICLE_PROJECTILE").parent("SPELL_MOD_AMPLIFY")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("t_spells_cast_master").requiredResearch("t_spell_cost_master").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_SORCERY", discipline).parent("MASTER_SORCERY")
+        ResearchEntryBuilder.entry("SUPREME_SORCERY", discipline).parent("SPELL_VEHICLE_BOLT").parent("SPELL_MOD_QUICKEN")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
@@ -781,11 +781,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_runeworking_expert").requiredResearch("t_items_runescribed_expert").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_RUNEWORKING", discipline).parent("EXPERT_RUNEWORKING")
+        ResearchEntryBuilder.entry("MASTER_RUNEWORKING", discipline).parent("RUNE_ABSORB").parent("RUNE_CREATURE")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_runeworking_master").requiredResearch("t_items_runescribed_master").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", discipline).parent("MASTER_RUNEWORKING")
+        ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", discipline).parent("RUNE_POWER")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build())
             .build(consumer);
@@ -841,15 +841,15 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_ABSORB.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_DISPEL", discipline).parent("EXPERT_RUNEWORKING")
+        ResearchEntryBuilder.entry("RUNE_DISPEL", discipline).parent("RUNE_ABSORB")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_DISPEL.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_SUMMON", discipline).parent("EXPERT_RUNEWORKING")
+        ResearchEntryBuilder.entry("RUNE_SUMMON", discipline).parent("RUNE_ABSORB")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_SUMMON.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_AREA", discipline).parent("EXPERT_RUNEWORKING")
+        ResearchEntryBuilder.entry("RUNE_AREA", discipline).parent("RUNE_CREATURE")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_AREA.get()).build())
             .build(consumer);
@@ -880,11 +880,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("t_rituals_completed_expert").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_RITUAL", discipline).parent("EXPERT_RITUAL")
+        ResearchEntryBuilder.entry("MASTER_RITUAL", discipline).parent("RITUAL_LECTERN").parent("RITUAL_BELL")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("t_rituals_completed_master").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).parent("MASTER_RITUAL")
+        ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).parent("BLOODLETTER").parent("SOUL_ANVIL")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_rituals_completed_supreme").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
@@ -1075,11 +1075,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").requiredResearch("b_scan_primalite").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_MAGITECH", discipline).parent("EXPERT_MAGITECH")
+        ResearchEntryBuilder.entry("MASTER_MAGITECH", discipline).parent("ARCANOMETER").parent("PRIMALITE_GOLEM")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_magitech_master").requiredResearch("b_scan_hexium").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).parent("MASTER_MAGITECH")
+        ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).parent("HEXIUM_GOLEM")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
             .build(consumer);

@@ -3,7 +3,8 @@
   "name": "primalmagic.research.supreme_manaweaving.title",
   "discipline": "MANAWEAVING",
   "parents": [
-    "MASTER_MANAWEAVING"
+    "WAND_CAP_HEXIUM",
+    "WAND_GEM_WIZARD"
   ],
   "stages": [
     {

@@ -4,7 +4,7 @@
   "discipline": "MANAWEAVING",
   "parents": [
     "EXPERT_MANAWEAVING",
-    "ADVANCED_WANDMAKING",
+    "WAND_GEM_ADEPT",
     "WAND_INSCRIPTION",
     "SHARD_SYNTHESIS"
   ],

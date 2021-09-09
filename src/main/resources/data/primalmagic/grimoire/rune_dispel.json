@@ -3,7 +3,7 @@
   "name": "primalmagic.research.rune_dispel.title",
   "discipline": "RUNEWORKING",
   "parents": [
-    "EXPERT_RUNEWORKING"
+    "RUNE_ABSORB"
   ],
   "stages": [
     {

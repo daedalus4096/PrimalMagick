@@ -3,7 +3,7 @@
   "name": "primalmagic.research.supreme_runeworking.title",
   "discipline": "RUNEWORKING",
   "parents": [
-    "MASTER_RUNEWORKING"
+    "RUNE_POWER"
   ],
   "stages": [
     {

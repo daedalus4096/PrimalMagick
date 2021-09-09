@@ -3,7 +3,8 @@
   "name": "primalmagic.research.supreme_alchemy.title",
   "discipline": "ALCHEMY",
   "parents": [
-    "MASTER_ALCHEMY"
+    "CALCINATOR_FORBIDDEN",
+    "HEXIUM"
   ],
   "stages": [
     {

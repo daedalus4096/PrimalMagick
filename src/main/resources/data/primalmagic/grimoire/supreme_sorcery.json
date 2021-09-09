@@ -3,7 +3,8 @@
   "name": "primalmagic.research.supreme_sorcery.title",
   "discipline": "SORCERY",
   "parents": [
-    "MASTER_SORCERY"
+    "SPELL_VEHICLE_BOLT",
+    "SPELL_MOD_QUICKEN"
   ],
   "stages": [
     {

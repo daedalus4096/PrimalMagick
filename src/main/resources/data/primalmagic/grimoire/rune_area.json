@@ -3,7 +3,7 @@
   "name": "primalmagic.research.rune_area.title",
   "discipline": "RUNEWORKING",
   "parents": [
-    "EXPERT_RUNEWORKING"
+    "RUNE_CREATURE"
   ],
   "stages": [
     {

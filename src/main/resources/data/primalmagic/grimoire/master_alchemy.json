@@ -3,7 +3,8 @@
   "name": "primalmagic.research.master_alchemy.title",
   "discipline": "ALCHEMY",
   "parents": [
-    "EXPERT_ALCHEMY"
+    "CALCINATOR_ENCHANTED",
+    "PRIMALITE"
   ],
   "stages": [
     {

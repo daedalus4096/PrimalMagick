@@ -3,7 +3,7 @@
   "name": "primalmagic.research.supreme_magitech.title",
   "discipline": "MAGITECH",
   "parents": [
-    "MASTER_MAGITECH"
+    "HEXIUM_GOLEM"
   ],
   "stages": [
     {

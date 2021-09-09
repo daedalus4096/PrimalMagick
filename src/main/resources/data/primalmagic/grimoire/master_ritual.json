@@ -3,7 +3,8 @@
   "name": "primalmagic.research.master_ritual.title",
   "discipline": "RITUAL",
   "parents": [
-    "EXPERT_RITUAL"
+    "RITUAL_LECTERN",
+    "RITUAL_BELL"
   ],
   "stages": [
     {

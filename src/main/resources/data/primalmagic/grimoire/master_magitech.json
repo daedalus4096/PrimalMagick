@@ -3,7 +3,8 @@
   "name": "primalmagic.research.master_magitech.title",
   "discipline": "MAGITECH",
   "parents": [
-    "EXPERT_MAGITECH"
+    "ARCANOMETER",
+    "PRIMALITE_GOLEM"
   ],
   "stages": [
     {

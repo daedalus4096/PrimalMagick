@@ -3,7 +3,8 @@
   "name": "primalmagic.research.supreme_ritual.title",
   "discipline": "RITUAL",
   "parents": [
-    "MASTER_RITUAL"
+    "BLOODLETTER",
+    "SOUL_ANVIL"
   ],
   "stages": [
     {

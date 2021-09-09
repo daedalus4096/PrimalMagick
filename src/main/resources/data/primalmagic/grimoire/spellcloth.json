@@ -4,7 +4,8 @@
   "discipline": "MANAWEAVING",
   "parents": [
     "EXPERT_MANAWEAVING",
-    "IMBUED_WOOL"
+    "IMBUED_WOOL",
+    "EARTHSHATTER_HAMMER"
   ],
   "stages": [
     {
