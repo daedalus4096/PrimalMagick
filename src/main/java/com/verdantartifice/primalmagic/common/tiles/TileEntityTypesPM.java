@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.tiles.crafting.ConcocterTileEntity
 import com.verdantartifice.primalmagic.common.tiles.crafting.EssenceFurnaceTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.HoneyExtractorTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.devices.ResearchTableTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.SanguineCrucibleTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
@@ -61,4 +62,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<BlockEntityType<ConcocterTileEntity>> CONCOCTER = TILE_ENTITIES.register("concocter", () -> BlockEntityType.Builder.of(ConcocterTileEntity::new, BlocksPM.CONCOCTER.get()).build(null));
     public static final RegistryObject<BlockEntityType<CelestialHarpTileEntity>> CELESTIAL_HARP = TILE_ENTITIES.register("celestial_harp", () -> BlockEntityType.Builder.of(CelestialHarpTileEntity::new, BlocksPM.CELESTIAL_HARP.get()).build(null));
     public static final RegistryObject<BlockEntityType<EntropySinkTileEntity>> ENTROPY_SINK = TILE_ENTITIES.register("entropy_sink", () -> BlockEntityType.Builder.of(EntropySinkTileEntity::new, BlocksPM.ENTROPY_SINK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ResearchTableTileEntity>> RESEARCH_TABLE = TILE_ENTITIES.register("research_table", () -> BlockEntityType.Builder.of(ResearchTableTileEntity::new, BlocksPM.RESEARCH_TABLE.get()).build(null));
 }

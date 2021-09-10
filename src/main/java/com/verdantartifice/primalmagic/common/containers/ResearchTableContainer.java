@@ -2,13 +2,11 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.slots.PaperSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementSlot;
 import com.verdantartifice.primalmagic.common.theorycrafting.IWritingImplement;
 
 import net.minecraft.world.Container;
-import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,23 +21,24 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class ResearchTableContainer extends AbstractContainerMenu implements ContainerListener {
+public class ResearchTableContainer extends AbstractContainerMenu {
     protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;
-    protected final SimpleContainer writingInv = new SimpleContainer(2);
+    protected final Container writingInv;
     protected final Slot paperSlot;
     protected final Slot pencilSlot;
     protected final DataSlot writingReady = DataSlot.standalone();
 
     public ResearchTableContainer(int windowId, Inventory inv) {
-        this(windowId, inv, ContainerLevelAccess.NULL);
+        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.NULL);
     }
 
-    public ResearchTableContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
+    public ResearchTableContainer(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess callable) {
         super(ContainersPM.RESEARCH_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
-        this.writingInv.addListener(this);
+        checkContainerSize(tableInv, 2);
+        this.writingInv = tableInv;
         
         // Slot 0: Pencil
         this.pencilSlot = this.addSlot(new WritingImplementSlot(this.writingInv, 0, 8, 8));
@@ -64,23 +63,17 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.RESEARCH_TABLE.get());
+        return this.writingInv.stillValid(playerIn);
     }
 
     @Override
-    public void containerChanged(Container invBasic) {
+    public void slotsChanged(Container invBasic) {
         // Set whether the container has writing tools ready; 1 for yes, 0 for no
+        super.slotsChanged(invBasic);
         boolean ready = (!this.getWritingImplementStack().isEmpty() && !this.getPaperStack().isEmpty());
         this.writingReady.set(ready ? 1 : 0);
     }
 
-    @Override
-    public void removed(Player playerIn) {
-        // Return input pencil and paper to the player's inventory when the GUI is closed
-        super.removed(playerIn);
-        this.clearContainer(playerIn, this.writingInv);
-    }
-    
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;

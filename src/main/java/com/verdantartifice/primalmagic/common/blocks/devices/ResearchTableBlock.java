@@ -1,27 +1,24 @@
 package com.verdantartifice.primalmagic.common.blocks.devices;
 
-import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagic.common.tiles.devices.ResearchTableTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -38,7 +35,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
  * 
  * @author Daedalus4096
  */
-public class ResearchTableBlock extends Block {
+public class ResearchTableBlock extends BaseEntityBlock {
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public ResearchTableBlock() {
@@ -78,18 +75,21 @@ public class ResearchTableBlock extends Block {
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the research table
-            NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
-                @Override
-                public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-                    return new ResearchTableContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
-                }
-
-                @Override
-                public Component getDisplayName() {
-                    return new TranslatableComponent(ResearchTableBlock.this.getDescriptionId());
-                }
-            });
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof ResearchTableTileEntity) {
+                NetworkHooks.openGui((ServerPlayer)player, (ResearchTableTileEntity)tile);
+            }
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ResearchTableTileEntity(pos, state);
     }
 }
