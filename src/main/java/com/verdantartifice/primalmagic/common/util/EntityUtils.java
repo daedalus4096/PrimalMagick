@@ -9,6 +9,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.TeleportArrivalPacket;
+import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -192,6 +194,9 @@ public class EntityUtils {
                     if (player.isPassenger()) {
                         player.stopRiding();
                     }
+                    
+                    // Record teleport distance statistic
+                    StatsManager.incrementValue((ServerPlayer)player, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * event.getPrev().distanceTo(event.getTarget())));
                     
                     // Do the teleportation
                     player.teleportTo(event.getTargetX(), event.getTargetY(), event.getTargetZ());

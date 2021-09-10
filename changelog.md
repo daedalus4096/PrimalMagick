@@ -2,6 +2,7 @@ v0.0.8-alpha
 ------------
 * Allow research tables to hold writing implements between uses
 * Show spell cooldowns visually
+* Record teleport distance statistic
 
 v0.0.7-alpha
 ------------
