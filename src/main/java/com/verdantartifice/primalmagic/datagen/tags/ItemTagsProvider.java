@@ -47,7 +47,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.tag(ItemTags.WOODEN_STAIRS).add(ItemsPM.MOONWOOD_STAIRS.get(), ItemsPM.SUNWOOD_STAIRS.get(), ItemsPM.HALLOWOOD_STAIRS.get());
         
         // Add entries to Forge tags
-        this.tag(Tags.Items.DUSTS).addTag(ItemTagsForgeExt.DUSTS_IRON).addTag(ItemTagsForgeExt.DUSTS_GOLD);
+        this.tag(Tags.Items.DUSTS).addTag(ItemTagsForgeExt.DUSTS_IRON).addTag(ItemTagsForgeExt.DUSTS_GOLD).addTag(ItemTagsForgeExt.DUSTS_COPPER);
         this.tag(Tags.Items.INGOTS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
         this.tag(Tags.Items.NUGGETS).addTag(ItemTagsPM.NUGGETS_PRIMALITE).addTag(ItemTagsPM.NUGGETS_HEXIUM).addTag(ItemTagsPM.NUGGETS_HALLOWSTEEL).addTag(ItemTagsForgeExt.NUGGETS_QUARTZ);
         this.tag(Tags.Items.ORES_QUARTZ).add(ItemsPM.QUARTZ_ORE.get());
@@ -92,6 +92,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.tag(Tags.Items.STAINED_GLASS_PANES).addTag(ItemTagsPM.STAINED_SKYGLASS_PANES);
 
         // Add entries to Forge extension tags
+        this.tag(ItemTagsForgeExt.DUSTS_COPPER).add(ItemsPM.COPPER_GRIT.get());
         this.tag(ItemTagsForgeExt.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
         this.tag(ItemTagsForgeExt.DUSTS_IRON).add(ItemsPM.IRON_GRIT.get());
         this.tag(ItemTagsForgeExt.NUGGETS_QUARTZ).add(ItemsPM.QUARTZ_NUGGET.get());

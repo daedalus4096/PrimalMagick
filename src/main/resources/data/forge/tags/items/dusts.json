@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "#forge:dusts/iron",
-    "#forge:dusts/gold"
+    "#forge:dusts/gold",
+    "#forge:dusts/copper"
   ]
 }
