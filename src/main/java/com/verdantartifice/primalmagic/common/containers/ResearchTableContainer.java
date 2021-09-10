@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementS
 import com.verdantartifice.primalmagic.common.theorycrafting.IWritingImplement;
 
 import net.minecraft.world.Container;
+import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class ResearchTableContainer extends AbstractContainerMenu {
+public class ResearchTableContainer extends AbstractContainerMenu implements ContainerListener {
     protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;
     protected final Container writingInv;
@@ -67,9 +68,8 @@ public class ResearchTableContainer extends AbstractContainerMenu {
     }
 
     @Override
-    public void slotsChanged(Container invBasic) {
+    public void containerChanged(Container invBasic) {
         // Set whether the container has writing tools ready; 1 for yes, 0 for no
-        super.slotsChanged(invBasic);
         boolean ready = (!this.getWritingImplementStack().isEmpty() && !this.getPaperStack().isEmpty());
         this.writingReady.set(ready ? 1 : 0);
     }

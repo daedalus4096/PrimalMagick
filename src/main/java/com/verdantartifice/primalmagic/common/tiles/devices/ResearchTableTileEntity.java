@@ -27,7 +27,9 @@ public class ResearchTableTileEntity extends TileInventoryPM implements MenuProv
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new ResearchTableContainer(windowId, playerInv, this, ContainerLevelAccess.create(this.level, this.worldPosition));
+        ResearchTableContainer menu = new ResearchTableContainer(windowId, playerInv, this, ContainerLevelAccess.create(this.level, this.worldPosition));
+        this.addListener(menu);
+        return menu;
     }
 
     @Override
