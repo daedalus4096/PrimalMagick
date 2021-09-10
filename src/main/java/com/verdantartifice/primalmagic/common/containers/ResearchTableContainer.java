@@ -60,18 +60,23 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
         }
         
         this.addDataSlot(this.writingReady).set(0);
+        this.checkWritingImplements();
     }
 
     @Override
     public boolean stillValid(Player playerIn) {
         return this.writingInv.stillValid(playerIn);
     }
-
-    @Override
-    public void containerChanged(Container invBasic) {
+    
+    protected void checkWritingImplements() {
         // Set whether the container has writing tools ready; 1 for yes, 0 for no
         boolean ready = (!this.getWritingImplementStack().isEmpty() && !this.getPaperStack().isEmpty());
         this.writingReady.set(ready ? 1 : 0);
+    }
+
+    @Override
+    public void containerChanged(Container invBasic) {
+        this.checkWritingImplements();
     }
 
     @Override
