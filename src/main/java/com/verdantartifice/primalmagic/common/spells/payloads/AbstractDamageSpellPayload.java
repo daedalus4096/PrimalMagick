@@ -62,6 +62,11 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
             if (entityTarget.getEntity() != null) {
                 // Damage the target entity
                 entityTarget.getEntity().hurt(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource));
+                
+                // Update the caster's last hurt mob
+                if (caster != null) {
+                    caster.setLastHurtMob(entityTarget.getEntity());
+                }
             }
         }
         
