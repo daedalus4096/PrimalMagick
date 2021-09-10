@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -8,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
+import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.containers.AnalysisTableContainer;
@@ -36,7 +38,8 @@ import net.minecraft.world.level.Level;
 public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_table.png");
     private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_button.png");
-    protected static final Component ANALYZE_BUTTON_TOOLTIP = new TranslatableComponent("tooltip.primalmagic.analyze_button.1").append(new TranslatableComponent("tooltip.primalmagic.analyze_button.2").withStyle(ChatFormatting.RED));
+    protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = new TranslatableComponent("tooltip.primalmagic.analyze_button.1");
+    protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = new TranslatableComponent("tooltip.primalmagic.analyze_button.2").withStyle(ChatFormatting.RED);
     
     protected Level world;
 
@@ -91,12 +94,11 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
         }, new Button.OnTooltip() {
             @Override
             public void onTooltip(Button button, PoseStack poseStack, int mouseX, int mouseY) {
-                AnalysisTableScreen.this.renderTooltip(poseStack, AnalysisTableScreen.ANALYZE_BUTTON_TOOLTIP, mouseX, mouseY);
+                GuiUtils.renderCustomTooltip(poseStack, Arrays.asList(ANALYZE_BUTTON_TOOLTIP_1, ANALYZE_BUTTON_TOOLTIP_2), mouseX, mouseY);
             }
 
             @Override
             public void narrateTooltip(Consumer<Component> consumer) {
-                consumer.accept(AnalysisTableScreen.ANALYZE_BUTTON_TOOLTIP);
             }
         }, TextComponent.EMPTY));
         

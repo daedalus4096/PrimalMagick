@@ -4,6 +4,7 @@ v0.0.8-alpha
 * Show spell cooldowns visually
 * Record teleport distance statistic
 * Properly trigger pixie aggro when attacking with spells
+* Fix analysis table button tooltip
 
 v0.0.7-alpha
 ------------
