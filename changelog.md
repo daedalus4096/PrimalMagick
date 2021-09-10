@@ -1,6 +1,7 @@
 v0.0.8-alpha
 ------------
 * Allow research tables to hold writing implements between uses
+* Show spell cooldowns visually
 
 v0.0.7-alpha
 ------------

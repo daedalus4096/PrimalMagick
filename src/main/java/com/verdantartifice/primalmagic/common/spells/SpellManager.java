@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SpellMineEntity;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
@@ -162,6 +163,12 @@ public class SpellManager {
                     cooldowns.sync((ServerPlayer)player); // Sync immediately, since cooldowns are time-sensitive
                 }
             }
+            
+            // Show the shared cooldown visually
+            player.getCooldowns().addCooldown(ItemsPM.SPELL_SCROLL_FILLED.get(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MUNDANE_WAND.get(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MODULAR_WAND.get(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MODULAR_STAFF.get(), durationTicks);
         }
     }
     
