@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.common.tiles.base;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -12,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.ContainerListener;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +30,7 @@ import net.minecraftforge.common.util.Constants;
 public class TileInventoryPM extends TilePM implements WorldlyContainer {
     protected NonNullList<ItemStack> items;         // The tile's inventory
     protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
+    protected List<ContainerListener> listeners;    // Listeners to be informed when the inventory contents change
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
     protected final int[] faceSlots;                // The slots of this tile's inventory visible from its sides
     
@@ -44,6 +48,17 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
     protected Set<Integer> getSyncedSlotIndices() {
         // Determine which inventory slots should be synced to the client
         return Collections.emptySet();
+    }
+    
+    public void addListener(ContainerListener listener) {
+        if (this.listeners == null) {
+            this.listeners = new ArrayList<>();
+        }
+        this.listeners.add(listener);
+    }
+    
+    public void removeListener(ContainerListener listener) {
+        this.listeners.remove(listener);
     }
     
     @Override
@@ -103,6 +118,14 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
         if (this.isSyncedSlot(index)) {
             // Sync the inventory change to nearby clients
             this.syncSlots(null);
+        }
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (this.listeners != null) {
+            this.listeners.forEach((listener) -> { listener.containerChanged(this); });
         }
     }
 
