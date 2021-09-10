@@ -1,3 +1,7 @@
+v0.0.8-alpha
+------------
+* Allow research tables to hold writing implements between uses
+
 v0.0.7-alpha
 ------------
 * Add Mana-tinged Arrows, an early-game improvement to ammunition
