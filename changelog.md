@@ -6,6 +6,7 @@ v0.0.8-alpha
 * Properly trigger pixie aggro when attacking with spells
 * Fix analysis table button tooltip
 * Add more scan entries to the grimoire
+* Expand range at which research aids are detected
 
 v0.0.7-alpha
 ------------

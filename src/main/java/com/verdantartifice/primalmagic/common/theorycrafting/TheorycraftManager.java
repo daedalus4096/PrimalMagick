@@ -65,7 +65,7 @@ public class TheorycraftManager {
         // Determine what blocks are nearby so that aid blocks can be checked
         Set<Block> nearby = new HashSet<>();
         if (player.level.isAreaLoaded(tablePos, 5)) {
-            Iterable<BlockPos> positions = BlockPos.betweenClosed(tablePos.offset(-5, -2, -5), tablePos.offset(5, 2, 5));
+            Iterable<BlockPos> positions = BlockPos.betweenClosed(tablePos.offset(-5, -5, -5), tablePos.offset(5, 5, 5));
             for (BlockPos pos : positions) {
                 nearby.add(player.level.getBlockState(pos).getBlock());
             }
