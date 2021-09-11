@@ -314,12 +314,12 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 2).recipe(ItemsPM.BAMBOO_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BAMBOO_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_CORE_SUNWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_BAMBOO")
+        ResearchEntryBuilder.entry("WAND_CORE_SUNWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_OBSIDIAN")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.SUNWOOD_LOG.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 2).recipe(ItemsPM.SUNWOOD_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.SUNWOOD_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("WAND_CORE_MOONWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("EXPERT_MANAWEAVING")
+        ResearchEntryBuilder.entry("WAND_CORE_MOONWOOD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_OBSIDIAN")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.MOONWOOD_LOG.get()).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 2).recipe(ItemsPM.MOONWOOD_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.MOONWOOD_STAFF_CORE_ITEM.get()).build())

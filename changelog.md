@@ -7,6 +7,7 @@ v0.0.8-alpha
 * Fix analysis table button tooltip
 * Add more scan entries to the grimoire
 * Expand range at which research aids are detected
+* Fix bug in wand core research requirements
 
 v0.0.7-alpha
 ------------

@@ -4,7 +4,7 @@
   "discipline": "MANAWEAVING",
   "parents": [
     "EXPERT_MANAWEAVING",
-    "EXPERT_MANAWEAVING"
+    "WAND_CORE_OBSIDIAN"
   ],
   "stages": [
     {
