@@ -59,6 +59,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public abstract class AbstractBlockLootTableProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
+    
+    protected static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
 
     protected final Map<Block, LootTable.Builder> lootTables = new HashMap<>();
     protected final Set<ResourceLocation> registeredBlocks = new HashSet<>();
@@ -102,8 +104,7 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
     
     protected void registerLeavesTable(Block leavesBlock, Block saplingBlock, float[] saplingFortuneChances) {
         float[] stickFortuneChances = new float[] { 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F };
-        LootItemCondition.Builder shearsOrSilkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
-                .or(MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1)))));
+        LootItemCondition.Builder shearsOrSilkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS)).or(HAS_SILK_TOUCH);
         LootPoolEntryContainer.Builder<?> saplingEntryBuilder = LootItem.lootTableItem(saplingBlock).when(ExplosionCondition.survivesExplosion()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, saplingFortuneChances));
         LootPoolEntryContainer.Builder<?> leavesEntryBuilder = LootItem.lootTableItem(leavesBlock).when(shearsOrSilkTouch);
         LootPool.Builder saplingAndLeavesPool = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(leavesEntryBuilder.otherwise(saplingEntryBuilder));
@@ -114,25 +115,21 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
     }
     
     protected void registerInfusedStoneTable(Block stoneBlock, Item dustItem) {
-        LootPool.Builder stonePoolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Blocks.COBBLESTONE))
-                .when(ExplosionCondition.survivesExplosion());
-        LootPool.Builder dustPoolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(dustItem))
-                .when(ExplosionCondition.survivesExplosion());
-        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(stonePoolBuilder).withPool(dustPoolBuilder);
+        LootPoolEntryContainer.Builder<?> dustEntryBuilder = LootItem.lootTableItem(dustItem).when(ExplosionCondition.survivesExplosion());
+        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(stoneBlock).when(HAS_SILK_TOUCH).otherwise(dustEntryBuilder));
+        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(poolBuilder);
         this.registerLootTableBuiler(stoneBlock, tableBuilder);
     }
     
     protected void registerGemOreTable(Block oreBlock, Item gemItem) {
-        LootItemCondition.Builder silkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
         LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
-        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(oreBlock).when(silkTouch).otherwise(gemEntryBuilder)));
+        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(oreBlock).when(HAS_SILK_TOUCH).otherwise(gemEntryBuilder)));
         this.registerLootTableBuiler(oreBlock, tableBuilder);
     }
     
     protected void registerMultiGemOreTable(Block oreBlock, Item gemItem, float minGems, float maxGems) {
-        LootItemCondition.Builder silkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
         LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(SetItemCountFunction.setCount(UniformGenerator.between(minGems, maxGems))).apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
-        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(oreBlock).when(silkTouch).otherwise(gemEntryBuilder)));
+        LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(oreBlock).when(HAS_SILK_TOUCH).otherwise(gemEntryBuilder)));
         this.registerLootTableBuiler(oreBlock, tableBuilder);
     }
     

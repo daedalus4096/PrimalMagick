@@ -8,6 +8,8 @@ v0.0.8-alpha
 * Add more scan entries to the grimoire
 * Expand range at which research aids are detected
 * Fix bug in wand core research requirements
+* Infused stone no longer drops cobblestone, only dust
+* Fix silk touch behavior for infused stone
 
 v0.0.7-alpha
 ------------
