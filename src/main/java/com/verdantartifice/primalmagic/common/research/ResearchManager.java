@@ -368,13 +368,30 @@ public class ResearchManager {
             }
         }
     }
+    
+    public static boolean hasScanTriggers(ServerPlayer player, ItemLike itemProvider) {
+        return hasScanTriggersInner(player, itemProvider);
+    }
+    
+    public static boolean hasScanTriggers(ServerPlayer player, EntityType<?> entityType) {
+        return hasScanTriggersInner(player, entityType);
+    }
+    
+    private static boolean hasScanTriggersInner(ServerPlayer player, Object obj) {
+        for (IScanTrigger trigger : SCAN_TRIGGERS) {
+            if (trigger.matches(player, obj)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static boolean isScanned(@Nullable ItemStack stack, @Nullable Player player) {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
         SourceList affinities = AffinityManager.getInstance().getAffinityValues(stack, player.level);
-        if (affinities == null || affinities.isEmpty()) {
+        if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, stack.getItem()))) {
             // If the given itemstack has no affinities, consider it already scanned
             return true;
         }
