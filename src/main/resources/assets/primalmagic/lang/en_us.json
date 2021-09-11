@@ -1698,6 +1698,18 @@
     "primalmagic.research.hallowood_trees.title": "Hallowood Trees",
     "primalmagic.research.hallowood_trees.text.stage.1": "Positively wondrous!  To think that such beauty could be the end product of the cleansing rite I've undertaken.<BR>These trees resonate with Hallowed energy, seeming to draw life from the very creative forces of the universe, rather than mere sunlight.  Perhaps I could learn more by studying their essence.<BR>Yes, that feels right.  Nurturing life to gain knowledge.  Perhaps this is a lesson in humility that I sorely need.",
     
+    "primalmagic.research.sunwood_trees.title": "Sunwood Trees",
+    "primalmagic.research.sunwood_trees.text.stage.1": "These magical trees wax and wane over time.  During the day they're fully present, but at night they fade out to near invisibility.<BR>They seem strongly aligned with the Sun, and could prove a useful source of essence of that type.<BR>Alternately, I could make some tasteful decoration with it.  The wood loses its phasing properties with too much processing, though.",
+    
+    "primalmagic.research.moonwood_trees.title": "Moonwood Trees",
+    "primalmagic.research.moonwood_trees.text.stage.1": "These magical trees wax and wane over time.  During the night they're fully present, but in they daytime they fade out to near invisibility.<BR>They seem strongly aligned with the Moon, and could prove a useful source of essence of that type.<BR>Alternately, I could make some tasteful decoration with it.  The wood loses its phasing properties with too much processing, though.",
+    
+    "primalmagic.research.rock_salt.title": "Rock Salt",
+    "primalmagic.research.rock_salt.text.stage.1": "Ah, salt.  This delicious mineral can be found all over the place.<BR>Rock salt needs to be refined in a furnace before it's of much use, though.  The Grimoire seems to hint that it has interesting interactions with magic, but doesn't go into detail.<BR>In time, perhaps I will learn more.  Until then, I can use it to season my food to make it tastier and more filling!",
+    
+    "primalmagic.research.alchemical_waste.title": "Alchemical Waste",
+    "primalmagic.research.alchemical_waste.text.stage.1": "Oh, gross.  What is this garbage?  It's not essence, that's for sure.<BR>I thought I had my equipment properly configured to process every type of magical essence there was.  Perhaps this waste is an indicator that I haven't learned as much as I think.<BR>I should keep an eye out for objects bearing unknown magical signatures.  Save them for later, maybe.  This gunk, on the other hand, I can definitely throw out.",
+    
     "commands.primalmagic.research.list": "All research for %1$s: %2$s",
     "commands.primalmagic.research.reset": "Resetting all research for %1$s",
     "commands.primalmagic.research.reset.target": "%1$s has reset all of your research",

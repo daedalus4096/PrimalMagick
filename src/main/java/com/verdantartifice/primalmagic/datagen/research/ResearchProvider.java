@@ -1209,6 +1209,22 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_HALLOWOOD_WOOD.get()).recipe(ItemsPM.HALLOWOOD_PLANKS.get())
                     .recipe(ItemsPM.HALLOWOOD_SLAB.get()).recipe(ItemsPM.HALLOWOOD_STAIRS.get()).recipe(ItemsPM.HALLOWOOD_PILLAR.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("SUNWOOD_TREES", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SUNWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_SUNWOOD_WOOD.get()).recipe(ItemsPM.SUNWOOD_PLANKS.get())
+                    .recipe(ItemsPM.SUNWOOD_SLAB.get()).recipe(ItemsPM.SUNWOOD_STAIRS.get()).recipe(ItemsPM.SUNWOOD_PILLAR.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MOONWOOD_TREES", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MOONWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_MOONWOOD_WOOD.get()).recipe(ItemsPM.MOONWOOD_PLANKS.get())
+                    .recipe(ItemsPM.MOONWOOD_SLAB.get()).recipe(ItemsPM.MOONWOOD_STAIRS.get()).recipe(ItemsPM.MOONWOOD_PILLAR.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("ROCK_SALT", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
+                    .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
+                    .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("ALCHEMICAL_WASTE", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
     }
     
     @Override

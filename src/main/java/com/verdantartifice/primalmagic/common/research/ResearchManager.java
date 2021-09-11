@@ -405,6 +405,9 @@ public class ResearchManager {
             return false;
         }
         
+        // Check to see if any scan triggers need to be run for the item
+        checkScanTriggers(player, stack.getItem());
+        
         // Generate a research key for the itemstack and add that research to the player
         SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
         if (key != null && knowledge.addResearch(key)) {
@@ -416,9 +419,6 @@ public class ResearchManager {
             
             // Increment the items analyzed stat
             StatsManager.incrementValue(player, StatsPM.ITEMS_ANALYZED);
-            
-            // Check to see if any scan triggers need to be run for the item
-            checkScanTriggers(player, stack.getItem());
             
             // Sync the research/knowledge changes to the player's client if requested
             if (sync) {

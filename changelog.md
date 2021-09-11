@@ -5,6 +5,7 @@ v0.0.8-alpha
 * Record teleport distance statistic
 * Properly trigger pixie aggro when attacking with spells
 * Fix analysis table button tooltip
+* Add more scan entries to the grimoire
 
 v0.0.7-alpha
 ------------
