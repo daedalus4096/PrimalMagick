@@ -12,6 +12,7 @@ v0.0.8-alpha
 * Fix silk touch behavior for infused stone
 * Increase knockback of Earth-Tinged Arrows
 * Only show mana cost grimoire widget when the recipe has a mana cost
+* Add workaround for inventory syncing issue with block entities
 
 v0.0.7-alpha
 ------------

@@ -306,6 +306,12 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, RitualAltarTileEntity entity) {
+        // FIXME Remove when Forge onLoad bug is fixed
+        if (entity.ticksExisted == 0) {
+            entity.doInventorySync();
+        }
+        entity.ticksExisted++;
+
         if (entity.active) {
             entity.activeCount++;
         }

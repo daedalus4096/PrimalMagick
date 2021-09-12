@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -24,5 +25,13 @@ public class OfferingPedestalTileEntity extends TileInventoryPM {
     protected Set<Integer> getSyncedSlotIndices() {
         // Sync the pedestal's item stack for client rendering use
         return ImmutableSet.of(Integer.valueOf(0));
+    }
+    
+    public static void tick(Level level, BlockPos pos, BlockState state, OfferingPedestalTileEntity entity) {
+        // FIXME Remove when Forge onLoad bug is fixed
+        if (entity.ticksExisted == 0) {
+            entity.doInventorySync();
+        }
+        entity.ticksExisted++;
     }
 }
