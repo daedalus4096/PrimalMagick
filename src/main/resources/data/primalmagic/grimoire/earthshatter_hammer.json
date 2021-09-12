@@ -24,7 +24,10 @@
         "earth": 2
       },
       "recipes": [
-        "primalmagic:earthshatter_hammer"
+        "primalmagic:earthshatter_hammer",
+        "primalmagic:iron_ingot_from_grit_smelting",
+        "primalmagic:gold_ingot_from_grit_smelting",
+        "primalmagic:copper_ingot_from_grit_smelting"
       ]
     }
   ],
