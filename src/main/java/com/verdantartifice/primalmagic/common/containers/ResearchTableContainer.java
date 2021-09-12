@@ -1,11 +1,19 @@
 package com.verdantartifice.primalmagic.common.containers;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.containers.slots.PaperSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementSlot;
 import com.verdantartifice.primalmagic.common.theorycrafting.IWritingImplement;
+import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
@@ -16,6 +24,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Server data container for the research table GUI.
@@ -167,5 +176,12 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
     @Nonnull
     public ContainerLevelAccess getWorldPosCallable() {
         return this.worldPosCallable;
+    }
+    
+    public List<Component> getNearbyAidBlockNames() {
+        Set<Block> nearby = this.worldPosCallable.evaluate((level, pos) -> {
+            return TheorycraftManager.getNearbyAidBlocks(level, pos);
+        }, Collections.emptySet());
+        return nearby.stream().map(b -> b.getName()).sorted(Comparator.comparing(c -> c.getString())).collect(Collectors.toList());
     }
 }

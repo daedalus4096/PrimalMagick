@@ -53,6 +53,11 @@ public class ProjectTemplate {
     }
     
     @Nullable
+    public ResourceLocation getAidBlock() {
+        return this.aidBlock;
+    }
+    
+    @Nullable
     public Project initialize(Player player) {
         if (this.requiredResearch != null && !this.requiredResearch.isKnownByStrict(player)) {
             // Fail initialization to prevent use if the player doesn't have the right research unlocked

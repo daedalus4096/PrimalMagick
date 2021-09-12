@@ -4,7 +4,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,6 +17,7 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
 /**
@@ -82,6 +85,29 @@ public class TheorycraftManager {
                 retVal = initializedProject;
             }
         }
+        return retVal;
+    }
+    
+    @Nonnull
+    protected static Set<ResourceLocation> getAllAidBlockIds() {
+        return TEMPLATES.values().stream().map(t -> t.getAidBlock()).filter(Objects::nonNull).collect(Collectors.toSet());
+    }
+    
+    @Nonnull
+    public static Set<Block> getNearbyAidBlocks(Level level, BlockPos pos) {
+        Set<ResourceLocation> allAids = getAllAidBlockIds();
+        Set<Block> retVal = new HashSet<>();
+        
+        if (level.isAreaLoaded(pos, 5)) {
+            Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5));
+            for (BlockPos searchPos : positions) {
+                Block block = level.getBlockState(searchPos).getBlock();
+                if (allAids.contains(block.getRegistryName())) {
+                    retVal.add(block);
+                }
+            }
+        }
+        
         return retVal;
     }
 }
