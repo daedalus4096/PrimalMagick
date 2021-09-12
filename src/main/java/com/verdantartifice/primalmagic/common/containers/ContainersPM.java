@@ -46,7 +46,7 @@ public class ContainersPM {
         return new WandChargerContainer(windowId, inv);
     }));
     public static final RegistryObject<MenuType<ResearchTableContainer>> RESEARCH_TABLE = CONTAINERS.register("research_table", () -> IForgeContainerType.create((windowId, inv, data) -> {
-        return new ResearchTableContainer(windowId, inv);
+        return new ResearchTableContainer(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<RunescribingAltarBasicContainer>> RUNESCRIBING_ALTAR_BASIC = CONTAINERS.register("runescribing_altar_basic", () -> IForgeContainerType.create((windowId, inv, data) -> {
         return new RunescribingAltarBasicContainer(windowId, inv);
