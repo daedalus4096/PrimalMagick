@@ -11,6 +11,7 @@ v0.0.8-alpha
 * Infused stone no longer drops cobblestone, only dust
 * Fix silk touch behavior for infused stone
 * Increase knockback of Earth-Tinged Arrows
+* Only show mana cost grimoire widget when the recipe has a mana cost
 
 v0.0.7-alpha
 ------------

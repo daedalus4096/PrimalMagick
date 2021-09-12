@@ -60,7 +60,9 @@ public class RitualRecipePage extends AbstractRecipePage {
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y, false));
         
         // Add mana cost summary widget
-        screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
+        if (!this.recipe.getManaCosts().isEmpty()) {
+            screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
+        }
         
         // Render recipe type widget
         screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y, new TranslatableComponent(this.getRecipeTypeTranslationKey())));

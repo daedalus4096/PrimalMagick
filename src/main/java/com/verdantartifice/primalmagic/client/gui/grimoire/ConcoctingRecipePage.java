@@ -22,7 +22,9 @@ public class ConcoctingRecipePage extends AbstractShapelessRecipePage<Concocting
         // Add mana cost summary widget
         int indent = 124;
         int overlayWidth = 52;
-        screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
+        if (!this.recipe.getManaCosts().isEmpty()) {
+            screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
+        }
     }
 
     @Override
