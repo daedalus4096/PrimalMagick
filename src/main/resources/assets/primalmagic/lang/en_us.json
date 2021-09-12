@@ -1964,6 +1964,7 @@
     "primalmagic.research_table.completing": "Completing...",
     "primalmagic.research_table.complete": "Complete Project (%1$s%%)",
     "primalmagic.research_table.unlock": "Unlocked by: %1$s",
+    "primalmagic.research_table.aid_header": "Active research aids:",
     
     "primalmagic.toast.title": "Research Complete!",
     

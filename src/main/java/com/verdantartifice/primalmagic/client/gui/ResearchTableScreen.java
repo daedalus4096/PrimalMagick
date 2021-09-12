@@ -7,6 +7,7 @@ import java.util.List;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.client.gui.widgets.research_table.AidListWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.AidUnlockWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.research_table.ProjectMaterialSelectionCheckbox;
@@ -187,6 +188,12 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
                 Component text = new TranslatableComponent("primalmagic.research_table.complete", FORMATTER.format(chance));
                 this.completeProjectButton = this.addRenderableWidget(new CompleteProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
                 this.completeProjectButton.active = this.project.isSatisfied(player);
+                
+                // Render aid list widget, if applicable
+                List<Component> aidNames = this.menu.getNearbyAidBlockNames();
+                if (!aidNames.isEmpty()) {
+                    this.addRenderableWidget(new AidListWidget(this.leftPos + 36, this.topPos + 9, aidNames));
+                }
                 
                 // Render unlock widget, if applicable
                 if (this.project.getAidBlock() != null) {

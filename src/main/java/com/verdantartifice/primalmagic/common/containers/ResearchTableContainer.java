@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.containers.slots.WritingImplementS
 import com.verdantartifice.primalmagic.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
@@ -39,8 +40,8 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
     protected final Slot pencilSlot;
     protected final DataSlot writingReady = DataSlot.standalone();
 
-    public ResearchTableContainer(int windowId, Inventory inv) {
-        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.NULL);
+    public ResearchTableContainer(int windowId, Inventory inv, BlockPos pos) {
+        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level, pos));
     }
 
     public ResearchTableContainer(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess callable) {
@@ -178,9 +179,10 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
         return this.worldPosCallable;
     }
     
+    @Nonnull
     public List<Component> getNearbyAidBlockNames() {
         Set<Block> nearby = this.worldPosCallable.evaluate((level, pos) -> {
-            return TheorycraftManager.getNearbyAidBlocks(level, pos);
+            return TheorycraftManager.getNearbyAidBlocks(this.player.level, pos);
         }, Collections.emptySet());
         return nearby.stream().map(b -> b.getName()).sorted(Comparator.comparing(c -> c.getString())).collect(Collectors.toList());
     }
