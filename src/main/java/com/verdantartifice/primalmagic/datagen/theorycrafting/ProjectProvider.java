@@ -149,7 +149,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.CARTOGRAPHY_TABLE, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.TORCH, 32, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BREAD, 8, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), true).weight(1).matchNbt().build())
             .material(ItemTagMaterialBuilder.tag("forge", "ender_pearls", 4, true).weight(3).build())
             .material(ItemMaterialBuilder.item(Items.ENDER_EYE, true).weight(1).build())
             .build(consumer);
@@ -232,7 +232,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.CARTOGRAPHY_TABLE, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.TORCH, 16, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BREAD, 4, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true).weight(4).build())
+            .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true).weight(4).matchNbt().build())
             .material(ItemMaterialBuilder.item(Items.MILK_BUCKET, true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag("forge", "obsidian", 10, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.FLINT_AND_STEEL, false).weight(1).build())

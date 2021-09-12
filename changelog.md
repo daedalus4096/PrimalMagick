@@ -13,6 +13,7 @@ v0.0.8-alpha
 * Increase knockback of Earth-Tinged Arrows
 * Only show mana cost grimoire widget when the recipe has a mana cost
 * Add workaround for inventory syncing issue with block entities
+* Allow items of any durability for theorycrafting materials
 
 v0.0.7-alpha
 ------------

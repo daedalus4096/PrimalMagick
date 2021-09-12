@@ -105,7 +105,7 @@
       "type": "item",
       "stack": "minecraft:turtle_helmet;1;{Damage:0}",
       "consumed": true,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 0.5
     },
     {

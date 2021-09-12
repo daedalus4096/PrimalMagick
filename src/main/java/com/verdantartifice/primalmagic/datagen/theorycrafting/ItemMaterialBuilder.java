@@ -16,14 +16,13 @@ import net.minecraft.world.level.ItemLike;
 public class ItemMaterialBuilder {
     protected final ItemStack stack;
     protected final boolean consumed;
-    protected final boolean matchNBT;
+    protected boolean matchNBT = false;
     protected double weight = 1D;
     protected CompoundResearchKey requiredResearch;
     
     protected ItemMaterialBuilder(@Nonnull ItemStack stack, boolean consumed) {
         this.stack = stack.copy();
         this.consumed = consumed;
-        this.matchNBT = this.stack.hasTag();
     }
     
     public static ItemMaterialBuilder item(@Nonnull ItemLike item, boolean consumed) {
@@ -48,6 +47,11 @@ public class ItemMaterialBuilder {
     
     public ItemMaterialBuilder weight(double weight) {
         this.weight = weight;
+        return this;
+    }
+    
+    public ItemMaterialBuilder matchNbt() {
+        this.matchNBT = true;
         return this;
     }
     

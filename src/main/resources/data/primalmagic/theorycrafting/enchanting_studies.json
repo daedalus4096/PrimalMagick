@@ -34,63 +34,63 @@
       "type": "item",
       "stack": "minecraft:golden_sword;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
       "stack": "minecraft:golden_pickaxe;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
       "stack": "minecraft:golden_shovel;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
       "stack": "minecraft:golden_axe;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
       "stack": "minecraft:golden_hoe;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
       "stack": "minecraft:golden_helmet;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
       "stack": "minecraft:golden_chestplate;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
       "stack": "minecraft:golden_leggings;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
       "stack": "minecraft:golden_boots;1;{Damage:0}",
       "consumed": false,
-      "match_nbt": true,
+      "match_nbt": false,
       "weight": 1.0
     },
     {
