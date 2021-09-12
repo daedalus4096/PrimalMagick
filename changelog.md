@@ -1,3 +1,7 @@
+v0.0.9-alpha
+------------
+* Add grimoire pages for smelting recipes
+
 v0.0.8-alpha
 ------------
 * Allow research tables to hold writing implements between uses
