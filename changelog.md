@@ -1,6 +1,7 @@
 v0.0.9-alpha
 ------------
 * Add grimoire pages for smelting recipes
+* Show widget on research table listing active research aids
 
 v0.0.8-alpha
 ------------
