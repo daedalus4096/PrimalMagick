@@ -53,7 +53,7 @@ public class ManaArrowEntity extends AbstractArrow {
     public void setSource(Source source) {
         this.entityData.set(SOURCE_TAG, source.getTag());
         if (source == Source.EARTH) {
-            this.setKnockback(this.getKnockback() + 1);
+            this.setKnockback(this.getKnockback() + 2);
         } else if (source == Source.SKY) {
             this.setNoGravity(true);
         } else if (source == Source.INFERNAL) {

@@ -10,6 +10,7 @@ v0.0.8-alpha
 * Fix bug in wand core research requirements
 * Infused stone no longer drops cobblestone, only dust
 * Fix silk touch behavior for infused stone
+* Increase knockback of Earth-Tinged Arrows
 
 v0.0.7-alpha
 ------------
