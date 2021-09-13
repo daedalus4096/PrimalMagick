@@ -299,6 +299,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     protected void parseDisciplinePages(ResearchDiscipline discipline) {
+        Minecraft mc = this.getMinecraft();
         this.currentStageIndex = 0;
         if (discipline == null) {
             return;
@@ -314,17 +315,20 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         List<ResearchEntry> completeList = new ArrayList<>();
         List<ResearchEntry> inProgressList = new ArrayList<>();
         List<ResearchEntry> availableList = new ArrayList<>();
+        List<ResearchEntry> upcomingList = new ArrayList<>();
         for (ResearchEntry entry : entries) {
-            if (this.knowledge.hasResearchFlag(entry.getKey(), IPlayerKnowledge.ResearchFlag.NEW)) {
+            if (entry.isNew(mc.player)) {
                 newList.add(entry);
-            } else if (this.knowledge.hasResearchFlag(entry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED)) {
+            } else if (entry.isUpdated(mc.player)) {
                 updatedList.add(entry);
-            } else if (this.knowledge.getResearchStatus(entry.getKey()) == IPlayerKnowledge.ResearchStatus.COMPLETE) {
+            } else if (entry.isComplete(mc.player)) {
                 completeList.add(entry);
-            } else if (this.knowledge.getResearchStatus(entry.getKey()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS) {
+            } else if (entry.isInProgress(mc.player)) {
                 inProgressList.add(entry);
-            } else if (!entry.isHidden() && (entry.getParentResearch() == null || entry.getParentResearch().isKnownByStrict(Minecraft.getInstance().player))) {
+            } else if (!entry.isHidden() && entry.isAvailable(mc.player)) {
                 availableList.add(entry);
+            } else if (!entry.isHidden() && entry.isUpcoming(mc.player)) {
+                upcomingList.add(entry);
             }
         }
         
@@ -344,6 +348,9 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         }
         if (!availableList.isEmpty()) {
             this.parseDisciplinePageSection(availableList, "available", discipline, properties);
+        }
+        if (!upcomingList.isEmpty()) {
+            this.parseDisciplinePageSection(upcomingList, "upcoming", discipline, properties);
         }
         if (!completeList.isEmpty()) {
             this.parseDisciplinePageSection(completeList, "complete", discipline, properties);
