@@ -28,12 +28,14 @@ public class ResearchEntries {
     }
     
     @Nonnull
-    public static List<ResearchEntry> getEntries(CompoundResearchKey key) {
+    public static List<ResearchEntry> getEntries(@Nullable CompoundResearchKey key) {
         List<ResearchEntry> retVal = new ArrayList<>();
-        for (SimpleResearchKey simpleKey : key.getKeys()) {
-            ResearchEntry entry = getEntry(simpleKey);
-            if (entry != null) {
-                retVal.add(entry);
+        if (key != null) {
+            for (SimpleResearchKey simpleKey : key.getKeys()) {
+                ResearchEntry entry = getEntry(simpleKey);
+                if (entry != null) {
+                    retVal.add(entry);
+                }
             }
         }
         return retVal;

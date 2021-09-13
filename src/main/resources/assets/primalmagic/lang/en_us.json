@@ -1954,8 +1954,10 @@
     "primalmagic.grimoire.section_header.complete": "Complete",
     "primalmagic.grimoire.section_header.in_progress": "In Progress",
     "primalmagic.grimoire.section_header.available": "Available",
+    "primalmagic.grimoire.section_header.upcoming": "Upcoming",
     "primalmagic.grimoire.section_header.unavailable": "Unavailable",
     "primalmagic.grimoire.missing_block": "Missing block!",
+    "primalmagic.grimoire.upcoming_tooltip_header": "Missing requirements:",
     
     "primalmagic.research_table.missing_writing_supplies": "Missing writing supplies!",
     "primalmagic.research_table.ready": "Ready to begin!",

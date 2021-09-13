@@ -10,8 +10,11 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Definition of a research entry, the primary component of the research system.  A research entry
@@ -157,5 +160,44 @@ public class ResearchEntry {
     
     public boolean appendAddendum(@Nullable ResearchAddendum addendum) {
         return (addendum == null) ? false : this.addenda.add(addendum);
+    }
+    
+    @Nonnull
+    protected IPlayerKnowledge getKnowledge(@Nonnull Player player) {
+        IPlayerKnowledge know = PrimalMagicCapabilities.getKnowledge(player);
+        if (know == null) {
+            throw new IllegalStateException("No knowledge provider for player");
+        }
+        return know;
+    }
+    
+    public boolean isNew(@Nonnull Player player) {
+        return this.getKnowledge(player).hasResearchFlag(this.getKey(), IPlayerKnowledge.ResearchFlag.NEW);
+    }
+    
+    public boolean isUpdated(@Nonnull Player player) {
+        return this.getKnowledge(player).hasResearchFlag(this.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
+    }
+    
+    public boolean isComplete(@Nonnull Player player) {
+        return this.getKnowledge(player).getResearchStatus(this.getKey()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
+    }
+    
+    public boolean isInProgress(@Nonnull Player player) {
+        return this.getKnowledge(player).getResearchStatus(this.getKey()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS;
+    }
+    
+    public boolean isAvailable(@Nonnull Player player) {
+        return this.getParentResearch() == null || this.getParentResearch().isKnownByStrict(player);
+    }
+    
+    public boolean isUpcoming(@Nonnull Player player) {
+        List<ResearchEntry> parentEntries = ResearchEntries.getEntries(this.getParentResearch());
+        for (ResearchEntry parent : parentEntries) {
+            if (!parent.isAvailable(player)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

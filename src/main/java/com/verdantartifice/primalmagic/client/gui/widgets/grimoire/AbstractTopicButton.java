@@ -22,8 +22,8 @@ import net.minecraft.network.chat.Component;
 public abstract class AbstractTopicButton extends Button {
     protected GrimoireScreen screen;
     
-    public AbstractTopicButton(int widthIn, int heightIn, int width, int height, Component text, GrimoireScreen screen, OnPress onPress) {
-        super(widthIn, heightIn, width, height, text, onPress);
+    public AbstractTopicButton(int x, int y, int width, int height, Component text, GrimoireScreen screen, OnPress onPress) {
+        super(x, y, width, height, text, onPress);
         this.screen = screen;
     }
 

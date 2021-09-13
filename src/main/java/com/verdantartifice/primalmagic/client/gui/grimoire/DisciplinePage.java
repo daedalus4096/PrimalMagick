@@ -10,9 +10,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.EntryButton;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.SectionHeaderWidget;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.UpcomingEntryWidget;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
@@ -63,15 +65,19 @@ public class DisciplinePage extends AbstractPage {
     
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        Minecraft mc = screen.getMinecraft();
         for (Object obj : this.getContents()) {
-            if (obj instanceof ResearchEntry) {
+            if (obj instanceof ResearchEntry entry) {
                 // If the current content object is a research entry, add a button for it to the screen
-                ResearchEntry entry = (ResearchEntry)obj;
                 Component text = new TranslatableComponent(entry.getNameTranslationKey());
-                screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, text, screen, entry));
-            } else if (obj instanceof Component) {
+                if (entry.isAvailable(mc.player)) {
+                    screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, text, screen, entry));
+                } else {
+                    screen.addWidgetToScreen(new UpcomingEntryWidget(x + 12 + (side * 140), y, text, entry));
+                }
+            } else if (obj instanceof Component comp) {
                 // If the current content object is a text component, add a section header with that text to the screen
-                screen.addWidgetToScreen(new SectionHeaderWidget(x + 12 + (side * 140), y, (Component)obj));
+                screen.addWidgetToScreen(new SectionHeaderWidget(x + 12 + (side * 140), y, comp));
             }
             y += 12;
         }
