@@ -56,7 +56,7 @@ public class RecipeIndexPage extends AbstractPage {
     public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, ItemsPM.ARCANE_WORKBENCH.get().getRegistryName());
+            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
         }
     }
 
