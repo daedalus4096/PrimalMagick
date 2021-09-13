@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagic.common.crafting;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
@@ -15,14 +14,7 @@ import net.minecraft.world.item.crafting.RecipeType;
  * 
  * @author Daedalus4096
  */
-public interface IRitualRecipe extends CraftingRecipe, IHasManaCost {
-    /**
-     * Get the required research for the recipe.
-     * 
-     * @return the required research for the recipe
-     */
-    public CompoundResearchKey getRequiredResearch();
-    
+public interface IRitualRecipe extends CraftingRecipe, IHasManaCost, IHasRequiredResearch {
     /**
      * Get the list of props for the recipe.
      * 
@@ -37,6 +29,7 @@ public interface IRitualRecipe extends CraftingRecipe, IHasManaCost {
      */
     public int getInstability();
     
+    @Override
     default RecipeType<?> getType() {
         return RecipeTypesPM.RITUAL;
     }

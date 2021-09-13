@@ -36,6 +36,8 @@ import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
+import com.verdantartifice.primalmagic.common.crafting.IHasRequiredResearch;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchAddendum;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
@@ -834,10 +836,8 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         Minecraft mc = this.getMinecraft();
         RecipeIndexPage tempPage = new RecipeIndexPage(true);
         
-        List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(r -> {
-            // TODO Filter by whether the recipe has been unlocked
-            return r.getId().getNamespace().equals(PrimalMagic.MODID);
-        }).sorted(Comparator.comparing(r -> r.getResultItem().getHoverName().getString())).collect(Collectors.toList());
+        List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
+                .sorted(Comparator.comparing(r -> r.getResultItem().getHoverName().getString())).collect(Collectors.toList());
         for (Recipe<?> recipe : processedRecipes) {
             tempPage.addContent(recipe.getId());
             heightRemaining -= 12;
@@ -849,6 +849,19 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         }
         if (!tempPage.getContents().isEmpty()) {
             this.pages.add(tempPage);
+        }
+    }
+    
+    protected static boolean isValidRecipeIndexEntry(Recipe<?> recipe) {
+        Minecraft mc = Minecraft.getInstance();
+        if (!recipe.getId().getNamespace().equals(PrimalMagic.MODID) || RecipePageFactory.createPage(recipe) == null) {
+            return false;
+        }
+        if (recipe instanceof IHasRequiredResearch hrr) {
+            CompoundResearchKey parents = hrr.getRequiredResearch();
+            return (parents == null || parents.isKnownByStrict(mc.player));
+        } else {
+            return true;
         }
     }
     
