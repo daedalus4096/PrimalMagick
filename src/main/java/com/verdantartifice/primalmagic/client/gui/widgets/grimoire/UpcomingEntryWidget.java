@@ -8,6 +8,8 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
+import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -16,6 +18,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 
 /**
@@ -62,7 +66,16 @@ public class UpcomingEntryWidget extends AbstractWidget {
                 if (parentEntry == null) {
                     tooltip.add(new TranslatableComponent("primalmagic.research." + parent.getRootKey() + ".text"));
                 } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
-                    tooltip.add(new TranslatableComponent(parentEntry.getNameTranslationKey()));
+                    MutableComponent comp = new TranslatableComponent(parentEntry.getNameTranslationKey());
+                    if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {
+                        ResearchDiscipline disc = ResearchDisciplines.getDiscipline(parentEntry.getDisciplineKey());
+                        if (disc != null) {
+                            comp.append(new TextComponent(" ("));
+                            comp.append(new TranslatableComponent(disc.getNameTranslationKey()));
+                            comp.append(new TextComponent(")"));
+                        }
+                    }
+                    tooltip.add(comp);
                 }
             }
             GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
