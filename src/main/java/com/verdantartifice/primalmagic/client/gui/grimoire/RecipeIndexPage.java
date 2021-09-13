@@ -9,7 +9,6 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RecipeEntryButton;
-import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;

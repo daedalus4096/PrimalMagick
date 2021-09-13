@@ -834,16 +834,17 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         Minecraft mc = this.getMinecraft();
         RecipeIndexPage tempPage = new RecipeIndexPage(true);
         
-        for (Recipe<?> recipe : mc.level.getRecipeManager().getRecipes()) {
-            if (recipe.getId().getNamespace().equals(PrimalMagic.MODID)) {
-                // TODO Filter by whether the recipe has been unlocked
-                tempPage.addContent(recipe.getId());
-                heightRemaining -= 12;
-                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
-                    heightRemaining = 155;
-                    this.pages.add(tempPage);
-                    tempPage = new RecipeIndexPage();
-                }
+        List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(r -> {
+            // TODO Filter by whether the recipe has been unlocked
+            return r.getId().getNamespace().equals(PrimalMagic.MODID);
+        }).sorted(Comparator.comparing(r -> r.getResultItem().getHoverName().getString())).collect(Collectors.toList());
+        for (Recipe<?> recipe : processedRecipes) {
+            tempPage.addContent(recipe.getId());
+            heightRemaining -= 12;
+            if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                heightRemaining = 155;
+                this.pages.add(tempPage);
+                tempPage = new RecipeIndexPage();
             }
         }
         if (!tempPage.getContents().isEmpty()) {
