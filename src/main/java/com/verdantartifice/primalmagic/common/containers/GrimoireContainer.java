@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.containers;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.client.gui.grimoire.AttunementIndexPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.RecipeIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RuneEnchantmentIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.StatisticsPage;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
@@ -52,6 +53,7 @@ public class GrimoireContainer extends AbstractContainerMenu {
              newTopic instanceof Enchantment ||
              AttunementIndexPage.TOPIC.equals(newTopic) || 
              RuneEnchantmentIndexPage.TOPIC.equals(newTopic) || 
+             RecipeIndexPage.TOPIC.equals(newTopic) || 
              StatisticsPage.TOPIC.equals(newTopic) ) {
             this.topic = newTopic;
         } else {

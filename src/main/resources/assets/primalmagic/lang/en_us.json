@@ -1930,6 +1930,7 @@
     "primalmagic.grimoire.stats_header": "Statistics",
     "primalmagic.grimoire.attunement_header": "Attunements",
     "primalmagic.grimoire.rune_enchantment_header": "Rune Enchantments",
+    "primalmagic.grimoire.recipe_index_header": "Recipes",
     "primalmagic.grimoire.attunement_gain_header": "Attunements Gained",
     "primalmagic.grimoire.addendum_header": "Addendum %1$d",
     "primalmagic.grimoire.requirements_header": "Requirements",

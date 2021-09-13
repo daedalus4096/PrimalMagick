@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.AttunementIndexButton;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.DisciplineButton;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RecipeIndexButton;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RuneEnchantmentIndexButton;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.StatisticsButton;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
@@ -46,6 +47,11 @@ public class OtherIndexPage extends AbstractPage {
             screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
             y += 12;
         }
+        
+        // Add recipes button
+        text = new TranslatableComponent("primalmagic.grimoire.recipe_index_header");
+        screen.addWidgetToScreen(new RecipeIndexButton(x + 12 + (side * 140), y, text, screen));
+        y += 12;
         
         // Add rune enchantments button if rune enchantments are unlocked
         if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {

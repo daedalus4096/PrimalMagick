@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.DisciplinePage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.OtherIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageImage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageString;
+import com.verdantartifice.primalmagic.client.gui.grimoire.RecipeIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RecipePageFactory;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RequirementsPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RuneEnchantmentIndexPage;
@@ -172,6 +173,8 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             this.parseAttunementIndexPages();
         } else if (RuneEnchantmentIndexPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseRuneEnchantmentIndexPages();
+        } else if (RecipeIndexPage.TOPIC.equals(this.menu.getTopic())) {
+            this.parseRecipeIndexPages();
         }
     }
     
@@ -819,6 +822,29 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             }
         }
         if (!tempPage.getEnchantments().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+    }
+    
+    protected void parseRecipeIndexPages() {
+        this.currentStageIndex = 0;
+        int heightRemaining = 137;
+        Minecraft mc = this.getMinecraft();
+        RecipeIndexPage tempPage = new RecipeIndexPage(true);
+        
+        for (Recipe<?> recipe : mc.level.getRecipeManager().getRecipes()) {
+            if (recipe.getId().getNamespace().equals(PrimalMagic.MODID)) {
+                // TODO Filter by whether the recipe has been unlocked
+                tempPage.addContent(recipe.getId());
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                    heightRemaining = 155;
+                    this.pages.add(tempPage);
+                    tempPage = new RecipeIndexPage();
+                }
+            }
+        }
+        if (!tempPage.getContents().isEmpty()) {
             this.pages.add(tempPage);
         }
     }
