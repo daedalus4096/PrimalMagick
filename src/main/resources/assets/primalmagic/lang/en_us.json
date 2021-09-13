@@ -1959,6 +1959,8 @@
     "primalmagic.grimoire.section_header.unavailable": "Unavailable",
     "primalmagic.grimoire.missing_block": "Missing block!",
     "primalmagic.grimoire.upcoming_tooltip_header": "Missing requirements:",
+    "primalmagic.grimoire.recipe_metadata.discipline": "Discipline:",
+    "primalmagic.grimoire.recipe_metadata.entry": "Research entry:",
     
     "primalmagic.research_table.missing_writing_supplies": "Missing writing supplies!",
     "primalmagic.research_table.ready": "Ready to begin!",

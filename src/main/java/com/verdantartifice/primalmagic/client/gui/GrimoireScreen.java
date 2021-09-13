@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.AttunementIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.AttunementPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.DisciplineIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.DisciplinePage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.RecipeMetadataPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.OtherIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageImage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageString;
@@ -871,6 +872,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         mc.level.getRecipeManager().byKey(recipeLoc).ifPresent(recipe -> {
             AbstractRecipePage page = RecipePageFactory.createPage(recipe);
             if (page != null) {
+                this.pages.add(new RecipeMetadataPage(recipe, true));
                 this.pages.add(page);
             }
         });
