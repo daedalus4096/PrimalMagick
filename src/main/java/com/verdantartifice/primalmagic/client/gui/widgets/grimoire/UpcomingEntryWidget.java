@@ -65,7 +65,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
                     tooltip.add(new TranslatableComponent(parentEntry.getNameTranslationKey()));
                 }
             }
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, p_renderButton_1_, p_renderButton_2_);
+            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
         }
     }
 
