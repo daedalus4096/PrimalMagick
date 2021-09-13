@@ -167,6 +167,8 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             this.parseAttunementPage((Source)this.menu.getTopic());
         } else if (this.menu.getTopic() instanceof Enchantment) {
             this.parseRuneEnchantmentPage((Enchantment)this.menu.getTopic());
+        } else if (this.menu.getTopic() instanceof ResourceLocation recipeLoc) {
+            this.parseRecipeEntryPages(recipeLoc);
         } else if (StatisticsPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseStatsPages();
         } else if (AttunementIndexPage.TOPIC.equals(this.menu.getTopic())) {
@@ -847,6 +849,17 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         if (!tempPage.getContents().isEmpty()) {
             this.pages.add(tempPage);
         }
+    }
+    
+    protected void parseRecipeEntryPages(ResourceLocation recipeLoc) {
+        this.currentStageIndex = 0;
+        Minecraft mc = this.getMinecraft();
+        mc.level.getRecipeManager().byKey(recipeLoc).ifPresent(recipe -> {
+            AbstractRecipePage page = RecipePageFactory.createPage(recipe);
+            if (page != null) {
+                this.pages.add(page);
+            }
+        });
     }
     
     public boolean nextPage() {

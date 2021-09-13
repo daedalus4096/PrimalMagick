@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RecipeEntryButton;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.client.Minecraft;
@@ -64,10 +65,12 @@ public class RecipeIndexPage extends AbstractPage {
         Minecraft mc = screen.getMinecraft();
         RecipeManager recipeManager = mc.level.getRecipeManager();
         for (ResourceLocation loc : this.getContents()) {
-            // TODO Render a recipe entry button for each recipe
+            // Render a recipe entry button for each recipe
+            final int yPos = y; // Temporary final field so as to work with closure
             recipeManager.byKey(loc).ifPresent(recipe -> {
-                
+                screen.addWidgetToScreen(new RecipeEntryButton(x + 12 + (side * 140), yPos, recipe.getResultItem().getHoverName(), screen, loc));
             });
+            y += 12;
         }
     }
 
