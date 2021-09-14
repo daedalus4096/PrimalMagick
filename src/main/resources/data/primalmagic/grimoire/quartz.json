@@ -1,0 +1,20 @@
+{
+  "key": "QUARTZ",
+  "name": "primalmagic.research.quartz.title",
+  "discipline": "SCANS",
+  "hidden": true,
+  "parents": [
+    "UNLOCK_SCANS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.quartz.text.stage.1",
+      "recipes": [
+        "primalmagic:quartz_nugget",
+        "primalmagic:quartz_from_nuggets",
+        "primalmagic:quartz_from_smelting"
+      ]
+    }
+  ],
+  "addenda": []
+}

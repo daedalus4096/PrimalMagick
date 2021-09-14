@@ -28,6 +28,10 @@
       },
       "recipes": [
         "primalmagic:hallowsteel_ingot",
+        "primalmagic:hallowsteel_nugget",
+        "primalmagic:hallowsteel_ingot_from_nuggets",
+        "primalmagic:hallowsteel_block",
+        "primalmagic:hallowsteel_ingots_from_block",
         "primalmagic:hallowsteel_sword",
         "primalmagic:hallowsteel_trident",
         "primalmagic:hallowsteel_bow",

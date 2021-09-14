@@ -25,6 +25,12 @@
       },
       "recipes": [
         "primalmagic:earthshatter_hammer",
+        "primalmagic:iron_grit_from_ore",
+        "primalmagic:iron_grit_from_raw_metal",
+        "primalmagic:gold_grit_from_ore",
+        "primalmagic:gold_grit_from_raw_metal",
+        "primalmagic:copper_grit_from_ore",
+        "primalmagic:copper_grit_from_raw_metal",
         "primalmagic:iron_ingot_from_grit_smelting",
         "primalmagic:gold_ingot_from_grit_smelting",
         "primalmagic:copper_ingot_from_grit_smelting"

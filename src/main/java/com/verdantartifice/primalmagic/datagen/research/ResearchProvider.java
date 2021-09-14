@@ -251,7 +251,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_HEARTWOOD", discipline).parent("ADVANCED_WANDMAKING")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.HEARTWOOD.get()).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "charcoal_from_smelting_heartwood")).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CAP_IRON", discipline).parent("ADVANCED_WANDMAKING")
@@ -264,7 +264,10 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("EARTHSHATTER_HAMMER", discipline).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.RAW_IRON).requiredItemStack(Items.RAW_GOLD).requiredItemStack(Items.RAW_COPPER).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.EARTHSHATTER_HAMMER.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "iron_ingot_from_grit_smelting"))
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.EARTHSHATTER_HAMMER.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_ore"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_ore"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_ore"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "iron_ingot_from_grit_smelting"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "gold_ingot_from_grit_smelting")).recipe(new ResourceLocation(PrimalMagic.MODID, "copper_ingot_from_grit_smelting")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUNLAMP", discipline).parent("EXPERT_MANAWEAVING").parent("PRIMALITE")
@@ -528,7 +531,9 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_SHARD_BLOOD.get()).requiredItemStack(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
                     .requiredItemStack(ItemsPM.ESSENCE_SHARD_VOID.get()).requiredCraftStack(ItemsPM.PRIMALITE_INGOT.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 2).attunement(Source.INFERNAL, 2).attunement(Source.VOID, 2)
-                    .recipe(ItemsPM.HEXIUM_INGOT.get()).recipe(ItemsPM.HEXIUM_SWORD.get()).recipe(ItemsPM.HEXIUM_TRIDENT.get()).recipe(ItemsPM.HEXIUM_BOW.get()).recipe(ItemsPM.HEXIUM_SHOVEL.get())
+                    .recipe(ItemsPM.HEXIUM_INGOT.get()).recipe(ItemsPM.HEXIUM_NUGGET.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "hexium_ingot_from_nuggets"))
+                    .recipe(ItemsPM.HEXIUM_BLOCK.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "hexium_ingots_from_block"))
+                    .recipe(ItemsPM.HEXIUM_SWORD.get()).recipe(ItemsPM.HEXIUM_TRIDENT.get()).recipe(ItemsPM.HEXIUM_BOW.get()).recipe(ItemsPM.HEXIUM_SHOVEL.get())
                     .recipe(ItemsPM.HEXIUM_PICKAXE.get()).recipe(ItemsPM.HEXIUM_AXE.get()).recipe(ItemsPM.HEXIUM_HOE.get()).recipe(ItemsPM.HEXIUM_FISHING_ROD.get())
                     .recipe(ItemsPM.HEXIUM_HEAD.get()).recipe(ItemsPM.HEXIUM_CHEST.get()).recipe(ItemsPM.HEXIUM_LEGS.get()).recipe(ItemsPM.HEXIUM_FEET.get())
                     .recipe(ItemsPM.HEXIUM_SHIELD.get()).build())
@@ -568,7 +573,9 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("HALLOWSTEEL", discipline).parent("SUPREME_ALCHEMY").parent("HEXIUM").parent("CRYSTAL_SYNTHESIS").parent("t_discover_hallowed")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get()).requiredCraftStack(ItemsPM.HEXIUM_INGOT.get())
                     .requiredKnowledge(KnowledgeType.THEORY, 3).build())
-            .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 3).recipe(ItemsPM.HALLOWSTEEL_INGOT.get()).recipe(ItemsPM.HALLOWSTEEL_SWORD.get())
+            .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 3).recipe(ItemsPM.HALLOWSTEEL_INGOT.get()).recipe(ItemsPM.HALLOWSTEEL_NUGGET.get())
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "hallowsteel_ingot_from_nuggets")).recipe(ItemsPM.HALLOWSTEEL_BLOCK.get())
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "hallowsteel_ingots_from_block")).recipe(ItemsPM.HALLOWSTEEL_SWORD.get())
                     .recipe(ItemsPM.HALLOWSTEEL_TRIDENT.get()).recipe(ItemsPM.HALLOWSTEEL_BOW.get()).recipe(ItemsPM.HALLOWSTEEL_SHOVEL.get()).recipe(ItemsPM.HALLOWSTEEL_PICKAXE.get())
                     .recipe(ItemsPM.HALLOWSTEEL_AXE.get()).recipe(ItemsPM.HALLOWSTEEL_HOE.get()).recipe(ItemsPM.HALLOWSTEEL_FISHING_ROD.get()).recipe(ItemsPM.HALLOWSTEEL_HEAD.get())
                     .recipe(ItemsPM.HALLOWSTEEL_CHEST.get()).recipe(ItemsPM.HALLOWSTEEL_LEGS.get()).recipe(ItemsPM.HALLOWSTEEL_FEET.get()).recipe(ItemsPM.HALLOWSTEEL_SHIELD.get()).build())
@@ -1221,12 +1228,17 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.MOONWOOD_SLAB.get()).recipe(ItemsPM.MOONWOOD_STAIRS.get()).recipe(ItemsPM.MOONWOOD_PILLAR.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("ROCK_SALT", discipline).hidden().parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.REFINED_SALT.get()).recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.REFINED_SALT.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "rock_salt_from_smelting"))
+                    .recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
                     .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
                     .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("ALCHEMICAL_WASTE", discipline).hidden().parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("QUARTZ", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.QUARTZ_NUGGET.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "quartz_from_nuggets"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "quartz_from_smelting")).build())
             .build(consumer);
     }
     

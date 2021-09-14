@@ -18,7 +18,8 @@
     {
       "text": "primalmagic.research.wand_core_heartwood.text.stage.2",
       "recipes": [
-        "primalmagic:heartwood_wand_core_item"
+        "primalmagic:heartwood_wand_core_item",
+        "primalmagic:charcoal_from_smelting_heartwood"
       ]
     }
   ],

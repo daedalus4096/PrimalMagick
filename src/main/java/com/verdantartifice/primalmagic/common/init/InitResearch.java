@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
+import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.resources.ResourceLocation;
@@ -87,5 +88,10 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanEntityTagResearchTrigger(EntityTypeTagsPM.GOLEMS, SimpleResearchKey.parse("t_golem"), false));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.NETHER_STARS, SimpleResearchKey.parse("b_scan_nether_star"), false));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.ALCHEMICAL_WASTE.get(), SimpleResearchKey.parse("ALCHEMICAL_WASTE")));
+        SimpleResearchKey quartz = SimpleResearchKey.parse("QUARTZ");
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.GEMS_QUARTZ, quartz));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.ORES_QUARTZ, quartz));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.STORAGE_BLOCKS_QUARTZ, quartz));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsForgeExt.NUGGETS_QUARTZ, quartz));
     }
 }

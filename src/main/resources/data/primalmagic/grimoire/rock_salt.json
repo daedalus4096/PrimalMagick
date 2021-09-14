@@ -11,6 +11,7 @@
       "text": "primalmagic.research.rock_salt.text.stage.1",
       "recipes": [
         "primalmagic:refined_salt",
+        "primalmagic:rock_salt_from_smelting",
         "primalmagic:salted_baked_potato",
         "primalmagic:salted_beetroot_soup",
         "primalmagic:salted_cooked_beef",
