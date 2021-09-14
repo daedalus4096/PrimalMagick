@@ -2,8 +2,10 @@ package com.verdantartifice.primalmagic.common.research;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,6 +26,7 @@ import com.verdantartifice.primalmagic.common.stats.StatsPM;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -49,6 +52,9 @@ public class ResearchManager {
     // Registry of all defined scan triggers
     private static final List<IScanTrigger> SCAN_TRIGGERS = new ArrayList<>();
     
+    // Reverse map of recipe IDs to the research entries that contain the stage or addendum that grants them
+    private static final Map<ResourceLocation, ResearchEntry> RECIPE_MAP = new HashMap<>();
+    
     public static Set<Integer> getAllCraftingReferences() {
         return Collections.unmodifiableSet(CRAFTING_REFERENCES);
     }
@@ -59,6 +65,19 @@ public class ResearchManager {
     
     static void clearCraftingReferences() {
         CRAFTING_REFERENCES.clear();
+    }
+    
+    @Nullable
+    public static ResearchEntry getEntryForRecipe(ResourceLocation recipeId) {
+        return RECIPE_MAP.get(recipeId);
+    }
+    
+    static void addRecipeMapping(ResourceLocation recipeId, ResearchEntry entry) {
+        RECIPE_MAP.put(recipeId, entry);
+    }
+    
+    static void clearRecipeMap() {
+        RECIPE_MAP.clear();
     }
     
     public static boolean isSyncScheduled(@Nullable Player player) {

@@ -736,6 +736,7 @@
     "tooltip.primalmagic.rune.self": "\"San\"",
     "tooltip.primalmagic.rune.power": "\"Par\"",
     "tooltip.primalmagic.none": "None",
+    "tooltip.primalmagic.question_marks": "???",
     "tooltip.primalmagic.more_info": "Hold Shift for more information",
     "tooltip.primalmagic.analyze_button.1": "Analyze item affinities",
     "tooltip.primalmagic.analyze_button.2": "Item will be destroyed",

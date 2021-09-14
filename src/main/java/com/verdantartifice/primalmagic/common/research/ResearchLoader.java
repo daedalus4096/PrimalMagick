@@ -54,6 +54,7 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
         ResearchManager.clearCraftingReferences();
+        ResearchManager.clearRecipeMap();
         ResearchDisciplines.clearAllResearch();
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {
             ResourceLocation location = entry.getKey();
@@ -67,6 +68,10 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
                 ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(researchEntry.getDisciplineKey());
                 if (discipline == null || !discipline.addEntry(researchEntry)) {
                     LOGGER.error("Could not add invalid entry: {}", location);
+                } else {
+                    // Assemble derived data structures
+                    researchEntry.getStages().forEach(s -> s.getRecipes().forEach(r -> ResearchManager.addRecipeMapping(r, researchEntry)));
+                    researchEntry.getAddenda().forEach(a -> a.getRecipes().forEach(r -> ResearchManager.addRecipeMapping(r, researchEntry)));
                 }
             } catch (Exception e) {
                 LOGGER.error("Parsing error loading research entry {}", location, e);
@@ -87,11 +92,12 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
             if (discipline == null || !discipline.addEntry(researchEntry)) {
                 LOGGER.error("Could not update invalid research entry");
             } else {
-                for (ResearchStage stage : researchEntry.getStages()) {
-                    for (int craftRef : stage.getCraftReference()) {
-                        ResearchManager.addCraftingReference(craftRef);
-                    }
-                }
+                // Assemble derived data structures
+                researchEntry.getStages().forEach(s -> {
+                    s.getCraftReference().forEach(c -> ResearchManager.addCraftingReference(c));
+                    s.getRecipes().forEach(r -> ResearchManager.addRecipeMapping(r, researchEntry));
+                });
+                researchEntry.getAddenda().forEach(a -> a.getRecipes().forEach(r -> ResearchManager.addRecipeMapping(r, researchEntry)));
             }
         }
         for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
