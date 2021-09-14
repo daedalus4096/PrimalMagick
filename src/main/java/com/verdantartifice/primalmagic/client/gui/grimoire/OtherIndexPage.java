@@ -9,6 +9,8 @@ import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RuneEnchantme
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.StatisticsButton;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagic.common.research.ResearchEntries;
+import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
@@ -49,9 +51,12 @@ public class OtherIndexPage extends AbstractPage {
         }
         
         // Add recipes button
-        text = new TranslatableComponent("primalmagic.grimoire.recipe_index_header");
-        screen.addWidgetToScreen(new RecipeIndexButton(x + 12 + (side * 140), y, text, screen));
-        y += 12;
+        ResearchEntry firstSteps = ResearchEntries.getEntry(SimpleResearchKey.FIRST_STEPS);
+        if (firstSteps != null && (firstSteps.isComplete(mc.player) || firstSteps.isInProgress(mc.player))) {
+            text = new TranslatableComponent("primalmagic.grimoire.recipe_index_header");
+            screen.addWidgetToScreen(new RecipeIndexButton(x + 12 + (side * 140), y, text, screen));
+            y += 12;
+        }
         
         // Add rune enchantments button if rune enchantments are unlocked
         if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
