@@ -93,7 +93,12 @@ public class ResearchManager {
         
         // First check to see if the current stage for the entry has the recipe listed
         int currentStageIndex = know.getResearchStage(entry.getKey());
-        if (currentStageIndex >= 0 && currentStageIndex < entry.getStages().size()) {
+        if (currentStageIndex == entry.getStages().size()) {
+            ResearchStage currentStage = entry.getStages().get(currentStageIndex - 1);
+            if (currentStage.getRecipes().contains(recipeId)) {
+                return true;
+            }
+        } else if (currentStageIndex >= 0 && currentStageIndex < entry.getStages().size()) {
             ResearchStage currentStage = entry.getStages().get(currentStageIndex);
             if (currentStage.getRecipes().contains(recipeId)) {
                 return true;
