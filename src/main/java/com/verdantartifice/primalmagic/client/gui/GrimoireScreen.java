@@ -862,7 +862,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             CompoundResearchKey parents = hrr.getRequiredResearch();
             return (parents == null || parents.isKnownByStrict(mc.player));
         } else {
-            return true;
+            return ResearchManager.isRecipeVisible(recipe.getId(), mc.player);
         }
     }
     

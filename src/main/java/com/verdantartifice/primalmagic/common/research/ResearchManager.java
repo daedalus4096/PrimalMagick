@@ -80,6 +80,37 @@ public class ResearchManager {
         RECIPE_MAP.clear();
     }
     
+    public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {
+        IPlayerKnowledge know = PrimalMagicCapabilities.getKnowledge(player);
+        if (know == null) {
+            throw new IllegalStateException("No knowledge provider for player");
+        }
+        ResearchEntry entry = ResearchManager.getEntryForRecipe(recipeId);
+        if (entry == null) {
+            // If the recipe has no controlling research, then assume it's visible
+            return true;
+        }
+        
+        // First check to see if the current stage for the entry has the recipe listed
+        int currentStageIndex = know.getResearchStage(entry.getKey());
+        if (currentStageIndex >= 0 && currentStageIndex < entry.getStages().size()) {
+            ResearchStage currentStage = entry.getStages().get(currentStageIndex);
+            if (currentStage.getRecipes().contains(recipeId)) {
+                return true;
+            }
+        }
+        
+        // If that doesn't pan out, check to see if any unlocked addendum lists the recipe
+        for (ResearchAddendum addendum : entry.getAddenda()) {
+            if (addendum.getRequiredResearch() != null && addendum.getRecipes().contains(recipeId) && addendum.getRequiredResearch().isKnownByStrict(player)) {
+                return true;
+            }
+        }
+        
+        // Otherwise, return false
+        return false;
+    }
+    
     public static boolean isSyncScheduled(@Nullable Player player) {
         if (player == null) {
             return false;
