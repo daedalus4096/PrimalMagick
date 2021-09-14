@@ -3,6 +3,7 @@ v0.0.9-alpha
 * Add grimoire pages for smelting recipes
 * Show widget on research table listing active research aids
 * Add upcoming section to grimoire discipline pages
+* Add index of unlocked recipes to grimoire
 
 v0.0.8-alpha
 ------------

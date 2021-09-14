@@ -21,9 +21,11 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.AttunementIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.AttunementPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.DisciplineIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.DisciplinePage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.RecipeMetadataPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.OtherIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageImage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageString;
+import com.verdantartifice.primalmagic.client.gui.grimoire.RecipeIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RecipePageFactory;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RequirementsPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RuneEnchantmentIndexPage;
@@ -35,6 +37,8 @@ import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.GrimoireContainer;
+import com.verdantartifice.primalmagic.common.crafting.IHasRequiredResearch;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchAddendum;
 import com.verdantartifice.primalmagic.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
@@ -166,12 +170,16 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             this.parseAttunementPage((Source)this.menu.getTopic());
         } else if (this.menu.getTopic() instanceof Enchantment) {
             this.parseRuneEnchantmentPage((Enchantment)this.menu.getTopic());
+        } else if (this.menu.getTopic() instanceof ResourceLocation recipeLoc) {
+            this.parseRecipeEntryPages(recipeLoc);
         } else if (StatisticsPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseStatsPages();
         } else if (AttunementIndexPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseAttunementIndexPages();
         } else if (RuneEnchantmentIndexPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseRuneEnchantmentIndexPages();
+        } else if (RecipeIndexPage.TOPIC.equals(this.menu.getTopic())) {
+            this.parseRecipeIndexPages();
         }
     }
     
@@ -821,6 +829,53 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         if (!tempPage.getEnchantments().isEmpty()) {
             this.pages.add(tempPage);
         }
+    }
+    
+    protected void parseRecipeIndexPages() {
+        this.currentStageIndex = 0;
+        int heightRemaining = 137;
+        Minecraft mc = this.getMinecraft();
+        RecipeIndexPage tempPage = new RecipeIndexPage(true);
+        
+        List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
+                .sorted(Comparator.comparing(r -> r.getResultItem().getHoverName().getString())).collect(Collectors.toList());
+        for (Recipe<?> recipe : processedRecipes) {
+            tempPage.addContent(recipe.getId());
+            heightRemaining -= 12;
+            if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                heightRemaining = 155;
+                this.pages.add(tempPage);
+                tempPage = new RecipeIndexPage();
+            }
+        }
+        if (!tempPage.getContents().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+    }
+    
+    protected static boolean isValidRecipeIndexEntry(Recipe<?> recipe) {
+        Minecraft mc = Minecraft.getInstance();
+        if (!recipe.getId().getNamespace().equals(PrimalMagic.MODID) || RecipePageFactory.createPage(recipe) == null) {
+            return false;
+        }
+        if (recipe instanceof IHasRequiredResearch hrr) {
+            CompoundResearchKey parents = hrr.getRequiredResearch();
+            return (parents == null || parents.isKnownByStrict(mc.player));
+        } else {
+            return ResearchManager.isRecipeVisible(recipe.getId(), mc.player);
+        }
+    }
+    
+    protected void parseRecipeEntryPages(ResourceLocation recipeLoc) {
+        this.currentStageIndex = 0;
+        Minecraft mc = this.getMinecraft();
+        mc.level.getRecipeManager().byKey(recipeLoc).ifPresent(recipe -> {
+            AbstractRecipePage page = RecipePageFactory.createPage(recipe);
+            if (page != null) {
+                this.pages.add(new RecipeMetadataPage(recipe, true));
+                this.pages.add(page);
+            }
+        });
     }
     
     public boolean nextPage() {

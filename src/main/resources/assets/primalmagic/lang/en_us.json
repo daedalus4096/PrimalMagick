@@ -736,6 +736,7 @@
     "tooltip.primalmagic.rune.self": "\"San\"",
     "tooltip.primalmagic.rune.power": "\"Par\"",
     "tooltip.primalmagic.none": "None",
+    "tooltip.primalmagic.question_marks": "???",
     "tooltip.primalmagic.more_info": "Hold Shift for more information",
     "tooltip.primalmagic.analyze_button.1": "Analyze item affinities",
     "tooltip.primalmagic.analyze_button.2": "Item will be destroyed",
@@ -1710,6 +1711,9 @@
     "primalmagic.research.alchemical_waste.title": "Alchemical Waste",
     "primalmagic.research.alchemical_waste.text.stage.1": "Oh, gross.  What is this garbage?  It's not essence, that's for sure.<BR>I thought I had my equipment properly configured to process every type of magical essence there was.  Perhaps this waste is an indicator that I haven't learned as much as I think.<BR>I should keep an eye out for objects bearing unknown magical signatures.  Save them for later, maybe.  This gunk, on the other hand, I can definitely throw out.",
     
+    "primalmagic.research.quartz.title": "Quartz",
+    "primalmagic.research.quartz.text.stage.1": "Curious...<BR>I've heard tell of this mineral quartz before, but I was always under the impression that it wasn't found in the Overworld.  Guess I was wrong.<BR>Notes in the Grimoire have taught me techniques to carve up a single piece of quartz into multiple slivers.  This should allow me to use it sparingly as needed.",
+    
     "commands.primalmagic.research.list": "All research for %1$s: %2$s",
     "commands.primalmagic.research.reset": "Resetting all research for %1$s",
     "commands.primalmagic.research.reset.target": "%1$s has reset all of your research",
@@ -1930,6 +1934,7 @@
     "primalmagic.grimoire.stats_header": "Statistics",
     "primalmagic.grimoire.attunement_header": "Attunements",
     "primalmagic.grimoire.rune_enchantment_header": "Rune Enchantments",
+    "primalmagic.grimoire.recipe_index_header": "Recipes",
     "primalmagic.grimoire.attunement_gain_header": "Attunements Gained",
     "primalmagic.grimoire.addendum_header": "Addendum %1$d",
     "primalmagic.grimoire.requirements_header": "Requirements",
@@ -1958,6 +1963,8 @@
     "primalmagic.grimoire.section_header.unavailable": "Unavailable",
     "primalmagic.grimoire.missing_block": "Missing block!",
     "primalmagic.grimoire.upcoming_tooltip_header": "Missing requirements:",
+    "primalmagic.grimoire.recipe_metadata.discipline": "Discipline:",
+    "primalmagic.grimoire.recipe_metadata.entry": "Research entry:",
     
     "primalmagic.research_table.missing_writing_supplies": "Missing writing supplies!",
     "primalmagic.research_table.ready": "Ready to begin!",

@@ -30,6 +30,10 @@
       },
       "recipes": [
         "primalmagic:primalite_ingot",
+        "primalmagic:primalite_nugget",
+        "primalmagic:primalite_ingot_from_nuggets",
+        "primalmagic:primalite_block",
+        "primalmagic:primalite_ingots_from_block",
         "primalmagic:primalite_sword",
         "primalmagic:primalite_trident",
         "primalmagic:primalite_bow",

@@ -34,6 +34,10 @@
       },
       "recipes": [
         "primalmagic:hexium_ingot",
+        "primalmagic:hexium_nugget",
+        "primalmagic:hexium_ingot_from_nuggets",
+        "primalmagic:hexium_block",
+        "primalmagic:hexium_ingots_from_block",
         "primalmagic:hexium_sword",
         "primalmagic:hexium_trident",
         "primalmagic:hexium_bow",

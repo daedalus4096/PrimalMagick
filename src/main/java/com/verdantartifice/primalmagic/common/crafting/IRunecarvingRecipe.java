@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagic.common.crafting;
 
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -14,14 +13,8 @@ import net.minecraft.world.item.crafting.RecipeType;
  *  
  * @author Daedalus4096
  */
-public interface IRunecarvingRecipe extends Recipe<Container> {
-    /**
-     * Get the required research for the recipe.
-     * 
-     * @return the required research for the recipe
-     */
-    public CompoundResearchKey getRequiredResearch();
-    
+public interface IRunecarvingRecipe extends Recipe<Container>, IHasRequiredResearch {
+    @Override
     default RecipeType<?> getType() {
         return RecipeTypesPM.RUNECARVING;
     }
