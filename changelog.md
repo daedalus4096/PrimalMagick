@@ -1,3 +1,7 @@
+v0.0.10-alpha
+-------------
+* Increment to Forge version 37.0.59
+
 v0.0.9-alpha
 ------------
 * Add grimoire pages for smelting recipes
