@@ -22,6 +22,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -180,5 +182,23 @@ public class TreefolkEntity extends PathfinderMob implements NeutralMob, RangedA
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return false;
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (stack.is(Items.FLINT_AND_STEEL)) {
+            this.level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
+            if (!this.level.isClientSide) {
+                this.setSecondsOnFire(10);
+                this.setLastHurtByMob(player);
+                stack.hurtAndBreak(1, player, p -> {
+                    p.broadcastBreakEvent(hand);
+                });
+            }
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
+        } else {
+            return super.mobInteract(player, hand);
+        }
     }
 }
