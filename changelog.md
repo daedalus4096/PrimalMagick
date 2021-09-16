@@ -1,3 +1,7 @@
+v0.0.11-alpha
+-------------
+* Update research table project background
+
 v0.0.10-alpha
 -------------
 * Increment to Forge version 37.0.59
