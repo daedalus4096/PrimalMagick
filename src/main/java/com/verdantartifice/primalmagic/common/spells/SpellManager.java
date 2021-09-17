@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.spells;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,6 +28,8 @@ import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
@@ -63,6 +66,8 @@ public class SpellManager {
     protected static final Set<EntityType<?>> POLYMORPH_ALLOW = new HashSet<>();
     protected static final Set<EntityType<?>> POLYMORPH_BAN = new HashSet<>();
     
+    protected static final DecimalFormat COOLDOWN_FORMATTER = new DecimalFormat("#######.##");
+
     @Nonnull
     protected static List<String> getFilteredTypes(@Nullable Player player, @Nonnull List<String> types, @Nonnull Map<String, Supplier<CompoundResearchKey>> suppliers) {
         // Compute a list of spell component types that the given player is able to use by dint of their accumulated research
@@ -251,5 +256,35 @@ public class SpellManager {
             // Don't allow misc entities like arrows and fishing bobbers unless explicitly allow-listed
             return !entityType.getCategory().equals(MobCategory.MISC);
         }
+    }
+    
+    @Nonnull
+    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, boolean indent) {
+        List<Component> retVal = new ArrayList<>();
+        TextComponent leader = indent ? new TextComponent("    ") : new TextComponent("");
+        if (spell != null) {
+            ISpellVehicle vehicle = spell.getVehicle();
+            if (vehicle != null) {
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.vehicle", vehicle.getDetailTooltip())));
+            }
+            
+            ISpellPayload payload = spell.getPayload();
+            if (payload != null) {
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.payload", payload.getDetailTooltip())));
+            }
+            
+            ISpellMod primary = spell.getPrimaryMod();
+            ISpellMod secondary = spell.getSecondaryMod();
+            if (primary != null && primary.isActive() && secondary != null && secondary.isActive()) {
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.double", primary.getDetailTooltip(), secondary.getDetailTooltip())));
+            } else if (primary != null && primary.isActive()) {
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.single", primary.getDetailTooltip())));
+            } else if (secondary != null && secondary.isActive()) {
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.single", secondary.getDetailTooltip())));
+            }
+            
+            retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));
+        }
+        return retVal;
     }
 }

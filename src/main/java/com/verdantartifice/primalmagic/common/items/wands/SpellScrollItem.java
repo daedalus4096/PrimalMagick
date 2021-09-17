@@ -65,6 +65,7 @@ public class SpellScrollItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
+        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(this.getSpell(stack), false));
         tooltip.add(TOOLTIP);
     }
 

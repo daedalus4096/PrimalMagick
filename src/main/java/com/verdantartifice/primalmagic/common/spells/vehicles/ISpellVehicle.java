@@ -52,6 +52,15 @@ public interface ISpellVehicle extends INBTSerializable<CompoundTag> {
     public Component getTypeName();
     
     /**
+     * Get a display text component to show in the details tooltip of the spell.
+     * 
+     * @return the spell vehicle details
+     */
+    public default Component getDetailTooltip() {
+        return this.getTypeName();
+    }
+    
+    /**
      * Get a display text component containing the human-friendly text to be used to identify the
      * spell vehicle in the default of a spell package.
      * 

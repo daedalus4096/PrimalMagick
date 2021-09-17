@@ -63,6 +63,15 @@ public interface ISpellMod extends INBTSerializable<CompoundTag> {
     public Component getTypeName();
     
     /**
+     * Get a display text component to show in the details tooltip of the spell.
+     * 
+     * @return the spell mod details
+     */
+    public default Component getDetailTooltip() {
+        return this.getTypeName();
+    }
+    
+    /**
      * Get a display text component containing the human-friendly text to be used to identify the
      * spell mod in the default of a spell package.
      * 
