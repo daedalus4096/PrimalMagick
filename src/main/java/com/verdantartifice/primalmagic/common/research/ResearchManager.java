@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
@@ -55,6 +56,14 @@ public class ResearchManager {
     // Reverse map of recipe IDs to the research entries that contain the stage or addendum that grants them
     private static final Map<ResourceLocation, ResearchEntry> RECIPE_MAP = new HashMap<>();
     
+    // Set of research keys whose children should not be shown in the Upcoming section of the grimoire
+    private static final Set<SimpleResearchKey> OPAQUE_RESEARCH = ImmutableSet.of(
+            Source.BLOOD.getDiscoverKey(), 
+            Source.INFERNAL.getDiscoverKey(), 
+            Source.VOID.getDiscoverKey(), 
+            Source.HALLOWED.getDiscoverKey()
+    );
+    
     public static Set<Integer> getAllCraftingReferences() {
         return Collections.unmodifiableSet(CRAFTING_REFERENCES);
     }
@@ -78,6 +87,10 @@ public class ResearchManager {
     
     static void clearRecipeMap() {
         RECIPE_MAP.clear();
+    }
+    
+    public static boolean isOpaque(SimpleResearchKey key) {
+        return OPAQUE_RESEARCH.contains(key);
     }
     
     public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {

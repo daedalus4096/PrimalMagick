@@ -192,10 +192,14 @@ public class ResearchEntry {
     }
     
     public boolean isUpcoming(@Nonnull Player player) {
-        List<ResearchEntry> parentEntries = ResearchEntries.getEntries(this.getParentResearch());
-        for (ResearchEntry parent : parentEntries) {
-            if (!parent.isAvailable(player)) {
+        for (SimpleResearchKey parentKey : this.getParentResearch().getKeys()) {
+            if (ResearchManager.isOpaque(parentKey)) {
                 return false;
+            } else {
+                ResearchEntry parent = ResearchEntries.getEntry(parentKey);
+                if (!parent.isAvailable(player)) {
+                    return false;
+                }
             }
         }
         return true;

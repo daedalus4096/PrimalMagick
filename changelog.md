@@ -3,6 +3,7 @@ v0.0.11-alpha
 * Update research table project background
 * Made Flint and Steel set Treefolk on fire
 * Add requirement of Sea Dust to Cryotreatment research
+* Occlude some research entries from the Upcoming section of the Grimoire
 
 v0.0.10-alpha
 -------------
