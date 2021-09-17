@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -53,11 +55,6 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
-        return 3.0F + this.getModdedPropertyValue("power", spell, spellSource);
-    }
-
-    @Override
     protected String getPayloadType() {
         return TYPE;
     }
@@ -65,5 +62,10 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     @Override
     public int getBaseManaCost() {
         return 2 * this.getPropertyValue("power");
+    }
+
+    @Override
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+        return new TranslatableComponent("primalmagic.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource)));
     }
 }

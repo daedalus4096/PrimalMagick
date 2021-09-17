@@ -41,6 +41,10 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         return propMap;
     }
     
+    protected float getBaseDamage(SpellPackage spell, ItemStack spellSource) {
+        return 3.0F + this.getModdedPropertyValue("power", spell, spellSource);
+    }
+    
     /**
      * Compute the total amount of damage to be done by this payload.
      * 
@@ -49,7 +53,9 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
      * @param spellSource the wand or scroll containing the spell package
      * @return the total amount of damage to be done
      */
-    protected abstract float getTotalDamage(Entity target, SpellPackage spell, @Nullable ItemStack spellSource);
+    protected float getTotalDamage(Entity target, SpellPackage spell, @Nullable ItemStack spellSource) {
+        return this.getBaseDamage(spell, spellSource);
+    }
     
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
         return DamageSource.thrown(target, source);

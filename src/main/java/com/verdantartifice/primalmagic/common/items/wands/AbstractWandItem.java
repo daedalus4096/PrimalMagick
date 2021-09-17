@@ -319,7 +319,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
                         tooltip.add(new TranslatableComponent("primalmagic.spells.name_selected", spell.getName()));
-                        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, true));
+                        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, true));
                     } else {
                         tooltip.add(new TranslatableComponent("primalmagic.spells.name_unselected", spell.getName()));
                     }

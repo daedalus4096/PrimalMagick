@@ -110,7 +110,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundTag> {
      * 
      * @return the spell payload details
      */
-    public default Component getDetailTooltip() {
+    public default Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
         return this.getTypeName();
     }
     

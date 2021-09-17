@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.spells.payloads;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
  * @author Daedalus4096
  */
 public abstract class AbstractSpellPayload implements ISpellPayload {
+    protected static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("#######.##");
+
     protected final Map<String, SpellProperty> properties;
     
     public AbstractSpellPayload() {

@@ -259,7 +259,7 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, boolean indent) {
+    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @Nonnull ItemStack spellSource, boolean indent) {
         List<Component> retVal = new ArrayList<>();
         TextComponent leader = indent ? new TextComponent("    ") : new TextComponent("");
         if (spell != null) {
