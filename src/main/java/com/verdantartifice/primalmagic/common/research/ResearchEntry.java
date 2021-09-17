@@ -197,7 +197,7 @@ public class ResearchEntry {
                 return false;
             } else {
                 ResearchEntry parent = ResearchEntries.getEntry(parentKey);
-                if (!parent.isAvailable(player)) {
+                if (parent != null && !parent.isAvailable(player)) {
                     return false;
                 }
             }
