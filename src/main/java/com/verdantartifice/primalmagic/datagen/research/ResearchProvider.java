@@ -600,7 +600,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_HEAVENLY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("CRYOTREATMENT", discipline).parent("STONEMELDING")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_SEA.get()).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 1).recipe(PrimalMagic.MODID, "ice_from_cryotreatment").recipe(PrimalMagic.MODID, "obsidian_from_cryotreatment").build())
             .build(consumer);
         ResearchEntryBuilder.entry("SANGUINE_CRUCIBLE", discipline).parent("MASTER_ALCHEMY").parent("HEXIUM").parent("CRYSTAL_SYNTHESIS").parent("SPELL_PAYLOAD_CONJURE_ANIMAL")

@@ -8,6 +8,9 @@
   "stages": [
     {
       "text": "primalmagic.research.cryotreatment.text.stage.1",
+      "required_item": [
+        "primalmagic:essence_dust_sea"
+      ],
       "required_knowledge": [
         "OBSERVATION;1"
       ]
