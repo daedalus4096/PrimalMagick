@@ -6,6 +6,7 @@ v0.0.11-alpha
 * Occlude some research entries from the Upcoming section of the Grimoire
 * Add active spell details to wand and scroll tooltips
 * Fix source omissions in mana arrow recipes
+* Research tables now drop their contents when broken
 
 v0.0.10-alpha
 -------------
