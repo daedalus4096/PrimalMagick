@@ -284,6 +284,10 @@ public class SpellManager {
             }
             
             retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));
+            
+            if (!spellSource.is(ItemsPM.SPELL_SCROLL_FILLED.get())) {
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mana_cost", spell.getManaCost().getText())));
+            }
         }
         return retVal;
     }

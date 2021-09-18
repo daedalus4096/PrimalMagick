@@ -4,6 +4,7 @@ v0.0.11-alpha
 * Made Flint and Steel set Treefolk on fire
 * Add requirement of Sea Dust to Cryotreatment research
 * Occlude some research entries from the Upcoming section of the Grimoire
+* Add active spell details to wand and scroll tooltips
 
 v0.0.10-alpha
 -------------
