@@ -1,3 +1,7 @@
+v0.0.12-alpha
+-------------
+* Allow clearing wand spells using the Wand Inscription Table
+
 v0.0.11-alpha
 -------------
 * Update research table project background

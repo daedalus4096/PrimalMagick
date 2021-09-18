@@ -271,4 +271,11 @@ public interface IWand {
      * @return true if the spell was successfully added, false otherwise
      */
     public boolean addSpell(@Nullable ItemStack stack, @Nullable SpellPackage spell);
+    
+    /**
+     * Remove all spell packages from the given wand stack's list of inscribed spells.
+     * 
+     * @param stack the wand stack to be modified
+     */
+    public void clearSpells(@Nullable ItemStack stack);
 }

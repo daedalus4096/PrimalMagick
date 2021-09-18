@@ -93,6 +93,11 @@ public class MundaneWandItem extends AbstractWandItem {
     }
 
     @Override
+    public void clearSpells(ItemStack stack) {
+        // Mundane wands can't carry spells
+    }
+
+    @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
             final BlockEntityWithoutLevelRenderer renderer = new MundaneWandISTER();

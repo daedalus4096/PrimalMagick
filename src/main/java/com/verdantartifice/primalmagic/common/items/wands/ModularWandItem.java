@@ -367,6 +367,11 @@ public class ModularWandItem extends AbstractWandItem {
     }
 
     @Override
+    public void clearSpells(ItemStack stack) {
+        stack.getTag().remove("Spells");
+    }
+
+    @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
             final BlockEntityWithoutLevelRenderer renderer = new ModularWandISTER();
