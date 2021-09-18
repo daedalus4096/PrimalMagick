@@ -1862,6 +1862,7 @@
     "primalmagic.spell.vehicle.type.projectile": "Projectile",
     "primalmagic.spell.vehicle.type.bolt": "Bolt",
     "primalmagic.spell.vehicle.type.self": "Self",
+    "primalmagic.spell.vehicle.detail_tooltip.bolt": "Bolt (%1$d blocks)",
     "primalmagic.spell.vehicle.default_name.none": "",
     "primalmagic.spell.vehicle.default_name.touch": "Hand",
     "primalmagic.spell.vehicle.default_name.projectile": "Missile",

@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -30,7 +32,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
 
     @Override
     protected double getReachDistance(LivingEntity caster) {
-        return 6.0D + (2.0D * this.getPropertyValue("range"));
+        return (double)this.getRangeBlocks();
     }
 
     @Override
@@ -60,5 +62,14 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
                     new BlockPos(source), 
                     64.0D);
         }
+    }
+    
+    protected int getRangeBlocks() {
+        return 6 + (2 * this.getPropertyValue("range"));
+    }
+
+    @Override
+    public Component getDetailTooltip() {
+        return new TranslatableComponent("primalmagic.spell.vehicle.detail_tooltip." + this.getVehicleType(), this.getRangeBlocks());
     }
 }
