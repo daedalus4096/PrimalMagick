@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.tiles.devices.SanguineCrucibleTile
 import com.verdantartifice.primalmagic.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.ArtificialManaFontTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.BloodletterTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.rituals.CelestialHarpTileEntity;
@@ -63,4 +64,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<BlockEntityType<CelestialHarpTileEntity>> CELESTIAL_HARP = TILE_ENTITIES.register("celestial_harp", () -> BlockEntityType.Builder.of(CelestialHarpTileEntity::new, BlocksPM.CELESTIAL_HARP.get()).build(null));
     public static final RegistryObject<BlockEntityType<EntropySinkTileEntity>> ENTROPY_SINK = TILE_ENTITIES.register("entropy_sink", () -> BlockEntityType.Builder.of(EntropySinkTileEntity::new, BlocksPM.ENTROPY_SINK.get()).build(null));
     public static final RegistryObject<BlockEntityType<ResearchTableTileEntity>> RESEARCH_TABLE = TILE_ENTITIES.register("research_table", () -> BlockEntityType.Builder.of(ResearchTableTileEntity::new, BlocksPM.RESEARCH_TABLE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<AutoChargerTileEntity>> AUTO_CHARGER = TILE_ENTITIES.register("auto_charger", () -> BlockEntityType.Builder.of(AutoChargerTileEntity::new, BlocksPM.AUTO_CHARGER.get()).build(null));
 }
