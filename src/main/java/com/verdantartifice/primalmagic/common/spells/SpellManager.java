@@ -224,7 +224,7 @@ public class SpellManager {
             if (allowMine && mineMod != null) {
                 // If the spell package has the Mine mod and mines are allowed (i.e. this payload wasn't triggered by an existing mine),
                 // spawn a new mine
-                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, spellSource, mineMod.getModdedPropertyValue("duration", spell, spellSource));
+                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, spellSource, mineMod.getDurationMinutes(spell, spellSource));
                 world.addFreshEntity(mineEntity);
             } else if (burstMod != null) {
                 // If the spell package has the burst mod, calculate the set of affected blocks/entities and execute the payload on each
@@ -276,11 +276,11 @@ public class SpellManager {
             ISpellMod primary = spell.getPrimaryMod();
             ISpellMod secondary = spell.getSecondaryMod();
             if (primary != null && primary.isActive() && secondary != null && secondary.isActive()) {
-                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.double", primary.getDetailTooltip(), secondary.getDetailTooltip())));
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.double", primary.getDetailTooltip(spell, spellSource), secondary.getDetailTooltip(spell, spellSource))));
             } else if (primary != null && primary.isActive()) {
-                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.single", primary.getDetailTooltip())));
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.single", primary.getDetailTooltip(spell, spellSource))));
             } else if (secondary != null && secondary.isActive()) {
-                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.single", secondary.getDetailTooltip())));
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.mods.single", secondary.getDetailTooltip(spell, spellSource))));
             }
             
             retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));

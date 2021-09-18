@@ -37,7 +37,6 @@ public class SpellMineEntity extends Entity {
     protected static final EntityDataAccessor<Boolean> ARMED = SynchedEntityData.defineId(SpellMineEntity.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> LIFESPAN = SynchedEntityData.defineId(SpellMineEntity.class, EntityDataSerializers.INT);
     
-    protected static final int DURATION_FACTOR = 4800;  // Number of ticks to live per duration of the mine
     protected static final int ARMING_TIME = 60;        // Number of ticks before switching to an armed state
     
     protected SpellPackage spell;
@@ -51,14 +50,14 @@ public class SpellMineEntity extends Entity {
         this.spell = null;
     }
     
-    public SpellMineEntity(Level world, Vec3 pos, LivingEntity caster, SpellPackage spell, @Nullable ItemStack spellSource, int duration) {
+    public SpellMineEntity(Level world, Vec3 pos, LivingEntity caster, SpellPackage spell, @Nullable ItemStack spellSource, int durationMinutes) {
         super(EntityTypesPM.SPELL_MINE.get(), world);
         this.setPos(pos.x, pos.y, pos.z);
         this.spell = spell;
         this.spellSource = spellSource.copy();
         this.caster = caster;
         this.casterId = caster.getUUID();
-        this.setLifespan(duration * DURATION_FACTOR);
+        this.setLifespan(20 * 60 * durationMinutes);
         if (spell != null && spell.getPayload() != null) {
             // Store the spell payload's color for use in rendering
             this.setColor(spell.getPayload().getSource().getColor());

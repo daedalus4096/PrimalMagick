@@ -15,6 +15,8 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
@@ -83,8 +85,8 @@ public class BurstSpellMod extends AbstractSpellMod {
         Set<BlockPos> affectedBlocks = new HashSet<>();
         Vec3 hitVec = origin.getLocation();
         BlockPos hitPos = new BlockPos(hitVec);
-        int radius = this.getPropertyValue("radius");
-        int power = this.getModdedPropertyValue("power", spell, spellSource);
+        int radius = this.getRadiusBlocks();
+        int power = this.getBlastPower(spell, spellSource);
         double sqRadius = (double)(radius * radius);
         int searchRadius = radius + 1;
         Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.BlockInteraction.NONE);
@@ -134,5 +136,18 @@ public class BurstSpellMod extends AbstractSpellMod {
         }
         
         return retVal;
+    }
+    
+    protected int getRadiusBlocks() {
+        return this.getPropertyValue("radius");
+    }
+    
+    protected int getBlastPower(SpellPackage spell, ItemStack spellSource) {
+        return this.getModdedPropertyValue("power", spell, spellSource);
+    }
+
+    @Override
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+        return new TranslatableComponent("primalmagic.spell.mod.detail_tooltip." + this.getModType(), this.getRadiusBlocks(), this.getBlastPower(spell, spellSource));
     }
 }

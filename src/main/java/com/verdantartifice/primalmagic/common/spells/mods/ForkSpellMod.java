@@ -9,9 +9,13 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import com.verdantartifice.primalmagic.common.util.VectorUtils;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -70,9 +74,8 @@ public class ForkSpellMod extends AbstractSpellMod {
         // Determine the direction vectors on which to execute the spell forks
         List<Vec3> retVal = new ArrayList<>();
         Vec3 normDir = dir.normalize();
-        int forks = this.getPropertyValue("forks");
-        int precision = this.getPropertyValue("precision");
-        int degrees = 10 + (15 * (5 - precision));  // 85, 70, 55, 40, 25, 10 degrees max from the given direction
+        int forks = this.getForkCount();
+        int degrees = this.getSpreadDegrees();
         double offsetMagnitude = Math.tan(Math.toRadians(degrees)); // Vector offset length needed to produce a given degree angle
         
         for (int index = 0; index < forks; index++) {
@@ -82,5 +85,23 @@ public class ForkSpellMod extends AbstractSpellMod {
         }
         
         return retVal;
+    }
+    
+    protected int getForkCount() {
+        return this.getPropertyValue("forks");
+    }
+    
+    protected int getSpreadDegrees() {
+        int precision = this.getPropertyValue("precision");
+        return 10 + (15 * (5 - precision));  // 85, 70, 55, 40, 25, 10 degrees max from the given direction
+    }
+    
+    protected String getSpreadDegreesText() {
+        return "" + this.getSpreadDegrees() + "\u00B0";
+    }
+
+    @Override
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+        return new TranslatableComponent("primalmagic.spell.mod.detail_tooltip." + this.getModType(), this.getForkCount(), this.getSpreadDegreesText());
     }
 }

@@ -4,7 +4,12 @@ import java.util.Map;
 
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of a Mine spell mod.  This mod causes the spell package, rather than execute its payload
@@ -53,5 +58,14 @@ public class MineSpellMod extends AbstractSpellMod {
     @Override
     protected String getModType() {
         return TYPE;
+    }
+    
+    public int getDurationMinutes(SpellPackage spell, ItemStack spellSource) {
+        return 4 * this.getModdedPropertyValue("duration", spell, spellSource);
+    }
+
+    @Override
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+        return new TranslatableComponent("primalmagic.spell.mod.detail_tooltip." + this.getModType(), this.getDurationMinutes(spell, spellSource));
     }
 }

@@ -5,10 +5,12 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -67,7 +69,7 @@ public interface ISpellMod extends INBTSerializable<CompoundTag> {
      * 
      * @return the spell mod details
      */
-    public default Component getDetailTooltip() {
+    public default Component getDetailTooltip(SpellPackage spell, @Nullable ItemStack spellSource) {
         return this.getTypeName();
     }
     
