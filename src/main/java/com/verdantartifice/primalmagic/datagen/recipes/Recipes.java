@@ -5481,7 +5481,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" A ")
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_BLOOD.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.BLOOD, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_INFERNAL.get(), 4)
@@ -5490,7 +5490,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" A ")
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_INFERNAL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_VOID.get(), 4)
@@ -5499,7 +5499,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" A ")
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_VOID.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.VOID.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.VOID, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_HALLOWED.get(), 4)
@@ -5508,7 +5508,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" A ")
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_HALLOWED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.HALLOWED, 5))
             .build(consumer);
     }

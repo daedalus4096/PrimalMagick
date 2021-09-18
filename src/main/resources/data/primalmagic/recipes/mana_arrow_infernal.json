@@ -1,6 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
-  "research": "MANA_ARROWS",
+  "research": "MANA_ARROWS\u0026\u0026t_discover_infernal",
   "mana": {
     "infernal": 5
   },
