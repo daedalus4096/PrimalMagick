@@ -301,7 +301,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
-                    Component nameComp = new TranslatableComponent(source.getNameTranslationKey()).withStyle(source.getChatColor());
+                    Component nameComp = source.getNameText();
                     int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source));
                     Component line = new TranslatableComponent("primalmagic.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);

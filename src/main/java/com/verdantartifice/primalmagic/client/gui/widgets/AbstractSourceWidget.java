@@ -62,7 +62,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         // Draw the tooltip if applicable
         if (this.isHovered()) {
             Component sourceText = discovered ? 
-                    new TranslatableComponent(this.source.getNameTranslationKey()).withStyle(this.source.getChatColor()) :
+                    this.source.getNameText() :
                     new TranslatableComponent(Source.getUnknownTranslationKey());
             Component labelText = new TranslatableComponent(this.getTooltipTranslationKey(), this.amount, sourceText);
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);

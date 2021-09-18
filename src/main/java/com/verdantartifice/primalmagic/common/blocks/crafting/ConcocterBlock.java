@@ -154,7 +154,7 @@ public class ConcocterBlock extends BaseEntityBlock {
             for (Source source : Source.SORTED_SOURCES) {
                 int amount = mana.getAmount(source);
                 if (amount > 0) {
-                    Component nameComp = new TranslatableComponent(source.getNameTranslationKey()).withStyle(source.getChatColor());
+                    Component nameComp = source.getNameText();
                     Component line = new TranslatableComponent("primalmagic.source.mana_container_tooltip", nameComp, (amount / 100.0D));
                     tooltip.add(line);
                 }

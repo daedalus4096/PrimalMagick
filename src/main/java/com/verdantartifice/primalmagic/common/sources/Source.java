@@ -14,6 +14,8 @@ import com.verdantartifice.primalmagic.common.stats.Stat;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
@@ -97,6 +99,11 @@ public class Source {
     @Nonnull
     public ChatFormatting getChatColor() {
         return this.chatColor;
+    }
+    
+    @Nonnull
+    public Component getNameText() {
+        return new TranslatableComponent(this.getNameTranslationKey()).withStyle(this.getChatColor());
     }
     
     @Nonnull

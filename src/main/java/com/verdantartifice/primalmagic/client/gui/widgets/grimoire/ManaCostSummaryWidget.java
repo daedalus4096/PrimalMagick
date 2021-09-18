@@ -57,7 +57,7 @@ public class ManaCostSummaryWidget extends AbstractWidget {
                 for (Source source : this.manaCosts.getSourcesSorted()) {
                     boolean discovered = source.isDiscovered(mc.player);
                     Component sourceText = discovered ? 
-                            new TranslatableComponent(source.getNameTranslationKey()).withStyle(source.getChatColor()) :
+                            source.getNameText() :
                             new TranslatableComponent(Source.getUnknownTranslationKey());
                     tooltip.add(new TranslatableComponent("primalmagic.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
                 }

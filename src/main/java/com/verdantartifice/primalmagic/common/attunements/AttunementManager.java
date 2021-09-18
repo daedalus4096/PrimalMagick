@@ -135,7 +135,7 @@ public class AttunementManager {
                 // Determine if any thresholds were passed, either up or down
                 for (AttunementThreshold threshold : AttunementThreshold.values()) {
                     int thresholdValue = threshold.getValue();
-                    Component sourceText = new TranslatableComponent(source.getNameTranslationKey()).withStyle(source.getChatColor());
+                    Component sourceText = source.getNameText();
                     if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
                         // If gaining a threshold, send a message to the player
                         if (source.isDiscovered(player)) {

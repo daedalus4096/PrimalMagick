@@ -73,7 +73,7 @@ public class ManaGaugeWidget extends AbstractWidget {
         matrixStack.popPose();
         
         if (this.isHovered()) {
-            Component sourceText = new TranslatableComponent(this.source.getNameTranslationKey()).withStyle(this.source.getChatColor());
+            Component sourceText = this.source.getNameText();
             Component labelText = new TranslatableComponent("primalmagic.source.mana_gauge_tooltip", sourceText, (this.curAmount / 100.0D), (this.maxAmount / 100.0D));
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);
         }
