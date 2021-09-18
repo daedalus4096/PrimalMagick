@@ -165,6 +165,7 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
         // Collect all appropriate modifiers before doing the calculation to prevent mod order dependency
         if (this.vehicle != null) {
             baseModifier += this.vehicle.getBaseManaCostModifier();
+            multiplier *= this.vehicle.getManaCostMultiplier();
         }
         if (this.primaryMod != null) {
             baseModifier += this.primaryMod.getBaseManaCostModifier();

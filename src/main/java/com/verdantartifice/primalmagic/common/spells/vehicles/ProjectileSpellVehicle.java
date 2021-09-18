@@ -58,6 +58,11 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     
     @Override
     public int getBaseManaCostModifier() {
-        return 5;
+        return 0;
+    }
+
+    @Override
+    public int getManaCostMultiplier() {
+        return 2;
     }
 }

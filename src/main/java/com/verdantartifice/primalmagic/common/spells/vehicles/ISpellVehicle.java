@@ -77,6 +77,13 @@ public interface ISpellVehicle extends INBTSerializable<CompoundTag> {
     public int getBaseManaCostModifier();
     
     /**
+     * Get the multiplicative modifier to be applied to the spell mod's package's total cost.
+     * 
+     * @return the multiplicative modifier for the spell package's cost
+     */
+    public int getManaCostMultiplier();
+    
+    /**
      * Get a name-ordered list of properties used by this spell vehicle.
      * 
      * @return a name-ordered list of properties used by this spell vehicle

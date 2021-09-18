@@ -70,6 +70,12 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
         return 0;
     }
 
+    @Override
+    public int getManaCostMultiplier() {
+        // No multiplication by default
+        return 1;
+    }
+
     /**
      * Initialize the property map for this spell vehicle.  Should create a maximum of two properties.
      * 
