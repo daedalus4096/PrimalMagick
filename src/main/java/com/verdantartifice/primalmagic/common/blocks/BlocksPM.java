@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagic.common.blocks.golems.HexiumGolemControlle
 import com.verdantartifice.primalmagic.common.blocks.golems.PrimaliteGolemControllerBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.ArtificialManaFontBlock;
+import com.verdantartifice.primalmagic.common.blocks.mana.AutoChargerBlock;
 import com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagic.common.blocks.minerals.QuartzOreBlock;
 import com.verdantartifice.primalmagic.common.blocks.misc.ConsecrationFieldBlock;
@@ -315,6 +316,7 @@ public class BlocksPM {
     public static final RegistryObject<ConcocterBlock> CONCOCTER = BLOCKS.register("concocter", ConcocterBlock::new);
     public static final RegistryObject<CelestialHarpBlock> CELESTIAL_HARP = BLOCKS.register("celestial_harp", CelestialHarpBlock::new);
     public static final RegistryObject<EntropySinkBlock> ENTROPY_SINK = BLOCKS.register("entropy_sink", EntropySinkBlock::new);
+    public static final RegistryObject<AutoChargerBlock> AUTO_CHARGER = BLOCKS.register("auto_charger", AutoChargerBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
