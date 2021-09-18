@@ -7,6 +7,8 @@ v0.0.11-alpha
 * Add active spell details to wand and scroll tooltips
 * Fix source omissions in mana arrow recipes
 * Research tables now drop their contents when broken
+* Reduced spell cast cooldown to one second, from three seconds
+* Reduced effectiveness of Quicken spell mod to 0.15sec per level, from 0.5sec per level
 
 v0.0.10-alpha
 -------------
