@@ -58,7 +58,7 @@ public class TeleportSpellPayload extends AbstractSpellPayload {
 
     @Override
     public int getBaseManaCost() {
-        return 25;
+        return 10;
     }
 
     @Override

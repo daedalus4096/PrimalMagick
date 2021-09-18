@@ -76,7 +76,8 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     
     @Override
     public int getBaseManaCost() {
-        return 2 * this.getPropertyValue("power");
+        int power = this.getPropertyValue("power");
+        return (1 << Math.max(0, power - 1)) + ((1 << Math.max(0, power - 1)) >> 1);
     }
 
     @Override

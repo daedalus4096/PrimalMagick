@@ -78,7 +78,7 @@ public class BreakSpellPayload extends AbstractSpellPayload {
 
     @Override
     public int getBaseManaCost() {
-        return this.getPropertyValue("power") + (10 * this.getPropertyValue("silk_touch"));
+        return this.getPropertyValue("power") + (5 * this.getPropertyValue("silk_touch"));
     }
 
     @Override

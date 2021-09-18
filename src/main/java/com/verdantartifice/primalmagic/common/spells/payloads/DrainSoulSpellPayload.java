@@ -73,7 +73,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
 
     @Override
     public int getBaseManaCost() {
-        return 10 * this.getPropertyValue("duration");
+        return 5 * this.getPropertyValue("duration");
     }
 
     @Override

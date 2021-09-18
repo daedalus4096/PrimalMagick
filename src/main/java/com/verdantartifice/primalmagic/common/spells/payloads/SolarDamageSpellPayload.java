@@ -85,7 +85,9 @@ public class SolarDamageSpellPayload extends AbstractDamageSpellPayload {
     
     @Override
     public int getBaseManaCost() {
-        return this.getPropertyValue("power") + this.getPropertyValue("duration");
+        int power = this.getPropertyValue("power");
+        int duration = this.getPropertyValue("duration");
+        return (1 << Math.max(0, power - 1)) + (duration == 0 ? 0 : (1 << Math.max(0, duration - 1)) >> 1);
     }
 
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {

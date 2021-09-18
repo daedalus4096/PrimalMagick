@@ -77,9 +77,8 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
         int duration = this.getDurationSeconds(spell, spellSource);
         if (target != null && target.getType() == HitResult.Type.ENTITY && duration > 0) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
+            if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity entity) {
                 // Set the entity on fire
-                LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 entity.setSecondsOnFire(duration);
             }
         }
@@ -87,7 +86,9 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     
     @Override
     public int getBaseManaCost() {
-        return this.getPropertyValue("power") + this.getPropertyValue("duration");
+        int power = this.getPropertyValue("power");
+        int duration = this.getPropertyValue("duration");
+        return (1 << Math.max(0, power - 1)) + (duration == 0 ? 0 : (1 << Math.max(0, duration - 1)) >> 1);
     }
     
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
