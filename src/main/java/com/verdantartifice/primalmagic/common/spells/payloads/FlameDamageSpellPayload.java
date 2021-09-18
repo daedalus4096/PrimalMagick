@@ -91,7 +91,7 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
-        return this.getModdedPropertyValue("duration", spell, spellSource);
+        return 2 * this.getModdedPropertyValue("duration", spell, spellSource);
     }
 
     @Override

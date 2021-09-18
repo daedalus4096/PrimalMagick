@@ -10,6 +10,7 @@ v0.0.11-alpha
 * Reduced spell cast cooldown to one second, from three seconds
 * Reduced effectiveness of Quicken spell mod to 0.15sec per level, from 0.5sec per level
 * Increase damage and healing of all spell types
+* Double duration of all damage spell secondary effects
 
 v0.0.10-alpha
 -------------
