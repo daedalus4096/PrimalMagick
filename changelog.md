@@ -9,6 +9,7 @@ v0.0.11-alpha
 * Research tables now drop their contents when broken
 * Reduced spell cast cooldown to one second, from three seconds
 * Reduced effectiveness of Quicken spell mod to 0.15sec per level, from 0.5sec per level
+* Increase damage and healing of all spell types
 
 v0.0.10-alpha
 -------------

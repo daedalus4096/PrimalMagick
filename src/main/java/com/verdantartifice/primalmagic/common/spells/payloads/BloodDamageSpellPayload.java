@@ -49,6 +49,11 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
+    protected float getBaseDamage(SpellPackage spell, ItemStack spellSource) {
+        return 3.0F + (2.0F * this.getModdedPropertyValue("power", spell, spellSource));
+    }
+
+    @Override
     protected DamageSource getDamageSource(Entity target, LivingEntity source) {
         // Bypass the target's armor, if any
         return super.getDamageSource(target, source).bypassArmor();

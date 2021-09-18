@@ -60,10 +60,10 @@ public class HealingSpellPayload extends AbstractSpellPayload {
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 if (entity.isInvertedHealAndHarm()) {
                     // Undead entities get dealt damage
-                    entity.hurt(DamageSource.indirectMagic(caster, caster), 1.5F * this.getModdedPropertyValue("power", spell, spellSource));
+                    entity.hurt(DamageSource.indirectMagic(caster, caster), 1.5F * this.getBaseAmount(spell, spellSource));
                 } else {
                     // All other entities are healed
-                    entity.heal((float)this.getModdedPropertyValue("power", spell, spellSource));
+                    entity.heal((float)this.getBaseAmount(spell, spellSource));
                 }
             }
         }
@@ -90,7 +90,7 @@ public class HealingSpellPayload extends AbstractSpellPayload {
     }
 
     protected int getBaseAmount(SpellPackage spell, ItemStack spellSource) {
-        return this.getModdedPropertyValue("power", spell, spellSource);
+        return 2 * this.getModdedPropertyValue("power", spell, spellSource);
     }
 
     @Override

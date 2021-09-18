@@ -42,7 +42,7 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     }
     
     protected float getBaseDamage(SpellPackage spell, ItemStack spellSource) {
-        return 3.0F + this.getModdedPropertyValue("power", spell, spellSource);
+        return 4.0F + (3.0F * this.getModdedPropertyValue("power", spell, spellSource));
     }
     
     /**

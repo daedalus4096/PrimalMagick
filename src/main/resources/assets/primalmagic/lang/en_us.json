@@ -1132,7 +1132,7 @@
     
     "primalmagic.research.spell_payload_blood.title": "Spell Payload: Blood",
     "primalmagic.research.spell_payload_blood.text.stage.1": "Most living things have some kind of blood in them.  Let's see if a Blood mana based attack spell can exploit that.",
-    "primalmagic.research.spell_payload_blood.text.stage.2": "I've discovered that the right Blood spell will rend and tear the insides of any creature unfortunate enough to be hit by it.  The damage remains comparable to an Earth spell, but because it harms the creature from within, it bypasses any armor that it may be wearing.",
+    "primalmagic.research.spell_payload_blood.text.stage.2": "I've discovered that the right Blood spell will rend and tear the insides of any creature unfortunate enough to be hit by it.  The damage is less than that of an Earth spell, but because it harms the creature from within, it bypasses any armor that it may have.",
     
     "primalmagic.research.spell_payload_flame.title": "Spell Payload: Flame",
     "primalmagic.research.spell_payload_flame.text.stage.1": "I've been waiting for this: fire.  Surely that's what an Infernal damage spell will unleash upon my foes.  I can't wait to see it in action.",

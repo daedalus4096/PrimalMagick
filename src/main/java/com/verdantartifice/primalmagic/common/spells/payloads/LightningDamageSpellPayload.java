@@ -47,7 +47,7 @@ public class LightningDamageSpellPayload extends AbstractDamageSpellPayload {
 
     @Override
     protected float getBaseDamage(SpellPackage spell, ItemStack spellSource) {
-        return 2.0F * this.getModdedPropertyValue("power", spell, spellSource);
+        return 5.0F * this.getModdedPropertyValue("power", spell, spellSource);
     }
 
     @Override
