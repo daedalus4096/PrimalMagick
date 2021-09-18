@@ -270,7 +270,7 @@ public class SpellManager {
             
             ISpellPayload payload = spell.getPayload();
             if (payload != null) {
-                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.payload", payload.getDetailTooltip())));
+                retVal.add(leader.copy().append(new TranslatableComponent("primalmagic.spells.details.payload", payload.getDetailTooltip(spell, spellSource))));
             }
             
             ISpellMod primary = spell.getPrimaryMod();

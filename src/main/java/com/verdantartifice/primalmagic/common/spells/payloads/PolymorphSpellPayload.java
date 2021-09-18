@@ -14,6 +14,8 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
@@ -36,7 +38,6 @@ import net.minecraft.world.phys.Vec3;
 public class PolymorphSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "polymorph";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_POLYMORPH"));
-    protected static final int TICKS_PER_DURATION = 120;
 
     public PolymorphSpellPayload() {
         super();
@@ -66,7 +67,7 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
                 // Create and enqueue an entity swapper for the target entity
                 UUID entityId = entityTarget.getEntity().getUUID();
                 CompoundTag originalData = entityTarget.getEntity().saveWithoutId(new CompoundTag());
-                int ticks = this.getModdedPropertyValue("duration", spell, spellSource) * TICKS_PER_DURATION;
+                int ticks = 20 * this.getDurationSeconds(spell, spellSource);
                 EntitySwapper.enqueue(world, new EntitySwapper(entityId, EntityType.WOLF, originalData, Optional.of(Integer.valueOf(ticks)), 0));
             }
         }
@@ -90,5 +91,14 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
     @Override
     protected String getPayloadType() {
         return TYPE;
+    }
+    
+    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
+        return 6 * this.getModdedPropertyValue("duration", spell, spellSource);
+    }
+
+    @Override
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+        return new TranslatableComponent("primalmagic.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
     }
 }

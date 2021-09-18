@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,7 +32,6 @@ import net.minecraft.world.phys.Vec3;
 public class DrainSoulSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "drain_soul";
     protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_DRAIN_SOUL"));
-    protected static final int TICKS_PER_DURATION = 60;
     
     public DrainSoulSpellPayload() {
         super();
@@ -59,7 +60,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
             if (entityTarget.getEntity() instanceof LivingEntity) {
                 // Grant the potion effect
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
-                int ticks = this.getModdedPropertyValue("duration", spell, spellSource) * TICKS_PER_DURATION;
+                int ticks = 20 * this.getDurationSeconds(spell, spellSource);
                 entity.addEffect(new MobEffectInstance(EffectsPM.DRAIN_SOUL.get(), ticks));
             }
         }
@@ -84,5 +85,13 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
     protected String getPayloadType() {
         return TYPE;
     }
+    
+    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
+        return 3 * this.getModdedPropertyValue("duration", spell, spellSource);
+    }
 
+    @Override
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+        return new TranslatableComponent("primalmagic.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
+    }
 }

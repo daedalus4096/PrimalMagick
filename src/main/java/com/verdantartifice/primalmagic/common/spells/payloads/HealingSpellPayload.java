@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -85,5 +87,14 @@ public class HealingSpellPayload extends AbstractSpellPayload {
     @Override
     protected String getPayloadType() {
         return TYPE;
+    }
+
+    protected int getBaseAmount(SpellPackage spell, ItemStack spellSource) {
+        return this.getModdedPropertyValue("power", spell, spellSource);
+    }
+
+    @Override
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+        return new TranslatableComponent("primalmagic.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getBaseAmount(spell, spellSource)));
     }
 }
