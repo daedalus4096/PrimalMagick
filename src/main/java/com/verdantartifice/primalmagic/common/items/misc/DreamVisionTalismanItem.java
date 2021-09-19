@@ -9,6 +9,8 @@ import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -118,7 +120,7 @@ public class DreamVisionTalismanItem extends Item {
      * @return whether the talisman was successfully drained
      */
     public boolean doDrain(ItemStack stack, Player player) {
-        if (this.isReadyToDrain(stack)) {
+        if (!player.level.isClientSide && this.isReadyToDrain(stack)) {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
                 stack.hurtAndBreak(1, player, p -> {
@@ -144,5 +146,20 @@ public class DreamVisionTalismanItem extends Item {
     @Override
     public boolean isFoil(ItemStack stack) {
         return this.isReadyToDrain(stack) || super.isFoil(stack);
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        boolean active = this.isActive(stack);
+        if (level.isClientSide) {
+            if (active) {
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.set_inactive"), false);
+            } else {
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.set_active"), false);
+            }
+        }
+        this.setActive(stack, !active);
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
 }

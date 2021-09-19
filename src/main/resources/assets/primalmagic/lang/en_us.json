@@ -1809,6 +1809,8 @@
     "event.primalmagic.ambrosia.not_wizard": "This stuff tastes funny. What is it?",
     "event.primalmagic.dream_vision_talisman.drained": "You awake from a vision-filled dream and record your newfound observations.",
     "event.primalmagic.dream_vision_talisman.break": "Your Dream Vision Talisman crumbles to dust as you wake.",
+    "event.primalmagic.dream_vision_talisman.set_active": "The talisman will now absorb experience.",
+    "event.primalmagic.dream_vision_talisman.set_inactive": "The talisman will no longer absorb experience.",
     
     "primalmagic.dream_journal.title": "Dream Journal",
     "primalmagic.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagic.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",
