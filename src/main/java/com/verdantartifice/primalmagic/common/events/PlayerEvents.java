@@ -24,19 +24,25 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.items.misc.DreamVisionTalismanItem;
 import com.verdantartifice.primalmagic.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
+import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -63,6 +69,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -454,6 +461,24 @@ public class PlayerEvents {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
                 grantDreamJournal(player);
             }
+            
+            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
+            if (!foundTalismans.isEmpty()) {
+                // Drain any full Dream Vision Talismans upon waking to grant new observation knowledge
+                boolean success = false;
+                for (ItemStack talismanStack : foundTalismans) {
+                    if (talismanStack.getItem() instanceof DreamVisionTalismanItem talisman && talisman.isActive(talismanStack) && talisman.isReadyToDrain(talismanStack)) {
+                        success = success || talisman.doDrain(talismanStack, player);
+                    }
+                }
+                if (success) {
+                    // Only show success effects once, regardless of how many talismans were triggered
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
+                    }
+                }
+            }
         }
     }
     
@@ -497,5 +522,29 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void onPlayerInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         LAST_BLOCK_LEFT_CLICK.put(event.getPlayer().getUUID(), new InteractionRecord(event.getPlayer(), event.getHand(), event.getPos(), event.getFace()));
+    }
+    
+    @SubscribeEvent
+    public static void onPickupExperience(PlayerXpEvent.PickupXp event) {
+        Player player = event.getPlayer();
+        if (player != null && !player.level.isClientSide) {
+            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
+            if (!foundTalismans.isEmpty()) {
+                int xpValue = event.getOrb().value;
+                for (ItemStack foundStack : foundTalismans) {
+                    if (foundStack.getItem() instanceof DreamVisionTalismanItem talisman && talisman.isActive(foundStack)) {
+                        // Add as much experience as possible from the orb to each active talisman until the orb runs out
+                        xpValue = talisman.addStoredExp(foundStack, xpValue);
+                        if (xpValue <= 0) {
+                            event.getOrb().value = 0;
+                            return;
+                        }
+                    }
+                }
+                
+                // If we made it through every talisman with experience left over, update the orb to be the leftover value
+                event.getOrb().value = xpValue;
+            }
+        }
     }
 }
