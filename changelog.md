@@ -2,6 +2,7 @@ v0.0.12-alpha
 -------------
 * Allow clearing wand spells using the Wand Inscription Table
 * Add Auto-Charger, to automatically charge wands from nearby fonts
+* Philosophy research for Earth and Sky now requires the player to be in the Overworld
 
 v0.0.11-alpha
 -------------

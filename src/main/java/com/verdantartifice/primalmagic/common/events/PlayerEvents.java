@@ -206,6 +206,8 @@ public class PlayerEvents {
         }
         
         Biome biome = player.level.getBiome(player.blockPosition());
+        boolean inOverworld = player.level.dimension().equals(Level.OVERWORLD);
+        
         if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && Biome.BiomeCategory.NETHER.equals(biome.getBiomeCategory())) {
             // If the player is in a Nether-based biome, discover the Infernal source
             ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
@@ -222,7 +224,7 @@ public class PlayerEvents {
         // If the player is working on the Earth Source research, check if they're far enough down
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
-            if (player.position().y < 10.0D && !knowledge.isResearchKnown(key)) {
+            if (player.position().y < 10.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
                 player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_earth").withStyle(ChatFormatting.GREEN), false);
             }
@@ -240,7 +242,7 @@ public class PlayerEvents {
         // If the player is working on the Sky Source research, check if they're high up enough
         if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@2"))) {
             SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
-            if (player.position().y > 100.0D && !knowledge.isResearchKnown(key)) {
+            if (player.position().y > 100.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                 ResearchManager.completeResearch(player, key);
                 player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sky").withStyle(ChatFormatting.GREEN), false);
             }
