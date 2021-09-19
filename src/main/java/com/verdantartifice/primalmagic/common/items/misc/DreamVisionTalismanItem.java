@@ -3,10 +3,13 @@ package com.verdantartifice.primalmagic.common.items.misc;
 import java.util.List;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge.KnowledgeType;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -47,13 +50,17 @@ public class DreamVisionTalismanItem extends Item {
         int current = this.getStoredExp(stack);
         int max = this.getExpCapacity(stack);
         if (current + toAdd <= max) {
-            stack.getOrCreateTag().putInt("StoredExp", current + toAdd);
+            this.setStoredExp(stack, current + toAdd);
             return 0;
         } else {
             int leftover = (current + toAdd) - max;
-            stack.getOrCreateTag().putInt("StoredExp", max);
+            this.setStoredExp(stack, max);
             return leftover;
         }
+    }
+    
+    protected void setStoredExp(ItemStack stack, int toSet) {
+        stack.getOrCreateTag().putInt("StoredExp", toSet);
     }
     
     /**
@@ -96,6 +103,27 @@ public class DreamVisionTalismanItem extends Item {
     public boolean isReadyToDrain(ItemStack stack) {
         if (stack != null && stack.getItem() instanceof DreamVisionTalismanItem talisman) {
             if (talisman.getStoredExp(stack) >= talisman.getExpCapacity(stack)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Drains the talisman of its experience to grant the player an observation.  Doing so decreases
+     * the talisman's durability.
+     * 
+     * @param stack the talisman to drain
+     * @param player the player to receive any observations
+     * @return whether the talisman was successfully drained
+     */
+    public boolean doDrain(ItemStack stack, Player player) {
+        if (this.isReadyToDrain(stack)) {
+            if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
+                this.setStoredExp(stack, 0);
+                stack.hurtAndBreak(1, player, p -> {
+                    p.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.break").withStyle(ChatFormatting.RED), false);
+                });
                 return true;
             }
         }

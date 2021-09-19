@@ -28,9 +28,11 @@ import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.misc.DreamVisionTalismanItem;
 import com.verdantartifice.primalmagic.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagic.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
@@ -458,6 +460,24 @@ public class PlayerEvents {
                  !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("t_got_dream")) ) {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
                 grantDreamJournal(player);
+            }
+            
+            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
+            if (!foundTalismans.isEmpty()) {
+                // Drain any full Dream Vision Talismans upon waking to grant new observation knowledge
+                boolean success = false;
+                for (ItemStack talismanStack : foundTalismans) {
+                    if (talismanStack.getItem() instanceof DreamVisionTalismanItem talisman && talisman.isActive(talismanStack) && talisman.isReadyToDrain(talismanStack)) {
+                        success = success || talisman.doDrain(talismanStack, player);
+                    }
+                }
+                if (success) {
+                    // Only show success effects once, regardless of how many talismans were triggered
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
+                    }
+                }
             }
         }
     }
