@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -262,6 +263,72 @@ public class InventoryUtils {
                 return null;
             }
         }
+    }
+    
+    /**
+     * Finds all instances of items matching the given item stack in the given player's inventory, optionally
+     * testing whether those item stacks match the NBT data of the given stack.  Does not consider equipped
+     * items or nested inventories (e.g. backpacks).
+     * 
+     * @param player the player whose inventory to search
+     * @param toFind the item stack being searched for
+     * @param matchNBT whether the test should consider the stacks' NBT data
+     * @return a list of item stacks matching the given stack
+     */
+    @Nonnull
+    public static NonNullList<ItemStack> find(@Nullable Player player, @Nullable ItemStack toFind, boolean matchNBT) {
+        NonNullList<ItemStack> retVal = NonNullList.create();
+        if (player != null && toFind != null && !toFind.isEmpty()) {
+            for (ItemStack searchStack : player.getInventory().items) {
+                // Determine if the stack items, and optionally NBT, match
+                boolean areEqual = matchNBT ?
+                        ItemStack.matches(toFind, searchStack) :
+                        ItemStack.isSame(toFind, searchStack);
+                if (areEqual) {
+                    retVal.add(searchStack);
+                }
+            }
+        }
+        return retVal;
+    }
+    
+    /**
+     * Finds all instances of items matching the given item stack in the given player's inventory, optionally
+     * testing whether those item stacks match the NBT data of the given stack.  Does not consider equipped
+     * items or nested inventories (e.g. backpacks).  Does not attempt to match NBT data on item stacks.
+     * 
+     * @param player the player whose inventory to search
+     * @param toFind the item stack being searched for
+     * @return a list of item stacks matching the given stack
+     */
+    @Nonnull
+    public static NonNullList<ItemStack> find(@Nullable Player player, @Nullable ItemStack toFind) {
+        return find(player, toFind, false);
+    }
+
+    /**
+     * Finds all instances of items matching the given named tag in the given player's inventory.  Does not
+     * consider equipped items or nested inventories (e.g. backpacks).  The found items need not be the same, 
+     * so long as all of them belong to the tag.  Does not attempt to match NBT data, as that cannot be 
+     * conveyed by a tag.
+     * 
+     * @param player the player whose inventory to search
+     * @param tagName the name of the tag containing the items to be searched for
+     * @return a list of item stacks matching the given tag
+     */
+    @Nonnull
+    public static NonNullList<ItemStack> find(@Nullable Player player, @Nullable ResourceLocation tagName) {
+        NonNullList<ItemStack> retVal = NonNullList.create();
+        if (player != null && tagName != null) {
+            Tag<Item> tag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(tagName);
+            for (ItemStack searchStack : player.getInventory().items) {
+                // Only the items need match, not the NBT data
+                if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
+                    retVal.add(searchStack);
+                }
+            }
+        }
+        return retVal;
     }
     
     /**
