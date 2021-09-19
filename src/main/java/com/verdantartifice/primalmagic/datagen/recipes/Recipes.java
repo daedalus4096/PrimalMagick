@@ -465,6 +465,17 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("ENTROPY_SINK")))
             .manaCost(new SourceList().add(Source.EARTH, 75).add(Source.SEA, 75).add(Source.SKY, 75).add(Source.SUN, 75).add(Source.MOON, 75))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.AUTO_CHARGER.get())
+            .patternLine("EME")
+            .patternLine("PCP")
+            .patternLine("EME")
+            .key('E', Tags.Items.GEMS_EMERALD)
+            .key('M', ItemsPM.MARBLE_ENCHANTED.get())
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .key('C', ItemsPM.WAND_CHARGER.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("AUTO_CHARGER")))
+            .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

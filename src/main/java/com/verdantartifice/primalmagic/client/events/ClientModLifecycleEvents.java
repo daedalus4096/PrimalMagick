@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagic.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagic.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagic.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagic.client.gui.WandInscriptionTableScreen;
+import com.verdantartifice.primalmagic.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.OfferingPedestalTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RitualAltarTER;
@@ -104,6 +105,7 @@ public class ClientModLifecycleEvents {
         BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_BELL.get(), RitualBellTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), RunescribingAltarTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTER::new);
     }
     
     private static void registerItemProperties(FMLClientSetupEvent event) {

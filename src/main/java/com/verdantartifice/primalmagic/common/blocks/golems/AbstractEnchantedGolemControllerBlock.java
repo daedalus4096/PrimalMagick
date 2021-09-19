@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.predicate.BlockMaterialPredicate;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -115,7 +116,7 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
     }
 
     @Override
-    public void onWandUseTick(ItemStack wandStack, Player player, int count) {
+    public void onWandUseTick(ItemStack wandStack, Level level, Player player, Vec3 targetPos, int count) {
         // Do nothing; golem controllers don't support wand channeling
     }
     

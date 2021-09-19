@@ -1,0 +1,26 @@
+{
+  "key": "AUTO_CHARGER",
+  "name": "primalmagic.research.auto_charger.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "EXPERT_MAGITECH",
+    "EXPERT_MANAWEAVING",
+    "WAND_CHARGER",
+    "ARTIFICIAL_MANA_FONTS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.auto_charger.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagic.research.auto_charger.text.stage.2",
+      "recipes": [
+        "primalmagic:auto_charger"
+      ]
+    }
+  ],
+  "addenda": []
+}
