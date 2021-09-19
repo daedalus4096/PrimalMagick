@@ -64,9 +64,15 @@ public class PrimalMagicCommand {
                     .then(Commands.literal("list").executes((context) -> { return listResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     // /pm research <target> reset
                     .then(Commands.literal("reset").executes((context) -> { return resetResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
+                    // /pm research <target> grant_all
+                    .then(Commands.literal("grant_all").executes((context) -> { return grantAllResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("grant")
                         // /pm research <target> grant <research>
                         .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return grantResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                    )
+                    .then(Commands.literal("grant_parents")
+                        // /pm research <target> grant_parents <research>
+                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return grantResearchParents(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
                     )
                     .then(Commands.literal("revoke")
                         // /pm research <target> revoke <research>
@@ -211,6 +217,35 @@ public class PrimalMagicCommand {
             ResearchManager.forceGrantWithAllParents(target, key);
             source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.grant", target.getName(), key.toString()), true);
             target.sendMessage(new TranslatableComponent("commands.primalmagic.research.grant.target", source.getTextName(), key.toString()), Util.NIL_UUID);
+        }
+        return 0;
+    }
+    
+    private static int grantResearchParents(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        SimpleResearchKey key = input.getKey();
+        if (knowledge == null) {
+            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+        } else if (ResearchEntries.getEntry(key) == null) {
+            source.sendFailure(new TranslatableComponent("commands.primalmagic.research.noexist", key.toString()));
+        } else {
+            // Grant the parents of the specified research to the target player, but not the research itself
+            ResearchManager.forceGrantParentsOnly(target, key);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.grant_parents", target.getName(), key.toString()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagic.research.grant_parents.target", source.getTextName(), key.toString()), Util.NIL_UUID);
+        }
+        return 0;
+    }
+    
+    private static int grantAllResearch(CommandSourceStack source, ServerPlayer target) {
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        if (knowledge == null) {
+            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+        } else {
+            // Grant all research entries to the target player
+            ResearchManager.forceGrantAll(target);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.grant_all", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagic.research.grant_all.target", source.getTextName()), Util.NIL_UUID);
         }
         return 0;
     }

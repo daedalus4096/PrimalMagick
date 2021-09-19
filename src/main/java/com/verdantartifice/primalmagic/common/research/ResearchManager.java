@@ -225,6 +225,40 @@ public class ResearchManager {
         }
     }
     
+    public static void forceGrantParentsOnly(@Nullable Player player, @Nullable SimpleResearchKey key) {
+        if (player != null && key != null) {
+            key = key.stripStage(); // When we force-grant, we fully complete the entry, not partially
+            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+            if (knowledge != null && !knowledge.isResearchComplete(key)) {
+                ResearchEntry entry = ResearchEntries.getEntry(key);
+                if (entry != null) {
+                    if (entry.getParentResearch() != null) {
+                        // Recursively force-grant all of this entry's parent entries, even if not all of them are required
+                        for (SimpleResearchKey parentKey : entry.getParentResearch().getKeys()) {
+                            forceGrantWithAllParents(player, parentKey);
+                        }
+                    }
+                    for (ResearchStage stage : entry.getStages()) {
+                        // Complete any research required as a prerequisite for any of the entry's stages
+                        if (stage.getRequiredResearch() != null) {
+                            for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
+                                completeResearch(player, requiredKey);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public static void forceGrantAll(@Nullable Player player) {
+        if (player != null) {
+            for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
+                forceGrantWithAllParents(player, entry.getKey());
+            }
+        }
+    }
+    
     public static void forceRevokeWithAllChildren(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
             IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);

@@ -6,6 +6,7 @@ v0.0.12-alpha
 * Add Dream Vision Talisman, a means to convert experience into observations
 * Increased spell cast cooldown to 1.5sec, from one second
 * Increased effectiveness of Quicken spell mod to 0.25sec per level, from 0.15sec per level
+* Added research/grant_parents and research/grant_all debug commands
 
 v0.0.11-alpha
 -------------
