@@ -1,6 +1,7 @@
 v0.0.12-alpha
 -------------
 * Allow clearing wand spells using the Wand Inscription Table
+* Add Auto-Charger, to automatically charge wands from nearby fonts
 
 v0.0.11-alpha
 -------------
