@@ -137,12 +137,12 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
 
     public int getCooldownTicks() {
         // Determine the length of the cooldown triggered by this spell; reduced by the Quicken mod
-        int retVal = 20;
+        int retVal = 30;
         QuickenSpellMod quickenMod = this.getMod(QuickenSpellMod.class, "haste");
         if (quickenMod != null) {
-            retVal -= (3 * quickenMod.getPropertyValue("haste"));
+            retVal -= (5 * quickenMod.getPropertyValue("haste"));
         }
-        return Mth.clamp(retVal, 0, 20);
+        return Mth.clamp(retVal, 0, 30);
     }
     
     @Nonnull
