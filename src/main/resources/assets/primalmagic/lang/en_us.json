@@ -1634,6 +1634,10 @@
     "primalmagic.research.sacred_shield.text.stage.2": "Ritually aligning a hallowsteel shield to the Hallowed has created a superlative defensive implement.<BR>Normal shields can only block certain types of incoming attacks, like swords or arrows.  This shield, however, will reduce the damage I take from *all* sources for as long as I'm blocking with it, even things that a shield couldn't normally save me from.<BR>This protection isn't quite instant, ramping up over time as I block, but it's pretty fast.  It fades as soon as I drop my guard, though.<BR>The shield doesn't seem to want to take on any other enchantments, though.  Maybe I'll find a way around that in the future.",
     "primalmagic.research.sacred_shield.text.addenda.1": "I've learned how to recreate this shield's special properties using a rune enchantment.  By combining the Protect, Self, and Hallowed runes, I can apply this enchantment to any shield to increase its defensive potential.",
     
+    "primalmagic.research.dream_vision_talisman.title": "Dream Vision Talisman",
+    "primalmagic.research.dream_vision_talisman.text.stage.1": "I find myself concerned about the number of Observations I'll be able to make.  It's getting harder and harder to find materials that I haven't analyzed already, and my theorycrafting work requires a steady stream of them.<BR>If only there were a way to harness the breadth of life experiences I've gained.  That might be a solution.",
+    "primalmagic.research.dream_vision_talisman.text.stage.2": "This should do nicely.  I've designed a talisman that will allow me to convert my experience into concrete Observations.<BR>As long as the talisman is on my person, it will absorb any experience orbs that I pick up, drawing their knowledge into itself rather than my experience pool.  Once it's full, the next time I sleep, the talisman will grant me a useful vision in my dreams, granting me a new Observation.  Doing so damages the talisman, however, and will eventually cause it to break.<BR>Should I decide that I don't want my talisman to absorb experience for a while, I can deactivate it by using it from my hand.  I can reactivate it by using it again.",
+    
     "primalmagic.research.basic_magitech.title": "Basic Magitech",
     "primalmagic.research.basic_magitech.text.stage.1": "I think I'm starting to get the hang of Magitech.  The devices are just like normal machines, except they run on mana instead of redstone.<BR>I've drawn up schematics for set of simple, replaceable parts that I can use when designing enchanted machinery.  No doubt more advanced devices will need something more intricate, but it's a start!",
     
@@ -2072,6 +2076,7 @@
     "primalmagic.research.t_flying_creature.text": "Scan a flying creature",
     "primalmagic.research.t_golem.text": "Scan an animated construct",
     "primalmagic.research.t_observations_made_basics.text": "Analyze enough objects to make an Observation",
+    "primalmagic.research.t_observations_made_expert.text": "Make 25 Observations",
     "primalmagic.research.t_theories_formed_basics.text": "Complete enough research projects to form a Theory",
     "primalmagic.research.m_blocks_broken_barehanded_expert.text": "Break 50 blocks with your bare hands.  They must be at least as hard as wood.",
     "primalmagic.research.m_drown_a_little.text": "Test the limits of your underwater endurance",

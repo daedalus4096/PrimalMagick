@@ -476,6 +476,20 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("AUTO_CHARGER")))
             .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.DREAM_VISION_TALISMAN.get())
+            .addIngredient(Items.AMETHYST_SHARD)
+            .addIngredient(Tags.Items.INGOTS_GOLD)
+            .addIngredient(Items.COPPER_INGOT)
+            .addIngredient(Tags.Items.STRING)
+            .addIngredient(ItemTags.SAND)
+            .addIngredient(Items.PHANTOM_MEMBRANE)
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.INCENSE_BRAZIER.get())
+            .addProp(BlocksPM.RITUAL_LECTERN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("DREAM_VISION_TALISMAN")))
+            .manaCost(new SourceList().add(Source.MOON, 40))
+            .instability(4)
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))
