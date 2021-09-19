@@ -1203,6 +1203,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredResearch("t_ritual_mishaps_basic").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ENTROPY_SINK.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("AUTO_CHARGER", discipline).parent("EXPERT_MAGITECH").parent("EXPERT_MANAWEAVING").parent("WAND_CHARGER").parent("ARTIFICIAL_MANA_FONTS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.AUTO_CHARGER.get()).build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {

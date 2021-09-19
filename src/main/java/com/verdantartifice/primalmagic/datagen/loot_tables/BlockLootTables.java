@@ -71,6 +71,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get());
         this.registerBasicTable(BlocksPM.CELESTIAL_HARP.get());
         this.registerBasicTable(BlocksPM.ENTROPY_SINK.get());
+        this.registerBasicTable(BlocksPM.AUTO_CHARGER.get());
 
         // Register misc loot tables
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());
