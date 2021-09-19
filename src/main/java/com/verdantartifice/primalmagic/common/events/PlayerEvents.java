@@ -537,7 +537,6 @@ public class PlayerEvents {
                         xpValue = talisman.addStoredExp(foundStack, xpValue);
                         if (xpValue <= 0) {
                             event.getOrb().value = 0;
-                            event.setCanceled(true);
                             return;
                         }
                     }
