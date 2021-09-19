@@ -84,6 +84,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -379,7 +380,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     }
 
     @Override
-    public void onWandUseTick(ItemStack wandStack, Player player, int count) {
+    public void onWandUseTick(ItemStack wandStack, Level level, Player player, Vec3 targetPos, int count) {
         // Do nothing; ritual altars don't support wand channeling
     }
     

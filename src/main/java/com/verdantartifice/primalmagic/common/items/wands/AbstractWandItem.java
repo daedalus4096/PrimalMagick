@@ -45,6 +45,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
@@ -463,11 +464,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity living, int count) {
         // If the player continues to hold the interact button, continue the interaction with the last wand-sensitive block/tile interacted with
-        if (living instanceof Player) {
-            Player player = (Player)living;
+        if (living instanceof Player player) {
+            Vec3 playerPos = player.position().add(0.0D, player.getEyeHeight() / 2.0D, 0.0D);
             IInteractWithWand wandable = this.getTileInUse(stack, player.level);
             if (wandable != null) {
-                wandable.onWandUseTick(stack, player, count);
+                wandable.onWandUseTick(stack, player.level, player, playerPos, count);
             }
         }
     }

@@ -70,7 +70,7 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
     }
 
     @Override
-    public void onWandUseTick(ItemStack wandStack, Player player, int count) {
+    public void onWandUseTick(ItemStack wandStack, Level level, Player player, Vec3 targetPos, int count) {
         if (count % 5 == 0 && wandStack.getItem() instanceof IWand) {
             IWand wand = (IWand)wandStack.getItem();
             if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock) {
@@ -86,11 +86,9 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
                         this.syncTile(true);
                         
                         // Show fancy sparkles
-                        if (!player.level.isClientSide) {
-                            Vec3 playerPos = player.position();
-                            double targetY = playerPos.y + (player.getEyeHeight() / 2.0D);
+                        if (!level.isClientSide) {
                             PacketHandler.sendToAllAround(
-                                    new ManaSparklePacket(this.worldPosition, playerPos.x, targetY, playerPos.z, 20, source.getColor()), 
+                                    new ManaSparklePacket(this.worldPosition, targetPos.x, targetPos.y, targetPos.z, 20, source.getColor()), 
                                     this.level.dimension(), 
                                     this.worldPosition, 
                                     32.0D);
