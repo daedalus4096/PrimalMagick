@@ -673,6 +673,7 @@
     "item.primalmagic.mana_arrow_infernal": "Infernal-Tinged Arrow",
     "item.primalmagic.mana_arrow_void": "Void-Tinged Arrow",
     "item.primalmagic.mana_arrow_hallowed": "Hallowed-Tinged Arrow",
+    "item.primalmagic.dream_vision_talisman": "Dream Vision Talisman",
     
     "entity.primalmagic.treefolk": "Treefolk",
     "entity.primalmagic.inner_demon": "Inner Demon",
@@ -742,6 +743,9 @@
     "tooltip.primalmagic.analyze_button.1": "Analyze item affinities",
     "tooltip.primalmagic.analyze_button.2": "Item will be destroyed",
     "tooltip.primalmagic.spell_scroll": "Right-click to cast; will consume scroll",
+    "tooltip.primalmagic.dream_vision_talisman.exp": "Experience: %1$d / %2$d",
+    "tooltip.primalmagic.dream_vision_talisman.active": "Active",
+    "tooltip.primalmagic.dream_vision_talisman.inactive": "Inactive",
     
     "effect.primalmagic.flying": "Flying",
     "effect.primalmagic.polymorph": "Polymorph",
