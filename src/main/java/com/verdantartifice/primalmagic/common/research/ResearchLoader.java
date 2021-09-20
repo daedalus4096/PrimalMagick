@@ -86,6 +86,7 @@ public class ResearchLoader extends SimpleJsonResourceReloadListener {
     
     public void replaceResearch(List<ResearchEntry> entries) {
         ResearchManager.clearCraftingReferences();
+        ResearchManager.clearRecipeMap();
         ResearchDisciplines.clearAllResearch();
         for (ResearchEntry researchEntry : entries) {
             ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(researchEntry.getDisciplineKey());
