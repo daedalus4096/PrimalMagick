@@ -837,8 +837,10 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     protected void generateIndexMap() {
         Minecraft mc = this.getMinecraft();
+        Comparator<Recipe<?>> displayNameComparator = Comparator.comparing(r -> r.getResultItem().getHoverName().getString());
+        Comparator<Recipe<?>> recipeIdComparator = Comparator.comparing(r -> r.getId());
         List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
-                .sorted(Comparator.comparing(r -> r.getResultItem().getHoverName().getString())).collect(Collectors.toList());
+                .sorted(displayNameComparator.thenComparing(recipeIdComparator)).collect(Collectors.toList());
 
         this.indexMap = new TreeMap<>();
         for (Recipe<?> recipe : processedRecipes) {
