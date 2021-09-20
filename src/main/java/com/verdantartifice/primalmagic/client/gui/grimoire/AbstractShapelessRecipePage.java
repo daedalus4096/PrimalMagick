@@ -43,7 +43,7 @@ public abstract class AbstractShapelessRecipePage<T extends Recipe<?>> extends A
         for (int index = 0; index < Math.min(ingredients.size(), 9); index++) {
             Ingredient ingredient = ingredients.get(index);
             if (ingredient != null) {
-                screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + ((index % 3) * 32), y + 67 + ((index / 3) * 32)));
+                screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + ((index % 3) * 32), y + 67 + ((index / 3) * 32), screen));
             }
         }
         

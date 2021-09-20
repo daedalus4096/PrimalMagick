@@ -77,7 +77,7 @@ public class RitualRecipePage extends AbstractRecipePage {
                     deltaX = 0;
                     y += 18;
                 }
-                screen.addWidgetToScreen(new IngredientWidget(ingredient, x + 8 + deltaX + (side * 144), y));
+                screen.addWidgetToScreen(new IngredientWidget(ingredient, x + 8 + deltaX + (side * 144), y, screen));
                 deltaX += 18;
             }
             deltaX = 0;

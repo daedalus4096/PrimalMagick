@@ -852,6 +852,10 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         }
     }
     
+    public boolean isIndexKey(String name) {
+        return this.indexMap.containsKey(name);
+    }
+    
     protected void parseRecipeIndexPages() {
         this.currentStageIndex = 0;
         int heightRemaining = 137;

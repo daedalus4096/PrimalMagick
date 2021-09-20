@@ -40,7 +40,7 @@ public class SmeltingRecipePage extends AbstractRecipePage {
         int overlayWidth = 51;
 
         // Render ingredient stacks
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 14));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 14, screen));
 
         // Render output stack
         ItemStack output = this.recipe.getResultItem();

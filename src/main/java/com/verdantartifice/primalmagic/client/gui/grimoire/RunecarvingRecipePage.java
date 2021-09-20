@@ -39,8 +39,8 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         int overlayWidth = 13;
 
         // Render ingredient stacks
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 6 + (side * 140) + (indent / 2), y + 99));
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(1), x + 58 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 99));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 6 + (side * 140) + (indent / 2), y + 99, screen));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(1), x + 58 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 99, screen));
 
         // Render output stack
         screen.addWidgetToScreen(new ItemStackWidget(this.recipe.getResultItem(), x + 29 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
