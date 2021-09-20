@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NavigableMap;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,11 +23,11 @@ import com.verdantartifice.primalmagic.client.gui.grimoire.AttunementIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.AttunementPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.DisciplineIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.DisciplinePage;
-import com.verdantartifice.primalmagic.client.gui.grimoire.RecipeMetadataPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.OtherIndexPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageImage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.PageString;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RecipeIndexPage;
+import com.verdantartifice.primalmagic.client.gui.grimoire.RecipeMetadataPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RecipePageFactory;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RequirementsPage;
 import com.verdantartifice.primalmagic.client.gui.grimoire.RuneEnchantmentIndexPage;
@@ -93,6 +95,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
     protected Inventory inventory;
+    protected NavigableMap<String, List<Recipe<?>>> indexMap;
     
     protected PageButton nextPageButton;
     protected PageButton prevPageButton;
@@ -153,6 +156,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         if (this.knowledge == null) {
             throw new IllegalStateException("No knowledge provider found for player");
         }
+        this.generateIndexMap();
         this.initPages();
         this.initButtons();
     }
@@ -170,8 +174,8 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             this.parseAttunementPage((Source)this.menu.getTopic());
         } else if (this.menu.getTopic() instanceof Enchantment) {
             this.parseRuneEnchantmentPage((Enchantment)this.menu.getTopic());
-        } else if (this.menu.getTopic() instanceof ResourceLocation recipeLoc) {
-            this.parseRecipeEntryPages(recipeLoc);
+        } else if (this.menu.getTopic() instanceof String nameStr && this.indexMap.containsKey(nameStr)) {
+            this.parseRecipeEntryPages(nameStr);
         } else if (StatisticsPage.TOPIC.equals(this.menu.getTopic())) {
             this.parseStatsPages();
         } else if (AttunementIndexPage.TOPIC.equals(this.menu.getTopic())) {
@@ -831,16 +835,34 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         }
     }
     
+    protected void generateIndexMap() {
+        Minecraft mc = this.getMinecraft();
+        Comparator<Recipe<?>> displayNameComparator = Comparator.comparing(r -> r.getResultItem().getHoverName().getString());
+        Comparator<Recipe<?>> recipeIdComparator = Comparator.comparing(r -> r.getId());
+        List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
+                .sorted(displayNameComparator.thenComparing(recipeIdComparator)).collect(Collectors.toList());
+
+        this.indexMap = new TreeMap<>();
+        for (Recipe<?> recipe : processedRecipes) {
+            String recipeName = recipe.getResultItem().getHoverName().getString();
+            if (!this.indexMap.containsKey(recipeName)) {
+                this.indexMap.put(recipeName, new ArrayList<>());
+            }
+            this.indexMap.get(recipeName).add(recipe);
+        }
+    }
+    
+    public boolean isIndexKey(String name) {
+        return this.indexMap.containsKey(name);
+    }
+    
     protected void parseRecipeIndexPages() {
         this.currentStageIndex = 0;
         int heightRemaining = 137;
-        Minecraft mc = this.getMinecraft();
         RecipeIndexPage tempPage = new RecipeIndexPage(true);
         
-        List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
-                .sorted(Comparator.comparing(r -> r.getResultItem().getHoverName().getString())).collect(Collectors.toList());
-        for (Recipe<?> recipe : processedRecipes) {
-            tempPage.addContent(recipe.getId());
+        for (String recipeName : this.indexMap.navigableKeySet()) {
+            tempPage.addContent(recipeName);
             heightRemaining -= 12;
             if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
                 heightRemaining = 155;
@@ -866,16 +888,18 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         }
     }
     
-    protected void parseRecipeEntryPages(ResourceLocation recipeLoc) {
+    protected void parseRecipeEntryPages(String recipeName) {
         this.currentStageIndex = 0;
-        Minecraft mc = this.getMinecraft();
-        mc.level.getRecipeManager().byKey(recipeLoc).ifPresent(recipe -> {
+        boolean firstPage = true;
+        List<Recipe<?>> recipes = this.indexMap.getOrDefault(recipeName, Collections.emptyList());
+        for (Recipe<?> recipe : recipes) {
             AbstractRecipePage page = RecipePageFactory.createPage(recipe);
             if (page != null) {
-                this.pages.add(new RecipeMetadataPage(recipe, true));
+                this.pages.add(new RecipeMetadataPage(recipe, firstPage));
                 this.pages.add(page);
+                firstPage = false;
             }
-        });
+        }
     }
     
     public boolean nextPage() {

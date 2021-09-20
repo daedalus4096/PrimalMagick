@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * GUI button to view the grimoire page for a given recipe.
@@ -12,15 +11,15 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class RecipeEntryButton extends AbstractTopicButton {
-    protected ResourceLocation recipeLoc;
+    protected String recipeName;
     
-    public RecipeEntryButton(int x, int y, Component text, GrimoireScreen screen, ResourceLocation recipeLoc) {
+    public RecipeEntryButton(int x, int y, Component text, GrimoireScreen screen, String recipeName) {
         super(x, y, 123, 12, text, screen, new Handler());
-        this.recipeLoc = recipeLoc;
+        this.recipeName = recipeName;
     }
     
-    public ResourceLocation getRecipeLocation() {
-        return this.recipeLoc;
+    public String getRecipeName() {
+        return this.recipeName;
     }
     
     private static class Handler implements OnPress {
@@ -31,7 +30,7 @@ public class RecipeEntryButton extends AbstractTopicButton {
                 GrimoireScreen.HISTORY.add(greb.getScreen().getMenu().getTopic());
                 
                 // Set the new grimoire topic and open a new screen for it
-                greb.getScreen().getMenu().setTopic(greb.getRecipeLocation());
+                greb.getScreen().getMenu().setTopic(greb.getRecipeName());
                 greb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
                     greb.getScreen().getMenu(),
                     greb.getScreen().getPlayerInventory(),

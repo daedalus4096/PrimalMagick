@@ -48,13 +48,9 @@ public class RecipeMetadataPage extends AbstractPage {
 
     @Override
     public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
-        // Draw title page if applicable
-        if (this.isFirstPage() && side == 0) {
-            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
-            y += 53;
-        } else {
-            y += 25;
-        }
+        // Draw title
+        this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
+        y += 53;
         
         Minecraft mc = Minecraft.getInstance();
         RenderSystem.enableBlend();
@@ -92,6 +88,9 @@ public class RecipeMetadataPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         Minecraft mc = screen.getMinecraft();
         ResearchEntry entry = ResearchManager.getEntryForRecipe(this.recipe.getId());
+        if (!this.isFirstPage()) {
+            y += 24;
+        }
         if (entry != null) {
             y += mc.font.lineHeight + 3;
             ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());

@@ -10,9 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.RecipeEntryButton;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.network.chat.TextComponent;
 
 /**
  * Grimoire page listing all of the mod recipes that the player has unlocked.
@@ -22,7 +20,7 @@ import net.minecraft.world.item.crafting.RecipeManager;
 public class RecipeIndexPage extends AbstractPage {
     public static final String TOPIC = "recipe_index";
     
-    protected List<ResourceLocation> contents = new ArrayList<>();
+    protected List<String> contents = new ArrayList<>();
     protected boolean firstPage;
 
     public RecipeIndexPage() {
@@ -34,11 +32,11 @@ public class RecipeIndexPage extends AbstractPage {
     }
     
     @Nonnull
-    public List<ResourceLocation> getContents() {
+    public List<String> getContents() {
         return Collections.unmodifiableList(this.contents);
     }
     
-    public boolean addContent(ResourceLocation entry) {
+    public boolean addContent(String entry) {
         return this.contents.add(entry);
     }
     
@@ -61,14 +59,9 @@ public class RecipeIndexPage extends AbstractPage {
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-        Minecraft mc = screen.getMinecraft();
-        RecipeManager recipeManager = mc.level.getRecipeManager();
-        for (ResourceLocation loc : this.getContents()) {
+        for (String name : this.getContents()) {
             // Render a recipe entry button for each recipe
-            final int yPos = y; // Temporary final field so as to work with closure
-            recipeManager.byKey(loc).ifPresent(recipe -> {
-                screen.addWidgetToScreen(new RecipeEntryButton(x + 12 + (side * 140), yPos, recipe.getResultItem().getHoverName(), screen, loc));
-            });
+            screen.addWidgetToScreen(new RecipeEntryButton(x + 12 + (side * 140), y, new TextComponent(name), screen, name));
             y += 12;
         }
     }

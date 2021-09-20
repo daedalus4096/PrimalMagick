@@ -46,7 +46,7 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
             for (int j = 0; j < Math.min(recipeHeight, 3); j++) {
                 Ingredient ingredient = ingredients.get(i + j * recipeWidth);
                 if (ingredient != null) {
-                    screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (i * 32), y + 67 + (j * 32)));
+                    screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (i * 32), y + 67 + (j * 32), screen));
                 }
             }
         }
