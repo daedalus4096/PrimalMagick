@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -17,6 +19,8 @@ import net.minecraft.world.level.block.state.BlockState;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.rituals.OfferingPedestalBlock}
  */
 public class OfferingPedestalTileEntity extends TileInventoryPM {
+    protected static final int[] SLOTS = new int[] { 0 };
+    
     public OfferingPedestalTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.OFFERING_PEDESTAL.get(), pos, state, 1);
     }
@@ -33,5 +37,20 @@ public class OfferingPedestalTileEntity extends TileInventoryPM {
             entity.doInventorySync();
         }
         entity.ticksExisted++;
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+        return this.canPlaceItem(index, itemStackIn);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        return true;
     }
 }
