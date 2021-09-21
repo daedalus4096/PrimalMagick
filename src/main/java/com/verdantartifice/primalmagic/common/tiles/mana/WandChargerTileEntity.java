@@ -33,7 +33,9 @@ import net.minecraft.world.level.block.state.BlockState;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
  */
 public class WandChargerTileEntity extends TileInventoryPM implements MenuProvider {
-    protected static final int[] SLOTS = new int[] { 0 };
+    protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
+    protected static final int[] SLOTS_FOR_DOWN = new int[0];
+    protected static final int[] SLOTS_FOR_SIDES = new int[] { 1 };
     
     protected int chargeTime;
     protected int chargeTimeTotal;
@@ -199,7 +201,13 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public int[] getSlotsForFace(Direction side) {
-        return SLOTS;
+        if (side == Direction.UP) {
+            return SLOTS_FOR_UP;
+        } else if (side == Direction.DOWN) {
+            return SLOTS_FOR_DOWN;
+        } else {
+            return SLOTS_FOR_SIDES;
+        }
     }
 
     @Override
