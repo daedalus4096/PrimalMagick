@@ -2010,6 +2010,10 @@
     "primalmagic.grimoire.upcoming_tooltip_header": "Missing requirements:",
     "primalmagic.grimoire.recipe_metadata.discipline": "Discipline:",
     "primalmagic.grimoire.recipe_metadata.entry": "Research entry:",
+    "primalmagic.grimoire.attunement_meter.tooltip.header": "%1$s attunement:",
+    "primalmagic.grimoire.attunement_meter.tooltip.permanent": "Permanent: %1$d",
+    "primalmagic.grimoire.attunement_meter.tooltip.induced": "Induced: %1$d",
+    "primalmagic.grimoire.attunement_meter.tooltip.temporary": "Temporary: %1$d",
     
     "primalmagic.research_table.missing_writing_supplies": "Missing writing supplies!",
     "primalmagic.research_table.ready": "Ready to begin!",

@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagic.client.gui.grimoire;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,15 +11,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.AttunementMeterWidget;
 import com.verdantartifice.primalmagic.client.gui.widgets.grimoire.AttunementThresholdWidget;
-import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
-import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 
 /**
  * Grimoire page showing the details of a discovered attunement.
@@ -67,40 +63,13 @@ public class AttunementPage extends AbstractPage {
         }
         
         if (this.isFirstPage()) {
-            Color baseColor = new Color(this.source.getColor());
-            Color color;
-            
             // Render attunement meter
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            Minecraft mc = Minecraft.getInstance();
             RenderSystem.setShaderTexture(0, TEXTURE);
             
             // Render meter background
-            this.blit(matrixStack, x + 51 + (side * 140), y, 12, 0, 14, 120);
-            
-            int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
-            int i = AttunementManager.getAttunement(mc.player, this.source, AttunementType.INDUCED);
-            int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
-
-            // Render permanent meter bar
-            color = baseColor.darker();
-            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
-            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p, 0, 100)), 0, 10, 10, Mth.clamp(p, 0, 100));
-            
-            // Render induced meter bar
-            color = baseColor;
-            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
-            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p + i, 0, 100)), 0, 10, 10, Mth.clamp(i, 0, 100 - p));
-            
-            // Render temporary meter bar
-            color = baseColor.brighter();
-            RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
-            this.blit(matrixStack, x + 53 + (side * 140), y + 10 + (100 - Mth.clamp(p + i + t, 0, 100)), 0, 10, 10, Mth.clamp(t, 0, 100 - p - i));
-
-            // Render meter foreground
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            this.blit(matrixStack, x + 52 + (side * 140), y + 9, 27, 9, 15, 102);
+            this.blit(matrixStack, x + 51 + (side * 140), y, 12, 0, 16, 120);
         }
 
         // Render page contents
@@ -118,6 +87,7 @@ public class AttunementPage extends AbstractPage {
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         if (this.isFirstPage()) {
+            screen.addWidgetToScreen(new AttunementMeterWidget(this.source, x + 68 + (side * 140), y + 17));
             screen.addWidgetToScreen(new AttunementThresholdWidget(this.source, AttunementThreshold.MINOR, x + 83 + (side * 140), y + 79));
             screen.addWidgetToScreen(new AttunementThresholdWidget(this.source, AttunementThreshold.LESSER, x + 83 + (side * 140), y + 49));
             screen.addWidgetToScreen(new AttunementThresholdWidget(this.source, AttunementThreshold.GREATER, x + 83 + (side * 140), y + 19));

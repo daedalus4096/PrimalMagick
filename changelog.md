@@ -9,6 +9,7 @@ v0.0.12-alpha
 * Added research/grant_parents and research/grant_all debug commands
 * Condense recipe index entries with the same name
 * Allow clicking through to recipe pages from ingredient widgets
+* Attunement meters now have a helpful tooltip
 
 v0.0.11-alpha
 -------------
