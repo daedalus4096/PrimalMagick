@@ -109,26 +109,22 @@ public class ArcaneWorkbenchContainer extends AbstractContainerMenu {
                 }
                 slot.onQuickCraft(slotStack, stack);
             } else if (index >= 11 && index < 38) {
-                // If transferring from the player's backpack, put wands in the wand slot and everything else into the hotbar
+                // If transferring from the player's backpack, put wands in the wand slot and everything else into the inputs or hotbar, in that order
                 if (this.wandSlot.mayPlace(slotStack)) {
                     if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else {
-                    if (!this.moveItemStackTo(slotStack, 38, 47, false)) {
-                        return ItemStack.EMPTY;
-                    }
+                } else if (!this.moveItemStackTo(slotStack, 2, 11, false) && !this.moveItemStackTo(slotStack, 38, 47, false)) {
+                    return ItemStack.EMPTY;
                 }
             } else if (index >= 38 && index < 47) {
-                // If transferring from the player's hotbar, put wands in the wand slot and everything else into the backpack
+                // If transferring from the player's hotbar, put wands in the wand slot and everything else into the inputs or backpack, in that order
                 if (this.wandSlot.mayPlace(slotStack)) {
                     if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else {
-                    if (!this.moveItemStackTo(slotStack, 11, 38, false)) {
-                        return ItemStack.EMPTY;
-                    }
+                } else if (!this.moveItemStackTo(slotStack, 2, 11, false) && !this.moveItemStackTo(slotStack, 11, 38, false)) {
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(slotStack, 11, 47, false)) {
                 // Move all other transfers into the backpack or hotbar
