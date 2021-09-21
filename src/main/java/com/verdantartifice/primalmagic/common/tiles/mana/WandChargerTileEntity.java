@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -32,6 +33,8 @@ import net.minecraft.world.level.block.state.BlockState;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
  */
 public class WandChargerTileEntity extends TileInventoryPM implements MenuProvider {
+    protected static final int[] SLOTS = new int[] { 0 };
+    
     protected int chargeTime;
     protected int chargeTimeTotal;
     
@@ -192,5 +195,20 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
             this.chargeTime = 0;
             this.setChanged();
         }
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+        return this.canPlaceItem(index, itemStackIn);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        return true;
     }
 }
