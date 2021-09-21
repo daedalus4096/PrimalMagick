@@ -28,11 +28,12 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class TileInventoryPM extends TilePM implements WorldlyContainer {
+    protected static final int[] NULL_SLOTS = new int[0];
+    
     protected NonNullList<ItemStack> items;         // The tile's inventory
     protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
     protected List<ContainerListener> listeners;    // Listeners to be informed when the inventory contents change
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
-    protected final int[] faceSlots;                // The slots of this tile's inventory visible from its sides
     protected int ticksExisted = 0;                 // FIXME Remove when Forge onLoad bug is fixed
     
     public TileInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state, int invSize) {
@@ -40,10 +41,6 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
         this.items = NonNullList.withSize(invSize, ItemStack.EMPTY);
         this.syncedItems = NonNullList.withSize(invSize, ItemStack.EMPTY);
         this.syncedSlotIndices = this.getSyncedSlotIndices();
-        this.faceSlots = new int[invSize];
-        for (int index = 0; index < invSize; index++) {
-            this.faceSlots[index] = index;
-        }
     }
     
     protected Set<Integer> getSyncedSlotIndices() {
@@ -149,17 +146,20 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
 
     @Override
     public int[] getSlotsForFace(Direction side) {
-        return this.faceSlots;
+        // Disable piping by default
+        return NULL_SLOTS;
     }
 
     @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
+        // Disable piping by default
+        return false;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
+        // Disable piping by default
+        return false;
     }
 
     protected boolean isSyncedSlot(int index) {

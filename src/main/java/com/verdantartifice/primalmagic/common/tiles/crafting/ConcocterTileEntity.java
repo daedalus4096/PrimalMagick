@@ -47,6 +47,9 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     protected static final int MAX_INPUT_ITEMS = 9;
     protected static final int WAND_SLOT_INDEX = 9;
     protected static final int OUTPUT_SLOT_INDEX = 10;
+    protected static final int[] SLOTS_FOR_UP = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+    protected static final int[] SLOTS_FOR_DOWN = new int[] { 10 };
+    protected static final int[] SLOTS_FOR_SIDES = new int[] { 9 };
     
     protected int cookTime;
     protected int cookTimeTotal;
@@ -315,5 +318,37 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
             this.cookTime = 0;
             this.setChanged();
         }
+    }
+
+    @Override
+    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+        if (slotIndex == 10) {
+            return false;
+        } else if (slotIndex == 9) {
+            return stack.getItem() instanceof IWand;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        if (side == Direction.UP) {
+            return SLOTS_FOR_UP;
+        } else if (side == Direction.DOWN) {
+            return SLOTS_FOR_DOWN;
+        } else {
+            return SLOTS_FOR_SIDES;
+        }
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+        return this.canPlaceItem(index, itemStackIn);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        return true;
     }
 }

@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -24,6 +25,8 @@ import net.minecraft.world.phys.Vec3;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.AutoChargerBlock}
  */
 public class AutoChargerTileEntity extends TileInventoryPM {
+    protected static final int[] SLOTS = new int[] { 0 };
+    
     protected final Set<BlockPos> fontLocations = new HashSet<>();
     protected int chargeTime;
 
@@ -98,5 +101,25 @@ public class AutoChargerTileEntity extends TileInventoryPM {
             this.chargeTime = 0;
             this.setChanged();
         }
+    }
+
+    @Override
+    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+        return stack.getItem() instanceof IWand;
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+        return this.canPlaceItem(index, itemStackIn);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        return true;
     }
 }

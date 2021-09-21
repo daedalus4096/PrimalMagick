@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -32,6 +33,10 @@ import net.minecraft.world.level.block.state.BlockState;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.mana.WandChargerBlock}
  */
 public class WandChargerTileEntity extends TileInventoryPM implements MenuProvider {
+    protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
+    protected static final int[] SLOTS_FOR_DOWN = new int[0];
+    protected static final int[] SLOTS_FOR_SIDES = new int[] { 1 };
+    
     protected int chargeTime;
     protected int chargeTimeTotal;
     
@@ -192,5 +197,35 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
             this.chargeTime = 0;
             this.setChanged();
         }
+    }
+
+    @Override
+    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+        if (slotIndex == 0) {
+            return stack.getItem() instanceof EssenceItem;
+        } else {
+            return stack.getItem() instanceof IWand;
+        }
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        if (side == Direction.UP) {
+            return SLOTS_FOR_UP;
+        } else if (side == Direction.DOWN) {
+            return SLOTS_FOR_DOWN;
+        } else {
+            return SLOTS_FOR_SIDES;
+        }
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+        return this.canPlaceItem(index, itemStackIn);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        return true;
     }
 }
