@@ -11,7 +11,7 @@ v0.0.12-alpha
 * Allow clicking through to recipe pages from ingredient widgets
 * Attunement meters now have a helpful tooltip
 * Disable hopper interaction with Essence Furnaces; they're too primitive!
-* Fix hopper interaction with Calcinators
+* Fix hopper interaction with various blocks
 
 v0.0.11-alpha
 -------------
