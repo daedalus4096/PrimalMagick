@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -22,6 +23,8 @@ import net.minecraft.world.level.block.state.BlockState;
  * @author Daedalus4096
  */
 public class EssenceFurnaceTileEntity extends AbstractCalcinatorTileEntity {
+    protected static final int[] SLOTS = new int[0];
+    
     public EssenceFurnaceTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.ESSENCE_FURNACE.get(), pos, state);
     }
@@ -49,5 +52,23 @@ public class EssenceFurnaceTileEntity extends AbstractCalcinatorTileEntity {
             }
         }
         return output;
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        // Essence furnaces are too primitive so support piping
+        return SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+        // Essence furnaces are too primitive so support piping
+        return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        // Essence furnaces are too primitive so support piping
+        return false;
     }
 }

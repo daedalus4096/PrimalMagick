@@ -10,6 +10,8 @@ v0.0.12-alpha
 * Condense recipe index entries with the same name
 * Allow clicking through to recipe pages from ingredient widgets
 * Attunement meters now have a helpful tooltip
+* Disable hopper interaction with Essence Furnaces; they're too primitive!
+* Fix hopper interaction with Calcinators
 
 v0.0.11-alpha
 -------------
