@@ -12,6 +12,7 @@ v0.0.12-alpha
 * Attunement meters now have a helpful tooltip
 * Disable hopper interaction with Essence Furnaces; they're too primitive!
 * Fix hopper interaction with various blocks
+* Rebalance calcinator cook times
 
 v0.0.11-alpha
 -------------

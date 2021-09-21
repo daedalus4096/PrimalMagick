@@ -38,7 +38,24 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
     
     @Override
     protected int getCookTimeTotal() {
-        return 100;
+        Block block = this.getBlockState().getBlock();
+        if (block instanceof CalcinatorBlock calcinatorBlock) {
+            DeviceTier tier = calcinatorBlock.getDeviceTier();
+            switch (tier) {
+            case BASIC:
+                return 160;
+            case ENCHANTED:
+                return 120;
+            case FORBIDDEN:
+                return 80;
+            case HEAVENLY:
+                return 40;
+            default:
+                throw new IllegalStateException("Unknown device tier " + tier);
+            }
+        } else {
+            throw new IllegalStateException("Unknown block type " + block);
+        }
     }
 
     @Override
@@ -81,8 +98,7 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
     @Nonnull
     protected EssenceType getMaxOutputEssenceType() {
         Block block = this.getBlockState().getBlock();
-        if (block instanceof CalcinatorBlock) {
-            CalcinatorBlock calcinatorBlock = (CalcinatorBlock)block;
+        if (block instanceof CalcinatorBlock calcinatorBlock) {
             DeviceTier tier = calcinatorBlock.getDeviceTier();
             switch (tier) {
             case BASIC:
