@@ -267,8 +267,10 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
             return false;
         } else if (slotIndex == 4) {
             return stack.getItem() instanceof IWand;
+        } else if (slotIndex == 1) {
+            return stack.is(Items.GLASS_BOTTLE);
         } else {
-            return true;
+            return stack.is(Items.HONEYCOMB);
         }
     }
 

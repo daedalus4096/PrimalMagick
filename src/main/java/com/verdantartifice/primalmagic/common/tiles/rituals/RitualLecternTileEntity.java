@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,8 +17,6 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class RitualLecternTileEntity extends TileInventoryPM implements IRitualPropTileEntity {
-    protected static final int[] SLOTS = new int[] { 0 };
-    
     protected BlockPos altarPos = null;
     
     public RitualLecternTileEntity(BlockPos pos, BlockState state) {
@@ -70,20 +67,5 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
                 ((RitualAltarTileEntity)tile).onPropActivation(this.worldPosition, stabilityBonus);
             }
         }
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        return SLOTS;
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
     }
 }

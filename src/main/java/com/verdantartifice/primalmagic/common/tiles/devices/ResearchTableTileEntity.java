@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagic.common.tiles.devices;
 
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagic.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -41,6 +43,15 @@ public class ResearchTableTileEntity extends TileInventoryPM implements MenuProv
     @Override
     public Component getDisplayName() {
         return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
+    }
+
+    @Override
+    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+        if (slotIndex == 1) {
+            return stack.is(Items.PAPER);
+        } else {
+            return stack.getItem() instanceof IWritingImplement;
+        }
     }
 
     @Override

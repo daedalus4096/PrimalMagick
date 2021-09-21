@@ -200,6 +200,15 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
     }
 
     @Override
+    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+        if (slotIndex == 0) {
+            return stack.getItem() instanceof EssenceItem;
+        } else {
+            return stack.getItem() instanceof IWand;
+        }
+    }
+
+    @Override
     public int[] getSlotsForFace(Direction side) {
         if (side == Direction.UP) {
             return SLOTS_FOR_UP;

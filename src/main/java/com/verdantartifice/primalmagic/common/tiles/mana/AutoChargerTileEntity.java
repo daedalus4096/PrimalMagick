@@ -104,6 +104,11 @@ public class AutoChargerTileEntity extends TileInventoryPM {
     }
 
     @Override
+    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+        return stack.getItem() instanceof IWand;
+    }
+
+    @Override
     public int[] getSlotsForFace(Direction side) {
         return SLOTS;
     }
