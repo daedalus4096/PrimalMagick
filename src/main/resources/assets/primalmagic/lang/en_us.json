@@ -2269,6 +2269,10 @@
     "death.attack.primalmagic.bleeding.player": "%1$s bled to death whilst fighting %2$s",
     "death.attack.primalmagic.hellish_chain": "%1$s was killed by %2$s",
     "death.attack.primalmagic.hellish_chain.item": "%1$s was killed by %2$s using %3$s",
+    "death.attack.primalmagic.direct_sorcery": "%1$s was killed by %2$s using sorcery",
+    "death.attack.primalmagic.direct_sorcery.item": "%1$s was killed by %2$s using %3$s",
+    "death.attack.primalmagic.indirect_sorcery": "%1$s was killed by %2$s using sorcery",
+    "death.attack.primalmagic.indirect_sorcery.item": "%1$s was killed by %2$s using %3$s",
     
     "itemGroup.primalmagic": "Primal Magic"
 }

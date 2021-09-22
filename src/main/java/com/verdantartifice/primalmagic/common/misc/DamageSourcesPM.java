@@ -13,8 +13,8 @@ import net.minecraft.world.entity.LivingEntity;
  */
 public class DamageSourcesPM {
     public static final String HELLISH_CHAIN_TYPE = "primalmagic.hellish_chain";
-    public static final String DIRECT_SORCERY_TYPE = "primalmagic.directSorcery";
-    public static final String INDIRECT_SORCERY_TYPE = "primalmagic.indirectSorcery";
+    public static final String DIRECT_SORCERY_TYPE = "primalmagic.direct_sorcery";
+    public static final String INDIRECT_SORCERY_TYPE = "primalmagic.indirect_sorcery";
     
     public static final DamageSource BLEEDING = (new DamageSource("primalmagic.bleeding")).bypassArmor();
     
