@@ -1,3 +1,8 @@
+v0.0.13-alpha
+-------------
+* Endermen can now be harmed by damaging touch-range spells
+* Witches now have substantial resistance to damaging spells
+
 v0.0.12-alpha
 -------------
 * Allow clearing wand spells using the Wand Inscription Table
