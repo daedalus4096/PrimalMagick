@@ -40,8 +40,13 @@ public class SelfSpellVehicle extends AbstractSpellVehicle {
             // Determine how many times the caster should be affected by the spell payload
             int forks = (forkMod == null) ? 1 : forkMod.getPropertyValue("forks");
             for (int index = 0; index < forks; index++) {
-                SpellManager.executeSpellPayload(spell, result, world, caster, spellSource, true);
+                SpellManager.executeSpellPayload(spell, result, world, caster, spellSource, true, null);
             }
         }
+    }
+
+    @Override
+    public boolean isIndirect() {
+        return false;
     }
 }

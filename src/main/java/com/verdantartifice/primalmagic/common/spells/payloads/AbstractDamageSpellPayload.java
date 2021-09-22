@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.misc.DamageSourcesPM;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 
@@ -57,17 +58,26 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
         return this.getBaseDamage(spell, spellSource);
     }
     
-    protected DamageSource getDamageSource(Entity target, LivingEntity source) {
-        return DamageSource.thrown(target, source);
+    protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
+        if (projectileEntity != null) {
+            // If the spell was a projectile or a mine, then it's indirect now matter how it was deployed
+            return DamageSourcesPM.causeIndirectSorceryDamage(projectileEntity, source);
+        } else if (spell.getVehicle().isIndirect()) {
+            // If the spell vehicle is indirect but no projectile was given, then it's still indirect
+            return DamageSourcesPM.causeIndirectSorceryDamage(null, source);
+        } else {
+            // Otherwise, do direct damage
+            return DamageSourcesPM.causeDirectSorceryDamage(source);
+        }
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
             if (entityTarget.getEntity() != null) {
                 // Damage the target entity
-                entityTarget.getEntity().hurt(this.getDamageSource(entityTarget.getEntity(), caster), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource));
+                entityTarget.getEntity().hurt(this.getDamageSource(caster, spell, projectileEntity), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource));
                 
                 // Update the caster's last hurt mob
                 if (caster != null) {

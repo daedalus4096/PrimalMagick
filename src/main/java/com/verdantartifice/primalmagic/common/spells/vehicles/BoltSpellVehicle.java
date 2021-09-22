@@ -72,4 +72,9 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     public Component getDetailTooltip() {
         return new TranslatableComponent("primalmagic.spell.vehicle.detail_tooltip." + this.getVehicleType(), this.getRangeBlocks());
     }
+
+    @Override
+    public boolean isIndirect() {
+        return true;
+    }
 }

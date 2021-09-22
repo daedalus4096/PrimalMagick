@@ -65,4 +65,9 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     public int getManaCostMultiplier() {
         return 2;
     }
+
+    @Override
+    public boolean isIndirect() {
+        return true;
+    }
 }

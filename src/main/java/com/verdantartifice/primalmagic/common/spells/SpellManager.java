@@ -32,6 +32,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
@@ -206,7 +207,8 @@ public class SpellManager {
         }
     }
     
-    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull HitResult result, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, boolean allowMine) {
+    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull HitResult result, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, 
+            boolean allowMine, @Nullable Entity projectileEntity) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (!world.isClientSide && spell.getPayload() != null) {
             Vec3 hitVec = result.getLocation();
@@ -230,11 +232,11 @@ public class SpellManager {
                 // If the spell package has the burst mod, calculate the set of affected blocks/entities and execute the payload on each
                 Set<HitResult> targetSet = burstMod.getBurstTargets(result, spell, spellSource, world);
                 for (HitResult target : targetSet) {
-                    spell.getPayload().execute(target, hitVec, spell, world, caster, spellSource);
+                    spell.getPayload().execute(target, hitVec, spell, world, caster, spellSource, null);
                 }
             } else {
                 // Otherwise, just execute the payload on the given target
-                spell.getPayload().execute(result, null, spell, world, caster, spellSource);
+                spell.getPayload().execute(result, null, spell, world, caster, spellSource, null);
             }
         }
     }

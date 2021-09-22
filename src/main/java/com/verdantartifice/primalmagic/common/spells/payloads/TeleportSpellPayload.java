@@ -36,7 +36,7 @@ public class TeleportSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (burstPoint != null) {
             // Do nothing if this was from a burst spell
             return;

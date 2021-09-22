@@ -106,4 +106,11 @@ public interface ISpellVehicle extends INBTSerializable<CompoundTag> {
      * @return the named property's value, or zero if no such property is attached to this spell vehicle
      */
     public int getPropertyValue(String name);
+    
+    /**
+     * Determine whether the spell vehicle deals its effect indirectly (i.e. via a projectile).
+     * 
+     * @return whether the spell vehicle deals its effect indirectly
+     */
+    public boolean isIndirect();
 }

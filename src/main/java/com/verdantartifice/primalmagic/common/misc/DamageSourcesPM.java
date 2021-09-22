@@ -22,7 +22,7 @@ public class DamageSourcesPM {
         return (new EntityDamageSource(HELLISH_CHAIN_TYPE, mob)).setIsFire();
     }
     
-    public static DamageSource causeTouchSorceryDamage(LivingEntity caster) {
+    public static DamageSource causeDirectSorceryDamage(LivingEntity caster) {
         return new EntityDamageSource(DIRECT_SORCERY_TYPE, caster).setMagic();
     }
     

@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -37,8 +38,9 @@ public interface ISpellPayload extends INBTSerializable<CompoundTag> {
      * @param world the world in which the payload should be executed
      * @param caster the player that originally casted the spell
      * @param spellSource the wand or scroll containing the spell package
+     * @param projectileEntity TODO
      */
-    public void execute(@Nullable HitResult target, @Nullable Vec3 burstPoint, @Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource);
+    public void execute(@Nullable HitResult target, @Nullable Vec3 burstPoint, @Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, @Nullable Entity projectileEntity);
     
     /**
      * Determine whether this payload has an effect that should be executed.  Should be true for all but
