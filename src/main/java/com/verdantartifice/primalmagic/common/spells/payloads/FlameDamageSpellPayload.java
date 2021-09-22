@@ -63,8 +63,8 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    protected DamageSource getDamageSource(Entity target, LivingEntity source) {
-        return super.getDamageSource(target, source).setIsFire();
+    protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
+        return super.getDamageSource(source, spell, projectileEntity).setIsFire();
     }
 
     @Override

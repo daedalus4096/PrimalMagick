@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -39,7 +40,7 @@ public class ConsecrateSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null) {
             if (target.getType() == HitResult.Type.BLOCK) {
                 // If the target is a block, place fields in the two blocks adjacent to the target in

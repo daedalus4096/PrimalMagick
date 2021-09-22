@@ -80,7 +80,7 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
                 this.drawFx(world, spell, eyePos.add(lookVector.scale(0.1D)), result.getLocation());
                 
                 // Execute the spell payload on the found target
-                SpellManager.executeSpellPayload(spell, result, world, caster, spellSource, true);
+                SpellManager.executeSpellPayload(spell, result, world, caster, spellSource, true, null);
             }
         }
     }

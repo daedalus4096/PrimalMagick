@@ -35,4 +35,9 @@ public class EmptySpellVehicle extends AbstractSpellVehicle {
     public static CompoundResearchKey getResearch() {
         return null;
     }
+
+    @Override
+    public boolean isIndirect() {
+        return false;
+    }
 }

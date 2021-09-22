@@ -54,9 +54,9 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     }
 
     @Override
-    protected DamageSource getDamageSource(Entity target, LivingEntity source) {
+    protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
         // Bypass the target's armor, if any
-        return super.getDamageSource(target, source).bypassArmor();
+        return super.getDamageSource(source, spell, projectileEntity).bypassArmor();
     }
 
     @Override

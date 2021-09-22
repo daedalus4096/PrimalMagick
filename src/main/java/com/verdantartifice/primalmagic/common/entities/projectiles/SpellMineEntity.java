@@ -186,7 +186,7 @@ public class SpellMineEntity extends Entity {
                             this.spell.getPayload().playSounds(this.level, this.blockPosition());
                         }
                         if (this.getCaster() != null) {
-                            SpellManager.executeSpellPayload(this.spell, new EntityHitResult(entity, this.position().add(0.0D, 0.5D, 0.0D)), this.level, this.getCaster(), this.spellSource, false);
+                            SpellManager.executeSpellPayload(this.spell, new EntityHitResult(entity, this.position().add(0.0D, 0.5D, 0.0D)), this.level, this.getCaster(), this.spellSource, false, this);
                         }
                         found = true;
                     }
