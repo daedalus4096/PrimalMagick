@@ -278,13 +278,11 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
 
     @Override
     public Player getTileOwner() {
-        if (this.owner == null && this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel) {
+        if (this.owner == null && this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
             // If the owner cache is empty, find the entity matching the owner's unique ID
-            ServerPlayer player = ((ServerLevel)this.level).getServer().getPlayerList().getPlayer(this.ownerUUID);
+            ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
             if (player != null) {
                 this.owner = player;
-            } else {
-                this.ownerUUID = null;
             }
         }
         return this.owner;
