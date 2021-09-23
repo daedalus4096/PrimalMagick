@@ -75,22 +75,38 @@ public class ArcaneCraftingResultSlot extends Slot {
     
     @Override
     protected void checkTakeAchievements(ItemStack stack) {
+        // Fire crafting handlers
+        if (this.amountCrafted > 0) {
+            stack.onCraftedBy(this.player.level, this.player, this.amountCrafted);
+            BasicEventHooks.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
+        }
+        if (this.container instanceof RecipeHolder recipeHolder) {
+            recipeHolder.awardUsedRecipes(this.player);
+        }
+        
+        // Reset crafted amount
+        this.amountCrafted = 0;
+    }
+    
+    @Override
+    public void onTake(Player thePlayer, ItemStack stack) {
+        this.checkTakeAchievements(stack);
+        
         // Do additional processing if the crafted recipe was arcane
-        if (this.container instanceof RecipeHolder) {
-            RecipeHolder holder = (RecipeHolder)this.container;
-            if (holder.getRecipeUsed() != null && holder.getRecipeUsed() instanceof IArcaneRecipe) {
+        if (this.container instanceof RecipeHolder holder) {
+            if (holder.getRecipeUsed() != null && holder.getRecipeUsed() instanceof IArcaneRecipe arcaneRecipe) {
                 // Consume the recipe's mana cost from the wand
-                SourceList manaCosts = ((IArcaneRecipe)holder.getRecipeUsed()).getManaCosts();
+                SourceList manaCosts = arcaneRecipe.getManaCosts();
                 if (!manaCosts.isEmpty()) {
                     ItemStack wandStack = this.wandInventory.getItem(0);
-                    if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
-                        ((IWand)wandStack.getItem()).consumeRealMana(wandStack, this.player, manaCosts);
+                    if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+                        wand.consumeRealMana(wandStack, this.player, manaCosts);
                     }
                 }
                 
                 // Increment the craft counter for the recipe's discipline
-                if (this.player instanceof ServerPlayer) {
-                    CompoundResearchKey key = ((IArcaneRecipe)holder.getRecipeUsed()).getRequiredResearch();
+                if (this.player instanceof ServerPlayer serverPlayer) {
+                    CompoundResearchKey key = arcaneRecipe.getRequiredResearch();
                     List<ResearchEntry> entryList = ResearchEntries.getEntries(key);
                     Set<String> recordedDisciplines = new HashSet<>();
                     for (ResearchEntry entry : entryList) {
@@ -102,7 +118,7 @@ public class ArcaneCraftingResultSlot extends Slot {
                                     recordedDisciplines.add(discKey);
                                     Stat craftingStat = disc.getCraftingStat();
                                     if (craftingStat != null) {
-                                        StatsManager.incrementValue((ServerPlayer)this.player, craftingStat, stack.getCount());
+                                        StatsManager.incrementValue(serverPlayer, craftingStat, stack.getCount());
                                     }
                                 }
                             }
@@ -112,22 +128,6 @@ public class ArcaneCraftingResultSlot extends Slot {
             }
         }
         
-        // Fire crafting handlers
-        if (this.amountCrafted > 0) {
-            stack.onCraftedBy(this.player.level, this.player, this.amountCrafted);
-            BasicEventHooks.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
-        }
-        if (this.container instanceof RecipeHolder) {
-            ((RecipeHolder)this.container).awardUsedRecipes(this.player);
-        }
-        
-        // Reset crafted amount
-        this.amountCrafted = 0;
-    }
-    
-    @Override
-    public void onTake(Player thePlayer, ItemStack stack) {
-        this.checkTakeAchievements(stack);
         ForgeHooks.setCraftingPlayer(thePlayer);
         
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes

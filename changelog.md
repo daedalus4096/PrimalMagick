@@ -4,6 +4,7 @@ v0.0.13-alpha
 * Witches now have substantial resistance to damaging spells
 * Fix bug where certain blocks could forget their owners in certain multiplayer situations
 * Fix bug where the Spellcrafting Altar could consume double mana
+* Fix bug where the Arcane Workbench could consume double mana
 
 v0.0.12-alpha
 -------------
