@@ -30,15 +30,15 @@ public class SpellcraftingResultSlot extends ResultSlot {
     }
     
     @Override
-    protected void checkTakeAchievements(ItemStack stack) {
+    public void onTake(Player player, ItemStack stack) {
         // Deduct the cost of the spell from the wand
         SourceList manaCosts = this.costSupplier.get();
         if (manaCosts != null && !manaCosts.isEmpty()) {
             ItemStack wandStack = this.wandInventory.getItem(0);
-            if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
-                ((IWand)wandStack.getItem()).consumeRealMana(wandStack, this.player, manaCosts);
+            if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+                wand.consumeRealMana(wandStack, this.player, manaCosts);
             }
         }
-        super.checkTakeAchievements(stack);
+        super.onTake(player, stack);
     }
 }

@@ -3,6 +3,7 @@ v0.0.13-alpha
 * Endermen can now be harmed by damaging touch-range spells
 * Witches now have substantial resistance to damaging spells
 * Fix bug where certain blocks could forget their owners in certain multiplayer situations
+* Fix bug where the Spellcrafting Altar could consume double mana
 
 v0.0.12-alpha
 -------------
