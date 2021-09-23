@@ -7,6 +7,7 @@ v0.0.13-alpha
 * Fix bug where the Arcane Workbench could consume double mana
 * Overhealing with the Healing spell payload now grants an absorb shield
 * Allow interacting with Wand and Auto-Chargers via their central gap
+* Made cloth armor prevent players from freezing in powder snow
 
 v0.0.12-alpha
 -------------

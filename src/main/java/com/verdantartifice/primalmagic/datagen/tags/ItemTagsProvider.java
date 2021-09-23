@@ -38,6 +38,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         // Add entries to vanilla tags
         this.tag(ItemTags.ARROWS).add(ItemsPM.MANA_ARROW_EARTH.get(), ItemsPM.MANA_ARROW_SEA.get(), ItemsPM.MANA_ARROW_SKY.get(), ItemsPM.MANA_ARROW_SUN.get(), ItemsPM.MANA_ARROW_MOON.get(), ItemsPM.MANA_ARROW_BLOOD.get(), ItemsPM.MANA_ARROW_INFERNAL.get(), ItemsPM.MANA_ARROW_VOID.get(), ItemsPM.MANA_ARROW_HALLOWED.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
+        this.tag(ItemTags.FREEZE_IMMUNE_WEARABLES).add(ItemsPM.IMBUED_WOOL_CHEST.get(), ItemsPM.IMBUED_WOOL_FEET.get(), ItemsPM.IMBUED_WOOL_HEAD.get(), ItemsPM.IMBUED_WOOL_LEGS.get(), ItemsPM.SPELLCLOTH_CHEST.get(), ItemsPM.SPELLCLOTH_FEET.get(), ItemsPM.SPELLCLOTH_HEAD.get(), ItemsPM.SPELLCLOTH_LEGS.get(), ItemsPM.HEXWEAVE_CHEST.get(), ItemsPM.HEXWEAVE_FEET.get(), ItemsPM.HEXWEAVE_HEAD.get(), ItemsPM.HEXWEAVE_LEGS.get(), ItemsPM.SAINTSWOOL_CHEST.get(), ItemsPM.SAINTSWOOL_FEET.get(), ItemsPM.SAINTSWOOL_HEAD.get(), ItemsPM.SAINTSWOOL_LEGS.get());
         this.tag(ItemTags.LOGS).addTag(ItemTagsPM.MOONWOOD_LOGS).addTag(ItemTagsPM.SUNWOOD_LOGS).addTag(ItemTagsPM.HALLOWOOD_LOGS);
         this.tag(ItemTags.LEAVES).add(ItemsPM.MOONWOOD_LEAVES.get(), ItemsPM.SUNWOOD_LEAVES.get(), ItemsPM.HALLOWOOD_LEAVES.get());
         this.tag(ItemTags.PLANKS).add(ItemsPM.MOONWOOD_PLANKS.get(), ItemsPM.SUNWOOD_PLANKS.get(), ItemsPM.HALLOWOOD_PLANKS.get());

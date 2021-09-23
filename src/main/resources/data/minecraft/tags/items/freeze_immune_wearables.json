@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "primalmagic:imbued_wool_chest",
+    "primalmagic:imbued_wool_feet",
+    "primalmagic:imbued_wool_head",
+    "primalmagic:imbued_wool_legs",
+    "primalmagic:spellcloth_chest",
+    "primalmagic:spellcloth_feet",
+    "primalmagic:spellcloth_head",
+    "primalmagic:spellcloth_legs",
+    "primalmagic:hexweave_chest",
+    "primalmagic:hexweave_feet",
+    "primalmagic:hexweave_head",
+    "primalmagic:hexweave_legs",
+    "primalmagic:saintswool_chest",
+    "primalmagic:saintswool_feet",
+    "primalmagic:saintswool_head",
+    "primalmagic:saintswool_legs"
+  ]
+}
