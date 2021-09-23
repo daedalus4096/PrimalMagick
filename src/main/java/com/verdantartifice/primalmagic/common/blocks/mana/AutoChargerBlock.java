@@ -1,13 +1,10 @@
 package com.verdantartifice.primalmagic.common.blocks.mana;
 
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.mana.AutoChargerTileEntity;
-import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
@@ -15,7 +12,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -28,8 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Block definition for the auto-charger.  An auto-charger will automatically siphon mana from
@@ -38,17 +32,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class AutoChargerBlock extends BaseEntityBlock {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/auto_charger"));
-    
     public AutoChargerBlock() {
-        super(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(3.0F, 12.0F).sound(SoundType.STONE));
+        super(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion());
     }
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
-    
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
