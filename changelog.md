@@ -5,6 +5,7 @@ v0.0.13-alpha
 * Fix bug where certain blocks could forget their owners in certain multiplayer situations
 * Fix bug where the Spellcrafting Altar could consume double mana
 * Fix bug where the Arcane Workbench could consume double mana
+* Overhealing with the Healing spell payload now grants an absorb shield
 
 v0.0.12-alpha
 -------------

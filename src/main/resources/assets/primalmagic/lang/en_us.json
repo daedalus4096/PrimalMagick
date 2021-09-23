@@ -1165,7 +1165,7 @@
     
     "primalmagic.research.spell_payload_healing.title": "Spell Payload: Healing",
     "primalmagic.research.spell_payload_healing.text.stage.1": "Nurturing, growing, healing, that's what the Sun is truly for, not random blasts of damaging energy.  Let's see about making that magic a reality.",
-    "primalmagic.research.spell_payload_healing.text.stage.2": "I can now heal wounds with but a few words and gestures.  If that's not magical, then what is?<BR>As with most healing effects, this is anathema to the undead.  They will be damaged proportionately to the spell's power when affected by it.",
+    "primalmagic.research.spell_payload_healing.text.stage.2": "I can now heal wounds with but a few words and gestures.  If that's not magical, then what is?<BR>Should I attempt to heal myself beyond my maximum health capacity, then, if the overhealing is sufficient, I will be granted a temporary absorption shield.<BR>As with most healing effects, this is anathema to the undead.  They will be damaged proportionately to the spell's power when affected by it.",
     
     "primalmagic.research.spell_payload_polymorph.title": "Spell Payload: Polymorph",
     "primalmagic.research.spell_payload_polymorph.text.stage.1": "Now this could be fun...  A little trick of the Moon to change something's shape?  It just might work!",
