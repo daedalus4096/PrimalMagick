@@ -18,7 +18,6 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
@@ -173,10 +172,9 @@ public class PlayerEvents {
 
     protected static void doScheduledSyncs(ServerPlayer player, boolean immediate) {
         if (immediate || ResearchManager.isSyncScheduled(player)) {
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-            if (knowledge != null) {
+            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                 knowledge.sync(player);
-            }
+            });
         }
         if (immediate || StatsManager.isSyncScheduled(player)) {
             IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
@@ -206,72 +204,73 @@ public class PlayerEvents {
     }
     
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-        if (knowledge == null || !knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
-            // Only check environmental research if the player has started progression
-            return;
-        }
-        
-        Biome biome = player.level.getBiome(player.blockPosition());
-        boolean inOverworld = player.level.dimension().equals(Level.OVERWORLD);
-        
-        if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && Biome.BiomeCategory.NETHER.equals(biome.getBiomeCategory())) {
-            // If the player is in a Nether-based biome, discover the Infernal source
-            ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
-            ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-            player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
-        }
-        if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && Biome.BiomeCategory.THEEND.equals(biome.getBiomeCategory())) {
-            // If the player is in an End-based biome, discover the Void source
-            ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
-            ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-            player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.void").withStyle(ChatFormatting.GREEN), false);
-        }
-        
-        // If the player is working on the Earth Source research, check if they're far enough down
-        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@2"))) {
-            SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
-            if (player.position().y < 10.0D && inOverworld && !knowledge.isResearchKnown(key)) {
-                ResearchManager.completeResearch(player, key);
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_earth").withStyle(ChatFormatting.GREEN), false);
+        PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            if (!knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
+                // Only check environmental research if the player has started progression
+                return;
             }
-        }
-        
-        // If the player is working on the Sea Source research, check if they're in the ocean
-        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@2"))) {
-            SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
-            if (Biome.BiomeCategory.OCEAN.equals(biome.getBiomeCategory()) && !knowledge.isResearchKnown(key)) {
-                ResearchManager.completeResearch(player, key);
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sea").withStyle(ChatFormatting.GREEN), false);
+            
+            Biome biome = player.level.getBiome(player.blockPosition());
+            boolean inOverworld = player.level.dimension().equals(Level.OVERWORLD);
+            
+            if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && Biome.BiomeCategory.NETHER.equals(biome.getBiomeCategory())) {
+                // If the player is in a Nether-based biome, discover the Infernal source
+                ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
+                ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
-        }
-        
-        // If the player is working on the Sky Source research, check if they're high up enough
-        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@2"))) {
-            SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
-            if (player.position().y > 100.0D && inOverworld && !knowledge.isResearchKnown(key)) {
-                ResearchManager.completeResearch(player, key);
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sky").withStyle(ChatFormatting.GREEN), false);
+            if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && Biome.BiomeCategory.THEEND.equals(biome.getBiomeCategory())) {
+                // If the player is in an End-based biome, discover the Void source
+                ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
+                ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
+                player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
-        }
-        
-        // If the player is working on the Sun Source research, check if they're in the desert during the daytime
-        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
-            SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
-            if (Biome.BiomeCategory.DESERT.equals(biome.getBiomeCategory()) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
-                ResearchManager.completeResearch(player, key);
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sun").withStyle(ChatFormatting.GREEN), false);
+            
+            // If the player is working on the Earth Source research, check if they're far enough down
+            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@2"))) {
+                SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
+                if (player.position().y < 10.0D && inOverworld && !knowledge.isResearchKnown(key)) {
+                    ResearchManager.completeResearch(player, key);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_earth").withStyle(ChatFormatting.GREEN), false);
+                }
             }
-        }
-        
-        // If the player is working on the Moon Source research, check if they're in the forest during the night-time
-        if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
-            SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
-            if (Biome.BiomeCategory.FOREST.equals(biome.getBiomeCategory()) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
-                ResearchManager.completeResearch(player, key);
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_moon").withStyle(ChatFormatting.GREEN), false);
+            
+            // If the player is working on the Sea Source research, check if they're in the ocean
+            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@2"))) {
+                SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
+                if (Biome.BiomeCategory.OCEAN.equals(biome.getBiomeCategory()) && !knowledge.isResearchKnown(key)) {
+                    ResearchManager.completeResearch(player, key);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sea").withStyle(ChatFormatting.GREEN), false);
+                }
             }
-        }
+            
+            // If the player is working on the Sky Source research, check if they're high up enough
+            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@2"))) {
+                SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
+                if (player.position().y > 100.0D && inOverworld && !knowledge.isResearchKnown(key)) {
+                    ResearchManager.completeResearch(player, key);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sky").withStyle(ChatFormatting.GREEN), false);
+                }
+            }
+            
+            // If the player is working on the Sun Source research, check if they're in the desert during the daytime
+            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
+                SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
+                if (Biome.BiomeCategory.DESERT.equals(biome.getBiomeCategory()) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                    ResearchManager.completeResearch(player, key);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sun").withStyle(ChatFormatting.GREEN), false);
+                }
+            }
+            
+            // If the player is working on the Moon Source research, check if they're in the forest during the night-time
+            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
+                SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
+                if (Biome.BiomeCategory.FOREST.equals(biome.getBiomeCategory()) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                    ResearchManager.completeResearch(player, key);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_moon").withStyle(ChatFormatting.GREEN), false);
+                }
+            }
+        });
     }
     
     protected static void checkVanillaStatistics(ServerPlayer player) {
@@ -385,8 +384,8 @@ public class PlayerEvents {
             event.getOriginal().revive();
             
             try {
-                CompoundTag nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).serializeNBT();
-                PrimalMagicCapabilities.getKnowledge(event.getPlayer()).deserializeNBT(nbtKnowledge);
+                CompoundTag nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
+                PrimalMagicCapabilities.getKnowledge(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
             } catch (Exception e) {
                 LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
             }

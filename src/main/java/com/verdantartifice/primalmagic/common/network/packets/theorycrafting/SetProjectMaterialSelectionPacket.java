@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.network.packets.theorycrafting;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.theorycrafting.Project;
@@ -47,13 +46,12 @@ public class SetProjectMaterialSelectionPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                if (knowledge != null) {
+                PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                     Project project = knowledge.getActiveResearchProject();
                     if (project != null && message.index >= 0 && message.index < project.getMaterials().size()) {
                         project.getMaterials().get(message.index).setSelected(message.selected);    // No need to sync because the screen updated its end
                     }
-                }
+                });
             });
             
             // Mark the packet as handled so we don't get warning log spam

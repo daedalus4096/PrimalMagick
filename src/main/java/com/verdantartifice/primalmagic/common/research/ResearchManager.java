@@ -95,10 +95,7 @@ public class ResearchManager {
     }
     
     public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {
-        IPlayerKnowledge know = PrimalMagicCapabilities.getKnowledge(player);
-        if (know == null) {
-            throw new IllegalStateException("No knowledge provider for player");
-        }
+        IPlayerKnowledge know = PrimalMagicCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
         ResearchEntry entry = ResearchManager.getEntryForRecipe(recipeId);
         if (entry == null) {
             // If the recipe has no controlling research, then assume it's visible
@@ -164,7 +161,7 @@ public class ResearchManager {
         if (player == null || key == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         } else {
@@ -188,66 +185,68 @@ public class ResearchManager {
     
     public static void forceGrantWithAllParents(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
-            key = key.stripStage(); // When we force-grant, we fully complete the entry, not partially
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-            if (knowledge != null && !knowledge.isResearchComplete(key)) {
-                ResearchEntry entry = ResearchEntries.getEntry(key);
-                if (entry != null) {
-                    if (entry.getParentResearch() != null) {
-                        // Recursively force-grant all of this entry's parent entries, even if not all of them are required
-                        for (SimpleResearchKey parentKey : entry.getParentResearch().getKeys()) {
-                            forceGrantWithAllParents(player, parentKey);
+            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                SimpleResearchKey strippedKey = key.stripStage(); // When we force-grant, we fully complete the entry, not partially
+                if (!knowledge.isResearchComplete(strippedKey)) {
+                    ResearchEntry entry = ResearchEntries.getEntry(strippedKey);
+                    if (entry != null) {
+                        if (entry.getParentResearch() != null) {
+                            // Recursively force-grant all of this entry's parent entries, even if not all of them are required
+                            for (SimpleResearchKey parentKey : entry.getParentResearch().getKeys()) {
+                                forceGrantWithAllParents(player, parentKey);
+                            }
+                        }
+                        for (ResearchStage stage : entry.getStages()) {
+                            // Complete any research required as a prerequisite for any of the entry's stages
+                            if (stage.getRequiredResearch() != null) {
+                                for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
+                                    completeResearch(player, requiredKey);
+                                }
+                            }
                         }
                     }
-                    for (ResearchStage stage : entry.getStages()) {
-                        // Complete any research required as a prerequisite for any of the entry's stages
-                        if (stage.getRequiredResearch() != null) {
-                            for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
-                                completeResearch(player, requiredKey);
+                    
+                    // Once all prerequisites are out of the way, complete this entry itself
+                    completeResearch(player, strippedKey);
+                    
+                    // Mark as updated any research entry that has a stage which requires completion of this entry
+                    for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
+                        for (ResearchStage searchStage : searchEntry.getStages()) {
+                            if (searchStage.getRequiredResearch() != null && searchStage.getRequiredResearch().contains(strippedKey)) {
+                                knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                                break;
                             }
                         }
                     }
                 }
-                
-                // Once all prerequisites are out of the way, complete this entry itself
-                completeResearch(player, key);
-                
-                // Mark as updated any research entry that has a stage which requires completion of this entry
-                for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
-                    for (ResearchStage searchStage : searchEntry.getStages()) {
-                        if (searchStage.getRequiredResearch() != null && searchStage.getRequiredResearch().contains(key)) {
-                            knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
-                            break;
-                        }
-                    }
-                }
-            }
+            });
         }
     }
     
     public static void forceGrantParentsOnly(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
-            key = key.stripStage(); // When we force-grant, we fully complete the entry, not partially
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-            if (knowledge != null && !knowledge.isResearchComplete(key)) {
-                ResearchEntry entry = ResearchEntries.getEntry(key);
-                if (entry != null) {
-                    if (entry.getParentResearch() != null) {
-                        // Recursively force-grant all of this entry's parent entries, even if not all of them are required
-                        for (SimpleResearchKey parentKey : entry.getParentResearch().getKeys()) {
-                            forceGrantWithAllParents(player, parentKey);
+            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                SimpleResearchKey strippedKey = key.stripStage(); // When we force-grant, we fully complete the entry, not partially
+                if (!knowledge.isResearchComplete(strippedKey)) {
+                    ResearchEntry entry = ResearchEntries.getEntry(strippedKey);
+                    if (entry != null) {
+                        if (entry.getParentResearch() != null) {
+                            // Recursively force-grant all of this entry's parent entries, even if not all of them are required
+                            for (SimpleResearchKey parentKey : entry.getParentResearch().getKeys()) {
+                                forceGrantWithAllParents(player, parentKey);
+                            }
                         }
-                    }
-                    for (ResearchStage stage : entry.getStages()) {
-                        // Complete any research required as a prerequisite for any of the entry's stages
-                        if (stage.getRequiredResearch() != null) {
-                            for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
-                                completeResearch(player, requiredKey);
+                        for (ResearchStage stage : entry.getStages()) {
+                            // Complete any research required as a prerequisite for any of the entry's stages
+                            if (stage.getRequiredResearch() != null) {
+                                for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
+                                    completeResearch(player, requiredKey);
+                                }
                             }
                         }
                     }
                 }
-            }
+            });
         }
     }
     
@@ -261,19 +260,20 @@ public class ResearchManager {
     
     public static void forceRevokeWithAllChildren(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-            if (knowledge != null && knowledge.isResearchComplete(key)) {
-                // Revoke all child research of this entry
-                for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
-                    CompoundResearchKey parentResearch = entry.getParentResearch();
-                    if (parentResearch != null && parentResearch.containsStripped(key)) {
-                        forceRevokeWithAllChildren(player, entry.getKey());
+            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                if (knowledge.isResearchComplete(key)) {
+                    // Revoke all child research of this entry
+                    for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
+                        CompoundResearchKey parentResearch = entry.getParentResearch();
+                        if (parentResearch != null && parentResearch.containsStripped(key)) {
+                            forceRevokeWithAllChildren(player, entry.getKey());
+                        }
                     }
+                    
+                    // Once all children are revoked, revoke this entry itself
+                    revokeResearch(player, key.stripStage());
                 }
-                
-                // Once all children are revoked, revoke this entry itself
-                revokeResearch(player, key.stripStage());
-            }
+            });
         }
     }
     
@@ -288,7 +288,7 @@ public class ResearchManager {
             return false;
         }
         
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -316,7 +316,7 @@ public class ResearchManager {
             return false;
         }
         
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -422,7 +422,7 @@ public class ResearchManager {
     
     public static boolean addKnowledge(Player player, IPlayerKnowledge.KnowledgeType type, int points, boolean scheduleSync) {
         // Add the given number of knowledge points to the player and sync to their client
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -520,7 +520,7 @@ public class ResearchManager {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -558,7 +558,7 @@ public class ResearchManager {
         if (type == null || player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -592,7 +592,7 @@ public class ResearchManager {
         if (player == null) {
             return 0;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return 0;
         }

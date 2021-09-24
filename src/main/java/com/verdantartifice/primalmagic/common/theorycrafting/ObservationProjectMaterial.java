@@ -61,7 +61,7 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isSatisfied(Player player) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         return (knowledge != null && knowledge.getKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION) >= this.count);
     }
 

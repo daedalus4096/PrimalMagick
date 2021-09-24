@@ -31,7 +31,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
     }
     
     public SyncKnowledgePacket(Player player) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         this.data = (knowledge != null) ?
                 knowledge.serializeNBT() :
                 null;
@@ -52,8 +52,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-                IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                if (knowledge != null) {
+                PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                     knowledge.deserializeNBT(message.data);
                     for (SimpleResearchKey key : knowledge.getResearchSet()) {
                         // Show a research completion toast for any research entries so flagged
@@ -65,7 +64,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
                             knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
                         }
                     }
-                }
+                });
             });
             
             // Mark the packet as handled so we don't get warning log spam

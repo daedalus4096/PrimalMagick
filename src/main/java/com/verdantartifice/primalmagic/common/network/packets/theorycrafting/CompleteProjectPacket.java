@@ -52,33 +52,33 @@ public class CompleteProjectPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                
-                // Consume paper and ink
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
-                    ((ResearchTableContainer)player.containerMenu).consumeWritingImplements();
-                }
-
-                // Determine if current project is a success
-                Project project = knowledge.getActiveResearchProject();
-                Random rand = player.getRandom();
-                if (project != null && project.isSatisfied(player) && project.consumeSelectedMaterials(player)) {
-                    if (rand.nextDouble() < project.getSuccessChance()) {
-                        ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());
-                        StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
-                        PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
-                    } else {
-                        PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundEvents.GLASS_BREAK, 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
+                PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                    // Consume paper and ink
+                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
+                        ((ResearchTableContainer)player.containerMenu).consumeWritingImplements();
                     }
-                }
-                
-                // Set new project
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
-                    ((ResearchTableContainer)player.containerMenu).getWorldPosCallable().execute((world, blockPos) -> {
-                        knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
-                    });
-                    knowledge.sync(player);
-                }
+
+                    // Determine if current project is a success
+                    Project project = knowledge.getActiveResearchProject();
+                    Random rand = player.getRandom();
+                    if (project != null && project.isSatisfied(player) && project.consumeSelectedMaterials(player)) {
+                        if (rand.nextDouble() < project.getSuccessChance()) {
+                            ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());
+                            StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
+                            PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
+                        } else {
+                            PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundEvents.GLASS_BREAK, 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
+                        }
+                    }
+                    
+                    // Set new project
+                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
+                        ((ResearchTableContainer)player.containerMenu).getWorldPosCallable().execute((world, blockPos) -> {
+                            knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
+                        });
+                        knowledge.sync(player);
+                    }
+                });
             });
             
             // Mark the packet as handled so we don't get warning log spam

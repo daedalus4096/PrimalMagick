@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagic.common.items.food;
 import java.util.List;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -35,13 +34,14 @@ public class BloodyFleshItem extends Item {
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
         if (!worldIn.isClientSide && (entityLiving instanceof Player)) {
             Player player = (Player)entityLiving;
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-            if (knowledge != null && knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
-                // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
-                ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
-                ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
-            }
+            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                if (knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
+                    // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
+                    ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
+                    ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
+                }
+            });
         }
         return super.finishUsingItem(stack, worldIn, entityLiving);
     }

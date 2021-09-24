@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
@@ -40,8 +39,7 @@ public class StatTriggers {
     
     public static void checkTriggers(@Nullable ServerPlayer player, @Nullable Stat stat, int value) {
         if (player != null && stat != null) {
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-            if (knowledge != null) {
+            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                 boolean found = false;
                 
                 // Iterate through the map of thresholds to research for the stat, or an empty map if it doesn't exist
@@ -63,7 +61,7 @@ public class StatTriggers {
                 if (found) {
                     ResearchManager.scheduleSync(player);
                 }
-            }
+            });
         }
     }
 }

@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagic.common.network.packets.theorycrafting;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
@@ -43,13 +42,14 @@ public class StartProjectPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
-                    ((ResearchTableContainer)player.containerMenu).getWorldPosCallable().execute((world, blockPos) -> {
-                        knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
-                    });
-                    knowledge.sync(player);
-                }
+                PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
+                        ((ResearchTableContainer)player.containerMenu).getWorldPosCallable().execute((world, blockPos) -> {
+                            knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
+                        });
+                        knowledge.sync(player);
+                    }
+                });
             });
             
             // Mark the packet as handled so we don't get warning log spam

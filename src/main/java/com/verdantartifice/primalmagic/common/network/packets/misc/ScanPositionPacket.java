@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
@@ -59,48 +58,45 @@ public class ScanPositionPacket implements IMessageToServer {
                 // Only process blocks that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
                 if (message.pos != null && world.isLoaded(message.pos)) {
-                    IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                    if (knowledge == null) {
-                        return;
-                    }
-                    
-                    // Scan the block
-                    boolean found = false;
-                    ItemStack posStack = new ItemStack(world.getBlockState(message.pos).getBlock());
-                    if (!ResearchManager.isScanned(posStack, player)) {
-                        // Delay syncing until scan is done
-                        found = ResearchManager.setScanned(posStack, player, false);
-                    }
-                    
-                    // If the given block has an inventory, scan its contents too
-                    IItemHandler handler = InventoryUtils.getItemHandler(world, message.pos, Direction.UP);
-                    if (handler != null) {
-                        int scanCount = 0;
-                        ItemStack chestStack;
-                        for (int slot = 0; slot < handler.getSlots(); slot++) {
-                            chestStack = handler.getStackInSlot(slot);
-                            if (chestStack != null && !chestStack.isEmpty()) {
-                                // Limit how much of an inventory can be scanned
-                                if (scanCount >= AffinityManager.MAX_SCAN_COUNT) {
-                                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.toobig").withStyle(ChatFormatting.RED), true);
-                                    break;
+                    PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                        // Scan the block
+                        boolean found = false;
+                        ItemStack posStack = new ItemStack(world.getBlockState(message.pos).getBlock());
+                        if (!ResearchManager.isScanned(posStack, player)) {
+                            // Delay syncing until scan is done
+                            found = ResearchManager.setScanned(posStack, player, false);
+                        }
+                        
+                        // If the given block has an inventory, scan its contents too
+                        IItemHandler handler = InventoryUtils.getItemHandler(world, message.pos, Direction.UP);
+                        if (handler != null) {
+                            int scanCount = 0;
+                            ItemStack chestStack;
+                            for (int slot = 0; slot < handler.getSlots(); slot++) {
+                                chestStack = handler.getStackInSlot(slot);
+                                if (chestStack != null && !chestStack.isEmpty()) {
+                                    // Limit how much of an inventory can be scanned
+                                    if (scanCount >= AffinityManager.MAX_SCAN_COUNT) {
+                                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.toobig").withStyle(ChatFormatting.RED), true);
+                                        break;
+                                    }
+                                    if (ResearchManager.setScanned(chestStack, player, false)) {
+                                        // Delay syncing until scan is done
+                                        found = true;
+                                    }
+                                    scanCount++;
                                 }
-                                if (ResearchManager.setScanned(chestStack, player, false)) {
-                                    // Delay syncing until scan is done
-                                    found = true;
-                                }
-                                scanCount++;
                             }
                         }
-                    }
-                    
-                    // If at least one unscanned item was processed, send a success message
-                    if (found) {
-                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.success").withStyle(ChatFormatting.GREEN), true);
-                        knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
-                    } else {
-                        player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.repeat").withStyle(ChatFormatting.RED), true);
-                    }
+                        
+                        // If at least one unscanned item was processed, send a success message
+                        if (found) {
+                            player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.success").withStyle(ChatFormatting.GREEN), true);
+                            knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
+                        } else {
+                            player.displayClientMessage(new TranslatableComponent("event.primalmagic.scan.repeat").withStyle(ChatFormatting.RED), true);
+                        }
+                    });
                 }
             });
             

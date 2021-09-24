@@ -33,12 +33,11 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
     public SyncResearchFlagsPacket(Player player, SimpleResearchKey key) {
         this();
         this.key = key;
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-        if (knowledge != null) {
+        PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             this.isNew = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
             this.isUpdated = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.UPDATED);
             this.isPopup = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
-        }
+        });
     }
     
     public static void encode(SyncResearchFlagsPacket message, FriendlyByteBuf buf) {
@@ -63,8 +62,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
             ctx.get().enqueueWork(() -> {
                 if (message.key != null) {
                     Player player = ctx.get().getSender();
-                    IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
-                    if (knowledge != null) {
+                    PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                         // Add or remove each flag from the research entry as appropriate
                         if (message.isNew) {
                             knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.NEW);
@@ -81,7 +79,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
                         } else {
                             knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.POPUP);
                         }
-                    }
+                    });
                 }
             });
             

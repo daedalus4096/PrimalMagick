@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.util.LazyOptional;
 
 /**
  * Access point for all capabilities defined by the mod.  Capabilities are injected with the output 
@@ -38,8 +39,8 @@ public class PrimalMagicCapabilities {
     public static final Capability<IManaStorage> MANA_STORAGE = null;
     
     @Nullable
-    public static IPlayerKnowledge getKnowledge(@Nullable Player player) {
-        return player == null ? null : player.getCapability(KNOWLEDGE, null).orElse(null);
+    public static LazyOptional<IPlayerKnowledge> getKnowledge(@Nullable Player player) {
+        return player == null ? LazyOptional.empty() : player.getCapability(KNOWLEDGE, null);
     }
     
     @Nullable

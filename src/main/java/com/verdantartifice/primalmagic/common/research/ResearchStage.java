@@ -220,7 +220,7 @@ public class ResearchStage {
         if (player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -289,7 +289,7 @@ public class ResearchStage {
             // If the player is invalid, return false for all requirements
             return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             // If the player's knowledge capability is invalid, return false for all requirements
             return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
@@ -311,7 +311,7 @@ public class ResearchStage {
             // If the player is invalid, return false for all requirements
             return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             // If the player's knowledge capability is invalid, return false for all requirements
             return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);

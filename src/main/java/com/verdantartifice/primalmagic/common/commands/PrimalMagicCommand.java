@@ -175,7 +175,7 @@ public class PrimalMagicCommand {
     }
 
     private static int listResearch(CommandSourceStack source, ServerPlayer target) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
         } else {
@@ -192,7 +192,7 @@ public class PrimalMagicCommand {
     }
     
     private static int resetResearch(CommandSourceStack source, ServerPlayer target) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
         } else {
@@ -206,7 +206,7 @@ public class PrimalMagicCommand {
     }
     
     private static int grantResearch(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
@@ -222,7 +222,7 @@ public class PrimalMagicCommand {
     }
     
     private static int grantResearchParents(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
@@ -238,7 +238,7 @@ public class PrimalMagicCommand {
     }
     
     private static int grantAllResearch(CommandSourceStack source, ServerPlayer target) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
         } else {
@@ -251,7 +251,7 @@ public class PrimalMagicCommand {
     }
     
     private static int revokeResearch(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
@@ -267,7 +267,7 @@ public class PrimalMagicCommand {
     }
     
     private static int detailResearch(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
@@ -292,7 +292,7 @@ public class PrimalMagicCommand {
     }
     
     private static int progressResearch(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
@@ -313,7 +313,7 @@ public class PrimalMagicCommand {
     }
     
     private static int resetKnowledge(CommandSourceStack source, ServerPlayer target) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
         } else {
@@ -326,7 +326,7 @@ public class PrimalMagicCommand {
     }
     
     private static int getKnowledge(CommandSourceStack source, ServerPlayer target, KnowledgeTypeInput knowledgeTypeInput) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
@@ -342,7 +342,7 @@ public class PrimalMagicCommand {
     }
     
     private static int addKnowledge(CommandSourceStack source, ServerPlayer target, KnowledgeTypeInput knowledgeTypeInput, int points) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
         if (knowledge == null) {
             source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));

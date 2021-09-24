@@ -114,7 +114,7 @@ public class SimpleResearchKey {
         if (player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         } else {
@@ -128,7 +128,7 @@ public class SimpleResearchKey {
         if (player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }

@@ -152,10 +152,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.scaledLeft = (int)(this.width - this.imageWidth * SCALE) / 2;
         this.scaledTop = (int)(this.height - this.imageHeight * SCALE) / 2;
         Minecraft mc = this.getMinecraft();
-        this.knowledge = PrimalMagicCapabilities.getKnowledge(mc.player);
-        if (this.knowledge == null) {
-            throw new IllegalStateException("No knowledge provider found for player");
-        }
+        this.knowledge = PrimalMagicCapabilities.getKnowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
         this.generateIndexMap();
         this.initPages();
         this.initButtons();

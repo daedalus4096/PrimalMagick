@@ -93,7 +93,7 @@ public class SyncProgressPacket implements IMessageToServer {
                 return true;
             }
 
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player);
+            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
             if (knowledge == null) {
                 return false;
             }

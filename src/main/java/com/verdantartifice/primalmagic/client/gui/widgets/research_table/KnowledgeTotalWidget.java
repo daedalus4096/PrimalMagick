@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.util.LazyOptional;
 
 /**
  * Display widget for showing accumulated knowledge (e.g. observations) in the research table GUI.
@@ -27,13 +28,13 @@ public class KnowledgeTotalWidget extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/research_table_overlay.png");
 
     protected IPlayerKnowledge.KnowledgeType type;
-    protected IPlayerKnowledge knowledge;
+    protected LazyOptional<IPlayerKnowledge> knowledgeOpt;
     
     public KnowledgeTotalWidget(int x, int y, IPlayerKnowledge.KnowledgeType type) {
         super(x, y, 16, 19, TextComponent.EMPTY);
         Minecraft mc = Minecraft.getInstance();
         this.type = type;
-        this.knowledge = PrimalMagicCapabilities.getKnowledge(mc.player);
+        this.knowledgeOpt = PrimalMagicCapabilities.getKnowledge(mc.player);
     }
     
     @Override
@@ -55,9 +56,9 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         this.blit(matrixStack, 0, 0, 182, 2, 16, 2);
         matrixStack.popPose();
         
-        if (this.knowledge != null) {
+        this.knowledgeOpt.ifPresent(knowledge -> {
             // Draw amount str
-            int levels = this.knowledge.getKnowledge(this.type);
+            int levels = knowledge.getKnowledge(this.type);
             Component amountText = new TextComponent(Integer.toString(levels));
             int width = mc.font.width(amountText);
             matrixStack.pushPose();
@@ -67,7 +68,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             matrixStack.popPose();
             
             // Draw progress bar foreground
-            int rawPoints = this.knowledge.getKnowledgeRaw(this.type);
+            int rawPoints = knowledge.getKnowledgeRaw(this.type);
             int levelPoints = rawPoints % this.type.getProgression();
             int px = (int)(16.0D * ((double)levelPoints / (double)this.type.getProgression()));
             matrixStack.pushPose();
@@ -75,7 +76,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             matrixStack.translate(this.x, this.y + 17, 1.0F);
             this.blit(matrixStack, 0, 0, 182, 0, px, 2);
             matrixStack.popPose();
-        }
+        });
         
         if (this.isHovered()) {
             // Render tooltip

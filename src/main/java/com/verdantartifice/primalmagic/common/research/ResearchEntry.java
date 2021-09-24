@@ -164,11 +164,7 @@ public class ResearchEntry {
     
     @Nonnull
     protected IPlayerKnowledge getKnowledge(@Nonnull Player player) {
-        IPlayerKnowledge know = PrimalMagicCapabilities.getKnowledge(player);
-        if (know == null) {
-            throw new IllegalStateException("No knowledge provider for player");
-        }
-        return know;
+        return PrimalMagicCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
     }
     
     public boolean isNew(@Nonnull Player player) {
