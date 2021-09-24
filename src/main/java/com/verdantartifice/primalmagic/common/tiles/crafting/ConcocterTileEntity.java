@@ -27,7 +27,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -54,7 +53,6 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     protected int cookTime;
     protected int cookTimeTotal;
     protected ManaStorage manaStorage;
-    protected Player owner;
     protected UUID ownerUUID;
 
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
@@ -109,7 +107,6 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
         
-        this.owner = null;
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
             this.ownerUUID = compound.getUUID("OwnerUUID");
@@ -134,20 +131,16 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     @Override
     public void setTileOwner(Player owner) {
-        this.owner = owner;
         this.ownerUUID = owner.getUUID();
     }
 
     @Override
     public Player getTileOwner() {
-        if (this.owner == null && this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
-            // If the owner cache is empty, find the entity matching the owner's unique ID
-            ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-            if (player != null) {
-                this.owner = player;
-            }
+        if (this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
+            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        } else {
+            return null;
         }
-        return this.owner;
     }
 
     @Override

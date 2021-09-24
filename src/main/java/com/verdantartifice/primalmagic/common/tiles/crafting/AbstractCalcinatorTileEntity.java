@@ -22,7 +22,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -51,7 +50,6 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     protected int burnTimeTotal;
     protected int cookTime;
     protected int cookTimeTotal;
-    protected Player owner;
     protected UUID ownerUUID;
     
     // Define a container-trackable representation of this tile's relevant data
@@ -113,7 +111,6 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
         
-        this.owner = null;
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
             String ownerUUIDStr = compound.getString("OwnerUUID");
@@ -272,19 +269,15 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
 
     @Override
     public void setTileOwner(Player owner) {
-        this.owner = owner;
         this.ownerUUID = owner.getUUID();
     }
 
     @Override
     public Player getTileOwner() {
-        if (this.owner == null && this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
-            // If the owner cache is empty, find the entity matching the owner's unique ID
-            ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-            if (player != null) {
-                this.owner = player;
-            }
+        if (this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
+            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        } else {
+            return null;
         }
-        return this.owner;
     }
 }

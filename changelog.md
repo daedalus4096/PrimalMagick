@@ -1,3 +1,7 @@
+v0.0.14-alpha
+-------------
+* Fix caching bug in owned tile entities
+
 v0.0.13-alpha
 -------------
 * Endermen can now be harmed by damaging touch-range spells
