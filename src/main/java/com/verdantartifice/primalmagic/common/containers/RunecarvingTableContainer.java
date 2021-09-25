@@ -60,6 +60,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
 
     public RunecarvingTableContainer(int windowId, Inventory inv, BlockPos pos) {
         this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level, pos));
+        ((SimpleContainer)this.tableInv).addListener(this);
     }
     
     public RunecarvingTableContainer(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess worldPosCallable) {
