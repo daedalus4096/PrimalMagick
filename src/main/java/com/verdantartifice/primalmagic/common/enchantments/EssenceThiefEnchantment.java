@@ -51,4 +51,9 @@ public class EssenceThiefEnchantment extends AbstractRuneEnchantment {
             ((LivingEntity)target).addEffect(new MobEffectInstance(EffectsPM.STOLEN_ESSENCE.get(), 200, Math.max(0, level - 1)));
         }
     }
+
+    @Override
+    public boolean isTradeable() {
+        return false;
+    }
 }

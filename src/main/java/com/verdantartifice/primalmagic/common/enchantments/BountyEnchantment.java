@@ -36,4 +36,9 @@ public class BountyEnchantment extends AbstractRuneEnchantment {
     public boolean canEnchant(ItemStack stack) {
         return stack.getItem() instanceof HoeItem || super.canEnchant(stack);
     }
+
+    @Override
+    public boolean isTradeable() {
+        return false;
+    }
 }

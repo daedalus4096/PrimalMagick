@@ -3,6 +3,7 @@ v0.0.14-alpha
 * Fix caching bug in owned tile entities, ritual altars, and spell mines
 * Require individual rune research to unlock empowered rune enchantments
 * Replaced sugar cane's sky affinity with an equal amount of sea affinity
+* Prevent empowered rune enchantment books from being offered for trade by villagers
 
 v0.0.13-alpha
 -------------
