@@ -1,6 +1,6 @@
 v0.0.14-alpha
 -------------
-* Fix caching bug in owned tile entities
+* Fix caching bug in owned tile entities, ritual altars, and spell mines
 
 v0.0.13-alpha
 -------------

@@ -107,7 +107,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     protected int nextCheckCount = 0;
     protected float stability = 0.0F;
     protected UUID activePlayerId = null;
-    protected Player activePlayerCache = null;
     protected ResourceLocation activeRecipeId = null;
     protected AbstractRitualStep currentStep = null;
     protected Queue<AbstractRitualStep> remainingSteps = new LinkedList<>();
@@ -146,26 +145,15 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     
     @Nullable
     public Player getActivePlayer() {
-        if (this.activePlayerCache == null && this.activePlayerId != null && this.level instanceof ServerLevel) {
-            // If the active player cache is empty, find the entity matching the caster's unique ID
-            ServerPlayer player = ((ServerLevel)this.level).getServer().getPlayerList().getPlayer(this.activePlayerId);
-            if (player != null) {
-                this.activePlayerCache = player;
-            } else {
-                this.activePlayerId = null;
-            }
+        if (this.activePlayerId != null && this.level instanceof ServerLevel serverLevel) {
+            return serverLevel.getServer().getPlayerList().getPlayer(this.activePlayerId);
+        } else {
+            return null;
         }
-        return this.activePlayerCache;
     }
     
     public void setActivePlayer(@Nullable Player player) {
-        if (player == null) {
-            this.activePlayerCache = null;
-            this.activePlayerId = null;
-        } else {
-            this.activePlayerCache = player;
-            this.activePlayerId = player.getUUID();
-        }
+        this.activePlayerId = player == null ? null : player.getUUID();
     }
     
     @Nullable
@@ -206,7 +194,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         this.nextCheckCount = compound.getInt("NextCheckCount");
         this.stability = Mth.clamp(compound.getFloat("Stability"), MIN_STABILITY, MAX_STABILITY);
         
-        this.activePlayerCache = null;
         if (compound.contains("ActivePlayer", Constants.NBT.TAG_COMPOUND)) {
             this.activePlayerId = NbtUtils.loadUUID(compound.getCompound("ActivePlayer"));
         } else {

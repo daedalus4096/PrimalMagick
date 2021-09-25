@@ -40,7 +40,6 @@ public class SpellMineEntity extends Entity {
     protected static final int ARMING_TIME = 60;        // Number of ticks before switching to an armed state
     
     protected SpellPackage spell;
-    protected LivingEntity caster;
     protected UUID casterId;
     protected ItemStack spellSource;
     protected int currentLife = 0;
@@ -55,7 +54,6 @@ public class SpellMineEntity extends Entity {
         this.setPos(pos.x, pos.y, pos.z);
         this.spell = spell;
         this.spellSource = spellSource.copy();
-        this.caster = caster;
         this.casterId = caster.getUUID();
         this.setLifespan(20 * 60 * durationMinutes);
         if (spell != null && spell.getPayload() != null) {
@@ -95,16 +93,11 @@ public class SpellMineEntity extends Entity {
     
     @Nullable
     public LivingEntity getCaster() {
-        if (this.caster == null && this.casterId != null && this.level instanceof ServerLevel) {
-            // If the caster cache is empty, find the entity matching the caster's unique ID
-            Entity entity = ((ServerLevel)this.level).getEntity(this.casterId);
-            if (entity != null && entity instanceof LivingEntity) {
-                this.caster = (LivingEntity)entity;
-            } else {
-                this.casterId = null;
-            }
+        if (this.casterId != null && this.level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.casterId) instanceof LivingEntity living) {
+            return living;
+        } else {
+            return null;
         }
-        return this.caster;
     }
 
     @Override
@@ -116,7 +109,6 @@ public class SpellMineEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
-        this.caster = null;
         if (compound.contains("Caster", Constants.NBT.TAG_COMPOUND)) {
             this.casterId =  compound.getUUID("Caster");
         }
