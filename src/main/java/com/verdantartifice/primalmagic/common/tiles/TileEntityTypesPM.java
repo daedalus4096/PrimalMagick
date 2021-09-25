@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.tiles.crafting.CalcinatorTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.EssenceFurnaceTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.ResearchTableTileEntity;
@@ -65,4 +66,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<BlockEntityType<EntropySinkTileEntity>> ENTROPY_SINK = TILE_ENTITIES.register("entropy_sink", () -> BlockEntityType.Builder.of(EntropySinkTileEntity::new, BlocksPM.ENTROPY_SINK.get()).build(null));
     public static final RegistryObject<BlockEntityType<ResearchTableTileEntity>> RESEARCH_TABLE = TILE_ENTITIES.register("research_table", () -> BlockEntityType.Builder.of(ResearchTableTileEntity::new, BlocksPM.RESEARCH_TABLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<AutoChargerTileEntity>> AUTO_CHARGER = TILE_ENTITIES.register("auto_charger", () -> BlockEntityType.Builder.of(AutoChargerTileEntity::new, BlocksPM.AUTO_CHARGER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<RunecarvingTableTileEntity>> RUNECARVING_TABLE = TILE_ENTITIES.register("runecarving_table", () -> BlockEntityType.Builder.of(RunecarvingTableTileEntity::new, BlocksPM.RUNECARVING_TABLE.get()).build(null));
 }
