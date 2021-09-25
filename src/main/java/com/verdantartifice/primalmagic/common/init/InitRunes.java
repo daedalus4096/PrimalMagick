@@ -60,13 +60,13 @@ public class InitRunes {
         RuneManager.registerRuneEnchantment(EnchantmentsPM.SPELL_POWER.get(), Rune.PROJECT, Rune.ITEM, Rune.VOID);
         RuneManager.registerRuneEnchantment(EnchantmentsPM.TREASURE.get(), Rune.PROJECT, Rune.ITEM, Rune.MOON);
         RuneManager.registerRuneEnchantment(EnchantmentsPM.BLUDGEONING.get(), Rune.PROJECT, Rune.ITEM, Rune.EARTH);
-        RuneManager.registerRuneEnchantment(EnchantmentsPM.REVERBERATION.get(), Rune.PROJECT, Rune.AREA, Rune.EARTH, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "PRIMAL_SHOVEL"));
-        RuneManager.registerRuneEnchantment(EnchantmentsPM.BOUNTY.get(), Rune.SUMMON, Rune.AREA, Rune.SEA, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "PRIMAL_FISHING_ROD"));
-        RuneManager.registerRuneEnchantment(EnchantmentsPM.DISINTEGRATION.get(), Rune.PROJECT, Rune.AREA, Rune.SKY, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "PRIMAL_AXE"));
-        RuneManager.registerRuneEnchantment(EnchantmentsPM.LUCKY_STRIKE.get(), Rune.SUMMON, Rune.ITEM, Rune.MOON, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "PRIMAL_PICKAXE"));
-        RuneManager.registerRuneEnchantment(EnchantmentsPM.RENDING.get(), Rune.PROJECT, Rune.CREATURE, Rune.BLOOD, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "FORBIDDEN_TRIDENT"));
-        RuneManager.registerRuneEnchantment(EnchantmentsPM.SOULPIERCING.get(), Rune.ABSORB, Rune.CREATURE, Rune.INFERNAL, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "FORBIDDEN_BOw"));
-        RuneManager.registerRuneEnchantment(EnchantmentsPM.ESSENCE_THIEF.get(), Rune.SUMMON, Rune.ITEM, Rune.VOID, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "FORBIDDEN_SWORD"));
-        RuneManager.registerRuneEnchantment(EnchantmentsPM.BULWARK.get(), Rune.PROTECT, Rune.SELF, Rune.HALLOWED, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "SACRED_SHIELD"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.REVERBERATION.get(), Rune.PROJECT, Rune.AREA, Rune.EARTH, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "PRIMAL_SHOVEL", "RUNE_PROJECT", "RUNE_AREA", "RUNE_EARTH"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.BOUNTY.get(), Rune.SUMMON, Rune.AREA, Rune.SEA, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "PRIMAL_FISHING_ROD", "RUNE_SUMMON", "RUNE_AREA", "RUNE_SEA"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.DISINTEGRATION.get(), Rune.PROJECT, Rune.AREA, Rune.SKY, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "PRIMAL_AXE", "RUNE_PROJECT", "RUNE_AREA", "RUNE_SKY"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.LUCKY_STRIKE.get(), Rune.SUMMON, Rune.ITEM, Rune.MOON, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "PRIMAL_PICKAXE", "RUNE_SUMMON", "RUNE_ITEM", "RUNE_MOON"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.RENDING.get(), Rune.PROJECT, Rune.CREATURE, Rune.BLOOD, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "FORBIDDEN_TRIDENT", "RUNE_PROJECT", "RUNE_CREATURE", "RUNE_BLOOD"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.SOULPIERCING.get(), Rune.ABSORB, Rune.CREATURE, Rune.INFERNAL, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "FORBIDDEN_BOW", "RUNE_ABSORB", "RUNE_CREATURE", "RUNE_INFERNAL"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.ESSENCE_THIEF.get(), Rune.SUMMON, Rune.ITEM, Rune.VOID, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "FORBIDDEN_SWORD", "RUNE_SUMMON", "RUNE_ITEM", "RUNE_VOID"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.BULWARK.get(), Rune.PROTECT, Rune.SELF, Rune.HALLOWED, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "SACRED_SHIELD", "RUNE_PROTECT", "RUNE_SELF", "RUNE_HALLOWED"));
     }
 }

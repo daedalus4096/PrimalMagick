@@ -1,6 +1,7 @@
 v0.0.14-alpha
 -------------
 * Fix caching bug in owned tile entities, ritual altars, and spell mines
+* Require individual rune research to unlock empowered rune enchantments
 
 v0.0.13-alpha
 -------------

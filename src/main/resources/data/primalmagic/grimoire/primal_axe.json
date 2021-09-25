@@ -29,7 +29,10 @@
     {
       "text": "primalmagic.research.primal_axe.text.addenda.1",
       "required_research": [
-        "MASTER_RUNEWORKING"
+        "MASTER_RUNEWORKING",
+        "RUNE_PROJECT",
+        "RUNE_AREA",
+        "RUNE_SKY"
       ]
     }
   ]

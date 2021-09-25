@@ -29,7 +29,10 @@
     {
       "text": "primalmagic.research.primal_fishing_rod.text.addenda.1",
       "required_research": [
-        "MASTER_RUNEWORKING"
+        "MASTER_RUNEWORKING",
+        "RUNE_SUMMON",
+        "RUNE_AREA",
+        "RUNE_SEA"
       ]
     }
   ]

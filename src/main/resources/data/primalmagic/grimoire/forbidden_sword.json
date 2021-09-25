@@ -30,7 +30,10 @@
     {
       "text": "primalmagic.research.forbidden_sword.text.addenda.1",
       "required_research": [
-        "MASTER_RUNEWORKING"
+        "MASTER_RUNEWORKING",
+        "RUNE_SUMMON",
+        "RUNE_ITEM",
+        "RUNE_VOID"
       ]
     }
   ]
