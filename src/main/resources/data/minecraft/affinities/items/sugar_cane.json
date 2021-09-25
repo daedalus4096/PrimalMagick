@@ -3,7 +3,7 @@
   "target": "minecraft:sugar_cane",
   "set": {
     "earth": 5,
-    "sky": 5,
+    "sea": 5,
     "sun": 5
   }
 }

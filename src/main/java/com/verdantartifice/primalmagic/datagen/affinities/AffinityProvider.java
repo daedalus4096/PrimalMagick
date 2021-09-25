@@ -230,7 +230,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.NETHER_SPROUTS).base(Items.CRIMSON_ROOTS).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WEEPING_VINES).base(Items.VINE).add(Source.MOON, 5).add(Source.INFERNAL, 5).remove(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.TWISTING_VINES).base(Items.WEEPING_VINES).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.SUGAR_CANE).set(Source.EARTH, 5).set(Source.SKY, 5).set(Source.SUN, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SUGAR_CANE).set(Source.EARTH, 5).set(Source.SEA, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.KELP).set(Source.EARTH, 5).set(Source.SEA, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MOSS_BLOCK).set(Source.EARTH, 5).set(Source.MOON, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.HANGING_ROOTS).set(Source.EARTH, 2).set(Source.SUN, 2).build(consumer);
