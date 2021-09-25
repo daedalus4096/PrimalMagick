@@ -4,6 +4,7 @@ v0.0.14-alpha
 * Require individual rune research to unlock empowered rune enchantments
 * Replaced sugar cane's sky affinity with an equal amount of sea affinity
 * Prevent empowered rune enchantment books from being offered for trade by villagers
+* Allow runecarving tables to hold their inventory between uses
 
 v0.0.13-alpha
 -------------

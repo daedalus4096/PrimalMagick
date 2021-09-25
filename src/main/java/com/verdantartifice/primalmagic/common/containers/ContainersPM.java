@@ -61,7 +61,7 @@ public class ContainersPM {
         return new RunescribingAltarHeavenlyContainer(windowId, inv);
     }));
     public static final RegistryObject<MenuType<RunecarvingTableContainer>> RUNECARVING_TABLE = CONTAINERS.register("runecarving_table", () -> IForgeContainerType.create((windowId, inv, data) -> {
-        return new RunecarvingTableContainer(windowId, inv);
+        return new RunecarvingTableContainer(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<HoneyExtractorContainer>> HONEY_EXTRACTOR = CONTAINERS.register("honey_extractor", () -> IForgeContainerType.create((windowId, inv, data) -> {
         return new HoneyExtractorContainer(windowId, inv);
