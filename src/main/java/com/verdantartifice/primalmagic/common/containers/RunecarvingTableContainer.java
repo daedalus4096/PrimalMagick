@@ -116,6 +116,9 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
         }
 
         this.addDataSlot(this.selectedRecipe);
+        
+        // Do an immediate update of the table GUI
+        this.containerChanged(this.tableInv);
     }
 
     public int getSelectedRecipe() {
