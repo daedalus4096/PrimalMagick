@@ -27,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.entity.PartEntity;
 
 /**
  * Custom item stack renderer for the arcanometer.
@@ -70,6 +71,8 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
                             screenStack = EntityUtils.getEntityItemStack(entity);
                             if (!screenStack.isEmpty()) {
                                 this.renderScreenItem(itemRenderer, screenStack, matrixStack, buffer, combinedLight, combinedOverlay);
+                            } else if (entity instanceof PartEntity<?> partEntity) {
+                                this.renderScreenEntity(mc.getEntityRenderDispatcher(), partEntity.getParent(), matrixStack, buffer, combinedLight, combinedOverlay);
                             } else {
                                 this.renderScreenEntity(mc.getEntityRenderDispatcher(), entity, matrixStack, buffer, combinedLight, combinedOverlay);
                             }

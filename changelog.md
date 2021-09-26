@@ -11,6 +11,7 @@ v0.0.14-alpha
 * Fix rounding issue in wand mana calculations
 * Increase bone block affinities
 * Fix bug causing mod progress reset when returning from the End
+* Fix bug in Arcanometer rendering of multi-part entities
 
 v0.0.13-alpha
 -------------
