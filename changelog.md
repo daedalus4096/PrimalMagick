@@ -7,6 +7,7 @@ v0.0.14-alpha
 * Allow runecarving tables to hold their inventory between uses
 * Better describe the raw destructive power of the Disintegration enchantment
 * Fix Treasure enchantment for mob loot when using spells
+* Allow shift-clicking fuel items into calcinator input slot if fuel slot is full
 
 v0.0.13-alpha
 -------------

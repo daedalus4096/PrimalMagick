@@ -90,7 +90,7 @@ public class CalcinatorContainer extends AbstractContainerMenu {
             } else if (index != 0 && index != 1) {
                 // If transferring from the backpack or hotbar, move fuel to the fuel slot and anything else to the input slot
                 if (this.isFuel(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
+                    if (!this.moveItemStackTo(slotStack, 1, 2, false) && !this.moveItemStackTo(slotStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
