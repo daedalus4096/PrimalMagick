@@ -378,46 +378,45 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void playerCloneEvent(PlayerEvent.Clone event) {
-        // Preserve player capability data between deaths
-        if (event.isWasDeath()) {
-            // FIXME Workaround for a Forge issue
-            event.getOriginal().revive();
-            
-            try {
-                CompoundTag nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-                PrimalMagicCapabilities.getKnowledge(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
-            } catch (Exception e) {
-                LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
-            }
-            
-            try {
-                CompoundTag nbtCooldowns = PrimalMagicCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
-                PrimalMagicCapabilities.getCooldowns(event.getPlayer()).deserializeNBT(nbtCooldowns);
-            } catch (Exception e) {
-                LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
-            }
-            
-            try {
-                CompoundTag nbtStats = PrimalMagicCapabilities.getStats(event.getOriginal()).serializeNBT();
-                PrimalMagicCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
-            } catch (Exception e) {
-                LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
-            }
-            
-            try {
-                CompoundTag nbtAttunements = PrimalMagicCapabilities.getAttunements(event.getOriginal()).serializeNBT();
-                PrimalMagicCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
-            } catch (Exception e) {
-                LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
-            }
-            
-            try {
-                CompoundTag nbtCompanions = PrimalMagicCapabilities.getCompanions(event.getOriginal()).serializeNBT();
-                PrimalMagicCapabilities.getCompanions(event.getPlayer()).deserializeNBT(nbtCompanions);
-            } catch (Exception e) {
-                LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
-            }
+        // Preserve player capability data between deaths or returns from the End
+        event.getOriginal().reviveCaps();   // FIXME Workaround for a Forge issue
+        
+        try {
+            CompoundTag nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
+            PrimalMagicCapabilities.getKnowledge(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
         }
+        
+        try {
+            CompoundTag nbtCooldowns = PrimalMagicCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
+            PrimalMagicCapabilities.getCooldowns(event.getPlayer()).deserializeNBT(nbtCooldowns);
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
+        }
+        
+        try {
+            CompoundTag nbtStats = PrimalMagicCapabilities.getStats(event.getOriginal()).serializeNBT();
+            PrimalMagicCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
+        }
+        
+        try {
+            CompoundTag nbtAttunements = PrimalMagicCapabilities.getAttunements(event.getOriginal()).serializeNBT();
+            PrimalMagicCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
+        }
+        
+        try {
+            CompoundTag nbtCompanions = PrimalMagicCapabilities.getCompanions(event.getOriginal()).serializeNBT();
+            PrimalMagicCapabilities.getCompanions(event.getPlayer()).deserializeNBT(nbtCompanions);
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
+        }
+        
+        event.getOriginal().invalidateCaps();   // FIXME Remove when the reviveCaps call is removed
     }
     
     @SubscribeEvent

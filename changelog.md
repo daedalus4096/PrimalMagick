@@ -10,6 +10,7 @@ v0.0.14-alpha
 * Allow shift-clicking fuel items into calcinator input slot if fuel slot is full
 * Fix rounding issue in wand mana calculations
 * Increase bone block affinities
+* Fix bug causing mod progress reset when returning from the End
 
 v0.0.13-alpha
 -------------
