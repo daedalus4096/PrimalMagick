@@ -5,6 +5,7 @@ v0.0.14-alpha
 * Replaced sugar cane's sky affinity with an equal amount of sea affinity
 * Prevent empowered rune enchantment books from being offered for trade by villagers
 * Allow runecarving tables to hold their inventory between uses
+* Better describe the raw destructive power of the Disintegration enchantment
 
 v0.0.13-alpha
 -------------
