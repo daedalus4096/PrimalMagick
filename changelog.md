@@ -8,6 +8,7 @@ v0.0.14-alpha
 * Better describe the raw destructive power of the Disintegration enchantment
 * Fix Treasure enchantment for mob loot when using spells
 * Allow shift-clicking fuel items into calcinator input slot if fuel slot is full
+* Fix rounding issue in wand mana calculations
 
 v0.0.13-alpha
 -------------

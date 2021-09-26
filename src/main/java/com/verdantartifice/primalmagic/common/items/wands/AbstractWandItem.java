@@ -224,7 +224,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public boolean containsMana(ItemStack stack, Player player, Source source, int amount) {
         // A wand stack with infinite mana always contains the requested amount of mana
-        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (this.getTotalCostModifier(stack, player, source) * amount);
+        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (int)Math.floor(this.getTotalCostModifier(stack, player, source) * amount);
     }
 
     @Override
