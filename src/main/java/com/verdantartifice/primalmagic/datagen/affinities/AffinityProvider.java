@@ -301,7 +301,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.SEA_LANTERN).set(Source.EARTH, 24).set(Source.SEA, 52).set(Source.SUN, 15).build(consumer);  // Add lighting affinity
         ItemAffinityBuilder.itemAffinity(Items.RED_SANDSTONE).base(Items.SANDSTONE).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MAGMA_BLOCK).set(Source.INFERNAL, 10).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.BONE_BLOCK).set(Source.MOON, 5).set(Source.BLOOD, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.BONE_BLOCK).set(Source.MOON, 10).set(Source.BLOOD, 20).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WARPED_WART_BLOCK).base(Items.NETHER_WART_BLOCK).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WHITE_SHULKER_BOX).base(Items.SHULKER_BOX).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ORANGE_SHULKER_BOX).base(Items.SHULKER_BOX).build(consumer);

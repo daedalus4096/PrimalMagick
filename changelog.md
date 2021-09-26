@@ -9,6 +9,7 @@ v0.0.14-alpha
 * Fix Treasure enchantment for mob loot when using spells
 * Allow shift-clicking fuel items into calcinator input slot if fuel slot is full
 * Fix rounding issue in wand mana calculations
+* Increase bone block affinities
 
 v0.0.13-alpha
 -------------
