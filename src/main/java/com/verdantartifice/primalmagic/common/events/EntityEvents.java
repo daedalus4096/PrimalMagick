@@ -127,7 +127,7 @@ public class EntityEvents {
         // If the damage was magical, apply the Treasure enchantment as a looting modifier if greater than what's already there
         DamageSource source = event.getDamageSource();
         Entity caster = null;
-        if (source.isMagic()) {
+        if (source != null && source.isMagic()) {
             if (source instanceof IndirectEntityDamageSource indirectSource) {
                 caster = indirectSource.getEntity();
             } else if (source instanceof EntityDamageSource directSource) {

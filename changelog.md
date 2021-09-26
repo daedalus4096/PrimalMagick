@@ -1,3 +1,7 @@
+v0.0.15-alpha
+-------------
+* Fix intermittent server crash
+
 v0.0.14-alpha
 -------------
 * Fix caching bug in owned tile entities, ritual altars, and spell mines
