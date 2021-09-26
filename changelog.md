@@ -6,6 +6,7 @@ v0.0.14-alpha
 * Prevent empowered rune enchantment books from being offered for trade by villagers
 * Allow runecarving tables to hold their inventory between uses
 * Better describe the raw destructive power of the Disintegration enchantment
+* Fix Treasure enchantment for mob loot when using spells
 
 v0.0.13-alpha
 -------------
