@@ -1,3 +1,7 @@
+v0.0.16-alpha
+-------------
+* Fix bug preventing blocks broken by Break spells from dropping experience
+
 v0.0.15-alpha
 -------------
 * Fix intermittent server crash

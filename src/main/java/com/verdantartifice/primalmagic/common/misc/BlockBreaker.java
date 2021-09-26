@@ -10,6 +10,9 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagic.common.wands.IWand;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -177,6 +180,12 @@ public class BlockBreaker {
             BlockEntity tile = world.getBlockEntity(this.pos);
             BlockState state = world.getBlockState(this.pos);
             Block block = state.getBlock();
+            
+            // If the experience for the block was zero because the player is using a Break spell and thus the wrong tool type, recalculate
+            if (exp == 0 && !ForgeHooks.isCorrectToolForDrops(state, this.player)) {
+                exp = state.getExpDrop(world, this.pos, this.getFortuneLevel(), this.getSilkTouchLevel());
+            }
+            
             if ((block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !serverPlayer.canUseGameMasterBlocks()) {
                 world.sendBlockUpdated(this.pos, state, state, Constants.BlockFlags.DEFAULT);
                 return false;
@@ -201,6 +210,30 @@ public class BlockBreaker {
                     return true;
                 }
             }
+        }
+    }
+    
+    protected int getFortuneLevel() {
+        if (this.fortuneOverride.isPresent()) {
+            return this.fortuneOverride.get();
+        } else if (!this.tool.isEmpty()) {
+            if (this.tool.getItem() instanceof IWand) {
+                return EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.TREASURE.get(), this.tool);
+            } else {
+                return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, this.tool);
+            }
+        } else {
+            return 0;
+        }
+    }
+    
+    protected int getSilkTouchLevel() {
+        if (this.silkTouchOverride.isPresent()) {
+            return this.silkTouchOverride.get() ? 1 : 0;
+        } else if (!this.tool.isEmpty()) {
+            return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, this.tool);
+        } else {
+            return 0;
         }
     }
     
