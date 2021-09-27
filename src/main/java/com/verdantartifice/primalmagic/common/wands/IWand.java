@@ -9,11 +9,10 @@ import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellPackage;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * Base interface for a wand.  Wands store mana for use in crafting and, optionally, casting spells.
@@ -183,25 +182,24 @@ public interface IWand {
      * 
      * @param wandStack the wand stack to be modified
      */
-    public void clearTileInUse(@Nonnull ItemStack wandStack);
+    public void clearPositionInUse(@Nonnull ItemStack wandStack);
 
     /**
-     * Store the position data for the given interactable tile into the given wand stack.
+     * Store the given position data into the given wand stack.
      * 
      * @param wandStack the wand stack to be modified
-     * @param tile the tile whose position data is to be stored
+     * @param pos the position data is to be stored
      */
-    public <T extends BlockEntity & IInteractWithWand> void setTileInUse(@Nonnull ItemStack wandStack, @Nonnull T tile);
+    public void setPositionInUse(@Nonnull ItemStack wandStack, @Nonnull BlockPos pos);
 
     /**
-     * Get the tile currently being interacted with by the given wand stack.
+     * Get the position currently being interacted with by the given wand stack.
      * 
      * @param wandStack the wand stack to be queried
-     * @param world the world in which the tile resides
-     * @return the tile currently being interacted with, or null if none was found
+     * @return the position currently being interacted with, or null if none was found
      */
     @Nullable
-    public IInteractWithWand getTileInUse(@Nonnull ItemStack wandStack, @Nonnull Level world);
+    public BlockPos getPositionInUse(@Nonnull ItemStack wandStack);
     
     /**
      * Get the list of spell packages currently inscribed on the given wand stack.

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.client.util.ClientUtils;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
@@ -15,6 +16,8 @@ import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
@@ -25,6 +28,7 @@ import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
@@ -367,28 +371,25 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public IInteractWithWand getTileInUse(ItemStack wandStack, Level world) {
+    public BlockPos getPositionInUse(ItemStack wandStack) {
         // Look up the world coordinates of the wand-interactable tile entity currently in use from NBT, then query the world for it
         if (wandStack.hasTag() && wandStack.getTag().contains("UsingX") && wandStack.getTag().contains("UsingY") && wandStack.getTag().contains("UsingZ")) {
-            BlockPos pos = new BlockPos(wandStack.getTag().getInt("UsingX"), wandStack.getTag().getInt("UsingY"), wandStack.getTag().getInt("UsingZ"));
-            BlockEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof IInteractWithWand) {
-                return (IInteractWithWand)tile;
-            }
+            return new BlockPos(wandStack.getTag().getInt("UsingX"), wandStack.getTag().getInt("UsingY"), wandStack.getTag().getInt("UsingZ"));
+        } else {
+            return null;
         }
-        return null;
     }
     
     @Override
-    public <T extends BlockEntity & IInteractWithWand> void setTileInUse(ItemStack wandStack, T tile) {
+    public void setPositionInUse(ItemStack wandStack, BlockPos pos) {
         // Save the position of the wand-interactable tile entity so it can be looked up later
-        wandStack.addTagElement("UsingX", IntTag.valueOf(tile.getBlockPos().getX()));
-        wandStack.addTagElement("UsingY", IntTag.valueOf(tile.getBlockPos().getY()));
-        wandStack.addTagElement("UsingZ", IntTag.valueOf(tile.getBlockPos().getZ()));
+        wandStack.addTagElement("UsingX", IntTag.valueOf(pos.getX()));
+        wandStack.addTagElement("UsingY", IntTag.valueOf(pos.getY()));
+        wandStack.addTagElement("UsingZ", IntTag.valueOf(pos.getZ()));
     }
     
     @Override
-    public void clearTileInUse(ItemStack wandStack) {
+    public void clearPositionInUse(ItemStack wandStack) {
         if (wandStack.hasTag()) {
             wandStack.getTag().remove("UsingX");
             wandStack.getTag().remove("UsingY");
@@ -436,14 +437,14 @@ public abstract class AbstractWandItem extends Item implements IWand {
         
         // If the mouseover target is a wand-sensitive block, trigger that initial interaction
         BlockState bs = context.getLevel().getBlockState(context.getClickedPos());
-        if (bs.getBlock() instanceof IInteractWithWand) {
-            return ((IInteractWithWand)bs.getBlock()).onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
+        if (bs.getBlock() instanceof IInteractWithWand wandable) {
+            return wandable.onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
         }
         
         // If the mouseover target is a wand-sensitive tile entity, trigger that initial interaction
         BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
-        if (tile != null && tile instanceof IInteractWithWand) {
-            return ((IInteractWithWand)tile).onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
+        if (tile != null && tile instanceof IInteractWithWand wandable) {
+            return wandable.onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
         }
         
         // Otherwise, see if the mouseover target is a valid target for wand transformation
@@ -452,8 +453,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 if (!context.getPlayer().mayUseItemAt(context.getClickedPos(), context.getClickedFace(), context.getItemInHand())) {
                     return InteractionResult.FAIL;
                 } else {
-                    context.getPlayer().swing(context.getHand());
-                    transform.execute(context.getLevel(), context.getPlayer(), context.getClickedPos());
+                    // If so, save its position for future channeling
+                    this.setPositionInUse(stack, context.getClickedPos());
                     return InteractionResult.SUCCESS;
                 }
             }
@@ -465,19 +466,46 @@ public abstract class AbstractWandItem extends Item implements IWand {
     public void onUsingTick(ItemStack stack, LivingEntity living, int count) {
         // If the player continues to hold the interact button, continue the interaction with the last wand-sensitive block/tile interacted with
         if (living instanceof Player player) {
-            Vec3 playerPos = player.position().add(0.0D, player.getEyeHeight() / 2.0D, 0.0D);
-            IInteractWithWand wandable = this.getTileInUse(stack, player.level);
-            if (wandable != null) {
+            BlockPos wandPos = this.getPositionInUse(stack);
+            if (wandPos != null && player.level.getBlockEntity(wandPos) instanceof IInteractWithWand wandable) {
+                Vec3 playerPos = player.position().add(0.0D, player.getEyeHeight() / 2.0D, 0.0D);
                 wandable.onWandUseTick(stack, player.level, player, playerPos, count);
+            } else if (wandPos != null) {
+                for (IWandTransform transform : WandTransforms.getAll()) {
+                    if (transform.isValid(player.level, player, wandPos)) {
+                        if (player.level.isClientSide) {
+                            // Trigger visual effects during channel
+                            FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Source.HALLOWED.getColor());
+                        }
+                        if (this.getUseDuration(stack) - count >= WandTransforms.CHANNEL_DURATION) {
+                            transform.execute(player.level, player, wandPos);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
     
     @Override
     public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
-        // Once interaction ceases, clear the last-interacted coordinates
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
-        this.clearTileInUse(stack);
+        
+        // Give a hint the first time the player aborts a wand transform early
+        SimpleResearchKey hintKey = SimpleResearchKey.parse("m_wand_transform_hint");
+        BlockPos wandPos = this.getPositionInUse(stack);
+        if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !hintKey.isKnownByStrict(player)) {
+            for (IWandTransform transform : WandTransforms.getAll()) {
+                if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
+                    ResearchManager.completeResearch(player, hintKey);
+                    player.sendMessage(new TranslatableComponent("event.primalmagic.wand_transform_hint").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+                    break;
+                }
+            }
+        }
+
+        // Once interaction ceases, clear the last-interacted coordinates
+        this.clearPositionInUse(stack);
     }
     
     @Override

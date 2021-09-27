@@ -59,10 +59,9 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
 
     @Override
     public InteractionResult onWandRightClick(ItemStack wandStack, Level world, Player player, BlockPos pos, Direction direction) {
-        if (wandStack.getItem() instanceof IWand) {
-            // On initial interaction, save this tile into the wand's NBT for use during future ticks
-            IWand wand = (IWand)wandStack.getItem();
-            wand.setTileInUse(wandStack, this);
+        if (wandStack.getItem() instanceof IWand wand) {
+            // On initial interaction, save this tile's position into the wand's NBT for use during future ticks
+            wand.setPositionInUse(wandStack, this.getBlockPos());
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.FAIL;

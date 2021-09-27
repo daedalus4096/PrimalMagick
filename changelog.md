@@ -1,6 +1,7 @@
 v0.0.16-alpha
 -------------
 * Fix bug preventing blocks broken by Break spells from dropping experience
+* Wand transforms now require a two-second channel
 
 v0.0.15-alpha
 -------------
