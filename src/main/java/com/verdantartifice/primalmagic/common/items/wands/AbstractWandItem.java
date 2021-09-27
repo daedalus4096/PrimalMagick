@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.client.util.ClientUtils;
 import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementThreshold;
@@ -470,6 +471,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 for (IWandTransform transform : WandTransforms.getAll()) {
                     if (transform.isValid(player.level, player, wandPos)) {
                         // TODO Trigger visual effects during channel
+                        if (player.level.isClientSide) {
+                            FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Source.HALLOWED.getColor());
+                        }
                         if (this.getUseDuration(stack) - count >= WandTransforms.CHANNEL_DURATION) {
                             transform.execute(player.level, player, wandPos);
                             break;
