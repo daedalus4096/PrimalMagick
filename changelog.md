@@ -3,6 +3,7 @@ v0.0.16-alpha
 * Fix bug preventing blocks broken by Break spells from dropping experience
 * Wand transforms now require a two-second channel
 * Fix statistic increment when quick crafting in the arcane workbench
+* Made statistic names for discipline crafting more consistent with research requirements
 
 v0.0.15-alpha
 -------------
