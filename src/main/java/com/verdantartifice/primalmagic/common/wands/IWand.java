@@ -182,7 +182,7 @@ public interface IWand {
      * 
      * @param wandStack the wand stack to be modified
      */
-    public void clearTileInUse(@Nonnull ItemStack wandStack);
+    public void clearPositionInUse(@Nonnull ItemStack wandStack);
 
     /**
      * Store the given position data into the given wand stack.

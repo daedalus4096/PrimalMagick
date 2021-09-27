@@ -386,7 +386,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public void clearTileInUse(ItemStack wandStack) {
+    public void clearPositionInUse(ItemStack wandStack) {
         if (wandStack.hasTag()) {
             wandStack.getTag().remove("UsingX");
             wandStack.getTag().remove("UsingY");
@@ -470,8 +470,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
             } else if (wandPos != null) {
                 for (IWandTransform transform : WandTransforms.getAll()) {
                     if (transform.isValid(player.level, player, wandPos)) {
-                        // TODO Trigger visual effects during channel
                         if (player.level.isClientSide) {
+                            // Trigger visual effects during channel
                             FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Source.HALLOWED.getColor());
                         }
                         if (this.getUseDuration(stack) - count >= WandTransforms.CHANNEL_DURATION) {
@@ -488,7 +488,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
         // Once interaction ceases, clear the last-interacted coordinates
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
-        this.clearTileInUse(stack);
+        this.clearPositionInUse(stack);
     }
     
     @Override
