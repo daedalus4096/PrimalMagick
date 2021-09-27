@@ -19,7 +19,6 @@ import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -79,6 +78,28 @@ public class ArcaneCraftingResultSlot extends Slot {
         if (this.amountCrafted > 0) {
             stack.onCraftedBy(this.player.level, this.player, this.amountCrafted);
             BasicEventHooks.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
+            
+            // Increment the craft counter for the recipe's discipline
+            if (this.container instanceof RecipeHolder recipeHolder && recipeHolder.getRecipeUsed() instanceof IArcaneRecipe arcaneRecipe) {
+                CompoundResearchKey key = arcaneRecipe.getRequiredResearch();
+                List<ResearchEntry> entryList = ResearchEntries.getEntries(key);
+                Set<String> recordedDisciplines = new HashSet<>();
+                for (ResearchEntry entry : entryList) {
+                    if (entry != null) {
+                        ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
+                        if (disc != null) {
+                            String discKey = disc.getKey();
+                            if (!recordedDisciplines.contains(discKey)) {   // Only increment the stat for each discipline once
+                                recordedDisciplines.add(discKey);
+                                Stat craftingStat = disc.getCraftingStat();
+                                if (craftingStat != null) {
+                                    StatsManager.incrementValue(this.player, craftingStat, this.amountCrafted);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         if (this.container instanceof RecipeHolder recipeHolder) {
             recipeHolder.awardUsedRecipes(this.player);
@@ -101,28 +122,6 @@ public class ArcaneCraftingResultSlot extends Slot {
                     ItemStack wandStack = this.wandInventory.getItem(0);
                     if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                         wand.consumeRealMana(wandStack, this.player, manaCosts);
-                    }
-                }
-                
-                // Increment the craft counter for the recipe's discipline
-                if (this.player instanceof ServerPlayer serverPlayer) {
-                    CompoundResearchKey key = arcaneRecipe.getRequiredResearch();
-                    List<ResearchEntry> entryList = ResearchEntries.getEntries(key);
-                    Set<String> recordedDisciplines = new HashSet<>();
-                    for (ResearchEntry entry : entryList) {
-                        if (entry != null) {
-                            ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
-                            if (disc != null) {
-                                String discKey = disc.getKey();
-                                if (!recordedDisciplines.contains(discKey)) {   // Only increment the stat for each discipline once
-                                    recordedDisciplines.add(discKey);
-                                    Stat craftingStat = disc.getCraftingStat();
-                                    if (craftingStat != null) {
-                                        StatsManager.incrementValue(serverPlayer, craftingStat, stack.getCount());
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
