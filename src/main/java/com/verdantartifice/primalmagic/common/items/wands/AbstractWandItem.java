@@ -16,6 +16,8 @@ import com.verdantartifice.primalmagic.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
+import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.spells.SpellManager;
@@ -26,6 +28,7 @@ import com.verdantartifice.primalmagic.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
@@ -486,8 +489,22 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
-        // Once interaction ceases, clear the last-interacted coordinates
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
+        
+        // Give a hint the first time the player aborts a wand transform early
+        SimpleResearchKey hintKey = SimpleResearchKey.parse("m_wand_transform_hint");
+        BlockPos wandPos = this.getPositionInUse(stack);
+        if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !hintKey.isKnownByStrict(player)) {
+            for (IWandTransform transform : WandTransforms.getAll()) {
+                if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
+                    ResearchManager.completeResearch(player, hintKey);
+                    player.sendMessage(new TranslatableComponent("event.primalmagic.wand_transform_hint").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+                    break;
+                }
+            }
+        }
+
+        // Once interaction ceases, clear the last-interacted coordinates
         this.clearPositionInUse(stack);
     }
     
