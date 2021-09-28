@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.items;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagic.common.items.armor.RobeArmorItem;
@@ -24,6 +25,7 @@ import com.verdantartifice.primalmagic.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagic.common.items.misc.EnchantedInkAndQuillItem;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
+import com.verdantartifice.primalmagic.common.items.misc.KnowledgeGainItem;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 import com.verdantartifice.primalmagic.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
@@ -456,6 +458,10 @@ public class ItemsPM {
     public static final RegistryObject<Item> MAGITECH_PARTS_HEAVENLY = ITEMS.register("magitech_parts_heavenly", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> FLYING_CARPET = ITEMS.register("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<DreamVisionTalismanItem> DREAM_VISION_TALISMAN = ITEMS.register("dream_vision_talisman", DreamVisionTalismanItem::new);
+    
+    // Register knowledge items
+    public static final RegistryObject<KnowledgeGainItem> OBSERVATION_NOTES = ITEMS.register("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<KnowledgeGainItem> THEORY_NOTES = ITEMS.register("theory_notes", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

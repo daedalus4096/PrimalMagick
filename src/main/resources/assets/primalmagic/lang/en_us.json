@@ -674,6 +674,8 @@
     "item.primalmagic.mana_arrow_void": "Void-Tinged Arrow",
     "item.primalmagic.mana_arrow_hallowed": "Hallowed-Tinged Arrow",
     "item.primalmagic.dream_vision_talisman": "Dream Vision Talisman",
+    "item.primalmagic.observation_notes": "Field Research Report",
+    "item.primalmagic.theory_notes": "Arcane Thesis",
     
     "entity.primalmagic.treefolk": "Treefolk",
     "entity.primalmagic.inner_demon": "Inner Demon",
@@ -746,6 +748,8 @@
     "tooltip.primalmagic.dream_vision_talisman.exp": "Experience: %1$d / %2$d",
     "tooltip.primalmagic.dream_vision_talisman.active": "Active",
     "tooltip.primalmagic.dream_vision_talisman.inactive": "Inactive",
+    "tooltip.primalmagic.observation_notes": "Use to gain an arcane observation",
+    "tooltip.primalmagic.theory_notes": "Use to gain an arcane theory",
     
     "effect.primalmagic.flying": "Flying",
     "effect.primalmagic.polymorph": "Polymorph",
@@ -1820,6 +1824,8 @@
     "event.primalmagic.dream_vision_talisman.set_active": "The talisman will now absorb experience.",
     "event.primalmagic.dream_vision_talisman.set_inactive": "The talisman will no longer absorb experience.",
     "event.primalmagic.wand_transform_hint": "That seemed to do something, but apparently it wasn't enough. Try waving your wand for longer!",
+    "event.primalmagic.knowledge_item.success": "You have gained valuable arcane knowledge",
+    "event.primalmagic.knowledge_item.failure": "You can't make heads or tails of this",
     
     "primalmagic.dream_journal.title": "Dream Journal",
     "primalmagic.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagic.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",
