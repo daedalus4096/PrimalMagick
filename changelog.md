@@ -5,6 +5,7 @@ v0.0.16-alpha
 * Fix statistic increment when quick crafting in the arcane workbench
 * Made statistic names for discipline crafting more consistent with research requirements
 * Allow librarians and wandering traders to sell items that grant arcane knowledge
+* Fix behavior of owned tile entities while their owners are offline
 
 v0.0.15-alpha
 -------------

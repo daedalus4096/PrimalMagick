@@ -51,6 +51,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     protected int cookTime;
     protected int cookTimeTotal;
     protected UUID ownerUUID;
+    protected Player ownerCache;
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData calcinatorData = new ContainerData() {
@@ -111,6 +112,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
         
+        this.ownerCache = null;
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
             String ownerUUIDStr = compound.getString("OwnerUUID");
@@ -269,15 +271,23 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
 
     @Override
     public void setTileOwner(Player owner) {
+        this.ownerCache = owner;
         this.ownerUUID = owner.getUUID();
     }
 
     @Override
     public Player getTileOwner() {
-        if (this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-        } else {
-            return null;
+        if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
+            Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+            if (livePlayer == null) {
+                // If no matching player is found in the server list, presumably because they're offline, return the cached player object
+                return this.ownerCache;
+            } else {
+                // Otherwise, update the cache and return the live player
+                this.ownerCache = livePlayer;
+                return livePlayer;
+            }
         }
+        return null;
     }
 }

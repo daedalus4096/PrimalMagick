@@ -54,6 +54,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     protected int cookTimeTotal;
     protected ManaStorage manaStorage;
     protected UUID ownerUUID;
+    protected Player ownerCache;
 
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     
@@ -107,6 +108,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
         
+        this.ownerCache = null;
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
             this.ownerUUID = compound.getUUID("OwnerUUID");
@@ -131,16 +133,24 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     @Override
     public void setTileOwner(Player owner) {
+        this.ownerCache = owner;
         this.ownerUUID = owner.getUUID();
     }
 
     @Override
     public Player getTileOwner() {
-        if (this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-        } else {
-            return null;
+        if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
+            Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+            if (livePlayer == null) {
+                // If no matching player is found in the server list, presumably because they're offline, return the cached player object
+                return this.ownerCache;
+            } else {
+                // Otherwise, update the cache and return the live player
+                this.ownerCache = livePlayer;
+                return livePlayer;
+            }
         }
+        return null;
     }
 
     @Override
