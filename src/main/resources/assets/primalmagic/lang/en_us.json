@@ -674,6 +674,8 @@
     "item.primalmagic.mana_arrow_void": "Void-Tinged Arrow",
     "item.primalmagic.mana_arrow_hallowed": "Hallowed-Tinged Arrow",
     "item.primalmagic.dream_vision_talisman": "Dream Vision Talisman",
+    "item.primalmagic.observation_notes": "Field Research Report",
+    "item.primalmagic.theory_notes": "Arcane Thesis",
     
     "entity.primalmagic.treefolk": "Treefolk",
     "entity.primalmagic.inner_demon": "Inner Demon",
@@ -746,6 +748,8 @@
     "tooltip.primalmagic.dream_vision_talisman.exp": "Experience: %1$d / %2$d",
     "tooltip.primalmagic.dream_vision_talisman.active": "Active",
     "tooltip.primalmagic.dream_vision_talisman.inactive": "Inactive",
+    "tooltip.primalmagic.observation_notes": "Use to gain an arcane observation",
+    "tooltip.primalmagic.theory_notes": "Use to gain an arcane theory",
     
     "effect.primalmagic.flying": "Flying",
     "effect.primalmagic.polymorph": "Polymorph",
