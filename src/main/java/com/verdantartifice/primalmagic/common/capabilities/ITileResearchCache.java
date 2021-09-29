@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.nbt.CompoundTag;
@@ -29,6 +30,14 @@ public interface ITileResearchCache extends INBTSerializable<CompoundTag> {
      * @return true if the given research is complete, false otherwise
      */
     public boolean isResearchComplete(@Nullable SimpleResearchKey key);
+    
+    /**
+     * Determine if the given research has been completed, as known by the cache.
+     * 
+     * @param key a key for the desired research entry
+     * @return true if the given research is complete, false otherwise
+     */
+    public boolean isResearchComplete(@Nullable CompoundResearchKey key);
     
     /**
      * Updates the cache to contain a subset of the given player's research.  The subset to copy over

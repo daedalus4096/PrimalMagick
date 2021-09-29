@@ -1,6 +1,10 @@
 package com.verdantartifice.primalmagic.common.tiles.crafting;
 
+import java.util.Collections;
+import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -16,6 +20,7 @@ import com.verdantartifice.primalmagic.common.containers.ConcocterContainer;
 import com.verdantartifice.primalmagic.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -61,6 +66,9 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
+    
+    protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
+    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.relevantResearch.contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData concocterData = new ContainerData() {
@@ -139,8 +147,9 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     @Override
     public void setTileOwner(Player owner) {
+        // Set the owner and update the local research cache with their relevant research
         this.ownerUUID = owner.getUUID();
-        // TODO Update research cache with player research
+        this.researchCache.update(owner, this.relevantFilter);
     }
 
     @Override
@@ -149,6 +158,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
             Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
             if (livePlayer != null && livePlayer.tickCount % 20 == 0) {
                 // Update research cache with current player research
+                this.researchCache.update(livePlayer, this.relevantFilter);
             }
             return livePlayer;
         }
@@ -161,12 +171,19 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         } else {
             Player owner = this.getTileOwner();
             if (owner != null) {
+                // Check the live research list if possible
                 return key.isKnownByStrict(owner);
             } else {
-                // TODO Check the research cache
-                return false;
+                // Check the research cache if the owner is unavailable
+                return this.researchCache.isResearchComplete(key);
             }
         }
+    }
+    
+    protected static Set<SimpleResearchKey> assembleRelevantResearch(Level level) {
+        // Get a set of all the research keys used in any concocting recipe
+        return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING).stream().map(r -> r.getRequiredResearch().getKeys())
+                .flatMap(l -> l.stream()).distinct().collect(Collectors.toUnmodifiableSet());
     }
     
     @Override
@@ -178,8 +195,9 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         boolean shouldMarkDirty = false;
         
         // FIXME Remove when onLoad works again
-        if (entity.ticksExisted == 0) {
-            // TODO Assemble relevant research keys for filter
+        if (entity.ticksExisted == 0 && !level.isClientSide) {
+            // Assemble relevant research keys for filter
+            entity.relevantResearch = assembleRelevantResearch(level);
         }
         
         if (!level.isClientSide) {

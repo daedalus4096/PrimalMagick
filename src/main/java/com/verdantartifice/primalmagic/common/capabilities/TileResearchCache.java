@@ -1,9 +1,13 @@
 package com.verdantartifice.primalmagic.common.capabilities;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
+import javax.annotation.Nonnull;
+
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
 import net.minecraft.nbt.CompoundTag;
@@ -66,6 +70,33 @@ public class TileResearchCache implements ITileResearchCache {
         } else {
             return this.research.contains(key.getRootKey());
         }
+    }
+
+    @Override
+    public boolean isResearchComplete(CompoundResearchKey key) {
+        if (key == null) {
+            return false;
+        } else {
+            return key.getRequireAll() ? this.isAllResearchComplete(key.getKeys()) : this.isAnyResearchComplete(key.getKeys());
+        }
+    }
+    
+    protected boolean isAnyResearchComplete(@Nonnull List<SimpleResearchKey> keys) {
+        for (SimpleResearchKey key : keys) {
+            if (this.isResearchComplete(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    protected boolean isAllResearchComplete(@Nonnull List<SimpleResearchKey> keys) {
+        for (SimpleResearchKey key : keys) {
+            if (!this.isResearchComplete(key)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
