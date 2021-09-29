@@ -6,13 +6,16 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagic.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagic.common.concoctions.FuseType;
 import com.verdantartifice.primalmagic.common.containers.ConcocterContainer;
 import com.verdantartifice.primalmagic.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -53,10 +56,11 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     protected int cookTime;
     protected int cookTimeTotal;
     protected ManaStorage manaStorage;
+    protected ITileResearchCache researchCache;
     protected UUID ownerUUID;
-    protected Player ownerCache;
 
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData concocterData = new ContainerData() {
@@ -98,6 +102,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     public ConcocterTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.CONCOCTER.get(), pos, state, MAX_INPUT_ITEMS + 2);
         this.manaStorage = new ManaStorage(10000, 1000, 1000, Source.INFERNAL);
+        this.researchCache = new TileResearchCache();
     }
     
     @Override
@@ -107,8 +112,8 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
         
-        this.ownerCache = null;
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
             this.ownerUUID = compound.getUUID("OwnerUUID");
@@ -120,6 +125,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        compound.put("ResearchCache", this.researchCache.serializeNBT());
         if (this.ownerUUID != null) {
             compound.putUUID("OwnerUUID", this.ownerUUID);
         }
@@ -133,26 +139,36 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerCache = owner;
         this.ownerUUID = owner.getUUID();
+        // TODO Update research cache with player research
     }
 
     @Override
     public Player getTileOwner() {
         if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
             Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-            if (livePlayer == null) {
-                // If no matching player is found in the server list, presumably because they're offline, return the cached player object
-                return this.ownerCache;
-            } else {
-                // Otherwise, update the cache and return the live player
-                this.ownerCache = livePlayer;
-                return livePlayer;
+            if (livePlayer != null && livePlayer.tickCount % 20 == 0) {
+                // Update research cache with current player research
             }
+            return livePlayer;
         }
         return null;
     }
 
+    protected boolean isResearchKnown(@Nullable CompoundResearchKey key) {
+        if (key == null) {
+            return true;
+        } else {
+            Player owner = this.getTileOwner();
+            if (owner != null) {
+                return key.isKnownByStrict(owner);
+            } else {
+                // TODO Check the research cache
+                return false;
+            }
+        }
+    }
+    
     @Override
     public Component getDisplayName() {
         return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
@@ -160,6 +176,11 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     public static void tick(Level level, BlockPos pos, BlockState state, ConcocterTileEntity entity) {
         boolean shouldMarkDirty = false;
+        
+        // FIXME Remove when onLoad works again
+        if (entity.ticksExisted == 0) {
+            // TODO Assemble relevant research keys for filter
+        }
         
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
@@ -211,7 +232,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
                 return false;
             } else if (this.getMana(Source.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Source.INFERNAL))) {
                 return false;
-            } else if (!recipe.getRequiredResearch().isKnownByStrict(this.getTileOwner())) {
+            } else if (!this.isResearchKnown(recipe.getRequiredResearch())) {
                 return false;
             } else {
                 ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
@@ -262,14 +283,18 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     public void invalidateCaps() {
         super.invalidateCaps();
         this.manaStorageOpt.invalidate();
+        this.researchCacheOpt.invalidate();
     }
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
         if (!this.remove && cap == PrimalMagicCapabilities.MANA_STORAGE) {
             return this.manaStorageOpt.cast();
+        } else if (!this.remove && cap == PrimalMagicCapabilities.RESEARCH_CACHE) {
+            return this.researchCacheOpt.cast();
+        } else {
+            return super.getCapability(cap, side);
         }
-        return super.getCapability(cap, side);
     }
 
     @Override
