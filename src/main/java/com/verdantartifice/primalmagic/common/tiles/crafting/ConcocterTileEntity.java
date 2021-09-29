@@ -199,6 +199,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
             // Assemble relevant research keys for filter
             entity.relevantResearch = assembleRelevantResearch(level);
         }
+        entity.ticksExisted++;
         
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
