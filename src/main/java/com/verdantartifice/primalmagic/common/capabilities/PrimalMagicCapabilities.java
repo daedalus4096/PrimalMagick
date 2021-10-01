@@ -38,7 +38,10 @@ public class PrimalMagicCapabilities {
     @CapabilityInject(IManaStorage.class)
     public static final Capability<IManaStorage> MANA_STORAGE = null;
     
-    @Nullable
+    @CapabilityInject(ITileResearchCache.class)
+    public static final Capability<ITileResearchCache> RESEARCH_CACHE = null;
+    
+    @Nonnull
     public static LazyOptional<IPlayerKnowledge> getKnowledge(@Nullable Player player) {
         return player == null ? LazyOptional.empty() : player.getCapability(KNOWLEDGE, null);
     }
@@ -71,5 +74,10 @@ public class PrimalMagicCapabilities {
     @Nullable
     public static IManaStorage getManaStorage(@Nonnull BlockEntity tile) {
         return tile.getCapability(MANA_STORAGE, null).orElse(null);
+    }
+    
+    @Nonnull
+    public static LazyOptional<ITileResearchCache> getResearchCache(@Nonnull BlockEntity tile) {
+        return tile.getCapability(RESEARCH_CACHE);
     }
 }

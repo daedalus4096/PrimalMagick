@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
+import com.verdantartifice.primalmagic.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagic.common.capabilities.IWorldEntitySwappers;
 
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -29,5 +30,6 @@ public class ModRegistrationEvents {
         event.register(IPlayerCompanions.class);
         event.register(IWorldEntitySwappers.class);
         event.register(IManaStorage.class);
+        event.register(ITileResearchCache.class);
     }
 }
