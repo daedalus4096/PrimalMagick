@@ -1,16 +1,29 @@
 package com.verdantartifice.primalmagic.common.tiles.crafting;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.blocks.crafting.AbstractCalcinatorBlock;
+import com.verdantartifice.primalmagic.common.capabilities.ITileResearchCache;
+import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagic.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
@@ -18,6 +31,7 @@ import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -33,7 +47,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.LazyOptional;
 
 /**
  * Base definition of a calcinator tile entity.  Provides the melting functionality for the corresponding
@@ -44,6 +60,7 @@ import net.minecraftforge.common.util.Constants;
  * @see {@link net.minecraft.tileentity.FurnaceTileEntity}
  */
 public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM implements MenuProvider, IOwnedTileEntity {
+    protected static final Logger LOGGER = LogManager.getLogger();
     protected static final int OUTPUT_CAPACITY = 9;
     
     protected int burnTime;
@@ -51,7 +68,12 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     protected int cookTime;
     protected int cookTimeTotal;
     protected UUID ownerUUID;
-    protected Player ownerCache;
+    protected ITileResearchCache researchCache;
+    
+    protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
+    
+    protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
+    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData calcinatorData = new ContainerData() {
@@ -97,6 +119,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     
     public AbstractCalcinatorTileEntity(BlockEntityType<? extends AbstractCalcinatorTileEntity> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state, OUTPUT_CAPACITY + 2);
+        this.researchCache = new TileResearchCache();
     }
     
     protected boolean isBurning() {
@@ -111,8 +134,8 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         this.burnTimeTotal = compound.getInt("BurnTimeTotal");
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
+        this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
         
-        this.ownerCache = null;
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
             String ownerUUIDStr = compound.getString("OwnerUUID");
@@ -128,6 +151,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         compound.putInt("BurnTimeTotal", this.burnTimeTotal);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
+        compound.put("ResearchCache", this.researchCache.serializeNBT());
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
@@ -137,6 +161,14 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     public static void tick(Level level, BlockPos pos, BlockState state, AbstractCalcinatorTileEntity entity) {
         boolean burningAtStart = entity.isBurning();
         boolean shouldMarkDirty = false;
+        
+        // FIXME Remove when onLoad works again
+        if (entity.ticksExisted == 0 && !level.isClientSide) {
+            // Assemble relevant research keys for filter
+            entity.relevantResearch = assembleRelevantResearch();
+            LOGGER.info("Assembled relevant research on load: {}", String.join(", ", entity.relevantResearch.stream().map(k -> k.getRootKey()).toList()));
+        }
+        entity.ticksExisted++;
         
         if (burningAtStart) {
             entity.burnTime--;
@@ -239,7 +271,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     
     @Nonnull
     protected ItemStack getOutputEssence(EssenceType type, Source source, int count) {
-        if (source.isDiscovered(this.getTileOwner())) {
+        if (this.isSourceKnown(source)) {
             return EssenceItem.getEssence(type, source, count);
         } else {
             // If the calcinator's owner hasn't discovered the given source, only produce alchemical waste
@@ -271,23 +303,58 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerCache = owner;
         this.ownerUUID = owner.getUUID();
+        this.researchCache.update(owner, this.relevantFilter);
     }
 
     @Override
     public Player getTileOwner() {
         if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
             Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-            if (livePlayer == null) {
-                // If no matching player is found in the server list, presumably because they're offline, return the cached player object
-                return this.ownerCache;
-            } else {
-                // Otherwise, update the cache and return the live player
-                this.ownerCache = livePlayer;
-                return livePlayer;
+            if (livePlayer != null && livePlayer.tickCount % 20 == 0) {
+                // Update research cache with current player research
+                this.researchCache.update(livePlayer, this.relevantFilter);
             }
+            return livePlayer;
         }
         return null;
+    }
+    
+    protected boolean isSourceKnown(@Nullable Source source) {
+        if (source == null || source.getDiscoverKey() == null) {
+            return true;
+        } else {
+            Player owner = this.getTileOwner();
+            if (owner != null) {
+                // Check the live research list if possible
+                return source.isDiscovered(owner);
+            } else {
+                // Check the research cache if the owner is unavailable
+                return this.researchCache.isResearchComplete(source.getDiscoverKey());
+            }
+        }
+    }
+    
+    protected Set<SimpleResearchKey> getRelevantResearch() {
+        return this.relevantResearch;
+    }
+    
+    protected static Set<SimpleResearchKey> assembleRelevantResearch() {
+        return Source.SORTED_SOURCES.stream().map(s -> s.getDiscoverKey()).filter(Objects::nonNull).collect(Collectors.toUnmodifiableSet());
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (!this.remove && cap == PrimalMagicCapabilities.RESEARCH_CACHE) {
+            return this.researchCacheOpt.cast();
+        } else {
+            return super.getCapability(cap, side);
+        }
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        this.researchCacheOpt.invalidate();
     }
 }
