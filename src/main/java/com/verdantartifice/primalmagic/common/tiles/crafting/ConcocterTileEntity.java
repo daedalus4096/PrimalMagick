@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagic.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ITileResearchCache;
@@ -51,6 +54,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer {
+    protected static final Logger LOGGER = LogManager.getLogger();
     protected static final int MAX_INPUT_ITEMS = 9;
     protected static final int WAND_SLOT_INDEX = 9;
     protected static final int OUTPUT_SLOT_INDEX = 10;
@@ -68,7 +72,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
     protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
-    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.relevantResearch.contains(k);
+    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData concocterData = new ContainerData() {
@@ -180,6 +184,10 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         }
     }
     
+    protected Set<SimpleResearchKey> getRelevantResearch() {
+        return this.relevantResearch;
+    }
+    
     protected static Set<SimpleResearchKey> assembleRelevantResearch(Level level) {
         // Get a set of all the research keys used in any concocting recipe
         return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING).stream().map(r -> r.getRequiredResearch().getKeys())
@@ -198,6 +206,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         if (entity.ticksExisted == 0 && !level.isClientSide) {
             // Assemble relevant research keys for filter
             entity.relevantResearch = assembleRelevantResearch(level);
+            LOGGER.info("Assembled relevant research on load: {}", String.join(", ", entity.relevantResearch.stream().map(k -> k.getRootKey()).toList()));
         }
         entity.ticksExisted++;
         
