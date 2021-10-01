@@ -8,9 +8,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagic.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ITileResearchCache;
@@ -54,7 +51,6 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer {
-    protected static final Logger LOGGER = LogManager.getLogger();
     protected static final int MAX_INPUT_ITEMS = 9;
     protected static final int WAND_SLOT_INDEX = 9;
     protected static final int OUTPUT_SLOT_INDEX = 10;
@@ -206,7 +202,6 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         if (entity.ticksExisted == 0 && !level.isClientSide) {
             // Assemble relevant research keys for filter
             entity.relevantResearch = assembleRelevantResearch(level);
-            LOGGER.info("Assembled relevant research on load: {}", String.join(", ", entity.relevantResearch.stream().map(k -> k.getRootKey()).toList()));
         }
         entity.ticksExisted++;
         

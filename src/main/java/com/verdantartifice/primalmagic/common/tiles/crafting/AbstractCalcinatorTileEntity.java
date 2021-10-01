@@ -11,9 +11,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagic.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagic.common.capabilities.ITileResearchCache;
@@ -60,7 +57,6 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link net.minecraft.tileentity.FurnaceTileEntity}
  */
 public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM implements MenuProvider, IOwnedTileEntity {
-    protected static final Logger LOGGER = LogManager.getLogger();
     protected static final int OUTPUT_CAPACITY = 9;
     
     protected int burnTime;
@@ -166,7 +162,6 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         if (entity.ticksExisted == 0 && !level.isClientSide) {
             // Assemble relevant research keys for filter
             entity.relevantResearch = assembleRelevantResearch();
-            LOGGER.info("Assembled relevant research on load: {}", String.join(", ", entity.relevantResearch.stream().map(k -> k.getRootKey()).toList()));
         }
         entity.ticksExisted++;
         

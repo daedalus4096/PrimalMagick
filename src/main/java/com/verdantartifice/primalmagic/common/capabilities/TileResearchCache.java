@@ -7,9 +7,6 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 
@@ -25,8 +22,6 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class TileResearchCache implements ITileResearchCache {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
     private final Set<String> research = ConcurrentHashMap.newKeySet();
 
     @Override
@@ -114,6 +109,5 @@ public class TileResearchCache implements ITileResearchCache {
                 }
             }
         });
-        LOGGER.info("Updated research cache to contain: {}", String.join(", ", this.research));
     }
 }
