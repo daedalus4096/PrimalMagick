@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagic.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagic.common.items.misc.EnchantedInkAndQuillItem;
 import com.verdantartifice.primalmagic.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagic.common.items.misc.HallowedOrbItem;
+import com.verdantartifice.primalmagic.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagic.common.items.misc.KnowledgeGainItem;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 import com.verdantartifice.primalmagic.common.items.misc.PixieItem;
@@ -324,6 +325,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> PRIMALITE_BLOCK = ITEMS.register("primalite_block", () -> new BlockItem(BlocksPM.PRIMALITE_BLOCK.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> HEXIUM_BLOCK = ITEMS.register("hexium_block", () -> new BlockItem(BlocksPM.HEXIUM_BLOCK.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> HALLOWSTEEL_BLOCK = ITEMS.register("hallowsteel_block", () -> new BlockItem(BlocksPM.HALLOWSTEEL_BLOCK.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BurnableBlockItem> IGNYX_BLOCK = ITEMS.register("ignyx_block", () -> new BurnableBlockItem(BlocksPM.IGNYX_BLOCK.get(), 128000, new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     
     // Register salted food items
     public static final RegistryObject<Item> SALTED_BAKED_POTATO = ITEMS.register("salted_baked_potato", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).build())));
@@ -458,6 +460,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> MAGITECH_PARTS_HEAVENLY = ITEMS.register("magitech_parts_heavenly", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<Item> FLYING_CARPET = ITEMS.register("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<DreamVisionTalismanItem> DREAM_VISION_TALISMAN = ITEMS.register("dream_vision_talisman", DreamVisionTalismanItem::new);
+    public static final RegistryObject<IgnyxItem> IGNYX = ITEMS.register("ignyx", () -> new IgnyxItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     
     // Register knowledge items
     public static final RegistryObject<KnowledgeGainItem> OBSERVATION_NOTES = ITEMS.register("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));

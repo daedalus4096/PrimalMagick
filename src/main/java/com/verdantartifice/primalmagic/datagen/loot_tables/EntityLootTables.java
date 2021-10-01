@@ -115,6 +115,7 @@ public class EntityLootTables implements DataProvider {
         this.registerEmptyLootTable(EntityTypesPM.SPELL_MINE.get());
         this.registerEmptyLootTable(EntityTypesPM.SPELL_PROJECTILE.get());
         this.registerEmptyLootTable(EntityTypesPM.APPLE.get());
+        this.registerEmptyLootTable(EntityTypesPM.IGNYX.get());
         this.registerEmptyLootTable(EntityTypesPM.ALCHEMICAL_BOMB.get());
         this.registerEmptyLootTable(EntityTypesPM.MANA_ARROW.get());
         this.registerEmptyLootTable(EntityTypesPM.FISHING_HOOK.get());

@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagic.common.commands.arguments.SourceArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.entities.misc.TreefolkEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.IgnyxEntity;
 import com.verdantartifice.primalmagic.common.init.InitAttunements;
 import com.verdantartifice.primalmagic.common.init.InitCauldron;
 import com.verdantartifice.primalmagic.common.init.InitRecipes;
@@ -21,6 +22,7 @@ import com.verdantartifice.primalmagic.common.init.InitResearch;
 import com.verdantartifice.primalmagic.common.init.InitRunes;
 import com.verdantartifice.primalmagic.common.init.InitSpells;
 import com.verdantartifice.primalmagic.common.init.InitStats;
+import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.misc.LazySpawnEggItem;
 import com.verdantartifice.primalmagic.common.loot.conditions.LootConditionTypesPM;
 import com.verdantartifice.primalmagic.common.misc.DispenseLazySpawnEggBehavior;
@@ -29,12 +31,18 @@ import com.verdantartifice.primalmagic.common.spells.SpellManager;
 import com.verdantartifice.primalmagic.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagic.common.worldgen.features.FeaturesPM;
 
+import net.minecraft.Util;
 import net.minecraft.commands.synchronization.ArgumentTypes;
 import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnPlacements.Type;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -97,6 +105,14 @@ public class ModLifecycleEvents {
             for (LazySpawnEggItem egg : LazySpawnEggItem.getEggs()) {
                 DispenserBlock.registerBehavior(egg, eggBehavior);
             }
+            DispenserBlock.registerBehavior(ItemsPM.IGNYX.get(), new AbstractProjectileDispenseBehavior() {
+                @Override
+                protected Projectile getProjectile(Level level, Position pos, ItemStack stack) {
+                    return Util.make(new IgnyxEntity(level, pos.x(), pos.y(), pos.z()), p -> {
+                        p.setItem(stack);
+                    });
+                }
+            });
         });
     }
 

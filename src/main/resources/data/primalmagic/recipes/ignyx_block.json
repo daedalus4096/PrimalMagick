@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primalmagic:ignyx"
+    },
+    {
+      "item": "primalmagic:ignyx"
+    },
+    {
+      "item": "primalmagic:ignyx"
+    },
+    {
+      "item": "primalmagic:ignyx"
+    },
+    {
+      "item": "primalmagic:ignyx"
+    },
+    {
+      "item": "primalmagic:ignyx"
+    },
+    {
+      "item": "primalmagic:ignyx"
+    },
+    {
+      "item": "primalmagic:ignyx"
+    },
+    {
+      "item": "primalmagic:ignyx"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:ignyx_block"
+  }
+}

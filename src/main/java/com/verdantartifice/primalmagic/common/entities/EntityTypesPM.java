@@ -43,6 +43,7 @@ import com.verdantartifice.primalmagic.common.entities.projectiles.FishingHookEn
 import com.verdantartifice.primalmagic.common.entities.projectiles.ForbiddenTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.HallowsteelTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.HexiumTridentEntity;
+import com.verdantartifice.primalmagic.common.entities.projectiles.IgnyxEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.ManaArrowEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.PrimaliteTridentEntity;
 import com.verdantartifice.primalmagic.common.entities.projectiles.SinCrashEntity;
@@ -99,6 +100,12 @@ public class EntityTypesPM {
             .updateInterval(10)
             .setCustomClientFactory((spawnEntity, world) -> new AppleEntity(EntityTypesPM.APPLE.get(), world))
             .build(PrimalMagic.MODID + ":apple"));
+    public static final RegistryObject<EntityType<IgnyxEntity>> IGNYX = ENTITY_TYPES.register("ignyx", () -> EntityType.Builder.<IgnyxEntity>of(IgnyxEntity::new, MobCategory.MISC)
+            .sized(0.25F, 0.25F)
+            .clientTrackingRange(4)
+            .updateInterval(10)
+            .setCustomClientFactory((spawnEntity, world) -> new IgnyxEntity(EntityTypesPM.IGNYX.get(), world))
+            .build(PrimalMagic.MODID + ":ignyx"));
     public static final RegistryObject<EntityType<AlchemicalBombEntity>> ALCHEMICAL_BOMB = ENTITY_TYPES.register("alchemical_bomb", () -> EntityType.Builder.<AlchemicalBombEntity>of(AlchemicalBombEntity::new, MobCategory.MISC)
             .sized(0.25F, 0.25F)
             .clientTrackingRange(4)

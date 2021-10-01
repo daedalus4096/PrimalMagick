@@ -51,6 +51,7 @@ public class EntityRendererEvents {
         event.registerEntityRenderer(EntityTypesPM.SIN_CRASH.get(), SinCrashRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.SIN_CRYSTAL.get(), SinCrystalRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.APPLE.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityTypesPM.IGNYX.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.ALCHEMICAL_BOMB.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.MANA_ARROW.get(), ManaArrowRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.FISHING_HOOK.get(), FishingHookRenderer::new);
