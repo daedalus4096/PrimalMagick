@@ -7,6 +7,7 @@ v0.0.16-alpha
 * Allow librarians and wandering traders to sell items that grant arcane knowledge
 * Fix behavior of owned tile entities while their owners are offline
 * Reduce string requirements for enchanted cloth
+* Add Ignyx, an unstable super-coal
 
 v0.0.15-alpha
 -------------
