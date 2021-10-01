@@ -6,6 +6,7 @@ v0.0.16-alpha
 * Made statistic names for discipline crafting more consistent with research requirements
 * Allow librarians and wandering traders to sell items that grant arcane knowledge
 * Fix behavior of owned tile entities while their owners are offline
+* Reduce string requirements for enchanted cloth
 
 v0.0.15-alpha
 -------------

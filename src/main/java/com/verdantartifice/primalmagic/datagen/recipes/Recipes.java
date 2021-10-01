@@ -4929,7 +4929,7 @@ public class Recipes extends RecipeProvider {
     protected void registerClothRecipes(Consumer<FinishedRecipe> consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH.get())
             .patternLine("ESE")
-            .patternLine("SCS")
+            .patternLine(" C ")
             .patternLine("ESE")
             .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
             .key('S', Tags.Items.STRING)
@@ -4939,7 +4939,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE.get())
             .patternLine("ESE")
-            .patternLine("SCS")
+            .patternLine(" C ")
             .patternLine("ESE")
             .key('E', ItemTagsPM.ESSENCES_FORBIDDEN_SHARDS)
             .key('S', Tags.Items.STRING)
@@ -4949,7 +4949,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL.get())
             .patternLine("ESE")
-            .patternLine("SCS")
+            .patternLine(" C ")
             .patternLine("ESE")
             .key('E', ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
             .key('S', Tags.Items.STRING)
