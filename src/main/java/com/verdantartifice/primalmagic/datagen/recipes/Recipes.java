@@ -490,6 +490,20 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.MOON, 40))
             .instability(4)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.IGNYX.get())
+            .addIngredient(ItemTags.COALS)
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IGNYX")))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapeless(ItemsPM.IGNYX_BLOCK.get())
+            .requires(ItemsPM.IGNYX.get(), 9)
+            .unlockedBy("has_ignyx", has(ItemsPM.IGNYX.get()))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(ItemsPM.IGNYX.get(), 9)
+            .requires(ItemsPM.IGNYX_BLOCK.get())
+            .unlockedBy("has_ignyx_block", has(ItemsPM.IGNYX_BLOCK.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "ignyx_from_storage_block"));
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

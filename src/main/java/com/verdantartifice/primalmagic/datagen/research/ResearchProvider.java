@@ -656,6 +656,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 2).recipe(ItemsPM.SANGUINE_CORE_ENDERMAN.get()).recipe(ItemsPM.SANGUINE_CORE_ENDERMITE.get()).recipe(ItemsPM.SANGUINE_CORE_SHULKER.get())
                     .build())
             .build(consumer);
+        ResearchEntryBuilder.entry("IGNYX", discipline).parent("EXPERT_ALCHEMY").parent("CALCINATOR_BASIC").parent("STONEMELDING").parent(Source.INFERNAL.getDiscoverKey())
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemTag(new ResourceLocation("minecraft", "coals")).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 2).recipe(ItemsPM.IGNYX.get()).recipe(ItemsPM.IGNYX_BLOCK.get())
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "ignyx_from_storage_block")).build())
+            .build(consumer);
     }
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {
