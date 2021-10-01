@@ -22,15 +22,15 @@ public class VillagerEvents {
     public static void onVillagerTradeSetup(VillagerTradesEvent event) {
         // Allow librarians to trade certain knowledge granting items
         if (VillagerProfession.LIBRARIAN.equals(event.getType())) {
-            event.getTrades().get(2).add(new BasicTrade(16, new ItemStack(ItemsPM.OBSERVATION_NOTES.get()), 12, 5, 0.05F));
-            event.getTrades().get(4).add(new BasicTrade(32, new ItemStack(ItemsPM.THEORY_NOTES.get()), 12, 15, 0.05F));
+            event.getTrades().get(2).add(new BasicTrade(8, new ItemStack(ItemsPM.OBSERVATION_NOTES.get()), 12, 5, 0.05F));
+            event.getTrades().get(4).add(new BasicTrade(16, new ItemStack(ItemsPM.THEORY_NOTES.get()), 12, 15, 0.05F));
         }
     }
     
     @SubscribeEvent
     public static void onWandererTradeSetup(WandererTradesEvent event) {
         // Allow wandering traders to sell certain knowledge granting items
-        event.getGenericTrades().add(new BasicTrade(16, new ItemStack(ItemsPM.OBSERVATION_NOTES.get()), 12, 5, 0.05F));
-        event.getRareTrades().add(new BasicTrade(32, new ItemStack(ItemsPM.THEORY_NOTES.get()), 12, 15, 0.05F));
+        event.getGenericTrades().add(new BasicTrade(8, new ItemStack(ItemsPM.OBSERVATION_NOTES.get()), 12, 5, 0.05F));
+        event.getRareTrades().add(new BasicTrade(16, new ItemStack(ItemsPM.THEORY_NOTES.get()), 12, 15, 0.05F));
     }
 }
