@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraftforge.common.Tags;
 
 /**
  * Item definition for an earthshatter hammer.  Can be crafting with ore to break it into grit for
@@ -31,5 +32,10 @@ public class EarthshatterHammerItem extends Item {
     @Override
     public boolean hasContainerItem(ItemStack stack) {
         return stack.getItem() instanceof EarthshatterHammerItem && stack.getDamageValue() < stack.getMaxDamage();
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+        return repair.is(Tags.Items.INGOTS_IRON) || super.isValidRepairItem(toRepair, repair);
     }
 }

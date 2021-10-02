@@ -1,3 +1,7 @@
+v0.0.17-alpha
+-------------
+* Allow Earthshatter Hammers to be repaired with iron ingots
+
 v0.0.16-alpha
 -------------
 * Fix bug preventing blocks broken by Break spells from dropping experience
