@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 
 import com.google.gson.JsonObject;
@@ -12,8 +14,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Definition of a project material that requires a specific item stack, which may or may not be
@@ -78,8 +82,14 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(Player player) {
-        return InventoryUtils.isPlayerCarrying(player, this.stack, this.matchNBT);
+    public boolean isSatisfied(Player player, Set<Block> surroundings) {
+        if (InventoryUtils.isPlayerCarrying(player, this.stack, this.matchNBT)) {
+            return true;
+        } else if (!this.consumed && this.stack.getCount() == 1 && surroundings != null && this.stack.getItem() instanceof BlockItem blockItem && surroundings.contains(blockItem.getBlock())) {
+            // Only allow satisfaction from surroundings if not consuming the material and only one item is required
+            return true;
+        }
+        return false;
     }
 
     @Override

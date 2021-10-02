@@ -54,26 +54,23 @@ public class CompleteProjectPacket implements IMessageToServer {
                 ServerPlayer player = ctx.get().getSender();
                 PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                     // Consume paper and ink
-                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
-                        ((ResearchTableContainer)player.containerMenu).consumeWritingImplements();
-                    }
-
-                    // Determine if current project is a success
-                    Project project = knowledge.getActiveResearchProject();
-                    Random rand = player.getRandom();
-                    if (project != null && project.isSatisfied(player) && project.consumeSelectedMaterials(player)) {
-                        if (rand.nextDouble() < project.getSuccessChance()) {
-                            ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());
-                            StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
-                            PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
-                        } else {
-                            PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundEvents.GLASS_BREAK, 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
-                        }
-                    }
-                    
-                    // Set new project
-                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
-                        ((ResearchTableContainer)player.containerMenu).getWorldPosCallable().execute((world, blockPos) -> {
+                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer researchMenu) {
+                        researchMenu.consumeWritingImplements();
+                        researchMenu.getWorldPosCallable().execute((world, blockPos) -> {
+                            // Determine if current project is a success
+                            Project project = knowledge.getActiveResearchProject();
+                            Random rand = player.getRandom();
+                            if (project != null && project.isSatisfied(player, TheorycraftManager.getSurroundings(world, blockPos)) && project.consumeSelectedMaterials(player)) {
+                                if (rand.nextDouble() < project.getSuccessChance()) {
+                                    ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());
+                                    StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
+                                    PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
+                                } else {
+                                    PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundEvents.GLASS_BREAK, 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
+                                }
+                            }
+                        
+                            // Set new project
                             knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
                         });
                         knowledge.sync(player);

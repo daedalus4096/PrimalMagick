@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Set;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,6 +22,7 @@ import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.Set
 import com.verdantartifice.primalmagic.common.network.packets.theorycrafting.StartProjectPacket;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
 import com.verdantartifice.primalmagic.common.theorycrafting.Project;
+import com.verdantartifice.primalmagic.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -35,6 +37,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 
 /**
  * GUI screen for the research table block.
@@ -179,37 +182,41 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
                 Component text = new TranslatableComponent("primalmagic.research_table.completing");
                 this.addRenderableWidget(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
             } else {
-                // Render complete project button
-                Player player = this.minecraft.player;
-                double chance = 100.0D * this.project.getSuccessChance();
-                Component text = new TranslatableComponent("primalmagic.research_table.complete", FORMATTER.format(chance));
-                this.completeProjectButton = this.addRenderableWidget(new CompleteProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
-                this.completeProjectButton.active = this.project.isSatisfied(player);
-                
-                // Render aid list widget, if applicable
-                List<Component> aidNames = this.menu.getNearbyAidBlockNames();
-                if (!aidNames.isEmpty()) {
-                    this.addRenderableWidget(new AidListWidget(this.leftPos + 36, this.topPos + 9, aidNames));
-                }
-                
-                // Render unlock widget, if applicable
-                if (this.project.getAidBlock() != null) {
-                    this.addRenderableWidget(new AidUnlockWidget(this.leftPos + 186, this.topPos + 9, this.project.getAidBlock()));
-                }
-                
-                // Render material widgets
-                int materialCount = this.project.getMaterials().size();
-                int x = (152 - (38 * materialCount)) / 2;
-                for (int index = 0; index < materialCount; index++) {
-                    AbstractProjectMaterial material = this.project.getMaterials().get(index);
-
-                    // Render material checkbox
-                    this.addRenderableWidget(new ProjectMaterialSelectionCheckbox(this.leftPos + 42 + x, this.topPos + 93, this, material.isSelected(), index));
-                    // Render material widget
-                    this.addRenderableWidget(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93));
+                this.menu.getWorldPosCallable().execute((level, tablePos) -> {
+                    // Render complete project button
+                    Player player = this.minecraft.player;
+                    double chance = 100.0D * this.project.getSuccessChance();
+                    Set<Block> surroundings = TheorycraftManager.getSurroundings(level, tablePos);
+                    Component text = new TranslatableComponent("primalmagic.research_table.complete", FORMATTER.format(chance));
                     
-                    x += 38;
-                }
+                    this.completeProjectButton = this.addRenderableWidget(new CompleteProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
+                    this.completeProjectButton.active = this.project.isSatisfied(player, surroundings);
+                    
+                    // Render aid list widget, if applicable
+                    List<Component> aidNames = this.menu.getNearbyAidBlockNames();
+                    if (!aidNames.isEmpty()) {
+                        this.addRenderableWidget(new AidListWidget(this.leftPos + 36, this.topPos + 9, aidNames));
+                    }
+                    
+                    // Render unlock widget, if applicable
+                    if (this.project.getAidBlock() != null) {
+                        this.addRenderableWidget(new AidUnlockWidget(this.leftPos + 186, this.topPos + 9, this.project.getAidBlock()));
+                    }
+                    
+                    // Render material widgets
+                    int materialCount = this.project.getMaterials().size();
+                    int x = (152 - (38 * materialCount)) / 2;
+                    for (int index = 0; index < materialCount; index++) {
+                        AbstractProjectMaterial material = this.project.getMaterials().get(index);
+
+                        // Render material checkbox
+                        this.addRenderableWidget(new ProjectMaterialSelectionCheckbox(this.leftPos + 42 + x, this.topPos + 93, this, material.isSelected(), index));
+                        // Render material widget
+                        this.addRenderableWidget(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93, surroundings));
+                        
+                        x += 38;
+                    }
+                });
             }
         }
         

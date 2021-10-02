@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
@@ -13,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Display widget for an item research project material.  Used on the research table screen.
@@ -22,8 +24,8 @@ import net.minecraft.world.item.TooltipFlag;
 public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget {
     protected ItemProjectMaterial material;
     
-    public ItemProjectMaterialWidget(ItemProjectMaterial material, int x, int y) {
-        super(material, x, y);
+    public ItemProjectMaterialWidget(ItemProjectMaterial material, int x, int y, Set<Block> surroundings) {
+        super(material, x, y, surroundings);
         this.material = material;
     }
     

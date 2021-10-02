@@ -2,6 +2,7 @@ v0.0.17-alpha
 -------------
 * Allow Earthshatter Hammers to be repaired with iron ingots
 * Make attunement gain and loss messages more descriptive
+* Allow the Research Table to detect non-consumed material blocks within five blocks of itself
 
 v0.0.16-alpha
 -------------

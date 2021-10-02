@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -96,13 +97,23 @@ public class TheorycraftManager {
     @Nonnull
     public static Set<Block> getNearbyAidBlocks(Level level, BlockPos pos) {
         Set<ResourceLocation> allAids = getAllAidBlockIds();
+        return getSurroundingsInner(level, pos, b -> allAids.contains(b.getRegistryName()));
+    }
+    
+    @Nonnull
+    public static Set<Block> getSurroundings(Level level, BlockPos pos) {
+        return getSurroundingsInner(level, pos, b -> true);
+    }
+    
+    @Nonnull
+    protected static Set<Block> getSurroundingsInner(Level level, BlockPos pos, Predicate<Block> filter) {
         Set<Block> retVal = new HashSet<>();
         
         if (level.isAreaLoaded(pos, 5)) {
             Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5));
             for (BlockPos searchPos : positions) {
                 Block block = level.getBlockState(searchPos).getBlock();
-                if (allAids.contains(block.getRegistryName())) {
+                if (filter.test(block)) {
                     retVal.add(block);
                 }
             }

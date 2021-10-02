@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -20,6 +21,7 @@ import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Display widget for an item tag research project material.  Used on the research table screen.
@@ -29,8 +31,8 @@ import net.minecraft.world.item.TooltipFlag;
 public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget {
     protected ItemTagProjectMaterial material;
     
-    public ItemTagProjectMaterialWidget(ItemTagProjectMaterial material, int x, int y) {
-        super(material, x, y);
+    public ItemTagProjectMaterialWidget(ItemTagProjectMaterial material, int x, int y, Set<Block> surroundings) {
+        super(material, x, y, surroundings);
         this.material = material;
     }
     

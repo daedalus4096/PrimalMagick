@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -14,6 +16,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Base class for a display widget for a research project material.  Used on the research table screen.
@@ -26,11 +29,11 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
     protected boolean complete;
     protected boolean consumed;
     
-    public AbstractProjectMaterialWidget(AbstractProjectMaterial material, int x, int y) {
+    public AbstractProjectMaterialWidget(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
         super(x, y, 16, 16, TextComponent.EMPTY);
         Minecraft mc = Minecraft.getInstance();
         this.consumed = material.isConsumed();
-        this.complete = material.isSatisfied(mc.player);
+        this.complete = material.isSatisfied(mc.player, this.consumed ? Collections.emptySet() : surroundings);
     }
     
     @Override
