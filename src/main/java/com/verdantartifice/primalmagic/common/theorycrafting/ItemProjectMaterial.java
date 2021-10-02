@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -82,8 +83,13 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
-        // TODO Check surroundings
-        return InventoryUtils.isPlayerCarrying(player, this.stack, this.matchNBT);
+        if (InventoryUtils.isPlayerCarrying(player, this.stack, this.matchNBT)) {
+            return true;
+        } else if (!this.consumed && this.stack.getCount() == 1 && surroundings != null && this.stack.getItem() instanceof BlockItem blockItem && surroundings.contains(blockItem.getBlock())) {
+            // Only allow satisfaction from surroundings if not consuming the material and only one item is required
+            return true;
+        }
+        return false;
     }
 
     @Override

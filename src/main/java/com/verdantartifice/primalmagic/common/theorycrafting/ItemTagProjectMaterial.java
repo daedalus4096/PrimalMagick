@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -10,9 +11,12 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.util.InventoryUtils;
 
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 
@@ -78,8 +82,16 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
-        // TODO Check surroundings
-        return InventoryUtils.isPlayerCarrying(player, this.tagName, this.quantity);
+        if (InventoryUtils.isPlayerCarrying(player, this.tagName, this.quantity)) {
+            return true;
+        } else if (!this.consumed && this.quantity == 1 && surroundings != null) {
+            // Only allow satisfaction from surroundings if not consuming the material and only one item is required
+            Tag<Block> tag = SerializationTags.getInstance().getOrEmpty(Registry.BLOCK_REGISTRY).getTagOrEmpty(this.tagName);
+            Set<Block> intersection = new HashSet<>(surroundings);
+            intersection.retainAll(tag.getValues());
+            return !intersection.isEmpty();
+        }
+        return false;
     }
 
     @Override
