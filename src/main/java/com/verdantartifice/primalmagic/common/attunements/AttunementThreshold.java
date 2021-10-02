@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagic.common.attunements;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+
 /**
  * Definition of attunement thresholds, determining when certain bonuses are received.
  * 
@@ -26,7 +29,7 @@ public enum AttunementThreshold {
         return this.value;
     }
     
-    public String getTranslationKey() {
-        return "primalmagic.attunement_threshold." + this.name();
+    public Component getThresholdText() {
+        return new TranslatableComponent("primalmagic.attunement_threshold." + this.name());
     }
 }

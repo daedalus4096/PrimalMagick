@@ -1,6 +1,7 @@
 v0.0.17-alpha
 -------------
 * Allow Earthshatter Hammers to be repaired with iron ingots
+* Make attunement gain and loss messages more descriptive
 
 v0.0.16-alpha
 -------------

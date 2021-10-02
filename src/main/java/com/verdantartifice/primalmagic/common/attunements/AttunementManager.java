@@ -136,10 +136,11 @@ public class AttunementManager {
                 for (AttunementThreshold threshold : AttunementThreshold.values()) {
                     int thresholdValue = threshold.getValue();
                     Component sourceText = source.getNameText();
+                    Component thresholdText = threshold.getThresholdText();
                     if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
                         // If gaining a threshold, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.displayClientMessage(new TranslatableComponent("primalmagic.attunement.threshold_gain", sourceText), false);
+                            player.displayClientMessage(new TranslatableComponent("primalmagic.attunement.threshold_gain", sourceText, thresholdText), false);
                         }
                         
                         // Apply any new attribute modifiers from the threshold gain
@@ -152,7 +153,7 @@ public class AttunementManager {
                     if (oldTotal >= thresholdValue && newTotal < thresholdValue) {
                         // If losing a threshold, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.displayClientMessage(new TranslatableComponent("primalmagic.attunement.threshold_loss", sourceText), false);
+                            player.displayClientMessage(new TranslatableComponent("primalmagic.attunement.threshold_loss", sourceText, thresholdText), false);
                         }
                         
                         // Remove any lost attribute modifiers from the threshold loss

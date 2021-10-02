@@ -1847,8 +1847,8 @@
     "primalmagic.analysis.no_affinities": "No affinities detected",
     "primalmagic.analysis.affinity_report_header": "%1$s affinities:",
     
-    "primalmagic.attunement.threshold_gain": "You feel more attuned to the %1$s",
-    "primalmagic.attunement.threshold_loss": "You feel less attuned to the %1$s",
+    "primalmagic.attunement.threshold_gain": "You have gained %2$s attunement to the %1$s",
+    "primalmagic.attunement.threshold_loss": "You have lost %2$s attunement to the %1$s",
     
     "primalmagic.attunement.threshold.earth.minor": "5% Earth mana discount",
     "primalmagic.attunement.threshold.earth.lesser": "Increased attack/mining speed",
