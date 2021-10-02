@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         super(x, y, 16, 16, TextComponent.EMPTY);
         Minecraft mc = Minecraft.getInstance();
         this.consumed = material.isConsumed();
-        this.complete = material.isSatisfied(mc.player, surroundings);
+        this.complete = material.isSatisfied(mc.player, this.consumed ? Collections.emptySet() : surroundings);
     }
     
     @Override
