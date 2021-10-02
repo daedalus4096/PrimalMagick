@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -12,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Definition of a project material that requires an item stack from a given tag, which may or may not be
@@ -74,7 +77,8 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(Player player) {
+    public boolean isSatisfied(Player player, Set<Block> surroundings) {
+        // TODO Check surroundings
         return InventoryUtils.isPlayerCarrying(player, this.tagName, this.quantity);
     }
 

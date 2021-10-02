@@ -212,7 +212,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
                         // Render material checkbox
                         this.addRenderableWidget(new ProjectMaterialSelectionCheckbox(this.leftPos + 42 + x, this.topPos + 93, this, material.isSelected(), index));
                         // Render material widget
-                        this.addRenderableWidget(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93));
+                        this.addRenderableWidget(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93, surroundings));
                         
                         x += 38;
                     }

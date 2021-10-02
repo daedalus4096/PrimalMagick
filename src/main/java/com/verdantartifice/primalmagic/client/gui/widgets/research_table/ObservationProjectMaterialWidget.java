@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -10,6 +11,7 @@ import com.verdantartifice.primalmagic.common.theorycrafting.ObservationProjectM
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Display widget for an observation research project material.  Used on the research table screen.
@@ -19,8 +21,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWidget {
     protected ObservationProjectMaterial material;
     
-    public ObservationProjectMaterialWidget(ObservationProjectMaterial material, int x, int y) {
-        super(material, x, y);
+    public ObservationProjectMaterialWidget(ObservationProjectMaterial material, int x, int y, Set<Block> surroundings) {
+        super(material, x, y, surroundings);
         this.material = material;
     }
     

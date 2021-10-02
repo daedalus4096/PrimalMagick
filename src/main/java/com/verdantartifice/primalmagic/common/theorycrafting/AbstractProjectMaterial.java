@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -8,6 +10,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -54,9 +57,10 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
      * Determine if this material's requirements are satisfied by the given player.
      * 
      * @param player the player doing the research project
+     * @param surroundings TODO
      * @return true if the requirement is satisfied, false otherwise
      */
-    public abstract boolean isSatisfied(Player player);
+    public abstract boolean isSatisfied(Player player, Set<Block> surroundings);
     
     /**
      * Consume this project material's requirements from the given player.

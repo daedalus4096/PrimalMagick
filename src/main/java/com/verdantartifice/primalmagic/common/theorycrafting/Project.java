@@ -120,7 +120,7 @@ public class Project implements INBTSerializable<CompoundTag> {
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
         // Determine satisfaction from selected materials
         for (AbstractProjectMaterial material : this.getMaterials()) {
-            if (material.isSelected() && !material.isSatisfied(player)) {
+            if (material.isSelected() && !material.isSatisfied(player, surroundings)) {
                 return false;
             }
         }

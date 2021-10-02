@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 
 import com.google.gson.JsonObject;
@@ -14,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Definition of a project material that requires a specific item stack, which may or may not be
@@ -78,7 +81,8 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(Player player) {
+    public boolean isSatisfied(Player player, Set<Block> surroundings) {
+        // TODO Check surroundings
         return InventoryUtils.isPlayerCarrying(player, this.stack, this.matchNBT);
     }
 

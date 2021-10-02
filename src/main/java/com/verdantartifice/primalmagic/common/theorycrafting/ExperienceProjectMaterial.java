@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.Set;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
@@ -8,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Definition of a project material that requires experience levels, which may or may not be consumed as part
@@ -57,7 +60,7 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public boolean isSatisfied(Player player) {
+    public boolean isSatisfied(Player player, Set<Block> surroundings) {
         return player.experienceLevel >= this.levels;
     }
 
