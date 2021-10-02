@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.theorycrafting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -116,7 +117,7 @@ public class Project implements INBTSerializable<CompoundTag> {
         return Mth.clamp(chance, 0.0D, 1.0D);
     }
     
-    public boolean isSatisfied(Player player) {
+    public boolean isSatisfied(Player player, Set<Block> surroundings) {
         // Determine satisfaction from selected materials
         for (AbstractProjectMaterial material : this.getMaterials()) {
             if (material.isSelected() && !material.isSatisfied(player)) {
