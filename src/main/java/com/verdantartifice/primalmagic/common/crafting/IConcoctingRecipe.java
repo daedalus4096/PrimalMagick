@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 
-public interface IConcoctingRecipe extends Recipe<Container>, IHasManaCost, IHasRequiredResearch {
+public interface IConcoctingRecipe extends Recipe<Container>, IHasManaCost, IHasRequiredResearch, IArcaneRecipeBookItem {
     @Override
     default RecipeType<?> getType() {
         return RecipeTypesPM.CONCOCTING;

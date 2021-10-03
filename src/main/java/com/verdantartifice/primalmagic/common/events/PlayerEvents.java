@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.crafting.recipebook.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
@@ -194,15 +195,17 @@ public class PlayerEvents {
                 companions.sync(player);
             }
         }
+        if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
+            PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+                recipeBook.sync(player);
+            });
+        }
         if (immediate) {
-            // Cooldowns and arcane recipe books don't do scheduled syncs, so only sync if it needs to be done immediately
+            // Cooldowns don't do scheduled syncs, so only sync if it needs to be done immediately
             IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
             if (cooldowns != null) {
                 cooldowns.sync(player);
             }
-            PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
-                recipeBook.sync(player);
-            });
         }
     }
     

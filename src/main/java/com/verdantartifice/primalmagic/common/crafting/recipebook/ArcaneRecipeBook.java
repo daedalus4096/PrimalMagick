@@ -10,6 +10,8 @@ import javax.annotation.Nullable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipeBookItem;
+
 import net.minecraft.ResourceLocationException;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -46,9 +48,19 @@ public class ArcaneRecipeBook {
         this.settings.clear();
     }
     
+    public boolean isValid(Recipe<?> recipe) {
+        if (recipe instanceof IArcaneRecipeBookItem arbi) {
+            if (!arbi.isArcaneSpecial()) {
+                return true;
+            }
+        } else if (!recipe.isSpecial()) {
+            return true;
+        }
+        return false;
+    }
+    
     public void add(Recipe<?> recipe) {
-        // TODO Test if it's a special arcane recipe (instead?)
-        if (!recipe.isSpecial()) {
+        if (this.isValid(recipe)) {
             this.add(recipe.getId());
         }
     }
