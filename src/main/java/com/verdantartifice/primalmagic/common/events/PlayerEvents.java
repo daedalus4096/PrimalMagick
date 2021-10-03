@@ -195,11 +195,14 @@ public class PlayerEvents {
             }
         }
         if (immediate) {
-            // Cooldowns don't do scheduled syncs, so only sync if it needs to be done immediately
+            // Cooldowns and arcane recipe books don't do scheduled syncs, so only sync if it needs to be done immediately
             IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
             if (cooldowns != null) {
                 cooldowns.sync(player);
             }
+            PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+                recipeBook.sync(player);
+            });
         }
     }
     

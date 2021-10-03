@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.network;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncArcaneRecipeBookPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncCompanionsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncCooldownsPacket;
@@ -102,6 +103,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, UpdateResearchPacket.class, UpdateResearchPacket::encode, UpdateResearchPacket::decode, UpdateResearchPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, UpdateAffinitiesPacket.class, UpdateAffinitiesPacket::encode, UpdateAffinitiesPacket::decode, UpdateAffinitiesPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, UpdateTheorycraftingPacket.class, UpdateTheorycraftingPacket::encode, UpdateTheorycraftingPacket::decode, UpdateTheorycraftingPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket::encode, SyncArcaneRecipeBookPacket::decode, SyncArcaneRecipeBookPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

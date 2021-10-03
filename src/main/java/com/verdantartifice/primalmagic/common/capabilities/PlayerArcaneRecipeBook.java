@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagic.common.capabilities;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.crafting.recipebook.ArcaneRecipeBook;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncArcaneRecipeBookPacket;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -27,8 +29,9 @@ public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
 
     @Override
     public void sync(ServerPlayer player) {
-        // TODO Auto-generated method stub
-
+        if (player != null) {
+            PacketHandler.sendToPlayer(new SyncArcaneRecipeBookPacket(player), player);
+        }
     }
 
     @Override
