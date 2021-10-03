@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.events;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
@@ -28,6 +29,7 @@ public class ModRegistrationEvents {
         event.register(IPlayerStats.class);
         event.register(IPlayerAttunements.class);
         event.register(IPlayerCompanions.class);
+        event.register(IPlayerArcaneRecipeBook.class);
         event.register(IWorldEntitySwappers.class);
         event.register(IManaStorage.class);
         event.register(ITileResearchCache.class);

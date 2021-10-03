@@ -1,12 +1,23 @@
 package com.verdantartifice.primalmagic.common.crafting.recipebook;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import net.minecraft.ResourceLocationException;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of the arcane recipe book.  Like the vanilla recipe book, but it also supports arcane
@@ -15,6 +26,8 @@ import net.minecraft.world.item.crafting.Recipe;
  * @author Daedalus4096
  */
 public class ArcaneRecipeBook {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected final Set<ResourceLocation> known = new HashSet<>();
     protected final Set<ResourceLocation> highlight = new HashSet<>();
     protected final ArcaneRecipeBookSettings settings = new ArcaneRecipeBookSettings();
@@ -25,6 +38,12 @@ public class ArcaneRecipeBook {
         this.settings.replaceFrom(other.settings);
         this.known.addAll(other.known);
         this.highlight.addAll(other.highlight);
+    }
+    
+    public void clear() {
+        this.known.clear();
+        this.highlight.clear();
+        this.settings.clear();
     }
     
     public void add(Recipe<?> recipe) {
@@ -94,5 +113,49 @@ public class ArcaneRecipeBook {
     public void setBookSettings(ArcaneRecipeBookType type, boolean open, boolean filtering) {
         this.settings.setOpen(type, open);
         this.settings.setFiltering(type, filtering);
+    }
+    
+    public CompoundTag toNbt() {
+        CompoundTag tag = new CompoundTag();
+        this.getBookSettings().write(tag);
+        
+        ListTag knownList = new ListTag();
+        for (ResourceLocation loc : this.known) {
+            knownList.add(StringTag.valueOf(loc.toString()));
+        }
+        tag.put("Recipes", knownList);
+        
+        ListTag highlightList = new ListTag();
+        for (ResourceLocation loc : this.highlight) {
+            highlightList.add(StringTag.valueOf(loc.toString()));
+        }
+        tag.put("ToBeDisplayed", highlightList);
+        
+        return tag;
+    }
+    
+    public void fromNbt(CompoundTag tag, RecipeManager recipeManager) {
+        this.clear();
+        this.setBookSettings(ArcaneRecipeBookSettings.read(tag));
+        this.loadRecipes(tag.getList("Recipes", Constants.NBT.TAG_STRING), this::add, recipeManager);
+        this.loadRecipes(tag.getList("ToBeDisplayed", Constants.NBT.TAG_STRING), this::addHighlight, recipeManager);
+    }
+    
+    protected void loadRecipes(ListTag tag, Consumer<Recipe<?>> consumer, RecipeManager recipeManager) {
+        for (int index = 0; index < tag.size(); index++) {
+            String locStr = tag.getString(index);
+            
+            try {
+                ResourceLocation loc = new ResourceLocation(locStr);
+                Optional<? extends Recipe<?>> recipeOpt = recipeManager.byKey(loc);
+                recipeOpt.ifPresentOrElse(recipe -> {
+                    consumer.accept(recipe);
+                }, () -> {
+                    LOGGER.error("Failed to load unrecognized recipe: {}, removing", locStr);
+                });
+            } catch (ResourceLocationException e) {
+                LOGGER.error("Failed to load improperly formatted recipe: {}, removing", locStr, e);
+            }
+        }
     }
 }

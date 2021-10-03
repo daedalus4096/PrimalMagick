@@ -32,6 +32,9 @@ public class PrimalMagicCapabilities {
     @CapabilityInject(IPlayerCompanions.class)
     public static final Capability<IPlayerCompanions> COMPANIONS = null;
     
+    @CapabilityInject(IPlayerArcaneRecipeBook.class)
+    public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = null;
+    
     @CapabilityInject(IWorldEntitySwappers.class)
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = null;
     
@@ -64,6 +67,11 @@ public class PrimalMagicCapabilities {
     @Nullable
     public static IPlayerCompanions getCompanions(@Nullable Player player) {
         return player == null ? null : player.getCapability(COMPANIONS, null).orElse(null);
+    }
+    
+    @Nonnull
+    public static LazyOptional<IPlayerArcaneRecipeBook> getArcaneRecipeBook(@Nullable Player player) {
+        return player == null ? LazyOptional.empty() : player.getCapability(ARCANE_RECIPE_BOOK);
     }
     
     @Nullable

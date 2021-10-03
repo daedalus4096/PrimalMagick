@@ -47,6 +47,13 @@ public class ArcaneRecipeBookSettings {
         this.states.get(type).filtering = filtering;
     }
     
+    public void clear() {
+        for (ArcaneRecipeBookType type : ArcaneRecipeBookType.values()) {
+            this.setOpen(type, false);
+            this.setFiltering(type, false);
+        }
+    }
+    
     public static ArcaneRecipeBookSettings read(CompoundTag tag) {
         Map<ArcaneRecipeBookType, ArcaneRecipeBookSettings.TypeSettings> map = Maps.newEnumMap(ArcaneRecipeBookType.class);
         TAG_FIELDS.forEach((type, pair) -> {
