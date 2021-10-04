@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.crafting.recipebook.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
@@ -34,6 +37,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -292,6 +297,16 @@ public class ResearchManager {
         if (knowledge == null) {
             return false;
         }
+        
+        // Remove all recipes that are unlocked by the given research from the player's arcane recipe book
+        if (player instanceof ServerPlayer serverPlayer) {
+            ResearchEntry entry = ResearchEntries.getEntry(key);
+            if (entry != null) {
+                RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
+                Set<Recipe<?>> recipesToRemove = entry.getAllRecipeIds().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
+                ArcaneRecipeBookManager.removeRecipes(recipesToRemove, serverPlayer);
+            }
+        }
 
         knowledge.removeResearch(key);
         if (sync) {
@@ -367,6 +382,13 @@ public class ResearchManager {
                         AttunementManager.incrementAttunement(player, source, AttunementType.PERMANENT, amount);
                     }
                 }
+                
+                // Add any unlocked recipes to the player's arcane recipe book
+                if (player instanceof ServerPlayer serverPlayer) {
+                    RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
+                    Set<Recipe<?>> recipesToUnlock = currentStage.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
+                    ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
+                }
             }
 
             // Give the player experience for advancing their research
@@ -401,6 +423,13 @@ public class ResearchManager {
                                 if (amount > 0) {
                                     AttunementManager.incrementAttunement(player, source, AttunementType.PERMANENT, amount);
                                 }
+                            }
+                            
+                            // Add any unlocked recipes to the player's arcane recipe book
+                            if (player instanceof ServerPlayer serverPlayer) {
+                                RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
+                                Set<Recipe<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
+                                ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                             }
                         }
                     }
