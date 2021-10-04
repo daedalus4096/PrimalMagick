@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.common.crafting.recipebook;
+package com.verdantartifice.primalmagic.common.crafting.recipe_book;
 
 /**
  * Types of arcane recipe book to show.

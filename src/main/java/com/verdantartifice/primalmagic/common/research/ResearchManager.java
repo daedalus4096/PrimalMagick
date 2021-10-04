@@ -21,7 +21,7 @@ import com.verdantartifice.primalmagic.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagic.common.attunements.AttunementType;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
-import com.verdantartifice.primalmagic.common.crafting.recipebook.ArcaneRecipeBookManager;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;

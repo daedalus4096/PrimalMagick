@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagic.common.capabilities;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
-import com.verdantartifice.primalmagic.common.crafting.recipebook.ArcaneRecipeBook;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.SyncArcaneRecipeBookPacket;
 

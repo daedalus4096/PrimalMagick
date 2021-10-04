@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.capabilities;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagic.common.crafting.recipebook.ArcaneRecipeBook;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBook;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;

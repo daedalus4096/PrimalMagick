@@ -28,7 +28,7 @@ import com.verdantartifice.primalmagic.common.commands.arguments.SourceArgument;
 import com.verdantartifice.primalmagic.common.commands.arguments.SourceInput;
 import com.verdantartifice.primalmagic.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipeBookItem;
-import com.verdantartifice.primalmagic.common.crafting.recipebook.ArcaneRecipeBookManager;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
