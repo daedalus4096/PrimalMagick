@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagic.client.gui.recipe_book.ArcaneRecipeBookCategories;
+import com.verdantartifice.primalmagic.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ServerPlaceArcaneRecipe;
 

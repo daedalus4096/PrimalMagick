@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagic.client.gui.recipe_book;
+package com.verdantartifice.primalmagic.client.recipe_book;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
+import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -20,20 +21,22 @@ import net.minecraft.world.level.block.Blocks;
  * @author Daedalus4096
  */
 public enum ArcaneRecipeBookCategories {
-    CRAFTING_SEARCH(new ItemStack(Items.COMPASS)),
-    CRAFTING_BUILDING_BLOCKS(new ItemStack(Blocks.BRICKS)),
-    CRAFTING_REDSTONE(new ItemStack(Items.REDSTONE)),
-    CRAFTING_EQUIPMENT(new ItemStack(Items.IRON_AXE), new ItemStack(Items.GOLDEN_SWORD)),
-    CRAFTING_MISC(new ItemStack(Items.LAVA_BUCKET), new ItemStack(Items.APPLE)),
-    CRAFTING_ARCANE(new ItemStack(ItemsPM.GRIMOIRE.get())),
-    UNKNOWN(new ItemStack(Items.BARRIER));
+    CRAFTING_SEARCH(RecipeBookCategories.CRAFTING_SEARCH, new ItemStack(Items.COMPASS)),
+    CRAFTING_BUILDING_BLOCKS(RecipeBookCategories.CRAFTING_BUILDING_BLOCKS, new ItemStack(Blocks.BRICKS)),
+    CRAFTING_REDSTONE(RecipeBookCategories.CRAFTING_REDSTONE, new ItemStack(Items.REDSTONE)),
+    CRAFTING_EQUIPMENT(RecipeBookCategories.CRAFTING_EQUIPMENT, new ItemStack(Items.IRON_AXE), new ItemStack(Items.GOLDEN_SWORD)),
+    CRAFTING_MISC(RecipeBookCategories.CRAFTING_MISC, new ItemStack(Items.LAVA_BUCKET), new ItemStack(Items.APPLE)),
+    CRAFTING_ARCANE(RecipeBookCategories.UNKNOWN, new ItemStack(ItemsPM.GRIMOIRE.get())),
+    UNKNOWN(RecipeBookCategories.UNKNOWN, new ItemStack(Items.BARRIER));
     
     public static final List<ArcaneRecipeBookCategories> CRAFTING_CATEGORIES = ImmutableList.of(CRAFTING_SEARCH, CRAFTING_ARCANE, CRAFTING_EQUIPMENT, CRAFTING_BUILDING_BLOCKS, CRAFTING_MISC, CRAFTING_REDSTONE);
     public static final Map<ArcaneRecipeBookCategories, List<ArcaneRecipeBookCategories>> AGGREGATE_CATEGORIES = ImmutableMap.of(CRAFTING_SEARCH, ImmutableList.of(CRAFTING_ARCANE, CRAFTING_EQUIPMENT, CRAFTING_BUILDING_BLOCKS, CRAFTING_MISC, CRAFTING_REDSTONE));
 
+    private final RecipeBookCategories vanillaCategory;
     private final List<ItemStack> itemIcons;
     
-    private ArcaneRecipeBookCategories(ItemStack... icons) {
+    private ArcaneRecipeBookCategories(RecipeBookCategories vanillaCategory, ItemStack... icons) {
+        this.vanillaCategory = vanillaCategory;
         this.itemIcons = ImmutableList.copyOf(icons);
     }
     
@@ -49,5 +52,9 @@ public enum ArcaneRecipeBookCategories {
 
     public List<ItemStack> getIconItems() {
         return this.itemIcons;
+    }
+    
+    public RecipeBookCategories getVanillaCategory() {
+        return this.vanillaCategory;
     }
 }

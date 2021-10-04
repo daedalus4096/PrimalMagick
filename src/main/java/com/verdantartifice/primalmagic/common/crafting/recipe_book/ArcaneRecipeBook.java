@@ -57,19 +57,12 @@ public class ArcaneRecipeBook {
         return Collections.unmodifiableSet(this.highlight);
     }
     
-    public boolean isValid(Recipe<?> recipe) {
-        if (recipe instanceof IArcaneRecipeBookItem arbi) {
-            if (!arbi.isArcaneSpecial()) {
-                return true;
-            }
-        } else if (!recipe.isSpecial()) {
-            return true;
-        }
-        return false;
+    public static boolean isValid(Recipe<?> recipe) {
+        return recipe instanceof IArcaneRecipeBookItem arbi && !arbi.isArcaneSpecial();
     }
     
     public void add(Recipe<?> recipe) {
-        if (this.isValid(recipe)) {
+        if (isValid(recipe)) {
             this.add(recipe.getId());
         }
     }
