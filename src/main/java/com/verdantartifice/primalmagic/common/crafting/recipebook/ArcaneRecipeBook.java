@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.crafting.recipebook;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -46,6 +47,14 @@ public class ArcaneRecipeBook {
         this.known.clear();
         this.highlight.clear();
         this.settings.clear();
+    }
+    
+    public Set<ResourceLocation> getKnown() {
+        return Collections.unmodifiableSet(this.known);
+    }
+    
+    public Set<ResourceLocation> getHighlight() {
+        return Collections.unmodifiableSet(this.highlight);
     }
     
     public boolean isValid(Recipe<?> recipe) {
