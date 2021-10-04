@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipeBookItem;
 
@@ -57,5 +58,10 @@ public class ArcaneRecipeBookManager {
             }
         });
         scheduleSync(serverPlayer);
+    }
+    
+    public static boolean containsRecipe(Player player, Recipe<?> recipe) {
+        IPlayerArcaneRecipeBook book = PrimalMagicCapabilities.getArcaneRecipeBook(player).orElse(null);
+        return book != null && book.get().contains(recipe);
     }
 }
