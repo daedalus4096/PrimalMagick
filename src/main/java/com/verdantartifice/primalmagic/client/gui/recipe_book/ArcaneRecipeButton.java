@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.recipe_book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -9,6 +10,7 @@ import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeB
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
@@ -116,11 +118,50 @@ public class ArcaneRecipeButton extends AbstractWidget {
             RenderSystem.applyModelViewMatrix();
         }
     }
-
-    @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        // TODO Auto-generated method stub
-
+    
+    protected List<Recipe<?>> getOrderedRecipes() {
+        List<Recipe<?>> retVal = this.collection.getDisplayRecipes(true);
+        if (!this.book.isFiltering(this.menu.getRecipeBookType())) {
+            retVal.addAll(this.collection.getDisplayRecipes(false));
+        }
+        return retVal;
+    }
+    
+    public boolean isOnlyOption() {
+        return this.getOrderedRecipes().size() == 1;
     }
 
+    public Recipe<?> getRecipe() {
+        return this.getOrderedRecipes().get(this.currentIndex);
+    }
+    
+    public List<Component> getTooltipText(Screen screen) {
+        ItemStack stack = this.getRecipe().getResultItem();
+        List<Component> retVal = new ArrayList<>(screen.getTooltipFromItem(stack));
+        if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
+            retVal.add(MORE_RECIPES_TOOLTIP);
+        }
+        return retVal;
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput output) {
+        ItemStack stack = this.getRecipe().getResultItem();
+        output.add(NarratedElementType.TITLE, new TranslatableComponent("narration.recipe", stack.getHoverName()));
+        if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
+            output.add(NarratedElementType.USAGE, new TranslatableComponent("narration.button.usage.hovered"), new TranslatableComponent("narration.recipe.usage.more"));
+        } else {
+            output.add(NarratedElementType.USAGE, new TranslatableComponent("narration.button.usage.hovered"));
+        }
+    }
+
+    @Override
+    public int getWidth() {
+        return BACKGROUND_SIZE;
+    }
+
+    @Override
+    protected boolean isValidClickButton(int value) {
+        return value == 0 || value == 1;
+    }
 }
