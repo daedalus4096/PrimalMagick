@@ -60,7 +60,6 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
 
     @Override
     public void renderButton(PoseStack poseStack, int p_94632_, int p_94633_, float p_94634_) {
-        // TODO Auto-generated method stub
         if (this.animationTime > 0.0F) {
             float f = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / 15.0F * (float)Math.PI));
             poseStack.pushPose();
