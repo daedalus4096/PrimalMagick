@@ -47,8 +47,9 @@ public class ArcaneRecipeButton extends AbstractWidget {
     }
     
     public void init(RecipeCollection recipeCollection, ArcaneRecipeBookPage page) {
+        Minecraft mc = page.getMinecraft();
         this.collection = recipeCollection;
-        this.menu = (AbstractArcaneRecipeBookMenu<?>)page.getMinecraft().player.containerMenu;
+        this.menu = (AbstractArcaneRecipeBookMenu<?>)mc.player.containerMenu;
         this.book = page.getArcaneRecipeBook();
         List<Recipe<?>> list = this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType()));
         
