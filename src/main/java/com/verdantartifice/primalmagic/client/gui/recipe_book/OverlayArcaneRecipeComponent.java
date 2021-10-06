@@ -177,6 +177,14 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
             this.blit(p_100214_, this.x + p_100218_ + (i + 1) * p_100217_, this.y + p_100218_ * 2 + p_100216_ * p_100217_, p_100219_ + p_100218_, p_100220_ + p_100217_ + p_100218_, p_100218_, p_100218_);
         }
     }
+    
+    public void setVisible(boolean visible) {
+        this.isVisible = visible;
+    }
+    
+    public boolean isVisible() {
+        return this.isVisible;
+    }
 
     protected class OverlayArcaneRecipeButton extends AbstractWidget implements PlaceRecipe<Ingredient> {
         protected final Recipe<?> recipe;
