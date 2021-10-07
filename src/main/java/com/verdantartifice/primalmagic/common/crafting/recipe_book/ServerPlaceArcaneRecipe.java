@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagic.common.containers.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -46,7 +48,7 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
                         this.handleRecipeClicked(recipe, shiftDown);
                     } else {
                         this.clearGrid();
-                        // TODO Fire place ghost recipe packet
+                        PacketHandler.sendToPlayer(new PlaceGhostArcaneRecipePacket(player.containerMenu.containerId, recipe), player);
                     }
                     player.getInventory().setChanged();
                 }
