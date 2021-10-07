@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.recipe_book;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nullable;
 
@@ -24,6 +25,7 @@ import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.recipebook.GhostRecipe;
 import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
@@ -347,29 +349,137 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         this.arcaneBook.getData().setFiltering(type, newValue);
         return newValue;
     }
-
-    @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        // TODO Auto-generated method stub
-
+    
+    protected boolean hasClickedOutside(double mouseX, double mouseY, int parentLeft, int parentTop, int parentWidth, int parentHeight, int buttonIndex) {
+        if (!this.isVisible()) {
+            return true;
+        } else {
+            boolean flag = mouseX < (double)parentLeft || mouseY < (double)parentTop || mouseX >= (double)(parentLeft + parentWidth) || mouseY >= (double)(parentTop + parentHeight);
+            boolean flag1 = (double)(parentLeft - IMAGE_WIDTH) < mouseX && mouseX < (double)parentLeft && (double)parentTop < mouseY && mouseY < (double)(parentTop + parentHeight);
+            return flag && !flag1 && !this.selectedTab.isHovered();
+        }
     }
 
     @Override
-    public void recipesShown(List<Recipe<?>> p_100518_) {
-        // TODO Auto-generated method stub
+    public boolean keyPressed(int p_94745_, int p_94746_, int p_94747_) {
+        this.ignoreTextInput = false;
+        if (this.isVisible() && !this.mc.player.isSpectator()) {
+            if (p_94745_ == 256 && !this.isOffsetNextToMainGUI()) {
+                this.setVisible(false);
+                return true;
+            } else if (this.searchBox.keyPressed(p_94745_, p_94746_, p_94747_)) {
+                this.checkSearchStringUpdate();
+                return true;
+            } else if (this.searchBox.isFocused() && this.searchBox.isVisible() && p_94745_ != 256) {
+                return true;
+            } else if (this.mc.options.keyChat.matches(p_94745_, p_94746_) && !this.searchBox.isFocused()) {
+                this.ignoreTextInput = true;
+                this.searchBox.setFocus(true);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
+    @Override
+    public boolean keyReleased(int p_94750_, int p_94751_, int p_94752_) {
+        this.ignoreTextInput = false;
+        return GuiEventListener.super.keyReleased(p_94750_, p_94751_, p_94752_);
+    }
+
+    @Override
+    public boolean charTyped(char p_94732_, int p_94733_) {
+        if (this.ignoreTextInput) {
+            return false;
+        } else if (this.isVisible() && !this.mc.player.isSpectator()) {
+            if (this.searchBox.charTyped(p_94732_, p_94733_)) {
+                this.checkSearchStringUpdate();
+                return true;
+            } else {
+                return GuiEventListener.super.charTyped(p_94732_, p_94733_);
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isMouseOver(double p_94748_, double p_94749_) {
+        return false;
+    }
+    
+    protected void checkSearchStringUpdate() {
+        String str = this.searchBox.getValue().toLowerCase(Locale.ROOT);
+        if (!str.equals(this.lastSearch)) {
+            this.updateCollections(false);
+            this.lastSearch = str;
+        }
+    }
+    
+    protected boolean isOffsetNextToMainGUI() {
+        return this.xOffset == OFFSET_X_POSITION;
+    }
+    
+    public void recipesUpdates() {
+        this.updateTabs();
+        if (this.isVisible()) {
+            this.updateCollections(false);
+        }
+    }
+
+    @Override
+    public void recipesShown(List<Recipe<?>> recipes) {
+        for (Recipe<?> recipe : recipes) {
+            this.mc.player.removeRecipeHighlight(recipe);
+            if (this.arcaneBook.getData().willHighlight(recipe)) {
+                this.arcaneBook.getData().removeHighlight(recipe);
+                // TODO Send recipe seen packet to server
+            }
+        }
+    }
+    
+    public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
+        ItemStack stack = recipe.getResultItem();
+        this.ghostRecipe.setRecipe(recipe);
+        this.ghostRecipe.addIngredient(Ingredient.of(stack), (slots.get(0)).x, (slots.get(0)).y);
+        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, recipe.getIngredients().iterator(), 0);
+    }
+
+    @Override
+    public void addItemToSlot(Iterator<Ingredient> iterator, int slotIndex, int count, int p_135418_, int p_135419_) {
+        Ingredient ingredient = iterator.next();
+        if (!ingredient.isEmpty()) {
+            Slot slot = this.menu.slots.get(slotIndex);
+            this.ghostRecipe.addIngredient(ingredient, slot.x, slot.y);
+        }
+    }
+    
+    protected void sendUpdateSettings() {
+        // TODO Send packet to server with new recipe book type, arcane book isOpen, and arcane book isFiltering
     }
 
     @Override
     public NarrationPriority narrationPriority() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.visible ? NarratableEntry.NarrationPriority.HOVERED : NarratableEntry.NarrationPriority.NONE;
     }
 
     @Override
-    public void addItemToSlot(Iterator<Ingredient> p_135415_, int p_135416_, int p_135417_, int p_135418_, int p_135419_) {
-        // TODO Auto-generated method stub
-        
+    public void updateNarration(NarrationElementOutput output) {
+        List<NarratableEntry> entryList = new ArrayList<>();
+        this.recipeBookPage.listButtons(widget -> {
+            if (widget.isActive()) {
+                entryList.add(widget);
+            }
+        });
+        entryList.add(this.searchBox);
+        entryList.add(this.filterButton);
+        entryList.addAll(this.tabButtons);
+        Screen.NarratableSearchResult result = Screen.findNarratableWidget(entryList, null);
+        if (result != null) {
+            result.entry.updateNarration(output.nest());
+        }
     }
-
 }
