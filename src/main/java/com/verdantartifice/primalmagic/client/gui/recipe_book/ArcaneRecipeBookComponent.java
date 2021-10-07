@@ -390,7 +390,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         return newValue;
     }
     
-    protected boolean hasClickedOutside(double mouseX, double mouseY, int parentLeft, int parentTop, int parentWidth, int parentHeight, int buttonIndex) {
+    public boolean hasClickedOutside(double mouseX, double mouseY, int parentLeft, int parentTop, int parentWidth, int parentHeight, int buttonIndex) {
         if (!this.isVisible()) {
             return true;
         } else {
@@ -463,7 +463,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         return this.xOffset == OFFSET_X_POSITION;
     }
     
-    public void recipesUpdates() {
+    public void recipesUpdated() {
         this.updateTabs();
         if (this.isVisible()) {
             this.updateCollections(false);
