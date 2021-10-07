@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBook;
 
+import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +28,11 @@ public class ArcaneRecipeCollection {
         } else {
             this.singleResultItem = allRecipesHaveSameResult(recipes);
         }
+    }
+    
+    public ArcaneRecipeCollection(RecipeCollection vanillaCollection) {
+        this.recipes = ImmutableList.copyOf(vanillaCollection.getRecipes());
+        this.singleResultItem = vanillaCollection.hasSingleResultItem();
     }
     
     protected static boolean allRecipesHaveSameResult(List<Recipe<?>> recipes) {

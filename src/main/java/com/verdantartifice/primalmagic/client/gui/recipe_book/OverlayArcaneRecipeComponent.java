@@ -18,7 +18,6 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -38,12 +37,12 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
     protected int x;
     protected int y;
     protected Minecraft mc;
-    protected RecipeCollection collection;
+    protected ArcaneRecipeCollection collection;
     @Nullable
     protected Recipe<?> lastRecipeClicked;
     protected float time;
     
-    public void init(Minecraft mc, RecipeCollection recipeCollection, ArcaneRecipeBook book, int xPos, int yPos, int dx, int dy, float parentWidth) {
+    public void init(Minecraft mc, ArcaneRecipeCollection recipeCollection, ArcaneRecipeBook book, int xPos, int yPos, int dx, int dy, float parentWidth) {
         this.mc = mc;
         this.collection = recipeCollection;
         
@@ -94,7 +93,7 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
         return false;
     }
 
-    public RecipeCollection getRecipeCollection() {
+    public ArcaneRecipeCollection getRecipeCollection() {
         return this.collection;
     }
 

@@ -14,10 +14,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Table;
+import com.verdantartifice.primalmagic.client.gui.recipe_book.ArcaneRecipeCollection;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBook;
 
-import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.Recipe;
@@ -31,8 +31,8 @@ import net.minecraft.world.item.crafting.RecipeType;
  */
 public class ClientArcaneRecipeBook {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected Map<ArcaneRecipeBookCategories, List<RecipeCollection>> collectionsByTab = ImmutableMap.of();
-    protected List<RecipeCollection> allCollections = ImmutableList.of();
+    protected Map<ArcaneRecipeBookCategories, List<ArcaneRecipeCollection>> collectionsByTab = ImmutableMap.of();
+    protected List<ArcaneRecipeCollection> allCollections = ImmutableList.of();
     protected final ArcaneRecipeBook book;
     
     public ClientArcaneRecipeBook(ArcaneRecipeBook book) {
@@ -41,11 +41,11 @@ public class ClientArcaneRecipeBook {
     
     public void setupCollections(Iterable<Recipe<?>> recipes) {
         Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> recipeListMap = categorizeAndGroupRecipes(recipes);
-        Map<ArcaneRecipeBookCategories, List<RecipeCollection>> recipeCollectionMap = new HashMap<>();
-        Builder<RecipeCollection> builder = ImmutableList.builder();
+        Map<ArcaneRecipeBookCategories, List<ArcaneRecipeCollection>> recipeCollectionMap = new HashMap<>();
+        Builder<ArcaneRecipeCollection> builder = ImmutableList.builder();
 
         recipeListMap.forEach((category, recipeLists) -> {
-            recipeCollectionMap.put(category, recipeLists.stream().map(RecipeCollection::new).peek(builder::add).collect(ImmutableList.toImmutableList()));
+            recipeCollectionMap.put(category, recipeLists.stream().map(ArcaneRecipeCollection::new).peek(builder::add).collect(ImmutableList.toImmutableList()));
         });
         ArcaneRecipeBookCategories.AGGREGATE_CATEGORIES.forEach((searchCategory, subCategories) -> {
             recipeCollectionMap.put(searchCategory, subCategories.stream().flatMap(cat -> {
@@ -112,11 +112,11 @@ public class ClientArcaneRecipeBook {
         return this.book;
     }
     
-    public List<RecipeCollection> getCollections() {
+    public List<ArcaneRecipeCollection> getCollections() {
         return this.allCollections;
     }
     
-    public List<RecipeCollection> getCollection(ArcaneRecipeBookCategories category) {
+    public List<ArcaneRecipeCollection> getCollection(ArcaneRecipeBookCategories category) {
         return this.collectionsByTab.getOrDefault(category, Collections.emptyList());
     }
 }

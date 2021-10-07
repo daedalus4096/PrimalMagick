@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -27,7 +28,6 @@ import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.recipebook.GhostRecipe;
-import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -190,6 +190,8 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     
     protected void updateCollections(boolean resetPage) {
         // TODO
+        List<ArcaneRecipeCollection> recipeCollections = this.arcaneBook.getCollection(this.selectedTab.getCategory());
+        recipeCollections.addAll(this.vanillaBook.getCollection(this.selectedTab.getCategory().getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
     }
     
     protected void updateTabs() {
@@ -197,12 +199,15 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         int yPos = (this.height - IMAGE_HEIGHT) / 2 + 3;
         int tabCount = 0;
         
+        // FIXME Is there a better place to do this?
+        this.arcaneBook.setupCollections(this.mc.level.getRecipeManager().getRecipes());
+        
         for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
             ArcaneRecipeBookCategories category = tab.getCategory();
             if (category != ArcaneRecipeBookCategories.CRAFTING_SEARCH) {
                 if (tab.updateVisibility(this.vanillaBook, this.arcaneBook)) {
                     tab.setPosition(xPos, yPos + 27 * tabCount++);
-                    tab.startAnimation(this.mc);
+                    tab.startAnimation(this.mc, this.vanillaBook, this.arcaneBook);
                 }
             } else {
                 tab.visible = true;
@@ -303,7 +308,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         if (this.isVisible() && !this.mc.player.isSpectator()) {
             if (this.recipeBookPage.mouseClicked(mouseX, mouseY, buttonIndex, (this.width - IMAGE_WIDTH) / 2 - this.xOffset, (this.height - IMAGE_HEIGHT) / 2, IMAGE_WIDTH, IMAGE_HEIGHT)) {
                 Recipe<?> recipe = this.recipeBookPage.getLastClickedRecipe();
-                RecipeCollection collection = this.recipeBookPage.getLastClickedRecipeCollection();
+                ArcaneRecipeCollection collection = this.recipeBookPage.getLastClickedRecipeCollection();
                 if (recipe != null && collection != null) {
                     if (!collection.isCraftable(recipe) && this.ghostRecipe.getRecipe() == recipe) {
                         return false;

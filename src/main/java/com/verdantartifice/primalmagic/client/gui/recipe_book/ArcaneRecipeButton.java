@@ -13,7 +13,6 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -37,7 +36,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     
     protected AbstractArcaneRecipeBookMenu<?> menu;
     protected ArcaneRecipeBook book;
-    protected RecipeCollection collection;
+    protected ArcaneRecipeCollection collection;
     protected float time;
     protected float animationTime;
     protected int currentIndex;
@@ -46,7 +45,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
         super(0, 0, BACKGROUND_SIZE, BACKGROUND_SIZE, TextComponent.EMPTY);
     }
     
-    public void init(RecipeCollection recipeCollection, ArcaneRecipeBookPage page) {
+    public void init(ArcaneRecipeCollection recipeCollection, ArcaneRecipeBookPage page) {
         Minecraft mc = page.getMinecraft();
         this.collection = recipeCollection;
         this.menu = (AbstractArcaneRecipeBookMenu<?>)mc.player.containerMenu;
@@ -62,7 +61,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
         }
     }
     
-    public RecipeCollection getCollection() {
+    public ArcaneRecipeCollection getCollection() {
         return this.collection;
     }
     

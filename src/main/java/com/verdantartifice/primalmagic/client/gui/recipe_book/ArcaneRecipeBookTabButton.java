@@ -1,19 +1,17 @@
 package com.verdantartifice.primalmagic.client.gui.recipe_book;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagic.client.recipe_book.ClientArcaneRecipeBook;
-import com.verdantartifice.primalmagic.common.capabilities.IPlayerArcaneRecipeBook;
-import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.AbstractArcaneRecipeBookMenu;
 
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.StateSwitchingButton;
-import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemStack;
@@ -36,18 +34,12 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         this.initTextureValues(153, 2, 35, 0, ArcaneRecipeBookComponent.RECIPE_BOOK_LOCATION);
     }
     
-    public void startAnimation(Minecraft mc) {
-        IPlayerArcaneRecipeBook arcaneBookCap = PrimalMagicCapabilities.getArcaneRecipeBook(mc.player).orElse(null);
-        ClientArcaneRecipeBook arcaneBook = arcaneBookCap == null ? null : new ClientArcaneRecipeBook(arcaneBookCap.get());
-        ClientRecipeBook vanillaBook = mc.player.getRecipeBook();
-        List<RecipeCollection> list = vanillaBook.getCollection(this.category.getVanillaCategory());
-        if (arcaneBook != null) {
-            arcaneBook.setupCollections(mc.level.getRecipeManager().getRecipes());  // TODO Optimize this
-            list.addAll(arcaneBook.getCollection(this.category));
-        }
+    public void startAnimation(Minecraft mc, ClientRecipeBook vanillaBook, ClientArcaneRecipeBook arcaneBook) {
+        List<ArcaneRecipeCollection> list = arcaneBook.getCollection(this.category);
+        list.addAll(vanillaBook.getCollection(this.category.getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
         
         if (mc.player.containerMenu instanceof AbstractArcaneRecipeBookMenu<?> recipeMenu) {
-            for (RecipeCollection recipeCollection : list) {
+            for (ArcaneRecipeCollection recipeCollection : list) {
                 for (Recipe<?> recipe : recipeCollection.getRecipes(arcaneBook.getData().isFiltering(recipeMenu.getRecipeBookType()))) {
                     if (arcaneBook.getData().willHighlight(recipe) || vanillaBook.willHighlight(recipe)) {
                         this.animationTime = ANIMATION_TIME;
@@ -114,10 +106,10 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     }
     
     public boolean updateVisibility(ClientRecipeBook vanillaBook, ClientArcaneRecipeBook arcaneBook) {
-        List<RecipeCollection> list = vanillaBook.getCollection(this.category.getVanillaCategory());
-        list.addAll(arcaneBook.getCollection(this.category));
+        List<ArcaneRecipeCollection> list = arcaneBook.getCollection(this.category);
+        list.addAll(vanillaBook.getCollection(this.category.getVanillaCategory()).stream().map(rc -> new ArcaneRecipeCollection(rc)).collect(Collectors.toList()));
         this.visible = false;
-        for (RecipeCollection collection : list) {
+        for (ArcaneRecipeCollection collection : list) {
             if (collection.hasKnownRecipes() && collection.hasFitting()) {
                 this.visible = true;
                 break;

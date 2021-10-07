@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeB
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.StateSwitchingButton;
-import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.item.crafting.Recipe;
@@ -33,7 +32,7 @@ public class ArcaneRecipeBookPage {
     @Nullable
     protected ArcaneRecipeButton hoveredButton;
     protected Minecraft mc;
-    protected List<RecipeCollection> recipeCollections = ImmutableList.of();
+    protected List<ArcaneRecipeCollection> recipeCollections = ImmutableList.of();
     protected StateSwitchingButton forwardButton;
     protected StateSwitchingButton backButton;
     protected int totalPages;
@@ -43,7 +42,7 @@ public class ArcaneRecipeBookPage {
     @Nullable
     protected Recipe<?> lastClickedRecipe;
     @Nullable
-    protected RecipeCollection lastClickedRecipeCollection;
+    protected ArcaneRecipeCollection lastClickedRecipeCollection;
 
     public ArcaneRecipeBookPage() {
         for (int index = 0; index < ITEMS_PER_PAGE; index++) {
@@ -71,7 +70,7 @@ public class ArcaneRecipeBookPage {
         this.showListeners.add(component);
     }
     
-    public void updateCollections(List<RecipeCollection> collectionList, boolean resetPage) {
+    public void updateCollections(List<ArcaneRecipeCollection> collectionList, boolean resetPage) {
         this.recipeCollections = collectionList;
         this.totalPages = (int)Math.ceil((double)collectionList.size() / (double)ITEMS_PER_PAGE);
         if (this.totalPages <= this.currentPage || resetPage) {
@@ -85,7 +84,7 @@ public class ArcaneRecipeBookPage {
         for (int index = 0; index < this.buttons.size(); index++) {
             ArcaneRecipeButton button = this.buttons.get(index);
             if (recipesPast + index < this.recipeCollections.size()) {
-                RecipeCollection collection = this.recipeCollections.get(recipesPast + index);
+                ArcaneRecipeCollection collection = this.recipeCollections.get(recipesPast + index);
                 button.init(collection, this);
                 button.visible = true;
             } else {
@@ -135,7 +134,7 @@ public class ArcaneRecipeBookPage {
     }
     
     @Nullable
-    public RecipeCollection getLastClickedRecipeCollection() {
+    public ArcaneRecipeCollection getLastClickedRecipeCollection() {
         return this.lastClickedRecipeCollection;
     }
     
