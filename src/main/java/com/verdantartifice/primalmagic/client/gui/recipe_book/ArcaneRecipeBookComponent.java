@@ -16,6 +16,8 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.containers.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
 
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
+import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
@@ -30,6 +32,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.recipebook.GhostRecipe;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.recipebook.PlaceRecipe;
@@ -189,9 +192,37 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     }
     
     protected void updateCollections(boolean resetPage) {
-        // TODO
         List<ArcaneRecipeCollection> recipeCollections = this.arcaneBook.getCollection(this.selectedTab.getCategory());
         recipeCollections.addAll(this.vanillaBook.getCollection(this.selectedTab.getCategory().getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
+        recipeCollections.forEach(arc -> {
+            arc.canCraft(this.stackedContents, this.menu.getGridWidth(), this.menu.getGridHeight(), this.vanillaBook, this.arcaneBook.getData());
+        });
+        
+        List<ArcaneRecipeCollection> filteredCollections = new ArrayList<>(recipeCollections);
+        filteredCollections.removeIf(arc -> {
+            return !arc.hasKnownRecipes();
+        });
+        filteredCollections.removeIf(arc -> {
+            return !arc.hasFitting();
+        });
+        
+        String searchStr = this.searchBox.getValue();
+        if (!searchStr.isEmpty()) {
+            // TODO Include arcane search text source?
+            ObjectSet<ArcaneRecipeCollection> objectSet = new ObjectLinkedOpenHashSet<>(this.mc.getSearchTree(SearchRegistry.RECIPE_COLLECTIONS)
+                    .search(searchStr.toLowerCase(Locale.ROOT)).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
+            filteredCollections.removeIf(arc -> {
+                return !objectSet.contains(arc);
+            });
+        }
+        
+        if (this.arcaneBook.getData().isFiltering(this.menu.getRecipeBookType())) {
+            filteredCollections.removeIf(arc -> {
+                return !arc.hasCraftable();
+            });
+        }
+        
+        this.recipeBookPage.updateCollections(filteredCollections, resetPage);
     }
     
     protected void updateTabs() {
