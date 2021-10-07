@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagic.client.gui;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +32,8 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     protected static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/arcane_workbench.png");
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
+    
+    protected List<ManaCostWidget> costWidgets = new ArrayList<>();
 
     public ArcaneWorkbenchScreen(ArcaneWorkbenchContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
@@ -39,11 +43,17 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     @Override
     protected void init() {
         super.init();
+        this.initCostWidgets();
+        
+        // Add arcane recipe book button
+        this.addRenderableWidget(new ImageButton(this.leftPos + 105, this.topPos + 69, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
+            LOGGER.info("Toggling arcane recipe book");
+        }));
     }
 
     @Override
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.initWidgets();
+        this.adjustCostWidgets();
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
@@ -67,28 +77,33 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
             this.font.draw(matrixStack, text, x, y, Color.BLACK.getRGB());
         }
     }
-
-    protected void initWidgets() {
-        this.clearWidgets();
-        
-        // Add arcane recipe book button
-        this.addRenderableWidget(new ImageButton(this.leftPos + 105, this.topPos + 69, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
-            LOGGER.info("Toggling arcane recipe book");
-        }));
-
-        // Show mana cost widgets, if the active recipe has a mana cost
+    
+    protected void initCostWidgets() {
+        this.costWidgets.clear();
+        int widgetSetWidth = Source.SORTED_SOURCES.size() * 18;
+        int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
+        int y = this.topPos + 10;
+        for (Source source : Source.SORTED_SOURCES) {
+            this.costWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, 0, x, y)));
+            x += 18;
+        }
+    }
+    
+    protected void adjustCostWidgets() {
         IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe != null) {
             SourceList manaCosts = activeArcaneRecipe.getManaCosts();
-            if (!manaCosts.isEmpty()) {
-                int widgetSetWidth = manaCosts.getSourcesSorted().size() * 18;
-                int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
-                int y = this.topPos + 10;
-                for (Source source : manaCosts.getSourcesSorted()) {
-                    this.addRenderableWidget(new ManaCostWidget(source, manaCosts.getAmount(source), x, y));
-                    x += 18;
-                }
+            int widgetSetWidth = manaCosts.getSourcesSorted().size() * 18;
+            for (ManaCostWidget widget : this.costWidgets) {
+                int amount = manaCosts.getAmount(widget.getSource());
+                widget.visible = (amount > 0);
+                widget.setAmount(amount);
+                widget.x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
             }
+        } else {
+            this.costWidgets.forEach(widget -> {
+                widget.visible = false;
+            });
         }
     }
 }

@@ -31,6 +31,18 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         this.amount = amount;
     }
     
+    public Source getSource() {
+        return this.source;
+    }
+    
+    public int getAmount() {
+        return this.amount;
+    }
+    
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+    
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
