@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.recipe_book.ArcaneRecipeBookCategories;
@@ -196,8 +197,10 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     }
     
     protected void updateCollections(boolean resetPage) {
-        List<ArcaneRecipeCollection> recipeCollections = this.arcaneBook.getCollection(this.selectedTab.getCategory());
-        recipeCollections.addAll(this.vanillaBook.getCollection(this.selectedTab.getCategory().getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
+        ImmutableList.Builder<ArcaneRecipeCollection> builder = ImmutableList.builder();
+        builder.addAll(this.arcaneBook.getCollection(this.selectedTab.getCategory()));
+        builder.addAll(this.vanillaBook.getCollection(this.selectedTab.getCategory().getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
+        List<ArcaneRecipeCollection> recipeCollections = builder.build();
         recipeCollections.forEach(arc -> {
             arc.canCraft(this.stackedContents, this.menu.getGridWidth(), this.menu.getGridHeight(), this.vanillaBook, this.arcaneBook.getData());
         });

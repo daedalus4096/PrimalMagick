@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.client.gui.recipe_book;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.recipe_book.ArcaneRecipeBookCategories;
@@ -35,8 +36,10 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     }
     
     public void startAnimation(Minecraft mc, ClientRecipeBook vanillaBook, ClientArcaneRecipeBook arcaneBook) {
-        List<ArcaneRecipeCollection> list = arcaneBook.getCollection(this.category);
-        list.addAll(vanillaBook.getCollection(this.category.getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
+        ImmutableList.Builder<ArcaneRecipeCollection> builder = ImmutableList.builder();
+        builder.addAll(arcaneBook.getCollection(this.category));
+        builder.addAll(vanillaBook.getCollection(this.category.getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
+        List<ArcaneRecipeCollection> list = builder.build();
         
         if (mc.player.containerMenu instanceof AbstractArcaneRecipeBookMenu<?> recipeMenu) {
             for (ArcaneRecipeCollection recipeCollection : list) {
@@ -106,8 +109,10 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     }
     
     public boolean updateVisibility(ClientRecipeBook vanillaBook, ClientArcaneRecipeBook arcaneBook) {
-        List<ArcaneRecipeCollection> list = arcaneBook.getCollection(this.category);
-        list.addAll(vanillaBook.getCollection(this.category.getVanillaCategory()).stream().map(rc -> new ArcaneRecipeCollection(rc)).collect(Collectors.toList()));
+        ImmutableList.Builder<ArcaneRecipeCollection> builder = ImmutableList.builder();
+        builder.addAll(arcaneBook.getCollection(this.category));
+        builder.addAll(vanillaBook.getCollection(this.category.getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
+        List<ArcaneRecipeCollection> list = builder.build();
         this.visible = false;
         for (ArcaneRecipeCollection collection : list) {
             if (collection.hasKnownRecipes() && collection.hasFitting()) {
