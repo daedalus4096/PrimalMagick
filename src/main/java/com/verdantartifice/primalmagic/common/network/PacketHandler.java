@@ -33,6 +33,7 @@ import com.verdantartifice.primalmagic.common.network.packets.misc.ResetFallDist
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagic.common.network.packets.misc.ScanPositionPacket;
+import com.verdantartifice.primalmagic.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 import com.verdantartifice.primalmagic.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 import com.verdantartifice.primalmagic.common.network.packets.recipe_book.SeenArcaneRecipePacket;
@@ -110,6 +111,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket::encode, PlaceArcaneRecipePacket::decode, PlaceArcaneRecipePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket::encode, PlaceGhostArcaneRecipePacket::decode, PlaceGhostArcaneRecipePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SeenArcaneRecipePacket.class, SeenArcaneRecipePacket::encode, SeenArcaneRecipePacket::decode, SeenArcaneRecipePacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket::encode, ChangeArcaneRecipeBookSettingsPacket::decode, ChangeArcaneRecipeBookSettingsPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

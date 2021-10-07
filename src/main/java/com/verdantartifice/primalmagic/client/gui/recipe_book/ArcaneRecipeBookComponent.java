@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabiliti
 import com.verdantartifice.primalmagic.common.containers.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 import com.verdantartifice.primalmagic.common.network.packets.recipe_book.SeenArcaneRecipePacket;
 
@@ -497,7 +498,10 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     }
     
     protected void sendUpdateSettings() {
-        // TODO Send packet to server with new recipe book type, arcane book isOpen, and arcane book isFiltering
+        ArcaneRecipeBookType type = this.menu.getRecipeBookType();
+        boolean open = this.arcaneBook.getData().getBookSettings().isOpen(type);
+        boolean filtering = this.arcaneBook.getData().getBookSettings().isFiltering(type);
+        PacketHandler.sendToServer(new ChangeArcaneRecipeBookSettingsPacket(type, open, filtering));
     }
 
     @Override
