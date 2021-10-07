@@ -23,8 +23,9 @@ public abstract class AbstractArcaneRecipeBookMenu<C extends Container> extends 
         super(type, windowId);
     }
 
-    public void handlePlacement(boolean shiftDown, Recipe<C> recipe, ServerPlayer player) {
-        new ServerPlaceArcaneRecipe<C>(this).recipeClicked(player, recipe, shiftDown);
+    @SuppressWarnings("unchecked")
+    public void handlePlacement(boolean shiftDown, Recipe<?> recipe, ServerPlayer player) {
+        new ServerPlaceArcaneRecipe<C>(this).recipeClicked(player, (Recipe<C>)recipe, shiftDown);
     }
     
     public abstract void fillCraftSlotsStackedContents(StackedContents contents);
