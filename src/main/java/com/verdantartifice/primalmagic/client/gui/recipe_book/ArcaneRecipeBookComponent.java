@@ -15,6 +15,8 @@ import com.verdantartifice.primalmagic.client.recipe_book.ClientArcaneRecipeBook
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
@@ -345,7 +347,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
                         return false;
                     }
                     this.ghostRecipe.clear();
-                    // TODO Handle place recipe
+                    PacketHandler.sendToServer(new PlaceArcaneRecipePacket(this.mc.player.containerMenu.containerId, recipe, Screen.hasShiftDown()));
                     if (!this.isOffsetNextToMainGUI()) {
                         this.setVisible(false);
                     }
