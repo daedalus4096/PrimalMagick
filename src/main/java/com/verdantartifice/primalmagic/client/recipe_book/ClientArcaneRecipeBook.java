@@ -62,7 +62,7 @@ public class ClientArcaneRecipeBook {
         Table<ArcaneRecipeBookCategories, String, List<Recipe<?>>> table = HashBasedTable.create();
 
         for (Recipe<?> recipe : recipes) {
-            if (ArcaneRecipeBook.isValid(recipe) && !recipe.isIncomplete()) {
+            if ((ArcaneRecipeBook.isValid(recipe) || !recipe.isSpecial()) && !recipe.isIncomplete()) {
                 ArcaneRecipeBookCategories category = getCategory(recipe);
                 String group = recipe.getGroup();
                 if (group.isEmpty()) {

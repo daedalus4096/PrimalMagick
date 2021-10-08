@@ -221,6 +221,16 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         }
     }
 
+    @Override
+    public boolean isIncomplete() {
+        NonNullList<Ingredient> ingredients = this.getIngredients();
+        return ingredients.isEmpty() || ingredients.stream().filter(i -> {
+            return !i.isEmpty();
+        }).anyMatch(i -> {
+            return i.getItems().length == 0;
+        });
+    }
+
     private static int firstNonSpace(String str) {
         int i;
         for (i = 0; i < str.length() && str.charAt(i) == ' '; ++i) {}
