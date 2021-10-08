@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.client.fx.particles.PropMarkerParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.SpellSparkleParticle;
 import com.verdantartifice.primalmagic.client.fx.particles.WandPoofParticle;
+import com.verdantartifice.primalmagic.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.wands.WandCap;
 import com.verdantartifice.primalmagic.common.wands.WandCore;
@@ -79,5 +80,6 @@ public class ClientRegistrationEvents {
         event.registerReloadListener(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ArcaneSearchRegistry.getInstance());
     }
 }

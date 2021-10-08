@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.network.packets.data;
 
 import java.util.function.Supplier;
 
+import com.verdantartifice.primalmagic.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagic.client.util.ClientUtils;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.network.packets.IMessageToClient;
@@ -50,6 +51,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
                     PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                         recipeBook.deserializeNBT(message.data, player.level.getRecipeManager());
                     });
+                    ArcaneSearchRegistry.getInstance().populate();
                 }
             });
             

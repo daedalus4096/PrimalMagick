@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagic.client.recipe_book.ArcaneRecipeBookCategories;
+import com.verdantartifice.primalmagic.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagic.client.recipe_book.ClientArcaneRecipeBook;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.AbstractArcaneRecipeBookMenu;
@@ -221,10 +222,11 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         
         String searchStr = this.searchBox.getValue();
         if (!searchStr.isEmpty()) {
-            ObjectSet<ArcaneRecipeCollection> objectSet = new ObjectLinkedOpenHashSet<>(this.mc.getSearchTree(SearchRegistry.RECIPE_COLLECTIONS)
+            ObjectSet<ArcaneRecipeCollection> vanillaObjectSet = new ObjectLinkedOpenHashSet<>(this.mc.getSearchTree(SearchRegistry.RECIPE_COLLECTIONS)
                     .search(searchStr.toLowerCase(Locale.ROOT)).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
+            ObjectSet<ArcaneRecipeCollection> arcaneObjectSet = new ObjectLinkedOpenHashSet<>(ArcaneSearchRegistry.getInstance().getSearchTree().search(searchStr.toLowerCase(Locale.ROOT)));
             filteredCollections.removeIf(arc -> {
-                return !objectSet.contains(arc);
+                return !vanillaObjectSet.contains(arc) && !arcaneObjectSet.contains(arc);
             });
         }
         
