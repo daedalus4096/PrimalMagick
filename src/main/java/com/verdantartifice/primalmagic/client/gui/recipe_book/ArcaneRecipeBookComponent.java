@@ -92,7 +92,13 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         this.widthTooNarrow = tooNarrow;
         mc.player.containerMenu = menu;
         this.vanillaBook = mc.player.getRecipeBook();
+        
         this.arcaneBook = new ClientArcaneRecipeBook(PrimalMagicCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
+        this.arcaneBook.setupCollections(this.mc.level.getRecipeManager().getRecipes());
+        this.arcaneBook.getCollections().forEach(collection -> {
+            collection.updateKnownRecipes(this.vanillaBook, this.arcaneBook.getData());
+        });
+        
         this.visible = this.isVisibleAccordingToBookData();
         if (this.visible) {
             this.initVisuals();
@@ -236,9 +242,6 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         int xPos = (this.width - IMAGE_WIDTH) / 2 - this.xOffset - 30;
         int yPos = (this.height - IMAGE_HEIGHT) / 2 + 3;
         int tabCount = 0;
-        
-        // FIXME Is there a better place to do this?
-        this.arcaneBook.setupCollections(this.mc.level.getRecipeManager().getRecipes());
         
         for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
             ArcaneRecipeBookCategories category = tab.getCategory();

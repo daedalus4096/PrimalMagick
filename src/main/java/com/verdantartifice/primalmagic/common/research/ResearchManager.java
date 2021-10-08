@@ -305,6 +305,7 @@ public class ResearchManager {
                 RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
                 Set<Recipe<?>> recipesToRemove = entry.getAllRecipeIds().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                 ArcaneRecipeBookManager.removeRecipes(recipesToRemove, serverPlayer);
+                serverPlayer.resetRecipes(recipesToRemove);
             }
         }
 
@@ -388,6 +389,7 @@ public class ResearchManager {
                     RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
                     Set<Recipe<?>> recipesToUnlock = currentStage.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                     ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
+                    serverPlayer.awardRecipes(recipesToUnlock);
                 }
             }
 
