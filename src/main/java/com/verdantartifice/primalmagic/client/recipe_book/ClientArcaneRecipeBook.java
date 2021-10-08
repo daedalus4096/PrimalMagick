@@ -100,11 +100,15 @@ public class ClientArcaneRecipeBook {
             } else {
                 return ArcaneRecipeBookCategories.CRAFTING_MISC;
             }
+        } else if (type == RecipeType.SMELTING || type == RecipeType.BLASTING || type == RecipeType.SMOKING || type == RecipeType.STONECUTTING || 
+                type == RecipeType.CAMPFIRE_COOKING || type == RecipeType.SMITHING) {
+            // We don't deal with these crafting types
+            return ArcaneRecipeBookCategories.UNKNOWN;
         } else {
             LOGGER.warn("Unknown recipe category: {}/{}", () -> {
                 return Registry.RECIPE_TYPE.getKey(recipe.getType());
-             }, recipe::getId);
-             return ArcaneRecipeBookCategories.UNKNOWN;
+            }, recipe::getId);
+            return ArcaneRecipeBookCategories.UNKNOWN;
         }
     }
     
