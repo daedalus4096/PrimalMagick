@@ -219,4 +219,34 @@ public class ResearchEntry {
         
         return retVal;
     }
+    
+    @Nonnull
+    public Set<ResourceLocation> getKnownRecipeIds(Player player) {
+        Set<ResourceLocation> retVal = new HashSet<>();
+        IPlayerKnowledge knowledge = this.getKnowledge(player);
+        
+        ResearchStage currentStage = null;
+        int currentStageNum = knowledge.getResearchStage(key);
+        if (currentStageNum >= 0) {
+            currentStage = this.getStages().get(Math.min(currentStageNum, this.getStages().size() - 1));
+        }
+        boolean entryComplete = (currentStageNum >= this.getStages().size());
+        
+        if (currentStage != null) {
+            retVal.addAll(currentStage.getRecipes());
+        }
+        if (entryComplete) {
+            for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
+                if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
+                    for (ResearchAddendum addendum : searchEntry.getAddenda()) {
+                        if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(this.getKey()) && addendum.getRequiredResearch().isKnownByStrict(player)) {
+                            retVal.addAll(addendum.getRecipes());
+                        }
+                    }
+                }
+            }
+        }
+        
+        return retVal;
+    }
 }

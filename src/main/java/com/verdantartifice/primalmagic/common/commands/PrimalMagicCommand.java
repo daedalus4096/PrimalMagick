@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagic.common.commands;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,7 @@ import com.verdantartifice.primalmagic.common.commands.arguments.StatValueArgume
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagic.common.research.ResearchEntries;
+import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
@@ -51,6 +54,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
 
 /**
  * Definition of the /primalmagic debug command and its /pm alias.
@@ -172,6 +176,8 @@ public class PrimalMagicCommand {
                     .then(Commands.literal("reset").executes((context) -> { return resetRecipes(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     // /pm recipes <target> list
                     .then(Commands.literal("list").executes((context) -> { return listArcaneRecipes(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
+                    // /pm recipes <target> sync
+                    .then(Commands.literal("sync").executes((context) -> { return syncArcaneRecipes(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("add")
                         // /pm recipes <target> add <recipe>
                         .then(Commands.argument("recipe", ResourceLocationArgument.id()).suggests(SuggestionProviders.ALL_RECIPES).executes((context) -> { return addArcaneRecipe(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getRecipe(context, "recipe")); }))
@@ -584,7 +590,28 @@ public class PrimalMagicCommand {
                                         .toArray(new String[highlightSet.size()]);
             String highlightOutput = String.join(", ", highlightList);
             source.sendSuccess(new TranslatableComponent("commands.primalmagic.recipes.list.highlight", target.getName(), highlightOutput), true);
-}
+        }
+        return 0;
+    }
+    
+    private static int syncArcaneRecipes(CommandSourceStack source, ServerPlayer target) {
+        IPlayerArcaneRecipeBook recipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(target).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
+        if (recipeBook == null || knowledge == null) {
+            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+        } else {
+            recipeBook.get().clear();
+            RecipeManager recipeManager = target.level.getRecipeManager();
+            Set<ResourceLocation> idsToAdd = new HashSet<>();
+            for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
+                if (knowledge.isResearchKnown(entry.getKey())) {
+                    idsToAdd.addAll(entry.getKnownRecipeIds(target));
+                }
+            }
+            ArcaneRecipeBookManager.addRecipes(idsToAdd.stream().map(id -> recipeManager.byKey(id).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet()), target);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagic.recipes.sync", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagic.recipes.sync.target", source.getTextName()), Util.NIL_UUID);
+        }
         return 0;
     }
 

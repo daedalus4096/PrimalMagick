@@ -1797,6 +1797,8 @@
     "commands.primalmagic.recipes.reset.target": "%1$s has reset your arcane recipe book",
     "commands.primalmagic.recipes.list.known": "All known arcane recipes for %1$s: %2$s",
     "commands.primalmagic.recipes.list.highlight": "All highlighted arcane recipes for %1$s: %2$s",
+    "commands.primalmagic.recipes.sync": "Syncing arcane recipe book for %1$s",
+    "commands.primalmagic.recipes.sync.target": "%1$s has synced your arcane recipe book with your research",
     "commands.primalmagic.recipes.recipe_not_arcane": "Given recipe does not go in the arcane recipe book",
     "commands.primalmagic.recipes.add": "Added recipe to arcane recipe book of %1$s: %2$s",
     "commands.primalmagic.recipes.add.target": "%1$s has added %2$s to your arcane recipe book",
