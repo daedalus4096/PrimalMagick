@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBook;
 
@@ -18,8 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 
 public class ArcaneRecipeCollection {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
     protected final List<Recipe<?>> recipes;
     protected final boolean singleResultItem;
     protected final Set<Recipe<?>> craftable = new HashSet<>();
@@ -58,7 +53,6 @@ public class ArcaneRecipeCollection {
     public void updateKnownRecipes(RecipeBook vanillaBook, ArcaneRecipeBook arcaneBook) {
         for (Recipe<?> recipe : this.recipes) {
             if (vanillaBook.contains(recipe) || arcaneBook.contains(recipe)) {
-                LOGGER.info("Adding recipe {} to set of known recipes in collection", recipe.getId().toString());
                 this.known.add(recipe);
             }
         }
