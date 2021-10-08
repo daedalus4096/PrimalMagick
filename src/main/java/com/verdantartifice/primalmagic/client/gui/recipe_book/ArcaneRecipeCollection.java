@@ -116,4 +116,21 @@ public class ArcaneRecipeCollection {
     public boolean hasSingleResultItem() {
         return this.singleResultItem;
     }
+
+    @Override
+    public int hashCode() {
+        return this.recipes.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ArcaneRecipeCollection other = (ArcaneRecipeCollection) obj;
+        return this.recipes.equals(other.getRecipes());
+    }
 }

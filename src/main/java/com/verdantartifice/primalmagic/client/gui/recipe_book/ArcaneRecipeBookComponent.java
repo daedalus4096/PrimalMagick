@@ -221,7 +221,6 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         
         String searchStr = this.searchBox.getValue();
         if (!searchStr.isEmpty()) {
-            // TODO Include arcane search text source?
             ObjectSet<ArcaneRecipeCollection> objectSet = new ObjectLinkedOpenHashSet<>(this.mc.getSearchTree(SearchRegistry.RECIPE_COLLECTIONS)
                     .search(searchStr.toLowerCase(Locale.ROOT)).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
             filteredCollections.removeIf(arc -> {
