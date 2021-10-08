@@ -55,16 +55,16 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
         // Slot 0: Workbench output
         this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 138, 52));
         
-        // Slot 1: Crafting wand
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52, false));
-        
-        // Slots 2-10: Crafting inputs
+        // Slots 1-9: Crafting inputs
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
                 this.addSlot(new Slot(this.craftingInv, j + i * 3, 44 + j * 18, 34 + i * 18));
             }
         }
+        
+        // Slot 10: Crafting wand
+        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52, false));
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {
@@ -113,19 +113,19 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
             } else if (index >= 11 && index < 38) {
                 // If transferring from the player's backpack, put wands in the wand slot and everything else into the inputs or hotbar, in that order
                 if (this.wandSlot.mayPlace(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
+                    if (!this.moveItemStackTo(slotStack, 10, 11, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotStack, 2, 11, false) && !this.moveItemStackTo(slotStack, 38, 47, false)) {
+                } else if (!this.moveItemStackTo(slotStack, 1, 10, false) && !this.moveItemStackTo(slotStack, 38, 47, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 38 && index < 47) {
                 // If transferring from the player's hotbar, put wands in the wand slot and everything else into the inputs or backpack, in that order
                 if (this.wandSlot.mayPlace(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
+                    if (!this.moveItemStackTo(slotStack, 10, 11, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotStack, 2, 11, false) && !this.moveItemStackTo(slotStack, 11, 38, false)) {
+                } else if (!this.moveItemStackTo(slotStack, 1, 10, false) && !this.moveItemStackTo(slotStack, 11, 38, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(slotStack, 11, 47, false)) {
