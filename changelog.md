@@ -5,6 +5,7 @@ v0.0.17-alpha
 * Allow the Research Table to detect non-consumed material blocks within five blocks of itself
 * Fix third-person appearance of several tools
 * Add recipe book functionality to the arcane workbench
+* Increment to Forge version 37.0.75
 
 v0.0.16-alpha
 -------------
