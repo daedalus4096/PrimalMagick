@@ -7,7 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -17,32 +18,15 @@ import net.minecraftforge.common.util.LazyOptional;
  * @author Daedalus4096
  */
 public class PrimalMagicCapabilities {
-    @CapabilityInject(IPlayerKnowledge.class)
-    public static final Capability<IPlayerKnowledge> KNOWLEDGE = null;
-    
-    @CapabilityInject(IPlayerCooldowns.class)
-    public static final Capability<IPlayerCooldowns> COOLDOWNS = null;
-    
-    @CapabilityInject(IPlayerStats.class)
-    public static final Capability<IPlayerStats> STATS = null;
-    
-    @CapabilityInject(IPlayerAttunements.class)
-    public static final Capability<IPlayerAttunements> ATTUNEMENTS = null;
-    
-    @CapabilityInject(IPlayerCompanions.class)
-    public static final Capability<IPlayerCompanions> COMPANIONS = null;
-    
-    @CapabilityInject(IPlayerArcaneRecipeBook.class)
-    public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = null;
-    
-    @CapabilityInject(IWorldEntitySwappers.class)
-    public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = null;
-    
-    @CapabilityInject(IManaStorage.class)
-    public static final Capability<IManaStorage> MANA_STORAGE = null;
-    
-    @CapabilityInject(ITileResearchCache.class)
-    public static final Capability<ITileResearchCache> RESEARCH_CACHE = null;
+    public static final Capability<IPlayerKnowledge> KNOWLEDGE = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerCooldowns> COOLDOWNS = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerStats> STATS = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerAttunements> ATTUNEMENTS = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerCompanions> COMPANIONS = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IManaStorage> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});
     
     @Nonnull
     public static LazyOptional<IPlayerKnowledge> getKnowledge(@Nullable Player player) {
