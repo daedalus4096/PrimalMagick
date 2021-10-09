@@ -111,6 +111,11 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         return this.manaCosts;
     }
 
+    @Override
+    public String getGroup() {
+        return this.group;
+    }
+
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ShapelessArcaneRecipe> {
         @Override
         public ShapelessArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {

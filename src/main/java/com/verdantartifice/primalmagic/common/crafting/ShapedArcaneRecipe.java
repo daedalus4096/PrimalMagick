@@ -144,6 +144,11 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         return this.recipeHeight;
     }
 
+    @Override
+    public String getGroup() {
+        return this.group;
+    }
+
     protected static Map<String, Ingredient> deserializeKey(JsonObject jsonObject) {
         Map<String, Ingredient> map = new HashMap<>();
         for (Entry<String, JsonElement> entry : jsonObject.entrySet()) {
