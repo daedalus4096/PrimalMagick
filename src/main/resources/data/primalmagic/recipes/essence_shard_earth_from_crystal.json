@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
+  "group": "essence_shard",
   "research": "CRYSTAL_DESYNTHESIS",
   "ingredients": [
     {

@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.crafting.WandInventory;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -17,13 +18,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
@@ -32,7 +34,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchContainer extends AbstractContainerMenu {
+public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<CraftingContainer> {
     protected final CraftingContainer craftingInv = new CraftingContainer(this, 3, 3);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
@@ -53,16 +55,16 @@ public class ArcaneWorkbenchContainer extends AbstractContainerMenu {
         // Slot 0: Workbench output
         this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 138, 52));
         
-        // Slot 1: Crafting wand
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52, false));
-        
-        // Slots 2-10: Crafting inputs
+        // Slots 1-9: Crafting inputs
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
                 this.addSlot(new Slot(this.craftingInv, j + i * 3, 44 + j * 18, 34 + i * 18));
             }
         }
+        
+        // Slot 10: Crafting wand
+        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52, false));
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {
@@ -111,19 +113,19 @@ public class ArcaneWorkbenchContainer extends AbstractContainerMenu {
             } else if (index >= 11 && index < 38) {
                 // If transferring from the player's backpack, put wands in the wand slot and everything else into the inputs or hotbar, in that order
                 if (this.wandSlot.mayPlace(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
+                    if (!this.moveItemStackTo(slotStack, 10, 11, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotStack, 2, 11, false) && !this.moveItemStackTo(slotStack, 38, 47, false)) {
+                } else if (!this.moveItemStackTo(slotStack, 1, 10, false) && !this.moveItemStackTo(slotStack, 38, 47, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 38 && index < 47) {
                 // If transferring from the player's hotbar, put wands in the wand slot and everything else into the inputs or backpack, in that order
                 if (this.wandSlot.mayPlace(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
+                    if (!this.moveItemStackTo(slotStack, 10, 11, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotStack, 2, 11, false) && !this.moveItemStackTo(slotStack, 11, 38, false)) {
+                } else if (!this.moveItemStackTo(slotStack, 1, 10, false) && !this.moveItemStackTo(slotStack, 11, 38, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(slotStack, 11, 47, false)) {
@@ -210,5 +212,51 @@ public class ArcaneWorkbenchContainer extends AbstractContainerMenu {
         }
         IWand wand = (IWand)stack.getItem();
         return wand.containsRealMana(stack, player, recipe.getManaCosts());
+    }
+
+    @Override
+    public void fillCraftSlotsStackedContents(StackedContents contents) {
+        this.craftingInv.fillStackedContents(contents);
+    }
+
+    @Override
+    public void clearCraftingContent() {
+        this.craftingInv.clearContent();
+        this.resultInv.clearContent();
+    }
+
+    @Override
+    public boolean recipeMatches(Recipe<? super CraftingContainer> recipe) {
+        return recipe.matches(this.craftingInv, this.player.level);
+    }
+
+    @Override
+    public int getResultSlotIndex() {
+        return 0;
+    }
+
+    @Override
+    public int getGridWidth() {
+        return this.craftingInv.getWidth();
+    }
+
+    @Override
+    public int getGridHeight() {
+        return this.craftingInv.getHeight();
+    }
+
+    @Override
+    public int getSize() {
+        return 10;
+    }
+
+    @Override
+    public ArcaneRecipeBookType getRecipeBookType() {
+        return ArcaneRecipeBookType.CRAFTING;
+    }
+
+    @Override
+    public boolean shouldMoveToInventory(int index) {
+        return index != this.getResultSlotIndex();
     }
 }

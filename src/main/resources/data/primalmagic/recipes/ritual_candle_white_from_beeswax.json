@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "ritual_candles",
   "research": "RITUAL_CANDLES",
   "pattern": [
     "S",

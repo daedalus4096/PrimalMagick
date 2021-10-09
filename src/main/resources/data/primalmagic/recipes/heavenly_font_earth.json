@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "heavenly_mana_fonts",
   "research": "HEAVENLY_MANA_FONTS",
   "mana": {
     "earth": 2500

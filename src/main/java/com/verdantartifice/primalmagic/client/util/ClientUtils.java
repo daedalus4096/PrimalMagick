@@ -2,9 +2,13 @@ package com.verdantartifice.primalmagic.client.util;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.client.gui.recipe_book.ArcaneRecipeUpdateListener;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 
 /**
@@ -48,5 +52,26 @@ public class ClientUtils {
      */
     public static boolean hasShiftDown() {
         return Screen.hasShiftDown();
+    }
+    
+    /**
+     * Places a ghost recipe into the screen of the given IDed menu.
+     * 
+     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
+     * 
+     * @param containerId the ID of the menu whose screen to update
+     * @param recipeId the ID of the recipe to be placed
+     */
+    public static void handlePlaceGhostRecipe(int containerId, ResourceLocation recipeId) {
+        // TODO Find a better home for this method
+        Minecraft mc = Minecraft.getInstance();
+        AbstractContainerMenu menu = mc.player.containerMenu;
+        if (menu.containerId == containerId) {
+            mc.level.getRecipeManager().byKey(recipeId).ifPresent(recipe -> {
+                if (mc.screen instanceof ArcaneRecipeUpdateListener listener) {
+                    listener.getRecipeBookComponent().setupGhostRecipe(recipe, menu.slots);
+                }
+            });
+        }
     }
 }

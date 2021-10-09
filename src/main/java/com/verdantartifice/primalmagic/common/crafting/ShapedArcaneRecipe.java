@@ -144,6 +144,11 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         return this.recipeHeight;
     }
 
+    @Override
+    public String getGroup() {
+        return this.group;
+    }
+
     protected static Map<String, Ingredient> deserializeKey(JsonObject jsonObject) {
         Map<String, Ingredient> map = new HashMap<>();
         for (Entry<String, JsonElement> entry : jsonObject.entrySet()) {
@@ -219,6 +224,16 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             }
             return astring;
         }
+    }
+
+    @Override
+    public boolean isIncomplete() {
+        NonNullList<Ingredient> ingredients = this.getIngredients();
+        return ingredients.isEmpty() || ingredients.stream().filter(i -> {
+            return !i.isEmpty();
+        }).anyMatch(i -> {
+            return i.getItems().length == 0;
+        });
     }
 
     private static int firstNonSpace(String str) {

@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "essence_shard",
   "research": "SHARD_SYNTHESIS",
   "pattern": [
     "###",

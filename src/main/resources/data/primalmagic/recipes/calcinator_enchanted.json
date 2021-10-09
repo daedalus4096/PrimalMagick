@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "calcinators",
   "research": "CALCINATOR_ENCHANTED",
   "mana": {
     "earth": 20,

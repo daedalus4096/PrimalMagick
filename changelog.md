@@ -4,6 +4,7 @@ v0.0.17-alpha
 * Make attunement gain and loss messages more descriptive
 * Allow the Research Table to detect non-consumed material blocks within five blocks of itself
 * Fix third-person appearance of several tools
+* Add recipe book functionality to the arcane workbench
 
 v0.0.16-alpha
 -------------

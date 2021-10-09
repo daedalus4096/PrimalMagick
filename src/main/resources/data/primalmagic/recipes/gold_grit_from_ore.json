@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "group": "earthshatter_hammer_grit",
   "ingredients": [
     {
       "item": "primalmagic:earthshatter_hammer"

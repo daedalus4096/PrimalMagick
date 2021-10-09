@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagic.common.research;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,6 +16,7 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -199,5 +202,51 @@ public class ResearchEntry {
             }
         }
         return true;
+    }
+    
+    @Nonnull
+    public Set<ResourceLocation> getAllRecipeIds() {
+        Set<ResourceLocation> retVal = new HashSet<>();
+        
+        ResearchStage lastStage = this.stages.isEmpty() ? null : this.stages.get(this.stages.size() - 1);
+        if (lastStage != null) {
+            retVal.addAll(lastStage.getRecipes());
+        }
+        
+        for (ResearchAddendum addendum : this.addenda) {
+            retVal.addAll(addendum.getRecipes());
+        }
+        
+        return retVal;
+    }
+    
+    @Nonnull
+    public Set<ResourceLocation> getKnownRecipeIds(Player player) {
+        Set<ResourceLocation> retVal = new HashSet<>();
+        IPlayerKnowledge knowledge = this.getKnowledge(player);
+        
+        ResearchStage currentStage = null;
+        int currentStageNum = knowledge.getResearchStage(key);
+        if (currentStageNum >= 0) {
+            currentStage = this.getStages().get(Math.min(currentStageNum, this.getStages().size() - 1));
+        }
+        boolean entryComplete = (currentStageNum >= this.getStages().size());
+        
+        if (currentStage != null) {
+            retVal.addAll(currentStage.getRecipes());
+        }
+        if (entryComplete) {
+            for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
+                if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
+                    for (ResearchAddendum addendum : searchEntry.getAddenda()) {
+                        if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(this.getKey()) && addendum.getRequiredResearch().isKnownByStrict(player)) {
+                            retVal.addAll(addendum.getRecipes());
+                        }
+                    }
+                }
+            }
+        }
+        
+        return retVal;
     }
 }

@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "magitech_parts",
   "research": "EXPERT_MAGITECH",
   "mana": {
     "earth": 20,

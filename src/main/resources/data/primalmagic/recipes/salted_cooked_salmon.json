@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "group": "salted_food",
   "ingredients": [
     {
       "item": "primalmagic:refined_salt"
