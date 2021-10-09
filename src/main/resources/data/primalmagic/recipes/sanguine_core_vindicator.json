@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
+  "group": "attuned_sanguine_cores",
   "research": "SANGUINE_CORE_SAPIENTS",
   "ingredients": [
     {

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "hexium_ingot",
   "pattern": [
     "NNN",
     "NNN",

@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
+  "group": "essence_dust",
   "research": "SHARD_DESYNTHESIS",
   "ingredients": [
     {

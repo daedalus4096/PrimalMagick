@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "stained_skyglass",
   "research": "SKYGLASS",
   "pattern": [
     "GGG",

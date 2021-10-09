@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
+  "group": "essence_crystal",
   "research": "CLUSTER_DESYNTHESIS\u0026\u0026t_discover_blood",
   "ingredients": [
     {

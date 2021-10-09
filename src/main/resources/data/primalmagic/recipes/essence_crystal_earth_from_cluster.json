@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
+  "group": "essence_crystal",
   "research": "CLUSTER_DESYNTHESIS",
   "ingredients": [
     {

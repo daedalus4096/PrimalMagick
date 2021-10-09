@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "essence_crystal",
   "research": "CRYSTAL_SYNTHESIS\u0026\u0026t_discover_void",
   "pattern": [
     "###",

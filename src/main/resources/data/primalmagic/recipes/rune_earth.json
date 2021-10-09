@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
+  "group": "source_runes",
   "research": "RUNE_EARTH",
   "ingredients": [
     {

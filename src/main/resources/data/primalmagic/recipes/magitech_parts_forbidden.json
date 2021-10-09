@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "magitech_parts",
   "research": "MASTER_MAGITECH",
   "mana": {
     "blood": 50,

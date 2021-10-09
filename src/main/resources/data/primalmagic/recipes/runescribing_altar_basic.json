@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "runescribing_altar",
   "research": "BASIC_RUNEWORKING",
   "mana": {
     "earth": 5,

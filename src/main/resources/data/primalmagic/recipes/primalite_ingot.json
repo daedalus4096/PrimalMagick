@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shapeless",
+  "group": "primalite_ingot",
   "research": "PRIMALITE",
   "ingredients": [
     {

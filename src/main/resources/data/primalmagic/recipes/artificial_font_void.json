@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:arcane_crafting_shaped",
+  "group": "artificial_mana_fonts",
   "research": "ARTIFICIAL_MANA_FONTS\u0026\u0026t_discover_void",
   "mana": {
     "void": 250
