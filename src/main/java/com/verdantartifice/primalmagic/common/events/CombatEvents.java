@@ -85,6 +85,7 @@ public class CombatEvents {
             
             // If the attacker has lesser infernal attunement, launch a hellish chain at the next closest nearby target
             if (!DamageSourcesPM.HELLISH_CHAIN_TYPE.equals(event.getSource().msgId) && 
+                    event.getAmount() > 0.0F && 
                     !attacker.level.isClientSide && 
                     AttunementManager.meetsThreshold(attacker, Source.INFERNAL, AttunementThreshold.LESSER)) {
                 List<LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attacker.level, event.getEntityLiving().position(), 
