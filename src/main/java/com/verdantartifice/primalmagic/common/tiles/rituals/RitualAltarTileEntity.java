@@ -347,11 +347,14 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     }
 
     @Override
-    public InteractionResult onWandRightClick(ItemStack wandStack, Level world, Player player, BlockPos pos, Direction direction) {
+    public InteractionResult onWandRightClick(ItemStack wandStack, Level level, Player player, BlockPos pos, Direction direction) {
         if (!this.level.isClientSide && wandStack.getItem() instanceof IWand) {
             if (this.active) {
                 player.displayClientMessage(new TranslatableComponent("primalmagic.ritual.info.canceled"), false);
                 this.doMishap();    // Trigger an automatic mishap if canceling a ritual early
+                this.reset();
+            } else if (!level.getBlockState(pos.above()).isAir() || !level.getBlockState(pos.above(2)).isAir()) {
+                player.displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.obstructed"), false);
                 this.reset();
             } else if (this.startCraft(wandStack, player)) {
                 this.active = true;

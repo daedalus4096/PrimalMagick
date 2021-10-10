@@ -2235,6 +2235,7 @@
     "primalmagic.ritual.warning.channel_interrupt.empty": "The channeling of a required offering has been interrupted!",
     "primalmagic.ritual.warning.prop_interrupt": "The activation of the required prop %1$s has been interrupted!",
     "primalmagic.ritual.warning.prop_interrupt.empty": "The activation of a required prop has been interrupted!",
+    "primalmagic.ritual.warning.obstructed": "The area above the ritual altar is obstructed",
     "primalmagic.ritual.info.started": "Ritual started!",
     "primalmagic.ritual.info.complete": "Ritual complete!",
     "primalmagic.ritual.info.canceled": "Ritual canceled",

@@ -8,6 +8,7 @@ v0.0.18-alpha
 * Added workaround for translucent textures not rendering under Fabulous graphics settings
 * The Hellish Chain ability now only triggers from attacks that actually do damage
 * Add extra audio-visual effects to active ritual altars
+* The Ritual Altar now requires two empty blocks above it to start a ritual
 
 v0.0.17-alpha
 -------------
