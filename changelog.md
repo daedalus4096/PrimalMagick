@@ -10,6 +10,7 @@ v0.0.18-alpha
 * Add extra audio-visual effects to active ritual altars
 * The Ritual Altar now requires two empty blocks above it to start a ritual
 * Fix clumping of mana cost widgets on arcane workbench screen
+* Increased affinities of glowstone blocks
 
 v0.0.17-alpha
 -------------

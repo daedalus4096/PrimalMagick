@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "target": "minecraft:glowstone",
-  "set": {
-    "sun": 20,
-    "infernal": 5
-  }
-}

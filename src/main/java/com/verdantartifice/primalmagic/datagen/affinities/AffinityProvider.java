@@ -266,7 +266,6 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.SOUL_SOIL).base(Items.SOUL_SAND).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BASALT).base(Items.STONE).add(Source.INFERNAL, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SOUL_TORCH).base(Items.TORCH).add(Source.INFERNAL, 5).remove(Source.SUN, 5).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.GLOWSTONE).set(Source.SUN, 20).set(Source.INFERNAL, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.INFESTED_STONE).base(Items.STONE).add(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.INFESTED_COBBLESTONE).base(Items.COBBLESTONE).add(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.INFESTED_STONE_BRICKS).base(Items.STONE_BRICKS).add(Source.BLOOD, 2).build(consumer);
