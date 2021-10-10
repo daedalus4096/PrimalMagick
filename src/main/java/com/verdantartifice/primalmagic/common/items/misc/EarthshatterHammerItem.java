@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagic.common.items.misc;
 
+import java.util.Random;
+
 import com.verdantartifice.primalmagic.PrimalMagic;
 
 import net.minecraft.world.item.Item;
@@ -14,6 +16,8 @@ import net.minecraftforge.common.Tags;
  * @author Daedalus4096
  */
 public class EarthshatterHammerItem extends Item {
+    protected static final Random RNG = new Random();
+    
     public EarthshatterHammerItem() {
         super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).durability(255).rarity(Rarity.UNCOMMON));
     }
@@ -22,7 +26,7 @@ public class EarthshatterHammerItem extends Item {
     public ItemStack getContainerItem(ItemStack stack) {
         if (this.hasContainerItem(stack)) {
             ItemStack newStack = stack.copy();
-            newStack.setDamageValue(stack.getDamageValue() + 1);
+            newStack.hurt(1, RNG, null);
             return newStack;
         } else {
             return ItemStack.EMPTY;
