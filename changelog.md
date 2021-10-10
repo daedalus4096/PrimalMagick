@@ -5,6 +5,7 @@ v0.0.18-alpha
 * Fix Unbreaking enchant interaction with Earthshatter Hammer
 * Made ritual warning messages more descriptive about missing offerings and props
 * Fix bug reseting arcane recipe book data on player death or return from the End
+* Added workaround for translucent textures not rendering under Fabulous graphics settings
 
 v0.0.17-alpha
 -------------

@@ -49,7 +49,7 @@ public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucible
         
         @SuppressWarnings("deprecation")
         TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(WATER_TEXTURE);
-        VertexConsumer builder = bufferIn.getBuffer(RenderType.translucent());
+        VertexConsumer builder = bufferIn.getBuffer(RenderType.solid());
         Matrix4f matrix = matrixStackIn.last().pose();
         builder.vertex(matrix, 0.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU0(), sprite.getV1()).uv2(0, 240).normal(1, 0, 0).endVertex();
         builder.vertex(matrix, 1.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU1(), sprite.getV1()).uv2(0, 240).normal(1, 0, 0).endVertex();

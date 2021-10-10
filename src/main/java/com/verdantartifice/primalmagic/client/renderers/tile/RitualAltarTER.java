@@ -105,17 +105,18 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
 
             @SuppressWarnings("deprecation")
             TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(ManaFontTER.TEXTURE);
-            VertexConsumer builder = buffer.getBuffer(RenderType.translucent());
+            VertexConsumer builder = buffer.getBuffer(RenderType.solid());  // FIXME Revert to translucent once Fabulous graphics bug is fixed
             
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 2.5D, 0.5D);
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the indicator like a shulker bullet
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the orb like a shulker bullet
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(Mth.cos(ticks * 0.1F) * 180.0F));
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(ticks * 0.15F) * 360.0F));
             this.renderCube(builder, matrixStack, ds, r, g, b, 1.0F, sprite);
             
-            matrixStack.scale(1.5F, 1.5F, 1.5F);
-            this.renderCube(builder, matrixStack, ds, r, g, b, 0.5F, sprite);
+            // FIXME Uncomment once Fabulous graphics bug is fixed
+//            matrixStack.scale(1.5F, 1.5F, 1.5F);
+//            this.renderCube(builder, matrixStack, ds, r, g, b, 0.5F, sprite);
             
             matrixStack.popPose();
         }
