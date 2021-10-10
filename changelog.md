@@ -1,3 +1,7 @@
+v0.0.18-alpha
+-------------
+* Clarified research requirement text for Polymorph spell payload
+
 v0.0.17-alpha
 -------------
 * Allow Earthshatter Hammers to be repaired with iron ingots
