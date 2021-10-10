@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.fx.OfferingChannelPacket;
+import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagic.common.rituals.AbstractRitualStep;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
@@ -97,6 +98,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class RitualAltarTileEntity extends TileInventoryPM implements IInteractWithWand {
     protected static final float MIN_STABILITY = -100.0F;
     protected static final float MAX_STABILITY = 25.0F;
+    protected static final int RITUAL_SOUND_LENGTH = 58;
     private static final Logger LOGGER = LogManager.getLogger();
     
     protected final WeightedRandomBag<Mishap> mishaps;
@@ -301,6 +303,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         entity.ticksExisted++;
 
         if (entity.active) {
+            entity.doEffects();
             entity.activeCount++;
         }
         if (entity.active && entity.activeCount % 10 == 0 && !level.isClientSide) {
@@ -369,6 +372,12 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     @Override
     public void onWandUseTick(ItemStack wandStack, Level level, Player player, Vec3 targetPos, int count) {
         // Do nothing; ritual altars don't support wand channeling
+    }
+    
+    protected void doEffects() {
+        if (!this.level.isClientSide && this.activeCount % RITUAL_SOUND_LENGTH == 0) {
+            PacketHandler.sendToAllAround(new PlayClientSoundPacket(SoundsPM.RITUAL.get(), 1.0F, 1.0F), this.level.dimension(), this.getBlockPos(), 16.0D);
+        }
     }
     
     protected boolean startCraft(ItemStack wandStack, Player player) {

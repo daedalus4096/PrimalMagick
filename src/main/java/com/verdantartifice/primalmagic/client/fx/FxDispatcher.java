@@ -131,6 +131,25 @@ public class FxDispatcher {
         }
     }
     
+    public void ritualGlow(BlockPos pos, int color) {
+        Minecraft mc = Minecraft.getInstance();
+        Level world = this.getWorld();
+        Random rng = world.random;
+
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+
+        int count = (10 + rng.nextInt(6));
+        for (int index = 0; index < count; index++) {
+            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), pos.getX() + rng.nextDouble(), pos.getY() + 1.0D, pos.getZ() + rng.nextDouble(), 0.0D, 0.075D, 0.0D);
+            if (p != null) {
+                p.setColor(r, g, b);
+            }
+        }
+    }
+    
     public void teleportArrival(double x, double y, double z) {
         // Show a cluster of particles at the point where a player arrives from a teleport spell; similar to Ender Pearl effect
         Level world = getWorld();

@@ -5,6 +5,7 @@ import java.awt.Color;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.tiles.rituals.RitualAltarTileEntity;
 
 import net.minecraft.client.Minecraft;
@@ -119,6 +120,8 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
 //            this.renderCube(builder, matrixStack, ds, r, g, b, 0.5F, sprite);
             
             matrixStack.popPose();
+            
+            FxDispatcher.INSTANCE.ritualGlow(tileEntityIn.getBlockPos(), 0xFFFFFF);
         }
     }
 }
