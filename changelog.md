@@ -3,6 +3,7 @@ v0.0.18-alpha
 * Clarified research requirement text for Polymorph spell payload
 * Allow players to eat Ambrosia even while full
 * Fix Unbreaking enchant interaction with Earthshatter Hammer
+* Made ritual warning messages more descriptive about missing offerings and props
 
 v0.0.17-alpha
 -------------

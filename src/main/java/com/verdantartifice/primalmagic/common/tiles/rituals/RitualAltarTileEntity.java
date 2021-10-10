@@ -85,6 +85,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of a ritual altar tile entity.  Provides the core functionality for the corresponding
@@ -430,7 +431,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             if (block instanceof IRitualPropBlock) {
                 IRitualPropBlock propBlock = (IRitualPropBlock)block;
                 if (propBlock.isUniversal() && !propBlock.isPropActivated(propState, this.level, propPos)) {
-                    propSteps.add(new UniversalRitualStep(propPos));
+                    propSteps.add(new UniversalRitualStep(propPos, block.getRegistryName()));
                 }
             }
         }
@@ -615,7 +616,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         } else if (step.getType() == RitualStepType.PROP) {
             return this.doPropStep(recipe, ((RecipeRitualStep)step).getIndex());
         } else if (step.getType() == RitualStepType.UNIVERSAL_PROP) {
-            return this.doUniversalPropStep(((UniversalRitualStep)step).getPos());
+            UniversalRitualStep uStep = (UniversalRitualStep)step;
+            return this.doUniversalPropStep(uStep.getPos(), uStep.getExpectedId());
         } else {
             LOGGER.warn("Invalid ritual step type {}", step.getType());
             return false;
@@ -643,7 +645,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             
             // If no match was found, warn the player the first time then check again in a second
             if (!this.skipWarningMessage && this.getActivePlayer() != null) {
-                this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_offering"), false);
+                if (requiredOffering.isEmpty()) {
+                    this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_offering.empty"), false);                    
+                } else {
+                    this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_offering", requiredOffering.getItems()[0].getHoverName()), false);
+                }
                 this.skipWarningMessage = true;
             }
             this.nextCheckCount = this.activeCount + 20;
@@ -673,7 +679,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 // If the channel was interrupted, add an instability spike and start looking again
                 this.channeledOfferingPos = null;
                 if (this.getActivePlayer() != null) {
-                    this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.channel_interrupt"), false);
+                    if (requiredOffering.isEmpty()) {
+                        this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.channel_interrupt.empty"), false);
+                    } else {
+                        this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.channel_interrupt", requiredOffering.getItems()[0].getHoverName()), false);
+                    }
                     this.skipWarningMessage = true;
                 }
                 this.addStability(Mth.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
@@ -700,7 +710,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 
                 // If no match was found, warn the player the first time
                 if (!this.skipWarningMessage && this.getActivePlayer() != null) {
-                    this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_prop"), false);
+                    if (requiredProp.hasNoMatchingBlocks()) {
+                        this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_prop.empty"), false);
+                    } else {
+                        this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_prop", requiredProp.getMatchingBlocks()[0].getName()), false);
+                    }
                     this.skipWarningMessage = true;
                 }
             } else {
@@ -709,7 +723,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 if ( !(block instanceof IRitualPropBlock) || 
                      !requiredProp.test(block) ||
                      !((IRitualPropBlock)block).isBlockSaltPowered(this.level, this.awaitedPropPos) ) {
-                    this.onPropInterrupted(block, propState);
+                    this.onPropInterrupted(block, propState, requiredProp.getMatchingBlocks()[0].getRegistryName());
                 }
             }
             this.nextCheckCount = this.activeCount + 20;
@@ -717,7 +731,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         return false;
     }
     
-    protected boolean doUniversalPropStep(BlockPos propPos) {
+    protected boolean doUniversalPropStep(BlockPos propPos, ResourceLocation expectedId) {
         if (this.activeCount >= this.nextCheckCount) {
             if (this.awaitedPropPos == null) {
                 // Open the prop block if it's valid
@@ -730,7 +744,12 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 
                 // If no match was found, warn the player the first time
                 if (!this.skipWarningMessage && this.getActivePlayer() != null) {
-                    this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_prop"), false);
+                    Block stepBlock = ForgeRegistries.BLOCKS.getValue(expectedId);
+                    if (stepBlock == null) {
+                        this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_prop.empty"), false);
+                    } else {
+                        this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.missing_prop", stepBlock.getName()), false);
+                    }
                     this.skipWarningMessage = true;
                 }
             } else {
@@ -739,7 +758,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 if ( !(block instanceof IRitualPropBlock) ||
                      !((IRitualPropBlock)block).isUniversal() ||
                      !((IRitualPropBlock)block).isBlockSaltPowered(this.level, this.awaitedPropPos) ) {
-                    this.onPropInterrupted(block, propState);
+                    this.onPropInterrupted(block, propState, expectedId);
                 }
             }
             this.nextCheckCount = this.activeCount + 20;
@@ -764,10 +783,16 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         return false;
     }
     
-    protected void onPropInterrupted(Block block, BlockState propState) {
+    protected void onPropInterrupted(Block block, BlockState propState, ResourceLocation expectedId) {
+        Block expectedProp = ForgeRegistries.BLOCKS.getValue(expectedId);
+        
         // If contact with the prop was lost, add an instability spike and start looking again
         if (this.getActivePlayer() != null) {
-            this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.prop_interrupt"), false);
+            if (expectedProp == null) {
+                this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.prop_interrupt.empty"), false);
+            } else {
+                this.getActivePlayer().displayClientMessage(new TranslatableComponent("primalmagic.ritual.warning.prop_interrupt", expectedProp.getName()), false);
+            }
             this.skipWarningMessage = true;
         }
         if (block instanceof IRitualPropBlock) {
