@@ -422,6 +422,13 @@ public class PlayerEvents {
             LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
         }
         
+        try {
+            CompoundTag nbtRecipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
+            PrimalMagicCapabilities.getArcaneRecipeBook(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getPlayer().level.getRecipeManager());
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
+        }
+        
         event.getOriginal().invalidateCaps();   // FIXME Remove when the reviveCaps call is removed
     }
     

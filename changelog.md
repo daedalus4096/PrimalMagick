@@ -4,6 +4,7 @@ v0.0.18-alpha
 * Allow players to eat Ambrosia even while full
 * Fix Unbreaking enchant interaction with Earthshatter Hammer
 * Made ritual warning messages more descriptive about missing offerings and props
+* Fix bug reseting arcane recipe book data on player death or return from the End
 
 v0.0.17-alpha
 -------------
