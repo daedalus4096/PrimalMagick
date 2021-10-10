@@ -1,6 +1,7 @@
 v0.0.18-alpha
 -------------
 * Clarified research requirement text for Polymorph spell payload
+* Allow players to eat Ambrosia even while full
 
 v0.0.17-alpha
 -------------
