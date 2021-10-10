@@ -3,6 +3,7 @@
   "values": [
     "primalmagic:rock_salt_ore",
     "primalmagic:quartz_ore",
-    "primalmagic:primalite_block"
+    "primalmagic:primalite_block",
+    "primalmagic:salt_block"
   ]
 }

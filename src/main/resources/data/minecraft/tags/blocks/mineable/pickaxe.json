@@ -106,6 +106,8 @@
     "primalmagic:quartz_ore",
     "primalmagic:primalite_block",
     "primalmagic:hexium_block",
-    "primalmagic:hallowsteel_block"
+    "primalmagic:hallowsteel_block",
+    "primalmagic:ignyx_block",
+    "primalmagic:salt_block"
   ]
 }

@@ -1171,6 +1171,14 @@ public class Recipes extends RecipeProvider {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.ROCK_SALT.get()), ItemsPM.REFINED_SALT.get(), 0.2F, 200)
             .unlockedBy("has_rock_salt", has(ItemsPM.ROCK_SALT.get()))
             .save(consumer);
+        ShapelessRecipeBuilder.shapeless(ItemsPM.SALT_BLOCK.get())
+            .requires(ItemsPM.REFINED_SALT.get(), 9)
+            .unlockedBy("has_salt", has(ItemsPM.REFINED_SALT.get()))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(ItemsPM.REFINED_SALT.get(), 9)
+            .requires(ItemsPM.SALT_BLOCK.get())
+            .unlockedBy("has_salt_block", has(ItemsPM.SALT_BLOCK.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "refined_salt_from_salt_block"));
         ShapelessRecipeBuilder.shapeless(ItemsPM.SALTED_BAKED_POTATO.get())
             .requires(ItemsPM.REFINED_SALT.get())
             .requires(Items.BAKED_POTATO)

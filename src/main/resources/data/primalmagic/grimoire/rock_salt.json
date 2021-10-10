@@ -12,6 +12,8 @@
       "recipes": [
         "primalmagic:refined_salt",
         "primalmagic:rock_salt_from_smelting",
+        "primalmagic:salt_block",
+        "primalmagic:refined_salt_from_salt_block",
         "primalmagic:salted_baked_potato",
         "primalmagic:salted_beetroot_soup",
         "primalmagic:salted_cooked_beef",

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primalmagic:salt_block"
+    }
+  ],
+  "result": {
+    "item": "primalmagic:refined_salt",
+    "count": 9
+  }
+}

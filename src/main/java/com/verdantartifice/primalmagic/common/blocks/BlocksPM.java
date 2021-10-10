@@ -329,6 +329,7 @@ public class BlocksPM {
     public static final RegistryObject<Block> HEXIUM_BLOCK = BLOCKS.register("hexium_block", () -> new Block(Block.Properties.of(Material.METAL).strength(7.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<Block> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new Block(Block.Properties.of(Material.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<Block> IGNYX_BLOCK = BLOCKS.register("ignyx_block", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(5.0F, 6.0F)));
+    public static final RegistryObject<Block> SALT_BLOCK = BLOCKS.register("salt_block", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(3.0F, 3.0F)));
 
     // Helper functions for block properties
     protected static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {

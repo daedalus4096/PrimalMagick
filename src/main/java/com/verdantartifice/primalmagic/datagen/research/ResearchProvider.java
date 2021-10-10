@@ -1242,6 +1242,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("ROCK_SALT", discipline).hidden().parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.REFINED_SALT.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "rock_salt_from_smelting"))
+                    .recipe(ItemsPM.SALT_BLOCK.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "refined_salt_from_salt_block"))
                     .recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
                     .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
                     .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).build())
