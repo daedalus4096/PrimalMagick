@@ -315,7 +315,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemTagMaterialBuilder.tag("forge", "leather", true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BOOK, true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag("forge", "gems/quartz", true).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.WHITE_WOOL, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("minecraft", "wool", true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag("forge", "ingots/iron", true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("wand_tinkering").requiredResearch("BASIC_SORCERY")

@@ -12,6 +12,7 @@ v0.0.18-alpha
 * Fix clumping of mana cost widgets on arcane workbench screen
 * Increased affinities of glowstone blocks
 * Add storage block for Refined Salt
+* Allow the Trade research project to accept any color of wool
 
 v0.0.17-alpha
 -------------
