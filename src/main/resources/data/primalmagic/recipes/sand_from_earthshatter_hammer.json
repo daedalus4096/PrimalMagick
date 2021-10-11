@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primalmagic:earthshatter_hammer"
+    },
+    {
+      "tag": "forge:gravel"
+    }
+  ],
+  "result": {
+    "item": "minecraft:sand"
+  }
+}

@@ -268,7 +268,9 @@ public class ResearchProvider implements DataProvider {
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_ore"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_ore"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "iron_ingot_from_grit_smelting"))
-                    .recipe(new ResourceLocation(PrimalMagic.MODID, "gold_ingot_from_grit_smelting")).recipe(new ResourceLocation(PrimalMagic.MODID, "copper_ingot_from_grit_smelting")).build())
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "gold_ingot_from_grit_smelting")).recipe(new ResourceLocation(PrimalMagic.MODID, "copper_ingot_from_grit_smelting"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "cobblestone_from_earthshatter_hammer")).recipe(new ResourceLocation(PrimalMagic.MODID, "gravel_from_earthshatter_hammer"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "sand_from_earthshatter_hammer")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUNLAMP", discipline).parent("EXPERT_MANAWEAVING").parent("PRIMALITE")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.LANTERN).requiredKnowledge(KnowledgeType.THEORY, 1).build())

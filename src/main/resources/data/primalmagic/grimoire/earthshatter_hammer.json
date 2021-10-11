@@ -33,7 +33,10 @@
         "primalmagic:copper_grit_from_raw_metal",
         "primalmagic:iron_ingot_from_grit_smelting",
         "primalmagic:gold_ingot_from_grit_smelting",
-        "primalmagic:copper_ingot_from_grit_smelting"
+        "primalmagic:copper_ingot_from_grit_smelting",
+        "primalmagic:cobblestone_from_earthshatter_hammer",
+        "primalmagic:gravel_from_earthshatter_hammer",
+        "primalmagic:sand_from_earthshatter_hammer"
       ]
     }
   ],

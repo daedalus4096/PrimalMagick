@@ -15,6 +15,7 @@ v0.0.18-alpha
 * Allow the Trade research project to accept any color of wool
 * Grant affinities to music discs
 * Increased drop rate of the Essence Thief enchantment
+* Allow the Earthshatter Hammer to break down stone
 
 v0.0.17-alpha
 -------------

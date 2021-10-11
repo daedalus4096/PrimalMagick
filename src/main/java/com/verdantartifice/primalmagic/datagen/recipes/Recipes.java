@@ -1725,6 +1725,21 @@ public class Recipes extends RecipeProvider {
             .group("earthshatter_hammer_grit")
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_raw_metal"));
+        ShapelessRecipeBuilder.shapeless(Items.COBBLESTONE)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(Tags.Items.STONE)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "cobblestone_from_earthshatter_hammer"));
+        ShapelessRecipeBuilder.shapeless(Items.GRAVEL)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(Tags.Items.COBBLESTONE)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "gravel_from_earthshatter_hammer"));
+        ShapelessRecipeBuilder.shapeless(Items.SAND)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(Tags.Items.GRAVEL)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, new ResourceLocation(PrimalMagic.MODID, "sand_from_earthshatter_hammer"));
     }
 
     protected void registerMineralRecipes(Consumer<FinishedRecipe> consumer) {
