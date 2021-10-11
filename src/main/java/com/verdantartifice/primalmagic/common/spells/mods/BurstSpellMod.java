@@ -143,7 +143,7 @@ public class BurstSpellMod extends AbstractSpellMod {
     }
     
     protected int getBlastPower(SpellPackage spell, ItemStack spellSource) {
-        return this.getModdedPropertyValue("power", spell, spellSource);
+        return 5 + (3 * this.getModdedPropertyValue("power", spell, spellSource));
     }
 
     @Override

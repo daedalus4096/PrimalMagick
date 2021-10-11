@@ -17,6 +17,7 @@ v0.0.18-alpha
 * Increased drop rate of the Essence Thief enchantment
 * Allow the Earthshatter Hammer to break down stone
 * Attack spells now do half damage against other players
+* Greatly increased penetration of Burst spells at all Power ranks
 
 v0.0.17-alpha
 -------------
