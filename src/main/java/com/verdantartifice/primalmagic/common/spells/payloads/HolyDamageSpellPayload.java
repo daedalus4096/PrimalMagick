@@ -49,7 +49,7 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload {
 
     @Override
     protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
-        float damage = this.getBaseDamage(spell, spellSource);
+        float damage = super.getTotalDamage(target, spell, spellSource);
         if (target instanceof LivingEntity && ((LivingEntity)target).isInvertedHealAndHarm()) {
             // Deal double damage to undead entities
             damage += damage;

@@ -16,6 +16,7 @@ v0.0.18-alpha
 * Grant affinities to music discs
 * Increased drop rate of the Essence Thief enchantment
 * Allow the Earthshatter Hammer to break down stone
+* Attack spells now do half damage against other players
 
 v0.0.17-alpha
 -------------

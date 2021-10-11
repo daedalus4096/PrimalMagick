@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.spells.SpellProperty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -55,7 +56,12 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
      * @return the total amount of damage to be done
      */
     protected float getTotalDamage(Entity target, SpellPackage spell, @Nullable ItemStack spellSource) {
-        return this.getBaseDamage(spell, spellSource);
+        float damage = this.getBaseDamage(spell, spellSource);
+        if (target instanceof Player) {
+            // Spells do half damage against other players
+            damage *= 0.5F;
+        }
+        return damage;
     }
     
     protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
