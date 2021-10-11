@@ -14,6 +14,7 @@ v0.0.18-alpha
 * Add storage block for Refined Salt
 * Allow the Trade research project to accept any color of wool
 * Grant affinities to music discs
+* Increased drop rate of the Essence Thief enchantment
 
 v0.0.17-alpha
 -------------

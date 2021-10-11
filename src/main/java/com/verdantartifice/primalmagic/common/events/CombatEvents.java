@@ -209,7 +209,7 @@ public class CombatEvents {
                         bag.add(source, amount);
                     }
                 }
-                for (int index = 0; index < instance.getAmplifier() + 1; index++) {
+                for (int index = 0; index < 2 * (instance.getAmplifier() + 1); index++) {
                     Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), EssenceItem.getEssence(EssenceType.DUST, bag.getRandom(entity.getRandom())));
                 }
             }
