@@ -13,6 +13,7 @@ v0.0.18-alpha
 * Increased affinities of glowstone blocks
 * Add storage block for Refined Salt
 * Allow the Trade research project to accept any color of wool
+* Grant affinities to music discs
 
 v0.0.17-alpha
 -------------
