@@ -18,6 +18,7 @@ v0.0.18-alpha
 * Allow the Earthshatter Hammer to break down stone
 * Attack spells now do half damage against other players
 * Greatly increased penetration of Burst spells at all Power ranks
+* Increment to Forge version 37.0.78
 
 v0.0.17-alpha
 -------------
