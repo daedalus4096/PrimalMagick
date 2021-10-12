@@ -2,16 +2,19 @@ package com.verdantartifice.primalmagic.common.blocks.trees;
 
 import java.util.Random;
 
+import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraftforge.common.util.Constants;
 
@@ -22,10 +25,11 @@ import net.minecraftforge.common.util.Constants;
  */
 public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
+    public static final BooleanProperty PULSING = BooleanProperty.create("pulsing");
     
     public AbstractPhasingLogBlock(Block stripped, Block.Properties properties) {
         super(stripped, properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(PHASE, TimePhase.FULL));
+        this.registerDefaultState(this.defaultBlockState().setValue(PHASE, TimePhase.FULL).setValue(PULSING, false));
     }
     
     /**
@@ -36,10 +40,17 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
      */
     public abstract TimePhase getCurrentPhase(LevelAccessor world);
     
+    /**
+     * Get the color of particles to be emitted during animation if this block is pulsing.
+     * 
+     * @return the intended particle color
+     */
+    public abstract int getPulseColor();
+    
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(PHASE);
+        builder.add(PHASE, PULSING);
     }
     
     @Override
@@ -75,5 +86,13 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     @Override
     protected BlockState getDefaultStrippedState(BlockState originalState) {
         return super.getDefaultStrippedState(originalState).setValue(PHASE, originalState.getValue(PHASE));
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+        super.animateTick(state, level, pos, random);
+        if (state.getValue(PULSING) && random.nextInt(4) == 0) {
+            FxDispatcher.INSTANCE.spellImpact(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 2, this.getPulseColor());
+        }
     }
 }
