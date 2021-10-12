@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagic.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagic.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagic.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagic.common.items.misc.SeascribePenItem;
+import com.verdantartifice.primalmagic.common.items.misc.ForbiddenSourceGainItem;
 import com.verdantartifice.primalmagic.common.items.tools.ForbiddenBowItem;
 import com.verdantartifice.primalmagic.common.items.tools.ForbiddenSwordItem;
 import com.verdantartifice.primalmagic.common.items.tools.ForbiddenTridentItem;
@@ -466,6 +467,7 @@ public class ItemsPM {
     // Register knowledge items
     public static final RegistryObject<KnowledgeGainItem> OBSERVATION_NOTES = ITEMS.register("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<KnowledgeGainItem> THEORY_NOTES = ITEMS.register("theory_notes", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ForbiddenSourceGainItem> BLOOD_NOTES = ITEMS.register("blood_notes", () -> new ForbiddenSourceGainItem(Source.BLOOD, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

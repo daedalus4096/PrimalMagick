@@ -678,6 +678,7 @@
     "item.primalmagic.dream_vision_talisman": "Dream Vision Talisman",
     "item.primalmagic.observation_notes": "Field Research Report",
     "item.primalmagic.theory_notes": "Arcane Thesis",
+    "item.primalmagic.blood_notes": "Blood-Scrawled Ravings",
     "item.primalmagic.ignyx": "Ignyx",
     
     "entity.primalmagic.treefolk": "Treefolk",
@@ -753,6 +754,7 @@
     "tooltip.primalmagic.dream_vision_talisman.inactive": "Inactive",
     "tooltip.primalmagic.observation_notes": "Use to gain an arcane observation",
     "tooltip.primalmagic.theory_notes": "Use to gain an arcane theory",
+    "tooltip.primalmagic.forbidden_source_item": "Dare you decipher it?",
     
     "effect.primalmagic.flying": "Flying",
     "effect.primalmagic.polymorph": "Polymorph",
@@ -1827,6 +1829,7 @@
     "event.primalmagic.env_sun": "You have felt the scorching rays of the desert sun and feel enlightened.",
     "event.primalmagic.env_moon": "You have seen the moonlight filtered through the forest trees and feel enlightened.",
     "event.primalmagic.discover_source.blood": "Your blood sings with power as warmth spreads through you. You believe this may be a new primal source!",
+    "event.primalmagic.discover_source.blood.alternate": "Your blood sings with power as you absorb the knowledge within. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.infernal": "The fiery aura of this place seethes with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.void": "The emptiness of this place nonetheless teems with magic. You believe this may be a new primal source!",
     "event.primalmagic.discover_source.hallowed": "This object seems to radiate a magic of harmony. You believe this may be a new primal source!",
@@ -1844,6 +1847,7 @@
     "event.primalmagic.wand_transform_hint": "That seemed to do something, but apparently it wasn't enough. Try waving your wand for longer!",
     "event.primalmagic.knowledge_item.success": "You have gained valuable arcane knowledge",
     "event.primalmagic.knowledge_item.failure": "You can't make heads or tails of this",
+    "event.primalmagic.knowledge_item.already_known": "You already know everything this has to teach",
     
     "primalmagic.dream_journal.title": "Dream Journal",
     "primalmagic.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagic.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",

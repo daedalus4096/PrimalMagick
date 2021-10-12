@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.loot.conditions.MatchBlockTag;
+import com.verdantartifice.primalmagic.common.loot.modifiers.BloodNotesModifier;
 import com.verdantartifice.primalmagic.common.loot.modifiers.BloodyFleshModifier;
 import com.verdantartifice.primalmagic.common.loot.modifiers.BonusNuggetModifier;
 import com.verdantartifice.primalmagic.common.loot.modifiers.BountyFarmingModifier;
@@ -71,5 +72,16 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         MatchBlockTag.builder(Tags.Blocks.ORES_QUARTZ).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.5F, ItemsPM.QUARTZ_NUGGET.get()));
+        this.add("blood_notes_high", LootModifierSerializersPM.BLOOD_NOTES.get(), new BloodNotesModifier(
+                new LootItemCondition[] {
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }));
+        this.add("blood_notes_low", LootModifierSerializersPM.BLOOD_NOTES.get(), new BloodNotesModifier(
+                new LootItemCondition[] {
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOOD_NOTES_LOW)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.25F, 0.25F).build()
+                }));
     }
 }

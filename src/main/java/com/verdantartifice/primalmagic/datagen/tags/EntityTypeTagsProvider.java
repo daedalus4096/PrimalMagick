@@ -49,6 +49,8 @@ public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
         
         this.tag(EntityTypeTagsPM.DROPS_BLOODY_FLESH).add(EntityType.EVOKER, EntityType.ILLUSIONER, EntityType.PILLAGER, EntityType.VILLAGER, EntityType.VINDICATOR,
                 EntityType.WANDERING_TRADER, EntityType.WITCH);
+        this.tag(EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH).add(EntityType.EVOKER);
+        this.tag(EntityTypeTagsPM.DROPS_BLOOD_NOTES_LOW).add(EntityType.ILLUSIONER, EntityType.WITCH);
     }
 
     @Override

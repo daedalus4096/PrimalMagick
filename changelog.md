@@ -1,6 +1,7 @@
 v0.0.19-alpha
 -------------
 * Allow Heartwood to rarely drop from Sunwood or Moonwood trees
+* Add Blood-Scrawled Ravings, a means to unlock the Blood source for the faint of heart
 
 v0.0.18-alpha
 -------------
