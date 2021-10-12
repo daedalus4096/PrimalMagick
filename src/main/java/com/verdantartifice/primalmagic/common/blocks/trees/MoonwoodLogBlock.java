@@ -1,11 +1,10 @@
 package com.verdantartifice.primalmagic.common.blocks.trees;
 
 import com.verdantartifice.primalmagic.common.blockstates.properties.TimePhase;
+import com.verdantartifice.primalmagic.common.sources.Source;
 
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -17,14 +16,16 @@ import net.minecraft.world.level.material.MaterialColor;
  */
 public class MoonwoodLogBlock extends AbstractPhasingLogBlock {
     public MoonwoodLogBlock(Block stripped) {
-        super(stripped, Block.Properties.of(Material.WOOD, (state) -> {
-            // TODO Use different color for bark vs top?
-            return state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? MaterialColor.METAL : MaterialColor.METAL;
-        }).strength(2.0F).randomTicks().noOcclusion().sound(SoundType.WOOD));
+        super(stripped, Block.Properties.of(Material.WOOD, MaterialColor.METAL).strength(2.0F).randomTicks().noOcclusion().sound(SoundType.WOOD));
     }
 
     @Override
     public TimePhase getCurrentPhase(LevelAccessor world) {
         return TimePhase.getMoonPhase(world);
+    }
+
+    @Override
+    public int getPulseColor() {
+        return Source.MOON.getColor();
     }
 }

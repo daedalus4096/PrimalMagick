@@ -1,3 +1,7 @@
+v0.0.19-alpha
+-------------
+* Allow Heartwood to rarely drop from Sunwood or Moonwood trees
+
 v0.0.18-alpha
 -------------
 * Clarified research requirement text for Polymorph spell payload
