@@ -85,7 +85,7 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     
     @Override
     protected BlockState getDefaultStrippedState(BlockState originalState) {
-        return super.getDefaultStrippedState(originalState).setValue(PHASE, originalState.getValue(PHASE));
+        return super.getDefaultStrippedState(originalState).setValue(PHASE, originalState.getValue(PHASE)).setValue(PULSING, originalState.getValue(PULSING));
     }
 
     @Override
