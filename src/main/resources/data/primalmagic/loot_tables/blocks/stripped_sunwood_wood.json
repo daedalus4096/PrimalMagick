@@ -16,6 +16,26 @@
         }
       ],
       "functions": []
+    },
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "primalmagic:heartwood"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "primalmagic:stripped_sunwood_wood",
+          "properties": {
+            "pulsing": "true"
+          }
+        }
+      ],
+      "functions": []
     }
   ]
 }

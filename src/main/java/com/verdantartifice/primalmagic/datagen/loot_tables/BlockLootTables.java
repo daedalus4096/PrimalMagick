@@ -152,10 +152,10 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
     }
     
     private void registerSunwoodLootTables() {
-        this.registerBasicTable(BlocksPM.SUNWOOD_LOG.get());
-        this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_LOG.get());
-        this.registerBasicTable(BlocksPM.SUNWOOD_WOOD.get());
-        this.registerBasicTable(BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
+        this.registerPulsingLogTable(BlocksPM.SUNWOOD_LOG.get());
+        this.registerPulsingLogTable(BlocksPM.STRIPPED_SUNWOOD_LOG.get());
+        this.registerPulsingLogTable(BlocksPM.SUNWOOD_WOOD.get());
+        this.registerPulsingLogTable(BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
         this.registerLeavesTable(BlocksPM.SUNWOOD_LEAVES.get(), BlocksPM.SUNWOOD_SAPLING.get(), new float[] { 0.1F, 0.125F, 0.16666667F, 0.2F });
         this.registerBasicTable(BlocksPM.SUNWOOD_SAPLING.get());
         this.registerBasicTable(BlocksPM.SUNWOOD_PLANKS.get());
@@ -165,10 +165,10 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
     }
     
     private void registerMoonwoodLootTables() {
-        this.registerBasicTable(BlocksPM.MOONWOOD_LOG.get());
-        this.registerBasicTable(BlocksPM.STRIPPED_MOONWOOD_LOG.get());
-        this.registerBasicTable(BlocksPM.MOONWOOD_WOOD.get());
-        this.registerBasicTable(BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
+        this.registerPulsingLogTable(BlocksPM.MOONWOOD_LOG.get());
+        this.registerPulsingLogTable(BlocksPM.STRIPPED_MOONWOOD_LOG.get());
+        this.registerPulsingLogTable(BlocksPM.MOONWOOD_WOOD.get());
+        this.registerPulsingLogTable(BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
         this.registerLeavesTable(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.MOONWOOD_SAPLING.get(), new float[] { 0.1F, 0.125F, 0.16666667F, 0.2F });
         this.registerBasicTable(BlocksPM.MOONWOOD_SAPLING.get());
         this.registerBasicTable(BlocksPM.MOONWOOD_PLANKS.get());
