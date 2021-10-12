@@ -24,4 +24,5 @@ public class LootModifierSerializersPM {
     public static final RegistryObject<GlobalLootModifierSerializer<BonusNuggetModifier>> BONUS_NUGGET = SERIALIZERS.register("bonus_nugget", BonusNuggetModifier.Serializer::new);
     public static final RegistryObject<GlobalLootModifierSerializer<BountyFarmingModifier>> BOUNTY_FARMING = SERIALIZERS.register("bounty_farming", BountyFarmingModifier.Serializer::new);
     public static final RegistryObject<GlobalLootModifierSerializer<BountyFishingModifier>> BOUNTY_FISHING = SERIALIZERS.register("bounty_fishing", BountyFishingModifier.Serializer::new);
+    public static final RegistryObject<GlobalLootModifierSerializer<BloodNotesModifier>> BLOOD_NOTES = SERIALIZERS.register("blood_notes", BloodNotesModifier.Serializer::new);
 }
