@@ -19,6 +19,7 @@ public class ItemMaterialBuilder {
     protected boolean matchNBT = false;
     protected double weight = 1D;
     protected int afterCrafting = 0;
+    protected double bonusReward = 0.0D;
     protected CompoundResearchKey requiredResearch;
     
     protected ItemMaterialBuilder(@Nonnull ItemStack stack, boolean consumed) {
@@ -74,6 +75,11 @@ public class ItemMaterialBuilder {
         return this;
     }
     
+    public ItemMaterialBuilder bonusReward(double bonus) {
+        this.bonusReward = bonus;
+        return this;
+    }
+    
     private void validate() {
         if (this.stack == null || this.stack == ItemStack.EMPTY) {
             throw new IllegalStateException("No item stack for item project material");
@@ -84,11 +90,14 @@ public class ItemMaterialBuilder {
         if (this.afterCrafting < 0) {
             throw new IllegalStateException("Invalid minimum craft count value for item project material");
         }
+        if (this.bonusReward < 0.0D) {
+            throw new IllegalStateException("Invalid bonus reward for item project material");
+        }
     }
     
     public IFinishedProjectMaterial build() {
         this.validate();
-        return new ItemMaterialBuilder.Result(this.stack, this.consumed, this.matchNBT, this.weight, this.afterCrafting, this.requiredResearch);
+        return new ItemMaterialBuilder.Result(this.stack, this.consumed, this.matchNBT, this.weight, this.afterCrafting, this.bonusReward, this.requiredResearch);
     }
     
     public static class Result implements IFinishedProjectMaterial {
@@ -97,14 +106,16 @@ public class ItemMaterialBuilder {
         protected final boolean matchNBT;
         protected final double weight;
         protected final int afterCrafting;
+        protected final double bonusReward;
         protected final CompoundResearchKey requiredResearch;
         
-        public Result(@Nonnull ItemStack stack, boolean consumed, boolean matchNBT, double weight, int afterCrafting, @Nullable CompoundResearchKey requiredResearch) {
+        public Result(@Nonnull ItemStack stack, boolean consumed, boolean matchNBT, double weight, int afterCrafting, double bonusReward, @Nullable CompoundResearchKey requiredResearch) {
             this.stack = stack.copy();
             this.consumed = consumed;
             this.matchNBT = matchNBT;
             this.weight = weight;
             this.afterCrafting = afterCrafting;
+            this.bonusReward = bonusReward;
             this.requiredResearch = requiredResearch == null ? null : requiredResearch.copy();
         }
 
@@ -117,6 +128,9 @@ public class ItemMaterialBuilder {
             json.addProperty("weight", this.weight);
             if (this.afterCrafting > 0) {
                 json.addProperty("after_crafting", this.afterCrafting);
+            }
+            if (this.bonusReward > 0.0D) {
+                json.addProperty("bonus_reward", this.bonusReward);
             }
             if (this.requiredResearch != null) {
                 json.addProperty("required_research", this.requiredResearch.toString());

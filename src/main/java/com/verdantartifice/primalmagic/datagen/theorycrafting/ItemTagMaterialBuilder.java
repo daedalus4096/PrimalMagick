@@ -15,6 +15,7 @@ public class ItemTagMaterialBuilder {
     protected final int quantity;
     protected final boolean consumed;
     protected double weight = 1D;
+    protected double bonusReward = 0.0D;
     protected CompoundResearchKey requiredResearch;
 
     protected ItemTagMaterialBuilder(@Nonnull ResourceLocation tagName, int quantity, boolean consumed) {
@@ -57,6 +58,11 @@ public class ItemTagMaterialBuilder {
         return requiredResearch(CompoundResearchKey.parse(keyStr));
     }
     
+    public ItemTagMaterialBuilder bonusReward(double bonus) {
+        this.bonusReward = bonus;
+        return this;
+    }
+    
     private void validate() {
         if (this.tagName == null) {
             throw new IllegalStateException("No tag name for item tag project material");
@@ -67,11 +73,14 @@ public class ItemTagMaterialBuilder {
         if (this.weight <= 0D) {
             throw new IllegalStateException("Invalid weight for item tag project material");
         }
+        if (this.bonusReward < 0.0D) {
+            throw new IllegalStateException("Invalid bonus reward for item tag project material");
+        }
     }
     
     public IFinishedProjectMaterial build() {
         this.validate();
-        return new ItemTagMaterialBuilder.Result(this.tagName, this.quantity, this.consumed, this.weight, this.requiredResearch);
+        return new ItemTagMaterialBuilder.Result(this.tagName, this.quantity, this.consumed, this.weight, this.bonusReward, this.requiredResearch);
     }
     
     public static class Result implements IFinishedProjectMaterial {
@@ -79,13 +88,15 @@ public class ItemTagMaterialBuilder {
         protected final int quantity;
         protected final boolean consumed;
         protected final double weight;
+        protected final double bonusReward;
         protected final CompoundResearchKey requiredResearch;
         
-        public Result(@Nonnull ResourceLocation tagName, int quantity, boolean consumed, double weight, @Nullable CompoundResearchKey requiredResearch) {
+        public Result(@Nonnull ResourceLocation tagName, int quantity, boolean consumed, double weight, double bonusReward, @Nullable CompoundResearchKey requiredResearch) {
             this.tagName = tagName;
             this.quantity = quantity;
             this.consumed = consumed;
             this.weight = weight;
+            this.bonusReward = bonusReward;
             this.requiredResearch = requiredResearch == null ? null : requiredResearch.copy();
         }
 
@@ -96,6 +107,9 @@ public class ItemTagMaterialBuilder {
             json.addProperty("quantity", this.quantity);
             json.addProperty("consumed", this.consumed);
             json.addProperty("weight", this.weight);
+            if (this.bonusReward > 0.0D) {
+                json.addProperty("bonus_reward", this.bonusReward);
+            }
             if (this.requiredResearch != null) {
                 json.addProperty("required_research", this.requiredResearch.toString());
             }

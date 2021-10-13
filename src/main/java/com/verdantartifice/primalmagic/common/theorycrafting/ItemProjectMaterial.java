@@ -146,6 +146,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         material.matchNBT = this.matchNBT;
         material.selected = this.selected;
         material.weight = this.weight;
+        material.bonusReward = this.bonusReward;
         material.afterCrafting = this.afterCrafting;
         if (this.requiredResearch != null) {
             material.requiredResearch = this.requiredResearch.copy();
@@ -188,6 +189,9 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
             ItemProjectMaterial retVal = new ItemProjectMaterial(stack, consumed, matchNbt);
             
             retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
+            if (json.has("bonus_reward")) {
+                retVal.setBonusReward(json.getAsJsonPrimitive("bonus_reward").getAsDouble());
+            }
             if (json.has("after_crafting")) {
                 retVal.setAfterCrafting(json.getAsJsonPrimitive("after_crafting").getAsInt());
             }
@@ -202,6 +206,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         public ItemProjectMaterial fromNetwork(FriendlyByteBuf buf) {
             ItemProjectMaterial material = new ItemProjectMaterial(buf.readItem(), buf.readBoolean(), buf.readBoolean());
             material.setWeight(buf.readDouble());
+            material.setBonusReward(buf.readDouble());
             material.setAfterCrafting(buf.readVarInt());
             CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
             if (research != null) {
@@ -216,6 +221,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
             buf.writeBoolean(material.consumed);
             buf.writeBoolean(material.matchNBT);
             buf.writeDouble(material.weight);
+            buf.writeDouble(material.bonusReward);
             buf.writeVarInt(material.afterCrafting);
             buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
         }

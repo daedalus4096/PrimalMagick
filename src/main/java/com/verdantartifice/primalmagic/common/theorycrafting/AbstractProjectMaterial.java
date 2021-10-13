@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -22,6 +23,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 public abstract class AbstractProjectMaterial implements INBTSerializable<CompoundTag> {
     protected boolean selected;
     protected double weight;
+    protected double bonusReward;
     protected CompoundResearchKey requiredResearch;
     
     protected AbstractProjectMaterial() {
@@ -34,6 +36,7 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
         retVal.putString("MaterialType", this.getMaterialType());
         retVal.putBoolean("Selected", this.isSelected());
         retVal.putDouble("Weight", this.getWeight());
+        retVal.putDouble("BonusReward", this.bonusReward);
         if (this.requiredResearch != null) {
             retVal.putString("RequiredResearch", this.getRequiredResearch().toString());
         }
@@ -44,6 +47,7 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
     public void deserializeNBT(CompoundTag nbt) {
         this.selected = nbt.getBoolean("Selected");
         this.weight = nbt.getDouble("Weight");
+        this.bonusReward = nbt.getDouble("BonusReward");
         this.requiredResearch = nbt.contains("RequiredResearch") ? CompoundResearchKey.parse(nbt.getString("RequiredResearch")) : null;
     }
     
@@ -93,6 +97,10 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
         return this.weight;
     }
     
+    public double getBonusReward() {
+        return this.bonusReward;
+    }
+    
     @Nullable
     public CompoundResearchKey getRequiredResearch() {
         return this.requiredResearch;
@@ -104,6 +112,10 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
     
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+    
+    public void setBonusReward(double bonus) {
+        this.bonusReward = bonus;
     }
     
     public void setRequiredResearch(@Nonnull CompoundResearchKey key) {
@@ -126,14 +138,7 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((requiredResearch == null) ? 0 : requiredResearch.hashCode());
-        result = prime * result + (selected ? 1231 : 1237);
-        long temp;
-        temp = Double.doubleToLongBits(weight);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return Objects.hash(bonusReward, requiredResearch, selected, weight);
     }
 
     @Override
@@ -145,15 +150,8 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
         if (getClass() != obj.getClass())
             return false;
         AbstractProjectMaterial other = (AbstractProjectMaterial) obj;
-        if (requiredResearch == null) {
-            if (other.requiredResearch != null)
-                return false;
-        } else if (!requiredResearch.equals(other.requiredResearch))
-            return false;
-        if (selected != other.selected)
-            return false;
-        if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
-            return false;
-        return true;
+        return Double.doubleToLongBits(bonusReward) == Double.doubleToLongBits(other.bonusReward)
+                && Objects.equals(requiredResearch, other.requiredResearch) && selected == other.selected
+                && Double.doubleToLongBits(weight) == Double.doubleToLongBits(other.weight);
     }
 }
