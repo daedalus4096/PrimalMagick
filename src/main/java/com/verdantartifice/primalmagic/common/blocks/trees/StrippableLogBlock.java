@@ -6,12 +6,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -33,7 +33,7 @@ public class StrippableLogBlock extends RotatedPillarBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (this.strippedVersion != null && player != null && player.getItemInHand(handIn).getItem() instanceof AxeItem) {
+        if (this.strippedVersion != null && player != null && player.getItemInHand(handIn).canPerformAction(ToolActions.AXE_STRIP)) {
             // If the player right-clicks on the log with an axe, replace this block with its stripped version
             worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isClientSide) {
