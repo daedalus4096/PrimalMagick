@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -58,7 +59,7 @@ public class ProjectTemplate {
     }
     
     @Nullable
-    public Project initialize(Player player) {
+    public Project initialize(ServerPlayer player) {
         if (this.requiredResearch != null && !this.requiredResearch.isKnownByStrict(player)) {
             // Fail initialization to prevent use if the player doesn't have the right research unlocked
             return null;
@@ -98,10 +99,10 @@ public class ProjectTemplate {
     }
     
     @Nonnull
-    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions(Player player) {
+    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions(ServerPlayer player) {
         WeightedRandomBag<AbstractProjectMaterial> retVal = new WeightedRandomBag<>();
         for (AbstractProjectMaterial material : this.materialOptions) {
-            if (material.hasRequiredResearch(player)) {
+            if (material.isAllowedInProject(player)) {
                 retVal.add(material, material.getWeight());
             }
         }

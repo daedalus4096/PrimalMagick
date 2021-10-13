@@ -17,7 +17,7 @@ import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -60,7 +60,7 @@ public class TheorycraftManager {
     }
     
     @Nonnull
-    public static Project createRandomProject(@Nonnull Player player, @Nonnull BlockPos tablePos) {
+    public static Project createRandomProject(@Nonnull ServerPlayer player, @Nonnull BlockPos tablePos) {
         WeightedRandomBag<ProjectTemplate> templateBag = new WeightedRandomBag<>();
         for (ProjectTemplate template : TEMPLATES.values()) {
             templateBag.add(template, 1);

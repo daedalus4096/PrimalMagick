@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -107,6 +108,10 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
     
     public void setRequiredResearch(@Nonnull CompoundResearchKey key) {
         this.requiredResearch = key.copy();
+    }
+    
+    public boolean isAllowedInProject(ServerPlayer player) {
+        return this.hasRequiredResearch(player);
     }
     
     public boolean hasRequiredResearch(Player player) {

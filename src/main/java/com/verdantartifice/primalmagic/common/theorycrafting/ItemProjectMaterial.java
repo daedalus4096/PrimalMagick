@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.common.theorycrafting;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -13,6 +14,8 @@ import com.verdantartifice.primalmagic.common.util.ItemUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -32,12 +35,14 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
     protected ItemStack stack;
     protected boolean consumed;
     protected boolean matchNBT;
+    protected int afterCrafting;
     
     public ItemProjectMaterial() {
         super();
         this.stack = ItemStack.EMPTY;
         this.consumed = false;
         this.matchNBT = false;
+        this.afterCrafting = 0;
     }
     
     public ItemProjectMaterial(@Nonnull ItemStack stack, boolean consumed, boolean matchNBT) {
@@ -45,6 +50,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         this.stack = stack;
         this.consumed = consumed;
         this.matchNBT = matchNBT;
+        this.afterCrafting = 0;
     }
     
     public ItemProjectMaterial(@Nonnull ItemStack stack, boolean consumed) {
@@ -65,6 +71,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         tag.put("Stack", this.stack.save(new CompoundTag()));
         tag.putBoolean("Consumed", this.consumed);
         tag.putBoolean("MatchNBT", this.matchNBT);
+        tag.putInt("AfterCrafting", this.afterCrafting);
         return tag;
     }
     
@@ -74,6 +81,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         this.stack = ItemStack.of(nbt.getCompound("Stack"));
         this.consumed = nbt.getBoolean("Consumed");
         this.matchNBT = nbt.getBoolean("MatchNBT");
+        this.afterCrafting = nbt.getInt("AfterCrafting");
     }
 
     @Override
@@ -112,6 +120,19 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         return this.consumed;
     }
     
+    public int getAfterCrafting() {
+        return this.afterCrafting;
+    }
+    
+    public void setAfterCrafting(int after) {
+        this.afterCrafting = after;
+    }
+    
+    @Override
+    public boolean isAllowedInProject(ServerPlayer player) {
+        return super.isAllowedInProject(player) && player.getStats().getValue(Stats.ITEM_CRAFTED.get(this.getItemStack().getItem())) >= this.getAfterCrafting();
+    }
+
     @Override
     public void toNetwork(FriendlyByteBuf buf) {
         SERIALIZER.toNetwork(buf, this);
@@ -125,6 +146,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         material.matchNBT = this.matchNBT;
         material.selected = this.selected;
         material.weight = this.weight;
+        material.afterCrafting = this.afterCrafting;
         if (this.requiredResearch != null) {
             material.requiredResearch = this.requiredResearch.copy();
         }
@@ -135,9 +157,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + (consumed ? 1231 : 1237);
-        result = prime * result + (matchNBT ? 1231 : 1237);
-        result = prime * result + ((stack == null) ? 0 : stack.hashCode());
+        result = prime * result + Objects.hash(afterCrafting, consumed, matchNBT, stack);
         return result;
     }
 
@@ -150,16 +170,8 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         if (getClass() != obj.getClass())
             return false;
         ItemProjectMaterial other = (ItemProjectMaterial) obj;
-        if (consumed != other.consumed)
-            return false;
-        if (matchNBT != other.matchNBT)
-            return false;
-        if (stack == null) {
-            if (other.stack != null)
-                return false;
-        } else if (!ItemStack.matches(this.stack, other.stack))
-            return false;
-        return true;
+        return afterCrafting == other.afterCrafting && consumed == other.consumed && matchNBT == other.matchNBT
+                && Objects.equals(stack, other.stack);
     }
 
     public static class Serializer implements IProjectMaterialSerializer<ItemProjectMaterial> {
@@ -176,6 +188,9 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
             ItemProjectMaterial retVal = new ItemProjectMaterial(stack, consumed, matchNbt);
             
             retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
+            if (json.has("after_crafting")) {
+                retVal.setAfterCrafting(json.getAsJsonPrimitive("after_crafting").getAsInt());
+            }
             if (json.has("required_research")) {
                 retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
             }
@@ -187,6 +202,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         public ItemProjectMaterial fromNetwork(FriendlyByteBuf buf) {
             ItemProjectMaterial material = new ItemProjectMaterial(buf.readItem(), buf.readBoolean(), buf.readBoolean());
             material.setWeight(buf.readDouble());
+            material.setAfterCrafting(buf.readVarInt());
             CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
             if (research != null) {
                 material.setRequiredResearch(research);
@@ -200,6 +216,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
             buf.writeBoolean(material.consumed);
             buf.writeBoolean(material.matchNBT);
             buf.writeDouble(material.weight);
+            buf.writeVarInt(material.afterCrafting);
             buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
         }
     }

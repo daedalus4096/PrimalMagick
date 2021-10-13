@@ -18,6 +18,7 @@ public class ItemMaterialBuilder {
     protected final boolean consumed;
     protected boolean matchNBT = false;
     protected double weight = 1D;
+    protected int afterCrafting = 0;
     protected CompoundResearchKey requiredResearch;
     
     protected ItemMaterialBuilder(@Nonnull ItemStack stack, boolean consumed) {
@@ -68,6 +69,11 @@ public class ItemMaterialBuilder {
         return requiredResearch(CompoundResearchKey.parse(keyStr)); 
     }
     
+    public ItemMaterialBuilder afterCrafting(int after) {
+        this.afterCrafting = after;
+        return this;
+    }
+    
     private void validate() {
         if (this.stack == null || this.stack == ItemStack.EMPTY) {
             throw new IllegalStateException("No item stack for item project material");
@@ -75,11 +81,14 @@ public class ItemMaterialBuilder {
         if (this.weight <= 0D) {
             throw new IllegalStateException("Invalid weight for item project material");
         }
+        if (this.afterCrafting < 0) {
+            throw new IllegalStateException("Invalid minimum craft count value for item project material");
+        }
     }
     
     public IFinishedProjectMaterial build() {
         this.validate();
-        return new ItemMaterialBuilder.Result(this.stack, this.consumed, this.matchNBT, this.weight, this.requiredResearch);
+        return new ItemMaterialBuilder.Result(this.stack, this.consumed, this.matchNBT, this.weight, this.afterCrafting, this.requiredResearch);
     }
     
     public static class Result implements IFinishedProjectMaterial {
@@ -87,13 +96,15 @@ public class ItemMaterialBuilder {
         protected final boolean consumed;
         protected final boolean matchNBT;
         protected final double weight;
+        protected final int afterCrafting;
         protected final CompoundResearchKey requiredResearch;
         
-        public Result(@Nonnull ItemStack stack, boolean consumed, boolean matchNBT, double weight, @Nullable CompoundResearchKey requiredResearch) {
+        public Result(@Nonnull ItemStack stack, boolean consumed, boolean matchNBT, double weight, int afterCrafting, @Nullable CompoundResearchKey requiredResearch) {
             this.stack = stack.copy();
             this.consumed = consumed;
             this.matchNBT = matchNBT;
             this.weight = weight;
+            this.afterCrafting = afterCrafting;
             this.requiredResearch = requiredResearch == null ? null : requiredResearch.copy();
         }
 
@@ -104,6 +115,9 @@ public class ItemMaterialBuilder {
             json.addProperty("consumed", this.consumed);
             json.addProperty("match_nbt", this.matchNBT);
             json.addProperty("weight", this.weight);
+            if (this.afterCrafting > 0) {
+                json.addProperty("after_crafting", this.afterCrafting);
+            }
             if (this.requiredResearch != null) {
                 json.addProperty("required_research", this.requiredResearch.toString());
             }
