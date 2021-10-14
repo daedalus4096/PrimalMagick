@@ -50,6 +50,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
+      "after_crafting": 5,
       "required_research": "t_discover_blood"
     },
     {
@@ -58,6 +59,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
+      "after_crafting": 5,
       "required_research": "t_discover_infernal"
     },
     {
@@ -66,6 +68,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
+      "after_crafting": 5,
       "required_research": "t_discover_void"
     },
     {
@@ -74,6 +77,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
+      "after_crafting": 5,
       "required_research": "t_discover_hallowed"
     },
     {
@@ -81,35 +85,45 @@
       "stack": "primalmagic:essence_crystal_earth",
       "consumed": true,
       "match_nbt": false,
-      "weight": 1.0
+      "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25
     },
     {
       "type": "item",
       "stack": "primalmagic:essence_crystal_sea",
       "consumed": true,
       "match_nbt": false,
-      "weight": 1.0
+      "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25
     },
     {
       "type": "item",
       "stack": "primalmagic:essence_crystal_sky",
       "consumed": true,
       "match_nbt": false,
-      "weight": 1.0
+      "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25
     },
     {
       "type": "item",
       "stack": "primalmagic:essence_crystal_sun",
       "consumed": true,
       "match_nbt": false,
-      "weight": 1.0
+      "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25
     },
     {
       "type": "item",
       "stack": "primalmagic:essence_crystal_moon",
       "consumed": true,
       "match_nbt": false,
-      "weight": 1.0
+      "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25
     },
     {
       "type": "item",
@@ -117,6 +131,8 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25,
       "required_research": "t_discover_blood"
     },
     {
@@ -125,6 +141,8 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25,
       "required_research": "t_discover_infernal"
     },
     {
@@ -133,6 +151,8 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25,
       "required_research": "t_discover_void"
     },
     {
@@ -141,6 +161,8 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
+      "bonus_reward": 0.25,
       "required_research": "t_discover_hallowed"
     }
   ]
