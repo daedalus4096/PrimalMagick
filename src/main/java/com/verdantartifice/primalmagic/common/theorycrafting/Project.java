@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge.KnowledgeType;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -28,16 +30,16 @@ public class Project implements INBTSerializable<CompoundTag> {
     protected ResourceLocation templateKey;
     protected List<AbstractProjectMaterial> activeMaterials = new ArrayList<>();
     protected double baseSuccessChance;
-    protected int rewardPoints;
+    protected double baseRewardMultiplier;
     protected ResourceLocation aidBlock;
     
     public Project() {}
     
-    public Project(@Nonnull ResourceLocation templateKey, @Nonnull List<AbstractProjectMaterial> materials, double baseSuccessChance, int rewardPoints, @Nullable ResourceLocation aidBlock) {
+    public Project(@Nonnull ResourceLocation templateKey, @Nonnull List<AbstractProjectMaterial> materials, double baseSuccessChance, double baseRewardMultiplier, @Nullable ResourceLocation aidBlock) {
         this.templateKey = templateKey;
         this.activeMaterials = materials;
         this.baseSuccessChance = baseSuccessChance;
-        this.rewardPoints = rewardPoints;
+        this.baseRewardMultiplier = baseRewardMultiplier;
         this.aidBlock = aidBlock;
     }
 
@@ -46,7 +48,7 @@ public class Project implements INBTSerializable<CompoundTag> {
         CompoundTag retVal = new CompoundTag();
         retVal.putString("TemplateKey", this.templateKey.toString());
         retVal.putDouble("BaseSuccessChance", this.baseSuccessChance);
-        retVal.putInt("RewardPoints", this.rewardPoints);
+        retVal.putDouble("BaseRewardMultiplier", this.baseRewardMultiplier);
         if (this.aidBlock != null) {
             retVal.putString("AidBlock", this.aidBlock.toString());
         }
@@ -64,7 +66,7 @@ public class Project implements INBTSerializable<CompoundTag> {
     public void deserializeNBT(CompoundTag nbt) {
         this.templateKey = new ResourceLocation(nbt.getString("TemplateKey"));
         this.baseSuccessChance = nbt.getDouble("BaseSuccessChance");
-        this.rewardPoints = nbt.getInt("RewardPoints");
+        this.baseRewardMultiplier = nbt.getDouble("BaseRewardMultiplier");
         
         this.aidBlock = null;
         if (nbt.contains("AidBlock")) {
@@ -139,7 +141,7 @@ public class Project implements INBTSerializable<CompoundTag> {
     }
     
     public int getTheoryPointReward() {
-        return this.rewardPoints;
+        return (int)(KnowledgeType.THEORY.getProgression() * (this.baseRewardMultiplier + this.getMaterials().stream().filter(m -> m.isSelected()).mapToDouble(m -> m.getBonusReward()).sum()));
     }
     
     @Nullable

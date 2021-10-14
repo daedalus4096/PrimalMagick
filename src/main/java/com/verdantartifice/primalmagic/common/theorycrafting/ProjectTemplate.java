@@ -79,7 +79,7 @@ public class ProjectTemplate {
         }
         
         // Create new initialized project
-        return new Project(this.key, materials, this.getBaseSuccessChance(player), this.getTheoryPointReward(), this.aidBlock);
+        return new Project(this.key, materials, this.getBaseSuccessChance(player), this.rewardMultiplier, this.aidBlock);
     }
     
     protected int getRequiredMaterialCount(Player player) {
@@ -107,10 +107,6 @@ public class ProjectTemplate {
             }
         }
         return retVal;
-    }
-    
-    protected int getTheoryPointReward() {
-        return (int)(KnowledgeType.THEORY.getProgression() * this.rewardMultiplier);
     }
     
     public static class Serializer implements IProjectTemplateSerializer {
