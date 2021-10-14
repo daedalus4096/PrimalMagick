@@ -153,6 +153,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.research.clear();
         this.stages.clear();
         this.flags.clear();
+        this.project = null;
     }
     
     @Override
