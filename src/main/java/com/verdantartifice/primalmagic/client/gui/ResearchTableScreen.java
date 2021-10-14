@@ -166,6 +166,9 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         this.clearWidgets();
         this.completeProjectButton = null;
         
+        // Render theory progress widget
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, IPlayerKnowledge.KnowledgeType.THEORY));
+        
         if (this.project == null && this.menu.isWritingReady()) {
             if (this.progressing) {
                 // Render starting widget
@@ -220,9 +223,8 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
             }
         }
         
-        // Render knowledge total widgets
+        // Render observation progress widget
         this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 11, this.topPos + 116, IPlayerKnowledge.KnowledgeType.OBSERVATION));
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, IPlayerKnowledge.KnowledgeType.THEORY));
     }
     
     /**
