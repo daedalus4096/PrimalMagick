@@ -86,6 +86,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
       "bonus_reward": 0.125,
       "required_research": "SHARD_SYNTHESIS"
     },
@@ -95,6 +96,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
       "bonus_reward": 0.125,
       "required_research": "SHARD_SYNTHESIS"
     },
@@ -104,6 +106,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
       "bonus_reward": 0.125,
       "required_research": "SHARD_SYNTHESIS"
     },
@@ -113,6 +116,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
       "bonus_reward": 0.125,
       "required_research": "SHARD_SYNTHESIS"
     },
@@ -122,6 +126,7 @@
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
+      "after_crafting": 5,
       "bonus_reward": 0.125,
       "required_research": "SHARD_SYNTHESIS"
     },
