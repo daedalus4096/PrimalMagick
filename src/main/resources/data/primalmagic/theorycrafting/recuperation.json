@@ -63,7 +63,8 @@
       "stack": "minecraft:tnt",
       "consumed": true,
       "match_nbt": false,
-      "weight": 0.5
+      "weight": 0.5,
+      "bonus_reward": 0.125
     }
   ]
 }

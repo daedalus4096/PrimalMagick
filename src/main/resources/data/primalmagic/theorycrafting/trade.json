@@ -7,7 +7,8 @@
       "name": "forge:gems/emerald",
       "quantity": 1,
       "consumed": true,
-      "weight": 10.0
+      "weight": 10.0,
+      "bonus_reward": 0.125
     },
     {
       "type": "tag",

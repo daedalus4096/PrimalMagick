@@ -15,14 +15,16 @@
       "name": "forge:storage_blocks/gold",
       "quantity": 1,
       "consumed": true,
-      "weight": 0.5
+      "weight": 0.5,
+      "bonus_reward": 0.25
     },
     {
       "type": "item",
       "stack": "minecraft:raw_gold_block",
       "consumed": true,
       "match_nbt": false,
-      "weight": 0.5
+      "weight": 0.5,
+      "bonus_reward": 0.25
     },
     {
       "type": "item",

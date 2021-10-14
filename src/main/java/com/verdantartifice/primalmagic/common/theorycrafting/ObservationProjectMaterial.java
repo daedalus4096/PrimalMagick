@@ -91,6 +91,7 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
         material.consumed = this.consumed;
         material.selected = this.selected;
         material.weight = this.weight;
+        material.bonusReward = this.bonusReward;
         if (this.requiredResearch != null) {
             material.requiredResearch = this.requiredResearch.copy();
         }
@@ -135,6 +136,9 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
             ObservationProjectMaterial retVal = new ObservationProjectMaterial(count, consumed);
             
             retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
+            if (json.has("bonus_reward")) {
+                retVal.setBonusReward(json.getAsJsonPrimitive("bonus_reward").getAsDouble());
+            }
             if (json.has("required_research")) {
                 retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
             }
@@ -146,6 +150,7 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
         public ObservationProjectMaterial fromNetwork(FriendlyByteBuf buf) {
             ObservationProjectMaterial material = new ObservationProjectMaterial(buf.readVarInt(), buf.readBoolean());
             material.setWeight(buf.readDouble());
+            material.setBonusReward(buf.readDouble());
             CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
             if (research != null) {
                 material.setRequiredResearch(research);
@@ -158,6 +163,7 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
             buf.writeVarInt(material.count);
             buf.writeBoolean(material.consumed);
             buf.writeDouble(material.weight);
+            buf.writeDouble(material.bonusReward);
             buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
         }
     }

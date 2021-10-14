@@ -21,7 +21,8 @@
       "type": "experience",
       "levels": 3,
       "consumed": true,
-      "weight": 5.0
+      "weight": 5.0,
+      "bonus_reward": 0.125
     },
     {
       "type": "item",

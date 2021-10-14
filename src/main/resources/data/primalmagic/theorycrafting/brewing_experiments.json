@@ -50,7 +50,8 @@
       "stack": "minecraft:rabbit_foot",
       "consumed": true,
       "match_nbt": false,
-      "weight": 0.5
+      "weight": 0.5,
+      "bonus_reward": 0.125
     },
     {
       "type": "item",
@@ -106,14 +107,16 @@
       "stack": "minecraft:turtle_helmet;1;{Damage:0}",
       "consumed": true,
       "match_nbt": false,
-      "weight": 0.5
+      "weight": 0.5,
+      "bonus_reward": 0.125
     },
     {
       "type": "item",
       "stack": "minecraft:phantom_membrane",
       "consumed": true,
       "match_nbt": false,
-      "weight": 0.5
+      "weight": 0.5,
+      "bonus_reward": 0.125
     },
     {
       "type": "observation",

@@ -91,6 +91,7 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
         retVal.consumed = this.consumed;
         retVal.selected = this.selected;
         retVal.weight = this.weight;
+        retVal.bonusReward = this.bonusReward;
         if (this.requiredResearch != null) {
             retVal.requiredResearch = this.requiredResearch.copy();
         }
@@ -135,6 +136,9 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
             ExperienceProjectMaterial retVal = new ExperienceProjectMaterial(levels, consumed);
             
             retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
+            if (json.has("bonus_reward")) {
+                retVal.setBonusReward(json.getAsJsonPrimitive("bonus_reward").getAsDouble());
+            }
             if (json.has("required_research")) {
                 retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
             }
@@ -146,6 +150,7 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
         public ExperienceProjectMaterial fromNetwork(FriendlyByteBuf buf) {
             ExperienceProjectMaterial material = new ExperienceProjectMaterial(buf.readVarInt(), buf.readBoolean());
             material.setWeight(buf.readDouble());
+            material.setBonusReward(buf.readDouble());
             CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
             if (research != null) {
                 material.setRequiredResearch(research);
@@ -158,6 +163,7 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial {
             buf.writeVarInt(material.levels);
             buf.writeBoolean(material.consumed);
             buf.writeDouble(material.weight);
+            buf.writeDouble(material.bonusReward);
             buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
         }
     }

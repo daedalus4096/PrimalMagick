@@ -2,6 +2,8 @@ v0.0.19-alpha
 -------------
 * Allow Heartwood to rarely drop from Sunwood or Moonwood trees
 * Add Blood-Scrawled Ravings, a means to unlock the Blood source for the faint of heart
+* Certain advanced research project materials are no longer selected until having been crafted a few times
+* Certain research project materials now grant bonus theory progress
 
 v0.0.18-alpha
 -------------
