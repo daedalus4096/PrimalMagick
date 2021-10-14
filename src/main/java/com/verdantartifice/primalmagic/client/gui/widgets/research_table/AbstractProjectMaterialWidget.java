@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagic.client.gui.widgets.research_table;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -10,11 +11,13 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.theorycrafting.AbstractProjectMaterial;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -28,10 +31,12 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
 
     protected boolean complete;
     protected boolean consumed;
+    protected boolean hasBonus;
     
     public AbstractProjectMaterialWidget(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
         super(x, y, 16, 16, TextComponent.EMPTY);
         Minecraft mc = Minecraft.getInstance();
+        this.hasBonus = material.getBonusReward() > 0.0D;
         this.consumed = material.isConsumed();
         this.complete = material.isSatisfied(mc.player, this.consumed ? Collections.emptySet() : surroundings);
     }
@@ -55,7 +60,14 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         }
         if (this.isHovered()) {
             // Render tooltip
-            GuiUtils.renderCustomTooltip(matrixStack, this.getHoverText(), this.x, this.y);
+            List<Component> tooltip = new ArrayList<>(this.getHoverText());
+            if (this.consumed) {
+                tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            }
+            if (this.hasBonus) {
+                tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            }
+            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
         }
     }
     

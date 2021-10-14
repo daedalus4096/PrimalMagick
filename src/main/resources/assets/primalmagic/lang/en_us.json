@@ -755,6 +755,8 @@
     "tooltip.primalmagic.observation_notes": "Use to gain an arcane observation",
     "tooltip.primalmagic.theory_notes": "Use to gain an arcane theory",
     "tooltip.primalmagic.forbidden_source_item": "Dare you decipher it?",
+    "tooltip.primalmagic.research_table.material.consumed": "This material will be consumed",
+    "tooltip.primalmagic.research_table.material.has_bonus": "This material will grant bonus research progress",
     
     "effect.primalmagic.flying": "Flying",
     "effect.primalmagic.polymorph": "Polymorph",
