@@ -172,7 +172,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
             return false;
         ItemProjectMaterial other = (ItemProjectMaterial) obj;
         return afterCrafting == other.afterCrafting && consumed == other.consumed && matchNBT == other.matchNBT
-                && Objects.equals(stack, other.stack);
+                && ItemStack.matches(stack, other.stack);
     }
 
     public static class Serializer implements IProjectMaterialSerializer<ItemProjectMaterial> {
