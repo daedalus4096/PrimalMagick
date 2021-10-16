@@ -2,6 +2,6 @@
   "type": "enchantment_bonus",
   "target": "minecraft:blast_protection",
   "multiplier": {
-    "earth": 1
+    "moon": 1
   }
 }

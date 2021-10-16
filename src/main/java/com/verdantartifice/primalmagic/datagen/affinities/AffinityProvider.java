@@ -884,7 +884,7 @@ public class AffinityProvider implements DataProvider {
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.ALL_DAMAGE_PROTECTION).multiplier(Source.EARTH).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.FIRE_PROTECTION).multiplier(Source.INFERNAL).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.FALL_PROTECTION).multiplier(Source.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.BLAST_PROTECTION).multiplier(Source.EARTH).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.BLAST_PROTECTION).multiplier(Source.MOON).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.PROJECTILE_PROTECTION).multiplier(Source.SKY).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.RESPIRATION).multiplier(Source.SEA).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.AQUA_AFFINITY).multiplier(Source.SEA).build(consumer);
@@ -936,6 +936,7 @@ public class AffinityProvider implements DataProvider {
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.SOULPIERCING.get()).multiplier(Source.INFERNAL).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.ESSENCE_THIEF.get()).multiplier(Source.VOID).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.BULWARK.get()).multiplier(Source.HALLOWED).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.MAGIC_PROTECTION.get()).multiplier(Source.VOID).build(consumer);
     }
 
     @Override
