@@ -96,7 +96,7 @@ public class FollowCompanionOwnerGoal extends Goal {
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
             if (!this.entity.isLeashed() && !this.entity.isPassenger()) {
-                if (this.entity.distanceToSqr(this.owner) >= 144.0D) {
+                if (this.entity.distanceToSqr(this.owner) >= 324.0D) {
                     this.tryToTeleportNearEntity();
                 } else {
                     this.navigator.moveTo(this.owner, this.followSpeed);
