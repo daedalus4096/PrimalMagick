@@ -108,9 +108,9 @@ public class FollowCompanionOwnerGoal extends Goal {
     protected void tryToTeleportNearEntity() {
         BlockPos pos = this.owner.blockPosition();
         for (int attempts = 0; attempts < 10; attempts++) {
-            int dx = this.getRandomNumber(-3, 3);
+            int dx = this.getRandomNumber(-2, 2);
             int dy = this.getRandomNumber(-1, 1);
-            int dz = this.getRandomNumber(-3, 3);
+            int dz = this.getRandomNumber(-2, 2);
             if (this.tryToTeleportToLocation(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz)) {
                 return;
             }

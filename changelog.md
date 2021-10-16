@@ -5,6 +5,7 @@ v0.0.19-alpha
 * Certain advanced research project materials are no longer selected until having been crafted a few times
 * Certain research project materials now grant bonus theory progress
 * Increase distance before companions will attempt to teleport to their owners
+* Tighten target selection zone for companion teleportation
 
 v0.0.18-alpha
 -------------
