@@ -6,6 +6,8 @@ v0.0.19-alpha
 * Certain research project materials now grant bonus theory progress
 * Increase distance before companions will attempt to teleport to their owners
 * Tighten target selection zone for companion teleportation
+* Add Magic Protection enchantment, reducing damage taken from all magical sources
+* Change rune enchantment recipe for Blast Protection
 
 v0.0.18-alpha
 -------------

@@ -787,6 +787,7 @@
     "enchantment.primalmagic.soulpiercing": "Soulpiercing",
     "enchantment.primalmagic.essence_thief": "Essence Thief",
     "enchantment.primalmagic.bulwark": "Bulwark",
+    "enchantment.primalmagic.magic_protection": "Magic Protection",
     
     "primalmagic.wand_core.heartwood.name": "Heartwood",
     "primalmagic.wand_core.obsidian.name": "Obsidian",
@@ -2250,7 +2251,7 @@
     "rune_enchantment.text.minecraft.protection": "The Protection enchantment can be imbued through the use of Protect, Self, and Earth runes.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage.  It is incompatible with other Protection enchantments.",
     "rune_enchantment.text.minecraft.fire_protection": "The Fire Protection enchantment can be imbued through the use of Protect, Self, and Infernal runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming fire damage as well as the amount of time that the wearer is engulfed in flames.  It is incompatible with other Protection enchantments.",
     "rune_enchantment.text.minecraft.feather_falling": "The Feather Falling enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any pair of boots.  When applied, it greatly reduces all damage sustained from falling.",
-    "rune_enchantment.text.minecraft.blast_protection": "The Blast Protection enchantment can be imbued through the use of Protect, Self, and Void runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming explosion damage as well as the distance that the wearer is knocked back by explosions.  It is incompatible with other Protection enchantments.",
+    "rune_enchantment.text.minecraft.blast_protection": "The Blast Protection enchantment can be imbued through the use of Protect, Self, and Moon runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming explosion damage as well as the distance that the wearer is knocked back by explosions.  It is incompatible with other Protection enchantments.",
     "rune_enchantment.text.minecraft.projectile_protection": "The Projectile Protection enchantment can be imbued through the use of Protect, Self, and Sky runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming damage from projectiles, such as arrows.  It is incompatible with other Protection enchantments.",
     "rune_enchantment.text.minecraft.respiration": "The Respiration enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any helmet.  When applied, it increases the amount of time the wearer can remain underwater before drowning.",
     "rune_enchantment.text.minecraft.aqua_affinity": "The Aqua Affinity enchantment can be imbued through the use of Project, Item, and Sea runes.  It can be applied to any helmet.  When applied, it increases the speed at which the wearer can dig while underwater.",
@@ -2298,6 +2299,7 @@
     "rune_enchantment.text.primalmagic.soulpiercing": "The Soulpiercing enchantment can be imbued through the use of Absorb, Creature, and Infernal runes.  It can be applied to any bow or crossbow.  When applied, the first strike against a target causes it to drop soul gem slivers.",
     "rune_enchantment.text.primalmagic.essence_thief": "The Essence Thief enchantment can be imbued through the use of Summon, Item, and Void runes.  It can be applied to any sword, axe, or trident.  When applied, it steals a portion of the victim's essence, causing them to drop essence dust when slain.",
     "rune_enchantment.text.primalmagic.bulwark": "The Bulwark enchantment can be imbued through the use of Protect, Self, and Hallowed runes.  It can be applied to any shield.  When applied, it causes the wielder to take less damage from all sources while blocking, even sources that a shield could not normally protect against.",
+    "rune_enchantment.text.primalmagic.magic_protection": "The Magic Protection enchantment can be imbued through the use of Protect, Self, and Void runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming magic damage, such as from sorcerous spells.  It is incompatible with other Protection enchantments.",
     
     "concoctions.primalmagic.doses_remaining": "Doses: %1$d",
     "concoctions.primalmagic.charges_remaining": "Charges: %1$d",

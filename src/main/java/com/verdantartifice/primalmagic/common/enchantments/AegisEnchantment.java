@@ -8,7 +8,7 @@ import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
 /**
  * Definition of a rune enchantment that combines the damage reduction of the base five protection
- * enchantments.  Does not reduce burn time or explosion knockback, however.
+ * enchantments plus Magic Protection.  Does not reduce burn time or explosion knockback, however.
  * 
  * @author Daedalus4096
  */
@@ -23,7 +23,7 @@ public class AegisEnchantment extends ProtectionEnchantment {
             return 0;
         } else if (source == DamageSource.FALL) {
             return level * 3;
-        } else if (source.isFire() || source.isExplosion() || source.isProjectile()) {
+        } else if (source.isFire() || source.isExplosion() || source.isProjectile() || source.isMagic()) {
             return level * 2;
         } else {
             return level;

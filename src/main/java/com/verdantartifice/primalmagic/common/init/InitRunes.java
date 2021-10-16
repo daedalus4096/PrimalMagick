@@ -18,7 +18,7 @@ public class InitRunes {
         RuneManager.registerRuneEnchantment(Enchantments.ALL_DAMAGE_PROTECTION, Rune.PROTECT, Rune.SELF, Rune.EARTH);
         RuneManager.registerRuneEnchantment(Enchantments.FIRE_PROTECTION, Rune.PROTECT, Rune.SELF, Rune.INFERNAL);
         RuneManager.registerRuneEnchantment(Enchantments.FALL_PROTECTION, Rune.PROJECT, Rune.ITEM, Rune.SKY);
-        RuneManager.registerRuneEnchantment(Enchantments.BLAST_PROTECTION, Rune.PROTECT, Rune.SELF, Rune.VOID);
+        RuneManager.registerRuneEnchantment(Enchantments.BLAST_PROTECTION, Rune.PROTECT, Rune.SELF, Rune.MOON);
         RuneManager.registerRuneEnchantment(Enchantments.PROJECTILE_PROTECTION, Rune.PROTECT, Rune.SELF, Rune.SKY);
         RuneManager.registerRuneEnchantment(Enchantments.RESPIRATION, Rune.PROJECT, Rune.ITEM, Rune.SKY);
         RuneManager.registerRuneEnchantment(Enchantments.AQUA_AFFINITY, Rune.PROJECT, Rune.ITEM, Rune.SEA);
@@ -68,5 +68,6 @@ public class InitRunes {
         RuneManager.registerRuneEnchantment(EnchantmentsPM.SOULPIERCING.get(), Rune.ABSORB, Rune.CREATURE, Rune.INFERNAL, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "FORBIDDEN_BOW", "RUNE_ABSORB", "RUNE_CREATURE", "RUNE_INFERNAL"));
         RuneManager.registerRuneEnchantment(EnchantmentsPM.ESSENCE_THIEF.get(), Rune.SUMMON, Rune.ITEM, Rune.VOID, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "FORBIDDEN_SWORD", "RUNE_SUMMON", "RUNE_ITEM", "RUNE_VOID"));
         RuneManager.registerRuneEnchantment(EnchantmentsPM.BULWARK.get(), Rune.PROTECT, Rune.SELF, Rune.HALLOWED, CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "SACRED_SHIELD", "RUNE_PROTECT", "RUNE_SELF", "RUNE_HALLOWED"));
+        RuneManager.registerRuneEnchantment(EnchantmentsPM.MAGIC_PROTECTION.get(), Rune.PROTECT, Rune.SELF, Rune.VOID);
     }
 }
