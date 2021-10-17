@@ -1852,6 +1852,7 @@
     "event.primalmagic.knowledge_item.success": "You have gained valuable arcane knowledge",
     "event.primalmagic.knowledge_item.failure": "You can't make heads or tails of this",
     "event.primalmagic.knowledge_item.already_known": "You already know everything this has to teach",
+    "event.primalmagic.dowsing_rod.altar_stability": "Altar stability delta per tick: %1$d",
     
     "primalmagic.dream_journal.title": "Dream Journal",
     "primalmagic.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagic.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",

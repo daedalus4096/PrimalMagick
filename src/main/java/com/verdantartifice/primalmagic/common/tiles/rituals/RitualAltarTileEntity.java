@@ -300,13 +300,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         if (entity.ticksExisted == 0) {
             entity.doInventorySync();
         }
-        entity.ticksExisted++;
 
         if (entity.active) {
             entity.doEffects();
-            entity.activeCount++;
         }
-        if (entity.active && entity.activeCount % 10 == 0 && !level.isClientSide) {
+        if (entity.ticksExisted % (entity.active ? 10 : 20) == 0 && !level.isClientSide) {
             entity.scanDirty = true;
         }
         if (entity.scanDirty && !level.isClientSide) {
@@ -343,6 +341,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             }
             entity.setChanged();
             entity.syncTile(false);
+        }
+        
+        entity.ticksExisted++;
+        if (entity.active) {
+            entity.activeCount++;
         }
     }
 
@@ -837,7 +840,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         this.stability = Mth.clamp(this.stability + delta, MIN_STABILITY, MAX_STABILITY);
     }
 
-    protected float calculateStabilityDelta() {
+    public float calculateStabilityDelta() {
         float delta = 0.0F;
         
         // Deduct stability based on the active recipe
