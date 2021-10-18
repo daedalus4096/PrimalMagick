@@ -587,6 +587,17 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         }
     }
     
+    @Nullable
+    public static BlockPos getSymmetricPosition(@Nullable BlockPos altarPos, @Nullable BlockPos propPos) {
+        if (altarPos == null || propPos == null) {
+            return null;
+        } else {
+            int dx = altarPos.getX() - propPos.getX();
+            int dz = altarPos.getZ() - propPos.getZ();
+            return new BlockPos(altarPos.getX() + dx, propPos.getY(), altarPos.getZ() + dz);
+        }
+    }
+    
     protected float calculateSymmetryDelta() {
         float delta = 0.0F;
         
@@ -595,9 +606,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         toScan.addAll(this.propPositions);
         
         for (BlockPos scanPos : toScan) {
-            int dx = this.worldPosition.getX() - scanPos.getX();
-            int dz = this.worldPosition.getZ() - scanPos.getZ();
-            BlockPos symPos = new BlockPos(this.worldPosition.getX() + dx, scanPos.getY(), this.worldPosition.getZ() + dz);
+            BlockPos symPos = getSymmetricPosition(this.worldPosition, scanPos);
             Block block = this.level.getBlockState(scanPos).getBlock();
             
             if (block instanceof IRitualStabilizer) {
