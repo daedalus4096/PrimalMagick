@@ -10,6 +10,7 @@ v0.0.19-alpha
 * Change rune enchantment recipe for Blast Protection
 * Add Dowsing Rod, to provide feedback on ritual altar layouts
 * Add scan research for the Inner Demon
+* Increment to Forge version 37.0.84
 
 v0.0.18-alpha
 -------------

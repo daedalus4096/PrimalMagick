@@ -109,12 +109,6 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
     public static void tick(Level level, BlockPos pos, BlockState state, WandChargerTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        // FIXME Remove when Forge onLoad bug is fixed
-        if (entity.ticksExisted == 0) {
-            entity.doInventorySync();
-        }
-        entity.ticksExisted++;
-
         if (!level.isClientSide) {
             ItemStack inputStack = entity.items.get(0);
             ItemStack wandStack = entity.items.get(1);

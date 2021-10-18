@@ -154,16 +154,17 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         return super.save(compound);
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (!this.level.isClientSide) {
+            this.relevantResearch = assembleRelevantResearch();
+        }
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, AbstractCalcinatorTileEntity entity) {
         boolean burningAtStart = entity.isBurning();
         boolean shouldMarkDirty = false;
-        
-        // FIXME Remove when onLoad works again
-        if (entity.ticksExisted == 0 && !level.isClientSide) {
-            // Assemble relevant research keys for filter
-            entity.relevantResearch = assembleRelevantResearch();
-        }
-        entity.ticksExisted++;
         
         if (burningAtStart) {
             entity.burnTime--;

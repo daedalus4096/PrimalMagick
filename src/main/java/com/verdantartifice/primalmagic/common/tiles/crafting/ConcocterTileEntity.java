@@ -195,15 +195,16 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (!this.level.isClientSide) {
+            this.relevantResearch = assembleRelevantResearch(this.level);
+        }
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, ConcocterTileEntity entity) {
         boolean shouldMarkDirty = false;
-        
-        // FIXME Remove when onLoad works again
-        if (entity.ticksExisted == 0 && !level.isClientSide) {
-            // Assemble relevant research keys for filter
-            entity.relevantResearch = assembleRelevantResearch(level);
-        }
-        entity.ticksExisted++;
         
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands

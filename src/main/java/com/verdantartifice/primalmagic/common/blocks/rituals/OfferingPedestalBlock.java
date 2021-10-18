@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
-import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagic.common.util.VoxelShapeUtils;
 
@@ -27,8 +26,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -143,10 +140,5 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);
         }
-    }
-
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.OFFERING_PEDESTAL.get(), OfferingPedestalTileEntity::tick);
     }
 }
