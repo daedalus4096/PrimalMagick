@@ -2,15 +2,19 @@ package com.verdantartifice.primalmagic.common.tiles.rituals;
 
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of an offering pedestal tile entity.  Holds the pedestal's inventory.
@@ -20,6 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class OfferingPedestalTileEntity extends TileInventoryPM {
     protected static final int[] SLOTS = new int[] { 0 };
+    
+    protected BlockPos altarPos = null;
     
     public OfferingPedestalTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.OFFERING_PEDESTAL.get(), pos, state, 1);
@@ -37,6 +43,30 @@ public class OfferingPedestalTileEntity extends TileInventoryPM {
             entity.doInventorySync();
         }
         entity.ticksExisted++;
+    }
+
+    @Nullable
+    public BlockPos getAltarPos() {
+        return this.altarPos;
+    }
+    
+    public void setAltarPos(@Nullable BlockPos pos) {
+        this.altarPos = pos;
+        this.setChanged();
+    }
+
+    @Override
+    public void load(CompoundTag compound) {
+        super.load(compound);
+        this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
+    }
+
+    @Override
+    public CompoundTag save(CompoundTag compound) {
+        if (this.altarPos != null) {
+            compound.putLong("AltarPos", this.altarPos.asLong());
+        }
+        return super.save(compound);
     }
 
     @Override

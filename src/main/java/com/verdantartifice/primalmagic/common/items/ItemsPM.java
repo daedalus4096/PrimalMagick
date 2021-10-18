@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagic.common.items.food.ManafruitItem;
 import com.verdantartifice.primalmagic.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagic.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagic.common.items.misc.BurnableBlockItem;
+import com.verdantartifice.primalmagic.common.items.misc.DowsingRodItem;
 import com.verdantartifice.primalmagic.common.items.misc.DreamVisionTalismanItem;
 import com.verdantartifice.primalmagic.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagic.common.items.misc.EnchantedInkAndQuillItem;
@@ -463,6 +464,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> FLYING_CARPET = ITEMS.register("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<DreamVisionTalismanItem> DREAM_VISION_TALISMAN = ITEMS.register("dream_vision_talisman", DreamVisionTalismanItem::new);
     public static final RegistryObject<IgnyxItem> IGNYX = ITEMS.register("ignyx", () -> new IgnyxItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<DowsingRodItem> DOWSING_ROD = ITEMS.register("dowsing_rod", () -> new DowsingRodItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).durability(63)));
     
     // Register knowledge items
     public static final RegistryObject<KnowledgeGainItem> OBSERVATION_NOTES = ITEMS.register("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));

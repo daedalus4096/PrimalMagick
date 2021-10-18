@@ -39,6 +39,7 @@ import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSound
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagic.common.rituals.AbstractRitualStep;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
+import com.verdantartifice.primalmagic.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.rituals.Mishap;
@@ -300,13 +301,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         if (entity.ticksExisted == 0) {
             entity.doInventorySync();
         }
-        entity.ticksExisted++;
 
         if (entity.active) {
             entity.doEffects();
-            entity.activeCount++;
         }
-        if (entity.active && entity.activeCount % 10 == 0 && !level.isClientSide) {
+        if (entity.ticksExisted % (entity.active ? 10 : 20) == 0 && !level.isClientSide) {
             entity.scanDirty = true;
         }
         if (entity.scanDirty && !level.isClientSide) {
@@ -343,6 +342,11 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             }
             entity.setChanged();
             entity.syncTile(false);
+        }
+        
+        entity.ticksExisted++;
+        if (entity.active) {
+            entity.activeCount++;
         }
     }
 
@@ -567,13 +571,30 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             OfferingPedestalBlock pedestalBlock = (OfferingPedestalBlock)block;
             if (pedestalBlock.isBlockSaltPowered(this.level, pos)) {
                 this.pedestalPositions.add(pos);
+                if (this.level.getBlockEntity(pos) instanceof OfferingPedestalTileEntity pedestalTile) {
+                    pedestalTile.setAltarPos(this.getBlockPos());
+                }
             }
         } else if (block instanceof IRitualPropBlock) {
             // Add this position to the prop collection
             IRitualPropBlock propBlock = (IRitualPropBlock)block;
             if (propBlock.isBlockSaltPowered(this.level, pos)) {
                 this.propPositions.add(pos);
+                if (this.level.getBlockEntity(pos) instanceof IRitualPropTileEntity propTile) {
+                    propTile.setAltarPos(this.getBlockPos());
+                }
             }
+        }
+    }
+    
+    @Nullable
+    public static BlockPos getSymmetricPosition(@Nullable BlockPos altarPos, @Nullable BlockPos propPos) {
+        if (altarPos == null || propPos == null) {
+            return null;
+        } else {
+            int dx = altarPos.getX() - propPos.getX();
+            int dz = altarPos.getZ() - propPos.getZ();
+            return new BlockPos(altarPos.getX() + dx, propPos.getY(), altarPos.getZ() + dz);
         }
     }
     
@@ -585,9 +606,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         toScan.addAll(this.propPositions);
         
         for (BlockPos scanPos : toScan) {
-            int dx = this.worldPosition.getX() - scanPos.getX();
-            int dz = this.worldPosition.getZ() - scanPos.getZ();
-            BlockPos symPos = new BlockPos(this.worldPosition.getX() + dx, scanPos.getY(), this.worldPosition.getZ() + dz);
+            BlockPos symPos = getSymmetricPosition(this.worldPosition, scanPos);
             Block block = this.level.getBlockState(scanPos).getBlock();
             
             if (block instanceof IRitualStabilizer) {
@@ -837,7 +856,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         this.stability = Mth.clamp(this.stability + delta, MIN_STABILITY, MAX_STABILITY);
     }
 
-    protected float calculateStabilityDelta() {
+    public float calculateStabilityDelta() {
         float delta = 0.0F;
         
         // Deduct stability based on the active recipe

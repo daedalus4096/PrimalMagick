@@ -18,6 +18,7 @@ import net.minecraftforge.common.util.Constants;
  */
 public class RitualLecternTileEntity extends TileInventoryPM implements IRitualPropTileEntity {
     protected BlockPos altarPos = null;
+    protected boolean isOpen = false;
     
     public RitualLecternTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.RITUAL_LECTERN.get(), pos, state, 1);
@@ -27,6 +28,7 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
     public void load(CompoundTag compound) {
         super.load(compound);
         this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
+        this.isOpen = compound.contains("PropOpen", Constants.NBT.TAG_BYTE) ? compound.getBoolean("PropOpen") : false;
     }
     
     @Override
@@ -34,6 +36,7 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
         if (this.altarPos != null) {
             compound.putLong("AltarPos", this.altarPos.asLong());
         }
+        compound.putBoolean("PropOpen", this.isOpen);
         return super.save(compound);
     }
     
@@ -48,6 +51,16 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
         return 1;
     }
     
+    @Override
+    public boolean isPropOpen() {
+        return this.isOpen;
+    }
+
+    @Override
+    public void setPropOpen(boolean open) {
+        this.isOpen = open;
+    }
+
     @Override
     public BlockPos getAltarPos() {
         return this.altarPos;
