@@ -1755,6 +1755,9 @@
     "primalmagic.research.quartz.title": "Quartz",
     "primalmagic.research.quartz.text.stage.1": "Curious...<BR>I've heard tell of this mineral quartz before, but I was always under the impression that it wasn't found in the Overworld.  Guess I was wrong.<BR>Notes in the Grimoire have taught me techniques to carve up a single piece of quartz into multiple slivers.  This should allow me to use it sparingly as needed.",
     
+    "primalmagic.research.inner_demon.title": "Inner Demon",
+    "primalmagic.research.inner_demon.text.stage.1": "Wow...  I'm not sure whether it was brave or foolish of me to scan that thing instead of fighting or running, but I got a clear read, at least.  As I suspected, this creature is an amalgam of my darkest impulses, twisted and empowered by forbidden magic.<BR>There doesn't seem to be a safe way to fight this thing.  Its fists are infused with the Infernal, meaning that it will set me aflame with every strike.  But if I'm out of range of that, it will instead lash out with Blood magic, ignoring my armor and tearing me apart from the inside.<BR>Worst of all, perhaps, is its mastery of Void magic.  Every so often, it will use that to summon a Sin Crystal which will steadily heal it until destroyed.  But the crystals project a damaging magical aura which will hurt me if I get too close to them.  I'll have to deal with those quickly and carefully.",
+    
     "commands.primalmagic.research.list": "All research for %1$s: %2$s",
     "commands.primalmagic.research.reset": "Resetting all research for %1$s",
     "commands.primalmagic.research.reset.target": "%1$s has reset all of your research",

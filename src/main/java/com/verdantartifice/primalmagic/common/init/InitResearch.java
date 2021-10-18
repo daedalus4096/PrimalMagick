@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagic.common.init;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagic.common.research.ResearchManager;
+import com.verdantartifice.primalmagic.common.research.ScanEntityResearchTrigger;
 import com.verdantartifice.primalmagic.common.research.ScanEntityTagResearchTrigger;
 import com.verdantartifice.primalmagic.common.research.ScanItemResearchTrigger;
 import com.verdantartifice.primalmagic.common.research.ScanItemTagResearchTrigger;
@@ -93,5 +95,6 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.ORES_QUARTZ, quartz));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.STORAGE_BLOCKS_QUARTZ, quartz));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsForgeExt.NUGGETS_QUARTZ, quartz));
+        ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.INNER_DEMON.get(), SimpleResearchKey.parse("INNER_DEMON")));
     }
 }

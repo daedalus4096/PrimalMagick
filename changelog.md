@@ -9,6 +9,7 @@ v0.0.19-alpha
 * Add Magic Protection enchantment, reducing damage taken from all magical sources
 * Change rune enchantment recipe for Blast Protection
 * Add Dowsing Rod, to provide feedback on ritual altar layouts
+* Add scan research for the Inner Demon
 
 v0.0.18-alpha
 -------------

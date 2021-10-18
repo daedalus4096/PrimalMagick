@@ -1260,6 +1260,9 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.QUARTZ_NUGGET.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "quartz_from_nuggets"))
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "quartz_from_smelting")).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("INNER_DEMON", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
     }
     
     @Override
