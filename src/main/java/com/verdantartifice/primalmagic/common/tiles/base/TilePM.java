@@ -3,6 +3,9 @@ package com.verdantartifice.primalmagic.common.tiles.base;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagic.common.network.packets.data.TileToServerPacket;
@@ -24,6 +27,8 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class TilePM extends BlockEntity {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     public TilePM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }

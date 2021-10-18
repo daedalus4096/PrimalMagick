@@ -10,6 +10,10 @@ import net.minecraft.core.BlockPos;
  * @author Daedalus4096
  */
 public interface IRitualPropTileEntity {
+    public boolean isPropOpen();
+    
+    public void setPropOpen(boolean open);
+    
     @Nullable
     public BlockPos getAltarPos();
 

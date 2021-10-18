@@ -19,11 +19,23 @@ import net.minecraftforge.common.util.Constants;
  */
 public abstract class AbstractRitualPropTileEntity extends TilePM implements IRitualPropTileEntity {
     protected BlockPos altarPos = null;
+    protected boolean isOpen = false;
     
     public AbstractRitualPropTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
     
+    @Override
+    public boolean isPropOpen() {
+        return this.isOpen;
+    }
+
+    @Override
+    public void setPropOpen(boolean open) {
+        this.isOpen = open;
+        this.setChanged();
+    }
+
     @Override
     @Nullable
     public BlockPos getAltarPos() {
@@ -40,6 +52,7 @@ public abstract class AbstractRitualPropTileEntity extends TilePM implements IRi
     public void load(CompoundTag compound) {
         super.load(compound);
         this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
+        this.isOpen = compound.contains("PropOpen", Constants.NBT.TAG_BYTE) ? compound.getBoolean("PropOpen") : false;
     }
     
     @Override
@@ -47,6 +60,7 @@ public abstract class AbstractRitualPropTileEntity extends TilePM implements IRi
         if (this.altarPos != null) {
             compound.putLong("AltarPos", this.altarPos.asLong());
         }
+        compound.putBoolean("PropOpen", this.isOpen);
         return super.save(compound);
     }
     
@@ -54,8 +68,8 @@ public abstract class AbstractRitualPropTileEntity extends TilePM implements IRi
     public void notifyAltarOfPropActivation(float stabilityBonus) {
         if (this.altarPos != null) {
             BlockEntity tile = this.level.getBlockEntity(this.altarPos);
-            if (tile instanceof RitualAltarTileEntity) {
-                ((RitualAltarTileEntity)tile).onPropActivation(this.worldPosition, stabilityBonus);
+            if (tile instanceof RitualAltarTileEntity altarTile) {
+                altarTile.onPropActivation(this.worldPosition, stabilityBonus);
             }
         }
     }

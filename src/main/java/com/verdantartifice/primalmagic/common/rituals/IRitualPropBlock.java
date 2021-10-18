@@ -24,20 +24,20 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
     
     public default void onPropActivated(BlockState state, Level world, BlockPos pos, float stabilityBonus) {
         BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof IRitualPropTileEntity) {
-            ((IRitualPropTileEntity)tile).notifyAltarOfPropActivation(stabilityBonus);
+        if (tile instanceof IRitualPropTileEntity propTile) {
+            propTile.notifyAltarOfPropActivation(stabilityBonus);
         }
     }
     
     public default boolean isPropOpen(BlockState state, Level world, BlockPos pos) {
         BlockEntity tile = world.getBlockEntity(pos);
-        return (tile instanceof IRitualPropTileEntity) && ((IRitualPropTileEntity)tile).getAltarPos() != null;
+        return (tile instanceof IRitualPropTileEntity propTile) && propTile.isPropOpen();
     }
     
     public default void openProp(BlockState state, Level world, BlockPos pos, @Nullable Player player, BlockPos altarPos) {
         BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof IRitualPropTileEntity) {
-            ((IRitualPropTileEntity)tile).setAltarPos(altarPos);
+        if (tile instanceof IRitualPropTileEntity propTile) {
+            propTile.setPropOpen(true);
             PacketHandler.sendToAllAround(new PropMarkerPacket(pos), world.dimension(), pos, 32.0D);
             if (player != null) {
                 this.sendPropStatusMessage(player);
@@ -47,8 +47,8 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
     
     public default void closeProp(BlockState state, Level world, BlockPos pos) {
         BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof IRitualPropTileEntity) {
-            ((IRitualPropTileEntity)tile).setAltarPos(null);
+        if (tile instanceof IRitualPropTileEntity propTile) {
+            propTile.setPropOpen(false);
             PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), world.dimension(), pos, 32.0D);
         }
     }

@@ -39,6 +39,7 @@ import com.verdantartifice.primalmagic.common.network.packets.fx.PlayClientSound
 import com.verdantartifice.primalmagic.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagic.common.rituals.AbstractRitualStep;
 import com.verdantartifice.primalmagic.common.rituals.IRitualPropBlock;
+import com.verdantartifice.primalmagic.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagic.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagic.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagic.common.rituals.Mishap;
@@ -570,12 +571,18 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             OfferingPedestalBlock pedestalBlock = (OfferingPedestalBlock)block;
             if (pedestalBlock.isBlockSaltPowered(this.level, pos)) {
                 this.pedestalPositions.add(pos);
+                if (this.level.getBlockEntity(pos) instanceof OfferingPedestalTileEntity pedestalTile) {
+                    pedestalTile.setAltarPos(this.getBlockPos());
+                }
             }
         } else if (block instanceof IRitualPropBlock) {
             // Add this position to the prop collection
             IRitualPropBlock propBlock = (IRitualPropBlock)block;
             if (propBlock.isBlockSaltPowered(this.level, pos)) {
                 this.propPositions.add(pos);
+                if (this.level.getBlockEntity(pos) instanceof IRitualPropTileEntity propTile) {
+                    propTile.setAltarPos(this.getBlockPos());
+                }
             }
         }
     }
