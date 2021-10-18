@@ -8,6 +8,7 @@ v0.0.19-alpha
 * Tighten target selection zone for companion teleportation
 * Add Magic Protection enchantment, reducing damage taken from all magical sources
 * Change rune enchantment recipe for Blast Protection
+* Add Dowsing Rod, to provide feedback on ritual altar layouts
 
 v0.0.18-alpha
 -------------
