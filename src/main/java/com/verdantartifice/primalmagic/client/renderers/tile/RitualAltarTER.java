@@ -121,7 +121,7 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
             
             matrixStack.popPose();
             
-            FxDispatcher.INSTANCE.ritualGlow(tileEntityIn.getBlockPos(), 0xFFFFFF);
+            FxDispatcher.INSTANCE.ritualGlow(tileEntityIn.getBlockPos(), color.getRGB());
         }
     }
 }
