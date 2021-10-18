@@ -512,6 +512,15 @@ public class Recipes extends RecipeProvider {
             .requires(ItemsPM.IGNYX_BLOCK.get())
             .unlockedBy("has_ignyx_block", has(ItemsPM.IGNYX_BLOCK.get()))
             .save(consumer, new ResourceLocation(PrimalMagic.MODID, "ignyx_from_storage_block"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DOWSING_ROD.get())
+            .patternLine("  S")
+            .patternLine("SS ")
+            .patternLine("DS ")
+            .key('S', Tags.Items.RODS_WOODEN)
+            .key('D', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("DOWSING_ROD")))
+            .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

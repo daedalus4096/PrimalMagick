@@ -1085,6 +1085,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredResearch("t_observations_made_expert").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.DREAM_VISION_TALISMAN.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("DOWSING_ROD", discipline).parent("BASIC_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.DOWSING_ROD.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
