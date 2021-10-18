@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Constants;
 
@@ -37,14 +36,6 @@ public class OfferingPedestalTileEntity extends TileInventoryPM {
         return ImmutableSet.of(Integer.valueOf(0));
     }
     
-    public static void tick(Level level, BlockPos pos, BlockState state, OfferingPedestalTileEntity entity) {
-        // FIXME Remove when Forge onLoad bug is fixed
-        if (entity.ticksExisted == 0) {
-            entity.doInventorySync();
-        }
-        entity.ticksExisted++;
-    }
-
     @Nullable
     public BlockPos getAltarPos() {
         return this.altarPos;

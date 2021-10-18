@@ -72,12 +72,6 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SanguineCrucibleTileEntity entity) {
-        // FIXME Remove when Forge onLoad bug is fixed
-        if (entity.ticksExisted == 0) {
-            entity.doInventorySync();
-        }
-        entity.ticksExisted++;
-
         entity.counter++;
         if (entity.fluidAmount < FLUID_CAPACITY) {
             entity.fluidAmount++;

@@ -53,12 +53,6 @@ public class AutoChargerTileEntity extends TileInventoryPM {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
-        // FIXME Remove when Forge onLoad bug is fixed
-        if (entity.ticksExisted == 0) {
-            entity.doInventorySync();
-        }
-        entity.ticksExisted++;
-
         ItemStack wandStack = entity.getItem(0);
         if (!level.isClientSide && wandStack.getItem() instanceof IWand) {
             if (entity.chargeTime % 20 == 0) {

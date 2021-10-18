@@ -104,6 +104,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     
     protected final WeightedRandomBag<Mishap> mishaps;
     
+    protected int ticksExisted = 0;
     protected boolean active = false;
     protected boolean currentStepComplete = false;
     protected int activeCount = 0;
@@ -297,11 +298,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, RitualAltarTileEntity entity) {
-        // FIXME Remove when Forge onLoad bug is fixed
-        if (entity.ticksExisted == 0) {
-            entity.doInventorySync();
-        }
-
         if (entity.active) {
             entity.doEffects();
         }
