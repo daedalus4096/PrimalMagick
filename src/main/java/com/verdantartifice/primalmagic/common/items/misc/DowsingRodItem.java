@@ -27,6 +27,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  * @author Daedalus4096
  */
 public class DowsingRodItem extends Item {
+    protected static final float THRESHOLD_HIGH = 0.15F;
+    protected static final float THRESHOLD_LOW = 0.025F;
+    
     public DowsingRodItem(Item.Properties properties) {
         super(properties);
     }
@@ -63,7 +66,18 @@ public class DowsingRodItem extends Item {
     }
     
     protected void doStabilityCheck(RitualAltarTileEntity altarEntity, Player player) {
-        player.sendMessage(new TranslatableComponent("event.primalmagic.dowsing_rod.altar_stability", altarEntity.calculateStabilityDelta()), Util.NIL_UUID);
+        float delta = altarEntity.calculateStabilityDelta();
+        if (delta >= THRESHOLD_HIGH) {
+            player.sendMessage(new TranslatableComponent("event.primalmagic.dowsing_rod.altar_stability.very_good"), Util.NIL_UUID);
+        } else if (delta >= THRESHOLD_LOW) {
+            player.sendMessage(new TranslatableComponent("event.primalmagic.dowsing_rod.altar_stability.good"), Util.NIL_UUID);
+        } else if (delta <= -THRESHOLD_HIGH) {
+            player.sendMessage(new TranslatableComponent("event.primalmagic.dowsing_rod.altar_stability.very_poor"), Util.NIL_UUID);
+        } else if (delta <= -THRESHOLD_LOW) {
+            player.sendMessage(new TranslatableComponent("event.primalmagic.dowsing_rod.altar_stability.poor"), Util.NIL_UUID);
+        } else {
+            player.sendMessage(new TranslatableComponent("event.primalmagic.dowsing_rod.altar_stability.neutral"), Util.NIL_UUID);
+        }
     }
     
     protected void doPropSaltCheck(Level level, ISaltPowered block, BlockPos blockPos, Player player) {
