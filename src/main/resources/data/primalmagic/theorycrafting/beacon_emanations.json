@@ -7,7 +7,7 @@
   "material_options": [
     {
       "type": "tag",
-      "name": "forge:beacon_payment",
+      "name": "minecraft:beacon_payment_items",
       "quantity": 1,
       "consumed": true,
       "weight": 1.0

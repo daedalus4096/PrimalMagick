@@ -100,7 +100,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemTagMaterialBuilder.tag("minecraft", "small_flowers", true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("beacon_emanations").aid(Blocks.BEACON).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
-            .material(ItemTagMaterialBuilder.tag("forge", "beacon_payment", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag("minecraft", "beacon_payment_items", true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("brewing_experiments").requiredResearch(Source.INFERNAL.getDiscoverKey())
             .material(ItemMaterialBuilder.item(Items.BREWING_STAND, false).weight(3).build())
