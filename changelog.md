@@ -1,3 +1,7 @@
+v0.0.20-alpha
+-------------
+* Add scan research identifying most research aids
+
 v0.0.19-alpha
 -------------
 * Allow Heartwood to rarely drop from Sunwood or Moonwood trees
