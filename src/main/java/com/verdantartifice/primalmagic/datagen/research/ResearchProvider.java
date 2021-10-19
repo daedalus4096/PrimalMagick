@@ -1263,6 +1263,18 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("INNER_DEMON", discipline).hidden().parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
+        ResearchEntryBuilder.entry("BOOKSHELF", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("BEEHIVE", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("BEACON", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("DRAGON_EGG", discipline).hidden().parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
     }
     
     @Override

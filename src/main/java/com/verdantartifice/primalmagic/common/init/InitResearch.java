@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagic.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 
 /**
@@ -96,5 +97,9 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.STORAGE_BLOCKS_QUARTZ, quartz));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsForgeExt.NUGGETS_QUARTZ, quartz));
         ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.INNER_DEMON.get(), SimpleResearchKey.parse("INNER_DEMON")));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.BOOKSHELVES, SimpleResearchKey.parse("BOOKSHELF")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEEHIVE, SimpleResearchKey.parse("BEEHIVE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEACON, SimpleResearchKey.parse("BEACON")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.DRAGON_EGG, SimpleResearchKey.parse("DRAGON_EGG")));
     }
 }
