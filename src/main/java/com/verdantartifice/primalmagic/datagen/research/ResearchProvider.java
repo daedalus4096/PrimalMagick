@@ -20,12 +20,15 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 
 public class ResearchProvider implements DataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
@@ -128,7 +131,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_EARTH", discipline).parent("TERRESTRIAL_MAGIC")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag("forge", "obsidian").requiredItemTag("forge", "gems/diamond")
+                    .requiredItemTag(Tags.Items.OBSIDIAN).requiredItemTag(Tags.Items.GEMS_DIAMOND)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("m_found_shrine_earth").requiredResearch("m_env_earth").requiredResearch("t_mana_spent_earth_expert")
                     .build())
@@ -136,7 +139,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_SEA", discipline).parent("TERRESTRIAL_MAGIC")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(PrimalMagic.MODID, "coral_blocks").requiredItemStack(Items.ICE)
+                    .requiredItemTag(ItemTagsPM.CORAL_BLOCKS).requiredItemStack(Items.ICE)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("m_found_shrine_sea").requiredResearch("m_env_sea").requiredResearch("t_mana_spent_sea_expert")
                     .build())
@@ -144,7 +147,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_SKY", discipline).parent("TERRESTRIAL_MAGIC")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemStack(Items.BAMBOO).requiredItemTag("minecraft", "leaves")
+                    .requiredItemStack(Items.BAMBOO).requiredItemTag(ItemTags.LEAVES)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("m_found_shrine_sky").requiredResearch("m_env_sky").requiredResearch("t_mana_spent_sky_expert")
                     .build())
@@ -152,7 +155,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_SUN", discipline).parent("TERRESTRIAL_MAGIC")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(PrimalMagic.MODID, "sunwood_logs").requiredItemTag("forge", "sandstone")
+                    .requiredItemTag(ItemTagsPM.SUNWOOD_LOGS).requiredItemTag(Tags.Items.SANDSTONE)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("m_found_shrine_sun").requiredResearch("m_env_sun").requiredResearch("t_mana_spent_sun_expert")
                     .build())
@@ -160,7 +163,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_MOON", discipline).parent("TERRESTRIAL_MAGIC")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(PrimalMagic.MODID, "moonwood_logs").requiredItemTag("forge", "mushrooms")
+                    .requiredItemTag(ItemTagsPM.MOONWOOD_LOGS).requiredItemTag(Tags.Items.MUSHROOMS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("m_found_shrine_moon").requiredResearch("m_env_moon").requiredResearch("t_mana_spent_moon_expert")
                     .build())
@@ -171,7 +174,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_BLOOD", discipline).parent("FORBIDDEN_MAGIC").parent("t_discover_blood")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag("forge", "bones").requiredItemStack(ItemsPM.BLOODY_FLESH.get())
+                    .requiredItemTag(Tags.Items.BONES).requiredItemStack(ItemsPM.BLOODY_FLESH.get())
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("t_mana_spent_blood_expert")
                     .build())
@@ -179,7 +182,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_INFERNAL", discipline).parent("FORBIDDEN_MAGIC").parent("t_discover_infernal")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag("forge", "rods/blaze").requiredItemStack(Items.SOUL_SAND)
+                    .requiredItemTag(Tags.Items.RODS_BLAZE).requiredItemStack(Items.SOUL_SAND)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("t_mana_spent_infernal_expert")
                     .build())
@@ -187,7 +190,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_VOID", discipline).parent("FORBIDDEN_MAGIC").parent("t_discover_void")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag("forge", "end_stones").requiredItemTag("forge", "ender_pearls")
+                    .requiredItemTag(Tags.Items.END_STONES).requiredItemTag(Tags.Items.ENDER_PEARLS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("t_mana_spent_void_expert")
                     .build())
@@ -198,7 +201,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_HALLOWED", discipline).parent("HEAVENLY_MAGIC")
             .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag("forge", "nether_stars")
+                    .requiredItemTag(Tags.Items.NETHER_STARS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
                     .requiredResearch("t_mana_spent_hallowed_expert")
                     .build())
@@ -233,7 +236,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.MARBLE_HALLOWED_STAIRS.get()).recipe(ItemsPM.MARBLE_HALLOWED_WALL.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CHARGER", discipline).parent("BASIC_MANAWEAVING")
-            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "essences/terrestrial_dusts").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_CHARGER.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("MANA_SALTS", discipline).parent("WAND_CHARGER")
@@ -255,11 +258,11 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CAP_IRON", discipline).parent("ADVANCED_WANDMAKING")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "ingots/iron").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.INGOTS_IRON).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.IRON_WAND_CAP_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_GEM_APPRENTICE", discipline).parent("ADVANCED_WANDMAKING")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "gems/diamond").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.GEMS_DIAMOND).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("EARTHSHATTER_HAMMER", discipline).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS")
@@ -278,40 +281,40 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("HEXIUM").attunement(Source.INFERNAL, 2).recipe(ItemsPM.SPIRIT_LANTERN.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_GEM_ADEPT", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_GEM_APPRENTICE").parent("SHARD_SYNTHESIS")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.GEMS_DIAMOND).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_GEM_WIZARD", discipline).parent("MASTER_MANAWEAVING").parent("WAND_GEM_ADEPT").parent("CRYSTAL_SYNTHESIS")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.GEMS_DIAMOND).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_GEM_ARCHMAGE", discipline).parent("SUPREME_MANAWEAVING").parent("WAND_GEM_WIZARD").parent("CLUSTER_SYNTHESIS")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "gems/diamond").requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.GEMS_DIAMOND).requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CAP_GOLD", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CAP_IRON")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "ingots/gold").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.INGOTS_GOLD).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.GOLD_WAND_CAP_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CAP_PRIMALITE", discipline).parent("WAND_CAP_GOLD").parent("PRIMALITE")
-            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "ingots/primalite").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTagsPM.INGOTS_PRIMALITE).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMALITE_WAND_CAP_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CAP_HEXIUM", discipline).parent("MASTER_MANAWEAVING").parent("WAND_CAP_PRIMALITE").parent("HEXIUM")
-            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "ingots/hexium").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTagsPM.INGOTS_HEXIUM).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEXIUM_WAND_CAP_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CAP_HALLOWSTEEL", discipline).parent("SUPREME_MANAWEAVING").parent("WAND_CAP_HEXIUM").parent("HALLOWSTEEL")
-            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "ingots/hallowsteel").requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTagsPM.INGOTS_HALLOWSTEEL).requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWSTEEL_WAND_CAP_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_OBSIDIAN", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "obsidian").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.OBSIDIAN).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_CORAL", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_OBSIDIAN")
-            .stage(ResearchStageBuilder.stage().requiredItemTag(PrimalMagic.MODID, "coral_blocks").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTagsPM.CORAL_BLOCKS).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 2).recipe(ItemsPM.CORAL_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.CORAL_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
@@ -336,7 +339,7 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BONE_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_BLAZE_ROD", discipline).parent("MASTER_MANAWEAVING").parent("WAND_CORE_HEARTWOOD").parent("t_discover_infernal")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("forge", "rods/blaze").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.RODS_BLAZE).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).recipe(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BLAZE_ROD_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
@@ -346,7 +349,7 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.PURPUR_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("IMBUED_WOOL", discipline).parent("MANA_ARROWS")
-            .stage(ResearchStageBuilder.stage().requiredItemTag("minecraft", "wool").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTags.WOOL).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.IMBUED_WOOL_HEAD.get()).recipe(ItemsPM.IMBUED_WOOL_CHEST.get()).recipe(ItemsPM.IMBUED_WOOL_LEGS.get())
                     .recipe(ItemsPM.IMBUED_WOOL_FEET.get()).build())
             .build(consumer);
@@ -659,7 +662,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .build(consumer);
         ResearchEntryBuilder.entry("IGNYX", discipline).parent("EXPERT_ALCHEMY").parent("CALCINATOR_BASIC").parent("STONEMELDING").parent(Source.INFERNAL.getDiscoverKey())
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemTag(new ResourceLocation("minecraft", "coals")).build())
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemTag(ItemTags.COALS).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 2).recipe(ItemsPM.IGNYX.get()).recipe(ItemsPM.IGNYX_BLOCK.get())
                     .recipe(new ResourceLocation(PrimalMagic.MODID, "ignyx_from_storage_block")).build())
             .build(consumer);

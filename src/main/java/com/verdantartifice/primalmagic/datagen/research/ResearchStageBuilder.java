@@ -16,6 +16,8 @@ import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
@@ -53,12 +55,8 @@ public class ResearchStageBuilder {
         return this;
     }
     
-    public ResearchStageBuilder requiredItemTag(@Nonnull String namespace, @Nonnull String path) {
-        return requiredItemTag(new ResourceLocation(namespace, path));
-    }
-    
-    public ResearchStageBuilder requiredItemTag(@Nonnull ResourceLocation tagLoc) {
-        this.requiredItems.add("tag:" + tagLoc.toString());
+    public ResearchStageBuilder requiredItemTag(@Nonnull Tag.Named<Item> tag) {
+        this.requiredItems.add("tag:" + tag.getName().toString());
         return this;
     }
     
