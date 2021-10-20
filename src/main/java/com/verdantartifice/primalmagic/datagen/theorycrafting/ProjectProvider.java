@@ -16,22 +16,24 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
+import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 
 public class ProjectProvider implements DataProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
@@ -97,17 +99,17 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get(), true).requiredResearch(Source.HALLOWED.getDiscoverKey()).afterCrafting(5).bonusReward(0.25D).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("apiamancy").aid(Blocks.BEEHIVE).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
-            .material(ItemTagMaterialBuilder.tag("minecraft", "small_flowers", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTags.SMALL_FLOWERS, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("beacon_emanations").aid(Blocks.BEACON).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
-            .material(ItemTagMaterialBuilder.tag("minecraft", "beacon_payment_items", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTags.BEACON_PAYMENT_ITEMS, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("brewing_experiments").requiredResearch(Source.INFERNAL.getDiscoverKey())
             .material(ItemMaterialBuilder.item(Items.BREWING_STAND, false).weight(3).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "crops/nether_wart", true).weight(3).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.CROPS_NETHER_WART, true).weight(3).build())
             .material(ItemMaterialBuilder.item(Items.FERMENTED_SPIDER_EYE, true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "dusts/glowstone", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "dusts/redstone", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.DUSTS_GLOWSTONE, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.DUSTS_REDSTONE, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.SUGAR, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.RABBIT_FOOT, true).bonusReward(0.125D).weight(0.5D).build())
             .material(ItemMaterialBuilder.item(Items.BLAZE_POWDER, true).weight(1).build())
@@ -122,11 +124,11 @@ public class ProjectProvider implements DataProvider {
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
             .build(consumer);
         ProjectBuilder.project("draconic_energies").aid(Blocks.DRAGON_EGG).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
-            .material(ItemTagMaterialBuilder.tag("forge", "ender_pearls", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.ENDER_PEARLS, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("enchanting_studies").requiredResearch("BASIC_MANAWEAVING")
             .material(ItemMaterialBuilder.item(Items.ENCHANTING_TABLE, false).weight(5).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "gems/lapis", true).weight(5).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, true).weight(5).build())
             .material(ExperienceMaterialBuilder.experience(3, true).bonusReward(0.125D).weight(5).build())
             .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.GOLDEN_SWORD, false).weight(1).build())
@@ -150,7 +152,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.TORCH, 32, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BREAD, 8, true).weight(1).build())
             .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), true).bonusReward(0.5D).weight(1).matchNbt().build())
-            .material(ItemTagMaterialBuilder.tag("forge", "ender_pearls", 4, true).weight(3).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.ENDER_PEARLS, 4, true).weight(3).build())
             .material(ItemMaterialBuilder.item(Items.ENDER_EYE, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("essence_analysis").requiredResearch("BASIC_ALCHEMY")
@@ -213,7 +215,7 @@ public class ProjectProvider implements DataProvider {
             .build(consumer);
         ProjectBuilder.project("mundane_tinkering")
             .material(ItemMaterialBuilder.item(Items.CRAFTING_TABLE, false).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("minecraft", "anvil", false).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTags.ANVIL, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.FURNACE, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BLAST_FURNACE, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.LOOM, false).weight(1).build())
@@ -234,7 +236,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.BREAD, 4, true).weight(1).build())
             .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true).bonusReward(0.25D).weight(4).matchNbt().build())
             .material(ItemMaterialBuilder.item(Items.MILK_BUCKET, true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "obsidian", 10, false).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.OBSIDIAN, 10, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.FLINT_AND_STEEL, false).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("observation_analysis").aid(BlocksPM.ANALYSIS_TABLE.get()).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
@@ -242,13 +244,13 @@ public class ProjectProvider implements DataProvider {
             .build(consumer);
         ProjectBuilder.project("piglin_barter").requiredResearch(Source.INFERNAL.getDiscoverKey()).rewardMultiplier(0.5D)
             .material(ItemMaterialBuilder.item(Items.BELL, true).weight(0.5D).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "storage_blocks/gold", true).bonusReward(0.25D).weight(0.5D).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.STORAGE_BLOCKS_GOLD, true).bonusReward(0.25D).weight(0.5D).build())
             .material(ItemMaterialBuilder.item(Items.RAW_GOLD_BLOCK, true).bonusReward(0.25D).weight(0.5D).build())
             .material(ItemMaterialBuilder.item(Items.CLOCK, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.GILDED_BLACKSTONE, true).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.GLISTERING_MELON_SLICE, true).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.RAW_GOLD, true).weight(2).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "ingots/gold", true).weight(5).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.INGOTS_GOLD, true).weight(5).build())
             .material(ItemMaterialBuilder.item(Items.GOLDEN_APPLE, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.GOLDEN_AXE, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.GOLDEN_BOOTS, true).weight(1).build())
@@ -267,7 +269,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.MAGNIFYING_GLASS.get(), false).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("recuperation")
-            .material(ItemTagMaterialBuilder.tag("minecraft", "beds", false).weight(2).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTags.BEDS, false).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.JUKEBOX, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.COOKED_BEEF, true).weight(1).build())
@@ -288,7 +290,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.REDSTONE_LAMP, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.STICKY_PISTON, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.COMPARATOR, false).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "dusts/redstone", 4, true).weight(3).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.DUSTS_REDSTONE, 4, true).weight(3).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
             .build(consumer);
         ProjectBuilder.project("spellwork").requiredResearch("BASIC_SORCERY")
@@ -305,31 +307,31 @@ public class ProjectProvider implements DataProvider {
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
             .build(consumer);
         ProjectBuilder.project("trade")
-            .material(ItemTagMaterialBuilder.tag("forge", "gems/emerald", true).bonusReward(0.125D).weight(10).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "gems/diamond", true).weight(2).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_EMERALD, true).bonusReward(0.125D).weight(10).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_DIAMOND, true).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.COAL, true).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.COMPASS, true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "ingots/gold", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.INGOTS_GOLD, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.PUMPKIN, true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "string", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "leather", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.STRING, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.LEATHER, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BOOK, true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "gems/quartz", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("minecraft", "wool", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "ingots/iron", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_QUARTZ, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTags.WOOL, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.INGOTS_IRON, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("wand_tinkering").requiredResearch("BASIC_SORCERY")
             .material(ItemMaterialBuilder.item(ItemsPM.WAND_ASSEMBLY_TABLE.get(), false).requiredResearch("ADVANCED_WANDMAKING").weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.HEARTWOOD.get(), true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "obsidian", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag(PrimalMagic.MODID, "coral_blocks", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.OBSIDIAN, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTagsPM.CORAL_BLOCKS, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BAMBOO, true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag(PrimalMagic.MODID, "sunwood_logs", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag(PrimalMagic.MODID, "moonwood_logs", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "ingots/iron", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "ingots/gold", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag("forge", "gems/diamond", true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag(PrimalMagic.MODID, "essences/terrestrial_dusts", true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTagsPM.SUNWOOD_LOGS, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTagsPM.MOONWOOD_LOGS, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.INGOTS_IRON, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.INGOTS_GOLD, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_DIAMOND, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS, true).weight(1).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
             .build(consumer);
     }

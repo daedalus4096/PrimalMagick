@@ -9,6 +9,8 @@ import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.theorycrafting.ItemTagProjectMaterial;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
 
 public class ItemTagMaterialBuilder {
     protected final ResourceLocation tagName;
@@ -18,26 +20,18 @@ public class ItemTagMaterialBuilder {
     protected double bonusReward = 0.0D;
     protected CompoundResearchKey requiredResearch;
 
-    protected ItemTagMaterialBuilder(@Nonnull ResourceLocation tagName, int quantity, boolean consumed) {
-        this.tagName = tagName;
+    protected ItemTagMaterialBuilder(@Nonnull Tag.Named<Item> tag, int quantity, boolean consumed) {
+        this.tagName = tag.getName();
         this.quantity = quantity;
         this.consumed = consumed;
     }
     
-    public static ItemTagMaterialBuilder tag(@Nonnull String namespace, @Nonnull String path, boolean consumed) {
-        return tag(namespace, path, 1, consumed);
+    public static ItemTagMaterialBuilder tag(@Nonnull Tag.Named<Item> tag, boolean consumed) {
+        return tag(tag, 1, consumed);
     }
     
-    public static ItemTagMaterialBuilder tag(@Nonnull ResourceLocation tagName, boolean consumed) {
-        return tag(tagName, 1, consumed);
-    }
-    
-    public static ItemTagMaterialBuilder tag(@Nonnull String namespace, @Nonnull String path, int quantity, boolean consumed) {
-        return tag(new ResourceLocation(namespace, path), quantity, consumed);
-    }
-    
-    public static ItemTagMaterialBuilder tag(@Nonnull ResourceLocation tagName, int quantity, boolean consumed) {
-        return new ItemTagMaterialBuilder(tagName, quantity, consumed);
+    public static ItemTagMaterialBuilder tag(@Nonnull Tag.Named<Item> tag, int quantity, boolean consumed) {
+        return new ItemTagMaterialBuilder(tag, quantity, consumed);
     }
     
     public ItemTagMaterialBuilder weight(double weight) {
