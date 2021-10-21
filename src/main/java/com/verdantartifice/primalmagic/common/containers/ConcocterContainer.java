@@ -42,18 +42,7 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
         this.concocterData = concocterData;
         this.world = playerInv.player.level;
         
-        // Slots 0-8: Input slots
-        int i, j;
-        for (i = 0; i < 3; i++) {
-            for (j = 0; j < 3; j++) {
-                this.addSlot(new Slot(this.concocterInv, j + i * 3, 44 + j * 18, 17 + i * 18));
-            }
-        }
-        
-        // Slot 9: Wand slot
-        this.wandSlot = this.addSlot(new WandSlot(this.concocterInv, 9, 8, 62, false));
-        
-        // Slot 10: Output slot
+        // Slot 0: Output slot
         this.addSlot(new GenericResultSlot(playerInv.player, this.concocterInv, 10, 138, 35) {
             @Override
             protected void checkTakeAchievements(ItemStack stack) {
@@ -61,6 +50,17 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
                 StatsManager.incrementValue(this.player, StatsPM.CRAFTED_MAGITECH, stack.getCount());
             }
         });
+        
+        // Slots 1-9: Input slots
+        int i, j;
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                this.addSlot(new Slot(this.concocterInv, j + i * 3, 44 + j * 18, 17 + i * 18));
+            }
+        }
+        
+        // Slot 10: Wand slot
+        this.wandSlot = this.addSlot(new WandSlot(this.concocterInv, 9, 8, 62, false));
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {
@@ -89,7 +89,7 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
         if (slot != null && slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
-            if (index == 10) {
+            if (index == 0) {
                 // If transferring the output item, move it into the player's backpack or hotbar
                 if (!this.moveItemStackTo(slotStack, 11, 47, true)) {
                     return ItemStack.EMPTY;
@@ -98,19 +98,19 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
             } else if (index >= 11 && index < 38) {
                 // If transferring from the player's backpack, put wands in the wand slot and everything else into the input slots or hotbar, in that order
                 if (this.wandSlot.mayPlace(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 9, 10, false)) {
+                    if (!this.moveItemStackTo(slotStack, 10, 11, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotStack, 0, 9, false) && !this.moveItemStackTo(slotStack, 38, 47, false)) {
+                } else if (!this.moveItemStackTo(slotStack, 1, 10, false) && !this.moveItemStackTo(slotStack, 38, 47, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 38 && index < 47) {
                 // If transferring from the player's hotbar, put wands in the wand slot and everything else into the input slots or backpack, in that order
                 if (this.wandSlot.mayPlace(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 9, 10, false)) {
+                    if (!this.moveItemStackTo(slotStack, 10, 11, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotStack, 0, 9, false) && !this.moveItemStackTo(slotStack, 11, 38, false)) {
+                } else if (!this.moveItemStackTo(slotStack, 1, 10, false) && !this.moveItemStackTo(slotStack, 11, 38, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(slotStack, 11, 47, false)) {
@@ -157,10 +157,9 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
 
     @Override
     public void clearCraftingContent() {
-        for (int index = 0; index <= 8; index++) {
+        for (int index = 0; index <= 9; index++) {
             this.getSlot(index).set(ItemStack.EMPTY);
         }
-        this.getSlot(10).set(ItemStack.EMPTY);
     }
 
     @Override
@@ -170,7 +169,7 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
 
     @Override
     public int getResultSlotIndex() {
-        return 10;
+        return 0;
     }
 
     @Override
@@ -185,7 +184,7 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
 
     @Override
     public int getSize() {
-        return 11;
+        return 10;
     }
 
     @Override
@@ -195,6 +194,6 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
 
     @Override
     public boolean shouldMoveToInventory(int index) {
-        return index != 9;
+        return index != this.getResultSlotIndex();
     }
 }
