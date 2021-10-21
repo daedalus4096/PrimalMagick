@@ -17,6 +17,7 @@ import com.google.common.collect.Table;
 import com.verdantartifice.primalmagic.client.gui.recipe_book.ArcaneRecipeCollection;
 import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBook;
+import com.verdantartifice.primalmagic.common.items.concoctions.AlchemicalBombItem;
 
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
@@ -87,8 +88,7 @@ public class ClientArcaneRecipeBook {
         if (type == RecipeTypesPM.ARCANE_CRAFTING) {
             return ArcaneRecipeBookCategories.CRAFTING_ARCANE;
         } else if (type == RecipeTypesPM.CONCOCTING) {
-            // TODO Return appropriate concocting category
-            return ArcaneRecipeBookCategories.UNKNOWN;
+            return recipe.getResultItem().getItem() instanceof AlchemicalBombItem ? ArcaneRecipeBookCategories.CONCOCTER_BOMB : ArcaneRecipeBookCategories.CONCOCTER_DRINKABLE;
         } else if (type == RecipeType.CRAFTING) {
             CreativeModeTab tab = recipe.getResultItem().getItem().getItemCategory();
             if (tab == CreativeModeTab.TAB_BUILDING_BLOCKS) {
