@@ -41,8 +41,10 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,7 +52,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer {
+public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
     protected static final int MAX_INPUT_ITEMS = 9;
     protected static final int WAND_SLOT_INDEX = 9;
     protected static final int OUTPUT_SLOT_INDEX = 10;
@@ -400,5 +402,12 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         return true;
+    }
+
+    @Override
+    public void fillStackedContents(StackedContents stackedContents) {
+        for (ItemStack stack : this.items) {
+            stackedContents.accountStack(stack);
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import com.verdantartifice.primalmagic.common.containers.slots.GenericResultSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagic.common.stats.StatsManager;
 import com.verdantartifice.primalmagic.common.stats.StatsPM;
 
@@ -9,11 +10,13 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
 /**
@@ -21,7 +24,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class ConcocterContainer extends AbstractContainerMenu {
+public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> {
     protected final Container concocterInv;
     protected final ContainerData concocterData;
     protected final Level world;
@@ -143,5 +146,55 @@ public class ConcocterContainer extends AbstractContainerMenu {
     
     public int getMaxMana() {
         return this.concocterData.get(3);
+    }
+
+    @Override
+    public void fillCraftSlotsStackedContents(StackedContents stackedContents) {
+        if (this.concocterInv instanceof StackedContentsCompatible stackedContainer) {
+            stackedContainer.fillStackedContents(stackedContents);
+        }
+    }
+
+    @Override
+    public void clearCraftingContent() {
+        for (int index = 0; index <= 8; index++) {
+            this.getSlot(index).set(ItemStack.EMPTY);
+        }
+        this.getSlot(10).set(ItemStack.EMPTY);
+    }
+
+    @Override
+    public boolean recipeMatches(Recipe<? super Container> recipe) {
+        return recipe.matches(this.concocterInv, this.world);
+    }
+
+    @Override
+    public int getResultSlotIndex() {
+        return 10;
+    }
+
+    @Override
+    public int getGridWidth() {
+        return 3;
+    }
+
+    @Override
+    public int getGridHeight() {
+        return 3;
+    }
+
+    @Override
+    public int getSize() {
+        return 11;
+    }
+
+    @Override
+    public ArcaneRecipeBookType getRecipeBookType() {
+        return ArcaneRecipeBookType.CONCOCTER;
+    }
+
+    @Override
+    public boolean shouldMoveToInventory(int index) {
+        return index != 9;
     }
 }
