@@ -72,6 +72,7 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterContainer>
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
             ((ImageButton)button).setPosition(this.leftPos + 105, this.topPos + 52);
+            this.manaGauge.setPosition(this.leftPos + 10, this.topPos + 6);
         }));
         this.addWidget(this.recipeBookComponent);
         this.setInitialFocus(this.recipeBookComponent);
