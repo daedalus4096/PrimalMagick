@@ -8,6 +8,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.verdantartifice.primalmagic.PrimalMagic;
+import com.verdantartifice.primalmagic.common.network.PacketHandler;
+import com.verdantartifice.primalmagic.common.network.packets.data.SyncCompanionsPacket;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -97,7 +99,7 @@ public class PlayerCompanions implements IPlayerCompanions {
     @Override
     public void sync(ServerPlayer player) {
         if (player != null) {
-            // TODO send sync packet
+            PacketHandler.sendToPlayer(new SyncCompanionsPacket(player), player);
         }
     }
 
