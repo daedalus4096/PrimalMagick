@@ -36,6 +36,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ConcoctingRecipeBuilder {
     protected final ItemStack result;
     protected final List<Ingredient> ingredients = new ArrayList<>();
+    protected String group;
+    protected boolean useDefaultGroup = false;
     protected CompoundResearchKey research;
     protected SourceList manaCosts;
 
@@ -76,6 +78,16 @@ public class ConcoctingRecipeBuilder {
         return this.addIngredient(Ingredient.of(tag));
     }
     
+    public ConcoctingRecipeBuilder setGroup(String group) {
+        this.group = group;
+        return this;
+    }
+    
+    public ConcoctingRecipeBuilder useDefaultGroup() {
+        this.useDefaultGroup = true;
+        return this;
+    }
+    
     public ConcoctingRecipeBuilder research(CompoundResearchKey research) {
         this.research = research;
         return this;
@@ -97,7 +109,8 @@ public class ConcoctingRecipeBuilder {
     
     public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new ConcoctingRecipeBuilder.Result(id, this.result, this.ingredients, this.research, this.manaCosts));
+        String groupStr = this.useDefaultGroup ? PotionUtils.getPotion(this.result).getRegistryName().getPath() : this.group;
+        consumer.accept(new ConcoctingRecipeBuilder.Result(id, this.result, this.ingredients, groupStr, this.research, this.manaCosts));
     }
     
     public void build(Consumer<FinishedRecipe> consumer) {
@@ -113,19 +126,24 @@ public class ConcoctingRecipeBuilder {
         protected final ResourceLocation id;
         protected final ItemStack result;
         protected final List<Ingredient> ingredients;
+        protected final String group;
         protected final CompoundResearchKey research;
         protected final SourceList manaCosts;
         
-        public Result(ResourceLocation id, ItemStack result, List<Ingredient> ingredients, CompoundResearchKey research, SourceList manaCosts) {
+        public Result(ResourceLocation id, ItemStack result, List<Ingredient> ingredients, String group, CompoundResearchKey research, SourceList manaCosts) {
             this.id = id;
             this.result = result;
             this.ingredients = ingredients;
+            this.group = group;
             this.research = research;
             this.manaCosts = manaCosts;
         }
 
         @Override
         public void serializeRecipeData(JsonObject json) {
+            if (this.group != null && !this.group.isEmpty()) {
+                json.addProperty("group", this.group);
+            }
             if (this.research != null) {
                 json.addProperty("research", this.research.toString());
             }

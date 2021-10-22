@@ -33,14 +33,16 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
  */
 public class ConcoctingRecipe implements IConcoctingRecipe {
     protected final ResourceLocation id;
+    protected final String group;
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     protected final ItemStack recipeOutput;
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
 
-    public ConcoctingRecipe(ResourceLocation id, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
+    public ConcoctingRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
         this.id = id;
+        this.group = group;
         this.research = research;
         this.manaCosts = manaCosts;
         this.recipeOutput = output;
@@ -109,9 +111,15 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
         return this.research;
     }
 
+    @Override
+    public String getGroup() {
+        return this.group;
+    }
+
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ConcoctingRecipe> {
         @Override
         public ConcoctingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            String group = GsonHelper.getAsString(json, "group", "");
             CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
             SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
             ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
@@ -121,7 +129,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
             } else if (ingredients.size() > 9) {
                 throw new JsonParseException("Too many ingredients for concocting recipe the max is 9");
             } else {
-                return new ConcoctingRecipe(recipeId, research, manaCosts, result, ingredients);
+                return new ConcoctingRecipe(recipeId, group, research, manaCosts, result, ingredients);
             }
         }
 
@@ -138,6 +146,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
         
         @Override
         public ConcoctingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+            String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             
             SourceList manaCosts = new SourceList();
@@ -152,11 +161,12 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
             }
             
             ItemStack result = buffer.readItem();
-            return new ConcoctingRecipe(recipeId, research, manaCosts, result, ingredients);
+            return new ConcoctingRecipe(recipeId, group, research, manaCosts, result, ingredients);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, ConcoctingRecipe recipe) {
+            buffer.writeUtf(recipe.group);
             buffer.writeUtf(recipe.research.toString());
             for (Source source : Source.SORTED_SOURCES) {
                 buffer.writeVarInt(recipe.manaCosts.getAmount(source));

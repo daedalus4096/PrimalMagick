@@ -4081,6 +4081,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4090,6 +4091,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4099,6 +4101,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4109,6 +4112,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4117,6 +4121,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4126,6 +4131,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4135,6 +4141,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4143,6 +4150,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4152,6 +4160,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4160,6 +4169,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4169,6 +4179,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4178,6 +4189,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4186,6 +4198,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4195,6 +4208,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4204,6 +4218,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4213,6 +4228,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4223,6 +4239,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4232,6 +4249,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4242,6 +4260,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4251,6 +4270,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4261,6 +4281,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4271,6 +4292,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4279,6 +4301,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4288,6 +4311,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4297,6 +4321,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4305,6 +4330,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4314,6 +4340,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
@@ -4325,6 +4352,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4334,6 +4362,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4343,6 +4372,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4353,6 +4383,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4361,6 +4392,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4370,6 +4402,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4379,6 +4412,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4387,6 +4421,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4396,6 +4431,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4404,6 +4440,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4413,6 +4450,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4422,6 +4460,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4430,6 +4469,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4439,6 +4479,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4448,6 +4489,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4457,6 +4499,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4467,6 +4510,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4476,6 +4520,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4486,6 +4531,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4495,6 +4541,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4505,6 +4552,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4515,6 +4563,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4523,6 +4572,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4532,6 +4582,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4541,6 +4592,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4549,6 +4601,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4558,6 +4611,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
@@ -4569,6 +4623,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4578,6 +4633,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4587,6 +4643,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4597,6 +4654,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4605,6 +4663,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4614,6 +4673,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4623,6 +4683,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4631,6 +4692,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4640,6 +4702,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4648,6 +4711,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4657,6 +4721,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4666,6 +4731,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4674,6 +4740,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4683,6 +4750,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4692,6 +4760,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4701,6 +4770,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4711,6 +4781,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4720,6 +4791,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4730,6 +4802,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4739,6 +4812,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4749,6 +4823,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4759,6 +4834,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4767,6 +4843,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4776,6 +4853,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4785,6 +4863,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4793,6 +4872,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);
@@ -4802,6 +4882,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
             .build(consumer);

@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "leaping",
   "research": "CONCOCTING_TINCTURES",
   "mana": {
     "infernal": 1

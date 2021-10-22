@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "long_fire_resistance",
   "research": "CONCOCTING_ELIXIRS\u0026\u0026t_discover_infernal",
   "mana": {
     "infernal": 9
