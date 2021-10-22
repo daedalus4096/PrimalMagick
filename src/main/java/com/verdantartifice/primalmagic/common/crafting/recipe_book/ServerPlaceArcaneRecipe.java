@@ -26,7 +26,7 @@ import net.minecraft.world.item.crafting.Recipe;
 
 public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe<Integer> {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected final StackedContents stackedContents = new StackedContents();
+    protected final StackedNbtContents stackedContents = new StackedNbtContents();
     protected final AbstractArcaneRecipeBookMenu<C> menu;
     protected Inventory inventory;
     
@@ -102,7 +102,11 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
     @Override
     public void addItemToSlot(Iterator<Integer> iterator, int slotIndex, int count, int p_135418_, int p_135419_) {
         Slot slot = this.menu.getSlot(slotIndex);
-        ItemStack stack = StackedContents.fromStackingIndex(iterator.next());
+        int itemId = iterator.next();
+        ItemStack stack = StackedContents.fromStackingIndex(itemId);
+        if (this.stackedContents.hasNbtData(itemId)) {
+            stack.setTag(this.stackedContents.getNbtData(itemId));
+        }
         if (!stack.isEmpty()) {
             for (int index = 0; index < count; index++) {
                 this.moveItemToGrid(slot, stack);
