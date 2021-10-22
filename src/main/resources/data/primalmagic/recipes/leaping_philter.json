@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "leaping",
   "research": "CONCOCTING_PHILTERS",
   "mana": {
     "infernal": 3

@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "strength",
   "research": "CONCOCTING_PHILTERS",
   "mana": {
     "infernal": 3

@@ -7,12 +7,16 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.verdantartifice.primalmagic.common.concoctions.ConcoctionType;
+import com.verdantartifice.primalmagic.common.concoctions.ConcoctionUtils;
+import com.verdantartifice.primalmagic.common.concoctions.FuseType;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
 
 /**
@@ -27,10 +31,14 @@ public enum ArcaneRecipeBookCategories {
     CRAFTING_EQUIPMENT(RecipeBookCategories.CRAFTING_EQUIPMENT, new ItemStack(Items.IRON_AXE), new ItemStack(Items.GOLDEN_SWORD)),
     CRAFTING_MISC(RecipeBookCategories.CRAFTING_MISC, new ItemStack(Items.LAVA_BUCKET), new ItemStack(Items.APPLE)),
     CRAFTING_ARCANE(RecipeBookCategories.UNKNOWN, new ItemStack(ItemsPM.GRIMOIRE.get())),
+    CONCOCTER_SEARCH(RecipeBookCategories.UNKNOWN, new ItemStack(Items.COMPASS)),
+    CONCOCTER_DRINKABLE(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE)),
+    CONCOCTER_BOMB(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newBomb(Potions.POISON, FuseType.MEDIUM)),
     UNKNOWN(RecipeBookCategories.UNKNOWN, new ItemStack(Items.BARRIER));
     
     public static final List<ArcaneRecipeBookCategories> CRAFTING_CATEGORIES = ImmutableList.of(CRAFTING_SEARCH, CRAFTING_ARCANE, CRAFTING_EQUIPMENT, CRAFTING_BUILDING_BLOCKS, CRAFTING_MISC, CRAFTING_REDSTONE);
-    public static final Map<ArcaneRecipeBookCategories, List<ArcaneRecipeBookCategories>> AGGREGATE_CATEGORIES = ImmutableMap.of(CRAFTING_SEARCH, ImmutableList.of(CRAFTING_ARCANE, CRAFTING_EQUIPMENT, CRAFTING_BUILDING_BLOCKS, CRAFTING_MISC, CRAFTING_REDSTONE));
+    public static final List<ArcaneRecipeBookCategories> CONCOCTER_CATEGORIES = ImmutableList.of(CONCOCTER_SEARCH, CONCOCTER_DRINKABLE, CONCOCTER_BOMB);
+    public static final Map<ArcaneRecipeBookCategories, List<ArcaneRecipeBookCategories>> AGGREGATE_CATEGORIES = ImmutableMap.of(CRAFTING_SEARCH, ImmutableList.of(CRAFTING_ARCANE, CRAFTING_EQUIPMENT, CRAFTING_BUILDING_BLOCKS, CRAFTING_MISC, CRAFTING_REDSTONE), CONCOCTER_SEARCH, ImmutableList.of(CONCOCTER_DRINKABLE, CONCOCTER_BOMB));
 
     private final RecipeBookCategories vanillaCategory;
     private final List<ItemStack> itemIcons;
@@ -45,6 +53,8 @@ public enum ArcaneRecipeBookCategories {
         switch (type) {
         case CRAFTING:
             return CRAFTING_CATEGORIES;
+        case CONCOCTER:
+            return CONCOCTER_CATEGORIES;
         default:
             return ImmutableList.of();
         }

@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "long_leaping",
   "research": "CONCOCTING_ELIXIRS",
   "mana": {
     "infernal": 9

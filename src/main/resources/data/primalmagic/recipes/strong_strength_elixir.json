@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "strong_strength",
   "research": "CONCOCTING_ELIXIRS",
   "mana": {
     "infernal": 9

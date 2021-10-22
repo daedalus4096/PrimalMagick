@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "strong_strength",
   "research": "CONCOCTING_TINCTURES",
   "mana": {
     "infernal": 1

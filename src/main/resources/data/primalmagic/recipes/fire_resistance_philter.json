@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "fire_resistance",
   "research": "CONCOCTING_PHILTERS\u0026\u0026t_discover_infernal",
   "mana": {
     "infernal": 3

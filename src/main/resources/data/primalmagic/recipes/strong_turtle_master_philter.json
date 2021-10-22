@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "strong_turtle_master",
   "research": "CONCOCTING_PHILTERS",
   "mana": {
     "infernal": 3

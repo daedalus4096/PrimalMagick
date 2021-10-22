@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagic.client.recipe_book.ClientArcaneRecipeBook
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.StackedNbtContents;
 import com.verdantartifice.primalmagic.common.network.PacketHandler;
 import com.verdantartifice.primalmagic.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
 import com.verdantartifice.primalmagic.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
@@ -43,7 +44,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -79,7 +79,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     protected ClientRecipeBook vanillaBook;
     protected ClientArcaneRecipeBook arcaneBook;
     protected final ArcaneRecipeBookPage recipeBookPage = new ArcaneRecipeBookPage();
-    protected final StackedContents stackedContents = new StackedContents();
+    protected final StackedNbtContents stackedContents = new StackedNbtContents();
     protected int timesInventoryChanged;
     protected boolean ignoreTextInput;
     protected boolean visible;

@@ -1,5 +1,6 @@
 {
   "type": "primalmagic:concocting",
+  "group": "healing",
   "research": "CONCOCTING_TINCTURES\u0026\u0026t_discover_blood",
   "mana": {
     "infernal": 1

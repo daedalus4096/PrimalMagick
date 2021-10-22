@@ -35,6 +35,11 @@ public class ManaGaugeWidget extends AbstractWidget {
         this.maxAmount = maxAmount;
     }
     
+    public void setPosition(int newX, int newY) {
+        this.x = newX;
+        this.y = newY;
+    }
+    
     public void setCurrentMana(int amount) {
         this.curAmount = amount;
     }
