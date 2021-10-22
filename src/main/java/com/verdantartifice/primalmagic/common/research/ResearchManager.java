@@ -384,12 +384,24 @@ public class ResearchManager {
                     }
                 }
                 
-                // Add any unlocked recipes to the player's arcane recipe book
+                // Add any unlocked recipes from the current stage to the player's arcane recipe book
                 if (player instanceof ServerPlayer serverPlayer) {
                     RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
                     Set<Recipe<?>> recipesToUnlock = currentStage.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                     ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                     serverPlayer.awardRecipes(recipesToUnlock);
+                }
+            }
+            
+            if (entryComplete && !entry.getAddenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
+                // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
+                RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
+                for (ResearchAddendum addendum : entry.getAddenda()) {
+                    if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(player)) {
+                        Set<Recipe<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
+                        ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
+                        serverPlayer.awardRecipes(recipesToUnlock);
+                    }
                 }
             }
 
@@ -432,6 +444,7 @@ public class ResearchManager {
                                 RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
                                 Set<Recipe<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                                 ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
+                                serverPlayer.awardRecipes(recipesToUnlock);
                             }
                         }
                     }

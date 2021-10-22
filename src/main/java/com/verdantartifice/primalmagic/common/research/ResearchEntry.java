@@ -236,6 +236,11 @@ public class ResearchEntry {
             retVal.addAll(currentStage.getRecipes());
         }
         if (entryComplete) {
+            for (ResearchAddendum addendum : this.getAddenda()) {
+                if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(player)) {
+                    retVal.addAll(addendum.getRecipes());
+                }
+            }
             for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
                 if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
                     for (ResearchAddendum addendum : searchEntry.getAddenda()) {
