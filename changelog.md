@@ -1,6 +1,7 @@
 v0.0.20-alpha
 -------------
 * Add scan research identifying most research aids
+* Add recipe book functionality to the concocter
 
 v0.0.19-alpha
 -------------
