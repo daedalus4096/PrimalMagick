@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagic.common.blocks.crafting.SpellcraftingAltar
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandAssemblyTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.crafting.WandInscriptionTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.AnalysisTableBlock;
+import com.verdantartifice.primalmagic.common.blocks.devices.EssenceTransmuterBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.HoneyExtractorBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.ResearchTableBlock;
 import com.verdantartifice.primalmagic.common.blocks.devices.SanguineCrucibleBlock;
@@ -317,6 +318,7 @@ public class BlocksPM {
     public static final RegistryObject<CelestialHarpBlock> CELESTIAL_HARP = BLOCKS.register("celestial_harp", CelestialHarpBlock::new);
     public static final RegistryObject<EntropySinkBlock> ENTROPY_SINK = BLOCKS.register("entropy_sink", EntropySinkBlock::new);
     public static final RegistryObject<AutoChargerBlock> AUTO_CHARGER = BLOCKS.register("auto_charger", AutoChargerBlock::new);
+    public static final RegistryObject<EssenceTransmuterBlock> ESSENCE_TRANSMUTER = BLOCKS.register("essence_transmuter", EssenceTransmuterBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
