@@ -1,15 +1,24 @@
 package com.verdantartifice.primalmagic.common.tiles.devices;
 
+import java.util.List;
+import java.util.Random;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.EssenceTransmuterContainer;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagic.common.util.ItemUtils;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
@@ -17,6 +26,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -39,10 +50,12 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     protected static final int[] SLOTS_FOR_DOWN = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     protected static final int[] SLOTS_FOR_SIDES = new int[] { 10 };
     protected static final int ESSENCE_PER_TRANSMUTE = 8;
+    protected static final int OUTPUT_CAPACITY = 9;
     
     protected int processTime;
     protected int processTimeTotal;
     protected ManaStorage manaStorage;
+    protected Source nextOutputSource;
     
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     
@@ -94,6 +107,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        this.nextOutputSource = compound.contains("NextSource", Constants.NBT.TAG_STRING) ? Source.getSource(compound.getString("NextSource")) : null;
     }
 
     @Override
@@ -101,6 +115,9 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        if (this.nextOutputSource != null) {
+            compound.putString("NextSource", this.nextOutputSource.getTag());
+        }
         return super.save(compound);
     }
 
@@ -123,7 +140,88 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceTransmuterTileEntity entity) {
-        // TODO
+        boolean shouldMarkDirty = false;
+
+        if (!level.isClientSide) {
+            // Fill up internal mana storage with that from any inserted wands
+            ItemStack wandStack = entity.items.get(10);
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.MOON) - entity.manaStorage.getManaStored(Source.MOON);
+                int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
+                if (wand.consumeMana(wandStack, null, Source.MOON, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Source.MOON, centimanaToTransfer, false);
+                    shouldMarkDirty = true;
+                }
+            }
+            
+            // Process ingredients
+            ItemStack essenceStack = entity.items.get(0);
+            if (!essenceStack.isEmpty() && entity.manaStorage.getManaStored(Source.MOON) >= entity.getManaCost()) {
+                // If transmutable input is in place, process it
+                if (entity.canTransmute(essenceStack)) {
+                    entity.processTime++;
+                    if (entity.processTime == entity.processTimeTotal) {
+                        entity.processTime = 0;
+                        entity.processTimeTotal = entity.getProcessTimeTotal();
+                        entity.doTransmute(essenceStack);
+                        entity.nextOutputSource = null;
+                        shouldMarkDirty = true;
+                    }
+                } else {
+                    entity.processTime = 0;
+                }
+            } else if (entity.processTime > 0) {
+                // Decay any transmute progress
+                entity.processTime = Mth.clamp(entity.processTime - 2, 0, entity.processTimeTotal);
+            }
+        }
+        if (shouldMarkDirty) {
+            entity.setChanged();
+            entity.syncTile(true);
+        }
+    }
+    
+    @Nonnull
+    protected Source getNextSource(Source inputSource, Random rng) {
+        if (this.nextOutputSource == null || this.nextOutputSource.equals(inputSource)) {
+            // TODO Generate a new random, known source different from the input
+            this.nextOutputSource = Source.EARTH;   // FIXME
+        }
+        return this.nextOutputSource;
+    }
+
+    protected boolean canTransmute(ItemStack inputStack) {
+        List<ItemStack> newOutputs = this.getNewOutputs(inputStack);
+        return newOutputs != null && newOutputs.size() <= OUTPUT_CAPACITY;
+    }
+
+    protected void doTransmute(ItemStack inputStack) {
+        List<ItemStack> newOutputs = this.getNewOutputs(inputStack);
+        if (newOutputs != null) {
+            // Merge the items already in the output inventory with the new output items from the transmutation
+            for (int index = 0; index < Math.min(newOutputs.size(), OUTPUT_CAPACITY); index++) {
+                ItemStack out = newOutputs.get(index);
+                this.items.set(index + 1, (out == null ? ItemStack.EMPTY : out));
+            }
+            
+            // Shrink the input stack
+            inputStack.shrink(ESSENCE_PER_TRANSMUTE);
+        }
+    }
+    
+    @Nullable
+    protected List<ItemStack> getNewOutputs(ItemStack inputStack) {
+        if (inputStack != null && !inputStack.isEmpty() && inputStack.getCount() >= ESSENCE_PER_TRANSMUTE && inputStack.getItem() instanceof EssenceItem essence) {
+            EssenceType inputType = essence.getEssenceType();
+            Source inputSource = essence.getSource();
+            Source outputSource = this.getNextSource(inputSource, this.level.random);
+            ItemStack outputItem = EssenceItem.getEssence(inputType, outputSource, 1);
+            List<ItemStack> currentOutputs = this.items.subList(1, 1 + OUTPUT_CAPACITY);
+            List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackIntoList(currentOutputs, outputItem);
+            return mergedOutputs;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -133,6 +231,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         if (index == 0 && (stack.isEmpty() || !stack.sameItem(slotStack) || !ItemStack.tagMatches(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
+            this.nextOutputSource = null;
             this.setChanged();
         }
     }
