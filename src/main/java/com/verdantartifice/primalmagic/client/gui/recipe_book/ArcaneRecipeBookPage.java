@@ -122,9 +122,7 @@ public class ArcaneRecipeBookPage {
     
     public void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
         if (this.mc.screen != null && this.hoveredButton != null && !this.overlay.isVisible()) {
-            GuiUtils.preItemToolTip(this.hoveredButton.getRecipe().getResultItem());    // Workaround for MinecraftForge issue #8124
-            this.mc.screen.renderComponentTooltip(poseStack, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY);
-            GuiUtils.postItemToolTip();
+            this.mc.screen.renderComponentTooltip(poseStack, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY, this.hoveredButton.getRecipe().getResultItem());
         }
     }
     
