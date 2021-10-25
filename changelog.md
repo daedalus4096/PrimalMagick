@@ -3,6 +3,7 @@ v0.0.20-alpha
 * Add scan research identifying most research aids
 * Add recipe book functionality to the concocter
 * Add Essence Transmuter, to convert one source of essence into another
+* Add Mystical Relics, fragments of which drop from certain mobs, to study for theories
 
 v0.0.19-alpha
 -------------

@@ -532,6 +532,10 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_TRANSMUTER")))
             .manaCost(new SourceList().add(Source.MOON, 40))
             .build(consumer);
+        ShapelessRecipeBuilder.shapeless(ItemsPM.MYSTICAL_RELIC.get())
+            .requires(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), 9)
+            .unlockedBy("has_fragment", has(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get()))
+            .save(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

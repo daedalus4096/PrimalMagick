@@ -679,6 +679,8 @@
     "item.primalmagic.dream_vision_talisman": "Dream Vision Talisman",
     "item.primalmagic.observation_notes": "Field Research Report",
     "item.primalmagic.theory_notes": "Arcane Thesis",
+    "item.primalmagic.mystical_relic": "Mystical Relic",
+    "item.primalmagic.mystical_relic_fragment": "Mystical Relic Fragment",
     "item.primalmagic.blood_notes": "Blood-Scrawled Ravings",
     "item.primalmagic.ignyx": "Ignyx",
     "item.primalmagic.dowsing_rod": "Dowsing Rod",
@@ -756,6 +758,7 @@
     "tooltip.primalmagic.dream_vision_talisman.inactive": "Inactive",
     "tooltip.primalmagic.observation_notes": "Use to gain an arcane observation",
     "tooltip.primalmagic.theory_notes": "Use to gain an arcane theory",
+    "tooltip.primalmagic.mystical_relic": "Use to gain an arcane theory, or keep to trade",
     "tooltip.primalmagic.forbidden_source_item": "Dare you decipher it?",
     "tooltip.primalmagic.research_table.material.consumed": "This material will be consumed",
     "tooltip.primalmagic.research_table.material.has_bonus": "This material will grant bonus research progress",
@@ -1774,6 +1777,9 @@
     
     "primalmagic.research.dragon_egg.title": "Dragon Egg",
     "primalmagic.research.dragon_egg.text.stage.1": "This egg is more than just a trophy.  If my analysis is correct, it's a powerful magical artifact in its own right.<BR>I wonder what I could learn if I used it as a research aid for my research table?",
+    
+    "primalmagic.research.mystical_relic.title": "Mystical Relics",
+    "primalmagic.research.mystical_relic.text.stage.1": "It appears the ancients left more than just shrines behind.  They also left knowledge in the form of inscribed stone tablets.<BR>Of course, finding an intact one seems impossible.  I'll have to assemble these relics from fragments that I recover in the world.<BR>Studying a completed relic will reveal to me a new theory!  Or, if I need the emeralds, a Librarian villager might be interested in buying them from me.",
     
     "commands.primalmagic.research.list": "All research for %1$s: %2$s",
     "commands.primalmagic.research.reset": "Resetting all research for %1$s",

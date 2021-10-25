@@ -51,6 +51,10 @@ public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
                 EntityType.WANDERING_TRADER, EntityType.WITCH);
         this.tag(EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH).add(EntityType.EVOKER);
         this.tag(EntityTypeTagsPM.DROPS_BLOOD_NOTES_LOW).add(EntityType.ILLUSIONER, EntityType.WITCH);
+        this.tag(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH).add(EntityType.EVOKER, EntityType.ILLUSIONER, EntityType.WITCH, EntityType.ELDER_GUARDIAN);
+        this.tag(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW).add(EntityType.CREEPER, EntityType.DROWNED, EntityType.ENDERMAN, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HUSK,
+                EntityType.PHANTOM, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.SKELETON, EntityType.STRAY, EntityType.VINDICATOR, EntityType.WITHER_SKELETON,
+                EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN, EntityTypesPM.TREEFOLK.get());
     }
 
     @Override
