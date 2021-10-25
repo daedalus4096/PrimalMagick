@@ -1778,6 +1778,9 @@
     "primalmagic.research.dragon_egg.title": "Dragon Egg",
     "primalmagic.research.dragon_egg.text.stage.1": "This egg is more than just a trophy.  If my analysis is correct, it's a powerful magical artifact in its own right.<BR>I wonder what I could learn if I used it as a research aid for my research table?",
     
+    "primalmagic.research.mystical_relic.title": "Mystical Relics",
+    "primalmagic.research.mystical_relic.text.stage.1": "It appears the ancients left more than just shrines behind.  They also left knowledge in the form of inscribed stone tablets.<BR>Of course, finding an intact one seems impossible.  I'll have to assemble these relics from fragments that I recover in the world.<BR>Studying a completed relic will reveal to me a new theory!  Or, if I need the emeralds, a Librarian villager might be interested in buying them from me.",
+    
     "commands.primalmagic.research.list": "All research for %1$s: %2$s",
     "commands.primalmagic.research.reset": "Resetting all research for %1$s",
     "commands.primalmagic.research.reset.target": "%1$s has reset all of your research",
