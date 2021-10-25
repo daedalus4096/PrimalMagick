@@ -28,6 +28,8 @@ import com.verdantartifice.primalmagic.client.renderers.tile.RitualLecternTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.RunescribingAltarTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.SanguineCrucibleTER;
 import com.verdantartifice.primalmagic.client.renderers.tile.WandChargerTER;
+import com.verdantartifice.primalmagic.client.tooltips.ClientAffinityTooltipComponent;
+import com.verdantartifice.primalmagic.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagic.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagic.common.containers.ContainersPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
@@ -50,6 +52,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -69,6 +72,7 @@ public class ClientModLifecycleEvents {
         registerTERs();
         registerItemProperties(event);
         setRenderLayers();
+        registerTooltipComponentFactories();
     }
 
     private static void registerKeybinds() {
@@ -268,5 +272,9 @@ public class ClientModLifecycleEvents {
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get(), RenderType.translucent());
+    }
+
+    private static void registerTooltipComponentFactories() {
+        MinecraftForgeClient.registerTooltipComponentFactory(AffinityTooltipComponent.class, ClientAffinityTooltipComponent::new);
     }
 }

@@ -2,9 +2,11 @@ package com.verdantartifice.primalmagic.client.events;
 
 import java.util.Collections;
 
+import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.affinities.AffinityManager;
+import com.verdantartifice.primalmagic.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagic.common.config.Config;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.armor.IManaDiscountGear;
@@ -50,7 +52,7 @@ public class ClientRenderEvents {
         if (RuneManager.hasRunes(event.getItemStack())) {
             event.getToolTip().add(new TranslatableComponent("tooltip.primalmagic.runescribed").withStyle(ChatFormatting.DARK_AQUA));
         }
-        
+        /*
         // Make the tooltip changes for showing primal affinities on an itemstack
         if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getItemStack() != null) {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getItemStack(), mc.level);
@@ -77,8 +79,10 @@ public class ClientRenderEvents {
                 }
             }
         }
+        */
     }
     
+    /*
     @SubscribeEvent
     public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground event) {
         Minecraft mc = Minecraft.getInstance();
@@ -98,6 +102,26 @@ public class ClientRenderEvents {
                         break;
                     }
                 }
+            }
+        }
+    }
+    */
+    
+    @SubscribeEvent
+    public static void onRenderTooltipGatherComponents(RenderTooltipEvent.GatherComponents event) {
+        Minecraft mc = Minecraft.getInstance();
+        Screen gui = mc.screen;
+
+        // Assemble the tooltip components for showing primal affinities on an item stack
+        if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getStack() != null) {
+            SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getStack(), mc.level);
+            if (sources == null || sources.isEmpty()) {
+                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagic.affinities.none")));
+            } else if (!ResearchManager.isScanned(event.getStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
+                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagic.affinities.unknown")));
+            } else {
+                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagic.affinities.label")));
+                event.getTooltipElements().add(Either.right(new AffinityTooltipComponent(sources)));
             }
         }
     }
