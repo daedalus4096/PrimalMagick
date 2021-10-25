@@ -1,0 +1,29 @@
+{
+  "type": "primalmagic:arcane_crafting_shaped",
+  "research": "ESSENCE_TRANSMUTER",
+  "mana": {
+    "moon": 40
+  },
+  "pattern": [
+    "CCC",
+    "CRC",
+    "MPM"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "R": {
+      "item": "primalmagic:mana_prism"
+    },
+    "M": {
+      "item": "primalmagic:marble_enchanted_slab"
+    },
+    "P": {
+      "item": "primalmagic:magitech_parts_enchanted"
+    }
+  },
+  "result": {
+    "item": "primalmagic:essence_transmuter"
+  }
+}
