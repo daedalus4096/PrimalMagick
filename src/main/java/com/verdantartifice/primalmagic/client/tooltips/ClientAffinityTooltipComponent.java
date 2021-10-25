@@ -1,9 +1,11 @@
 package com.verdantartifice.primalmagic.client.tooltips;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.verdantartifice.primalmagic.client.util.GuiUtils;
 import com.verdantartifice.primalmagic.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -33,6 +35,7 @@ public class ClientAffinityTooltipComponent implements ClientTooltipComponent {
 
     @Override
     public void renderImage(Font font, int x, int y, PoseStack poseStack, ItemRenderer itemRenderer, int z, TextureManager textureManager) {
-        // TODO Auto-generated method stub
+        Minecraft mc = Minecraft.getInstance();
+        GuiUtils.renderSourcesForPlayer(poseStack, this.affinities, mc.player, x, y);
     }
 }
