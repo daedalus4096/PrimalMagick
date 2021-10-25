@@ -54,7 +54,7 @@ public class ClientRenderEvents {
         Screen gui = mc.screen;
 
         // Assemble the tooltip components for showing primal affinities on an item stack
-        if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getStack() != null) {
+        if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getStack() != null && !event.getStack().isEmpty()) {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getStack(), mc.level);
             if (sources == null || sources.isEmpty()) {
                 event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagic.affinities.none")));

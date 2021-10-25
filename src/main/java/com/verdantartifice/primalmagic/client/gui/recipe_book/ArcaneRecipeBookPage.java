@@ -16,7 +16,6 @@ import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraftforge.fmlclient.gui.GuiUtils;
 
 /**
  * GUI page for the arcane recipe book.
