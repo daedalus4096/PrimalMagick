@@ -1,24 +1,35 @@
 package com.verdantartifice.primalmagic.common.tiles.devices;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagic.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagic.common.containers.EssenceTransmuterContainer;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagic.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagic.common.util.ItemUtils;
+import com.verdantartifice.primalmagic.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagic.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
@@ -26,6 +37,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -45,7 +57,7 @@ import net.minecraftforge.common.util.LazyOptional;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.EssenceTransmuterBlock}
  */
-public class EssenceTransmuterTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer {
+public class EssenceTransmuterTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, IOwnedTileEntity {
     protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
     protected static final int[] SLOTS_FOR_DOWN = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     protected static final int[] SLOTS_FOR_SIDES = new int[] { 10 };
@@ -54,10 +66,16 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     
     protected int processTime;
     protected int processTimeTotal;
+    protected UUID ownerUUID;
     protected ManaStorage manaStorage;
+    protected ITileResearchCache researchCache;
     protected Source nextOutputSource;
     
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
+    
+    protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
+    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData transmuterData = new ContainerData() {
@@ -99,6 +117,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     public EssenceTransmuterTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.ESSENCE_TRANSMUTER.get(), pos, state, 11);
         this.manaStorage = new ManaStorage(10000, 100, 100, Source.MOON);
+        this.researchCache = new TileResearchCache();
     }
 
     @Override
@@ -107,7 +126,16 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
         this.nextOutputSource = compound.contains("NextSource", Constants.NBT.TAG_STRING) ? Source.getSource(compound.getString("NextSource")) : null;
+        
+        this.ownerUUID = null;
+        if (compound.contains("OwnerUUID")) {
+            String ownerUUIDStr = compound.getString("OwnerUUID");
+            if (!ownerUUIDStr.isEmpty()) {
+                this.ownerUUID = UUID.fromString(ownerUUIDStr);
+            }
+        }
     }
 
     @Override
@@ -115,8 +143,12 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        compound.put("ResearchCache", this.researchCache.serializeNBT());
         if (this.nextOutputSource != null) {
             compound.putString("NextSource", this.nextOutputSource.getTag());
+        }
+        if (this.ownerUUID != null) {
+            compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
         return super.save(compound);
     }
@@ -139,6 +171,14 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         return 10;
     }
     
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (!this.level.isClientSide) {
+            this.relevantResearch = assembleRelevantResearch();
+        }
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceTransmuterTileEntity entity) {
         boolean shouldMarkDirty = false;
 
@@ -184,8 +224,14 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     @Nonnull
     protected Source getNextSource(Source inputSource, Random rng) {
         if (this.nextOutputSource == null || this.nextOutputSource.equals(inputSource)) {
-            // TODO Generate a new random, known source different from the input
-            this.nextOutputSource = Source.EARTH;   // FIXME
+            // Generate a new random, known source different from the input
+            WeightedRandomBag<Source> bag = new WeightedRandomBag<>();
+            for (Source source : Source.SOURCES.values()) {
+                if (!source.equals(inputSource) && this.isSourceKnown(source)) {
+                    bag.add(source, 1.0D);
+                }
+            }
+            this.nextOutputSource = bag.getRandom(rng);
         }
         return this.nextOutputSource;
     }
@@ -240,14 +286,18 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
         if (!this.remove && cap == PrimalMagicCapabilities.MANA_STORAGE) {
             return this.manaStorageOpt.cast();
+        } else if (!this.remove && cap == PrimalMagicCapabilities.RESEARCH_CACHE) {
+            return this.researchCacheOpt.cast();
+        } else {
+            return super.getCapability(cap, side);
         }
-        return super.getCapability(cap, side);
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         this.manaStorageOpt.invalidate();
+        this.researchCacheOpt.invalidate();
     }
 
     @Override
@@ -317,5 +367,52 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         return true;
+    }
+
+    @Override
+    public void setTileOwner(Player owner) {
+        this.ownerUUID = owner.getUUID();
+        this.updateResearchCache(owner);
+    }
+
+    @Override
+    public Player getTileOwner() {
+        if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
+            Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+            if (livePlayer != null && livePlayer.tickCount % 20 == 0) {
+                // Update research cache with current player research
+                this.updateResearchCache(livePlayer);
+            }
+            return livePlayer;
+        }
+        return null;
+    }
+    
+    protected void updateResearchCache(Player player) {
+        this.researchCache.update(player, this.relevantFilter);
+        this.nextOutputSource = null;
+    }
+    
+    protected boolean isSourceKnown(@Nullable Source source) {
+        if (source == null || source.getDiscoverKey() == null) {
+            return true;
+        } else {
+            Player owner = this.getTileOwner();
+            if (owner != null) {
+                // Check the live research list if possible
+                return source.isDiscovered(owner);
+            } else {
+                // Check the research cache if the owner is unavailable
+                return this.researchCache.isResearchComplete(source.getDiscoverKey());
+            }
+        }
+    }
+    
+    protected Set<SimpleResearchKey> getRelevantResearch() {
+        return this.relevantResearch;
+    }
+    
+    protected static Set<SimpleResearchKey> assembleRelevantResearch() {
+        return Source.SORTED_SOURCES.stream().map(s -> s.getDiscoverKey()).filter(Objects::nonNull).collect(Collectors.toUnmodifiableSet());
     }
 }

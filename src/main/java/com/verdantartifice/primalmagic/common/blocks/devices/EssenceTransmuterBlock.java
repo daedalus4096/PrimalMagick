@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagic.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.EssenceTransmuterTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -139,6 +140,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
         BlockEntity tile = worldIn.getBlockEntity(pos);
+        
         if (tile instanceof IManaContainer manaTile) {
             CompoundTag nbt = stack.getTagElement("ManaContainerTag");
             if (nbt != null) {
@@ -146,6 +148,11 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
                 mana.deserializeNBT(nbt);
                 manaTile.setMana(mana);
             }
+        }
+        
+        // Set the transmuter tile entity's owner when placed by a player.  Needed so that the tile entity can do research checks.
+        if (!worldIn.isClientSide && placer instanceof Player player && tile instanceof IOwnedTileEntity ownedTile) {
+            ownedTile.setTileOwner(player);
         }
     }
 }
