@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagic.common.loot.modifiers.BonusNuggetModifier
 import com.verdantartifice.primalmagic.common.loot.modifiers.BountyFarmingModifier;
 import com.verdantartifice.primalmagic.common.loot.modifiers.BountyFishingModifier;
 import com.verdantartifice.primalmagic.common.loot.modifiers.LootModifierSerializersPM;
+import com.verdantartifice.primalmagic.common.loot.modifiers.RelicFragmentsModifier;
 import com.verdantartifice.primalmagic.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagic.common.tags.EntityTypeTagsPM;
 
@@ -83,5 +84,16 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.25F, 0.25F).build()
                 }));
+        this.add("relic_fragments_high", LootModifierSerializersPM.RELIC_FRAGMENTS.get(), new RelicFragmentsModifier(
+                new LootItemCondition[] {
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }, 3, 5, 1));
+        this.add("relic_fragments_low", LootModifierSerializersPM.RELIC_FRAGMENTS.get(), new RelicFragmentsModifier(
+                new LootItemCondition[] {
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.1F, 0.05F).build()
+                }, 1, 1, 0));
     }
 }

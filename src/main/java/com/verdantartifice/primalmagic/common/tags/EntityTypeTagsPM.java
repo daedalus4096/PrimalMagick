@@ -23,6 +23,8 @@ public class EntityTypeTagsPM {
     public static final IOptionalNamedTag<EntityType<?>> DROPS_BLOODY_FLESH = tag("drops_bloody_flesh");
     public static final IOptionalNamedTag<EntityType<?>> DROPS_BLOOD_NOTES_HIGH = tag("drops_blood_notes_high");
     public static final IOptionalNamedTag<EntityType<?>> DROPS_BLOOD_NOTES_LOW = tag("drops_blood_notes_low");
+    public static final IOptionalNamedTag<EntityType<?>> DROPS_RELIC_FRAGMENTS_HIGH = tag("drops_relic_fragments_high");
+    public static final IOptionalNamedTag<EntityType<?>> DROPS_RELIC_FRAGMENTS_LOW = tag("drops_relic_fragments_low");
 
     private static IOptionalNamedTag<EntityType<?>> tag(String name) {
         return EntityTypeTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
