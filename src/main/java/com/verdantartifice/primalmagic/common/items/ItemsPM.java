@@ -470,6 +470,8 @@ public class ItemsPM {
     // Register knowledge items
     public static final RegistryObject<KnowledgeGainItem> OBSERVATION_NOTES = ITEMS.register("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<KnowledgeGainItem> THEORY_NOTES = ITEMS.register("theory_notes", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<KnowledgeGainItem> MYSTICAL_RELIC = ITEMS.register("mystical_relic", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> MYSTICAL_RELIC_FRAGMENT = ITEMS.register("mystical_relic_fragment", () -> new Item(new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<ForbiddenSourceGainItem> BLOOD_NOTES = ITEMS.register("blood_notes", () -> new ForbiddenSourceGainItem(Source.BLOOD, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     
     // Register dust essence items
