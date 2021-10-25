@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "primalmagic:block/essence_transmuter" },
+        "facing=south": { "model": "primalmagic:block/essence_transmuter", "y": 180 },
+        "facing=west":  { "model": "primalmagic:block/essence_transmuter", "y": 270 },
+        "facing=east":  { "model": "primalmagic:block/essence_transmuter", "y": 90 }
+    }
+}

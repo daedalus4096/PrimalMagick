@@ -108,6 +108,7 @@
     "primalmagic:hexium_block",
     "primalmagic:hallowsteel_block",
     "primalmagic:ignyx_block",
-    "primalmagic:salt_block"
+    "primalmagic:salt_block",
+    "primalmagic:essence_transmuter"
   ]
 }

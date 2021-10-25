@@ -2,6 +2,7 @@ v0.0.20-alpha
 -------------
 * Add scan research identifying most research aids
 * Add recipe book functionality to the concocter
+* Add Essence Transmuter, to convert one source of essence into another
 
 v0.0.19-alpha
 -------------

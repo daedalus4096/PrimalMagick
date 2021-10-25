@@ -521,6 +521,17 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("DOWSING_ROD")))
             .manaCost(new SourceList().add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ESSENCE_TRANSMUTER.get())
+            .patternLine("CCC")
+            .patternLine("CRC")
+            .patternLine("MPM")
+            .key('C', Items.COPPER_INGOT)
+            .key('R', ItemsPM.MANA_PRISM.get())
+            .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_TRANSMUTER")))
+            .manaCost(new SourceList().add(Source.MOON, 40))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

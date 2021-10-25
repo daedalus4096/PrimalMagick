@@ -69,4 +69,7 @@ public class ContainersPM {
     public static final RegistryObject<MenuType<ConcocterContainer>> CONCOCTER = CONTAINERS.register("concocter", () -> IForgeContainerType.create((windowId, inv, data) -> {
         return new ConcocterContainer(windowId, inv);
     }));
+    public static final RegistryObject<MenuType<EssenceTransmuterContainer>> ESSENCE_TRANSMUTER = CONTAINERS.register("essence_transmuter", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        return new EssenceTransmuterContainer(windowId, inv);
+    }));
 }

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagic.common.tiles.crafting.ConcocterTileEntity
 import com.verdantartifice.primalmagic.common.tiles.crafting.EssenceFurnaceTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.crafting.RunescribingAltarTileEntity;
+import com.verdantartifice.primalmagic.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.ResearchTableTileEntity;
 import com.verdantartifice.primalmagic.common.tiles.devices.SanguineCrucibleTileEntity;
@@ -67,4 +68,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<BlockEntityType<ResearchTableTileEntity>> RESEARCH_TABLE = TILE_ENTITIES.register("research_table", () -> BlockEntityType.Builder.of(ResearchTableTileEntity::new, BlocksPM.RESEARCH_TABLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<AutoChargerTileEntity>> AUTO_CHARGER = TILE_ENTITIES.register("auto_charger", () -> BlockEntityType.Builder.of(AutoChargerTileEntity::new, BlocksPM.AUTO_CHARGER.get()).build(null));
     public static final RegistryObject<BlockEntityType<RunecarvingTableTileEntity>> RUNECARVING_TABLE = TILE_ENTITIES.register("runecarving_table", () -> BlockEntityType.Builder.of(RunecarvingTableTileEntity::new, BlocksPM.RUNECARVING_TABLE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<EssenceTransmuterTileEntity>> ESSENCE_TRANSMUTER = TILE_ENTITIES.register("essence_transmuter", () -> BlockEntityType.Builder.of(EssenceTransmuterTileEntity::new, BlocksPM.ESSENCE_TRANSMUTER.get()).build(null));
 }
