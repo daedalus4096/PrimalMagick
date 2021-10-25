@@ -250,8 +250,9 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
                 this.items.set(index + 1, (out == null ? ItemStack.EMPTY : out));
             }
             
-            // Shrink the input stack
+            // Deduct the inputs
             inputStack.shrink(ESSENCE_PER_TRANSMUTE);
+            this.manaStorage.extractMana(Source.MOON, this.getManaCost(), false);
         }
     }
     
