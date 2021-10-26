@@ -1,3 +1,7 @@
+v0.0.21-alpha
+-------------
+* Fix Z-ordering issues with Research Table tooltips
+
 v0.0.20-alpha
 -------------
 * Add scan research identifying most research aids
