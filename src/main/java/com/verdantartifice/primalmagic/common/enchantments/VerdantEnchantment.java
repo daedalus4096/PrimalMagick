@@ -10,6 +10,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class VerdantEnchantment extends AbstractRuneEnchantment {
+    public static final int BASE_DAMAGE_PER_USE = 8;
+    
     public VerdantEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slots) {
         super(rarity, EnchantmentTypesPM.HOE, slots);
     }
