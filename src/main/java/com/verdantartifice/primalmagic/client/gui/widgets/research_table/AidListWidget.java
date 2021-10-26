@@ -38,14 +38,6 @@ public class AidListWidget extends AbstractWidget {
         matrixStack.translate(this.x, this.y, 0.0F);
         this.blit(matrixStack, 0, 0, 206, 0, 8, 8);
         matrixStack.popPose();
-
-        if (this.isHovered() && !this.aidNames.isEmpty()) {
-            // Render tooltip
-            List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagic.research_table.aid_header"));
-            tooltip.addAll(this.aidNames);
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
-        }
     }
     
     @Override
@@ -56,5 +48,16 @@ public class AidListWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput p_169152_) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        if (!this.aidNames.isEmpty()) {
+            // Render tooltip
+            List<Component> tooltip = new ArrayList<>();
+            tooltip.add(new TranslatableComponent("primalmagic.research_table.aid_header"));
+            tooltip.addAll(this.aidNames);
+            GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+        }
     }
 }

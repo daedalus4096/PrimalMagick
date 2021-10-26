@@ -40,12 +40,6 @@ public class AidUnlockWidget extends AbstractWidget {
         matrixStack.translate(this.x, this.y, 0.0F);
         this.blit(matrixStack, 0, 0, 198, 0, 8, 8);
         matrixStack.popPose();
-
-        if (this.isHovered() && this.aidBlock != null) {
-            // Render tooltip
-            Component unlockText = new TranslatableComponent("primalmagic.research_table.unlock", this.aidBlock.getName());
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(unlockText), mouseX, mouseY);
-        }
     }
     
     @Override
@@ -56,5 +50,14 @@ public class AidUnlockWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        if (this.aidBlock != null) {
+            // Render tooltip
+            Component unlockText = new TranslatableComponent("primalmagic.research_table.unlock", this.aidBlock.getName());
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(unlockText), mouseX, mouseY);
+        }
     }
 }

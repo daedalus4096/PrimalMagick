@@ -77,12 +77,6 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             this.blit(matrixStack, 0, 0, 182, 0, px, 2);
             matrixStack.popPose();
         });
-        
-        if (this.isHovered()) {
-            // Render tooltip
-            Component knowledgeText = new TranslatableComponent(this.type.getNameTranslationKey());
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), mouseX, mouseY);
-        }
     }
     
     @Override
@@ -93,5 +87,12 @@ public class KnowledgeTotalWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip
+        Component knowledgeText = new TranslatableComponent(this.type.getNameTranslationKey());
+        GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), mouseX, mouseY);
     }
 }

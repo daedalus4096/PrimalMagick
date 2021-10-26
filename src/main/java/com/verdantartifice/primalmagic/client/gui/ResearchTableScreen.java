@@ -28,6 +28,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -94,6 +95,12 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
+        
+        for (Widget w : this.renderables) {
+            if (w instanceof AbstractWidget widget && widget.isHovered()) {
+                widget.renderToolTip(matrixStack, mouseX, mouseY);
+            }
+        }
     }
     
     @Override
@@ -167,7 +174,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         this.completeProjectButton = null;
         
         // Render theory progress widget
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 206, this.topPos + 29, IPlayerKnowledge.KnowledgeType.THEORY));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, IPlayerKnowledge.KnowledgeType.THEORY));
         
         if (this.project == null && this.menu.isWritingReady()) {
             if (this.progressing) {
@@ -224,7 +231,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         }
         
         // Render observation progress widget
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 29, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 11, this.topPos + 116, IPlayerKnowledge.KnowledgeType.OBSERVATION));
     }
     
     /**

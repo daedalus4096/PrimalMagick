@@ -65,20 +65,6 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
             this.blit(matrixStack, 0, 0, 215, 0, 6, 5);
             matrixStack.popPose();
         }
-        if (this.isHovered()) {
-            // Render tooltip
-            matrixStack.pushPose();
-            matrixStack.translate(0, 0, 200);
-            List<Component> tooltip = new ArrayList<>(this.getHoverText());
-            if (this.consumed) {
-                tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-            }
-            if (this.hasBonus) {
-                tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-            }
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
-            matrixStack.popPose();
-        }
     }
     
     /**
@@ -96,5 +82,21 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        List<Component> tooltip = new ArrayList<>(this.getHoverText());
+        if (this.consumed) {
+            tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        }
+        if (this.hasBonus) {
+            tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        }
+        GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+        matrixStack.popPose();
     }
 }
