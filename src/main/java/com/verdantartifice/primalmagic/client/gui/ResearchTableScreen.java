@@ -167,7 +167,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         this.completeProjectButton = null;
         
         // Render theory progress widget
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, IPlayerKnowledge.KnowledgeType.THEORY));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 206, this.topPos + 29, IPlayerKnowledge.KnowledgeType.THEORY));
         
         if (this.project == null && this.menu.isWritingReady()) {
             if (this.progressing) {
@@ -208,23 +208,23 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
                     
                     // Render material widgets
                     int materialCount = this.project.getMaterials().size();
-                    int x = (152 - (38 * materialCount)) / 2;
-                    for (int index = 0; index < materialCount; index++) {
-                        AbstractProjectMaterial material = this.project.getMaterials().get(index);
-
+                    int startX = (152 - (38 * materialCount)) / 2;
+                    for (int index = 0, x = startX; index < materialCount; index++, x += 38) {
                         // Render material checkbox
+                        AbstractProjectMaterial material = this.project.getMaterials().get(index);
                         this.addRenderableWidget(new ProjectMaterialSelectionCheckbox(this.leftPos + 42 + x, this.topPos + 93, this, material.isSelected(), index));
+                    }
+                    for (int index = 0, x = startX; index < materialCount; index++, x += 38) {
                         // Render material widget
+                        AbstractProjectMaterial material = this.project.getMaterials().get(index);
                         this.addRenderableWidget(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93, surroundings));
-                        
-                        x += 38;
                     }
                 });
             }
         }
         
         // Render observation progress widget
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 11, this.topPos + 116, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 29, IPlayerKnowledge.KnowledgeType.OBSERVATION));
     }
     
     /**

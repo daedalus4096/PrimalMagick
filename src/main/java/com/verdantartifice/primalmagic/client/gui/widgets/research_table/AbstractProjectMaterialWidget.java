@@ -42,7 +42,7 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShaderTexture(0, TEXTURE);
         if (this.complete) {
             // Render completion checkmark if appropriate
@@ -67,6 +67,8 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         }
         if (this.isHovered()) {
             // Render tooltip
+            matrixStack.pushPose();
+            matrixStack.translate(0, 0, 200);
             List<Component> tooltip = new ArrayList<>(this.getHoverText());
             if (this.consumed) {
                 tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
@@ -74,7 +76,8 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
             if (this.hasBonus) {
                 tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             }
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+            matrixStack.popPose();
         }
     }
     

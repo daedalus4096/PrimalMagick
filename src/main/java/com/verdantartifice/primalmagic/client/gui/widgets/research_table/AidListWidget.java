@@ -31,7 +31,7 @@ public class AidListWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         // Draw padlock icon
         matrixStack.pushPose();
         RenderSystem.setShaderTexture(0, TEXTURE);
@@ -44,7 +44,7 @@ public class AidListWidget extends AbstractWidget {
             List<Component> tooltip = new ArrayList<>();
             tooltip.add(new TranslatableComponent("primalmagic.research_table.aid_header"));
             tooltip.addAll(this.aidNames);
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
         }
     }
     

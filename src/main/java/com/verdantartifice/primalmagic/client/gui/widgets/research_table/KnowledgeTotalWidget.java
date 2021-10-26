@@ -38,7 +38,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
         
         // Draw knowledge type icon
@@ -81,7 +81,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         if (this.isHovered()) {
             // Render tooltip
             Component knowledgeText = new TranslatableComponent(this.type.getNameTranslationKey());
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), mouseX, mouseY);
         }
     }
     

@@ -33,7 +33,7 @@ public class AidUnlockWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         // Draw padlock icon
         matrixStack.pushPose();
         RenderSystem.setShaderTexture(0, TEXTURE);
@@ -44,7 +44,7 @@ public class AidUnlockWidget extends AbstractWidget {
         if (this.isHovered() && this.aidBlock != null) {
             // Render tooltip
             Component unlockText = new TranslatableComponent("primalmagic.research_table.unlock", this.aidBlock.getName());
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(unlockText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(unlockText), mouseX, mouseY);
         }
     }
     
