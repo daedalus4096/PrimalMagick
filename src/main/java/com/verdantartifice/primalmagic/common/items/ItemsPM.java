@@ -44,6 +44,7 @@ import com.verdantartifice.primalmagic.common.items.tools.HexiumTridentItem;
 import com.verdantartifice.primalmagic.common.items.tools.ItemTierPM;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalAxeItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalFishingRodItem;
+import com.verdantartifice.primalmagic.common.items.tools.PrimalHoeItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalPickaxeItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimalShovelItem;
 import com.verdantartifice.primalmagic.common.items.tools.PrimaliteShieldItem;
@@ -387,6 +388,7 @@ public class ItemsPM {
     public static final RegistryObject<PrimalShovelItem> PRIMAL_SHOVEL = ITEMS.register("primal_shovel", () -> new PrimalShovelItem(ItemTierPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimalFishingRodItem> PRIMAL_FISHING_ROD = ITEMS.register("primal_fishing_rod", () -> new PrimalFishingRodItem(ItemTierPM.PRIMALITE, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimalAxeItem> PRIMAL_AXE = ITEMS.register("primal_axe", () -> new PrimalAxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PrimalHoeItem> PRIMAL_HOE = ITEMS.register("primal_hoe", () -> new PrimalHoeItem(ItemTierPM.PRIMALITE, -2, 0.0F, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimalPickaxeItem> PRIMAL_PICKAXE = ITEMS.register("primal_pickaxe", () -> new PrimalPickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<ForbiddenTridentItem> FORBIDDEN_TRIDENT = ITEMS.register("forbidden_trident", () -> new ForbiddenTridentItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<ForbiddenBowItem> FORBIDDEN_BOW = ITEMS.register("forbidden_bow", () -> new ForbiddenBowItem(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(Rarity.RARE)));
