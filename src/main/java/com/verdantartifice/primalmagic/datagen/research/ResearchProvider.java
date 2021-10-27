@@ -1054,6 +1054,12 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_AXE.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROJECT").requiredResearch("RUNE_AREA").requiredResearch("RUNE_SKY").build())
             .build(consumer);
+        ResearchEntryBuilder.entry("PRIMAL_HOE", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_SUN").parent("RITUAL_CANDLES")
+            .parent("INCENSE_BRAZIER")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_HOE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_SUN").build())
+            .build(consumer);
         ResearchEntryBuilder.entry("PRIMAL_PICKAXE", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_MOON").parent("RITUAL_LECTERN")
             .parent("INCENSE_BRAZIER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
