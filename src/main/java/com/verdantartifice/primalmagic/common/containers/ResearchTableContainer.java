@@ -184,6 +184,6 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
         Set<Block> nearby = this.worldPosCallable.evaluate((level, pos) -> {
             return TheorycraftManager.getNearbyAidBlocks(this.player.level, pos);
         }, Collections.emptySet());
-        return nearby.stream().map(b -> b.getName()).sorted(Comparator.comparing(c -> c.getString())).collect(Collectors.toList());
+        return nearby.stream().map(b -> b.getName()).distinct().sorted(Comparator.comparing(c -> c.getString())).collect(Collectors.toList());
     }
 }
