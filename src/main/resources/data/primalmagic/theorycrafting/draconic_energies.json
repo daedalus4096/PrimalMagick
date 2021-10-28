@@ -2,7 +2,7 @@
   "key": "primalmagic:draconic_energies",
   "required_material_count_override": 1,
   "base_success_chance_override": 0.5,
-  "reward_multiplier": 0.5,
+  "reward_multiplier": 1.0,
   "aid_blocks": [
     "minecraft:dragon_egg"
   ],

@@ -123,7 +123,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.PHANTOM_MEMBRANE, true).bonusReward(0.125D).weight(0.5D).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
             .build(consumer);
-        ProjectBuilder.project("draconic_energies").aid(Blocks.DRAGON_EGG).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+        ProjectBuilder.project("draconic_energies").aid(Blocks.DRAGON_EGG).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(1.0D)
             .material(ItemTagMaterialBuilder.tag(Tags.Items.ENDER_PEARLS, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("draconic_memories").aid(Blocks.DRAGON_HEAD).aid(Blocks.DRAGON_WALL_HEAD).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
