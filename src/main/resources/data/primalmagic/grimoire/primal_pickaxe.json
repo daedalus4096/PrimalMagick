@@ -33,6 +33,9 @@
         "RUNE_SUMMON",
         "RUNE_ITEM",
         "RUNE_MOON"
+      ],
+      "siblings": [
+        "\u0026primalmagic:lucky_strike"
       ]
     }
   ]

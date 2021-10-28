@@ -20,6 +20,7 @@ public class ResearchAddendumBuilder {
     protected final String modId;
     protected final List<SimpleResearchKey> requiredResearch = new ArrayList<>();
     protected final List<ResourceLocation> recipes = new ArrayList<>();
+    protected final List<SimpleResearchKey> siblings = new ArrayList<>();
     protected SourceList attunements;
 
     protected ResearchAddendumBuilder(@Nonnull String modId) {
@@ -73,6 +74,15 @@ public class ResearchAddendumBuilder {
         return this;
     }
     
+    public ResearchAddendumBuilder sibling(@Nonnull String keyStr) {
+        return sibling(SimpleResearchKey.parse(keyStr));
+    }
+    
+    public ResearchAddendumBuilder sibling(@Nonnull SimpleResearchKey key) {
+        this.siblings.add(key);
+        return this;
+    }
+    
     private void validate() {
         if (this.modId == null) {
             throw new IllegalStateException("No mod ID for research addendum");
@@ -81,21 +91,24 @@ public class ResearchAddendumBuilder {
     
     public IFinishedResearchAddendum build() {
         this.validate();
-        return new ResearchAddendumBuilder.Result(this.modId, this.requiredResearch, this.recipes, this.attunements);
+        return new ResearchAddendumBuilder.Result(this.modId, this.requiredResearch, this.recipes, this.siblings, this.attunements);
     }
     
     public static class Result implements IFinishedResearchAddendum {
         protected final String modId;
         protected final List<SimpleResearchKey> requiredResearch;
         protected final List<ResourceLocation> recipes;
+        protected final List<SimpleResearchKey> siblings;
         protected final SourceList attunements;
         protected String entryKey;
         protected int stageIndex;
 
-        public Result(@Nonnull String modId, @Nonnull List<SimpleResearchKey> requiredResearch, @Nonnull List<ResourceLocation> recipes, @Nullable SourceList attunements) {
+        public Result(@Nonnull String modId, @Nonnull List<SimpleResearchKey> requiredResearch, @Nonnull List<ResourceLocation> recipes, @Nonnull List<SimpleResearchKey> siblings, 
+                @Nullable SourceList attunements) {
             this.modId = modId;
             this.requiredResearch = requiredResearch;
             this.recipes = recipes;
+            this.siblings = siblings;
             this.attunements = attunements;
         }
 
@@ -137,6 +150,14 @@ public class ResearchAddendumBuilder {
                     recipeArray.add(recipe.toString());
                 }
                 json.add("recipes", recipeArray);
+            }
+            
+            if (!this.siblings.isEmpty()) {
+                JsonArray siblingArray = new JsonArray();
+                for (SimpleResearchKey key : this.siblings) {
+                    siblingArray.add(key.toString());
+                }
+                json.add("siblings", siblingArray);
             }
         }
     }

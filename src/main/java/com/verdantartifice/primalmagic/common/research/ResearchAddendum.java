@@ -27,6 +27,7 @@ public class ResearchAddendum {
     protected ResearchEntry researchEntry;
     protected String textTranslationKey;
     protected List<ResourceLocation> recipes = new ArrayList<>();
+    protected List<SimpleResearchKey> siblings = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
     protected SourceList attunements = new SourceList();
 
@@ -50,6 +51,9 @@ public class ResearchAddendum {
         if (obj.has("recipes")) {
             addendum.recipes = JsonUtils.toResourceLocations(obj.get("recipes").getAsJsonArray());
         }
+        if (obj.has("siblings")) {
+            addendum.siblings = JsonUtils.toSimpleResearchKeys(obj.get("siblings").getAsJsonArray());
+        }
         if (obj.has("required_research")) {
             addendum.requiredResearch = CompoundResearchKey.parse(obj.get("required_research").getAsJsonArray());
         }
@@ -66,6 +70,10 @@ public class ResearchAddendum {
         for (int index = 0; index < recipeSize; index++) {
             addendum.recipes.add(new ResourceLocation(buf.readUtf()));
         }
+        int siblingSize = buf.readVarInt();
+        for (int index = 0; index < siblingSize; index++) {
+            addendum.siblings.add(SimpleResearchKey.parse(buf.readUtf()));
+        }
         addendum.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
         for (Source source : Source.SORTED_SOURCES) {
             addendum.attunements.add(source, buf.readVarInt());
@@ -78,6 +86,10 @@ public class ResearchAddendum {
         buf.writeVarInt(addendum.recipes.size());
         for (ResourceLocation recipe : addendum.recipes) {
             buf.writeUtf(recipe.toString());
+        }
+        buf.writeVarInt(addendum.siblings.size());
+        for (SimpleResearchKey key : addendum.siblings) {
+            buf.writeUtf(key.toString());
         }
         buf.writeUtf(addendum.requiredResearch == null ? "" : addendum.requiredResearch.toString());
         for (Source source : Source.SORTED_SOURCES) {
@@ -98,6 +110,11 @@ public class ResearchAddendum {
     @Nonnull
     public List<ResourceLocation> getRecipes() {
         return Collections.unmodifiableList(this.recipes);
+    }
+    
+    @Nonnull
+    public List<SimpleResearchKey> getSiblings() {
+        return Collections.unmodifiableList(this.siblings);
     }
     
     @Nullable

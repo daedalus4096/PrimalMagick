@@ -5,6 +5,7 @@ v0.0.21-alpha
 * Add new research project using a Dragon Head as a research aid
 * Increase reward for Draconic Energies research project
 * Spell projectiles are no longer slowed by water
+* Rune enchantments discovered from primal tools are now indexed upon discovery, rather than creation
 
 v0.0.20-alpha
 -------------
