@@ -41,6 +41,7 @@ public class ResearchStage {
     protected List<Object> mustCraft = new ArrayList<>();   // Either a specific ItemStack or a tag ResourceLocation
     protected List<Integer> craftReference = new ArrayList<>();
     protected List<Knowledge> requiredKnowledge = new ArrayList<>();
+    protected List<SimpleResearchKey> siblings = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
     protected SourceList attunements = new SourceList();
     
@@ -87,6 +88,9 @@ public class ResearchStage {
                                         .filter(Objects::nonNull)
                                         .collect(Collectors.toList());
         }
+        if (obj.has("siblings")) {
+            stage.siblings = JsonUtils.toSimpleResearchKeys(obj.get("siblings").getAsJsonArray());
+        }
         if (obj.has("required_research")) {
             stage.requiredResearch = CompoundResearchKey.parse(obj.get("required_research").getAsJsonArray());
         }
@@ -119,6 +123,10 @@ public class ResearchStage {
         int knowSize = buf.readVarInt();
         for (int index = 0; index < knowSize; index++) {
             stage.requiredKnowledge.add(Knowledge.parse(buf.readUtf()));
+        }
+        int siblingSize = buf.readVarInt();
+        for (int index = 0; index < siblingSize; index++) {
+            stage.siblings.add(SimpleResearchKey.parse(buf.readUtf()));
         }
         stage.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
         for (Source source : Source.SORTED_SOURCES) {
@@ -161,6 +169,10 @@ public class ResearchStage {
         for (Knowledge know : stage.requiredKnowledge) {
             buf.writeUtf(know.toString());
         }
+        buf.writeVarInt(stage.siblings.size());
+        for (SimpleResearchKey key : stage.siblings) {
+            buf.writeUtf(key.toString());
+        }
         buf.writeUtf(stage.requiredResearch == null ? "" : stage.requiredResearch.toString());
         for (Source source : Source.SORTED_SOURCES) {
             buf.writeVarInt(stage.attunements.getAmount(source));
@@ -200,6 +212,11 @@ public class ResearchStage {
     @Nonnull
     public List<Knowledge> getRequiredKnowledge() {
         return Collections.unmodifiableList(this.requiredKnowledge);
+    }
+    
+    @Nonnull
+    public List<SimpleResearchKey> getSiblings() {
+        return Collections.unmodifiableList(this.siblings);
     }
     
     @Nullable

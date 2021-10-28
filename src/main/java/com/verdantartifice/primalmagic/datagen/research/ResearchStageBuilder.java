@@ -28,6 +28,7 @@ public class ResearchStageBuilder {
     protected final List<String> requiredKnowledge = new ArrayList<>();
     protected final List<SimpleResearchKey> requiredResearch = new ArrayList<>();
     protected final List<ResourceLocation> recipes = new ArrayList<>();
+    protected final List<SimpleResearchKey> siblings = new ArrayList<>();
     protected SourceList attunements;
     
     protected ResearchStageBuilder(@Nonnull String modId) {
@@ -122,6 +123,15 @@ public class ResearchStageBuilder {
         return this;
     }
     
+    public ResearchStageBuilder sibling(@Nonnull String keyStr) {
+        return sibling(SimpleResearchKey.parse(keyStr));
+    }
+    
+    public ResearchStageBuilder sibling(@Nonnull SimpleResearchKey key) {
+        this.siblings.add(key);
+        return this;
+    }
+    
     private void validate() {
         if (this.modId == null) {
             throw new IllegalStateException("No mod ID for research stage");
@@ -130,7 +140,7 @@ public class ResearchStageBuilder {
     
     public IFinishedResearchStage build() {
         this.validate();
-        return new ResearchStageBuilder.Result(this.modId, this.requiredItems, this.requiredCrafts, this.requiredKnowledge, this.requiredResearch, this.recipes, this.attunements);
+        return new ResearchStageBuilder.Result(this.modId, this.requiredItems, this.requiredCrafts, this.requiredKnowledge, this.requiredResearch, this.recipes, this.siblings, this.attunements);
     }
     
     public static class Result implements IFinishedResearchStage {
@@ -140,17 +150,19 @@ public class ResearchStageBuilder {
         protected final List<String> requiredKnowledge;
         protected final List<SimpleResearchKey> requiredResearch;
         protected final List<ResourceLocation> recipes;
+        protected final List<SimpleResearchKey> siblings;
         protected final SourceList attunements;
         protected String entryKey;
         protected int stageIndex;
         
-        public Result(@Nonnull String modId, @Nonnull List<String> requiredItems, @Nonnull List<String> requiredCrafts, @Nonnull List<String> requiredKnowledge, @Nonnull List<SimpleResearchKey> requiredResearch, @Nonnull List<ResourceLocation> recipes, @Nullable SourceList attunements) {
+        public Result(@Nonnull String modId, @Nonnull List<String> requiredItems, @Nonnull List<String> requiredCrafts, @Nonnull List<String> requiredKnowledge, @Nonnull List<SimpleResearchKey> requiredResearch, @Nonnull List<ResourceLocation> recipes, @Nonnull List<SimpleResearchKey> siblings, @Nullable SourceList attunements) {
             this.modId = modId;
             this.requiredItems = requiredItems;
             this.requiredCrafts = requiredCrafts;
             this.requiredKnowledge = requiredKnowledge;
             this.requiredResearch = requiredResearch;
             this.recipes = recipes;
+            this.siblings = siblings;
             this.attunements = attunements;
         }
 
@@ -216,6 +228,14 @@ public class ResearchStageBuilder {
                     recipeArray.add(recipe.toString());
                 }
                 json.add("recipes", recipeArray);
+            }
+            
+            if (!this.siblings.isEmpty()) {
+                JsonArray siblingArray = new JsonArray();
+                for (SimpleResearchKey key : this.siblings) {
+                    siblingArray.add(key.toString());
+                }
+                json.add("siblings", siblingArray);
             }
         }
     }
