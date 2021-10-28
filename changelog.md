@@ -2,6 +2,8 @@ v0.0.21-alpha
 -------------
 * Fix Z-ordering issues with Research Table tooltips
 * Add Hoe of the Nurturing Sun, to stimulate rapid plant growth
+* Add new research project using a Dragon Head as a research aid
+* Increase reward for Draconic Energies research project
 
 v0.0.20-alpha
 -------------
