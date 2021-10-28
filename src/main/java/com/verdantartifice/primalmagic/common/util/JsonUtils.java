@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 
@@ -52,6 +53,25 @@ public class JsonUtils {
             try {
                 retVal.add(new ResourceLocation(element.getAsString()));
             } catch (Exception e) {}
+        }
+        return retVal;
+    }
+    
+    /**
+     * Parse the given JSON array into a list of simple research keys, based on its elements' string
+     * representations.
+     * 
+     * @param jsonArray the JSON array to be parsed
+     * @return the list of deserialized simple research keys
+     */
+    @Nonnull
+    public static List<SimpleResearchKey> toSimpleResearchKeys(@Nonnull JsonArray jsonArray) {
+        List<SimpleResearchKey> retVal = new ArrayList<>();
+        for (JsonElement element : jsonArray) {
+            SimpleResearchKey key = SimpleResearchKey.parse(element.getAsString());
+            if (key != null) {
+                retVal.add(key);
+            }
         }
         return retVal;
     }
