@@ -126,6 +126,9 @@ public class ProjectProvider implements DataProvider {
         ProjectBuilder.project("draconic_energies").aid(Blocks.DRAGON_EGG).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
             .material(ItemTagMaterialBuilder.tag(Tags.Items.ENDER_PEARLS, true).weight(1).build())
             .build(consumer);
+        ProjectBuilder.project("draconic_memories").aid(Blocks.DRAGON_HEAD).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .material(ExperienceMaterialBuilder.experience(3, true).weight(1).build())
+            .build(consumer);
         ProjectBuilder.project("enchanting_studies").requiredResearch("BASIC_MANAWEAVING")
             .material(ItemMaterialBuilder.item(Items.ENCHANTING_TABLE, false).weight(5).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, true).weight(5).build())
