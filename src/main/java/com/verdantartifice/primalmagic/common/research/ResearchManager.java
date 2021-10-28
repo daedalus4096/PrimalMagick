@@ -391,16 +391,26 @@ public class ResearchManager {
                     ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                     serverPlayer.awardRecipes(recipesToUnlock);
                 }
+                
+                // Grant any sibling research from the current stage
+                for (SimpleResearchKey sibling : currentStage.getSiblings()) {
+                    completeResearch(player, sibling, sync);
+                }
             }
             
             if (entryComplete && !entry.getAddenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
-                // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
                 RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
                 for (ResearchAddendum addendum : entry.getAddenda()) {
+                    // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
                     if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(player)) {
                         Set<Recipe<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                         ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                         serverPlayer.awardRecipes(recipesToUnlock);
+                    }
+                    
+                    // Grant any sibling research from this entry's addenda
+                    for (SimpleResearchKey sibling : addendum.getSiblings()) {
+                        completeResearch(player, sibling, sync);
                     }
                 }
             }
@@ -445,6 +455,11 @@ public class ResearchManager {
                                 Set<Recipe<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                                 ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                                 serverPlayer.awardRecipes(recipesToUnlock);
+                            }
+                            
+                            // Grant any unlocked sibling research
+                            for (SimpleResearchKey sibling : addendum.getSiblings()) {
+                                completeResearch(player, sibling, sync);
                             }
                         }
                     }
