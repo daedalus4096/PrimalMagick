@@ -1,6 +1,7 @@
 v0.0.21-alpha
 -------------
 * Fix Z-ordering issues with Research Table tooltips
+* Add Hoe of the Nurturing Sun, to stimulate rapid plant growth
 
 v0.0.20-alpha
 -------------

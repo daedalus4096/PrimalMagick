@@ -18,11 +18,13 @@ import com.verdantartifice.primalmagic.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerCooldowns.CooldownType;
-import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagic.common.effects.EffectsPM;
 import com.verdantartifice.primalmagic.common.enchantments.EnchantmentHelperPM;
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagic.common.enchantments.VerdantEnchantment;
 import com.verdantartifice.primalmagic.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
 import com.verdantartifice.primalmagic.common.items.misc.DreamVisionTalismanItem;
@@ -48,6 +50,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -58,9 +61,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants;
@@ -70,6 +76,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -78,6 +86,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 @Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
@@ -555,6 +564,41 @@ public class PlayerEvents {
                 
                 // If we made it through every talisman with experience left over, update the orb to be the leftover value
                 event.getOrb().value = xpValue;
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onUseHoe(UseHoeEvent event) {
+        ItemStack stack = event.getContext().getItemInHand();
+        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.VERDANT.get(), stack);
+        if (enchantLevel > 0) {
+            Player player = event.getPlayer();
+            Level level = event.getContext().getLevel();
+            BlockPos pos = event.getContext().getClickedPos();
+            BlockState state = level.getBlockState(pos);
+            if (!player.isShiftKeyDown() && state.getBlock() instanceof BonemealableBlock mealBlock) {
+                if (mealBlock.isValidBonemealTarget(level, pos, state, level.isClientSide)) {
+                    if (level instanceof ServerLevel serverLevel) {
+                        if (mealBlock.isBonemealSuccess(level, level.random, pos, state)) {
+                            mealBlock.performBonemeal(serverLevel, level.random, pos, state);
+                        }
+                        
+                        // Damage the stack; do one less damage here than needed, as setting the event result to ALLOW will cause
+                        // one damage to be applied automatically.
+                        int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1)) - 1;
+                        if (damage > 0) {
+                            stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(event.getContext().getHand()));
+                        }
+                        
+                        // Setting an ALLOW result causes the rest of the hoe functionality to be skipped, and one damage to be
+                        // applied to the stack.
+                        event.setResult(Event.Result.ALLOW);
+                    }
+                    if (!level.isClientSide) {
+                        level.levelEvent(1505, pos, 0);
+                    }
+                }
             }
         }
     }

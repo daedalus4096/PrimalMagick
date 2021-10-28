@@ -5422,6 +5422,18 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SKY, 40))
             .instability(3)
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_HOE.get().getDefaultInstance())
+            .addIngredient(ItemsPM.PRIMALITE_HOE.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get(), 2)
+            .addIngredient(ItemsPM.RUNE_SUN.get())
+            .addIngredient(ItemsPM.MANA_PRISM.get())
+            .addIngredient(ItemsPM.MANA_SALTS.get())
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.INCENSE_BRAZIER.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_HOE")))
+            .manaCost(new SourceList().add(Source.SUN, 40))
+            .instability(3)
+            .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_PICKAXE.get().getDefaultInstance())
             .addIngredient(ItemsPM.PRIMALITE_PICKAXE.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get(), 2)
