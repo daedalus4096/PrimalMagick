@@ -4,6 +4,7 @@ v0.0.21-alpha
 * Add Hoe of the Nurturing Sun, to stimulate rapid plant growth
 * Add new research project using a Dragon Head as a research aid
 * Increase reward for Draconic Energies research project
+* Spell projectiles are no longer slowed by water
 
 v0.0.20-alpha
 -------------
