@@ -401,16 +401,16 @@ public class ResearchManager {
             if (entryComplete && !entry.getAddenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
                 RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
                 for (ResearchAddendum addendum : entry.getAddenda()) {
-                    // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
                     if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(player)) {
+                        // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
                         Set<Recipe<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                         ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                         serverPlayer.awardRecipes(recipesToUnlock);
-                    }
-                    
-                    // Grant any sibling research from this entry's addenda
-                    for (SimpleResearchKey sibling : addendum.getSiblings()) {
-                        completeResearch(player, sibling, sync);
+                        
+                        // Grant any sibling research from this entry's addenda
+                        for (SimpleResearchKey sibling : addendum.getSiblings()) {
+                            completeResearch(player, sibling, sync);
+                        }
                     }
                 }
             }
