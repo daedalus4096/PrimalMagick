@@ -2,6 +2,7 @@
   "key": "primalmagic:enchanting_studies",
   "required_research": "BASIC_MANAWEAVING",
   "reward_multiplier": 0.25,
+  "aid_blocks": [],
   "material_options": [
     {
       "type": "item",

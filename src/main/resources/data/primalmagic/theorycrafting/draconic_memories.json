@@ -3,7 +3,10 @@
   "required_material_count_override": 1,
   "base_success_chance_override": 0.5,
   "reward_multiplier": 0.5,
-  "aid_block": "minecraft:dragon_head",
+  "aid_blocks": [
+    "minecraft:dragon_head",
+    "minecraft:dragon_wall_head"
+  ],
   "material_options": [
     {
       "type": "experience",

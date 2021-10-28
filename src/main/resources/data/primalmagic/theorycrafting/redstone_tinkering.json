@@ -2,6 +2,7 @@
   "key": "primalmagic:redstone_tinkering",
   "required_research": "BASIC_MAGITECH",
   "reward_multiplier": 0.25,
+  "aid_blocks": [],
   "material_options": [
     {
       "type": "item",

@@ -2,6 +2,7 @@
   "key": "primalmagic:end_expedition",
   "required_research": "t_discover_void",
   "reward_multiplier": 1.0,
+  "aid_blocks": [],
   "material_options": [
     {
       "type": "item",

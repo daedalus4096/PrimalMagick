@@ -3,7 +3,9 @@
   "required_material_count_override": 1,
   "base_success_chance_override": 0.5,
   "reward_multiplier": 0.5,
-  "aid_block": "minecraft:nether_portal",
+  "aid_blocks": [
+    "minecraft:nether_portal"
+  ],
   "material_options": [
     {
       "type": "item",

@@ -2,6 +2,7 @@
   "key": "primalmagic:piglin_barter",
   "required_research": "t_discover_infernal",
   "reward_multiplier": 0.5,
+  "aid_blocks": [],
   "material_options": [
     {
       "type": "item",

@@ -2,6 +2,7 @@
   "key": "primalmagic:master_essence_analysis",
   "required_research": "CLUSTER_SYNTHESIS",
   "reward_multiplier": 1.0,
+  "aid_blocks": [],
   "material_options": [
     {
       "type": "observation",
