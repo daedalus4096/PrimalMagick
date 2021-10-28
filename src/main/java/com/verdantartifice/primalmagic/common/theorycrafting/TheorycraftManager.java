@@ -80,9 +80,10 @@ public class TheorycraftManager {
         while (retVal == null && attempts < 1000) {
             attempts++;
             ProjectTemplate selectedTemplate = templateBag.getRandom(player.getRandom());
-            Project initializedProject = selectedTemplate.initialize(player);
-            // Only select the project if it initializes successfully and any required aid blocks are nearby
-            if (initializedProject != null && (initializedProject.getAidBlock() == null || nearby.contains(initializedProject.getAidBlock()))) {
+            Project initializedProject = selectedTemplate.initialize(player, nearby);
+            
+            // Only select the project if it initializes successfully
+            if (initializedProject != null) {
                 retVal = initializedProject;
             }
         }
@@ -91,7 +92,7 @@ public class TheorycraftManager {
     
     @Nonnull
     protected static Set<ResourceLocation> getAllAidBlockIds() {
-        return TEMPLATES.values().stream().map(t -> t.getAidBlock()).filter(Objects::nonNull).collect(Collectors.toSet());
+        return TEMPLATES.values().stream().flatMap(t -> t.getAidBlocks().stream()).filter(Objects::nonNull).collect(Collectors.toSet());
     }
     
     @Nonnull

@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagic.common.theorycrafting;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,6 +22,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -35,17 +38,17 @@ public class ProjectTemplate {
     protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
     protected double rewardMultiplier = 0.25D;
-    protected ResourceLocation aidBlock;
+    protected List<ResourceLocation> aidBlocks = new ArrayList<>();
     
     protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nullable SimpleResearchKey requiredResearch,
-            @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nullable ResourceLocation aidBlock) {
+            @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks) {
         this.key = key;
         this.materialOptions = materialOptions;
         this.requiredResearch = requiredResearch;
         this.requiredMaterialCountOverride = requiredMaterialCountOverride;
         this.baseSuccessChanceOverride = baseSuccessChanceOverride;
         this.rewardMultiplier = rewardMultiplier;
-        this.aidBlock = aidBlock;
+        this.aidBlocks = aidBlocks;
     }
 
     public ResourceLocation getKey() {
@@ -53,15 +56,32 @@ public class ProjectTemplate {
     }
     
     @Nullable
-    public ResourceLocation getAidBlock() {
-        return this.aidBlock;
+    public List<ResourceLocation> getAidBlocks() {
+        return this.aidBlocks;
     }
     
     @Nullable
-    public Project initialize(ServerPlayer player) {
+    public Project initialize(ServerPlayer player, Set<Block> nearby) {
         if (this.requiredResearch != null && !this.requiredResearch.isKnownByStrict(player)) {
             // Fail initialization to prevent use if the player doesn't have the right research unlocked
             return null;
+        }
+        
+        ResourceLocation foundAid = null;
+        if (!this.aidBlocks.isEmpty()) {
+            boolean found = false;
+            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> b.getRegistryName()).collect(Collectors.toUnmodifiableSet());
+            for (ResourceLocation aidBlock : this.aidBlocks) {
+                if (nearbyIds.contains(aidBlock)) {
+                    found = true;
+                    foundAid = aidBlock;
+                    break;
+                }
+            }
+            if (!found) {
+                // Fail initialization to prevent use if none of the required aid blocks are nearby
+                return null;
+            }
         }
         
         // Randomly select materials to use from the bag of options, disallowing duplicates
@@ -76,9 +96,13 @@ public class ProjectTemplate {
                 materials.add(material);
             }
         }
+        if (materials.size() < maxMaterials) {
+            // Fail initialization to prevent use if not all materials could be allocated
+            return null;
+        }
         
         // Create new initialized project
-        return new Project(this.key, materials, this.getBaseSuccessChance(player), this.rewardMultiplier, this.aidBlock);
+        return new Project(this.key, materials, this.getBaseSuccessChance(player), this.rewardMultiplier, foundAid);
     }
     
     protected int getRequiredMaterialCount(Player player) {
@@ -134,12 +158,20 @@ public class ProjectTemplate {
             
             double rewardMultiplier = json.getAsJsonPrimitive("reward_multiplier").getAsDouble();
             
-            ResourceLocation aidBlock = null;
-            if (json.has("aid_block")) {
-                aidBlock = new ResourceLocation(json.getAsJsonPrimitive("aid_block").getAsString());
+            List<ResourceLocation> aidBlocks = new ArrayList<>();
+            JsonArray aidsArray = json.getAsJsonArray("aid_blocks");
+            for (JsonElement aidElement : aidsArray) {
+                ResourceLocation aidBlock;
+                try {
+                    aidBlock = new ResourceLocation(aidElement.getAsString());
+                }
+                catch (Exception e) {
+                    throw new JsonSyntaxException("Invalid aid block in project template JSON for " + templateId.toString());
+                }
                 if (!ForgeRegistries.BLOCKS.containsKey(aidBlock)) {
                     throw new JsonSyntaxException("Invalid aid block in project template JSON for " + templateId.toString());
                 }
+                aidBlocks.add(aidBlock);
             }
             
             List<AbstractProjectMaterial> materials = new ArrayList<>();
@@ -155,7 +187,7 @@ public class ProjectTemplate {
                 }
             }
             
-            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlock);
+            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks);
         }
 
         @Override
@@ -165,7 +197,13 @@ public class ProjectTemplate {
             Optional<Integer> materialCountOverride = buf.readBoolean() ? Optional.of(buf.readVarInt()) : Optional.empty();
             Optional<Double> baseSuccessChanceOverride = buf.readBoolean() ? Optional.of(buf.readDouble()) : Optional.empty();
             double rewardMultiplier = buf.readDouble();
-            ResourceLocation aidBlock = buf.readBoolean() ? buf.readResourceLocation() : null;
+            
+            List<ResourceLocation> aidBlocks = new ArrayList<>();
+            int aidCount = buf.readVarInt();
+            for (int index = 0; index < aidCount; index++) {
+                aidBlocks.add(buf.readResourceLocation());
+            }
+            
             List<AbstractProjectMaterial> materials = new ArrayList<>();
             int materialCount = buf.readVarInt();
             for (int index = 0; index < materialCount; index++) {
@@ -177,7 +215,8 @@ public class ProjectTemplate {
                     throw new IllegalArgumentException("Unknown theorycrafting project material type " + materialType);
                 }
             }
-            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlock);
+            
+            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks);
         }
 
         @Override
@@ -202,11 +241,9 @@ public class ProjectTemplate {
                 buf.writeBoolean(false);
             });
             buf.writeDouble(template.rewardMultiplier);
-            if (template.aidBlock != null) {
-                buf.writeBoolean(true);
-                buf.writeResourceLocation(template.aidBlock);
-            } else {
-                buf.writeBoolean(false);
+            buf.writeVarInt(template.aidBlocks.size());
+            for (ResourceLocation aidBlock : template.aidBlocks) {
+                buf.writeResourceLocation(aidBlock);
             }
             buf.writeVarInt(template.materialOptions.size());
             for (AbstractProjectMaterial material : template.materialOptions) {

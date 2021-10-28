@@ -20,11 +20,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ProjectBuilder {
     protected final ResourceLocation key;
     protected final List<IFinishedProjectMaterial> materialOptions = new ArrayList<>();
+    protected final List<ResourceLocation> aidBlocks = new ArrayList<>();
     protected SimpleResearchKey requiredResearch;
     protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
     protected double rewardMultiplier = 0.25D;
-    protected ResourceLocation aidBlock;
     
     protected ProjectBuilder(@Nonnull ResourceLocation key) {
         this.key = key;
@@ -73,12 +73,14 @@ public class ProjectBuilder {
     }
     
     public ProjectBuilder aid(@Nullable ResourceLocation block) {
-        this.aidBlock = block;
+        this.aidBlocks.add(block);
         return this;
     }
     
     public ProjectBuilder aid(@Nullable Block block) {
-        this.aidBlock = block == null ? null : block.getRegistryName();
+        if (block != null) {
+            this.aidBlocks.add(block.getRegistryName());
+        }
         return this;
     }
     
@@ -102,8 +104,10 @@ public class ProjectBuilder {
         if (this.rewardMultiplier <= 0D) {
             throw new IllegalStateException("Invalid reward multiplier for theorycrafting project " + id.toString());
         }
-        if (this.aidBlock != null && !ForgeRegistries.BLOCKS.containsKey(this.aidBlock)) {
-            throw new IllegalStateException("Unknown aid block for theorycrafting project " + id.toString());
+        for (ResourceLocation aidBlock : this.aidBlocks) {
+            if (!ForgeRegistries.BLOCKS.containsKey(aidBlock)) {
+                throw new IllegalStateException("Unknown aid block for theorycrafting project " + id.toString());
+            }
         }
     }
     
@@ -117,7 +121,7 @@ public class ProjectBuilder {
     
     public void build(Consumer<IFinishedProject> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new ProjectBuilder.Result(this.key, this.materialOptions, this.requiredResearch, this.requiredMaterialCountOverride, this.baseSuccessChanceOverride, this.rewardMultiplier, this.aidBlock));
+        consumer.accept(new ProjectBuilder.Result(this.key, this.materialOptions, this.requiredResearch, this.requiredMaterialCountOverride, this.baseSuccessChanceOverride, this.rewardMultiplier, this.aidBlocks));
     }
     
     public static class Result implements IFinishedProject {
@@ -127,17 +131,17 @@ public class ProjectBuilder {
         protected final Optional<Integer> requiredMaterialCountOverride;
         protected final Optional<Double> baseSuccessChanceOverride;
         protected final double rewardMultiplier;
-        protected final ResourceLocation aidBlock;
+        protected final List<ResourceLocation> aidBlocks;
         
         public Result(@Nonnull ResourceLocation key, @Nonnull List<IFinishedProjectMaterial> materialOptions, @Nullable SimpleResearchKey requiredResearch, @Nonnull Optional<Integer> materialCount, 
-                @Nonnull Optional<Double> successChance, double rewardMultiplier, @Nullable ResourceLocation aidBlock) {
+                @Nonnull Optional<Double> successChance, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks) {
             this.key = key;
             this.materialOptions = materialOptions;
             this.requiredResearch = requiredResearch;
             this.requiredMaterialCountOverride = materialCount;
             this.baseSuccessChanceOverride = successChance;
             this.rewardMultiplier = rewardMultiplier;
-            this.aidBlock = aidBlock;
+            this.aidBlocks = aidBlocks;
         }
 
         @Override
@@ -158,9 +162,12 @@ public class ProjectBuilder {
                 json.addProperty("base_success_chance_override", chance);
             });
             json.addProperty("reward_multiplier", this.rewardMultiplier);
-            if (this.aidBlock != null) {
-                json.addProperty("aid_block", this.aidBlock.toString());
+            
+            JsonArray aidsArray = new JsonArray();
+            for (ResourceLocation aidBlock : this.aidBlocks) {
+                aidsArray.add(aidBlock.toString());
             }
+            json.add("aid_blocks", aidsArray);
             
             JsonArray materialsArray = new JsonArray();
             for (IFinishedProjectMaterial material : this.materialOptions) {
