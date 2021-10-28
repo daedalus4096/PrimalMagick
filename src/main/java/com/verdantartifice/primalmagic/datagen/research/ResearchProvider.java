@@ -18,7 +18,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge.KnowledgeType;
+import com.verdantartifice.primalmagic.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagic.common.items.ItemsPM;
+import com.verdantartifice.primalmagic.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.tags.ItemTagsPM;
 
@@ -1040,55 +1042,64 @@ public class ResearchProvider implements DataProvider {
             .parent("RITUAL_BELL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_SHOVEL.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROJECT").requiredResearch("RUNE_AREA").requiredResearch("RUNE_EARTH").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROJECT").requiredResearch("RUNE_AREA").requiredResearch("RUNE_EARTH")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.REVERBERATION.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("PRIMAL_FISHING_ROD", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_SEA").parent("RITUAL_BELL")
             .parent("RITUAL_LECTERN")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_FISHING_ROD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_AREA").requiredResearch("RUNE_SEA").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_AREA").requiredResearch("RUNE_SEA")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.BOUNTY.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("PRIMAL_AXE", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_SKY").parent("RITUAL_BELL")
             .parent("INCENSE_BRAZIER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_AXE.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROJECT").requiredResearch("RUNE_AREA").requiredResearch("RUNE_SKY").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROJECT").requiredResearch("RUNE_AREA").requiredResearch("RUNE_SKY")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.DISINTEGRATION.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("PRIMAL_HOE", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_SUN").parent("RITUAL_CANDLES")
             .parent("INCENSE_BRAZIER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_HOE.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_SUN").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_SUN")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.VERDANT.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("PRIMAL_PICKAXE", discipline).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_MOON").parent("RITUAL_LECTERN")
             .parent("INCENSE_BRAZIER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.PRIMAL_PICKAXE.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_ITEM").requiredResearch("RUNE_MOON").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_ITEM").requiredResearch("RUNE_MOON")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.LUCKY_STRIKE.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("FORBIDDEN_TRIDENT", discipline).parent(Source.BLOOD.getDiscoverKey()).parent("MASTER_RITUAL").parent("HEXIUM").parent("SHARD_SYNTHESIS").parent("MANA_SALTS")
             .parent("RUNE_BLOOD").parent("BLOODLETTER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_TRIDENT.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROJECT").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_BLOOD").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROJECT").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_BLOOD")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.RENDING.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("FORBIDDEN_BOW", discipline).parent(Source.INFERNAL.getDiscoverKey()).parent("MASTER_RITUAL").parent("HEXIUM").parent("SHARD_SYNTHESIS").parent("MANA_SALTS")
             .parent("RUNE_INFERNAL").parent("SOUL_ANVIL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_BOW.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_ABSORB").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_INFERNAL").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_ABSORB").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_INFERNAL")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.SOULPIERCING.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("FORBIDDEN_SWORD", discipline).parent(Source.VOID.getDiscoverKey()).parent("MASTER_RITUAL").parent("HEXIUM").parent("SHARD_SYNTHESIS").parent("MANA_SALTS")
             .parent("RUNE_VOID").parent("BLOODLETTER").parent("SOUL_ANVIL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_SWORD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_ITEM").requiredResearch("RUNE_VOID").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_ITEM").requiredResearch("RUNE_VOID")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.ESSENCE_THIEF.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SACRED_SHIELD", discipline).parent(Source.HALLOWED.getDiscoverKey()).parent("SUPREME_RITUAL").parent("HALLOWSTEEL").parent("SHARD_SYNTHESIS").parent("MANA_SALTS")
             .parent("RUNE_HALLOWED").parent("CELESTIAL_HARP")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SACRED_SHIELD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROTECT").requiredResearch("RUNE_SELF").requiredResearch("RUNE_HALLOWED").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROTECT").requiredResearch("RUNE_SELF").requiredResearch("RUNE_HALLOWED")
+                    .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.BULWARK.get())).build())
             .build(consumer);
         ResearchEntryBuilder.entry("DREAM_VISION_TALISMAN", discipline).parent("EXPERT_RITUAL").parent("RITUAL_CANDLES").parent("INCENSE_BRAZIER").parent("RITUAL_LECTERN")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredResearch("t_observations_made_expert").build())

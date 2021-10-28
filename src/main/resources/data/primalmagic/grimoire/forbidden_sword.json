@@ -34,6 +34,9 @@
         "RUNE_SUMMON",
         "RUNE_ITEM",
         "RUNE_VOID"
+      ],
+      "siblings": [
+        "\u0026primalmagic:essence_thief"
       ]
     }
   ]

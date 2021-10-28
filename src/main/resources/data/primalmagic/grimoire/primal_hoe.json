@@ -33,6 +33,9 @@
         "RUNE_SUMMON",
         "RUNE_CREATURE",
         "RUNE_SUN"
+      ],
+      "siblings": [
+        "\u0026primalmagic:verdant"
       ]
     }
   ]

@@ -33,6 +33,9 @@
         "RUNE_PROJECT",
         "RUNE_AREA",
         "RUNE_SKY"
+      ],
+      "siblings": [
+        "\u0026primalmagic:disintegration"
       ]
     }
   ]
