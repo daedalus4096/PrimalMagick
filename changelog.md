@@ -6,6 +6,7 @@ v0.0.21-alpha
 * Increase reward for Draconic Energies research project
 * Spell projectiles are no longer slowed by water
 * Rune enchantments discovered from primal tools are now indexed upon discovery, rather than creation
+* Add Conjure Light spell payload, to create temporary glow fields
 
 v0.0.20-alpha
 -------------
