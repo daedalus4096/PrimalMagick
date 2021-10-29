@@ -744,6 +744,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("m_fly_elytra").requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 3).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_LIGHT", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_SOLAR")
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_place_torch_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 3).build())
+            .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_HEALING", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_SOLAR")
             .stage(ResearchStageBuilder.stage().requiredResearch("m_near_death_experience").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 3).build())

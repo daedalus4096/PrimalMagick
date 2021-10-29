@@ -292,6 +292,9 @@ public class PlayerEvents {
         if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_fly_elytra")) && player.getStats().getValue(Stats.CUSTOM.get(Stats.AVIATE_ONE_CM)) >= 100000) {
             ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_fly_elytra"));
         }
+        if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("b_place_torch_expert")) && player.getStats().getValue(Stats.ITEM_USED.get(Items.TORCH)) >= 100) {
+            ResearchManager.completeResearch(player, SimpleResearchKey.parse("b_place_torch_expert"));
+        }
     }
 
     protected static void handlePhotosynthesis(ServerPlayer player) {
