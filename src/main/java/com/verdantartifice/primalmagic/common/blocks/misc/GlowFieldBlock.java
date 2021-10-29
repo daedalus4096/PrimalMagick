@@ -31,7 +31,7 @@ public class GlowFieldBlock extends Block {
     public static final BooleanProperty FADING = BooleanProperty.create("fading");
     
     public GlowFieldBlock() {
-        super(Block.Properties.of(Material.AIR).strength(-1, 3600000).lightLevel((state) -> { return state.getValue(LIGHT); }).noDrops().noOcclusion());
+        super(Block.Properties.of(Material.AIR).strength(-1, 3600000).lightLevel((state) -> { return state.getValue(LIGHT); }).noDrops().noOcclusion().randomTicks());
         this.registerDefaultState(this.stateDefinition.any().setValue(LIGHT, Integer.valueOf(15)).setValue(FADING, Boolean.FALSE));
     }
     
