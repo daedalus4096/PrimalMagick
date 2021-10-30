@@ -932,6 +932,7 @@ public class AffinityProvider implements DataProvider {
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.REVERBERATION.get()).multiplier(Source.EARTH).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.BOUNTY.get()).multiplier(Source.SEA).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.DISINTEGRATION.get()).multiplier(Source.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.VERDANT.get()).multiplier(Source.SUN).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.LUCKY_STRIKE.get()).multiplier(Source.MOON).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.RENDING.get()).multiplier(Source.BLOOD).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.SOULPIERCING.get()).multiplier(Source.INFERNAL).build(consumer);
