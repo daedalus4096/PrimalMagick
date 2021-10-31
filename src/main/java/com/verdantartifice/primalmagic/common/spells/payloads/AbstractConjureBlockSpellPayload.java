@@ -12,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -61,6 +63,7 @@ public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayl
     
     protected void placeBlockState(Player player, Level world, BlockPos pos, BlockHitResult blockTarget) {
         BlockState state = world.getBlockState(pos);
+        FluidState fluidState = world.getFluidState(pos);
         Material material = state.getMaterial();
         boolean isSolid = material.isSolid();
         boolean isReplaceable = material.isReplaceable();
@@ -70,12 +73,15 @@ public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayl
                 world.destroyBlock(pos, true);
             }
             
-            // Otherwise set the target state, with facing if applicable, into the world
+            // Otherwise set the target state, with facing and waterlogging if applicable, into the world
             BlockState newState = this.targetState;
             if (state.hasProperty(BlockStateProperties.FACING)) {
                 newState = newState.setValue(BlockStateProperties.FACING, state.getValue(BlockStateProperties.FACING));
             } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
                 newState = newState.setValue(BlockStateProperties.HORIZONTAL_FACING, state.getValue(BlockStateProperties.HORIZONTAL_FACING));
+            }
+            if (fluidState.isSourceOfType(Fluids.WATER)) {
+                newState = newState.setValue(BlockStateProperties.WATERLOGGED, Boolean.TRUE);
             }
             world.setBlock(pos, newState, Constants.BlockFlags.DEFAULT);
         } else if (blockTarget != null) {
