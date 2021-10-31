@@ -8,7 +8,7 @@ v0.0.21-alpha
 * Rune enchantments discovered from primal tools are now indexed upon discovery, rather than creation
 * Add Conjure Light spell payload, to create temporary glow fields
 * Update model for Spellcrafting Altar
-* Allow glow fields to work underwater
+* Allow glow and consecration fields to work underwater
 
 v0.0.20-alpha
 -------------

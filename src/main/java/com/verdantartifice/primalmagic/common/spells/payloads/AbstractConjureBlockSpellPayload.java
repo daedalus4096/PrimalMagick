@@ -31,10 +31,16 @@ import net.minecraftforge.event.ForgeEventFactory;
  */
 public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayload {
     protected final BlockState targetState;
+    protected final int count;
     
     public AbstractConjureBlockSpellPayload(BlockState targetState) {
+        this(targetState, 1);
+    }
+    
+    public AbstractConjureBlockSpellPayload(BlockState targetState, int count) {
         super();
         this.targetState = targetState;
+        this.count = count;
     }
 
     @Override
@@ -45,23 +51,32 @@ public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayl
         
         if (target != null) {
             if (target.getType() == HitResult.Type.BLOCK) {
-                BlockHitResult blockTarget = (BlockHitResult)target;
-                BlockPos targetPos = blockTarget.getBlockPos();
-                if (world.mayInteract(player, targetPos) && !ForgeEventFactory.onBlockPlace(player, BlockSnapshot.create(world.dimension(), world, targetPos), Direction.UP)) {
-                    this.placeBlockState(player, world, targetPos, blockTarget);
-                }
+                this.executeInner((BlockHitResult)target, player, world);
             } else if (target.getType() == HitResult.Type.ENTITY) {
                 // If the target is an entity, place the new block at the entity's position
-                BlockHitResult blockTarget = RayTraceUtils.getBlockResultFromEntityResult((EntityHitResult)target);
-                if (world.mayInteract(player, blockTarget.getBlockPos()) && !ForgeEventFactory.onBlockPlace(player, BlockSnapshot.create(world.dimension(), world, blockTarget.getBlockPos()), Direction.UP)) {
-                    // Only place if the caster is allowed to modify the target location
-                    this.placeBlockState(player, world, blockTarget.getBlockPos(), blockTarget);
-                }
+                this.executeInner(RayTraceUtils.getBlockResultFromEntityResult((EntityHitResult)target), player, world);
             }
         }
     }
     
-    protected void placeBlockState(Player player, Level world, BlockPos pos, BlockHitResult blockTarget) {
+    protected void executeInner(BlockHitResult blockTarget, Player player, Level world) {
+        BlockPos targetPos = blockTarget.getBlockPos();
+        int shift = this.canPlaceBlockState(player, world, targetPos) ? 0 : 1;
+        for (int offset = shift; offset < this.count + shift; offset++) {
+            this.placeBlockState(world, targetPos.relative(blockTarget.getDirection(), offset));
+        }
+    }
+    
+    protected boolean canPlaceBlockState(Player player, Level world, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
+        Material material = state.getMaterial();
+        boolean isSolid = material.isSolid();
+        boolean isReplaceable = material.isReplaceable();
+        return world.mayInteract(player, pos) && !ForgeEventFactory.onBlockPlace(player, BlockSnapshot.create(world.dimension(), world, pos), Direction.UP) && 
+                world.isEmptyBlock(pos) || !isSolid || isReplaceable;
+    }
+    
+    protected void placeBlockState(Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         FluidState fluidState = world.getFluidState(pos);
         Material material = state.getMaterial();
@@ -84,9 +99,6 @@ public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayl
                 newState = newState.setValue(BlockStateProperties.WATERLOGGED, Boolean.TRUE);
             }
             world.setBlock(pos, newState, Constants.BlockFlags.DEFAULT);
-        } else if (blockTarget != null) {
-            // If we can't place the new block at the given position, place it instead at the adjacent position defined by the raytrace result
-            this.placeBlockState(player, world, blockTarget.getBlockPos().relative(blockTarget.getDirection()), null);
         }
     }
 }
