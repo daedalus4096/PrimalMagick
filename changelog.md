@@ -11,6 +11,7 @@ v0.0.21-alpha
 * Allow glow and consecration fields to work underwater
 * Add Conjure Stone spell payload, for when you just need a block of stone right now
 * Changed default name of Earth Damage spells to "Earthen" from "Stone"
+* Increment to Forge version 37.0.103
 
 v0.0.20-alpha
 -------------
