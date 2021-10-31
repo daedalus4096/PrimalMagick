@@ -7,6 +7,7 @@ v0.0.21-alpha
 * Spell projectiles are no longer slowed by water
 * Rune enchantments discovered from primal tools are now indexed upon discovery, rather than creation
 * Add Conjure Light spell payload, to create temporary glow fields
+* Update model for Spellcrafting Altar
 
 v0.0.20-alpha
 -------------
