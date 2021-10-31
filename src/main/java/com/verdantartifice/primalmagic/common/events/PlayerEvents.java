@@ -295,6 +295,10 @@ public class PlayerEvents {
         if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("b_place_torch_expert")) && player.getStats().getValue(Stats.ITEM_USED.get(Items.TORCH)) >= 100) {
             ResearchManager.completeResearch(player, SimpleResearchKey.parse("b_place_torch_expert"));
         }
+        if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("b_place_stone_expert")) &&
+                (player.getStats().getValue(Stats.ITEM_USED.get(Items.STONE)) + player.getStats().getValue(Stats.ITEM_USED.get(Items.COBBLESTONE))) >= 100) {
+            ResearchManager.completeResearch(player, SimpleResearchKey.parse("b_place_stone_expert"));
+        }
     }
 
     protected static void handlePhotosynthesis(ServerPlayer player) {

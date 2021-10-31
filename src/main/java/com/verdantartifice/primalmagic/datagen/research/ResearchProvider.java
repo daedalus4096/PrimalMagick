@@ -736,6 +736,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("m_blocks_broken_barehanded_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_STONE", discipline).parent("EXPERT_SORCERY")
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_place_stone_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).build())
+            .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_WATER", discipline).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_FROST")
             .stage(ResearchStageBuilder.stage().requiredResearch("m_drown_a_little").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 3).build())

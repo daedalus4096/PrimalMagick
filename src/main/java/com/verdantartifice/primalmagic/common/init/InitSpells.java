@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagic.common.spells.payloads.BreakSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ConjureAnimalSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ConjureLavaSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ConjureLightSpellPayload;
+import com.verdantartifice.primalmagic.common.spells.payloads.ConjureStoneSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ConjureWaterSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.ConsecrateSpellPayload;
 import com.verdantartifice.primalmagic.common.spells.payloads.DrainSoulSpellPayload;
@@ -67,6 +68,7 @@ public class InitSpells {
         SpellManager.registerPayloadType(VoidDamageSpellPayload.TYPE, VoidDamageSpellPayload::new, VoidDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(HolyDamageSpellPayload.TYPE, HolyDamageSpellPayload::new, HolyDamageSpellPayload::getResearch);
         SpellManager.registerPayloadType(BreakSpellPayload.TYPE, BreakSpellPayload::new, BreakSpellPayload::getResearch);
+        SpellManager.registerPayloadType(ConjureStoneSpellPayload.TYPE, ConjureStoneSpellPayload::new, ConjureStoneSpellPayload::getResearch);
         SpellManager.registerPayloadType(ConjureWaterSpellPayload.TYPE, ConjureWaterSpellPayload::new, ConjureWaterSpellPayload::getResearch);
         SpellManager.registerPayloadType(FlightSpellPayload.TYPE, FlightSpellPayload::new, FlightSpellPayload::getResearch);
         SpellManager.registerPayloadType(ConjureLightSpellPayload.TYPE, ConjureLightSpellPayload::new, ConjureLightSpellPayload::getResearch);

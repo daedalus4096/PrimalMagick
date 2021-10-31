@@ -9,6 +9,8 @@ v0.0.21-alpha
 * Add Conjure Light spell payload, to create temporary glow fields
 * Update model for Spellcrafting Altar
 * Allow glow and consecration fields to work underwater
+* Add Conjure Stone spell payload, for when you just need a block of stone right now
+* Changed default name of Earth Damage spells to "Earthen" from "Stone"
 
 v0.0.20-alpha
 -------------
