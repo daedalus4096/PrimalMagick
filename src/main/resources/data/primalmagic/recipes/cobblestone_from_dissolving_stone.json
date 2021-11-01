@@ -3,7 +3,7 @@
   "mana": {
     "earth": 1
   },
-  "ingredients": {
+  "ingredient": {
     "tag": "forge:stone"
   },
   "result": {

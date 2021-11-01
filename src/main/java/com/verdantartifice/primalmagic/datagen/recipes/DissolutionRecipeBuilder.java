@@ -107,7 +107,7 @@ public class DissolutionRecipeBuilder {
                 json.add("mana", manaJson);
             }
 
-            json.add("ingredients", this.ingredient.toJson());
+            json.add("ingredient", this.ingredient.toJson());
             
             JsonObject resultJson = new JsonObject();
             resultJson.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result.getItem()).toString());

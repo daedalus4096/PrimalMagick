@@ -4,7 +4,7 @@
   "mana": {
     "earth": 1
   },
-  "ingredients": {
+  "ingredient": {
     "tag": "forge:ores/gold"
   },
   "result": {

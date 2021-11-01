@@ -4,7 +4,7 @@
   "mana": {
     "earth": 1
   },
-  "ingredients": {
+  "ingredient": {
     "item": "minecraft:raw_gold"
   },
   "result": {
