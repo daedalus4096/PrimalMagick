@@ -1,0 +1,14 @@
+{
+  "type": "primalmagic:dissolution",
+  "group": "copper_grit_dissolution",
+  "mana": {
+    "earth": 1
+  },
+  "ingredients": {
+    "item": "minecraft:raw_copper"
+  },
+  "result": {
+    "item": "primalmagic:copper_grit",
+    "count": 3
+  }
+}

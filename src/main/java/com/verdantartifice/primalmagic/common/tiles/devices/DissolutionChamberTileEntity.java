@@ -122,10 +122,6 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
         return 200;
     }
     
-    protected int getManaCost() {
-        return 100;
-    }
-    
     public static void tick(Level level, BlockPos pos, BlockState state, DissolutionChamberTileEntity entity) {
         boolean shouldMarkDirty = false;
         

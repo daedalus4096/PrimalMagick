@@ -1,0 +1,30 @@
+{
+  "key": "DISSOLUTION_CHAMBER",
+  "name": "primalmagic.research.dissolution_chamber.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "MASTER_MAGITECH",
+    "MASTER_MANAWEAVING",
+    "EARTHSHATTER_HAMMER"
+  ],
+  "stages": [
+    {
+      "text": "primalmagic.research.dissolution_chamber.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagic.research.dissolution_chamber.text.stage.2",
+      "required_item": [
+        "primalmagic:iron_grit;20",
+        "primalmagic:copper_grit;20",
+        "primalmagic:gold_grit;10"
+      ],
+      "recipes": [
+        "primalmagic:dissolution_chamber"
+      ]
+    }
+  ],
+  "addenda": []
+}

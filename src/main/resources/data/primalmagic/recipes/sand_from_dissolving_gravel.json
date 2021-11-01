@@ -1,0 +1,13 @@
+{
+  "type": "primalmagic:dissolution",
+  "mana": {
+    "earth": 1
+  },
+  "ingredients": {
+    "tag": "forge:gravel"
+  },
+  "result": {
+    "item": "minecraft:sand",
+    "count": 2
+  }
+}
