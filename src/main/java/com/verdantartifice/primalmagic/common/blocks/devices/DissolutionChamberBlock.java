@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
+import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagic.common.tiles.devices.DissolutionChamberTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -92,14 +94,11 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        // TODO Auto-generated method stub
-        return null;
+        return new DissolutionChamberTileEntity(pos, state);
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        // TODO Auto-generated method stub
-        return super.getTicker(p_153212_, p_153213_, p_153214_);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, TileEntityTypesPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberTileEntity::tick);
     }
-
 }
