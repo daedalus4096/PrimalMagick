@@ -12,4 +12,5 @@ public class RecipeTypesPM {
     public static RecipeType<IRitualRecipe> RITUAL;
     public static RecipeType<IRunecarvingRecipe> RUNECARVING;
     public static RecipeType<IConcoctingRecipe> CONCOCTING;
+    public static RecipeType<IDissolutionRecipe> DISSOLUTION;
 }
