@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagic.common.blocks.devices;
 
 import java.util.List;
 
+import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
 import com.verdantartifice.primalmagic.common.tiles.TileEntityTypesPM;
@@ -12,6 +13,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -32,6 +39,8 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Block definition for a dissolution chamber.  Uses earth mana to dissolve ore into grit for ore
@@ -100,5 +109,46 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return createTickerHelper(type, TileEntityTypesPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberTileEntity::tick);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            // Open the GUI for the dissolution chamber
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof DissolutionChamberTileEntity chamberTile) {
+                NetworkHooks.openGui(serverPlayer, chamberTile);
+            }
+        }
+        return InteractionResult.SUCCESS;
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Drop the tile entity's inventory into the world when the block is replaced
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof DissolutionChamberTileEntity chamberTile) {
+                Containers.dropContents(worldIn, pos, chamberTile);
+                worldIn.updateNeighbourForOutputSignal(pos, this);
+            }
+            super.onRemove(state, worldIn, pos, newState, isMoving);
+        }
+    }
+
+    @Override
+    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(worldIn, pos, state, placer, stack);
+        BlockEntity tile = worldIn.getBlockEntity(pos);
+        
+        if (tile instanceof IManaContainer manaTile) {
+            CompoundTag nbt = stack.getTagElement("ManaContainerTag");
+            if (nbt != null) {
+                SourceList mana = new SourceList();
+                mana.deserializeNBT(nbt);
+                manaTile.setMana(mana);
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagic.common.tiles.devices;
 import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagic.common.containers.DissolutionChamberContainer;
 import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -102,8 +103,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        // TODO Auto-generated method stub
-        return null;
+        return new DissolutionChamberContainer(windowId, playerInv, this, this.chamberData);
     }
 
     @Override
