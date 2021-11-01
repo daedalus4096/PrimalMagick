@@ -4,6 +4,8 @@ import com.verdantartifice.primalmagic.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.containers.DissolutionChamberContainer;
+import com.verdantartifice.primalmagic.common.crafting.IDissolutionRecipe;
+import com.verdantartifice.primalmagic.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagic.common.sources.IManaContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 import com.verdantartifice.primalmagic.common.sources.SourceList;
@@ -37,9 +39,10 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.DissolutionChamberBlock}
  */
 public class DissolutionChamberTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer {
+    protected static final int OUTPUT_SLOT_INDEX = 1;
     protected static final int WAND_SLOT_INDEX = 2;
     protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
-    protected static final int[] SLOTS_FOR_DOWN = new int[] { 1 };
+    protected static final int[] SLOTS_FOR_DOWN = new int[] { OUTPUT_SLOT_INDEX };
     protected static final int[] SLOTS_FOR_SIDES = new int[] { WAND_SLOT_INDEX };
     
     protected int processTime;
@@ -138,15 +141,14 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
                 }
             }
 
-            SimpleContainer testInv = new SimpleContainer(1);
-            testInv.setItem(0, entity.items.get(0));
-            // TODO Find matching dissolution recipe for testInv
-            if (entity.canDissolve(testInv /*, recipe */)) {
+            SimpleContainer testInv = new SimpleContainer(entity.items.get(0));
+            IDissolutionRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION, testInv, level).orElse(null);
+            if (entity.canDissolve(testInv, recipe)) {
                 entity.processTime++;
                 if (entity.processTime >= entity.processTimeTotal) {
                     entity.processTime = 0;
                     entity.processTimeTotal = entity.getProcessTimeTotal();
-                    entity.doDissolve(testInv /*, recipe */);
+                    entity.doDissolve(testInv, recipe);
                     shouldMarkDirty = true;
                 }
             } else {
@@ -160,13 +162,48 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
         }
     }
     
-    protected boolean canDissolve(Container inputInv /* recipe */) {
-        // TODO Implement
-        return false;
+    protected boolean canDissolve(Container inputInv, IDissolutionRecipe recipe) {
+        if (!inputInv.isEmpty() && recipe != null) {
+            ItemStack output = recipe.getResultItem();
+            if (output.isEmpty()) {
+                return false;
+            } else if (this.getMana(Source.EARTH) < (100 * recipe.getManaCosts().getAmount(Source.EARTH))) {
+                return false;
+            } else {
+                ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
+                if (currentOutput.isEmpty()) {
+                    return true;
+                } else if (!currentOutput.sameItem(output)) {
+                    return false;
+                } else if (currentOutput.getCount() + output.getCount() <= this.getMaxStackSize() && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
+                    return true;
+                } else {
+                    return currentOutput.getCount() + output.getCount() <= output.getMaxStackSize();
+                }
+            }
+        } else {
+            return false;
+        }
     }
     
-    protected void doDissolve(Container inputInv /* recipe */) {
-        // TODO Implement
+    protected void doDissolve(Container inputInv, IDissolutionRecipe recipe) {
+        if (recipe != null && this.canDissolve(inputInv, recipe)) {
+            ItemStack recipeOutput = recipe.assemble(inputInv);
+            ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
+            if (currentOutput.isEmpty()) {
+                this.items.set(OUTPUT_SLOT_INDEX, recipeOutput);
+            } else if (recipeOutput.getItem() == currentOutput.getItem() && ItemStack.tagMatches(recipeOutput, currentOutput)) {
+                currentOutput.grow(recipeOutput.getCount());
+            }
+            
+            for (int index = 0; index < inputInv.getContainerSize(); index++) {
+                ItemStack stack = inputInv.getItem(index);
+                if (!stack.isEmpty()) {
+                    stack.shrink(1);
+                }
+            }
+            this.setMana(Source.EARTH, this.getMana(Source.EARTH) - (100 * recipe.getManaCosts().getAmount(Source.EARTH)));
+        }
     }
     
     @Override
