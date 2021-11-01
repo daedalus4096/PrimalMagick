@@ -321,6 +321,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> ENTROPY_SINK = ITEMS.register("entropy_sink", () -> new BlockItem(BlocksPM.ENTROPY_SINK.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> AUTO_CHARGER = ITEMS.register("auto_charger", () -> new BlockItem(BlocksPM.AUTO_CHARGER.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> ESSENCE_TRANSMUTER = ITEMS.register("essence_transmuter", () -> new BlockItem(BlocksPM.ESSENCE_TRANSMUTER.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> DISSOLUTION_CHAMBER = ITEMS.register("dissolution_chamber", () -> new BlockItem(BlocksPM.DISSOLUTION_CHAMBER.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
 
     // Register miscellaneous block items
     public static final RegistryObject<ItemNameBlockItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().tab(PrimalMagic.ITEM_GROUP)));
