@@ -16,7 +16,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,9 +37,10 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.DissolutionChamberBlock}
  */
 public class DissolutionChamberTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer {
+    protected static final int WAND_SLOT_INDEX = 2;
     protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
     protected static final int[] SLOTS_FOR_DOWN = new int[] { 1 };
-    protected static final int[] SLOTS_FOR_SIDES = new int[] { 2 };
+    protected static final int[] SLOTS_FOR_SIDES = new int[] { WAND_SLOT_INDEX };
     
     protected int processTime;
     protected int processTimeTotal;
@@ -120,6 +124,48 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, DissolutionChamberTileEntity entity) {
+        boolean shouldMarkDirty = false;
+        
+        if (!level.isClientSide) {
+            // Fill up internal mana storage with that from any inserted wands
+            ItemStack wandStack = entity.items.get(WAND_SLOT_INDEX);
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.EARTH) - entity.manaStorage.getManaStored(Source.EARTH);
+                int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
+                if (wand.consumeMana(wandStack, null, Source.EARTH, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Source.EARTH, centimanaToTransfer, false);
+                    shouldMarkDirty = true;
+                }
+            }
+
+            SimpleContainer testInv = new SimpleContainer(1);
+            testInv.setItem(0, entity.items.get(0));
+            // TODO Find matching dissolution recipe for testInv
+            if (entity.canDissolve(testInv /*, recipe */)) {
+                entity.processTime++;
+                if (entity.processTime >= entity.processTimeTotal) {
+                    entity.processTime = 0;
+                    entity.processTimeTotal = entity.getProcessTimeTotal();
+                    entity.doDissolve(testInv /*, recipe */);
+                    shouldMarkDirty = true;
+                }
+            } else {
+                entity.processTime = Mth.clamp(entity.processTime - 2, 0, entity.processTimeTotal);
+            }
+        }
+
+        if (shouldMarkDirty) {
+            entity.setChanged();
+            entity.syncTile(true);
+        }
+    }
+    
+    protected boolean canDissolve(Container inputInv /* recipe */) {
+        // TODO Implement
+        return false;
+    }
+    
+    protected void doDissolve(Container inputInv /* recipe */) {
         // TODO Implement
     }
     
