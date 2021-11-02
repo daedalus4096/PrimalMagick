@@ -24,8 +24,10 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,7 +40,7 @@ import net.minecraftforge.common.util.LazyOptional;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.DissolutionChamberBlock}
  */
-public class DissolutionChamberTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer {
+public class DissolutionChamberTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
     protected static final int OUTPUT_SLOT_INDEX = 1;
     protected static final int WAND_SLOT_INDEX = 2;
     protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
@@ -295,5 +297,12 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         return true;
+    }
+
+    @Override
+    public void fillStackedContents(StackedContents stackedContents) {
+        for (ItemStack stack : this.items) {
+            stackedContents.accountStack(stack);
+        }
     }
 }

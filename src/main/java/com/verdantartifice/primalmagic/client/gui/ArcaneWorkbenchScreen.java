@@ -51,7 +51,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     protected void init() {
         super.init();
         this.widthTooNarrow = this.width < 379;
-        this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
+        this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, false, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
 
         this.initCostWidgets();

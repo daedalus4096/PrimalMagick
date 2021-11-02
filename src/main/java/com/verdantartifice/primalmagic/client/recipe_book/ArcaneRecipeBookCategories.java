@@ -34,11 +34,15 @@ public enum ArcaneRecipeBookCategories {
     CONCOCTER_SEARCH(RecipeBookCategories.UNKNOWN, new ItemStack(Items.COMPASS)),
     CONCOCTER_DRINKABLE(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE)),
     CONCOCTER_BOMB(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newBomb(Potions.POISON, FuseType.MEDIUM)),
+    DISSOLUTION_SEARCH(RecipeBookCategories.UNKNOWN, new ItemStack(Items.COMPASS)),
+    DISSOLUTION_ORES(RecipeBookCategories.UNKNOWN, new ItemStack(Items.RAW_GOLD)),
+    DISSOLUTION_MISC(RecipeBookCategories.UNKNOWN, new ItemStack(Items.GRAVEL)),
     UNKNOWN(RecipeBookCategories.UNKNOWN, new ItemStack(Items.BARRIER));
     
     public static final List<ArcaneRecipeBookCategories> CRAFTING_CATEGORIES = ImmutableList.of(CRAFTING_SEARCH, CRAFTING_ARCANE, CRAFTING_EQUIPMENT, CRAFTING_BUILDING_BLOCKS, CRAFTING_MISC, CRAFTING_REDSTONE);
     public static final List<ArcaneRecipeBookCategories> CONCOCTER_CATEGORIES = ImmutableList.of(CONCOCTER_SEARCH, CONCOCTER_DRINKABLE, CONCOCTER_BOMB);
-    public static final Map<ArcaneRecipeBookCategories, List<ArcaneRecipeBookCategories>> AGGREGATE_CATEGORIES = ImmutableMap.of(CRAFTING_SEARCH, ImmutableList.of(CRAFTING_ARCANE, CRAFTING_EQUIPMENT, CRAFTING_BUILDING_BLOCKS, CRAFTING_MISC, CRAFTING_REDSTONE), CONCOCTER_SEARCH, ImmutableList.of(CONCOCTER_DRINKABLE, CONCOCTER_BOMB));
+    public static final List<ArcaneRecipeBookCategories> DISSOLUTION_CATEGORIES = ImmutableList.of(DISSOLUTION_SEARCH, DISSOLUTION_ORES, DISSOLUTION_MISC);
+    public static final Map<ArcaneRecipeBookCategories, List<ArcaneRecipeBookCategories>> AGGREGATE_CATEGORIES = ImmutableMap.of(CRAFTING_SEARCH, ImmutableList.of(CRAFTING_ARCANE, CRAFTING_EQUIPMENT, CRAFTING_BUILDING_BLOCKS, CRAFTING_MISC, CRAFTING_REDSTONE), CONCOCTER_SEARCH, ImmutableList.of(CONCOCTER_DRINKABLE, CONCOCTER_BOMB), DISSOLUTION_SEARCH, ImmutableList.of(DISSOLUTION_ORES, DISSOLUTION_MISC));
 
     private final RecipeBookCategories vanillaCategory;
     private final List<ItemStack> itemIcons;
@@ -55,6 +59,8 @@ public enum ArcaneRecipeBookCategories {
             return CRAFTING_CATEGORIES;
         case CONCOCTER:
             return CONCOCTER_CATEGORIES;
+        case DISSOLUTION:
+            return DISSOLUTION_CATEGORIES;
         default:
             return ImmutableList.of();
         }

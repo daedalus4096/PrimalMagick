@@ -2,27 +2,32 @@ package com.verdantartifice.primalmagic.common.containers;
 
 import com.verdantartifice.primalmagic.common.containers.slots.GenericResultSlot;
 import com.verdantartifice.primalmagic.common.containers.slots.WandSlot;
+import com.verdantartifice.primalmagic.common.crafting.recipe_book.ArcaneRecipeBookType;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.Level;
 
 /**
  * Server data container for the dissolution chamber GUI.
  * 
  * @author Daedalus4096
  */
-public class DissolutionChamberContainer extends AbstractContainerMenu {
+public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Container> {
     protected final Container chamberInv;
     protected final ContainerData chamberData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
+    protected final Level world;
     
     public DissolutionChamberContainer(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(3), new SimpleContainerData(4));
@@ -34,6 +39,7 @@ public class DissolutionChamberContainer extends AbstractContainerMenu {
         checkContainerDataCount(chamberData, 4);
         this.chamberInv = chamberInv;
         this.chamberData = chamberData;
+        this.world = playerInv.player.level;
         
         // Slot 0: ore input
         this.inputSlot = this.addSlot(new Slot(this.chamberInv, 0, 44, 35));
@@ -129,5 +135,53 @@ public class DissolutionChamberContainer extends AbstractContainerMenu {
     
     public int getMaxMana() {
         return this.chamberData.get(3);
+    }
+
+    @Override
+    public void fillCraftSlotsStackedContents(StackedContents contents) {
+        if (this.chamberInv instanceof StackedContentsCompatible stackedContainer) {
+            stackedContainer.fillStackedContents(contents);
+        }
+    }
+
+    @Override
+    public void clearCraftingContent() {
+        this.getSlot(0).set(ItemStack.EMPTY);
+        this.getSlot(1).set(ItemStack.EMPTY);
+    }
+
+    @Override
+    public boolean recipeMatches(Recipe<? super Container> recipe) {
+        return recipe.matches(this.chamberInv, this.world);
+    }
+
+    @Override
+    public int getResultSlotIndex() {
+        return 1;
+    }
+
+    @Override
+    public int getGridWidth() {
+        return 1;
+    }
+
+    @Override
+    public int getGridHeight() {
+        return 1;
+    }
+
+    @Override
+    public int getSize() {
+        return 2;
+    }
+
+    @Override
+    public ArcaneRecipeBookType getRecipeBookType() {
+        return ArcaneRecipeBookType.DISSOLUTION;
+    }
+
+    @Override
+    public boolean shouldMoveToInventory(int index) {
+        return index != this.getResultSlotIndex();
     }
 }
