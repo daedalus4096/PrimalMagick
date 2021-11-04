@@ -80,6 +80,11 @@ public class DissolutionRecipe implements IDissolutionRecipe {
         return this.manaCosts;
     }
 
+    @Override
+    public String getGroup() {
+        return this.group;
+    }
+
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<DissolutionRecipe> {
         @Override
         public DissolutionRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
