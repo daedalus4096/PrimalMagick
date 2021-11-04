@@ -391,10 +391,12 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void playerJoinEvent(EntityJoinWorldEvent event) {
         Level world = event.getWorld();
-        if (!world.isClientSide && (event.getEntity() instanceof ServerPlayer)) {
+        if (!world.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
             // When a player first joins a world, sync that player's capabilities to their client
-            ServerPlayer player = (ServerPlayer)event.getEntity();
             doScheduledSyncs(player, true);
+            
+            // Also sync their arcane recipe book contents with their research
+            ArcaneRecipeBookManager.syncRecipesWithResearch(player);
         }
     }
     

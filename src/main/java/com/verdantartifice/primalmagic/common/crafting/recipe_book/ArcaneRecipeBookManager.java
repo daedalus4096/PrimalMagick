@@ -1,19 +1,27 @@
 package com.verdantartifice.primalmagic.common.crafting.recipe_book;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagic.common.capabilities.IPlayerArcaneRecipeBook;
+import com.verdantartifice.primalmagic.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagic.common.capabilities.PrimalMagicCapabilities;
 import com.verdantartifice.primalmagic.common.crafting.IArcaneRecipeBookItem;
+import com.verdantartifice.primalmagic.common.research.ResearchEntries;
+import com.verdantartifice.primalmagic.common.research.ResearchEntry;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
 
 /**
  * Primary access point for methods related to the arcane recipe book.  This book is like the vanilla
@@ -63,5 +71,24 @@ public class ArcaneRecipeBookManager {
     public static boolean containsRecipe(Player player, Recipe<?> recipe) {
         IPlayerArcaneRecipeBook book = PrimalMagicCapabilities.getArcaneRecipeBook(player).orElse(null);
         return book != null && book.get().contains(recipe);
+    }
+    
+    public static boolean syncRecipesWithResearch(ServerPlayer player) {
+        IPlayerArcaneRecipeBook recipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        if (recipeBook == null || knowledge == null) {
+            return false;
+        } else {
+            recipeBook.get().clear();
+            RecipeManager recipeManager = player.level.getRecipeManager();
+            Set<ResourceLocation> idsToAdd = new HashSet<>();
+            for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
+                if (knowledge.isResearchKnown(entry.getKey())) {
+                    idsToAdd.addAll(entry.getKnownRecipeIds(player));
+                }
+            }
+            ArcaneRecipeBookManager.addRecipes(idsToAdd.stream().map(id -> recipeManager.byKey(id).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet()), player);
+            return true;
+        }
     }
 }

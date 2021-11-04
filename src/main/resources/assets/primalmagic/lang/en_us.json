@@ -2087,6 +2087,7 @@
     "primalmagic.grimoire.runecarving_recipe_header": "Runecarving Table recipe",
     "primalmagic.grimoire.concocting_recipe_header": "Concocter recipe (Shapeless)",
     "primalmagic.grimoire.smelting_recipe_header": "Smelting recipe",
+    "primalmagic.grimoire.dissolution_recipe_header": "Dissolution recipe",
     "primalmagic.grimoire.must_obtain_header": "Will be consumed:",
     "primalmagic.grimoire.must_craft_header": "Must craft:",
     "primalmagic.grimoire.required_knowledge_header": "Required knowledge:",

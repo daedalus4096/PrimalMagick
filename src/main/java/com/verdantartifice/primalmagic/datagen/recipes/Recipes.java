@@ -5959,5 +5959,17 @@ public class Recipes extends RecipeProvider {
             .ingredient(Tags.Items.GRAVEL)
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagic.MODID, "sand_from_dissolving_gravel"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.BONE_MEAL, 6)
+            .ingredient(Tags.Items.BONES)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "bone_meal_from_dissolving_bone"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.BLAZE_POWDER, 4)
+            .ingredient(Tags.Items.RODS_BLAZE)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "blaze_powder_from_dissolving_blaze_rod"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.STRING, 9)
+            .ingredient(ItemTags.WOOL)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "string_from_dissolving_wool"));
     }
 }
