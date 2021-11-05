@@ -98,10 +98,10 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
                         }
                         
                         PacketHandler.sendToAllAround(new WandPoofPacket(pos.above(), Color.WHITE.getRGB(), true, Direction.UP), level.dimension(), pos, 32.0D);
+                        
+                        entity.setChanged();
+                        entity.syncTile(true);
                     }
-                    
-                    entity.setChanged();
-                    entity.syncTile(true);
                 }
             }
         }

@@ -1,6 +1,7 @@
 v0.0.22-alpha
 -------------
 * Add Dissolution Chamber, for ore tripling at the cost of Earth mana
+* Fix multiplayer client crash when using Sanguine Crucible
 
 v0.0.21-alpha
 -------------
