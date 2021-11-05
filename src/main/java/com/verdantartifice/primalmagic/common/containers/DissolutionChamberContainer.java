@@ -184,4 +184,9 @@ public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Co
     public boolean shouldMoveToInventory(int index) {
         return index != this.getResultSlotIndex();
     }
+
+    @Override
+    public boolean isSingleIngredientMenu() {
+        return true;
+    }
 }
