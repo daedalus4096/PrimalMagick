@@ -53,7 +53,7 @@ public class DissolutionRecipePage extends AbstractRecipePage {
         screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, new TranslatableComponent(this.getRecipeTypeTranslationKey())));
 
         // Render ingredient stacks
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 14, screen));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 27, screen));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class DissolutionRecipePage extends AbstractRecipePage {
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.translate(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);
         matrixStack.scale(2.0F, 2.0F, 1.0F);
-        this.blit(matrixStack, -(overlayWidth / 2), -(overlayHeight / 2), 51, 0, overlayWidth, overlayHeight);
+        this.blit(matrixStack, -(overlayWidth / 2), -(overlayHeight / 2), 97, 0, overlayWidth, overlayHeight);
         matrixStack.popPose();
     }
 }
