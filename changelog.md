@@ -1,3 +1,7 @@
+v0.0.22-alpha
+-------------
+* Add Dissolution Chamber, for ore tripling at the cost of Earth mana
+
 v0.0.21-alpha
 -------------
 * Fix Z-ordering issues with Research Table tooltips
