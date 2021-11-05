@@ -49,4 +49,8 @@ public abstract class AbstractArcaneRecipeBookMenu<C extends Container> extends 
     public abstract ArcaneRecipeBookType getRecipeBookType();
 
     public abstract boolean shouldMoveToInventory(int index);
+    
+    public boolean isSingleIngredientMenu() {
+        return false;
+    }
 }

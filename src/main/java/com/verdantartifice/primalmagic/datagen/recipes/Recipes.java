@@ -81,6 +81,7 @@ public class Recipes extends RecipeProvider {
         this.registerPrimalToolRecipes(consumer);
         this.registerManaFontRecipes(consumer);
         this.registerManaArrowRecipes(consumer);
+        this.registerDissolutionChamberRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -5902,5 +5903,73 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.HALLOWED, 5))
             .build(consumer);
+    }
+    
+    protected void registerDissolutionChamberRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DISSOLUTION_CHAMBER.get())
+            .patternLine("DDD")
+            .patternLine("DHD")
+            .patternLine("MPM")
+            .key('D', Tags.Items.GEMS_DIAMOND)
+            .key('H', ItemsPM.EARTHSHATTER_HAMMER.get())
+            .key('M', ItemsPM.MARBLE_SMOKED_SLAB.get())
+            .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("DISSOLUTION_CHAMBER")))
+            .manaCost(new SourceList().add(Source.EARTH, 100))
+            .build(consumer);
+        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.IRON_GRIT.get(), 3)
+            .ingredient(Tags.Items.ORES_IRON)
+            .setGroup("iron_grit_dissolution")
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_dissolving_ore"));
+        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.IRON_GRIT.get(), 3)
+            .ingredient(Items.RAW_IRON)
+            .setGroup("iron_grit_dissolution")
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_dissolving_raw_metal"));
+        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.GOLD_GRIT.get(), 3)
+            .ingredient(Tags.Items.ORES_GOLD)
+            .setGroup("gold_grit_dissolution")
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_dissolving_ore"));
+        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.GOLD_GRIT.get(), 3)
+            .ingredient(Items.RAW_GOLD)
+            .setGroup("gold_grit_dissolution")
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_dissolving_raw_metal"));
+        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.COPPER_GRIT.get(), 3)
+            .ingredient(Items.COPPER_ORE)
+            .setGroup("copper_grit_dissolution")
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_dissolving_ore"));
+        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.COPPER_GRIT.get(), 3)
+            .ingredient(Items.RAW_COPPER)
+            .setGroup("copper_grit_dissolution")
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_dissolving_raw_metal"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLESTONE, 2)
+            .ingredient(Tags.Items.STONE)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "cobblestone_from_dissolving_stone"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.GRAVEL, 2)
+            .ingredient(Tags.Items.COBBLESTONE)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "gravel_from_dissolving_cobblestone"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.SAND, 2)
+            .ingredient(Tags.Items.GRAVEL)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "sand_from_dissolving_gravel"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.BONE_MEAL, 6)
+            .ingredient(Tags.Items.BONES)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "bone_meal_from_dissolving_bone"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.BLAZE_POWDER, 4)
+            .ingredient(Tags.Items.RODS_BLAZE)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "blaze_powder_from_dissolving_blaze_rod"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.STRING, 9)
+            .ingredient(ItemTags.WOOL)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagic.MODID, "string_from_dissolving_wool"));
     }
 }

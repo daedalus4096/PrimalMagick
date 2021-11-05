@@ -41,12 +41,19 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
     @Nullable
     protected Recipe<?> lastRecipeClicked;
     protected float time;
+    protected boolean useFurnaceStyle;
     
     public void init(Minecraft mc, ArcaneRecipeCollection recipeCollection, ArcaneRecipeBook book, int xPos, int yPos, int dx, int dy, float parentWidth) {
         this.mc = mc;
         this.collection = recipeCollection;
+        boolean isFiltering = false;
+        if (mc.player.containerMenu instanceof AbstractArcaneRecipeBookMenu<?> arcaneMenu) {
+            this.useFurnaceStyle = arcaneMenu.isSingleIngredientMenu();
+            isFiltering = book.isFiltering(arcaneMenu.getRecipeBookType());
+        } else {
+            this.useFurnaceStyle = false;
+        }
         
-        boolean isFiltering = book.isFiltering(((AbstractArcaneRecipeBookMenu<?>)mc.player.containerMenu).getRecipeBookType());
         List<Recipe<?>> visibleRecipes = this.collection.getDisplayRecipes(true);
         List<Recipe<?>> invisibleRecipes = isFiltering ? Collections.emptyList() : this.collection.getDisplayRecipes(false);
         int visibleSize = visibleRecipes.size();
@@ -82,7 +89,11 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
             Recipe<?> recipe = isVisible ? visibleRecipes.get(index) : invisibleRecipes.get(index - visibleSize);
             int slotX = this.x + 4 + 25 * (index % maxRowSize);
             int slotY = this.y + 5 + 25 * (index / maxRowSize);
-            this.recipeButtons.add(new OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton(slotX, slotY, recipe, isVisible));
+            if (this.useFurnaceStyle) {
+                this.recipeButtons.add(new OverlayArcaneRecipeComponent.OverlayArcaneSingleIngredientRecipeButton(slotX, slotY, recipe, isVisible));
+            } else {
+                this.recipeButtons.add(new OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton(slotX, slotY, recipe, isVisible));
+            }
         }
         
         this.lastRecipeClicked = null;
@@ -225,7 +236,7 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
                 texX += 26;
             }
             
-            int texY = 78;
+            int texY = OverlayArcaneRecipeComponent.this.useFurnaceStyle ? 130 : 78;
             if (this.isHovered()) {
                 texY += 26;
             }
@@ -259,6 +270,17 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
                 this.x = x;
                 this.y = y;
             }
+        }
+    }
+    
+    protected class OverlayArcaneSingleIngredientRecipeButton extends OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton {
+        public OverlayArcaneSingleIngredientRecipeButton(int xPos, int yPos, Recipe<?> recipe, boolean isCraftable) {
+            super(xPos, yPos, recipe, isCraftable);
+        }
+
+        protected void calculateIngredientsPositions(Recipe<?> recipe) {
+            ItemStack[] aitemstack = recipe.getIngredients().get(0).getItems();
+            this.ingredientPos.add(new OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos(10, 10, aitemstack));
         }
     }
 }

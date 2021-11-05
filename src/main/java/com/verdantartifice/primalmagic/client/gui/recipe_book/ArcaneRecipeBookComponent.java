@@ -84,13 +84,15 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     protected boolean ignoreTextInput;
     protected boolean visible;
     protected boolean widthTooNarrow;
+    protected boolean useFurnaceStyle;
 
-    public void init(int width, int height, Minecraft mc, boolean tooNarrow, AbstractArcaneRecipeBookMenu<?> menu) {
+    public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, AbstractArcaneRecipeBookMenu<?> menu) {
         this.mc = mc;
         this.width = width;
         this.height = height;
         this.menu = menu;
         this.widthTooNarrow = tooNarrow;
+        this.useFurnaceStyle = useFurnaceStyle;
         mc.player.containerMenu = menu;
         this.vanillaBook = mc.player.getRecipeBook();
         
@@ -151,7 +153,11 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     }
     
     protected void initFilterButtonTextures() {
-        this.filterButton.initTextureValues(152, 41, 28, 18, RECIPE_BOOK_LOCATION);
+        if (this.useFurnaceStyle) {
+            this.filterButton.initTextureValues(152, 182, 28, 18, RECIPE_BOOK_LOCATION);
+        } else {
+            this.filterButton.initTextureValues(152, 41, 28, 18, RECIPE_BOOK_LOCATION);
+        }
     }
     
     public void removed() {

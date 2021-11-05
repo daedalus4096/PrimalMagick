@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagic.PrimalMagic;
 import com.verdantartifice.primalmagic.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagic.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagic.client.gui.widgets.ManaGaugeWidget;
-import com.verdantartifice.primalmagic.common.containers.ConcocterContainer;
+import com.verdantartifice.primalmagic.common.containers.DissolutionChamberContainer;
 import com.verdantartifice.primalmagic.common.sources.Source;
 
 import net.minecraft.client.gui.components.ImageButton;
@@ -22,20 +22,20 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 
 /**
- * GUI screen for concocter block.
+ * GUI screen for the dissolution chamber block.
  * 
  * @author Daedalus4096
  */
-public class ConcocterScreen extends AbstractContainerScreen<ConcocterContainer> implements ArcaneRecipeUpdateListener {
+public class DissolutionChamberScreen extends AbstractContainerScreen<DissolutionChamberContainer> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/concocter.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/dissolution_chamber.png");
     protected static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
     
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
     protected boolean widthTooNarrow;
     protected ManaGaugeWidget manaGauge;
 
-    public ConcocterScreen(ConcocterContainer screenContainer, Inventory inv, Component titleIn) {
+    public DissolutionChamberScreen(DissolutionChamberContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.titleLabelX = 44;
         this.inventoryLabelX = 27;
@@ -62,16 +62,15 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterContainer>
     protected void init() {
         super.init();
         this.widthTooNarrow = this.width < 379;
-        this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, false, this.menu);
+        this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, true, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-
-        this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.INFERNAL, this.menu.getCurrentMana(), this.menu.getMaxMana()));
         
-        // Add arcane recipe book button
-        this.addRenderableWidget(new ImageButton(this.leftPos + 105, this.topPos + 52, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
+        this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.EARTH, this.menu.getCurrentMana(), this.menu.getMaxMana()));
+        
+        this.addRenderableWidget(new ImageButton(this.leftPos + 80, this.topPos + 52, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-            ((ImageButton)button).setPosition(this.leftPos + 105, this.topPos + 52);
+            ((ImageButton)button).setPosition(this.leftPos + 80, this.topPos + 52);
             this.manaGauge.setPosition(this.leftPos + 10, this.topPos + 6);
         }));
         this.addWidget(this.recipeBookComponent);
@@ -93,9 +92,9 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterContainer>
         RenderSystem.setShaderTexture(0, TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
-        // Animate spin progress indicator
-        int cook = this.menu.getCookProgressionScaled();
-        this.blit(matrixStack, this.leftPos + 103, this.topPos + 34, 176, 0, cook + 1, 16);
+        // Animate progress indicator
+        int cook = this.menu.getDissolutionProgressionScaled();
+        this.blit(matrixStack, this.leftPos + 78, this.topPos + 34, 176, 0, cook + 1, 16);
     }
 
     @Override

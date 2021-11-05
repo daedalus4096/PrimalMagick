@@ -208,6 +208,7 @@
     "block.primalmagic.ignyx_block": "Block of Ignyx",
     "block.primalmagic.salt_block": "Block of Refined Salt",
     "block.primalmagic.essence_transmuter": "Essence Transmuter",
+    "block.primalmagic.dissolution_chamber": "Dissolution Chamber",
     
     "item.primalmagic.grimoire": "Grimoire",
     "item.primalmagic.arcanometer": "Arcanometer",
@@ -1754,6 +1755,10 @@
     "primalmagic.research.essence_transmuter.text.stage.1": "Managing my essence stocks is a tricky feat.  Earth essence appears to be in almost everything, while some other sources are much harder to come by.<BR>I wonder if there's anything I can do to help balance this out.",
     "primalmagic.research.essence_transmuter.text.stage.2": "I've designed a new magitech device that I call an Essence Transmuter.  It utilizes the protean magic of the Moon to convert one source of essence into another source.<BR>The process is a very lossy one, though.  Currently it takes eight units of the same type of essence to produce one unit of another type of essence.  In addition, the source of essence that I get back is random, beyond my control.<BR>Like some other devices, the Essence Transmuter requires a certain amount of configuration.  It's not difficult, and I can do it automatically as part of placing the block, but it does mean that another mage's transmuter won't be set up precisely like my own.  Results could be unpredictable.",
     
+    "primalmagic.research.dissolution_chamber.title": "Dissolution Chamber",
+    "primalmagic.research.dissolution_chamber.text.stage.1": "Even using an Earthshatter Hammer, my works present an untenable demand upon my mineral stocks.  There must be a way to stretch my stores even further.<BR>I have more important things to do than dig in the dirt like some peasant!",
+    "primalmagic.research.dissolution_chamber.text.stage.2": "Brilliant!  With the careful application of Earth mana, I can now precisely dissolve select types of mineral.  The end result of this process is a larger amount of pure metals to be smelted into ingots.<BR>I can also utilize this process to break down stone into ever-finer particles with minimal loss of mass.  Very useful for when I need to create large quantities of sand for glazing.  There may even be other things that I can dissolve this way.",
+    
     "primalmagic.research.raw_marble.title": "Marble",
     "primalmagic.research.raw_marble.text.stage.1": "Marble is a lovely variety of stone, but that's not what makes it so special.  It synergizes with magic, reflecting, absorbing, or redirecting it at the will of the mage.<BR>I can see why the ancients used marble to build their shrines.  It will be very important in many of my workings.",
     
@@ -2082,6 +2087,7 @@
     "primalmagic.grimoire.runecarving_recipe_header": "Runecarving Table recipe",
     "primalmagic.grimoire.concocting_recipe_header": "Concocter recipe (Shapeless)",
     "primalmagic.grimoire.smelting_recipe_header": "Smelting recipe",
+    "primalmagic.grimoire.dissolution_recipe_header": "Dissolution recipe",
     "primalmagic.grimoire.must_obtain_header": "Will be consumed:",
     "primalmagic.grimoire.must_craft_header": "Must craft:",
     "primalmagic.grimoire.required_knowledge_header": "Required knowledge:",

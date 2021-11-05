@@ -23,6 +23,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.common.Tags;
 
 /**
  * A client-side representation of the arcane recipe book data, capable of interacting safely with
@@ -89,6 +90,8 @@ public class ClientArcaneRecipeBook {
             return ArcaneRecipeBookCategories.CRAFTING_ARCANE;
         } else if (type == RecipeTypesPM.CONCOCTING) {
             return recipe.getResultItem().getItem() instanceof AlchemicalBombItem ? ArcaneRecipeBookCategories.CONCOCTER_BOMB : ArcaneRecipeBookCategories.CONCOCTER_DRINKABLE;
+        } else if (type == RecipeTypesPM.DISSOLUTION) {
+            return recipe.getResultItem().is(Tags.Items.DUSTS) ? ArcaneRecipeBookCategories.DISSOLUTION_ORES : ArcaneRecipeBookCategories.DISSOLUTION_MISC;
         } else if (type == RecipeType.CRAFTING) {
             CreativeModeTab tab = recipe.getResultItem().getItem().getItemCategory();
             if (tab == CreativeModeTab.TAB_BUILDING_BLOCKS) {

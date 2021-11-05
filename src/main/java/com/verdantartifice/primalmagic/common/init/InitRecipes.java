@@ -26,6 +26,7 @@ public class InitRecipes {
         RecipeTypesPM.RITUAL = RecipeType.register(PrimalMagic.MODID + ":ritual");
         RecipeTypesPM.RUNECARVING = RecipeType.register(PrimalMagic.MODID + ":runecarving");
         RecipeTypesPM.CONCOCTING = RecipeType.register(PrimalMagic.MODID + ":concocting");
+        RecipeTypesPM.DISSOLUTION = RecipeType.register(PrimalMagic.MODID + ":dissolution");
     }
     
     public static void initWandTransforms() {

@@ -1254,6 +1254,17 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ESSENCE_TRANSMUTER.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("DISSOLUTION_CHAMBER", discipline).parent("MASTER_MAGITECH").parent("MASTER_MANAWEAVING").parent("EARTHSHATTER_HAMMER")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.IRON_GRIT.get(), 20).requiredItemStack(ItemsPM.COPPER_GRIT.get(), 20).requiredItemStack(ItemsPM.GOLD_GRIT.get(), 10)
+                    .requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).recipe(ItemsPM.DISSOLUTION_CHAMBER.get()).recipe(new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_dissolving_ore"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "iron_grit_from_dissolving_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_dissolving_ore"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "gold_grit_from_dissolving_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_dissolving_ore"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "copper_grit_from_dissolving_raw_metal")).recipe(new ResourceLocation(PrimalMagic.MODID, "cobblestone_from_dissolving_stone"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "gravel_from_dissolving_cobblestone")).recipe(new ResourceLocation(PrimalMagic.MODID, "sand_from_dissolving_gravel"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "bone_meal_from_dissolving_bone")).recipe(new ResourceLocation(PrimalMagic.MODID, "blaze_powder_from_dissolving_blaze_rod"))
+                    .recipe(new ResourceLocation(PrimalMagic.MODID, "string_from_dissolving_wool")).build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
