@@ -41,9 +41,10 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link com.verdantartifice.primalmagic.common.blocks.devices.DissolutionChamberBlock}
  */
 public class DissolutionChamberTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
-    protected static final int OUTPUT_SLOT_INDEX = 1;
+    protected static final int OUTPUT_SLOT_INDEX = 0;
+    protected static final int INPUT_SLOT_INDEX = 1;
     protected static final int WAND_SLOT_INDEX = 2;
-    protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
+    protected static final int[] SLOTS_FOR_UP = new int[] { INPUT_SLOT_INDEX };
     protected static final int[] SLOTS_FOR_DOWN = new int[] { OUTPUT_SLOT_INDEX };
     protected static final int[] SLOTS_FOR_SIDES = new int[] { WAND_SLOT_INDEX };
     
@@ -139,7 +140,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
                 }
             }
 
-            SimpleContainer testInv = new SimpleContainer(entity.items.get(0));
+            SimpleContainer testInv = new SimpleContainer(entity.items.get(INPUT_SLOT_INDEX));
             IDissolutionRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION, testInv, level).orElse(null);
             if (entity.canDissolve(testInv, recipe)) {
                 entity.processTime++;
@@ -269,9 +270,9 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
 
     @Override
     public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        if (slotIndex == 3) {
+        if (slotIndex == WAND_SLOT_INDEX) {
             return stack.getItem() instanceof IWand;
-        } else if (slotIndex == 0) {
+        } else if (slotIndex == INPUT_SLOT_INDEX) {
             return true;
         } else {
             return false;

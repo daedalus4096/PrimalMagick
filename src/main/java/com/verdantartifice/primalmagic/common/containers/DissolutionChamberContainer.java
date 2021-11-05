@@ -41,11 +41,11 @@ public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Co
         this.chamberData = chamberData;
         this.world = playerInv.player.level;
         
-        // Slot 0: ore input
-        this.inputSlot = this.addSlot(new Slot(this.chamberInv, 0, 44, 35));
+        // Slot 0: chamber output
+        this.addSlot(new GenericResultSlot(playerInv.player, this.chamberInv, 0, 125, 35));
         
-        // Slots 1: chamber output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.chamberInv, 1, 125, 35));
+        // Slot 1: ore input
+        this.inputSlot = this.addSlot(new Slot(this.chamberInv, 1, 44, 35));
         
         // Slot 2: wand input
         this.wandSlot = this.addSlot(new WandSlot(this.chamberInv, 2, 8, 62, false));
@@ -77,7 +77,7 @@ public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Co
         if (slot != null && slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
-            if (index == 1) {
+            if (index == 0) {
                 // If transferring an output item, move it into the player's backpack or hotbar
                 if (!this.moveItemStackTo(slotStack, 3, 39, true)) {
                     return ItemStack.EMPTY;
@@ -89,7 +89,7 @@ public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Co
                     if (!this.moveItemStackTo(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotStack, 0, 1, false) && !this.moveItemStackTo(slotStack, 30, 39, false)) {
+                } else if (!this.moveItemStackTo(slotStack, 1, 2, false) && !this.moveItemStackTo(slotStack, 30, 39, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 30 && index < 39) {
@@ -98,7 +98,7 @@ public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Co
                     if (!this.moveItemStackTo(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotStack, 0, 1, false) && !this.moveItemStackTo(slotStack, 3, 30, false)) {
+                } else if (!this.moveItemStackTo(slotStack, 1, 2, false) && !this.moveItemStackTo(slotStack, 3, 30, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(slotStack, 3, 39, false)) {
@@ -157,7 +157,7 @@ public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Co
 
     @Override
     public int getResultSlotIndex() {
-        return 1;
+        return 0;
     }
 
     @Override
