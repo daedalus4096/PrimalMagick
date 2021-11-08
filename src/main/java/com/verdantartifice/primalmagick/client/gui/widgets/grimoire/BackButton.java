@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
@@ -20,7 +20,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class BackButton extends Button {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
 
     protected GrimoireScreen screen;
     

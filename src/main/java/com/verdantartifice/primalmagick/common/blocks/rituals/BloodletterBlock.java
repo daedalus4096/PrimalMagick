@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 import java.awt.Color;
 import java.util.Random;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.misc.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
@@ -44,7 +44,7 @@ import net.minecraftforge.common.util.Constants;
  */
 public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final BooleanProperty FILLED = BooleanProperty.create("filled");
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/bloodletter"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/bloodletter"));
     
     public BloodletterBlock() {
         super(Block.Properties.of(Material.STONE, MaterialColor.PODZOL).strength(1.5F, 6.0F).sound(SoundType.STONE));

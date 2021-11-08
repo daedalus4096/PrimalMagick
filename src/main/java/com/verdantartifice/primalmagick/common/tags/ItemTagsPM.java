@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tags;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -57,6 +57,6 @@ public class ItemTagsPM {
     public static final IOptionalNamedTag<Item> STORAGE_BLOCKS_HALLOWSTEEL = tag("storage_blocks/hallowsteel");
 
     private static IOptionalNamedTag<Item> tag(String name) {
-        return ItemTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
+        return ItemTags.createOptional(new ResourceLocation(PrimalMagick.MODID, name));
     }
 }

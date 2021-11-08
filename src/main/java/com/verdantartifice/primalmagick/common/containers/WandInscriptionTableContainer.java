@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.containers;
 
 import java.util.Optional;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.slots.SpellScrollFilledSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.WandSlot;
@@ -30,7 +30,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WandInscriptionTableContainer extends AbstractContainerMenu {
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "wand_inscription");
+    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "wand_inscription");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final InscriptionComponentInventory componentInv = new InscriptionComponentInventory();

@@ -10,7 +10,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -51,7 +51,7 @@ public class WandCore implements IWandComponent {
     protected final ModelResourceLocation staffMrl; // Resource location of the staff core's model, stored in a blockstate file
 
     public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned) {
-        this(tag, rarity, spellSlots, bonusSlot, aligned, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_core"), ""), new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_staff_core"), ""));
+        this(tag, rarity, spellSlots, bonusSlot, aligned, new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, tag + "_wand_core"), ""), new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, tag + "_staff_core"), ""));
     }
     
     public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned, @Nonnull ModelResourceLocation wmrl, @Nonnull ModelResourceLocation smrl) {

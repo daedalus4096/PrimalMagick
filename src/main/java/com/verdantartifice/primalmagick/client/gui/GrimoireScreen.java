@@ -15,7 +15,7 @@ import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractRecipePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementGainPage;
@@ -79,7 +79,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  */
 public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagic:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     
@@ -874,7 +874,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     protected static boolean isValidRecipeIndexEntry(Recipe<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
-        if (!recipe.getId().getNamespace().equals(PrimalMagic.MODID) || RecipePageFactory.createPage(recipe) == null) {
+        if (!recipe.getId().getNamespace().equals(PrimalMagick.MODID) || RecipePageFactory.createPage(recipe) == null) {
             return false;
         }
         if (recipe instanceof IHasRequiredResearch hrr) {

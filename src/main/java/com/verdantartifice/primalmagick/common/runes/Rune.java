@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
@@ -47,7 +47,7 @@ public abstract class Rune {
     protected final boolean glint;
     
     public Rune(@Nonnull String tag, @Nonnull Rarity rarity, boolean glint) {
-        this(new ResourceLocation(PrimalMagic.MODID, tag), rarity, glint);
+        this(new ResourceLocation(PrimalMagick.MODID, tag), rarity, glint);
     }
     
     public Rune(@Nonnull ResourceLocation id, @Nonnull Rarity rarity, boolean glint) {

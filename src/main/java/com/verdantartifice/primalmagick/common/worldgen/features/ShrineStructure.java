@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
@@ -43,7 +43,7 @@ public class ShrineStructure extends StructureFeature<ShrineConfig> {
 
     @Override
     public String getFeatureName() {
-        return PrimalMagic.MODID + ":shrine";
+        return PrimalMagick.MODID + ":shrine";
     }
 
     public static class Start extends StructureStart<ShrineConfig> {

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.events;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.BlockSwapper;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class ServerEvents {
     @SubscribeEvent
     public static void serverWorldTick(TickEvent.WorldTickEvent event) {

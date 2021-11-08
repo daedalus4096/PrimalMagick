@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.events;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.commands.arguments.AttunementTypeArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.AttunementValueArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.DisciplineArgument;
@@ -57,7 +57,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ModLifecycleEvents {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
@@ -83,14 +83,14 @@ public class ModLifecycleEvents {
     }
     
     private static void registerCommandArguments(FMLCommonSetupEvent event) {
-        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "research")).toString(), ResearchArgument.class, new EmptyArgumentSerializer<>(ResearchArgument::research));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "discipline")).toString(), DisciplineArgument.class, new EmptyArgumentSerializer<>(DisciplineArgument::discipline));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "knowledge_type")).toString(), KnowledgeTypeArgument.class, new EmptyArgumentSerializer<>(KnowledgeTypeArgument::knowledgeType));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "knowledge_amount").toString()), KnowledgeAmountArgument.class, new EmptyArgumentSerializer<>(KnowledgeAmountArgument::amount));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "source")).toString(), SourceArgument.class, new EmptyArgumentSerializer<>(SourceArgument::source));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "stat_value")).toString(), StatValueArgument.class, new EmptyArgumentSerializer<>(StatValueArgument::value));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "attunement_type")).toString(), AttunementTypeArgument.class, new EmptyArgumentSerializer<>(AttunementTypeArgument::attunementType));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagic.MODID, "attunement_value")).toString(), AttunementValueArgument.class, new EmptyArgumentSerializer<>(AttunementValueArgument::value));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "research")).toString(), ResearchArgument.class, new EmptyArgumentSerializer<>(ResearchArgument::research));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "discipline")).toString(), DisciplineArgument.class, new EmptyArgumentSerializer<>(DisciplineArgument::discipline));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "knowledge_type")).toString(), KnowledgeTypeArgument.class, new EmptyArgumentSerializer<>(KnowledgeTypeArgument::knowledgeType));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "knowledge_amount").toString()), KnowledgeAmountArgument.class, new EmptyArgumentSerializer<>(KnowledgeAmountArgument::amount));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "source")).toString(), SourceArgument.class, new EmptyArgumentSerializer<>(SourceArgument::source));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "stat_value")).toString(), StatValueArgument.class, new EmptyArgumentSerializer<>(StatValueArgument::value));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "attunement_type")).toString(), AttunementTypeArgument.class, new EmptyArgumentSerializer<>(AttunementTypeArgument::attunementType));
+        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "attunement_value")).toString(), AttunementValueArgument.class, new EmptyArgumentSerializer<>(AttunementValueArgument::value));
     }
     
     private static void registerEntityPlacements(FMLCommonSetupEvent event) {
@@ -118,16 +118,16 @@ public class ModLifecycleEvents {
 
     @SubscribeEvent
     public static void enqueueIMC(InterModEnqueueEvent event) {
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityType.IRON_GOLEM);
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityType.SNOW_GOLEM);
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityType.VILLAGER);
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityTypesPM.PRIMALITE_GOLEM.get());
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityTypesPM.HEXIUM_GOLEM.get());
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphAllow", () -> EntityTypesPM.HALLOWSTEEL_GOLEM.get());
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.ENDER_DRAGON);
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.WITHER);
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityType.WOLF);
-        InterModComms.sendTo(PrimalMagic.MODID, "polymorphBan", () -> EntityTypesPM.INNER_DEMON.get());
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphAllow", () -> EntityType.IRON_GOLEM);
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphAllow", () -> EntityType.SNOW_GOLEM);
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphAllow", () -> EntityType.VILLAGER);
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphAllow", () -> EntityTypesPM.PRIMALITE_GOLEM.get());
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphAllow", () -> EntityTypesPM.HEXIUM_GOLEM.get());
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphAllow", () -> EntityTypesPM.HALLOWSTEEL_GOLEM.get());
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphBan", () -> EntityType.ENDER_DRAGON);
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphBan", () -> EntityType.WITHER);
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphBan", () -> EntityType.WOLF);
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphBan", () -> EntityTypesPM.INNER_DEMON.get());
     }
     
     @SubscribeEvent

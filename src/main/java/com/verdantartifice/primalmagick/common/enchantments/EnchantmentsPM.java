@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.enchantments;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class EnchantmentsPM {
-    private static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, PrimalMagic.MODID);
+    private static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, PrimalMagick.MODID);
     
     public static void init() {
         ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());

@@ -5,7 +5,7 @@ import java.util.Collections;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
@@ -22,11 +22,11 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ResearchWidget extends AbstractWidget {
-    protected static final ResourceLocation BAG_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_bag.png");
-    protected static final ResourceLocation TUBE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_tube.png");
-    protected static final ResourceLocation MAP_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_map.png");
-    protected static final ResourceLocation UNKNOWN_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_unknown.png");
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
+    protected static final ResourceLocation BAG_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_bag.png");
+    protected static final ResourceLocation TUBE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_tube.png");
+    protected static final ResourceLocation MAP_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_map.png");
+    protected static final ResourceLocation UNKNOWN_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_unknown.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
     
     protected SimpleResearchKey key;
     protected boolean isComplete;

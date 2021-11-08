@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.layers.HallowsteelGolemCracksLayer;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.HallowsteelGolemEntity;
 
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class HallowsteelGolemRenderer extends AbstractEnchantedGolemRenderer<HallowsteelGolemEntity> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/hallowsteel_golem/hallowsteel_golem.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/hallowsteel_golem/hallowsteel_golem.png");
     
     public HallowsteelGolemRenderer(EntityRendererProvider.Context context) {
         super(context);

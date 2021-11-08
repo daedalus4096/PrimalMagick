@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ModRegistrationEvents {
     @SubscribeEvent
     public static void onRegisterCapability(RegisterCapabilitiesEvent event) {

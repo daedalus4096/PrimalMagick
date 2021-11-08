@@ -5,7 +5,7 @@ import java.awt.Color;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.tiles.mana.AbstractManaFontTileEntity;
 
@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.Block;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock}
  */
 public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "entity/mana_font_core");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/mana_font_core");
     
     public ManaFontTER(BlockEntityRendererProvider.Context context) {
     }

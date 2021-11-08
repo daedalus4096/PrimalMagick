@@ -8,7 +8,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -68,10 +68,10 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     public static final EnumProperty<BellAttachType> ATTACHMENT = BlockStateProperties.BELL_ATTACHMENT;
     
     protected static final VoxelShape BELL_CORE_SHAPE = Shapes.or(Block.box(5.0D, 6.0D, 5.0D, 11.0D, 13.0D, 11.0D), Block.box(4.0D, 4.0D, 4.0D, 12.0D, 6.0D, 12.0D));
-    protected static final VoxelShape FLOOR_SHAPE = Shapes.or(BELL_CORE_SHAPE, VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/ritual_bell_floor")));
-    protected static final VoxelShape CEILING_SHAPE = Shapes.or(BELL_CORE_SHAPE, VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/ritual_bell_ceiling")));
-    protected static final VoxelShape ONE_WALL_SHAPE = Shapes.or(BELL_CORE_SHAPE, VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/ritual_bell_wall")));
-    protected static final VoxelShape TWO_WALLS_SHAPE = Shapes.or(BELL_CORE_SHAPE, VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/ritual_bell_between_walls")));
+    protected static final VoxelShape FLOOR_SHAPE = Shapes.or(BELL_CORE_SHAPE, VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/ritual_bell_floor")));
+    protected static final VoxelShape CEILING_SHAPE = Shapes.or(BELL_CORE_SHAPE, VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/ritual_bell_ceiling")));
+    protected static final VoxelShape ONE_WALL_SHAPE = Shapes.or(BELL_CORE_SHAPE, VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/ritual_bell_wall")));
+    protected static final VoxelShape TWO_WALLS_SHAPE = Shapes.or(BELL_CORE_SHAPE, VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/ritual_bell_between_walls")));
     protected static final Map<BellAttachType, Map<Direction, VoxelShape>> SHAPES = Util.make(Maps.newEnumMap(BellAttachType.class), map -> {
         map.put(BellAttachType.FLOOR, Util.make(Maps.newEnumMap(Direction.class), innerMap -> {
             innerMap.put(Direction.NORTH, FLOOR_SHAPE);

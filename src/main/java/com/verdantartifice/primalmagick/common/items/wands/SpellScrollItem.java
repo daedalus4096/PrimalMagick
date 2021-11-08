@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -36,7 +36,7 @@ public class SpellScrollItem extends Item {
     protected static final Component TOOLTIP = new TranslatableComponent("tooltip.primalmagic.spell_scroll").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
     
     public SpellScrollItem() {
-        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP));
+        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP));
     }
     
     @Nullable

@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
@@ -37,11 +37,11 @@ import net.minecraftforge.entity.PartEntity;
  */
 @SuppressWarnings("deprecation")
 public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL0 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_0"), "");
-    private static final ModelResourceLocation MRL1 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_1"), "");
-    private static final ModelResourceLocation MRL2 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_2"), "");
-    private static final ModelResourceLocation MRL3 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_3"), "");
-    private static final ModelResourceLocation MRL4 = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_4"), "");
+    private static final ModelResourceLocation MRL0 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_0"), "");
+    private static final ModelResourceLocation MRL1 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_1"), "");
+    private static final ModelResourceLocation MRL2 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_2"), "");
+    private static final ModelResourceLocation MRL3 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_3"), "");
+    private static final ModelResourceLocation MRL4 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_4"), "");
     private static AtomicBoolean isRenderingScreen = new AtomicBoolean(false);
     
     public ArcanometerISTER() {

@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -133,7 +133,7 @@ public class PlayerStats implements IPlayerStats {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_stats");
+        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagick.MODID, "capability_stats");
         
         private final IPlayerStats instance = new PlayerStats();
         private final LazyOptional<IPlayerStats> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

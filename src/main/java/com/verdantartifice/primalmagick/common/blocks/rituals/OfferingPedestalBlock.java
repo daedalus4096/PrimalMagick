@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 import java.awt.Color;
 import java.util.Random;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
@@ -40,7 +40,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPowered, IRitualStabilizer {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/offering_pedestal"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/offering_pedestal"));
     
     public OfferingPedestalBlock() {
         super(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(1.5F, 6.0F).sound(SoundType.STONE));

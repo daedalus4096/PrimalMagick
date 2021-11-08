@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.containers;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ContainersPM {
-    private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, PrimalMagic.MODID);
+    private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, PrimalMagick.MODID);
     
     public static void init() {
         CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());

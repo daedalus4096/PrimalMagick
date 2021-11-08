@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.misc;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 
 import net.minecraft.core.BlockPos;
@@ -24,9 +24,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class PillarBlock extends Block {
-    protected static final VoxelShape SHAPE_BASE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/pillar"));
-    protected static final VoxelShape SHAPE_BOTTOM = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/pillar_bottom"));
-    protected static final VoxelShape SHAPE_TOP = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/pillar_top"));
+    protected static final VoxelShape SHAPE_BASE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/pillar"));
+    protected static final VoxelShape SHAPE_BOTTOM = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/pillar_bottom"));
+    protected static final VoxelShape SHAPE_TOP = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/pillar_top"));
 
     public static final EnumProperty<Type> PROPERTY_TYPE = EnumProperty.create("type", Type.class);
     

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
@@ -34,7 +34,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
  * @author Daedalus4096
  */
 public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDevice {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/runescribing_altar_basic"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/runescribing_altar_basic"));
     
     protected final DeviceTier tier;
 

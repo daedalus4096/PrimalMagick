@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import java.util.Random;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntity;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
@@ -29,7 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class EssenceFurnaceBlock extends AbstractCalcinatorBlock {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/essence_furnace"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/essence_furnace"));
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {

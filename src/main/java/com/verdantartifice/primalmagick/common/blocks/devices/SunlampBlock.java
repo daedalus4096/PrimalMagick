@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -47,8 +47,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class SunlampBlock extends BaseEntityBlock {
     public static final DirectionProperty ATTACHMENT = DirectionProperty.create("attachment", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
     
-    protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/sunlamp_ground_base"));
-    protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/sunlamp_hanging_base"));
+    protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/sunlamp_ground_base"));
+    protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/sunlamp_hanging_base"));
     
     protected final Supplier<GlowFieldBlock> glowSupplier;
     

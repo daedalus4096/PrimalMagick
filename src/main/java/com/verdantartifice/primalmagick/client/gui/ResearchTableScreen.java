@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidListWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidUnlockWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
@@ -46,8 +46,8 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableContainer> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/research_table.png");
-    private static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagic.MODID, "textures/gui/research_table_overlay.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table.png");
+    private static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
     private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");
     
     protected long lastCheck = 0L;

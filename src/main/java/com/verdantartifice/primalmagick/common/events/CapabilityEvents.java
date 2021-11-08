@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanions;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class CapabilityEvents {
     @SubscribeEvent
     public static void attachEntityCapability(AttachCapabilitiesEvent<Entity> event) {

@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ArcanometerISTER;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
@@ -39,10 +39,10 @@ import net.minecraftforge.client.IItemRenderProperties;
  * @author Daedalus4096
  */
 public class ArcanometerItem extends Item {
-    public static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "scan_state");
+    public static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagick.MODID, "scan_state");
 
     public ArcanometerItem() {
-        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON));
+        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON));
     }
     
     public static boolean isMouseOverScannable(@Nullable HitResult result, @Nullable Level world, @Nullable Player player) {

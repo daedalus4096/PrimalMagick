@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -366,7 +366,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_knowledge");
+        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagick.MODID, "capability_knowledge");
         
         private final IPlayerKnowledge instance = new PlayerKnowledge();
         private final LazyOptional<IPlayerKnowledge> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

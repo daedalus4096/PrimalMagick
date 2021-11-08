@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.items.armor;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
@@ -55,7 +55,7 @@ public enum ArmorMaterialPM implements ArmorMaterial {
     private final LazyLoadedValue<Ingredient> repairMaterial;
 
     private ArmorMaterialPM(String name, int maxDamageFactor, int[] damageReductionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterialSupplier) {
-        this.name = PrimalMagic.MODID + ":" + name;
+        this.name = PrimalMagick.MODID + ":" + name;
         this.maxDamageFactor = maxDamageFactor;
         this.damageReductionAmountArray = damageReductionAmounts;
         this.enchantability = enchantability;

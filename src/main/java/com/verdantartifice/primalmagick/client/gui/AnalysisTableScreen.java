@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
@@ -36,8 +36,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableContainer> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_table.png");
-    private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/analysis_button.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_table.png");
+    private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_button.png");
     protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = new TranslatableComponent("tooltip.primalmagic.analyze_button.1");
     protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = new TranslatableComponent("tooltip.primalmagic.analyze_button.2").withStyle(ChatFormatting.RED);
     

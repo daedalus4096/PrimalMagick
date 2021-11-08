@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.datagen;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProvider;
 import com.verdantartifice.primalmagick.datagen.loot_tables.BlockLootTables;
@@ -22,7 +22,7 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {

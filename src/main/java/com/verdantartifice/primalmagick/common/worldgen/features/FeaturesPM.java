@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.worldgen.features;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.trees.MoonwoodLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.MoonwoodLogBlock;
@@ -46,7 +46,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class FeaturesPM {
-    private static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, PrimalMagic.MODID);
+    private static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, PrimalMagick.MODID);
     
     public static void init() {
         STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -114,7 +114,7 @@ public class FeaturesPM {
     }
     
     private static <FC extends FeatureConfiguration> ConfiguredFeature<FC, ?> registerFeature(String key, ConfiguredFeature<FC, ?> configuredFeature) {
-        return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(PrimalMagic.MODID, key), configuredFeature);
+        return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(PrimalMagick.MODID, key), configuredFeature);
     }
     
     protected static final class States {

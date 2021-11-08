@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.worldgen.features;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
@@ -31,6 +31,6 @@ public class ConfiguredFeaturesPM {
     }
     
     protected static void registerConfiguredStructure(Registry<ConfiguredStructureFeature<?, ?>> registry, String key, ConfiguredStructureFeature<?, ?> value) {
-        Registry.register(registry, new ResourceLocation(PrimalMagic.MODID, key), value);
+        Registry.register(registry, new ResourceLocation(PrimalMagick.MODID, key), value);
     }
 }

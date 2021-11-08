@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tags;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
@@ -27,6 +27,6 @@ public class EntityTypeTagsPM {
     public static final IOptionalNamedTag<EntityType<?>> DROPS_RELIC_FRAGMENTS_LOW = tag("drops_relic_fragments_low");
 
     private static IOptionalNamedTag<EntityType<?>> tag(String name) {
-        return EntityTypeTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
+        return EntityTypeTags.createOptional(new ResourceLocation(PrimalMagick.MODID, name));
     }
 }

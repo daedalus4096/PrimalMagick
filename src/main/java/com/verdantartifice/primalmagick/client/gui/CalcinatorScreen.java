@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.containers.CalcinatorContainer;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -16,7 +16,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class CalcinatorScreen extends AbstractContainerScreen<CalcinatorContainer> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/calcinator.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/calcinator.png");
 
     public CalcinatorScreen(CalcinatorContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);

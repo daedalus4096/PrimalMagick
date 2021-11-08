@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.fx.particles;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleType;
@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ParticleTypesPM {
-    private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PrimalMagic.MODID);
+    private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PrimalMagick.MODID);
 
     public static void init() {
         PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());

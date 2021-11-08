@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 
@@ -193,8 +193,8 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
     }
     
     public static enum KnowledgeType {
-        OBSERVATION(16, new ResourceLocation(PrimalMagic.MODID, "textures/research/knowledge_observation.png")),
-        THEORY(32, new ResourceLocation(PrimalMagic.MODID, "textures/research/knowledge_theory.png"));
+        OBSERVATION(16, new ResourceLocation(PrimalMagick.MODID, "textures/research/knowledge_observation.png")),
+        THEORY(32, new ResourceLocation(PrimalMagick.MODID, "textures/research/knowledge_theory.png"));
         
         private short progression;  // How many points make a complete level for this knowledge type
         private ResourceLocation iconLocation;

@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementMeterWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementThresholdWidget;
@@ -24,7 +24,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class AttunementPage extends AbstractPage {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/attunement_meter.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/attunement_meter.png");
 
     protected Source source;
     protected List<IPageElement> contents = new ArrayList<>();

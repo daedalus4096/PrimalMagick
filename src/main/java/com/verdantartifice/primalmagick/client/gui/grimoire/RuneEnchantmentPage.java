@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
@@ -25,7 +25,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class RuneEnchantmentPage extends AbstractPage {
-    protected static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire_overlay.png");
+    protected static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire_overlay.png");
     
     protected Enchantment enchant;
     protected List<IPageElement> contents = new ArrayList<>();

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.MundaneWandISTER;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
@@ -23,7 +23,7 @@ import net.minecraftforge.client.IItemRenderProperties;
  */
 public class MundaneWandItem extends AbstractWandItem {
     public MundaneWandItem() {
-        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1));
+        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(1));
     }
 
     @Override

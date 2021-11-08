@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 
 import net.minecraft.client.Minecraft;
@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ResearchToast implements Toast {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/hud.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/hud.png");
     
     protected ResearchEntry entry;
     

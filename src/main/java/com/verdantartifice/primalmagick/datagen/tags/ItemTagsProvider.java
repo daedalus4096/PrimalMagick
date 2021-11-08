@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.tags;
 
 import java.nio.file.Path;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -25,7 +25,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 public class ItemTagsProvider extends TagsProvider<Item> {
     @SuppressWarnings("deprecation")
     public ItemTagsProvider(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, Registry.ITEM, PrimalMagic.MODID, helper);
+        super(generator, Registry.ITEM, PrimalMagick.MODID, helper);
     }
 
     @Override

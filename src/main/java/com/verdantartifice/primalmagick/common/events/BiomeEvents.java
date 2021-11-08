@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.events;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class BiomeEvents {
     @SubscribeEvent(priority=EventPriority.HIGH)
     public static void loadBiome(BiomeLoadingEvent event) {

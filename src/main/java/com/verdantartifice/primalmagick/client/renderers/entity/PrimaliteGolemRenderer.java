@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.layers.PrimaliteGolemCracksLayer;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.PrimaliteGolemEntity;
 
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class PrimaliteGolemRenderer extends AbstractEnchantedGolemRenderer<PrimaliteGolemEntity> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/primalite_golem/primalite_golem.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/primalite_golem/primalite_golem.png");
     
     public PrimaliteGolemRenderer(EntityRendererProvider.Context context) {
         super(context);

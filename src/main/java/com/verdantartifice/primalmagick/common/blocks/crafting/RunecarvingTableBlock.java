@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 
@@ -40,7 +40,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
  * @author Daedalus4096
  */
 public class RunecarvingTableBlock extends BaseEntityBlock {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/runecarving_table"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/runecarving_table"));
 
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 

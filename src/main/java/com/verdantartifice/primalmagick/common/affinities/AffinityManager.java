@@ -21,7 +21,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.containers.FakeContainer;
 import com.verdantartifice.primalmagick.common.crafting.IHasManaCost;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -50,7 +50,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class AffinityManager extends SimpleJsonResourceReloadListener {
     protected static final int MAX_AFFINITY = 100;
     protected static final int HISTORY_LIMIT = 100;

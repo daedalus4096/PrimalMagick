@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.events;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT)
 public class InputEvents {
     @SubscribeEvent
     public static void onKeyInput(InputEvent.KeyInputEvent event) {

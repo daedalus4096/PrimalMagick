@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class EntityEvents {
     @SubscribeEvent
     public static void onEnderEntityTeleport(EntityTeleportEvent.EnderEntity event) {

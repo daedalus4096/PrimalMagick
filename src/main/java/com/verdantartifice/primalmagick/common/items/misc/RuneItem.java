@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 
 import net.minecraft.ChatFormatting;
@@ -29,7 +29,7 @@ public class RuneItem extends Item {
     protected final Rune rune;
     
     public RuneItem(@Nonnull Rune rune) {
-        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).rarity(rune.getRarity()));
+        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(rune.getRarity()));
         this.rune = rune;
         register(rune, this);
     }

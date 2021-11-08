@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.loot_modifiers;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.conditions.MatchBlockTag;
@@ -37,7 +37,7 @@ import net.minecraftforge.common.data.GlobalLootModifierProvider;
  */
 public class LootModifierProvider extends GlobalLootModifierProvider {
     public LootModifierProvider(DataGenerator gen) {
-        super(gen, PrimalMagic.MODID);
+        super(gen, PrimalMagick.MODID);
     }
 
     @Override

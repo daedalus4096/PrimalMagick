@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -40,7 +40,7 @@ public class ResearchStageBuilder {
     }
     
     public static ResearchStageBuilder stage() {
-        return new ResearchStageBuilder(PrimalMagic.MODID);
+        return new ResearchStageBuilder(PrimalMagick.MODID);
     }
     
     public ResearchStageBuilder requiredItemStack(@Nonnull ItemLike item) {
@@ -107,7 +107,7 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder recipe(@Nonnull String name) {
-        return recipe(PrimalMagic.MODID, name);
+        return recipe(PrimalMagick.MODID, name);
     }
     
     public ResearchStageBuilder recipe(@Nonnull String modId, @Nonnull String name) {

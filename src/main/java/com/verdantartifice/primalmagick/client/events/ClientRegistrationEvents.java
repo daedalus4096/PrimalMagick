@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.OfferingParticle;
@@ -32,7 +32,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrationEvents {
     @SubscribeEvent
     public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
@@ -54,7 +54,7 @@ public class ClientRegistrationEvents {
      */
     @SubscribeEvent
     public static void onModelRegister(ModelRegistryEvent event) {
-        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "mundane_wand_core"), ""));
+        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "mundane_wand_core"), ""));
         for (WandCore core : WandCore.getAllWandCores()) {
             ModelLoader.addSpecialModel(core.getWandModelResourceLocation());
             ModelLoader.addSpecialModel(core.getStaffModelResourceLocation());
@@ -67,7 +67,7 @@ public class ClientRegistrationEvents {
             ModelLoader.addSpecialModel(gem.getModelResourceLocation());
         }
         for (int index = 0; index <= 4; index++) {
-            ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "arcanometer_" + index), ""));
+            ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_" + index), ""));
         }
     }
     

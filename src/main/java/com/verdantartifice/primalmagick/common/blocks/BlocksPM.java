@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.base.SaplingBlockPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ArcaneWorkbenchBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.CalcinatorBlock;
@@ -90,7 +90,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class BlocksPM {
-    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, PrimalMagic.MODID);
+    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, PrimalMagick.MODID);
     
     public static void init() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());

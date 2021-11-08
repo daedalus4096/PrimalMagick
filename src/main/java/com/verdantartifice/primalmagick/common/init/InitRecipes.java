@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.init;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.WandTransformBlock;
@@ -22,11 +22,11 @@ import net.minecraft.world.level.block.Blocks;
  */
 public class InitRecipes {
     public static void initRecipeTypes() {
-        RecipeTypesPM.ARCANE_CRAFTING = RecipeType.register(PrimalMagic.MODID + ":arcane_crafting");
-        RecipeTypesPM.RITUAL = RecipeType.register(PrimalMagic.MODID + ":ritual");
-        RecipeTypesPM.RUNECARVING = RecipeType.register(PrimalMagic.MODID + ":runecarving");
-        RecipeTypesPM.CONCOCTING = RecipeType.register(PrimalMagic.MODID + ":concocting");
-        RecipeTypesPM.DISSOLUTION = RecipeType.register(PrimalMagic.MODID + ":dissolution");
+        RecipeTypesPM.ARCANE_CRAFTING = RecipeType.register(PrimalMagick.MODID + ":arcane_crafting");
+        RecipeTypesPM.RITUAL = RecipeType.register(PrimalMagick.MODID + ":ritual");
+        RecipeTypesPM.RUNECARVING = RecipeType.register(PrimalMagick.MODID + ":runecarving");
+        RecipeTypesPM.CONCOCTING = RecipeType.register(PrimalMagick.MODID + ":concocting");
+        RecipeTypesPM.DISSOLUTION = RecipeType.register(PrimalMagick.MODID + ":dissolution");
     }
     
     public static void initWandTransforms() {

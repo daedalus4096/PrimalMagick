@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.AnalysisTableScreen;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
@@ -64,7 +64,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
  * @author Daedalus4096
  */
 @SuppressWarnings("deprecation")
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientModLifecycleEvents {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {

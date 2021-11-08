@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
@@ -42,8 +42,8 @@ public class Source {
     // List of sources in the order in which they should be displayed
     public static final List<Source> SORTED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED);
     
-    protected static final ResourceLocation UNKNOWN_IMAGE = new ResourceLocation(PrimalMagic.MODID, "textures/research/research_unknown.png");
-    protected static final ResourceLocation UNKNOWN_ATLAS_LOC = new ResourceLocation(PrimalMagic.MODID, "research/research_unknown");
+    protected static final ResourceLocation UNKNOWN_IMAGE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_unknown.png");
+    protected static final ResourceLocation UNKNOWN_ATLAS_LOC = new ResourceLocation(PrimalMagick.MODID, "research/research_unknown");
 
     protected final String tag; // Unique identifier for the source
     protected final int color;  // Color to use for graphical effects
@@ -59,7 +59,7 @@ public class Source {
     }
     
     public Source(@Nonnull String tag, int color, double multiplier, @Nonnull ChatFormatting chatColor, @Nonnull Stat manaSpentStat, @Nullable SimpleResearchKey discoverKey) {
-        this(tag, color, multiplier, chatColor, manaSpentStat, discoverKey, new ResourceLocation(PrimalMagic.MODID, "textures/sources/" + tag.toLowerCase() + ".png"), new ResourceLocation(PrimalMagic.MODID, "sources/" + tag.toLowerCase()));
+        this(tag, color, multiplier, chatColor, manaSpentStat, discoverKey, new ResourceLocation(PrimalMagick.MODID, "textures/sources/" + tag.toLowerCase() + ".png"), new ResourceLocation(PrimalMagick.MODID, "sources/" + tag.toLowerCase()));
     }
     
     public Source(@Nonnull String tag, int color, double multiplier, @Nonnull ChatFormatting chatColor, @Nonnull Stat manaSpentStat, @Nullable SimpleResearchKey discoverKey, @Nonnull ResourceLocation image, @Nonnull ResourceLocation atlasLoc) {
@@ -85,7 +85,7 @@ public class Source {
     
     @Nonnull
     public String getNameTranslationKey() {
-        return PrimalMagic.MODID + ".source." + this.tag;
+        return PrimalMagick.MODID + ".source." + this.tag;
     }
     
     public int getColor() {
@@ -137,7 +137,7 @@ public class Source {
     
     @Nonnull
     public static String getUnknownTranslationKey() {
-        return PrimalMagic.MODID + ".source.unknown";
+        return PrimalMagick.MODID + ".source.unknown";
     }
     
     @Nonnull

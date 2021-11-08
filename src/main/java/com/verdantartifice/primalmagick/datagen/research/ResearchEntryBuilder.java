@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.resources.ResourceLocation;
@@ -34,11 +34,11 @@ public class ResearchEntryBuilder {
     }
     
     public static ResearchEntryBuilder entry(@Nonnull SimpleResearchKey key, @Nonnull String discipline) {
-        return new ResearchEntryBuilder(PrimalMagic.MODID, key, discipline);
+        return new ResearchEntryBuilder(PrimalMagick.MODID, key, discipline);
     }
     
     public static ResearchEntryBuilder entry(@Nonnull String keyStr, @Nonnull String discipline) {
-        return new ResearchEntryBuilder(PrimalMagic.MODID, SimpleResearchKey.parse(keyStr), discipline);
+        return new ResearchEntryBuilder(PrimalMagick.MODID, SimpleResearchKey.parse(keyStr), discipline);
     }
     
     public ResearchEntryBuilder parent(SimpleResearchKey parent) {
@@ -84,7 +84,7 @@ public class ResearchEntryBuilder {
     }
     
     public void build(Consumer<IFinishedResearchEntry> consumer) {
-        this.build(consumer, new ResourceLocation(PrimalMagic.MODID, this.key.toString().toLowerCase()));
+        this.build(consumer, new ResourceLocation(PrimalMagick.MODID, this.key.toString().toLowerCase()));
     }
     
     public void build(Consumer<IFinishedResearchEntry> consumer, String name) {

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
@@ -29,7 +29,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
  */
 public class GrimoireItem extends Item implements MenuProvider {
     public GrimoireItem() {
-        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON));
+        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON));
     }
     
     @Override

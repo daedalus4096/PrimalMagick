@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -46,7 +46,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
         super(x, y, 18, 18, TextComponent.EMPTY);
         this.source = source;
         this.threshold = threshold;
-        this.texture = new ResourceLocation(PrimalMagic.MODID, "textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
+        this.texture = new ResourceLocation(PrimalMagick.MODID, "textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
         this.tooltipText = new TranslatableComponent("primalmagic.attunement.threshold." + source.getTag() + "." + threshold.getTag());
     }
     

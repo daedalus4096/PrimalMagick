@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.mojang.datafixers.util.Either;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
@@ -30,7 +30,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT)
 public class ClientRenderEvents {
     @SubscribeEvent
     public static void renderTooltip(ItemTooltipEvent event) {

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.commands.PrimalMagicCommand;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,7 +12,7 @@ import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class ServerLifecycleEvents {
     @SubscribeEvent
     public static void serverStarting(FMLServerStartingEvent event) {

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.tags;
 
 import java.nio.file.Path;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 
@@ -21,7 +21,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
     @SuppressWarnings("deprecation")
     public EntityTypeTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, Registry.ENTITY_TYPE, PrimalMagic.MODID, existingFileHelper);
+        super(generatorIn, Registry.ENTITY_TYPE, PrimalMagick.MODID, existingFileHelper);
     }
 
     @Override

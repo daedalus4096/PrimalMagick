@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.NBTIngredientPM;
@@ -119,7 +119,7 @@ public class ConcoctingRecipeBuilder {
         if (type == null || potion == null || potion == Potions.EMPTY) {
             throw new IllegalStateException("Output is not a concoction for concocting recipe with output " + this.result.getHoverName().getString());
         }
-        this.build(consumer, new ResourceLocation(PrimalMagic.MODID, potion.getRegistryName().getPath() + "_" + type.getSerializedName()));
+        this.build(consumer, new ResourceLocation(PrimalMagick.MODID, potion.getRegistryName().getPath() + "_" + type.getSerializedName()));
     }
     
     public static class Result implements FinishedRecipe {

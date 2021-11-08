@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class LootModifierSerializersPM {
-    private static final DeferredRegister<GlobalLootModifierSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, PrimalMagic.MODID);
+    private static final DeferredRegister<GlobalLootModifierSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, PrimalMagick.MODID);
     
     public static void init() {
         SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());

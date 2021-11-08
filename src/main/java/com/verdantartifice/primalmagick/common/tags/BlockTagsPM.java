@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tags;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -35,6 +35,6 @@ public class BlockTagsPM {
     public static final IOptionalNamedTag<Block> SUNWOOD_LOGS = tag("sunwood_logs");
     
     private static IOptionalNamedTag<Block> tag(String name) {
-        return BlockTags.createOptional(new ResourceLocation(PrimalMagic.MODID, name));
+        return BlockTags.createOptional(new ResourceLocation(PrimalMagick.MODID, name));
     }
 }

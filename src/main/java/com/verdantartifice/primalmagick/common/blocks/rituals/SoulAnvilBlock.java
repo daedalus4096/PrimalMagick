@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.google.common.collect.Maps;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
@@ -55,7 +55,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty DIRTY = BooleanProperty.create("dirty");
     
-    protected static final VoxelShape BASE_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagic.MODID, "block/soul_anvil"));
+    protected static final VoxelShape BASE_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/soul_anvil"));
     protected static final Map<Direction, VoxelShape> SHAPES = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
         map.put(Direction.NORTH, BASE_SHAPE);
         map.put(Direction.SOUTH, VoxelShapeUtils.rotate(BASE_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_180));

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
@@ -40,7 +40,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class TileEntityTypesPM {
-    private static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, PrimalMagic.MODID);
+    private static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, PrimalMagick.MODID);
     
     public static void init() {
         TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());

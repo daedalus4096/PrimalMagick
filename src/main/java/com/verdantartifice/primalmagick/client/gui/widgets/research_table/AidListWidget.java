@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -21,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class AidListWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
     
     protected final List<Component> aidNames;
 

@@ -5,7 +5,7 @@ import java.awt.Color;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
@@ -32,10 +32,10 @@ import net.minecraft.world.item.ItemStack;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock}
  */
 public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "ancient_font_earth"), "");
-    private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "artificial_font_earth"), "");
-    private static final ModelResourceLocation MRL_FORBIDDEN = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "forbidden_font_earth"), "");
-    private static final ModelResourceLocation MRL_HEAVENLY = new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, "heavenly_font_earth"), "");
+    private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "ancient_font_earth"), "");
+    private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "artificial_font_earth"), "");
+    private static final ModelResourceLocation MRL_FORBIDDEN = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "forbidden_font_earth"), "");
+    private static final ModelResourceLocation MRL_HEAVENLY = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "heavenly_font_earth"), "");
     
     public ManaFontISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 

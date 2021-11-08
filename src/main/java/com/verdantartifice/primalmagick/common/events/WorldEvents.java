@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.events;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
 
 import net.minecraft.server.level.ServerChunkCache;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class WorldEvents {
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {

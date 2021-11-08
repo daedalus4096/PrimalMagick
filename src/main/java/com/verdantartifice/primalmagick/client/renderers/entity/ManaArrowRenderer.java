@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.projectiles.ManaArrowEntity;
 
 import net.minecraft.client.renderer.entity.ArrowRenderer;
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ManaArrowRenderer extends ArrowRenderer<ManaArrowEntity> {
-    public static final ResourceLocation MANA_ARROW_LOCATION = new ResourceLocation(PrimalMagic.MODID, "textures/entity/mana_arrow.png");
+    public static final ResourceLocation MANA_ARROW_LOCATION = new ResourceLocation(PrimalMagick.MODID, "textures/entity/mana_arrow.png");
 
     public ManaArrowRenderer(EntityRendererProvider.Context context) {
         super(context);

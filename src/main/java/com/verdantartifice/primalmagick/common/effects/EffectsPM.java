@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.effects;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.world.effect.MobEffect;
@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class EffectsPM {
-    private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, PrimalMagic.MODID);
+    private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, PrimalMagick.MODID);
     
     public static void init() {
         EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());

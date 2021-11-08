@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.stats;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
@@ -35,7 +35,7 @@ public class Stat {
     @Nonnull
     public static Stat create(@Nonnull String name, @Nonnull StatFormatter formatter, boolean hidden, boolean internal) {
         // Create the new stat and register it with the stats manager
-        Stat retVal = new Stat(new ResourceLocation(PrimalMagic.MODID, name), formatter, hidden, internal);
+        Stat retVal = new Stat(new ResourceLocation(PrimalMagick.MODID, name), formatter, hidden, internal);
         StatsManager.registerStat(retVal);
         return retVal;
     }

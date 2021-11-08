@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.containers.RunecarvingTableContainer;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingTableContainer> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/runecarving_table.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/runecarving_table.png");
     
     protected float sliderProgress;
     protected boolean clickedOnSroll;

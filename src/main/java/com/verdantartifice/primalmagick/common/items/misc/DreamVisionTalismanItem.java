@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
@@ -27,7 +27,7 @@ public class DreamVisionTalismanItem extends Item {
     protected static final int CAPACITY = 64;
     
     public DreamVisionTalismanItem() {
-        super(new Item.Properties().tab(PrimalMagic.ITEM_GROUP).durability(64));
+        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).durability(64));
     }
     
     /**

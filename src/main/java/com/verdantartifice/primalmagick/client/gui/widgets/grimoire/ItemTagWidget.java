@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -24,7 +24,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class ItemTagWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
 
     protected ResourceLocation tag;
     protected boolean isComplete;

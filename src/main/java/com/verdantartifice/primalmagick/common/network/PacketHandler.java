@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.network;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
@@ -63,7 +63,7 @@ public class PacketHandler {
     private static final String PROTOCOL_VERSION = Integer.toString(1);
     
     private static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder
-            .named(new ResourceLocation(PrimalMagic.MODID, "main_channel"))
+            .named(new ResourceLocation(PrimalMagick.MODID, "main_channel"))
             .clientAcceptedVersions(PROTOCOL_VERSION::equals)
             .serverAcceptedVersions(PROTOCOL_VERSION::equals)
             .networkProtocolVersion(() -> PROTOCOL_VERSION)

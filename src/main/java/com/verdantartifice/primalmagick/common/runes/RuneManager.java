@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
 import net.minecraft.nbt.ListTag;
@@ -37,7 +37,7 @@ public class RuneManager {
     protected static final Map<NounRune, Set<Enchantment>> NOUN_ENCHANTMENTS = new HashMap<>();
     protected static final Map<SourceRune, Set<Enchantment>> SOURCE_ENCHANTMENTS = new HashMap<>();
     protected static final Map<Enchantment, CompoundResearchKey> ENCHANTMENT_RESEARCH = new HashMap<>();
-    protected static final String RUNE_TAG_NAME = PrimalMagic.MODID + ":runes";
+    protected static final String RUNE_TAG_NAME = PrimalMagick.MODID + ":runes";
     
     public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source) {
         if (enchantment != null && verb != null && noun != null && source != null) {

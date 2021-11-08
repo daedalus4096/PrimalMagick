@@ -5,7 +5,7 @@ import java.awt.Color;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellProjectileModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellProjectileEntity;
@@ -25,7 +25,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntity> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/entity/spell_projectile.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/spell_projectile.png");
     protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
 
     protected final SpellProjectileModel model;

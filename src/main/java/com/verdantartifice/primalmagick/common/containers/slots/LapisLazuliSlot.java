@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.containers.slots;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -15,7 +15,7 @@ import net.minecraftforge.common.Tags;
  * @author Daedalus4096
  */
 public class LapisLazuliSlot extends Slot {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "item/empty_lapis_slot");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_lapis_slot");
 
     public LapisLazuliSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition);

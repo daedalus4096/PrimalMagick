@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.containers.slots;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.wands.IStaff;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class WandSlot extends Slot {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "item/empty_wand_slot");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_wand_slot");
     
     protected final boolean allowStaves;
     

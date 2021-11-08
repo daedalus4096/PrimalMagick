@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.entities;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
 
 import net.minecraft.core.BlockPos;
@@ -30,7 +30,7 @@ import net.minecraftforge.common.util.Constants;
  * @author Daedalus4096
  */
 public class FlyingCarpetItem extends Item {
-    public static final ResourceLocation COLOR_PROPERTY = new ResourceLocation(PrimalMagic.MODID, "color");
+    public static final ResourceLocation COLOR_PROPERTY = new ResourceLocation(PrimalMagick.MODID, "color");
     
     public static final CauldronInteraction DYED_CARPET = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
         Item item = stack.getItem();

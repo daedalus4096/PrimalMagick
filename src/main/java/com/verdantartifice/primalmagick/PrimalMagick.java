@@ -17,12 +17,12 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod(PrimalMagic.MODID)
-public class PrimalMagic {
-    public static final String MODID = "primalmagic";
+@Mod(PrimalMagick.MODID)
+public class PrimalMagick {
+    public static final String MODID = "primalmagick";
     public static final CreativeModeTab ITEM_GROUP = new ItemGroupPM();
     
-    public PrimalMagic() {
+    public PrimalMagick() {
         Config.register();
         InitRegistries.initDeferredRegistries();
     }

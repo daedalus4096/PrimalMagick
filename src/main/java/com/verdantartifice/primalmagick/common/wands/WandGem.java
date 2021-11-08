@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +35,7 @@ public class WandGem implements IWandComponent {
     protected final ModelResourceLocation mrl;  // Resource location of the gem's model, stored in a blockstate file
     
     public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity) {
-        this(tag, rarity, capacity, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_gem"), ""));
+        this(tag, rarity, capacity, new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, tag + "_wand_gem"), ""));
     }
     
     public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity, @Nonnull ModelResourceLocation mrl) {

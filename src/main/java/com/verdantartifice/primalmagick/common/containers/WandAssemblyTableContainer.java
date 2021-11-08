@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.containers;
 
 import java.util.Optional;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.slots.WandCapSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.WandCoreSlot;
@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WandAssemblyTableContainer extends AbstractContainerMenu {
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "wand_assembly");
+    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "wand_assembly");
     
     protected final ContainerLevelAccess worldPosCallable;
     protected final WandComponentInventory componentInv = new WandComponentInventory();

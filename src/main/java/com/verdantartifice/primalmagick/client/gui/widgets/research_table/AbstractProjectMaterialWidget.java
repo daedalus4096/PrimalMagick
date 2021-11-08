@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMaterial;
 
@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
 
     protected boolean complete;
     protected boolean consumed;

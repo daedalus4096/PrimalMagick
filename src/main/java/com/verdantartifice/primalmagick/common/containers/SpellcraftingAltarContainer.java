@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.slots.SpellScrollBlankSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.SpellcraftingResultSlot;
@@ -50,7 +50,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarContainer extends AbstractContainerMenu {
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagic.MODID, "spellcrafting");
+    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "spellcrafting");
 
     protected final CraftingContainer scrollInv = new CraftingContainer(this, 1, 1);
     protected final WandInventory wandInv = new WandInventory(this);

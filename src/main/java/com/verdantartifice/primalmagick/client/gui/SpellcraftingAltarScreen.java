@@ -11,7 +11,7 @@ import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -42,7 +42,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarScreen extends AbstractContainerScreen<SpellcraftingAltarContainer> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/spellcrafting_altar.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/spellcrafting_altar.png");
     
     private final Map<Vec3i, Component> texts = new HashMap<>();
     private final List<GuiEventListener> localWidgets = new ArrayList<>();

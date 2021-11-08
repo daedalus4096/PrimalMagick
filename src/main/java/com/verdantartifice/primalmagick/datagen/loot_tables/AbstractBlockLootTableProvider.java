@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
@@ -181,7 +181,7 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
     
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> blocks = ForgeRegistries.BLOCKS.getKeys().stream().filter(loc -> loc.getNamespace().equals(PrimalMagic.MODID)).collect(Collectors.toSet());
+        Set<ResourceLocation> blocks = ForgeRegistries.BLOCKS.getKeys().stream().filter(loc -> loc.getNamespace().equals(PrimalMagick.MODID)).collect(Collectors.toSet());
         
         // Warn for each mod block that didn't have a loot table registered
         blocks.removeAll(this.registeredBlocks);

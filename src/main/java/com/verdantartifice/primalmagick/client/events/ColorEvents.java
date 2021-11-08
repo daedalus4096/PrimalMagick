@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagic.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ColorEvents {
     @SubscribeEvent
     public static void onBlockColorInit(ColorHandlerEvent.Block event) {

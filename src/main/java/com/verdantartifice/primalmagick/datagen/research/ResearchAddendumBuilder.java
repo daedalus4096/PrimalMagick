@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -32,7 +32,7 @@ public class ResearchAddendumBuilder {
     }
     
     public static ResearchAddendumBuilder addendum() {
-        return new ResearchAddendumBuilder(PrimalMagic.MODID);
+        return new ResearchAddendumBuilder(PrimalMagick.MODID);
     }
     
     public ResearchAddendumBuilder requiredResearch(@Nonnull String keyStr) {
@@ -58,7 +58,7 @@ public class ResearchAddendumBuilder {
     }
     
     public ResearchAddendumBuilder recipe(@Nonnull String name) {
-        return recipe(PrimalMagic.MODID, name);
+        return recipe(PrimalMagick.MODID, name);
     }
     
     public ResearchAddendumBuilder recipe(@Nonnull String modId, @Nonnull String name) {

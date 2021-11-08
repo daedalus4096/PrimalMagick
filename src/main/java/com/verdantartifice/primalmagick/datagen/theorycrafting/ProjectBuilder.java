@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +39,7 @@ public class ProjectBuilder {
     }
     
     public static ProjectBuilder project(@Nonnull String keyPath) {
-        return project(PrimalMagic.MODID, keyPath);
+        return project(PrimalMagick.MODID, keyPath);
     }
     
     public ProjectBuilder material(@Nonnull IFinishedProjectMaterial material) {

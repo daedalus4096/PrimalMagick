@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -59,7 +59,7 @@ public class KnowledgeGainItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        String translationKey = "tooltip." + PrimalMagic.MODID + "." + this.getRegistryName().getPath();
+        String translationKey = "tooltip." + PrimalMagick.MODID + "." + this.getRegistryName().getPath();
         tooltip.add(new TranslatableComponent(translationKey).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }

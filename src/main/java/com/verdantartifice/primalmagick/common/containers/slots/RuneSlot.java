@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.containers.slots;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class RuneSlot extends Slot {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagic.MODID, "item/empty_rune_slot");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_rune_slot");
 
     public RuneSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition);

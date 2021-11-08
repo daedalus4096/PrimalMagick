@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
 import net.minecraft.core.BlockPos;
@@ -34,7 +34,7 @@ import net.minecraftforge.common.util.Constants;
  * @see {@link net.minecraft.world.level.levelgen.structure.DesertPyramidPiece}
  */
 public class ShrinePiece extends TemplateStructurePiece {
-    protected static final ResourceLocation TEMPLATE = new ResourceLocation(PrimalMagic.MODID, "shrine");
+    protected static final ResourceLocation TEMPLATE = new ResourceLocation(PrimalMagick.MODID, "shrine");
     
     protected final ShrineStructure.Type type;
     

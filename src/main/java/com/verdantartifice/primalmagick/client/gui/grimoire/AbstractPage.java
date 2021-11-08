@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 
 import net.minecraft.client.Minecraft;
@@ -22,7 +22,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public abstract class AbstractPage extends GuiComponent {
-    private static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagic.MODID, "textures/gui/grimoire.png");
+    private static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
 
     /**
      * Render this grimoire page

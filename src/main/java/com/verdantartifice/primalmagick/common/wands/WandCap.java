@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -38,7 +38,7 @@ public class WandCap implements IWandComponent {
     protected final ModelResourceLocation staffMrl; // Resource location of the staff cap's model, stored in a blockstate file
     
     public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon) {
-        this(tag, rarity, costModifier, siphon, new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_wand_cap"), ""), new ModelResourceLocation(new ResourceLocation(PrimalMagic.MODID, tag + "_staff_cap"), ""));
+        this(tag, rarity, costModifier, siphon, new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, tag + "_wand_cap"), ""), new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, tag + "_staff_cap"), ""));
     }
     
     public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon, @Nonnull ModelResourceLocation wmrl, @Nonnull ModelResourceLocation smrl) {

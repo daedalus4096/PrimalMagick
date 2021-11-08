@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
 
@@ -110,7 +110,7 @@ public class PlayerCompanions implements IPlayerCompanions {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_companions");
+        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagick.MODID, "capability_companions");
         
         private final IPlayerCompanions instance = new PlayerCompanions();
         private final LazyOptional<IPlayerCompanions> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

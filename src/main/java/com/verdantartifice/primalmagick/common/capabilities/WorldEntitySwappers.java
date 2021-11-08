@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.verdantartifice.primalmagick.PrimalMagic;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 
 import net.minecraft.core.Direction;
@@ -88,7 +88,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagic.MODID, "capability_world_entity_swappers");
+        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagick.MODID, "capability_world_entity_swappers");
 
         private final IWorldEntitySwappers instance = new WorldEntitySwappers();
         private final LazyOptional<IWorldEntitySwappers> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
