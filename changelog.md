@@ -1,3 +1,7 @@
+v0.1.0-beta
+-----------
+* Rename mod to Primal Magick
+
 v0.0.22-alpha
 -------------
 * Add Dissolution Chamber, for ore tripling at the cost of Earth mana
