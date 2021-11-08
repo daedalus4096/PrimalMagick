@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -44,7 +44,7 @@ public class SeenArcaneRecipePacket implements IMessageToServer {
                 ServerPlayer player = ctx.get().getSender();
                 player.getServer().getRecipeManager().byKey(message.recipeId).ifPresent(recipe -> {
                     player.getRecipeBook().removeHighlight(recipe);
-                    PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+                    PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                         recipeBook.get().removeHighlight(recipe);
                     });
                 });

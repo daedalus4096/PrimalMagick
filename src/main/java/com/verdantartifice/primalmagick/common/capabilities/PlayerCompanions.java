@@ -117,7 +117,7 @@ public class PlayerCompanions implements IPlayerCompanions {
 
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagicCapabilities.COMPANIONS) {
+            if (cap == PrimalMagickCapabilities.COMPANIONS) {
                 return holder.cast();
             } else {
                 return LazyOptional.empty();

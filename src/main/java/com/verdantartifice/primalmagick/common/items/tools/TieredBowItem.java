@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 
 /**
- * Definition of a repairable bow item made of a magical metal.
+ * Definition of a repairable bow item made of a magickal metal.
  * 
  * @author Daedalus4096
  */

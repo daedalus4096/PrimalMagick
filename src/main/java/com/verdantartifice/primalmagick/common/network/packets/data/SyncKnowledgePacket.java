@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagick.client.toast.ToastManager;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
@@ -31,7 +31,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
     }
     
     public SyncKnowledgePacket(Player player) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         this.data = (knowledge != null) ?
                 knowledge.serializeNBT() :
                 null;
@@ -52,7 +52,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-                PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                     knowledge.deserializeNBT(message.data);
                     for (SimpleResearchKey key : knowledge.getResearchSet()) {
                         // Show a research completion toast for any research entries so flagged

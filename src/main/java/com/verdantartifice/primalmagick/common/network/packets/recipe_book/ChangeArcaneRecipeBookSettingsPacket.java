@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
@@ -51,7 +51,7 @@ public class ChangeArcaneRecipeBookSettingsPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+                PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                     recipeBook.get().setBookSettings(message.type, message.open, message.filtering);
                 });
             });

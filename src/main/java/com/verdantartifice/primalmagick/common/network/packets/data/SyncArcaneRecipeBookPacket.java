@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +27,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
     }
     
     public SyncArcaneRecipeBookPacket(Player player) {
-        PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+        PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
             this.data = recipeBook.serializeNBT();
         });
     }
@@ -48,7 +48,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
             ctx.get().enqueueWork(() -> {
                 Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
                 if (player != null) {
-                    PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+                    PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                         recipeBook.deserializeNBT(message.data, player.level.getRecipeManager());
                     });
                     ArcaneSearchRegistry.getInstance().populate();

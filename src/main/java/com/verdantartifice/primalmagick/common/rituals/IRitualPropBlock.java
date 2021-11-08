@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Interface indicating whether a block can serve as a prop for magical rituals.
+ * Interface indicating whether a block can serve as a prop for magickal rituals.
  * 
  * @author Daedalus4096
  */

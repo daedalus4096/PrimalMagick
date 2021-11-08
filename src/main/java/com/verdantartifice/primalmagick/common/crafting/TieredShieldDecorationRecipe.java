@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 /**
- * Special recipe for decorating a magical metal shield with a banner.
+ * Special recipe for decorating a magickal metal shield with a banner.
  * 
  * @author Daedalus4096
  */

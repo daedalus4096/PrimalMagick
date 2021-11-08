@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.research_table.Knowle
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.ProjectMaterialSelectionCheckbox;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.ProjectMaterialWidgetFactory;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.CompleteProjectPacket;
@@ -69,7 +69,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
     protected void init() {
         super.init();
         Minecraft mc = this.getMinecraft();
-        this.knowledge = PrimalMagicCapabilities.getKnowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
+        this.knowledge = PrimalMagickCapabilities.getKnowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
         this.project = this.knowledge.getActiveResearchProject();
         this.lastWritingReady = this.writingReady = this.menu.isWritingReady();
         this.initButtons();

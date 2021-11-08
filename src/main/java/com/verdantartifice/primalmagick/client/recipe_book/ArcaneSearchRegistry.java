@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.recipe_book;
 
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeCollection;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -54,7 +54,7 @@ public class ArcaneSearchRegistry implements ResourceManagerReloadListener {
     
     public void populate() {
         Minecraft mc = Minecraft.getInstance();
-        ClientArcaneRecipeBook book = new ClientArcaneRecipeBook(PrimalMagicCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
+        ClientArcaneRecipeBook book = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
         this.arcaneSearchTree.clear();
         book.setupCollections(mc.level.getRecipeManager().getRecipes());
         book.getCollections().forEach(this.arcaneSearchTree::add);

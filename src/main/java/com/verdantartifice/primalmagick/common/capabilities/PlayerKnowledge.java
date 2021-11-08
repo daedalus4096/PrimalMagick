@@ -373,7 +373,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagicCapabilities.KNOWLEDGE) {
+            if (cap == PrimalMagickCapabilities.KNOWLEDGE) {
                 return holder.cast();
             } else {
                 return LazyOptional.empty();

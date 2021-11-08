@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.HoneyExtractorContainer;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
@@ -212,7 +212,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagicCapabilities.MANA_STORAGE) {
+        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
             return this.manaStorageOpt.cast();
         }
         return super.getCapability(cap, side);

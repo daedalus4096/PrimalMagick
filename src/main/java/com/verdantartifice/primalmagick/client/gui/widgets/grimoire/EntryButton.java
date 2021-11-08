@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
@@ -41,7 +41,7 @@ public class EntryButton extends AbstractTopicButton {
                 geb.getScreen().getMenu().setTopic(geb.getEntry());
                 if (geb.getEntry().getKey().isKnownBy(mc.player)) {
                     // If the research entry has been flagged as new or updated, clear those flags
-                    PrimalMagicCapabilities.getKnowledge(mc.player).ifPresent(knowledge -> {
+                    PrimalMagickCapabilities.getKnowledge(mc.player).ifPresent(knowledge -> {
                         knowledge.removeResearchFlag(geb.getEntry().getKey(), IPlayerKnowledge.ResearchFlag.NEW);
                         knowledge.removeResearchFlag(geb.getEntry().getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
                         PacketHandler.sendToServer(new SyncResearchFlagsPacket(mc.player, geb.getEntry().getKey()));

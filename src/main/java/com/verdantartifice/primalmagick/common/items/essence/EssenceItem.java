@@ -14,7 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Item definition for magical essences.
+ * Item definition for magickal essences.
  * 
  * @author Daedalus4096
  */

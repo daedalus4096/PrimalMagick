@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -151,7 +151,7 @@ public class SpellManager {
         }
         
         // Determine whether the given player's spell cooldown is currently active, thus making spells unavailable
-        IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+        IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
         if (cooldowns != null) {
             return cooldowns.isOnCooldown(IPlayerCooldowns.CooldownType.SPELL);
         } else {
@@ -162,7 +162,7 @@ public class SpellManager {
     public static void setCooldown(@Nullable Player player, int durationTicks) {
         if (player != null) {
             // Trigger a spell cooldown of the given duration for the given player and sync the data to their client
-            IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+            IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
             if (cooldowns != null) {
                 cooldowns.setCooldown(IPlayerCooldowns.CooldownType.SPELL, durationTicks);
                 if (player instanceof ServerPlayer) {

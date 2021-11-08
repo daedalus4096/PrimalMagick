@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.containers.CalcinatorContainer;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -341,7 +341,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagicCapabilities.RESEARCH_CACHE) {
+        if (!this.remove && cap == PrimalMagickCapabilities.RESEARCH_CACHE) {
             return this.researchCacheOpt.cast();
         } else {
             return super.getCapability(cap, side);

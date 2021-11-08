@@ -27,7 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Base class definition of a craftable, repairable trident item made of a magical metal.
+ * Base class definition of a craftable, repairable trident item made of a magickal metal.
  *  
  * @author Daedalus4096
  */

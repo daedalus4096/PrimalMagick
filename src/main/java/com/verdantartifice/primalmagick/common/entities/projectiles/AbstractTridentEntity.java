@@ -28,7 +28,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
- * Base class definition for a thrown magical metal trident entity.
+ * Base class definition for a thrown magickal metal trident entity.
  * 
  * @author Daedalus4096
  */

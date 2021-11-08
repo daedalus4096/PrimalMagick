@@ -95,7 +95,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
         
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagicCapabilities.ENTITY_SWAPPERS) {
+            if (cap == PrimalMagickCapabilities.ENTITY_SWAPPERS) {
                 return holder.cast();
             } else {
                 return LazyOptional.empty();

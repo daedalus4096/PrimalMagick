@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +27,7 @@ public class SyncCooldownsPacket implements IMessageToClient {
     }
     
     public SyncCooldownsPacket(Player player) {
-        IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+        IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
         this.data = (cooldowns != null) ? cooldowns.serializeNBT() : null;
     }
     
@@ -46,7 +46,7 @@ public class SyncCooldownsPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-                IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+                IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
                 if (cooldowns != null) {
                     cooldowns.deserializeNBT(message.data);
                 }

@@ -66,7 +66,7 @@ public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
 
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagicCapabilities.ARCANE_RECIPE_BOOK) {
+            if (cap == PrimalMagickCapabilities.ARCANE_RECIPE_BOOK) {
                 return holder.cast();
             } else {
                 return LazyOptional.empty();

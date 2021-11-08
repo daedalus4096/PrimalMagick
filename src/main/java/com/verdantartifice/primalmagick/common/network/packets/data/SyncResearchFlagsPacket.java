@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
@@ -33,7 +33,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
     public SyncResearchFlagsPacket(Player player, SimpleResearchKey key) {
         this();
         this.key = key;
-        PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             this.isNew = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
             this.isUpdated = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.UPDATED);
             this.isPopup = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
@@ -62,7 +62,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
             ctx.get().enqueueWork(() -> {
                 if (message.key != null) {
                     Player player = ctx.get().getSender();
-                    PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                    PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                         // Add or remove each flag from the research entry as appropriate
                         if (message.isNew) {
                             knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.NEW);

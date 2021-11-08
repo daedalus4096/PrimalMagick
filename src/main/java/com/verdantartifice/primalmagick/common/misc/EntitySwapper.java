@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IWorldEntitySwappers;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
@@ -67,7 +67,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
             // Don't allow empty swappers in the queue
             return false;
         } else {
-            IWorldEntitySwappers swappers = PrimalMagicCapabilities.getEntitySwappers(world);
+            IWorldEntitySwappers swappers = PrimalMagickCapabilities.getEntitySwappers(world);
             if (swappers == null) {
                 return false;
             } else {
@@ -79,7 +79,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
     
     @Nullable
     public static Queue<EntitySwapper> getWorldSwappers(@Nonnull Level world) {
-        IWorldEntitySwappers swappers = PrimalMagicCapabilities.getEntitySwappers(world);
+        IWorldEntitySwappers swappers = PrimalMagickCapabilities.getEntitySwappers(world);
         if (swappers == null) {
             return null;
         } else {
@@ -88,7 +88,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
     }
     
     public static boolean setWorldSwapperQueue(@Nonnull Level world, @Nonnull Queue<EntitySwapper> swapperQueue) {
-        IWorldEntitySwappers swappers = PrimalMagicCapabilities.getEntitySwappers(world);
+        IWorldEntitySwappers swappers = PrimalMagickCapabilities.getEntitySwappers(world);
         if (swappers == null) {
             return false;
         } else {

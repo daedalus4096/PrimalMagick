@@ -37,7 +37,7 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.StatisticsPage;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
@@ -152,7 +152,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.scaledLeft = (int)(this.width - this.imageWidth * SCALE) / 2;
         this.scaledTop = (int)(this.height - this.imageHeight * SCALE) / 2;
         Minecraft mc = this.getMinecraft();
-        this.knowledge = PrimalMagicCapabilities.getKnowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
+        this.knowledge = PrimalMagickCapabilities.getKnowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
         this.generateIndexMap();
         this.initPages();
         this.initButtons();

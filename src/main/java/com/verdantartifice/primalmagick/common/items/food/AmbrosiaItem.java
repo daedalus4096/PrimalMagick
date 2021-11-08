@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 /**
- * Item definition for ambrosia.  Magical food that induces attunement to a primal source in the eater, to a limit.
+ * Item definition for ambrosia.  Magickal food that induces attunement to a primal source in the eater, to a limit.
  * 
  * @author Daedalus4096
  */

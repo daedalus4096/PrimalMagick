@@ -140,7 +140,7 @@ public class PlayerStats implements IPlayerStats {
         
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagicCapabilities.STATS) {
+            if (cap == PrimalMagickCapabilities.STATS) {
                 return holder.cast();
             } else {
                 return LazyOptional.empty();

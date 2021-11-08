@@ -14,7 +14,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.StackedNbtContents;
@@ -96,7 +96,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         mc.player.containerMenu = menu;
         this.vanillaBook = mc.player.getRecipeBook();
         
-        this.arcaneBook = new ClientArcaneRecipeBook(PrimalMagicCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
+        this.arcaneBook = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
         this.arcaneBook.setupCollections(this.mc.level.getRecipeManager().getRecipes());
         this.arcaneBook.getCollections().forEach(collection -> {
             collection.updateKnownRecipes(this.vanillaBook, this.arcaneBook.getData());

@@ -46,7 +46,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.Constants;
 
 /**
- * Block definition for a soul anvil.  Soul anvils serve as props in magical rituals; breaking a soul
+ * Block definition for a soul anvil.  Soul anvils serve as props in magickal rituals; breaking a soul
  * gem on one at the right time can allow a ritual to progress to the next stage.
  * 
  * @author Daedalus4096
@@ -123,8 +123,8 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
                 }
             }
             return InteractionResult.SUCCESS;
-        } else if (player != null && ItemTagsPM.MAGICAL_CLOTH.contains(player.getItemInHand(handIn).getItem()) && state.getValue(DIRTY)) {
-            // If using a magical cloth on a dirty anvil, clean it
+        } else if (player != null && ItemTagsPM.MAGICKAL_CLOTH.contains(player.getItemInHand(handIn).getItem()) && state.getValue(DIRTY)) {
+            // If using a magickal cloth on a dirty anvil, clean it
             worldIn.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);

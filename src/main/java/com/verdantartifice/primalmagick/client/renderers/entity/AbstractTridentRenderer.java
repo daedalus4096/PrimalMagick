@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 
 /**
- * Base renderer definition for a thrown magical metal trident.
+ * Base renderer definition for a thrown magickal metal trident.
  * 
  * @author Daedalus4096
  */

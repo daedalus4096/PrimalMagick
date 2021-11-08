@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -100,7 +100,7 @@ public class ResearchManager {
     }
     
     public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {
-        IPlayerKnowledge know = PrimalMagicCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
+        IPlayerKnowledge know = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
         ResearchEntry entry = ResearchManager.getEntryForRecipe(recipeId);
         if (entry == null) {
             // If the recipe has no controlling research, then assume it's visible
@@ -166,7 +166,7 @@ public class ResearchManager {
         if (player == null || key == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         } else {
@@ -190,7 +190,7 @@ public class ResearchManager {
     
     public static void forceGrantWithAllParents(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
-            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                 SimpleResearchKey strippedKey = key.stripStage(); // When we force-grant, we fully complete the entry, not partially
                 if (!knowledge.isResearchComplete(strippedKey)) {
                     ResearchEntry entry = ResearchEntries.getEntry(strippedKey);
@@ -230,7 +230,7 @@ public class ResearchManager {
     
     public static void forceGrantParentsOnly(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
-            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                 SimpleResearchKey strippedKey = key.stripStage(); // When we force-grant, we fully complete the entry, not partially
                 if (!knowledge.isResearchComplete(strippedKey)) {
                     ResearchEntry entry = ResearchEntries.getEntry(strippedKey);
@@ -265,7 +265,7 @@ public class ResearchManager {
     
     public static void forceRevokeWithAllChildren(@Nullable Player player, @Nullable SimpleResearchKey key) {
         if (player != null && key != null) {
-            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                 if (knowledge.isResearchComplete(key)) {
                     // Revoke all child research of this entry
                     for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
@@ -293,7 +293,7 @@ public class ResearchManager {
             return false;
         }
         
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -332,7 +332,7 @@ public class ResearchManager {
             return false;
         }
         
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -481,7 +481,7 @@ public class ResearchManager {
     
     public static boolean addKnowledge(Player player, IPlayerKnowledge.KnowledgeType type, int points, boolean scheduleSync) {
         // Add the given number of knowledge points to the player and sync to their client
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -579,7 +579,7 @@ public class ResearchManager {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -617,7 +617,7 @@ public class ResearchManager {
         if (type == null || player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -651,7 +651,7 @@ public class ResearchManager {
         if (player == null) {
             return 0;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return 0;
         }

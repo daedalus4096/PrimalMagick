@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.containers.EssenceTransmuterContainer;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
@@ -285,9 +285,9 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagicCapabilities.MANA_STORAGE) {
+        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
             return this.manaStorageOpt.cast();
-        } else if (!this.remove && cap == PrimalMagicCapabilities.RESEARCH_CACHE) {
+        } else if (!this.remove && cap == PrimalMagickCapabilities.RESEARCH_CACHE) {
             return this.researchCacheOpt.cast();
         } else {
             return super.getCapability(cap, side);

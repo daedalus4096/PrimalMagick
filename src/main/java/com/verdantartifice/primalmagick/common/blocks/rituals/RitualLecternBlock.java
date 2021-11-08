@@ -47,7 +47,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.Constants;
 
 /**
- * Block definition for a ritual lectern.  Ritual lecterns serve as props in magical rituals; placing
+ * Block definition for a ritual lectern.  Ritual lecterns serve as props in magickal rituals; placing
  * an enchanted book on one at the right time can allow a ritual to progress to the next stage.
  * 
  * @author Daedalus4096

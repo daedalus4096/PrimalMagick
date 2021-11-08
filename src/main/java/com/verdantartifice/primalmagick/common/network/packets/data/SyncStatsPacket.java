@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +27,7 @@ public class SyncStatsPacket implements IMessageToClient {
     }
     
     public SyncStatsPacket(Player player) {
-        IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+        IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
         this.data = (stats != null) ? stats.serializeNBT() : null;
     }
     
@@ -46,7 +46,7 @@ public class SyncStatsPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-                IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+                IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
                 if (stats != null) {
                     stats.deserializeNBT(message.data);
                 }

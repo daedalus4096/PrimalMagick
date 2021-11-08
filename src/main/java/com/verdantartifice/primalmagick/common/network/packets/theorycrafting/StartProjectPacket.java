@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.theorycrafting;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.ResearchTableContainer;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
@@ -42,7 +42,7 @@ public class StartProjectPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                     if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer) {
                         ((ResearchTableContainer)player.containerMenu).getWorldPosCallable().execute((world, blockPos) -> {
                             knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));

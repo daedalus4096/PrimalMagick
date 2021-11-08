@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -170,7 +170,7 @@ public class PlayerEvents {
     }
 
     protected static void refreshWeakenedSoul(ServerPlayer player) {
-        IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+        IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
         if (cooldowns != null) {
             long remaining = cooldowns.getRemainingCooldown(CooldownType.DEATH_SAVE);
             if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.get())) {
@@ -182,36 +182,36 @@ public class PlayerEvents {
 
     protected static void doScheduledSyncs(ServerPlayer player, boolean immediate) {
         if (immediate || ResearchManager.isSyncScheduled(player)) {
-            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                 knowledge.sync(player);
             });
         }
         if (immediate || StatsManager.isSyncScheduled(player)) {
-            IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
             if (stats != null) {
                 stats.sync(player);
             }
         }
         if (immediate || AttunementManager.isSyncScheduled(player)) {
-            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
+            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
             if (attunements != null) {
                 attunements.sync(player);
             }
         }
         if (immediate || CompanionManager.isSyncScheduled(player)) {
-            IPlayerCompanions companions = PrimalMagicCapabilities.getCompanions(player);
+            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
             if (companions != null) {
                 companions.sync(player);
             }
         }
         if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
-            PrimalMagicCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+            PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                 recipeBook.sync(player);
             });
         }
         if (immediate) {
             // Cooldowns don't do scheduled syncs, so only sync if it needs to be done immediately
-            IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+            IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
             if (cooldowns != null) {
                 cooldowns.sync(player);
             }
@@ -219,7 +219,7 @@ public class PlayerEvents {
     }
     
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
-        PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             if (!knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
                 // Only check environmental research if the player has started progression
                 return;
@@ -406,43 +406,43 @@ public class PlayerEvents {
         event.getOriginal().reviveCaps();   // FIXME Workaround for a Forge issue
         
         try {
-            CompoundTag nbtKnowledge = PrimalMagicCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagicCapabilities.getKnowledge(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
+            CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
+            PrimalMagickCapabilities.getKnowledge(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtCooldowns = PrimalMagicCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
-            PrimalMagicCapabilities.getCooldowns(event.getPlayer()).deserializeNBT(nbtCooldowns);
+            CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
+            PrimalMagickCapabilities.getCooldowns(event.getPlayer()).deserializeNBT(nbtCooldowns);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtStats = PrimalMagicCapabilities.getStats(event.getOriginal()).serializeNBT();
-            PrimalMagicCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
+            CompoundTag nbtStats = PrimalMagickCapabilities.getStats(event.getOriginal()).serializeNBT();
+            PrimalMagickCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtAttunements = PrimalMagicCapabilities.getAttunements(event.getOriginal()).serializeNBT();
-            PrimalMagicCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
+            CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(event.getOriginal()).serializeNBT();
+            PrimalMagickCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtCompanions = PrimalMagicCapabilities.getCompanions(event.getOriginal()).serializeNBT();
-            PrimalMagicCapabilities.getCompanions(event.getPlayer()).deserializeNBT(nbtCompanions);
+            CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(event.getOriginal()).serializeNBT();
+            PrimalMagickCapabilities.getCompanions(event.getPlayer()).deserializeNBT(nbtCompanions);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtRecipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagicCapabilities.getArcaneRecipeBook(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getPlayer().level.getRecipeManager());
+            CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
+            PrimalMagickCapabilities.getArcaneRecipeBook(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getPlayer().level.getRecipeManager());
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
         }

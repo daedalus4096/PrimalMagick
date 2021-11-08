@@ -58,7 +58,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * Block definition for a ritual bell.  Ritual bells serve as props in magical rituals; ringing them
+ * Block definition for a ritual bell.  Ritual bells serve as props in magickal rituals; ringing them
  * at the right time can allow a ritual to progress to the next stage.
  * 
  * @author Daedalus4096

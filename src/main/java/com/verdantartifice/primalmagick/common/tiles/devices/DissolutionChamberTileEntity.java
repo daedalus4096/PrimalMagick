@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.DissolutionChamberContainer;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
@@ -218,7 +218,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagicCapabilities.MANA_STORAGE) {
+        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
             return this.manaStorageOpt.cast();
         } else {
             return super.getCapability(cap, side);

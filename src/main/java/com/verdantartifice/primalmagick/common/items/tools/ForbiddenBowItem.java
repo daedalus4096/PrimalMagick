@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
- * Definition for a bow made of the magical metal hexium which comes pre-enchanted with Soulpiercing.
+ * Definition for a bow made of the magickal metal hexium which comes pre-enchanted with Soulpiercing.
  * 
  * @author Daedalus4096
  */

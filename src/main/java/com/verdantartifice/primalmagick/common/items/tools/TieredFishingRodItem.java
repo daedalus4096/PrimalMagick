@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 /**
- * Definition of a fishing rod made of a magical metal.
+ * Definition of a fishing rod made of a magickal metal.
  * 
  * @author Daedalus4096
  */

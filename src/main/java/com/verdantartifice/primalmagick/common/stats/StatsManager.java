@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.core.BlockPos;
@@ -77,7 +77,7 @@ public class StatsManager {
     
     public static int getValue(@Nullable Player player, @Nullable Stat stat) {
         if (player != null) {
-            IPlayerStats stats = PrimalMagicCapabilities.getStats(player);
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
             if (stats != null) {
                 // Get the value from the player capability
                 return stats.getValue(stat);
@@ -102,7 +102,7 @@ public class StatsManager {
     public static void setValue(@Nullable Player player, @Nullable Stat stat, int value) {
         if (player instanceof ServerPlayer) {
             ServerPlayer spe = (ServerPlayer)player;
-            IPlayerStats stats = PrimalMagicCapabilities.getStats(spe);
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(spe);
             if (stats != null) {
                 // Set the new value into the player capability
                 stats.setValue(stat, value);
@@ -124,7 +124,7 @@ public class StatsManager {
         if (player instanceof ServerPlayer && shrineSource != null && shrinePos != null) {
             Stat stat = getShrineStatForSource(shrineSource);
             ServerPlayer spe = (ServerPlayer)player;
-            IPlayerStats stats = PrimalMagicCapabilities.getStats(spe);
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(spe);
             if (stat != null && stats != null && !stats.isLocationDiscovered(shrinePos)) {
                 // If the location has not yet been discovered, mark it as such and increment the appropriate stat
                 int value = 1 + stats.getValue(stat);

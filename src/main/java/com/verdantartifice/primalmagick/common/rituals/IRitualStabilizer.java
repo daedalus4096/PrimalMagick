@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
 /**
- * Interface indicating whether a block can affect the stability of a magical ritual.
+ * Interface indicating whether a block can affect the stability of a magickal ritual.
  * 
  * @author Daedalus4096
  */

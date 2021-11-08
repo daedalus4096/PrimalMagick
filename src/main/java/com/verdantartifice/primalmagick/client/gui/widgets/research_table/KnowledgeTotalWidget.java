@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -34,7 +34,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         super(x, y, 16, 19, TextComponent.EMPTY);
         Minecraft mc = Minecraft.getInstance();
         this.type = type;
-        this.knowledgeOpt = PrimalMagicCapabilities.getKnowledge(mc.player);
+        this.knowledgeOpt = PrimalMagickCapabilities.getKnowledge(mc.player);
     }
     
     @Override

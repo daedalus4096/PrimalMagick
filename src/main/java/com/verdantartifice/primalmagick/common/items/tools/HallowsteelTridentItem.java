@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
 
 /**
- * Definition for a trident made of the magical metal hallowsteel.
+ * Definition for a trident made of the magickal metal hallowsteel.
  * 
  * @author Daedalus4096
  */

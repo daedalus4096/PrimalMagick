@@ -113,7 +113,7 @@ public class PlayerCooldowns implements IPlayerCooldowns {
 
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagicCapabilities.COOLDOWNS) {
+            if (cap == PrimalMagickCapabilities.COOLDOWNS) {
                 return holder.cast();
             } else {
                 return LazyOptional.empty();

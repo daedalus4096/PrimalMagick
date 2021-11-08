@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
@@ -48,7 +48,7 @@ public class ArcaneRecipeBookManager {
     }
     
     public static void addRecipes(Collection<Recipe<?>> recipes, ServerPlayer serverPlayer) {
-        PrimalMagicCapabilities.getArcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
+        PrimalMagickCapabilities.getArcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
             for (Recipe<?> recipe : recipes) {
                 if (recipe instanceof IArcaneRecipeBookItem arbi && !arbi.isArcaneSpecial()) {
                     recipeBook.get().add(recipe);
@@ -60,7 +60,7 @@ public class ArcaneRecipeBookManager {
     }
     
     public static void removeRecipes(Collection<Recipe<?>> recipes, ServerPlayer serverPlayer) {
-        PrimalMagicCapabilities.getArcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
+        PrimalMagickCapabilities.getArcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
             for (Recipe<?> recipe : recipes) {
                 recipeBook.get().remove(recipe);
             }
@@ -69,13 +69,13 @@ public class ArcaneRecipeBookManager {
     }
     
     public static boolean containsRecipe(Player player, Recipe<?> recipe) {
-        IPlayerArcaneRecipeBook book = PrimalMagicCapabilities.getArcaneRecipeBook(player).orElse(null);
+        IPlayerArcaneRecipeBook book = PrimalMagickCapabilities.getArcaneRecipeBook(player).orElse(null);
         return book != null && book.get().contains(recipe);
     }
     
     public static boolean syncRecipesWithResearch(ServerPlayer player) {
-        IPlayerArcaneRecipeBook recipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(player).orElse(null);
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerArcaneRecipeBook recipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (recipeBook == null || knowledge == null) {
             return false;
         } else {

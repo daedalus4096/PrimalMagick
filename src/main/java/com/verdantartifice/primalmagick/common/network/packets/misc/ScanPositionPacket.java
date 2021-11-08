@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
@@ -58,7 +58,7 @@ public class ScanPositionPacket implements IMessageToServer {
                 // Only process blocks that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
                 if (message.pos != null && world.isLoaded(message.pos)) {
-                    PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                    PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                         // Scan the block
                         boolean found = false;
                         ItemStack posStack = new ItemStack(world.getBlockState(message.pos).getBlock());

@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +27,7 @@ public class SyncCompanionsPacket implements IMessageToClient {
     }
     
     public SyncCompanionsPacket(Player player) {
-        IPlayerCompanions companions = PrimalMagicCapabilities.getCompanions(player);
+        IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
         this.data = (companions != null) ? companions.serializeNBT() : null;
     }
     
@@ -46,7 +46,7 @@ public class SyncCompanionsPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-                IPlayerCompanions companions = PrimalMagicCapabilities.getCompanions(player);
+                IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
                 if (companions != null) {
                     companions.deserializeNBT(message.data);
                 }

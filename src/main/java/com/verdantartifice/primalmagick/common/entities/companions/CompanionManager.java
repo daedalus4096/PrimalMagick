@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -47,7 +47,7 @@ public class CompanionManager {
     public static void addCompanion(@Nullable Player player, @Nullable AbstractCompanionEntity companion) {
         if (player != null && companion != null) {
             companion.setCompanionOwnerId(player.getUUID());
-            IPlayerCompanions companions = PrimalMagicCapabilities.getCompanions(player);
+            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
             if (companions != null) {
                 UUID oldCompanion = companions.add(companion.getCompanionType(), companion.getUUID());
                 if (oldCompanion != null && player.level instanceof ServerLevel) {
@@ -73,7 +73,7 @@ public class CompanionManager {
     public static void removeCompanion(@Nullable Player player, @Nullable AbstractCompanionEntity companion) {
         if (player != null && companion != null) {
             companion.setCompanionOwnerId(null);
-            IPlayerCompanions companions = PrimalMagicCapabilities.getCompanions(player);
+            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
             if (companions != null && companions.remove(companion.getCompanionType(), companion.getUUID())) {
                 CompanionManager.scheduleSync(player);
             }

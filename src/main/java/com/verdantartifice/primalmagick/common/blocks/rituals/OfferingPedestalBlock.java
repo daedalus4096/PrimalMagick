@@ -35,7 +35,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Block definition for an offering pedestal.  An offering pedestal holds an item stack for use as
- * an ingredient in a magical ritual.
+ * an ingredient in a magickal ritual.
  * 
  * @author Daedalus4096
  */

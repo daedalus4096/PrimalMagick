@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
@@ -237,7 +237,7 @@ public class ResearchStage {
         if (player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -306,7 +306,7 @@ public class ResearchStage {
             // If the player is invalid, return false for all requirements
             return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             // If the player's knowledge capability is invalid, return false for all requirements
             return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
@@ -328,7 +328,7 @@ public class ResearchStage {
             // If the player is invalid, return false for all requirements
             return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
         }
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             // If the player's knowledge capability is invalid, return false for all requirements
             return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);

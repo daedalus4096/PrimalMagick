@@ -122,7 +122,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagicCapabilities.ATTUNEMENTS) {
+            if (cap == PrimalMagickCapabilities.ATTUNEMENTS) {
                 return holder.cast();
             } else {
                 return LazyOptional.empty();

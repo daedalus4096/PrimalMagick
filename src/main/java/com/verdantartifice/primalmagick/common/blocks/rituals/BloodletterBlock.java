@@ -37,7 +37,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.Constants;
 
 /**
- * Block definition for a bloodletter.  Bloodletters serve as props in magical rituals; cutting
+ * Block definition for a bloodletter.  Bloodletters serve as props in magickal rituals; cutting
  * yourself on them at the right time can allow a ritual to progress to the next stage.
  * 
  * @author Daedalus4096

@@ -41,7 +41,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * Block definition for a celestial harp.  Celestial harps serve as props in magical rituals;
+ * Block definition for a celestial harp.  Celestial harps serve as props in magickal rituals;
  * playing them at the right time can allow a ritual to progress to the next stage.
  * 
  * @author Daedalus4096

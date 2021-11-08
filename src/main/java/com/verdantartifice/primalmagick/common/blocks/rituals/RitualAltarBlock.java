@@ -33,7 +33,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * Block definition for the ritual altar.  It is the central component of magical rituals, providing
+ * Block definition for the ritual altar.  It is the central component of magickal rituals, providing
  * the salt "power" that enables the functionality of other ritual props.  It's also where the ritual
  * output appears.
  * 

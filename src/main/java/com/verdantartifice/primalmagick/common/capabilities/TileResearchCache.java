@@ -101,7 +101,7 @@ public class TileResearchCache implements ITileResearchCache {
 
     @Override
     public void update(Player player, Predicate<SimpleResearchKey> researchFilter) {
-        PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             this.clear();
             for (SimpleResearchKey key : knowledge.getResearchSet()) {
                 if (knowledge.isResearchComplete(key) && (researchFilter == null || researchFilter.test(key))) {

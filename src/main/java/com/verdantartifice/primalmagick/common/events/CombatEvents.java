@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
@@ -170,7 +170,7 @@ public class CombatEvents {
         // If the player has greater hallowed attunement and it's not on cooldown, cancel death as if using a totem of undying
         if (entity instanceof Player) {
             Player player = (Player)event.getEntityLiving();
-            IPlayerCooldowns cooldowns = PrimalMagicCapabilities.getCooldowns(player);
+            IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
             if (AttunementManager.meetsThreshold(player, Source.HALLOWED, AttunementThreshold.GREATER) &&
                     cooldowns != null &&
                     !cooldowns.isOnCooldown(CooldownType.DEATH_SAVE)) {

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
@@ -39,7 +39,7 @@ public class StatTriggers {
     
     public static void checkTriggers(@Nullable ServerPlayer player, @Nullable Stat stat, int value) {
         if (player != null && stat != null) {
-            PrimalMagicCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                 boolean found = false;
                 
                 // Iterate through the map of thresholds to research for the stat, or an empty map if it doesn't exist

@@ -7,7 +7,7 @@ import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.Tier;
 
 /**
- * Base definition of a shield item made of a magical metal.
+ * Base definition of a shield item made of a magickal metal.
  * 
  * @author Daedalus4096
  */

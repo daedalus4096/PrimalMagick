@@ -5,7 +5,7 @@ import java.util.Set;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
@@ -64,7 +64,7 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
-        IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         return (knowledge != null && knowledge.getKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION) >= this.count);
     }
 

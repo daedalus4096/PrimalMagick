@@ -18,7 +18,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Custom item stack renderer for magical metal tridents.
+ * Custom item stack renderer for magickal metal tridents.
  * 
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.items.tools.AbstractTieredTridentItem}

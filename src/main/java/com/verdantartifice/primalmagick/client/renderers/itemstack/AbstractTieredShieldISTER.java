@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.block.entity.BannerPattern;
 
 /**
- * Custom item stack renderer for magical metal shields.
+ * Custom item stack renderer for magickal metal shields.
  * 
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.items.tools.AbstractTieredShieldItem}

@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 
 /**
- * Interface indicating whether a tile entity can serve as a prop for magical rituals.
+ * Interface indicating whether a tile entity can serve as a prop for magickal rituals.
  * 
  * @author Daedalus4096
  */

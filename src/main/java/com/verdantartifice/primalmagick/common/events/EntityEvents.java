@@ -124,7 +124,7 @@ public class EntityEvents {
     
     @SubscribeEvent
     public static void onLootingLevel(LootingLevelEvent event) {
-        // If the damage was magical, apply the Treasure enchantment as a looting modifier if greater than what's already there
+        // If the damage was magickal, apply the Treasure enchantment as a looting modifier if greater than what's already there
         DamageSource source = event.getDamageSource();
         Entity caster = null;
         if (source != null && source.isMagic()) {

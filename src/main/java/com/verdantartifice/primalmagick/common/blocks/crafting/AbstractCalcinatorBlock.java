@@ -33,7 +33,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
  * Base block definition for the essence furnace and calcinators.  These are like furnaces, but instead of smelting items
- * they melt them down into magical essences.
+ * they melt them down into magickal essences.
  * 
  * @author Daedalus4096
  */

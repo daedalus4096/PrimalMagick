@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.client.IItemRenderProperties;
 
 /**
- * Definition of a shield item made of the magical metal hexium.
+ * Definition of a shield item made of the magickal metal hexium.
  * 
  * @author Daedalus4096
  */

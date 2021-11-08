@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -65,7 +65,7 @@ public class AttunementManager {
      */
     public static int getAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type) {
         if (player != null && source != null && type != null) {
-            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
+            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
             if (attunements != null) {
                 return attunements.getValue(source, type);
             }
@@ -82,7 +82,7 @@ public class AttunementManager {
      */
     public static int getTotalAttunement(@Nullable Player player, @Nullable Source source) {
         if (player != null && source != null) {
-            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
+            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
             if (attunements != null) {
                 // Sum up the partial attunement values for each attunement type
                 int total = 0;
@@ -122,7 +122,7 @@ public class AttunementManager {
      */
     public static void setAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type, int value) {
         if (player instanceof ServerPlayer && source != null && type != null) {
-            IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(player);
+            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
             if (attunements != null) {
                 int oldTotal = getTotalAttunement(player, source);
                 

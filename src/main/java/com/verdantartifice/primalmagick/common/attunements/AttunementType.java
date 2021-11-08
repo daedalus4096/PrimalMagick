@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.attunements;
 import javax.annotation.Nonnull;
 
 /**
- * Represents a type of magical attunement.  Permanent attunement is gained through research and
+ * Represents a type of magickal attunement.  Permanent attunement is gained through research and
  * cannot be removed.  Induced attunement is gained or lost through rituals, but does not decay
  * over time.  Temporary attunement is gained by crafting items and casting spells, but decays
  * slowly over time.

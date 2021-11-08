@@ -62,7 +62,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Base definition for an enchanted golem entity.  Like an iron golem, but follows the player as a
- * companion.  Can be made from a variety of magical metals.
+ * companion.  Can be made from a variety of magickal metals.
  * 
  * @author Daedalus4096
  */

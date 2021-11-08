@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagicCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.Knowledge;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -93,7 +93,7 @@ public class SyncProgressPacket implements IMessageToServer {
                 return true;
             }
 
-            IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(player).orElse(null);
+            IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
             if (knowledge == null) {
                 return false;
             }

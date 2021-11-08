@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
 
 /**
- * Definition for a trident made of the magical metal hexium which comes pre-enchanted with Rending.
+ * Definition for a trident made of the magickal metal hexium which comes pre-enchanted with Rending.
  * 
  * @author Daedalus4096
  */

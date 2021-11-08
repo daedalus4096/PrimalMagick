@@ -5,7 +5,7 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
- * Definition of a melee damage boosting enchantment for magical staves.
+ * Definition of a melee damage boosting enchantment for magickal staves.
  * 
  * @author Daedalus4096
  */

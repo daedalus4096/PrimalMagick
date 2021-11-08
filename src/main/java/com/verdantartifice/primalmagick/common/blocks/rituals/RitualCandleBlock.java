@@ -36,7 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.Constants;
 
 /**
- * Block definition for a ritual candle.  Ritual candles serve as props in magical rituals; lighting
+ * Block definition for a ritual candle.  Ritual candles serve as props in magickal rituals; lighting
  * them at the right time can allow a ritual to progress to the next stage.  They can also be dyed
  * different colors.
  * 
