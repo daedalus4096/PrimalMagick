@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:heavenly_font_infernal"
+          "name": "primalmagick:heavenly_font_infernal"
         }
       ],
       "conditions": [

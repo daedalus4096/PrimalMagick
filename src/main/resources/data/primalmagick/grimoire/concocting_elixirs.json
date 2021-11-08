@@ -1,6 +1,6 @@
 {
   "key": "CONCOCTING_ELIXIRS",
-  "name": "primalmagic.research.concocting_elixirs.title",
+  "name": "primalmagick.research.concocting_elixirs.title",
   "discipline": "MAGITECH",
   "parents": [
     "SUPREME_MAGITECH",
@@ -9,59 +9,59 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.concocting_elixirs.text.stage.1",
+      "text": "primalmagick.research.concocting_elixirs.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
       ]
     },
     {
-      "text": "primalmagic.research.concocting_elixirs.text.stage.2",
+      "text": "primalmagick.research.concocting_elixirs.text.stage.2",
       "recipes": [
-        "primalmagic:night_vision_elixir",
-        "primalmagic:long_night_vision_elixir",
-        "primalmagic:invisibility_elixir",
-        "primalmagic:long_invisibility_elixir",
-        "primalmagic:leaping_elixir",
-        "primalmagic:long_leaping_elixir",
-        "primalmagic:strong_leaping_elixir",
-        "primalmagic:swiftness_elixir",
-        "primalmagic:long_swiftness_elixir",
-        "primalmagic:strong_swiftness_elixir",
-        "primalmagic:turtle_master_elixir",
-        "primalmagic:long_turtle_master_elixir",
-        "primalmagic:strong_turtle_master_elixir",
-        "primalmagic:water_breathing_elixir",
-        "primalmagic:long_water_breathing_elixir",
-        "primalmagic:strength_elixir",
-        "primalmagic:long_strength_elixir",
-        "primalmagic:strong_strength_elixir",
-        "primalmagic:slow_falling_elixir",
-        "primalmagic:long_slow_falling_elixir"
+        "primalmagick:night_vision_elixir",
+        "primalmagick:long_night_vision_elixir",
+        "primalmagick:invisibility_elixir",
+        "primalmagick:long_invisibility_elixir",
+        "primalmagick:leaping_elixir",
+        "primalmagick:long_leaping_elixir",
+        "primalmagick:strong_leaping_elixir",
+        "primalmagick:swiftness_elixir",
+        "primalmagick:long_swiftness_elixir",
+        "primalmagick:strong_swiftness_elixir",
+        "primalmagick:turtle_master_elixir",
+        "primalmagick:long_turtle_master_elixir",
+        "primalmagick:strong_turtle_master_elixir",
+        "primalmagick:water_breathing_elixir",
+        "primalmagick:long_water_breathing_elixir",
+        "primalmagick:strength_elixir",
+        "primalmagick:long_strength_elixir",
+        "primalmagick:strong_strength_elixir",
+        "primalmagick:slow_falling_elixir",
+        "primalmagick:long_slow_falling_elixir"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.concocting_elixirs.text.addenda.1",
+      "text": "primalmagick.research.concocting_elixirs.text.addenda.1",
       "required_research": [
         "t_discover_blood"
       ],
       "recipes": [
-        "primalmagic:healing_elixir",
-        "primalmagic:strong_healing_elixir",
-        "primalmagic:regeneration_elixir",
-        "primalmagic:long_regeneration_elixir",
-        "primalmagic:strong_regeneration_elixir"
+        "primalmagick:healing_elixir",
+        "primalmagick:strong_healing_elixir",
+        "primalmagick:regeneration_elixir",
+        "primalmagick:long_regeneration_elixir",
+        "primalmagick:strong_regeneration_elixir"
       ]
     },
     {
-      "text": "primalmagic.research.concocting_elixirs.text.addenda.2",
+      "text": "primalmagick.research.concocting_elixirs.text.addenda.2",
       "required_research": [
         "t_discover_infernal"
       ],
       "recipes": [
-        "primalmagic:fire_resistance_elixir",
-        "primalmagic:long_fire_resistance_elixir"
+        "primalmagick:fire_resistance_elixir",
+        "primalmagick:long_fire_resistance_elixir"
       ]
     }
   ]

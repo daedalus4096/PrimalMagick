@@ -1,6 +1,6 @@
 {
   "key": "HALLOWSTEEL",
-  "name": "primalmagic.research.hallowsteel.title",
+  "name": "primalmagick.research.hallowsteel.title",
   "discipline": "ALCHEMY",
   "parents": [
     "SUPREME_ALCHEMY",
@@ -10,41 +10,41 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.hallowsteel.text.stage.1",
+      "text": "primalmagick.research.hallowsteel.text.stage.1",
       "required_item": [
-        "primalmagic:essence_crystal_hallowed"
+        "primalmagick:essence_crystal_hallowed"
       ],
       "required_craft": [
-        "primalmagic:hexium_ingot"
+        "primalmagick:hexium_ingot"
       ],
       "required_knowledge": [
         "THEORY;3"
       ]
     },
     {
-      "text": "primalmagic.research.hallowsteel.text.stage.2",
+      "text": "primalmagick.research.hallowsteel.text.stage.2",
       "attunements": {
         "hallowed": 3
       },
       "recipes": [
-        "primalmagic:hallowsteel_ingot",
-        "primalmagic:hallowsteel_nugget",
-        "primalmagic:hallowsteel_ingot_from_nuggets",
-        "primalmagic:hallowsteel_block",
-        "primalmagic:hallowsteel_ingots_from_block",
-        "primalmagic:hallowsteel_sword",
-        "primalmagic:hallowsteel_trident",
-        "primalmagic:hallowsteel_bow",
-        "primalmagic:hallowsteel_shovel",
-        "primalmagic:hallowsteel_pickaxe",
-        "primalmagic:hallowsteel_axe",
-        "primalmagic:hallowsteel_hoe",
-        "primalmagic:hallowsteel_fishing_rod",
-        "primalmagic:hallowsteel_head",
-        "primalmagic:hallowsteel_chest",
-        "primalmagic:hallowsteel_legs",
-        "primalmagic:hallowsteel_feet",
-        "primalmagic:hallowsteel_shield"
+        "primalmagick:hallowsteel_ingot",
+        "primalmagick:hallowsteel_nugget",
+        "primalmagick:hallowsteel_ingot_from_nuggets",
+        "primalmagick:hallowsteel_block",
+        "primalmagick:hallowsteel_ingots_from_block",
+        "primalmagick:hallowsteel_sword",
+        "primalmagick:hallowsteel_trident",
+        "primalmagick:hallowsteel_bow",
+        "primalmagick:hallowsteel_shovel",
+        "primalmagick:hallowsteel_pickaxe",
+        "primalmagick:hallowsteel_axe",
+        "primalmagick:hallowsteel_hoe",
+        "primalmagick:hallowsteel_fishing_rod",
+        "primalmagick:hallowsteel_head",
+        "primalmagick:hallowsteel_chest",
+        "primalmagick:hallowsteel_legs",
+        "primalmagick:hallowsteel_feet",
+        "primalmagick:hallowsteel_shield"
       ]
     }
   ],

@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/marble_chiseled"
+        "all": "primalmagick:block/marble_chiseled"
     }
 }

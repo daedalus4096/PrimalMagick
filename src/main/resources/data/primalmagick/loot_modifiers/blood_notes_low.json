@@ -3,7 +3,7 @@
     {
       "condition": "minecraft:entity_properties",
       "predicate": {
-        "type": "#primalmagic:drops_blood_notes_low"
+        "type": "#primalmagick:drops_blood_notes_low"
       },
       "entity": "this"
     },
@@ -16,5 +16,5 @@
       "looting_multiplier": 0.25
     }
   ],
-  "type": "primalmagic:blood_notes"
+  "type": "primalmagick:blood_notes"
 }

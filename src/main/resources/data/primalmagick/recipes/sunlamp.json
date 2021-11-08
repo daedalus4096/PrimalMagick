@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SUNLAMP",
   "mana": {
     "sun": 10
@@ -11,13 +11,13 @@
   ],
   "key": {
     "N": {
-      "tag": "primalmagic:nuggets/primalite"
+      "tag": "primalmagick:nuggets/primalite"
     },
     "T": {
       "item": "minecraft:torch"
     }
   },
   "result": {
-    "item": "primalmagic:sunlamp"
+    "item": "primalmagick:sunlamp"
   }
 }

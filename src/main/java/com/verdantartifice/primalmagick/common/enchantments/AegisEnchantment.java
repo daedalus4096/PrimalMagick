@@ -8,7 +8,7 @@ import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
 /**
  * Definition of a rune enchantment that combines the damage reduction of the base five protection
- * enchantments plus Magic Protection.  Does not reduce burn time or explosion knockback, however.
+ * enchantments plus Magick Protection.  Does not reduce burn time or explosion knockback, however.
  * 
  * @author Daedalus4096
  */

@@ -30,7 +30,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
 
     @Override
     public String getName() {
-        return "Primal Magic Item Tags";
+        return "Primal Magick Item Tags";
     }
 
     @Override

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:auto_charger"
+          "name": "primalmagick:auto_charger"
         }
       ],
       "conditions": [

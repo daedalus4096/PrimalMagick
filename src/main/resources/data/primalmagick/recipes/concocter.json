@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "CONCOCTING_TINCTURES",
   "mana": {
     "infernal": 40
@@ -14,16 +14,16 @@
       "item": "minecraft:copper_ingot"
     },
     "P": {
-      "item": "primalmagic:magitech_parts_enchanted"
+      "item": "primalmagick:magitech_parts_enchanted"
     },
     "B": {
       "item": "minecraft:brewing_stand"
     },
     "M": {
-      "item": "primalmagic:marble_enchanted"
+      "item": "primalmagick:marble_enchanted"
     }
   },
   "result": {
-    "item": "primalmagic:concocter"
+    "item": "primalmagick:concocter"
   }
 }

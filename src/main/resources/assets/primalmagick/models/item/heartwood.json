@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/heartwood"
+        "layer0": "primalmagick:item/heartwood"
     }
 }

@@ -1,6 +1,6 @@
 {
   "key": "IGNYX",
-  "name": "primalmagic.research.ignyx.title",
+  "name": "primalmagick.research.ignyx.title",
   "discipline": "ALCHEMY",
   "parents": [
     "EXPERT_ALCHEMY",
@@ -10,7 +10,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.ignyx.text.stage.1",
+      "text": "primalmagick.research.ignyx.text.stage.1",
       "required_item": [
         "tag:minecraft:coals"
       ],
@@ -19,14 +19,14 @@
       ]
     },
     {
-      "text": "primalmagic.research.ignyx.text.stage.2",
+      "text": "primalmagick.research.ignyx.text.stage.2",
       "attunements": {
         "infernal": 2
       },
       "recipes": [
-        "primalmagic:ignyx",
-        "primalmagic:ignyx_block",
-        "primalmagic:ignyx_from_storage_block"
+        "primalmagick:ignyx",
+        "primalmagick:ignyx_block",
+        "primalmagick:ignyx_from_storage_block"
       ]
     }
   ],

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/hexium_legs"
+        "layer0": "primalmagick:item/hexium_legs"
     }
 }

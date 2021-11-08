@@ -1,6 +1,6 @@
 {
   "key": "HEAVENLY_MANA_FONTS",
-  "name": "primalmagic.research.heavenly_mana_fonts.title",
+  "name": "primalmagick.research.heavenly_mana_fonts.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "FORBIDDEN_MANA_FONTS",
@@ -10,57 +10,57 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.heavenly_mana_fonts.text.stage.1",
+      "text": "primalmagick.research.heavenly_mana_fonts.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
       ]
     },
     {
-      "text": "primalmagic.research.heavenly_mana_fonts.text.stage.2",
+      "text": "primalmagick.research.heavenly_mana_fonts.text.stage.2",
       "recipes": [
-        "primalmagic:heavenly_font_earth",
-        "primalmagic:heavenly_font_sea",
-        "primalmagic:heavenly_font_sky",
-        "primalmagic:heavenly_font_sun",
-        "primalmagic:heavenly_font_moon"
+        "primalmagick:heavenly_font_earth",
+        "primalmagick:heavenly_font_sea",
+        "primalmagick:heavenly_font_sky",
+        "primalmagick:heavenly_font_sun",
+        "primalmagick:heavenly_font_moon"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.heavenly_mana_fonts.text.addenda.1",
+      "text": "primalmagick.research.heavenly_mana_fonts.text.addenda.1",
       "required_research": [
         "t_discover_blood"
       ],
       "recipes": [
-        "primalmagic:heavenly_font_blood"
+        "primalmagick:heavenly_font_blood"
       ]
     },
     {
-      "text": "primalmagic.research.heavenly_mana_fonts.text.addenda.2",
+      "text": "primalmagick.research.heavenly_mana_fonts.text.addenda.2",
       "required_research": [
         "t_discover_infernal"
       ],
       "recipes": [
-        "primalmagic:heavenly_font_infernal"
+        "primalmagick:heavenly_font_infernal"
       ]
     },
     {
-      "text": "primalmagic.research.heavenly_mana_fonts.text.addenda.3",
+      "text": "primalmagick.research.heavenly_mana_fonts.text.addenda.3",
       "required_research": [
         "t_discover_void"
       ],
       "recipes": [
-        "primalmagic:heavenly_font_void"
+        "primalmagick:heavenly_font_void"
       ]
     },
     {
-      "text": "primalmagic.research.heavenly_mana_fonts.text.addenda.4",
+      "text": "primalmagick.research.heavenly_mana_fonts.text.addenda.4",
       "required_research": [
         "t_discover_hallowed"
       ],
       "recipes": [
-        "primalmagic:heavenly_font_hallowed"
+        "primalmagick:heavenly_font_hallowed"
       ]
     }
   ]

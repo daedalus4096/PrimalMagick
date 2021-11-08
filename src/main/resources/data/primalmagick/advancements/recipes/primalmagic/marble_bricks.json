@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:marble_bricks"
+      "primalmagick:marble_bricks"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:marble_raw"
+              "primalmagick:marble_raw"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:marble_bricks"
+        "recipe": "primalmagick:marble_bricks"
       }
     }
   },

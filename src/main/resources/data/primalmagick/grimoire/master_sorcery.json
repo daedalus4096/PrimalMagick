@@ -1,6 +1,6 @@
 {
   "key": "MASTER_SORCERY",
-  "name": "primalmagic.research.master_sorcery.title",
+  "name": "primalmagick.research.master_sorcery.title",
   "discipline": "SORCERY",
   "parents": [
     "SPELL_VEHICLE_PROJECTILE",
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.master_sorcery.text.stage.1",
+      "text": "primalmagick.research.master_sorcery.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "t_spells_cast_master",
@@ -16,7 +16,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.master_sorcery.text.stage.2"
+      "text": "primalmagick.research.master_sorcery.text.stage.2"
     }
   ],
   "addenda": []

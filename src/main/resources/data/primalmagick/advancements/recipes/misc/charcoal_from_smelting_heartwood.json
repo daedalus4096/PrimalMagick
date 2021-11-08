@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:charcoal_from_smelting_heartwood"
+      "primalmagick:charcoal_from_smelting_heartwood"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:heartwood"
+              "primalmagick:heartwood"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:charcoal_from_smelting_heartwood"
+        "recipe": "primalmagick:charcoal_from_smelting_heartwood"
       }
     }
   },

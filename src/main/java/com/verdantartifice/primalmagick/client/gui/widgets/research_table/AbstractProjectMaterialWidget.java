@@ -91,10 +91,10 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         matrixStack.translate(0, 0, 200);
         List<Component> tooltip = new ArrayList<>(this.getHoverText());
         if (this.consumed) {
-            tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            tooltip.add(new TranslatableComponent("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
         if (this.hasBonus) {
-            tooltip.add(new TranslatableComponent("tooltip.primalmagic.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            tooltip.add(new TranslatableComponent("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
         GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
         matrixStack.popPose();

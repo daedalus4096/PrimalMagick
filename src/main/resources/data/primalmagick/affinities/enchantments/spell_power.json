@@ -1,6 +1,6 @@
 {
   "type": "enchantment_bonus",
-  "target": "primalmagic:spell_power",
+  "target": "primalmagick:spell_power",
   "multiplier": {
     "infernal": 1
   }

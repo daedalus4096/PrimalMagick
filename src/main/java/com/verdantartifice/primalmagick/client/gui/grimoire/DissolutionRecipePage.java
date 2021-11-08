@@ -32,7 +32,7 @@ public class DissolutionRecipePage extends AbstractRecipePage {
 
     @Override
     protected String getRecipeTypeTranslationKey() {
-        return "primalmagic.grimoire.dissolution_recipe_header";
+        return "primalmagick.grimoire.dissolution_recipe_header";
     }
 
     @Override

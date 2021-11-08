@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:primalite_block"
+          "name": "primalmagick:primalite_block"
         }
       ],
       "conditions": [

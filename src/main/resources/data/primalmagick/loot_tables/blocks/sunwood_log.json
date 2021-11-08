@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:sunwood_log"
+          "name": "primalmagick:sunwood_log"
         }
       ],
       "conditions": [
@@ -23,13 +23,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:heartwood"
+          "name": "primalmagick:heartwood"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "primalmagic:sunwood_log",
+          "block": "primalmagick:sunwood_log",
           "properties": {
             "pulsing": "true"
           }

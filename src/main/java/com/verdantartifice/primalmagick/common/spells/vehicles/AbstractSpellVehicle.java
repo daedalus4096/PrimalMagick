@@ -56,12 +56,12 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
 
     @Override
     public Component getTypeName() {
-        return new TranslatableComponent("primalmagic.spell.vehicle.type." + this.getVehicleType());
+        return new TranslatableComponent("primalmagick.spell.vehicle.type." + this.getVehicleType());
     }
     
     @Override
     public Component getDefaultNamePiece() {
-        return new TranslatableComponent("primalmagic.spell.vehicle.default_name." + this.getVehicleType());
+        return new TranslatableComponent("primalmagick.spell.vehicle.default_name." + this.getVehicleType());
     }
     
     @Override

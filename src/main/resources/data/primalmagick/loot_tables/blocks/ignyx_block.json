@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:ignyx_block"
+          "name": "primalmagick:ignyx_block"
         }
       ],
       "conditions": [

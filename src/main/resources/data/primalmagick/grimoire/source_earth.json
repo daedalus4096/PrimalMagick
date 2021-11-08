@@ -1,13 +1,13 @@
 {
   "key": "SOURCE_EARTH",
-  "name": "primalmagic.research.source_earth.title",
+  "name": "primalmagick.research.source_earth.title",
   "discipline": "BASICS",
   "parents": [
     "TERRESTRIAL_MAGIC"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.source_earth.text.stage.1",
+      "text": "primalmagick.research.source_earth.text.stage.1",
       "required_item": [
         "tag:forge:obsidian",
         "tag:forge:gems/diamond"
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.source_earth.text.stage.2",
+      "text": "primalmagick.research.source_earth.text.stage.2",
       "attunements": {
         "earth": 5
       }

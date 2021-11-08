@@ -1,9 +1,9 @@
 {
     "textures": [
-        "primalmagic:wand_poof_0",
-        "primalmagic:wand_poof_1",
-        "primalmagic:wand_poof_2",
-        "primalmagic:wand_poof_3",
-        "primalmagic:wand_poof_4"
+        "primalmagick:wand_poof_0",
+        "primalmagick:wand_poof_1",
+        "primalmagick:wand_poof_2",
+        "primalmagick:wand_poof_3",
+        "primalmagick:wand_poof_4"
     ]
 }

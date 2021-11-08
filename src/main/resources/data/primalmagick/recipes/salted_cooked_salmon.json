@@ -3,13 +3,13 @@
   "group": "salted_food",
   "ingredients": [
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
       "item": "minecraft:cooked_salmon"
     }
   ],
   "result": {
-    "item": "primalmagic:salted_cooked_salmon"
+    "item": "primalmagick:salted_cooked_salmon"
   }
 }

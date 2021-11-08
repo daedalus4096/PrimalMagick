@@ -1,6 +1,6 @@
 {
   "key": "DREAM_VISION_TALISMAN",
-  "name": "primalmagic.research.dream_vision_talisman.title",
+  "name": "primalmagick.research.dream_vision_talisman.title",
   "discipline": "RITUAL",
   "parents": [
     "EXPERT_RITUAL",
@@ -10,7 +10,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.dream_vision_talisman.text.stage.1",
+      "text": "primalmagick.research.dream_vision_talisman.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ],
@@ -19,9 +19,9 @@
       ]
     },
     {
-      "text": "primalmagic.research.dream_vision_talisman.text.stage.2",
+      "text": "primalmagick.research.dream_vision_talisman.text.stage.2",
       "recipes": [
-        "primalmagic:dream_vision_talisman"
+        "primalmagick:dream_vision_talisman"
       ]
     }
   ],

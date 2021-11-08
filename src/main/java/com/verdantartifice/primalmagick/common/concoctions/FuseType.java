@@ -53,7 +53,7 @@ public enum FuseType implements StringRepresentable {
     }
     
     public String getTranslationKey() {
-        return "concoctions.primalmagic.fuse." + this.tag;
+        return "concoctions.primalmagick.fuse." + this.tag;
     }
     
     @Nullable

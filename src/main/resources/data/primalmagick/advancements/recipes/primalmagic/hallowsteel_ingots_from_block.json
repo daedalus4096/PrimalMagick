@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:hallowsteel_ingots_from_block"
+      "primalmagick:hallowsteel_ingots_from_block"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:storage_blocks/hallowsteel"
+            "tag": "primalmagick:storage_blocks/hallowsteel"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:hallowsteel_ingots_from_block"
+        "recipe": "primalmagick:hallowsteel_ingots_from_block"
       }
     }
   },

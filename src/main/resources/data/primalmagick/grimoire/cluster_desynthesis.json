@@ -1,19 +1,19 @@
 {
   "key": "CLUSTER_DESYNTHESIS",
-  "name": "primalmagic.research.cluster_desynthesis.title",
+  "name": "primalmagick.research.cluster_desynthesis.title",
   "discipline": "ALCHEMY",
   "parents": [
     "CLUSTER_SYNTHESIS"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.cluster_desynthesis.text.stage.1",
+      "text": "primalmagick.research.cluster_desynthesis.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.cluster_desynthesis.text.stage.2",
+      "text": "primalmagick.research.cluster_desynthesis.text.stage.2",
       "attunements": {
         "earth": 1,
         "sea": 1,
@@ -22,17 +22,17 @@
         "moon": 1
       },
       "recipes": [
-        "primalmagic:essence_crystal_earth_from_cluster",
-        "primalmagic:essence_crystal_sea_from_cluster",
-        "primalmagic:essence_crystal_sky_from_cluster",
-        "primalmagic:essence_crystal_sun_from_cluster",
-        "primalmagic:essence_crystal_moon_from_cluster"
+        "primalmagick:essence_crystal_earth_from_cluster",
+        "primalmagick:essence_crystal_sea_from_cluster",
+        "primalmagick:essence_crystal_sky_from_cluster",
+        "primalmagick:essence_crystal_sun_from_cluster",
+        "primalmagick:essence_crystal_moon_from_cluster"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.cluster_desynthesis.text.addenda.1",
+      "text": "primalmagick.research.cluster_desynthesis.text.addenda.1",
       "required_research": [
         "t_discover_blood"
       ],
@@ -40,11 +40,11 @@
         "blood": 1
       },
       "recipes": [
-        "primalmagic:essence_crystal_blood_from_cluster"
+        "primalmagick:essence_crystal_blood_from_cluster"
       ]
     },
     {
-      "text": "primalmagic.research.cluster_desynthesis.text.addenda.2",
+      "text": "primalmagick.research.cluster_desynthesis.text.addenda.2",
       "required_research": [
         "t_discover_infernal"
       ],
@@ -52,11 +52,11 @@
         "infernal": 1
       },
       "recipes": [
-        "primalmagic:essence_crystal_infernal_from_cluster"
+        "primalmagick:essence_crystal_infernal_from_cluster"
       ]
     },
     {
-      "text": "primalmagic.research.cluster_desynthesis.text.addenda.3",
+      "text": "primalmagick.research.cluster_desynthesis.text.addenda.3",
       "required_research": [
         "t_discover_void"
       ],
@@ -64,11 +64,11 @@
         "void": 1
       },
       "recipes": [
-        "primalmagic:essence_crystal_void_from_cluster"
+        "primalmagick:essence_crystal_void_from_cluster"
       ]
     },
     {
-      "text": "primalmagic.research.cluster_desynthesis.text.addenda.4",
+      "text": "primalmagick.research.cluster_desynthesis.text.addenda.4",
       "required_research": [
         "t_discover_hallowed"
       ],
@@ -76,7 +76,7 @@
         "hallowed": 1
       },
       "recipes": [
-        "primalmagic:essence_crystal_hallowed_from_cluster"
+        "primalmagick:essence_crystal_hallowed_from_cluster"
       ]
     }
   ]

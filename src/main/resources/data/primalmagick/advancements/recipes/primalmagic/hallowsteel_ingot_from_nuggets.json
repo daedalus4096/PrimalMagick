@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:hallowsteel_ingot_from_nuggets"
+      "primalmagick:hallowsteel_ingot_from_nuggets"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:nuggets/hallowsteel"
+            "tag": "primalmagick:nuggets/hallowsteel"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:hallowsteel_ingot_from_nuggets"
+        "recipe": "primalmagick:hallowsteel_ingot_from_nuggets"
       }
     }
   },

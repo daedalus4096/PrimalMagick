@@ -3,11 +3,11 @@
   "group": "hexium_ingot",
   "ingredients": [
     {
-      "tag": "primalmagic:storage_blocks/hexium"
+      "tag": "primalmagick:storage_blocks/hexium"
     }
   ],
   "result": {
-    "item": "primalmagic:hexium_ingot",
+    "item": "primalmagick:hexium_ingot",
     "count": 9
   }
 }

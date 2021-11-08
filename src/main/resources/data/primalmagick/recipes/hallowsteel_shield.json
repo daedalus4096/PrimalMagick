@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HALLOWSTEEL",
   "pattern": [
     "PIP",
@@ -11,10 +11,10 @@
       "tag": "minecraft:planks"
     },
     "I": {
-      "tag": "primalmagic:ingots/hallowsteel"
+      "tag": "primalmagick:ingots/hallowsteel"
     }
   },
   "result": {
-    "item": "primalmagic:hallowsteel_shield"
+    "item": "primalmagick:hallowsteel_shield"
   }
 }

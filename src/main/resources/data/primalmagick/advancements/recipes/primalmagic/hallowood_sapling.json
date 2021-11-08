@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:hallowood_sapling"
+      "primalmagick:hallowood_sapling"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:hallowed_orb"
+              "primalmagick:hallowed_orb"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:hallowood_sapling"
+        "recipe": "primalmagick:hallowood_sapling"
       }
     }
   },

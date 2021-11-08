@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "primalmagic:wizard_wand_gem_item",
-  "base": "primalmagic:adept_wand_gem_item",
+  "target": "primalmagick:wizard_wand_gem_item",
+  "base": "primalmagick:adept_wand_gem_item",
   "add": {
     "earth": 2,
     "sea": 2,

@@ -1,6 +1,6 @@
 {
   "key": "SPELL_MOD_BURST",
-  "name": "primalmagic.research.spell_mod_burst.title",
+  "name": "primalmagick.research.spell_mod_burst.title",
   "discipline": "SORCERY",
   "parents": [
     "MASTER_SORCERY",
@@ -8,13 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_mod_burst.text.stage.1",
+      "text": "primalmagick.research.spell_mod_burst.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.spell_mod_burst.text.stage.2"
+      "text": "primalmagick.research.spell_mod_burst.text.stage.2"
     }
   ],
   "addenda": []

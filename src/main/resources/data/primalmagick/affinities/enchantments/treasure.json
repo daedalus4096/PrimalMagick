@@ -1,6 +1,6 @@
 {
   "type": "enchantment_bonus",
-  "target": "primalmagic:treasure",
+  "target": "primalmagick:treasure",
   "multiplier": {
     "moon": 1
   }

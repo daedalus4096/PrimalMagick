@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/forbidden_font_moon"
+            "model": "primalmagick:block/forbidden_font_moon"
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "type": "enchantment_bonus",
-  "target": "primalmagic:regrowth",
+  "target": "primalmagick:regrowth",
   "multiplier": {
     "hallowed": 1
   }

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/imbued_wool_chest"
+        "layer0": "primalmagick:item/imbued_wool_chest"
     }
 }

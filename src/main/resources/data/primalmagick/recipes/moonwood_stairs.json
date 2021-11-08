@@ -8,11 +8,11 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:moonwood_planks"
+      "item": "primalmagick:moonwood_planks"
     }
   },
   "result": {
-    "item": "primalmagic:moonwood_stairs",
+    "item": "primalmagick:moonwood_stairs",
     "count": 4
   }
 }

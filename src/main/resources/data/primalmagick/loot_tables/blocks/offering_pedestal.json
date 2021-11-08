@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:offering_pedestal"
+          "name": "primalmagick:offering_pedestal"
         }
       ],
       "conditions": [

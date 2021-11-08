@@ -1,16 +1,16 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "EXPERT_MANAWEAVING",
   "pattern": [
     "MMM"
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_enchanted_bricks"
+      "item": "primalmagick:marble_enchanted_bricks"
     }
   },
   "result": {
-    "item": "primalmagic:marble_enchanted_brick_slab",
+    "item": "primalmagick:marble_enchanted_brick_slab",
     "count": 6
   }
 }

@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/wood_table_top",
-		"1": "primalmagic:block/analysis_side",
-		"2": "primalmagic:block/wood_table_bottom",
-		"3": "primalmagic:block/analysis_misc",
-		"particle": "primalmagic:block/wood_table_top"
+		"0": "primalmagick:block/wood_table_top",
+		"1": "primalmagick:block/analysis_side",
+		"2": "primalmagick:block/wood_table_bottom",
+		"3": "primalmagick:block/analysis_misc",
+		"particle": "primalmagick:block/wood_table_top"
 	},
 	"elements": [
 		{

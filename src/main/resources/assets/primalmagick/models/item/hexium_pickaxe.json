@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/handheld",
     "textures": {
-        "layer0": "primalmagic:item/hexium_pickaxe"
+        "layer0": "primalmagick:item/hexium_pickaxe"
     }
 }

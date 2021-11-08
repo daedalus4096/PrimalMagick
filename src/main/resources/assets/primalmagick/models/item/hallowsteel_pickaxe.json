@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/handheld",
     "textures": {
-        "layer0": "primalmagic:item/hallowsteel_pickaxe"
+        "layer0": "primalmagick:item/hallowsteel_pickaxe"
     }
 }

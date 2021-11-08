@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:ritual_candle_white"
+          "name": "primalmagick:ritual_candle_white"
         }
       ],
       "conditions": [

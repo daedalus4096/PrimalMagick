@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/essence_transmuter_side",
-		"1": "primalmagic:block/essence_transmuter_top",
-		"2": "primalmagic:block/marble_enchanted",
-		"particle": "primalmagic:block/essence_transmuter_side"
+		"0": "primalmagick:block/essence_transmuter_side",
+		"1": "primalmagick:block/essence_transmuter_top",
+		"2": "primalmagick:block/marble_enchanted",
+		"particle": "primalmagick:block/essence_transmuter_side"
 	},
 	"elements": [
 		{

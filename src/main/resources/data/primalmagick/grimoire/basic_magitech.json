@@ -1,15 +1,15 @@
 {
   "key": "BASIC_MAGITECH",
-  "name": "primalmagic.research.basic_magitech.title",
+  "name": "primalmagick.research.basic_magitech.title",
   "discipline": "MAGITECH",
   "parents": [
     "UNLOCK_MAGITECH"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.basic_magitech.text.stage.1",
+      "text": "primalmagick.research.basic_magitech.text.stage.1",
       "recipes": [
-        "primalmagic:magitech_parts_basic"
+        "primalmagick:magitech_parts_basic"
       ]
     }
   ],

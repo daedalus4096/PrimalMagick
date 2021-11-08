@@ -1,6 +1,6 @@
 {
     "parent": "block/leaves",
     "textures": {
-        "all": "primalmagic:block/sunwood_leaves_waning"
+        "all": "primalmagick:block/sunwood_leaves_waning"
     }
 }

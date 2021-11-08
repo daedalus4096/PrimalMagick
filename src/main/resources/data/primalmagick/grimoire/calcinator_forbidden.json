@@ -1,6 +1,6 @@
 {
   "key": "CALCINATOR_FORBIDDEN",
-  "name": "primalmagic.research.calcinator_forbidden.title",
+  "name": "primalmagick.research.calcinator_forbidden.title",
   "discipline": "ALCHEMY",
   "parents": [
     "MASTER_ALCHEMY",
@@ -13,15 +13,15 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.calcinator_forbidden.text.stage.1",
+      "text": "primalmagick.research.calcinator_forbidden.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.calcinator_forbidden.text.stage.2",
+      "text": "primalmagick.research.calcinator_forbidden.text.stage.2",
       "recipes": [
-        "primalmagic:calcinator_forbidden"
+        "primalmagick:calcinator_forbidden"
       ]
     }
   ],

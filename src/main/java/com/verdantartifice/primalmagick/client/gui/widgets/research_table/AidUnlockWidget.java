@@ -56,7 +56,7 @@ public class AidUnlockWidget extends AbstractWidget {
     public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
         if (this.aidBlock != null) {
             // Render tooltip
-            Component unlockText = new TranslatableComponent("primalmagic.research_table.unlock", this.aidBlock.getName());
+            Component unlockText = new TranslatableComponent("primalmagick.research_table.unlock", this.aidBlock.getName());
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(unlockText), mouseX, mouseY);
         }
     }

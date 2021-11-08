@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "group": "primalite_ingot",
   "research": "PRIMALITE",
   "ingredients": [
@@ -7,22 +7,22 @@
       "tag": "forge:ingots/iron"
     },
     {
-      "item": "primalmagic:essence_dust_earth"
+      "item": "primalmagick:essence_dust_earth"
     },
     {
-      "item": "primalmagic:essence_dust_sea"
+      "item": "primalmagick:essence_dust_sea"
     },
     {
-      "item": "primalmagic:essence_dust_sky"
+      "item": "primalmagick:essence_dust_sky"
     },
     {
-      "item": "primalmagic:essence_dust_sun"
+      "item": "primalmagick:essence_dust_sun"
     },
     {
-      "item": "primalmagic:essence_dust_moon"
+      "item": "primalmagick:essence_dust_moon"
     }
   ],
   "result": {
-    "item": "primalmagic:primalite_ingot"
+    "item": "primalmagick:primalite_ingot"
   }
 }

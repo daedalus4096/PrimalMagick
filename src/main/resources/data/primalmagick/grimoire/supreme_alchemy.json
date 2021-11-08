@@ -1,6 +1,6 @@
 {
   "key": "SUPREME_ALCHEMY",
-  "name": "primalmagic.research.supreme_alchemy.title",
+  "name": "primalmagick.research.supreme_alchemy.title",
   "discipline": "ALCHEMY",
   "parents": [
     "CALCINATOR_FORBIDDEN",
@@ -8,14 +8,14 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.supreme_alchemy.text.stage.1",
+      "text": "primalmagick.research.supreme_alchemy.text.stage.1",
       "required_research": [
         "t_discover_hallowed",
         "b_crafted_alchemy_supreme"
       ]
     },
     {
-      "text": "primalmagic.research.supreme_alchemy.text.stage.2"
+      "text": "primalmagick.research.supreme_alchemy.text.stage.2"
     }
   ],
   "addenda": []

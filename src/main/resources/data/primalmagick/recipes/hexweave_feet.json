@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HEXWEAVE",
   "pattern": [
     "# #",
@@ -7,10 +7,10 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:hexweave"
+      "item": "primalmagick:hexweave"
     }
   },
   "result": {
-    "item": "primalmagic:hexweave_feet"
+    "item": "primalmagick:hexweave_feet"
   }
 }

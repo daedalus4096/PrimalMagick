@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "tag": "primalmagic:ingots/hallowsteel"
+      "tag": "primalmagick:ingots/hallowsteel"
     }
   ],
   "result": {
-    "item": "primalmagic:hallowsteel_nugget",
+    "item": "primalmagick:hallowsteel_nugget",
     "count": 9
   }
 }

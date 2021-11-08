@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:essence_furnace"
+          "name": "primalmagick:essence_furnace"
         }
       ],
       "conditions": [

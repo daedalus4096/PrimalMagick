@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SKYGLASS",
   "pattern": [
     "GGG",
@@ -7,11 +7,11 @@
   ],
   "key": {
     "G": {
-      "item": "primalmagic:skyglass"
+      "item": "primalmagick:skyglass"
     }
   },
   "result": {
-    "item": "primalmagic:skyglass_pane",
+    "item": "primalmagick:skyglass_pane",
     "count": 16
   }
 }

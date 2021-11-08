@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/rock_salt_ore"
+        "all": "primalmagick:block/rock_salt_ore"
     }
 }

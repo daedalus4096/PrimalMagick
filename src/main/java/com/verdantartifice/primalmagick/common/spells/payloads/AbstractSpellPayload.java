@@ -105,12 +105,12 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
     
     @Override
     public Component getTypeName() {
-        return new TranslatableComponent("primalmagic.spell.payload.type." + this.getPayloadType());
+        return new TranslatableComponent("primalmagick.spell.payload.type." + this.getPayloadType());
     }
     
     @Override
     public Component getDefaultNamePiece() {
-        return new TranslatableComponent("primalmagic.spell.payload.default_name." + this.getPayloadType());
+        return new TranslatableComponent("primalmagick.spell.payload.default_name." + this.getPayloadType());
     }
     
     @Override

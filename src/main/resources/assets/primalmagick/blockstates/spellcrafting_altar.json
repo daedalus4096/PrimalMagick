@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/spellcrafting_altar"
+            "model": "primalmagick:block/spellcrafting_altar"
         }
     }
 }

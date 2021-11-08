@@ -1,7 +1,7 @@
 {
     "variants": {
-        "type=bottom": { "model": "primalmagic:block/marble_enchanted_brick_slab_bottom" },
-        "type=top":    { "model": "primalmagic:block/marble_enchanted_brick_slab_top" },
-        "type=double": { "model": "primalmagic:block/marble_enchanted_bricks" }
+        "type=bottom": { "model": "primalmagick:block/marble_enchanted_brick_slab_bottom" },
+        "type=top":    { "model": "primalmagick:block/marble_enchanted_brick_slab_top" },
+        "type=double": { "model": "primalmagick:block/marble_enchanted_bricks" }
     }
 }

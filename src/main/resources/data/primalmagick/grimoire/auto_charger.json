@@ -1,6 +1,6 @@
 {
   "key": "AUTO_CHARGER",
-  "name": "primalmagic.research.auto_charger.title",
+  "name": "primalmagick.research.auto_charger.title",
   "discipline": "MAGITECH",
   "parents": [
     "EXPERT_MAGITECH",
@@ -10,15 +10,15 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.auto_charger.text.stage.1",
+      "text": "primalmagick.research.auto_charger.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.auto_charger.text.stage.2",
+      "text": "primalmagick.research.auto_charger.text.stage.2",
       "recipes": [
-        "primalmagic:auto_charger"
+        "primalmagick:auto_charger"
       ]
     }
   ],

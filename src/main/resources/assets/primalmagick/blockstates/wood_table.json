@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/wood_table"
+            "model": "primalmagick:block/wood_table"
         }
     }
 }

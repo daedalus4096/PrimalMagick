@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:hexium_golem_controller"
+          "name": "primalmagick:hexium_golem_controller"
         }
       ],
       "conditions": [

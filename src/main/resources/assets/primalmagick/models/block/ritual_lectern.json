@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"bottom": "primalmagic:block/moonwood_planks_full",
-		"base": "primalmagic:block/ritual_lectern_base",
-		"front": "primalmagic:block/ritual_lectern_front",
-		"particle": "primalmagic:block/ritual_lectern_sides",
-		"sides": "primalmagic:block/ritual_lectern_sides",
-		"top": "primalmagic:block/ritual_lectern_top"
+		"bottom": "primalmagick:block/moonwood_planks_full",
+		"base": "primalmagick:block/ritual_lectern_base",
+		"front": "primalmagick:block/ritual_lectern_front",
+		"particle": "primalmagick:block/ritual_lectern_sides",
+		"sides": "primalmagick:block/ritual_lectern_sides",
+		"top": "primalmagick:block/ritual_lectern_top"
 	},
 	"elements": [
 		{

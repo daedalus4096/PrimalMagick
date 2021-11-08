@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "FIRST_STEPS@2",
   "pattern": [
     "SSS",
@@ -15,6 +15,6 @@
     }
   },
   "result": {
-    "item": "primalmagic:wood_table"
+    "item": "primalmagick:wood_table"
   }
 }

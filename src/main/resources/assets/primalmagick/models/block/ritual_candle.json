@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/ritual_candle",
-		"particle": "primalmagic:block/ritual_candle"
+		"0": "primalmagick:block/ritual_candle",
+		"particle": "primalmagick:block/ritual_candle"
 	},
 	"elements": [
 		{

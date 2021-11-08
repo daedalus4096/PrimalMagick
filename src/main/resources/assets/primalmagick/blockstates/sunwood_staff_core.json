@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/sunwood_staff_core"
+            "model": "primalmagick:item/sunwood_staff_core"
         }
     }
 }

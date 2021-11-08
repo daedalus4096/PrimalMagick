@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/mundane_wand_core"
+            "model": "primalmagick:item/mundane_wand_core"
         }
     }
 }

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:hexium_ingots_from_block"
+      "primalmagick:hexium_ingots_from_block"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:storage_blocks/hexium"
+            "tag": "primalmagick:storage_blocks/hexium"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:hexium_ingots_from_block"
+        "recipe": "primalmagick:hexium_ingots_from_block"
       }
     }
   },

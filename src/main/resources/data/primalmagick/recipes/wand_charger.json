@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "WAND_CHARGER",
   "pattern": [
     "GMG",
@@ -11,13 +11,13 @@
       "tag": "forge:ingots/gold"
     },
     "M": {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     "P": {
-      "item": "primalmagic:mana_prism"
+      "item": "primalmagick:mana_prism"
     }
   },
   "result": {
-    "item": "primalmagic:wand_charger"
+    "item": "primalmagick:wand_charger"
   }
 }

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:ritual_candle_brown"
+      "primalmagick:ritual_candle_brown"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:ritual_candles"
+            "tag": "primalmagick:ritual_candles"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:ritual_candle_brown"
+        "recipe": "primalmagick:ritual_candle_brown"
       }
     }
   },

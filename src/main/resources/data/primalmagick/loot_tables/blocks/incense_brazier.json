@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:incense_brazier"
+          "name": "primalmagick:incense_brazier"
         }
       ],
       "conditions": [

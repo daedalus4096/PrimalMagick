@@ -3,11 +3,11 @@
   "group": "hallowsteel_ingot",
   "ingredients": [
     {
-      "tag": "primalmagic:storage_blocks/hallowsteel"
+      "tag": "primalmagick:storage_blocks/hallowsteel"
     }
   ],
   "result": {
-    "item": "primalmagic:hallowsteel_ingot",
+    "item": "primalmagick:hallowsteel_ingot",
     "count": 9
   }
 }

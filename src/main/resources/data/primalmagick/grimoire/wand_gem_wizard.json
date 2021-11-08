@@ -1,6 +1,6 @@
 {
   "key": "WAND_GEM_WIZARD",
-  "name": "primalmagic.research.wand_gem_wizard.title",
+  "name": "primalmagick.research.wand_gem_wizard.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "MASTER_MANAWEAVING",
@@ -9,7 +9,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.wand_gem_wizard.text.stage.1",
+      "text": "primalmagick.research.wand_gem_wizard.text.stage.1",
       "required_item": [
         "tag:forge:gems/diamond"
       ],
@@ -18,9 +18,9 @@
       ]
     },
     {
-      "text": "primalmagic.research.wand_gem_wizard.text.stage.2",
+      "text": "primalmagick.research.wand_gem_wizard.text.stage.2",
       "recipes": [
-        "primalmagic:wizard_wand_gem_item"
+        "primalmagick:wizard_wand_gem_item"
       ]
     }
   ],

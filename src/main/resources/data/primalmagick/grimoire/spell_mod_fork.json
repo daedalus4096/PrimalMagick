@@ -1,6 +1,6 @@
 {
   "key": "SPELL_MOD_FORK",
-  "name": "primalmagic.research.spell_mod_fork.title",
+  "name": "primalmagick.research.spell_mod_fork.title",
   "discipline": "SORCERY",
   "parents": [
     "SUPREME_SORCERY",
@@ -9,13 +9,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_mod_fork.text.stage.1",
+      "text": "primalmagick.research.spell_mod_fork.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
       ]
     },
     {
-      "text": "primalmagic.research.spell_mod_fork.text.stage.2"
+      "text": "primalmagick.research.spell_mod_fork.text.stage.2"
     }
   ],
   "addenda": []

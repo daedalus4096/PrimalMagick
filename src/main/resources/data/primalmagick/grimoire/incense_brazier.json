@@ -1,25 +1,25 @@
 {
   "key": "INCENSE_BRAZIER",
-  "name": "primalmagic.research.incense_brazier.title",
+  "name": "primalmagick.research.incense_brazier.title",
   "discipline": "RITUAL",
   "parents": [
     "BASIC_RITUAL"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.incense_brazier.text.stage.1",
+      "text": "primalmagick.research.incense_brazier.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.incense_brazier.text.stage.2",
+      "text": "primalmagick.research.incense_brazier.text.stage.2",
       "attunements": {
         "sky": 1
       },
       "recipes": [
-        "primalmagic:incense_brazier",
-        "primalmagic:incense_stick"
+        "primalmagick:incense_brazier",
+        "primalmagick:incense_stick"
       ]
     }
   ],

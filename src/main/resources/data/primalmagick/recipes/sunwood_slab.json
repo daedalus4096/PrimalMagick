@@ -6,11 +6,11 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:sunwood_planks"
+      "item": "primalmagick:sunwood_planks"
     }
   },
   "result": {
-    "item": "primalmagic:sunwood_slab",
+    "item": "primalmagick:sunwood_slab",
     "count": 6
   }
 }

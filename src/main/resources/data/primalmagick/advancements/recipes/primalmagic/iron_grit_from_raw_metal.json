@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:iron_grit_from_raw_metal"
+      "primalmagick:iron_grit_from_raw_metal"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:earthshatter_hammer"
+              "primalmagick:earthshatter_hammer"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:iron_grit_from_raw_metal"
+        "recipe": "primalmagick:iron_grit_from_raw_metal"
       }
     }
   },

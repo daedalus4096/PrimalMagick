@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:runecarving_table"
+          "name": "primalmagick:runecarving_table"
         }
       ],
       "conditions": [

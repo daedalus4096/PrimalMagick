@@ -1,6 +1,6 @@
 {
   "key": "MASTER_ALCHEMY",
-  "name": "primalmagic.research.master_alchemy.title",
+  "name": "primalmagick.research.master_alchemy.title",
   "discipline": "ALCHEMY",
   "parents": [
     "CALCINATOR_ENCHANTED",
@@ -8,14 +8,14 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.master_alchemy.text.stage.1",
+      "text": "primalmagick.research.master_alchemy.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "b_crafted_alchemy_master"
       ]
     },
     {
-      "text": "primalmagic.research.master_alchemy.text.stage.2"
+      "text": "primalmagick.research.master_alchemy.text.stage.2"
     }
   ],
   "addenda": []

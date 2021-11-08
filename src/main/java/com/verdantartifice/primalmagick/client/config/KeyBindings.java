@@ -20,13 +20,13 @@ public class KeyBindings {
     private static final String KEY_CATEGORY = "key.categories." + PrimalMagick.MODID;
     
     public static void init() {
-        changeSpellKey = new KeyMapping("key.primalmagic.change_spell", GLFW.GLFW_KEY_R, KEY_CATEGORY);
+        changeSpellKey = new KeyMapping("key.primalmagick.change_spell", GLFW.GLFW_KEY_R, KEY_CATEGORY);
         ClientRegistry.registerKeyBinding(changeSpellKey);
         
-        carpetForwardKey = new KeyMapping("key.primalmagic.carpet_forward", GLFW.GLFW_KEY_W, KEY_CATEGORY);
+        carpetForwardKey = new KeyMapping("key.primalmagick.carpet_forward", GLFW.GLFW_KEY_W, KEY_CATEGORY);
         ClientRegistry.registerKeyBinding(carpetForwardKey);
         
-        carpetBackwardKey = new KeyMapping("key.primalmagic.carpet_backward", GLFW.GLFW_KEY_S, KEY_CATEGORY);
+        carpetBackwardKey = new KeyMapping("key.primalmagick.carpet_backward", GLFW.GLFW_KEY_S, KEY_CATEGORY);
         ClientRegistry.registerKeyBinding(carpetBackwardKey);
     }
 }

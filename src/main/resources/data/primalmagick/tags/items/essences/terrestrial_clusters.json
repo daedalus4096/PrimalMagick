@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:essence_cluster_earth",
-    "primalmagic:essence_cluster_sea",
-    "primalmagic:essence_cluster_sky",
-    "primalmagic:essence_cluster_sun",
-    "primalmagic:essence_cluster_moon"
+    "primalmagick:essence_cluster_earth",
+    "primalmagick:essence_cluster_sea",
+    "primalmagick:essence_cluster_sky",
+    "primalmagick:essence_cluster_sun",
+    "primalmagick:essence_cluster_moon"
   ]
 }

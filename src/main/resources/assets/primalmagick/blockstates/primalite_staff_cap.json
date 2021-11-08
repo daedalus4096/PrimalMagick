@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/primalite_staff_cap"
+            "model": "primalmagick:item/primalite_staff_cap"
         }
     }
 }

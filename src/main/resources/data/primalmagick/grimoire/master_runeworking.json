@@ -1,6 +1,6 @@
 {
   "key": "MASTER_RUNEWORKING",
-  "name": "primalmagic.research.master_runeworking.title",
+  "name": "primalmagick.research.master_runeworking.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "RUNE_ABSORB",
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.master_runeworking.text.stage.1",
+      "text": "primalmagick.research.master_runeworking.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "b_crafted_runeworking_master",
@@ -16,9 +16,9 @@
       ]
     },
     {
-      "text": "primalmagic.research.master_runeworking.text.stage.2",
+      "text": "primalmagick.research.master_runeworking.text.stage.2",
       "recipes": [
-        "primalmagic:runescribing_altar_forbidden"
+        "primalmagick:runescribing_altar_forbidden"
       ]
     }
   ],

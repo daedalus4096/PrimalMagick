@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SPELLCLOTH",
   "pattern": [
     "###",
@@ -8,10 +8,10 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:spellcloth"
+      "item": "primalmagick:spellcloth"
     }
   },
   "result": {
-    "item": "primalmagic:spellcloth_legs"
+    "item": "primalmagick:spellcloth_legs"
   }
 }

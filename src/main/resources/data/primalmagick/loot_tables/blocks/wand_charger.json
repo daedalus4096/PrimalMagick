@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:wand_charger"
+          "name": "primalmagick:wand_charger"
         }
       ],
       "conditions": [

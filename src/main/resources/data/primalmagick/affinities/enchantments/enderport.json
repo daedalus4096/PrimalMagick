@@ -1,6 +1,6 @@
 {
   "type": "enchantment_bonus",
-  "target": "primalmagic:enderport",
+  "target": "primalmagick:enderport",
   "multiplier": {
     "void": 1
   }

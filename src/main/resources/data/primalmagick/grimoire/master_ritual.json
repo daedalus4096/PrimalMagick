@@ -1,6 +1,6 @@
 {
   "key": "MASTER_RITUAL",
-  "name": "primalmagic.research.master_ritual.title",
+  "name": "primalmagick.research.master_ritual.title",
   "discipline": "RITUAL",
   "parents": [
     "RITUAL_LECTERN",
@@ -8,14 +8,14 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.master_ritual.text.stage.1",
+      "text": "primalmagick.research.master_ritual.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "t_rituals_completed_master"
       ]
     },
     {
-      "text": "primalmagic.research.master_ritual.text.stage.2"
+      "text": "primalmagick.research.master_ritual.text.stage.2"
     }
   ],
   "addenda": []

@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "BLOODLETTER",
   "mana": {
     "blood": 50
@@ -11,16 +11,16 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_smoked"
+      "item": "primalmagick:marble_smoked"
     },
     "S": {
       "item": "minecraft:diamond_sword"
     },
     "P": {
-      "item": "primalmagic:marble_smoked_pillar"
+      "item": "primalmagick:marble_smoked_pillar"
     }
   },
   "result": {
-    "item": "primalmagic:bloodletter"
+    "item": "primalmagick:bloodletter"
   }
 }

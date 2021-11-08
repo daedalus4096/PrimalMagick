@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "WAND_GEM_ADEPT",
   "mana": {
     "earth": 30,
@@ -13,10 +13,10 @@
       "tag": "forge:gems/diamond"
     },
     {
-      "tag": "primalmagic:essences/terrestrial_shards"
+      "tag": "primalmagick:essences/terrestrial_shards"
     }
   ],
   "result": {
-    "item": "primalmagic:adept_wand_gem_item"
+    "item": "primalmagick:adept_wand_gem_item"
   }
 }

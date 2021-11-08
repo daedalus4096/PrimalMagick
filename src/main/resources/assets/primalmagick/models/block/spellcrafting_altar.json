@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"3": "primalmagic:block/wand_inscription_table_misc",
-		"4": "primalmagic:block/marble_raw",
-		"5": "primalmagic:block/spellcrafting_altar_top",
-		"6": "primalmagic:block/wand_assembly_table_side",
-		"particle": "primalmagic:block/spellcrafting_altar_top"
+		"3": "primalmagick:block/wand_inscription_table_misc",
+		"4": "primalmagick:block/marble_raw",
+		"5": "primalmagick:block/spellcrafting_altar_top",
+		"6": "primalmagick:block/wand_assembly_table_side",
+		"particle": "primalmagick:block/spellcrafting_altar_top"
 	},
 	"elements": [
 		{

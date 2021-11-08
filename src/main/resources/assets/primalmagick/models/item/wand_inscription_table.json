@@ -1,5 +1,5 @@
 {
-    "parent": "primalmagic:block/wand_inscription_table",
+    "parent": "primalmagick:block/wand_inscription_table",
     "display": {
         "thirdperson_righthand": {
             "rotation": [ 75, 135, 0 ],

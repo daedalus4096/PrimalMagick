@@ -1,7 +1,7 @@
 {
     "parent": "block/cube_column",
     "textures": {
-        "side": "primalmagic:block/marble_runed",
-        "end": "primalmagic:block/marble_raw"
+        "side": "primalmagick:block/marble_runed",
+        "end": "primalmagick:block/marble_raw"
     }
 }

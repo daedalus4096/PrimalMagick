@@ -341,6 +341,6 @@ public class ProjectProvider implements DataProvider {
 
     @Override
     public String getName() {
-        return "Primal Magic Theorycrafting Projects";
+        return "Primal Magick Theorycrafting Projects";
     }
 }

@@ -1,8 +1,8 @@
 {
-	"parent": "primalmagic:block/pillar_bottom",
+	"parent": "primalmagick:block/pillar_bottom",
 	"textures": {
-		"inner": "primalmagic:block/sunwood_pillar_inner_faded",
-		"side": "primalmagic:block/sunwood_pillar_bottom_faded",
-		"bottom": "primalmagic:block/stripped_sunwood_log_faded"
+		"inner": "primalmagick:block/sunwood_pillar_inner_faded",
+		"side": "primalmagick:block/sunwood_pillar_bottom_faded",
+		"bottom": "primalmagick:block/stripped_sunwood_log_faded"
 	}
 }

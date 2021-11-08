@@ -2,7 +2,7 @@
     "parent": "builtin/entity",
     "gui_light": "front",
     "textures": {
-        "particle": "primalmagic:block/hexium_block"
+        "particle": "primalmagick:block/hexium_block"
     },
     "display": {
         "thirdperson_righthand": {
@@ -46,7 +46,7 @@
             "predicate": {
                 "blocking": 1
             },
-            "model": "primalmagic:item/hexium_shield_blocking"
+            "model": "primalmagick:item/hexium_shield_blocking"
         }
     ]
 }

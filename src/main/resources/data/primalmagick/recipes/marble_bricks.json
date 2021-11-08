@@ -6,11 +6,11 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     }
   },
   "result": {
-    "item": "primalmagic:marble_bricks",
+    "item": "primalmagick:marble_bricks",
     "count": 4
   }
 }

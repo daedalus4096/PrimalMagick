@@ -1,5 +1,5 @@
 {
-  "key": "primalmagic:nether_expedition",
+  "key": "primalmagick:nether_expedition",
   "required_research": "t_discover_infernal",
   "reward_multiplier": 0.5,
   "aid_blocks": [],

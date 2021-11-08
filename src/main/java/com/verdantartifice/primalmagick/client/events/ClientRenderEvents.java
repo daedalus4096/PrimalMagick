@@ -39,12 +39,12 @@ public class ClientRenderEvents {
         // Show a tooltip entry if the item stack grants a mana discount
         if (event.getItemStack().getItem() instanceof IManaDiscountGear) {
             int discount = ((IManaDiscountGear)event.getItemStack().getItem()).getManaDiscount(event.getItemStack(), mc.player);
-            event.getToolTip().add(new TranslatableComponent("tooltip.primalmagic.mana_discount", discount).withStyle(ChatFormatting.DARK_AQUA));
+            event.getToolTip().add(new TranslatableComponent("tooltip.primalmagick.mana_discount", discount).withStyle(ChatFormatting.DARK_AQUA));
         }
         
         // Show a tooltip entry if the item stack is runescribed
         if (RuneManager.hasRunes(event.getItemStack())) {
-            event.getToolTip().add(new TranslatableComponent("tooltip.primalmagic.runescribed").withStyle(ChatFormatting.DARK_AQUA));
+            event.getToolTip().add(new TranslatableComponent("tooltip.primalmagick.runescribed").withStyle(ChatFormatting.DARK_AQUA));
         }
     }
     
@@ -57,11 +57,11 @@ public class ClientRenderEvents {
         if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getStack() != null && !event.getStack().isEmpty()) {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getStack(), mc.level);
             if (sources == null || sources.isEmpty()) {
-                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagic.affinities.none")));
+                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.none")));
             } else if (!ResearchManager.isScanned(event.getStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
-                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagic.affinities.unknown")));
+                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.unknown")));
             } else {
-                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagic.affinities.label")));
+                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.label")));
                 event.getTooltipElements().add(Either.right(new AffinityTooltipComponent(sources)));
             }
         }

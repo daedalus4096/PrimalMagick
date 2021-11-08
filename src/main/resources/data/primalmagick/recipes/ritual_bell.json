@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "RITUAL_BELL",
   "mana": {
     "sea": 10
@@ -11,7 +11,7 @@
   ],
   "key": {
     "P": {
-      "tag": "primalmagic:ingots/primalite"
+      "tag": "primalmagick:ingots/primalite"
     },
     "S": {
       "tag": "forge:rods/wooden"
@@ -21,6 +21,6 @@
     }
   },
   "result": {
-    "item": "primalmagic:ritual_bell"
+    "item": "primalmagick:ritual_bell"
   }
 }

@@ -1,6 +1,6 @@
 {
   "key": "WAND_CORE_BONE",
-  "name": "primalmagic.research.wand_core_bone.title",
+  "name": "primalmagick.research.wand_core_bone.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "MASTER_MANAWEAVING",
@@ -9,7 +9,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.wand_core_bone.text.stage.1",
+      "text": "primalmagick.research.wand_core_bone.text.stage.1",
       "required_item": [
         "minecraft:bone"
       ],
@@ -18,23 +18,23 @@
       ]
     },
     {
-      "text": "primalmagic.research.wand_core_bone.text.stage.2",
+      "text": "primalmagick.research.wand_core_bone.text.stage.2",
       "attunements": {
         "blood": 3
       },
       "recipes": [
-        "primalmagic:bone_wand_core_item"
+        "primalmagick:bone_wand_core_item"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.wand_core_bone.text.addenda.1",
+      "text": "primalmagick.research.wand_core_bone.text.addenda.1",
       "required_research": [
         "STAVES"
       ],
       "recipes": [
-        "primalmagic:bone_staff_core_item"
+        "primalmagick:bone_staff_core_item"
       ]
     }
   ]

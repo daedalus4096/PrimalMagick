@@ -232,13 +232,13 @@ public class PlayerEvents {
                 // If the player is in a Nether-based biome, discover the Infernal source
                 ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
             if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && Biome.BiomeCategory.THEEND.equals(biome.getBiomeCategory())) {
                 // If the player is in an End-based biome, discover the Void source
                 ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.discover_source.void").withStyle(ChatFormatting.GREEN), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
             
             // If the player is working on the Earth Source research, check if they're far enough down
@@ -246,7 +246,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
                 if (player.position().y < 10.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_earth").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -255,7 +255,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
                 if (Biome.BiomeCategory.OCEAN.equals(biome.getBiomeCategory()) && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sea").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -264,7 +264,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
                 if (player.position().y > 100.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sky").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -273,7 +273,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
                 if (Biome.BiomeCategory.DESERT.equals(biome.getBiomeCategory()) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_sun").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -282,7 +282,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
                 if (Biome.BiomeCategory.FOREST.equals(biome.getBiomeCategory()) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.env_moon").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }
             }
         });
@@ -502,7 +502,7 @@ public class PlayerEvents {
                 }
                 if (success) {
                     // Only show success effects once, regardless of how many talismans were triggered
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                     }
@@ -519,12 +519,12 @@ public class PlayerEvents {
         ItemStack journal = new ItemStack(Items.WRITTEN_BOOK);
         CompoundTag contents = new CompoundTag();
         contents.putInt("generation", 3);
-        contents.putString("title", new TranslatableComponent("primalmagic.dream_journal.title").getString());
+        contents.putString("title", new TranslatableComponent("primalmagick.dream_journal.title").getString());
         contents.putString("author", player.getName().getString());
         ListTag pages = new ListTag();
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagic.dream_journal.text.1").getString()));
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagic.dream_journal.text.2").getString()));
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagic.dream_journal.text.3").getString()));
+        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.1").getString()));
+        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.2").getString()));
+        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.3").getString()));
         contents.put("pages", pages);
         journal.setTag(contents);
         
@@ -532,7 +532,7 @@ public class PlayerEvents {
         if (!player.addItem(journal)) {
             player.drop(journal, false);
         }
-        player.sendMessage(new TranslatableComponent("event.primalmagic.got_dream").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+        player.sendMessage(new TranslatableComponent("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
     }
     
     @SubscribeEvent

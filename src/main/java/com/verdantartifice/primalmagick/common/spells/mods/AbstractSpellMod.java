@@ -106,11 +106,11 @@ public abstract class AbstractSpellMod implements ISpellMod {
     
     @Override
     public Component getTypeName() {
-        return new TranslatableComponent("primalmagic.spell.mod.type." + this.getModType());
+        return new TranslatableComponent("primalmagick.spell.mod.type." + this.getModType());
     }
     
     @Override
     public Component getDefaultNamePiece() {
-        return new TranslatableComponent("primalmagic.spell.mod.default_name." + this.getModType());
+        return new TranslatableComponent("primalmagick.spell.mod.default_name." + this.getModType());
     }
 }

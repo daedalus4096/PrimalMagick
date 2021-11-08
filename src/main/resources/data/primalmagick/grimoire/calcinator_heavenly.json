@@ -1,6 +1,6 @@
 {
   "key": "CALCINATOR_HEAVENLY",
-  "name": "primalmagic.research.calcinator_heavenly.title",
+  "name": "primalmagick.research.calcinator_heavenly.title",
   "discipline": "ALCHEMY",
   "parents": [
     "SUPREME_ALCHEMY",
@@ -11,15 +11,15 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.calcinator_heavenly.text.stage.1",
+      "text": "primalmagick.research.calcinator_heavenly.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
       ]
     },
     {
-      "text": "primalmagic.research.calcinator_heavenly.text.stage.2",
+      "text": "primalmagick.research.calcinator_heavenly.text.stage.2",
       "recipes": [
-        "primalmagic:calcinator_heavenly"
+        "primalmagick:calcinator_heavenly"
       ]
     }
   ],

@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/infused_stone_sky"
+            "model": "primalmagick:block/infused_stone_sky"
         }
     }
 }

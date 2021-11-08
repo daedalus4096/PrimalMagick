@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/base_wood_grain",
-		"1": "primalmagic:block/runecarving_table_top",
-		"particle": "primalmagic:block/base_wood_grain"
+		"0": "primalmagick:block/base_wood_grain",
+		"1": "primalmagick:block/runecarving_table_top",
+		"particle": "primalmagick:block/base_wood_grain"
 	},
 	"elements": [
 		{

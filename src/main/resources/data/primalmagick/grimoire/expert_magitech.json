@@ -1,6 +1,6 @@
 {
   "key": "EXPERT_MAGITECH",
-  "name": "primalmagic.research.expert_magitech.title",
+  "name": "primalmagick.research.expert_magitech.title",
   "discipline": "MAGITECH",
   "parents": [
     "HONEY_EXTRACTOR",
@@ -8,16 +8,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.expert_magitech.text.stage.1",
+      "text": "primalmagick.research.expert_magitech.text.stage.1",
       "required_research": [
         "b_crafted_magitech_expert",
         "b_scan_primalite"
       ]
     },
     {
-      "text": "primalmagic.research.expert_magitech.text.stage.2",
+      "text": "primalmagick.research.expert_magitech.text.stage.2",
       "recipes": [
-        "primalmagic:magitech_parts_enchanted"
+        "primalmagick:magitech_parts_enchanted"
       ]
     }
   ],

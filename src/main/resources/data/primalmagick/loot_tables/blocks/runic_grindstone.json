@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:runic_grindstone"
+          "name": "primalmagick:runic_grindstone"
         }
       ],
       "conditions": [

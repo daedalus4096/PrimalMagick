@@ -1,12 +1,12 @@
 {
-  "key": "primalmagic:wand_tinkering",
+  "key": "primalmagick:wand_tinkering",
   "required_research": "BASIC_SORCERY",
   "reward_multiplier": 0.25,
   "aid_blocks": [],
   "material_options": [
     {
       "type": "item",
-      "stack": "primalmagic:wand_assembly_table",
+      "stack": "primalmagick:wand_assembly_table",
       "consumed": false,
       "match_nbt": false,
       "weight": 3.0,
@@ -14,7 +14,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:heartwood",
+      "stack": "primalmagick:heartwood",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
@@ -28,7 +28,7 @@
     },
     {
       "type": "tag",
-      "name": "primalmagic:coral_blocks",
+      "name": "primalmagick:coral_blocks",
       "quantity": 1,
       "consumed": true,
       "weight": 1.0
@@ -42,14 +42,14 @@
     },
     {
       "type": "tag",
-      "name": "primalmagic:sunwood_logs",
+      "name": "primalmagick:sunwood_logs",
       "quantity": 1,
       "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
-      "name": "primalmagic:moonwood_logs",
+      "name": "primalmagick:moonwood_logs",
       "quantity": 1,
       "consumed": true,
       "weight": 1.0
@@ -77,7 +77,7 @@
     },
     {
       "type": "tag",
-      "name": "primalmagic:essences/terrestrial_dusts",
+      "name": "primalmagick:essences/terrestrial_dusts",
       "quantity": 1,
       "consumed": true,
       "weight": 1.0

@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "primalmagic:block/honey_extractor_side",
-		"1": "primalmagic:block/honey_extractor_bottom",
-		"2": "primalmagic:block/honey_extractor_top",
-		"3": "primalmagic:block/honey_extractor_misc",
-		"particle": "primalmagic:block/honey_extractor_side"
+		"0": "primalmagick:block/honey_extractor_side",
+		"1": "primalmagick:block/honey_extractor_bottom",
+		"2": "primalmagick:block/honey_extractor_top",
+		"3": "primalmagick:block/honey_extractor_misc",
+		"particle": "primalmagick:block/honey_extractor_side"
 	},
 	"elements": [
 		{

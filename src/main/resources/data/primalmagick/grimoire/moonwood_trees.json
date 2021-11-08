@@ -1,6 +1,6 @@
 {
   "key": "MOONWOOD_TREES",
-  "name": "primalmagic.research.moonwood_trees.title",
+  "name": "primalmagick.research.moonwood_trees.title",
   "discipline": "SCANS",
   "hidden": true,
   "parents": [
@@ -8,14 +8,14 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.moonwood_trees.text.stage.1",
+      "text": "primalmagick.research.moonwood_trees.text.stage.1",
       "recipes": [
-        "primalmagic:moonwood_wood",
-        "primalmagic:stripped_moonwood_wood",
-        "primalmagic:moonwood_planks",
-        "primalmagic:moonwood_slab",
-        "primalmagic:moonwood_stairs",
-        "primalmagic:moonwood_pillar"
+        "primalmagick:moonwood_wood",
+        "primalmagick:stripped_moonwood_wood",
+        "primalmagick:moonwood_planks",
+        "primalmagick:moonwood_slab",
+        "primalmagick:moonwood_stairs",
+        "primalmagick:moonwood_pillar"
       ]
     }
   ],

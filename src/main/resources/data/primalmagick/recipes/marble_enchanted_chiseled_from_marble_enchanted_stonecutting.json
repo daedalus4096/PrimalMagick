@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
   "ingredient": {
-    "item": "primalmagic:marble_enchanted"
+    "item": "primalmagick:marble_enchanted"
   },
-  "result": "primalmagic:marble_enchanted_chiseled",
+  "result": "primalmagick:marble_enchanted_chiseled",
   "count": 1
 }

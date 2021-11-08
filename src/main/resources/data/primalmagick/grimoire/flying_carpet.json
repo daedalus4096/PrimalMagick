@@ -1,6 +1,6 @@
 {
   "key": "FLYING_CARPET",
-  "name": "primalmagic.research.flying_carpet.title",
+  "name": "primalmagick.research.flying_carpet.title",
   "discipline": "RITUAL",
   "parents": [
     "MASTER_RITUAL",
@@ -15,7 +15,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.flying_carpet.text.stage.1",
+      "text": "primalmagick.research.flying_carpet.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ],
@@ -24,12 +24,12 @@
       ]
     },
     {
-      "text": "primalmagic.research.flying_carpet.text.stage.2",
+      "text": "primalmagick.research.flying_carpet.text.stage.2",
       "attunements": {
         "sky": 3
       },
       "recipes": [
-        "primalmagic:flying_carpet"
+        "primalmagick:flying_carpet"
       ]
     }
   ],

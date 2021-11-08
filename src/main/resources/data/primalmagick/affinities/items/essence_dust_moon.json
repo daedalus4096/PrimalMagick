@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_dust_moon",
+  "target": "primalmagick:essence_dust_moon",
   "set": {
     "moon": 5
   }

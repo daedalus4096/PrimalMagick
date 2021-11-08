@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:arcane_workbench"
+          "name": "primalmagick:arcane_workbench"
         }
       ],
       "conditions": [

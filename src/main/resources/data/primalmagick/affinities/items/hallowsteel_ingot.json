@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:hallowsteel_ingot",
+  "target": "primalmagick:hallowsteel_ingot",
   "set": {
     "earth": 6,
     "sea": 1,

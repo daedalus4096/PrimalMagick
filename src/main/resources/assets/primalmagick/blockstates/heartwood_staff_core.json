@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/heartwood_staff_core"
+            "model": "primalmagick:item/heartwood_staff_core"
         }
     }
 }

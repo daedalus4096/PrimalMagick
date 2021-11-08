@@ -1,6 +1,6 @@
 {
   "key": "SUPREME_SORCERY",
-  "name": "primalmagic.research.supreme_sorcery.title",
+  "name": "primalmagick.research.supreme_sorcery.title",
   "discipline": "SORCERY",
   "parents": [
     "SPELL_VEHICLE_BOLT",
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.supreme_sorcery.text.stage.1",
+      "text": "primalmagick.research.supreme_sorcery.text.stage.1",
       "required_research": [
         "t_discover_hallowed",
         "t_spells_cast_supreme",
@@ -16,7 +16,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.supreme_sorcery.text.stage.2"
+      "text": "primalmagick.research.supreme_sorcery.text.stage.2"
     }
   ],
   "addenda": []

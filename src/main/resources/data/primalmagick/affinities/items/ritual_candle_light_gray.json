@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "primalmagic:ritual_candle_light_gray",
-  "base": "primalmagic:ritual_candle_white"
+  "target": "primalmagick:ritual_candle_light_gray",
+  "base": "primalmagick:ritual_candle_white"
 }

@@ -1,6 +1,6 @@
 {
   "key": "EARTHSHATTER_HAMMER",
-  "name": "primalmagic.research.earthshatter_hammer.title",
+  "name": "primalmagick.research.earthshatter_hammer.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "EXPERT_MANAWEAVING",
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.earthshatter_hammer.text.stage.1",
+      "text": "primalmagick.research.earthshatter_hammer.text.stage.1",
       "required_item": [
         "minecraft:raw_iron",
         "minecraft:raw_gold",
@@ -19,24 +19,24 @@
       ]
     },
     {
-      "text": "primalmagic.research.earthshatter_hammer.text.stage.2",
+      "text": "primalmagick.research.earthshatter_hammer.text.stage.2",
       "attunements": {
         "earth": 2
       },
       "recipes": [
-        "primalmagic:earthshatter_hammer",
-        "primalmagic:iron_grit_from_ore",
-        "primalmagic:iron_grit_from_raw_metal",
-        "primalmagic:gold_grit_from_ore",
-        "primalmagic:gold_grit_from_raw_metal",
-        "primalmagic:copper_grit_from_ore",
-        "primalmagic:copper_grit_from_raw_metal",
-        "primalmagic:iron_ingot_from_grit_smelting",
-        "primalmagic:gold_ingot_from_grit_smelting",
-        "primalmagic:copper_ingot_from_grit_smelting",
-        "primalmagic:cobblestone_from_earthshatter_hammer",
-        "primalmagic:gravel_from_earthshatter_hammer",
-        "primalmagic:sand_from_earthshatter_hammer"
+        "primalmagick:earthshatter_hammer",
+        "primalmagick:iron_grit_from_ore",
+        "primalmagick:iron_grit_from_raw_metal",
+        "primalmagick:gold_grit_from_ore",
+        "primalmagick:gold_grit_from_raw_metal",
+        "primalmagick:copper_grit_from_ore",
+        "primalmagick:copper_grit_from_raw_metal",
+        "primalmagick:iron_ingot_from_grit_smelting",
+        "primalmagick:gold_ingot_from_grit_smelting",
+        "primalmagick:copper_ingot_from_grit_smelting",
+        "primalmagick:cobblestone_from_earthshatter_hammer",
+        "primalmagick:gravel_from_earthshatter_hammer",
+        "primalmagick:sand_from_earthshatter_hammer"
       ]
     }
   ],

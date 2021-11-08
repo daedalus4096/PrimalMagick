@@ -7,11 +7,11 @@
   ],
   "key": {
     "W": {
-      "item": "primalmagic:sunwood_log"
+      "item": "primalmagick:sunwood_log"
     }
   },
   "result": {
-    "item": "primalmagic:sunwood_wood",
+    "item": "primalmagick:sunwood_wood",
     "count": 3
   }
 }

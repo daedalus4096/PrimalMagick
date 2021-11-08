@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "ARCANOMETER",
   "mana": {
     "earth": 20,
@@ -21,13 +21,13 @@
       "tag": "forge:ingots/gold"
     },
     "P": {
-      "item": "primalmagic:magitech_parts_enchanted"
+      "item": "primalmagick:magitech_parts_enchanted"
     },
     "S": {
       "tag": "forge:rods/wooden"
     }
   },
   "result": {
-    "item": "primalmagic:arcanometer"
+    "item": "primalmagick:arcanometer"
   }
 }

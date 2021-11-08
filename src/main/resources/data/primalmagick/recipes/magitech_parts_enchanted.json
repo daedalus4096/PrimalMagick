@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "magitech_parts",
   "research": "EXPERT_MAGITECH",
   "mana": {
@@ -16,16 +16,16 @@
   ],
   "key": {
     "S": {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     },
     "I": {
-      "tag": "primalmagic:ingots/primalite"
+      "tag": "primalmagick:ingots/primalite"
     },
     "P": {
-      "item": "primalmagic:magitech_parts_basic"
+      "item": "primalmagick:magitech_parts_basic"
     }
   },
   "result": {
-    "item": "primalmagic:magitech_parts_enchanted"
+    "item": "primalmagick:magitech_parts_enchanted"
   }
 }

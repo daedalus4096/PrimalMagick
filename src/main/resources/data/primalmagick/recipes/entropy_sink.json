@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "ENTROPY_SINK",
   "mana": {
     "earth": 75,
@@ -15,22 +15,22 @@
   ],
   "key": {
     "P": {
-      "item": "primalmagic:magitech_parts_enchanted"
+      "item": "primalmagick:magitech_parts_enchanted"
     },
     "S": {
-      "item": "primalmagic:marble_enchanted_slab"
+      "item": "primalmagick:marble_enchanted_slab"
     },
     "T": {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     "R": {
       "tag": "forge:storage_blocks/redstone"
     },
     "M": {
-      "item": "primalmagic:marble_enchanted"
+      "item": "primalmagick:marble_enchanted"
     }
   },
   "result": {
-    "item": "primalmagic:entropy_sink"
+    "item": "primalmagick:entropy_sink"
   }
 }

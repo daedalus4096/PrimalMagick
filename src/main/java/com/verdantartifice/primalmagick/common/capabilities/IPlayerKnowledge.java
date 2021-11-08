@@ -215,7 +215,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
         
         @Nonnull
         public String getNameTranslationKey() {
-            return "primalmagic.knowledge_type." + this.name();
+            return "primalmagick.knowledge_type." + this.name();
         }
     }
 }

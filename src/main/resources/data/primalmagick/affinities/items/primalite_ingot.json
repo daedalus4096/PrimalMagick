@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:primalite_ingot",
+  "target": "primalmagick:primalite_ingot",
   "set": {
     "earth": 11,
     "sea": 3,

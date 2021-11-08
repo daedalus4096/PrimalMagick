@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:sunwood_wood"
+          "name": "primalmagick:sunwood_wood"
         }
       ],
       "conditions": [
@@ -23,13 +23,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:heartwood"
+          "name": "primalmagick:heartwood"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "primalmagic:sunwood_wood",
+          "block": "primalmagick:sunwood_wood",
           "properties": {
             "pulsing": "true"
           }

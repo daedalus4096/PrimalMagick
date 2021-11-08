@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "primalmagic:heartwood"
+    "item": "primalmagick:heartwood"
   },
   "result": "minecraft:charcoal",
   "experience": 0.15,

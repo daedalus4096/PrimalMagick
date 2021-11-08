@@ -3,15 +3,15 @@
 	"parent": "block/block",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "primalmagic:block/concocter_misc",
-		"1": "primalmagic:block/marble_enchanted",
+		"0": "primalmagick:block/concocter_misc",
+		"1": "primalmagick:block/marble_enchanted",
 		"2": "block/brewing_stand_base",
 		"3": "block/iron_block",
 		"5": "block/copper_block",
-		"6": "primalmagic:block/blood_still",
-		"7": "primalmagic:block/acid_still",
-		"8": "primalmagic:block/water_still",
-		"particle": "primalmagic:block/concocter_misc"
+		"6": "primalmagick:block/blood_still",
+		"7": "primalmagick:block/acid_still",
+		"8": "primalmagick:block/water_still",
+		"particle": "primalmagick:block/concocter_misc"
 	},
 	"elements": [
 		{

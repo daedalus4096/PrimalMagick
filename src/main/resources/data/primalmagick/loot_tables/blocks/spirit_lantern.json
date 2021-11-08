@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:spirit_lantern"
+          "name": "primalmagick:spirit_lantern"
         }
       ],
       "conditions": [

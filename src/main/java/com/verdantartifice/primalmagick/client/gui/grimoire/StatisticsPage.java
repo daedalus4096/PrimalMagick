@@ -61,7 +61,7 @@ public class StatisticsPage extends AbstractPage {
 
     @Override
     protected String getTitleTranslationKey() {
-        return "primalmagic.grimoire.stats_header";
+        return "primalmagick.grimoire.stats_header";
     }
 
     @Override

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/adept_wand_gem_item"
+        "layer0": "primalmagick:item/adept_wand_gem_item"
     }
 }

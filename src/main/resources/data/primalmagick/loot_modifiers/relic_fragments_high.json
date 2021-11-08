@@ -3,7 +3,7 @@
     {
       "condition": "minecraft:entity_properties",
       "predicate": {
-        "type": "#primalmagic:drops_relic_fragments_high"
+        "type": "#primalmagick:drops_relic_fragments_high"
       },
       "entity": "this"
     },
@@ -14,5 +14,5 @@
   "minCount": 3,
   "maxCount": 5,
   "lootingBonus": 1,
-  "type": "primalmagic:relic_fragments"
+  "type": "primalmagick:relic_fragments"
 }

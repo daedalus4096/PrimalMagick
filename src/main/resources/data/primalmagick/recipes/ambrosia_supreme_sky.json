@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "SUPREME_AMBROSIA",
   "mana": {
     "sky": 200
@@ -7,48 +7,48 @@
   "instability": 8,
   "ingredients": [
     {
-      "item": "primalmagic:manafruit"
+      "item": "primalmagick:manafruit"
     },
     {
-      "item": "primalmagic:mana_prism"
+      "item": "primalmagick:mana_prism"
     },
     {
-      "item": "primalmagic:essence_cluster_sky"
+      "item": "primalmagick:essence_cluster_sky"
     },
     {
-      "item": "primalmagic:rune_absorb"
+      "item": "primalmagick:rune_absorb"
     },
     {
-      "item": "primalmagic:rune_self"
+      "item": "primalmagick:rune_self"
     },
     {
-      "item": "primalmagic:rune_power"
+      "item": "primalmagick:rune_power"
     },
     {
-      "item": "primalmagic:rune_power"
+      "item": "primalmagick:rune_power"
     }
   ],
   "props": [
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     },
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     },
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     },
     {
-      "block": "primalmagic:ritual_lectern"
+      "block": "primalmagick:ritual_lectern"
     },
     {
-      "block": "primalmagic:bloodletter"
+      "block": "primalmagick:bloodletter"
     },
     {
-      "block": "primalmagic:celestial_harp"
+      "block": "primalmagick:celestial_harp"
     }
   ],
   "result": {
-    "item": "primalmagic:ambrosia_supreme_sky"
+    "item": "primalmagick:ambrosia_supreme_sky"
   }
 }

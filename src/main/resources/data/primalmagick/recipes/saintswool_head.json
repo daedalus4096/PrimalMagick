@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SAINTSWOOL",
   "pattern": [
     "###",
@@ -7,10 +7,10 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:saintswool"
+      "item": "primalmagick:saintswool"
     }
   },
   "result": {
-    "item": "primalmagic:saintswool_head"
+    "item": "primalmagick:saintswool_head"
   }
 }

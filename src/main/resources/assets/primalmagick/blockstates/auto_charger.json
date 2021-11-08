@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/auto_charger"
+            "model": "primalmagick:block/auto_charger"
         }
     }
 }

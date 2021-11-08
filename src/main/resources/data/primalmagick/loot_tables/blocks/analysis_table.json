@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:analysis_table"
+          "name": "primalmagick:analysis_table"
         }
       ],
       "conditions": [

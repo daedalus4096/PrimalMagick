@@ -29,6 +29,6 @@ public class ConcoctingRecipePage extends AbstractShapelessRecipePage<Concocting
 
     @Override
     protected String getRecipeTypeTranslationKey() {
-        return "primalmagic.grimoire.concocting_recipe_header";
+        return "primalmagick.grimoire.concocting_recipe_header";
     }
 }

@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/arcane_workbench"
+            "model": "primalmagick:block/arcane_workbench"
         }
     }
 }

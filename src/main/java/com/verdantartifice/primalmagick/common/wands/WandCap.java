@@ -85,7 +85,7 @@ public class WandCap implements IWandComponent {
     
     @Override
     public String getNameTranslationKey() {
-        return "primalmagic.wand_cap." + this.tag + ".name";
+        return "primalmagick.wand_cap." + this.tag + ".name";
     }
     
     @Nonnull

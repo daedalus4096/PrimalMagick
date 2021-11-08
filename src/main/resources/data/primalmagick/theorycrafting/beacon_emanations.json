@@ -1,5 +1,5 @@
 {
-  "key": "primalmagic:beacon_emanations",
+  "key": "primalmagick:beacon_emanations",
   "required_material_count_override": 1,
   "base_success_chance_override": 0.5,
   "reward_multiplier": 0.5,

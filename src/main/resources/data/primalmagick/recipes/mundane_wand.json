@@ -5,10 +5,10 @@
       "tag": "forge:rods/wooden"
     },
     {
-      "tag": "primalmagic:essences/terrestrial_dusts"
+      "tag": "primalmagick:essences/terrestrial_dusts"
     }
   ],
   "result": {
-    "item": "primalmagic:mundane_wand"
+    "item": "primalmagick:mundane_wand"
   }
 }

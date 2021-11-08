@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_shard_hallowed",
+  "target": "primalmagick:essence_shard_hallowed",
   "set": {
     "hallowed": 20
   }

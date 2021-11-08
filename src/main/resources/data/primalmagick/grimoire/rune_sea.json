@@ -1,24 +1,24 @@
 {
   "key": "RUNE_SEA",
-  "name": "primalmagic.research.rune_sea.title",
+  "name": "primalmagick.research.rune_sea.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "RUNE_EARTH"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rune_sea.text.stage.1",
+      "text": "primalmagick.research.rune_sea.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.rune_sea.text.stage.2",
+      "text": "primalmagick.research.rune_sea.text.stage.2",
       "attunements": {
         "sea": 1
       },
       "recipes": [
-        "primalmagic:rune_sea"
+        "primalmagick:rune_sea"
       ]
     }
   ],

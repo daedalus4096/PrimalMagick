@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "STAVES\u0026\u0026WAND_CORE_PRIMAL",
   "mana": {
     "earth": 15,
@@ -11,39 +11,39 @@
   "instability": 4,
   "ingredients": [
     {
-      "item": "primalmagic:obsidian_staff_core_item"
+      "item": "primalmagick:obsidian_staff_core_item"
     },
     {
-      "item": "primalmagic:coral_staff_core_item"
+      "item": "primalmagick:coral_staff_core_item"
     },
     {
-      "item": "primalmagic:bamboo_staff_core_item"
+      "item": "primalmagick:bamboo_staff_core_item"
     },
     {
-      "item": "primalmagic:sunwood_staff_core_item"
+      "item": "primalmagick:sunwood_staff_core_item"
     },
     {
-      "item": "primalmagic:moonwood_staff_core_item"
+      "item": "primalmagick:moonwood_staff_core_item"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:ritual_bell"
+      "block": "primalmagick:ritual_bell"
     },
     {
-      "block": "primalmagic:ritual_lectern"
+      "block": "primalmagick:ritual_lectern"
     },
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     }
   ],
   "result": {
-    "item": "primalmagic:primal_staff_core_item"
+    "item": "primalmagick:primal_staff_core_item"
   }
 }

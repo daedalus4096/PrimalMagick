@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SPIRIT_LANTERN",
   "mana": {
     "infernal": 10
@@ -11,13 +11,13 @@
   ],
   "key": {
     "N": {
-      "tag": "primalmagic:nuggets/hexium"
+      "tag": "primalmagick:nuggets/hexium"
     },
     "T": {
       "item": "minecraft:soul_torch"
     }
   },
   "result": {
-    "item": "primalmagic:spirit_lantern"
+    "item": "primalmagick:spirit_lantern"
   }
 }

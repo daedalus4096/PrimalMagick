@@ -46,12 +46,12 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
     public Component getName(ItemStack stack) {
         // A modular staff's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Staff")
         WandCore core = this.getWandCore(stack);
-        Component coreName = (core == null) ? new TranslatableComponent("primalmagic.wand_core.unknown.name") : new TranslatableComponent(core.getNameTranslationKey());
+        Component coreName = (core == null) ? new TranslatableComponent("primalmagick.wand_core.unknown.name") : new TranslatableComponent(core.getNameTranslationKey());
         WandCap cap = this.getWandCap(stack);
-        Component capName = (cap == null) ? new TranslatableComponent("primalmagic.wand_cap.unknown.name") : new TranslatableComponent(cap.getNameTranslationKey());
+        Component capName = (cap == null) ? new TranslatableComponent("primalmagick.wand_cap.unknown.name") : new TranslatableComponent(cap.getNameTranslationKey());
         WandGem gem = this.getWandGem(stack);
-        Component gemName = (gem == null) ? new TranslatableComponent("primalmagic.wand_gem.unknown.name") : new TranslatableComponent(gem.getNameTranslationKey());
-        return new TranslatableComponent("item.primalmagic.modular_staff", gemName, capName, coreName);
+        Component gemName = (gem == null) ? new TranslatableComponent("primalmagick.wand_gem.unknown.name") : new TranslatableComponent(gem.getNameTranslationKey());
+        return new TranslatableComponent("item.primalmagick.modular_staff", gemName, capName, coreName);
     }
     
     @Override

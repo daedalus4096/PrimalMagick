@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "calcinators",
   "research": "CALCINATOR_BASIC",
   "mana": {
@@ -16,16 +16,16 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     "F": {
-      "item": "primalmagic:essence_furnace"
+      "item": "primalmagick:essence_furnace"
     },
     "E": {
-      "tag": "primalmagic:essences/terrestrial_dusts"
+      "tag": "primalmagick:essences/terrestrial_dusts"
     }
   },
   "result": {
-    "item": "primalmagic:calcinator_basic"
+    "item": "primalmagick:calcinator_basic"
   }
 }

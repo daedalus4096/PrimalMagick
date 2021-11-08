@@ -1,15 +1,15 @@
 {
   "key": "STONEMELDING",
-  "name": "primalmagic.research.stonemelding.title",
+  "name": "primalmagick.research.stonemelding.title",
   "discipline": "ALCHEMY",
   "parents": [
     "BASIC_ALCHEMY"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.stonemelding.text.stage.1",
+      "text": "primalmagick.research.stonemelding.text.stage.1",
       "required_item": [
-        "primalmagic:essence_dust_earth"
+        "primalmagick:essence_dust_earth"
       ],
       "required_craft": [
         "minecraft:stone"
@@ -19,12 +19,12 @@
       ]
     },
     {
-      "text": "primalmagic.research.stonemelding.text.stage.2",
+      "text": "primalmagick.research.stonemelding.text.stage.2",
       "attunements": {
         "earth": 1
       },
       "recipes": [
-        "primalmagic:stone_from_stonemelding"
+        "primalmagick:stone_from_stonemelding"
       ]
     }
   ],

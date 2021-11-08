@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:stained_skyglass_pane_purple"
+          "name": "primalmagick:stained_skyglass_pane_purple"
         }
       ],
       "conditions": [

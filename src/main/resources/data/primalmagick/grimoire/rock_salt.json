@@ -1,6 +1,6 @@
 {
   "key": "ROCK_SALT",
-  "name": "primalmagic.research.rock_salt.title",
+  "name": "primalmagick.research.rock_salt.title",
   "discipline": "SCANS",
   "hidden": true,
   "parents": [
@@ -8,23 +8,23 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rock_salt.text.stage.1",
+      "text": "primalmagick.research.rock_salt.text.stage.1",
       "recipes": [
-        "primalmagic:refined_salt",
-        "primalmagic:rock_salt_from_smelting",
-        "primalmagic:salt_block",
-        "primalmagic:refined_salt_from_salt_block",
-        "primalmagic:salted_baked_potato",
-        "primalmagic:salted_beetroot_soup",
-        "primalmagic:salted_cooked_beef",
-        "primalmagic:salted_cooked_chicken",
-        "primalmagic:salted_cooked_cod",
-        "primalmagic:salted_cooked_mutton",
-        "primalmagic:salted_cooked_porkchop",
-        "primalmagic:salted_cooked_rabbit",
-        "primalmagic:salted_cooked_salmon",
-        "primalmagic:salted_mushroom_stew",
-        "primalmagic:salted_rabbit_stew"
+        "primalmagick:refined_salt",
+        "primalmagick:rock_salt_from_smelting",
+        "primalmagick:salt_block",
+        "primalmagick:refined_salt_from_salt_block",
+        "primalmagick:salted_baked_potato",
+        "primalmagick:salted_beetroot_soup",
+        "primalmagick:salted_cooked_beef",
+        "primalmagick:salted_cooked_chicken",
+        "primalmagick:salted_cooked_cod",
+        "primalmagick:salted_cooked_mutton",
+        "primalmagick:salted_cooked_porkchop",
+        "primalmagick:salted_cooked_rabbit",
+        "primalmagick:salted_cooked_salmon",
+        "primalmagick:salted_mushroom_stew",
+        "primalmagick:salted_rabbit_stew"
       ]
     }
   ],

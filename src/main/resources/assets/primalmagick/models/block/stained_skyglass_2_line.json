@@ -1,12 +1,12 @@
 {
-    "parent": "primalmagic:block/skyglass_base",
+    "parent": "primalmagick:block/skyglass_base",
     "textures": {
-        "particle": "primalmagic:block/stained_skyglass_unconnected",
-        "down": "primalmagic:block/stained_skyglass_udlr",
-        "up": "primalmagic:block/stained_skyglass_udlr",
-        "north": "primalmagic:block/stained_skyglass_ud",
-        "south": "primalmagic:block/stained_skyglass_ud",
-        "west": "primalmagic:block/stained_skyglass_ud",
-        "east": "primalmagic:block/stained_skyglass_ud"
+        "particle": "primalmagick:block/stained_skyglass_unconnected",
+        "down": "primalmagick:block/stained_skyglass_udlr",
+        "up": "primalmagick:block/stained_skyglass_udlr",
+        "north": "primalmagick:block/stained_skyglass_ud",
+        "south": "primalmagick:block/stained_skyglass_ud",
+        "west": "primalmagick:block/stained_skyglass_ud",
+        "east": "primalmagick:block/stained_skyglass_ud"
     }
 }

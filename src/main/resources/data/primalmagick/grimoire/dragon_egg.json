@@ -1,6 +1,6 @@
 {
   "key": "DRAGON_EGG",
-  "name": "primalmagic.research.dragon_egg.title",
+  "name": "primalmagick.research.dragon_egg.title",
   "discipline": "SCANS",
   "hidden": true,
   "parents": [
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.dragon_egg.text.stage.1"
+      "text": "primalmagick.research.dragon_egg.text.stage.1"
     }
   ],
   "addenda": []

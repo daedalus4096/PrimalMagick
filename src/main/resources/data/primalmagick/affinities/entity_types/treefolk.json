@@ -1,6 +1,6 @@
 {
   "type": "entity_type",
-  "target": "primalmagic:treefolk",
+  "target": "primalmagick:treefolk",
   "values": {
     "earth": 10,
     "sun": 10

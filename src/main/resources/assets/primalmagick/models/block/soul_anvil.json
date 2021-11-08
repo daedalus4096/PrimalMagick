@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"particle": "primalmagic:block/soul_anvil",
-		"body": "primalmagic:block/soul_anvil",
-		"top": "primalmagic:block/soul_anvil_top"
+		"particle": "primalmagick:block/soul_anvil",
+		"body": "primalmagick:block/soul_anvil",
+		"top": "primalmagick:block/soul_anvil_top"
 	},
 	"elements": [
 		{

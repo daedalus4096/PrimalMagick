@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/ritual_bell"
+        "layer0": "primalmagick:item/ritual_bell"
     }
 }

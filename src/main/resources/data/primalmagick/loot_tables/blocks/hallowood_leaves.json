@@ -38,7 +38,7 @@
                   ]
                 }
               ],
-              "name": "primalmagic:hallowood_leaves"
+              "name": "primalmagick:hallowood_leaves"
             },
             {
               "type": "minecraft:item",
@@ -57,7 +57,7 @@
                   ]
                 }
               ],
-              "name": "primalmagic:hallowood_sapling"
+              "name": "primalmagick:hallowood_sapling"
             }
           ]
         }

@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "forbidden_mana_fonts",
   "research": "FORBIDDEN_MANA_FONTS\u0026\u0026t_discover_infernal",
   "mana": {
@@ -12,19 +12,19 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     },
     "M": {
-      "item": "primalmagic:marble_smoked_slab"
+      "item": "primalmagick:marble_smoked_slab"
     },
     "E": {
-      "item": "primalmagic:essence_crystal_infernal"
+      "item": "primalmagick:essence_crystal_infernal"
     },
     "F": {
-      "item": "primalmagic:artificial_font_infernal"
+      "item": "primalmagick:artificial_font_infernal"
     }
   },
   "result": {
-    "item": "primalmagic:forbidden_font_infernal"
+    "item": "primalmagick:forbidden_font_infernal"
   }
 }

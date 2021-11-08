@@ -1,6 +1,6 @@
 {
   "key": "MYSTICAL_RELIC",
-  "name": "primalmagic.research.mystical_relic.title",
+  "name": "primalmagick.research.mystical_relic.title",
   "discipline": "SCANS",
   "hidden": true,
   "parents": [
@@ -8,9 +8,9 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.mystical_relic.text.stage.1",
+      "text": "primalmagick.research.mystical_relic.text.stage.1",
       "recipes": [
-        "primalmagic:mystical_relic"
+        "primalmagick:mystical_relic"
       ]
     }
   ],

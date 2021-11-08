@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_crystal_sea",
+  "target": "primalmagick:essence_crystal_sea",
   "set": {
     "sea": 50
   }

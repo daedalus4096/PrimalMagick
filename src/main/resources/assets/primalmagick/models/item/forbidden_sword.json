@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/handheld",
     "textures": {
-        "layer0": "primalmagic:item/forbidden_sword"
+        "layer0": "primalmagick:item/forbidden_sword"
     }
 }

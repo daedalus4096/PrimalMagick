@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:hexium_block"
+          "name": "primalmagick:hexium_block"
         }
       ],
       "conditions": [

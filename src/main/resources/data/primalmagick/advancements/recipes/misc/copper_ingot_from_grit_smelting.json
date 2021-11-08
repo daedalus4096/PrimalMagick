@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:copper_ingot_from_grit_smelting"
+      "primalmagick:copper_ingot_from_grit_smelting"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:copper_grit"
+              "primalmagick:copper_grit"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:copper_ingot_from_grit_smelting"
+        "recipe": "primalmagick:copper_ingot_from_grit_smelting"
       }
     }
   },

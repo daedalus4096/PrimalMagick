@@ -106,7 +106,7 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
 
     @Override
     public String getPropTranslationKey() {
-        return "primalmagic.ritual.prop.celestial_harp";
+        return "primalmagick.ritual.prop.celestial_harp";
     }
 
     public float getUsageStabilityBonus() {

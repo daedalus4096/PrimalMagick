@@ -1,6 +1,6 @@
 {
   "type": "enchantment_bonus",
-  "target": "primalmagic:disintegration",
+  "target": "primalmagick:disintegration",
   "multiplier": {
     "sky": 1
   }

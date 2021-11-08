@@ -1,6 +1,6 @@
 {
   "type": "enchantment_bonus",
-  "target": "primalmagic:lucky_strike",
+  "target": "primalmagick:lucky_strike",
   "multiplier": {
     "moon": 1
   }

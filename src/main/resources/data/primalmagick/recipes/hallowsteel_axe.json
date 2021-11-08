@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HALLOWSTEEL",
   "pattern": [
     "II",
@@ -8,13 +8,13 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/hallowsteel"
+      "tag": "primalmagick:ingots/hallowsteel"
     },
     "S": {
       "tag": "forge:rods/wooden"
     }
   },
   "result": {
-    "item": "primalmagic:hallowsteel_axe"
+    "item": "primalmagick:hallowsteel_axe"
   }
 }

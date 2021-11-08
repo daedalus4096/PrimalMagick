@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "primalmagic:block/stained_skyglass_unconnected",
-        "edge": "primalmagic:block/skyglass_pane_edge"
+        "particle": "primalmagick:block/stained_skyglass_unconnected",
+        "edge": "primalmagick:block/skyglass_pane_edge"
     },
     "elements": [
         {   "from": [ 7, 0, 0 ],

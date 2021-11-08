@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:calcinator_enchanted"
+          "name": "primalmagick:calcinator_enchanted"
         }
       ],
       "conditions": [

@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/hallowsteel_staff_cap"
+            "model": "primalmagick:item/hallowsteel_staff_cap"
         }
     }
 }

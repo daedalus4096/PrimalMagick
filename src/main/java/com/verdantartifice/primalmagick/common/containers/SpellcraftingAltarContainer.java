@@ -151,16 +151,16 @@ public class SpellcraftingAltarContainer extends AbstractContainerMenu {
             return new TextComponent("");
         } else if (!primaryActive && !secondaryActive) {
             // No mods selected
-            return new TranslatableComponent("primalmagic.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
+            return new TranslatableComponent("primalmagick.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
         } else if (primaryActive && secondaryActive) {
             // Two mods selected
-            return new TranslatableComponent("primalmagic.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
+            return new TranslatableComponent("primalmagick.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
         } else if (primaryActive) {
             // Only a primary mod selected
-            return new TranslatableComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
+            return new TranslatableComponent("primalmagick.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
         } else {
             // Only a secondary mod selected
-            return new TranslatableComponent("primalmagic.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
+            return new TranslatableComponent("primalmagick.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
         }
     }
     

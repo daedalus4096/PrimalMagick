@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:item/hexium_fishing_rod",
+    "parent": "primalmagick:item/hexium_fishing_rod",
     "textures": {
-        "layer0": "primalmagic:item/hexium_fishing_rod_cast"
+        "layer0": "primalmagick:item/hexium_fishing_rod_cast"
     }
 }

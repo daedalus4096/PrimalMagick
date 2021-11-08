@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * Definition of a primal source.  Each source represents a different type of magic in the mod, and
+ * Definition of a primal source.  Each source represents a different type of magick in the mod, and
  * each has its own styling and unlock requirements.  Also contains a static registry of all sources
  * in the mod.
  * 

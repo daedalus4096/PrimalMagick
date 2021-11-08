@@ -1,6 +1,6 @@
 {
   "key": "EXPERT_RITUAL",
-  "name": "primalmagic.research.expert_ritual.title",
+  "name": "primalmagick.research.expert_ritual.title",
   "discipline": "RITUAL",
   "parents": [
     "RITUAL_CANDLES",
@@ -8,13 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.expert_ritual.text.stage.1",
+      "text": "primalmagick.research.expert_ritual.text.stage.1",
       "required_research": [
         "t_rituals_completed_expert"
       ]
     },
     {
-      "text": "primalmagic.research.expert_ritual.text.stage.2"
+      "text": "primalmagick.research.expert_ritual.text.stage.2"
     }
   ],
   "addenda": []

@@ -53,13 +53,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 
 /**
- * Definition of the /primalmagic debug command and its /pm alias.
+ * Definition of the /primalmagick debug command and its /pm alias.
  * 
  * @author Daedalus4096
  */
 public class PrimalMagicCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal("primalmagic")
+        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal("primalmagick")
             .requires((source) -> { return source.hasPermission(2); })
             .then(Commands.literal("reset")
                 .then(Commands.argument("target", EntityArgument.player()).executes((context) -> { return resetAll(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
@@ -202,7 +202,7 @@ public class PrimalMagicCommand {
     private static int listResearch(CommandSourceStack source, ServerPlayer target) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
             // List all unlocked research entries for the target player
             Set<SimpleResearchKey> researchSet = knowledge.getResearchSet();
@@ -211,7 +211,7 @@ public class PrimalMagicCommand {
                                         .collect(Collectors.toSet())
                                         .toArray(new String[researchSet.size()]);
             String output = String.join(", ", researchList);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.list", target.getName(), output), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.list", target.getName(), output), true);
         }
         return 0;
     }
@@ -219,13 +219,13 @@ public class PrimalMagicCommand {
     private static int resetResearch(CommandSourceStack source, ServerPlayer target) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
             // Remove all unlocked research entries from the target player
             knowledge.clearResearch();
             ResearchManager.scheduleSync(target);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.reset", target.getName()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.research.reset.target", source.getTextName()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.reset", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.research.reset.target", source.getTextName()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -234,14 +234,14 @@ public class PrimalMagicCommand {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.research.noexist", key.toString()));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // Grant the specified research to the target player, along with all its parents
             ResearchManager.forceGrantWithAllParents(target, key);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.grant", target.getName(), key.toString()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.research.grant.target", source.getTextName(), key.toString()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.grant", target.getName(), key.toString()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.research.grant.target", source.getTextName(), key.toString()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -250,14 +250,14 @@ public class PrimalMagicCommand {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.research.noexist", key.toString()));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // Grant the parents of the specified research to the target player, but not the research itself
             ResearchManager.forceGrantParentsOnly(target, key);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.grant_parents", target.getName(), key.toString()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.research.grant_parents.target", source.getTextName(), key.toString()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.grant_parents", target.getName(), key.toString()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.research.grant_parents.target", source.getTextName(), key.toString()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -265,12 +265,12 @@ public class PrimalMagicCommand {
     private static int grantAllResearch(CommandSourceStack source, ServerPlayer target) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
             // Grant all research entries to the target player
             ResearchManager.forceGrantAll(target);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.grant_all", target.getName()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.research.grant_all.target", source.getTextName()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.grant_all", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.research.grant_all.target", source.getTextName()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -279,14 +279,14 @@ public class PrimalMagicCommand {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.research.noexist", key.toString()));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // Revoke the specified research from the target player, along with all its children
             ResearchManager.forceRevokeWithAllChildren(target, key);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.revoke", target.getName(), key.toString()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.research.revoke.target", source.getTextName(), key.toString()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.revoke", target.getName(), key.toString()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.research.revoke.target", source.getTextName(), key.toString()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -295,9 +295,9 @@ public class PrimalMagicCommand {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.research.noexist", key.toString()));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // List the status, current stage, and attached flags of the given research for the target player
             IPlayerKnowledge.ResearchStatus status = knowledge.getResearchStatus(key);
@@ -308,10 +308,10 @@ public class PrimalMagicCommand {
                                     .collect(Collectors.toSet())
                                     .toArray(new String[flagSet.size()]);
             String flagOutput = (flagStrs.length == 0) ? "none" : String.join(", ", flagStrs);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.details.1", key.toString(), target.getName()), true);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.details.2", status.name()), true);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.details.3", stage), true);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.details.4", flagOutput), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.details.1", key.toString(), target.getName()), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.details.2", status.name()), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.details.3", stage), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.details.4", flagOutput), true);
         }
         return 0;
     }
@@ -320,18 +320,18 @@ public class PrimalMagicCommand {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         SimpleResearchKey key = input.getKey();
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.research.noexist", key.toString()));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // Advance the given research to its next stage for the target player
             int oldStage = knowledge.getResearchStage(key);
             if (ResearchManager.progressResearch(target, key)) {
                 int newStage = knowledge.getResearchStage(key);
-                source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.progress.success", key.toString(), target.getName(), oldStage, newStage), true);
-                target.sendMessage(new TranslatableComponent("commands.primalmagic.research.progress.target", key.toString(), source.getTextName(), oldStage, newStage), Util.NIL_UUID);
+                source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.progress.success", key.toString(), target.getName(), oldStage, newStage), true);
+                target.sendMessage(new TranslatableComponent("commands.primalmagick.research.progress.target", key.toString(), source.getTextName(), oldStage, newStage), Util.NIL_UUID);
             } else {
-                source.sendSuccess(new TranslatableComponent("commands.primalmagic.research.progress.failure", key.toString(), oldStage), true);
+                source.sendSuccess(new TranslatableComponent("commands.primalmagick.research.progress.failure", key.toString(), oldStage), true);
             }
         }
         return 0;
@@ -340,12 +340,12 @@ public class PrimalMagicCommand {
     private static int resetKnowledge(CommandSourceStack source, ServerPlayer target) {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
             // Remove all observations and theories from the target player
             knowledge.clearKnowledge();
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.knowledge.reset", target.getName()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.knowledge.reset.target", source.getTextName()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.knowledge.reset", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.knowledge.reset.target", source.getTextName()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -354,14 +354,14 @@ public class PrimalMagicCommand {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (type == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.knowledge_type.noexist"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.knowledge_type.noexist"));
         } else {
             // Get the current levels and points for the given knowledge type for the target player
             int levels = knowledge.getKnowledge(type);
             int points = knowledge.getKnowledgeRaw(type);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.knowledge.get", target.getName(), levels, type.name(), points), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.knowledge.get", target.getName(), levels, type.name(), points), true);
         }
         return 0;
     }
@@ -370,16 +370,16 @@ public class PrimalMagicCommand {
         IPlayerKnowledge knowledge = PrimalMagicCapabilities.getKnowledge(target).orElse(null);
         IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
         if (knowledge == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (type == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.knowledge_type.noexist"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.knowledge_type.noexist"));
         } else {
             // Add the given number of points to the given knowledge type for the target player
             if (ResearchManager.addKnowledge(target, type, points)) {
-                source.sendSuccess(new TranslatableComponent("commands.primalmagic.knowledge.add.success", points, type.name(), target.getName()), true);
-                target.sendMessage(new TranslatableComponent("commands.primalmagic.knowledge.add.target", points, type.name(), source.getTextName()), Util.NIL_UUID);
+                source.sendSuccess(new TranslatableComponent("commands.primalmagick.knowledge.add.success", points, type.name(), target.getName()), true);
+                target.sendMessage(new TranslatableComponent("commands.primalmagick.knowledge.add.target", points, type.name(), source.getTextName()), Util.NIL_UUID);
             } else {
-                source.sendSuccess(new TranslatableComponent("commands.primalmagic.knowledge.add.failure", target.getName()), true);
+                source.sendSuccess(new TranslatableComponent("commands.primalmagick.knowledge.add.failure", target.getName()), true);
             }
         }
         return 0;
@@ -390,15 +390,15 @@ public class PrimalMagicCommand {
         try {
             stack = item.createItemStack(1, false);
         } catch (CommandSyntaxException e) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.scans.grant.failure", target.getName()));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.scans.grant.failure", target.getName()));
             return 0;
         }
         // Scan the given item for the target player and grant them its research
         if (ResearchManager.setScanned(stack, target)) {
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.scans.grant.success", target.getName(), item.getItem().getRegistryName().toString()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.scans.grant.target", source.getTextName(), item.getItem().getRegistryName().toString()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.scans.grant.success", target.getName(), item.getItem().getRegistryName().toString()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.scans.grant.target", source.getTextName(), item.getItem().getRegistryName().toString()), Util.NIL_UUID);
         } else {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.scans.grant.failure", target.getName()));            
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.scans.grant.failure", target.getName()));            
         }
         return 0;
     }
@@ -406,8 +406,8 @@ public class PrimalMagicCommand {
     private static int grantAllScanResearch(CommandSourceStack source, ServerPlayer target) {
         // Scan all possible items for the target player and grant them their research
         int count = ResearchManager.setAllScanned(target);
-        source.sendSuccess(new TranslatableComponent("commands.primalmagic.scans.grant_all", count, target.getName()), true);
-        target.sendMessage(new TranslatableComponent("commands.primalmagic.scans.grant_all.target", count, source.getTextName()), Util.NIL_UUID);
+        source.sendSuccess(new TranslatableComponent("commands.primalmagick.scans.grant_all", count, target.getName()), true);
+        target.sendMessage(new TranslatableComponent("commands.primalmagick.scans.grant_all.target", count, source.getTextName()), Util.NIL_UUID);
         return 0;
     }
 
@@ -418,7 +418,7 @@ public class PrimalMagicCommand {
                                         .map((s) -> s.getTag().toUpperCase())
                                         .collect(Collectors.toList());
         String tagStr = String.join(", ", unlockedTags);
-        source.sendSuccess(new TranslatableComponent("commands.primalmagic.sources.list", target.getName(), tagStr), true);
+        source.sendSuccess(new TranslatableComponent("commands.primalmagick.sources.list", target.getName(), tagStr), true);
         return 0;
     }
 
@@ -432,8 +432,8 @@ public class PrimalMagicCommand {
                 }
             }
         }
-        source.sendSuccess(new TranslatableComponent("commands.primalmagic.sources.unlock_all", target.getName(), unlocked), true);
-        target.sendMessage(new TranslatableComponent("commands.primalmagic.sources.unlock_all.target", source.getTextName(), unlocked), Util.NIL_UUID);
+        source.sendSuccess(new TranslatableComponent("commands.primalmagick.sources.unlock_all", target.getName(), unlocked), true);
+        target.sendMessage(new TranslatableComponent("commands.primalmagick.sources.unlock_all.target", source.getTextName(), unlocked), Util.NIL_UUID);
         return 0;
     }
 
@@ -442,14 +442,14 @@ public class PrimalMagicCommand {
         String tag = input.getSourceTag();
         Source toUnlock = Source.getSource(tag.toLowerCase());
         if (toUnlock == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.source.noexist", tag));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.source.noexist", tag));
         } else if (toUnlock.isDiscovered(target)) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.sources.unlock.already_unlocked", target.getName(), tag.toUpperCase()));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.sources.unlock.already_unlocked", target.getName(), tag.toUpperCase()));
         } else if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.sources.unlock.success", target.getName(), tag.toUpperCase()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.sources.unlock.target", source.getTextName(), tag.toUpperCase()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.sources.unlock.success", target.getName(), tag.toUpperCase()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.sources.unlock.target", source.getTextName(), tag.toUpperCase()), Util.NIL_UUID);
         } else {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.sources.unlock.failure", target.getName(), tag.toUpperCase()));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.sources.unlock.failure", target.getName(), tag.toUpperCase()));
         }
         return 0;
     }
@@ -458,11 +458,11 @@ public class PrimalMagicCommand {
         // Look up the requested stat value for the given player and display it
         Stat stat = StatsManager.getStat(statLoc);
         if (stat == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.stats.noexist", statLoc));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.stats.noexist", statLoc));
         } else {
             Component statName = new TranslatableComponent(stat.getTranslationKey());
             Component statValue = StatsManager.getFormattedValue(target, stat);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.stats.get", target.getName(), statName, statValue), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.stats.get", target.getName(), statName, statValue), true);
         }
         return 0;
     }
@@ -471,13 +471,13 @@ public class PrimalMagicCommand {
         // Set the given value for the given stat for the given player
         Stat stat = StatsManager.getStat(statLoc);
         if (stat == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.stats.noexist", statLoc));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.stats.noexist", statLoc));
         } else {
             StatsManager.setValue(target, stat, value);
             Component statName = new TranslatableComponent(stat.getTranslationKey());
             Component statValue = StatsManager.getFormattedValue(target, stat);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.stats.set", target.getName(), statName, statValue), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.stats.set.target", source.getTextName(), statName, statValue), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.stats.set", target.getName(), statName, statValue), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.stats.set.target", source.getTextName(), statName, statValue), Util.NIL_UUID);
         }
         return 0;
     }
@@ -486,12 +486,12 @@ public class PrimalMagicCommand {
         // Remove all accrued stats from the player
         IPlayerStats stats = PrimalMagicCapabilities.getStats(target);
         if (stats == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
             stats.clear();
             StatsManager.scheduleSync(target);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.stats.reset", target.getName()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.stats.reset.target", source.getTextName()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.stats.reset", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.stats.reset.target", source.getTextName()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -500,12 +500,12 @@ public class PrimalMagicCommand {
         // Remove all accrued attunements from the player
         IPlayerAttunements attunements = PrimalMagicCapabilities.getAttunements(target);
         if (attunements == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
             attunements.clear();
             AttunementManager.scheduleSync(target);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.attunements.reset", target.getName()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.attunements.reset.target", source.getTextName()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.attunements.reset", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.attunements.reset.target", source.getTextName()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -515,13 +515,13 @@ public class PrimalMagicCommand {
         String tag = input.getSourceTag();
         Source toQuery = Source.getSource(tag.toLowerCase());
         if (toQuery == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.source.noexist", tag));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.source.noexist", tag));
         } else {
             Component sourceText = new TranslatableComponent(toQuery.getNameTranslationKey());
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.attunements.get.total", sourceText, source.getTextName(), AttunementManager.getTotalAttunement(target, toQuery)), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.attunements.get.total", sourceText, source.getTextName(), AttunementManager.getTotalAttunement(target, toQuery)), true);
             for (AttunementType type : AttunementType.values()) {
                 Component typeText = new TranslatableComponent(type.getNameTranslationKey());
-                source.sendSuccess(new TranslatableComponent("commands.primalmagic.attunements.get.partial", typeText, AttunementManager.getAttunement(target, toQuery, type)), true);
+                source.sendSuccess(new TranslatableComponent("commands.primalmagick.attunements.get.partial", typeText, AttunementManager.getAttunement(target, toQuery, type)), true);
             }
         }
         return 0;
@@ -533,19 +533,19 @@ public class PrimalMagicCommand {
         Source toSet = Source.getSource(tag.toLowerCase());
         AttunementType type = attunementType.getType();
         if (toSet == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.source.noexist", tag));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.source.noexist", tag));
         } else if (type == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.attunement_type.noexist"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.attunement_type.noexist"));
         } else {
             AttunementManager.setAttunement(target, toSet, type, value);
             Component sourceText = new TranslatableComponent(toSet.getNameTranslationKey());
             Component typeText = new TranslatableComponent(type.getNameTranslationKey());
             if (type.isCapped() && value > type.getMaximum()) {
-                source.sendSuccess(new TranslatableComponent("commands.primalmagic.attunements.set.success.capped", target.getName(), typeText, sourceText, type.getMaximum(), value), true);
-                target.sendMessage(new TranslatableComponent("commands.primalmagic.attunements.set.target.capped", target.getName(), typeText, sourceText, type.getMaximum(), value), Util.NIL_UUID);
+                source.sendSuccess(new TranslatableComponent("commands.primalmagick.attunements.set.success.capped", target.getName(), typeText, sourceText, type.getMaximum(), value), true);
+                target.sendMessage(new TranslatableComponent("commands.primalmagick.attunements.set.target.capped", target.getName(), typeText, sourceText, type.getMaximum(), value), Util.NIL_UUID);
             } else {
-                source.sendSuccess(new TranslatableComponent("commands.primalmagic.attunements.set.success", target.getName(), typeText, sourceText, value), true);
-                target.sendMessage(new TranslatableComponent("commands.primalmagic.attunements.set.target", target.getName(), typeText, sourceText, value), Util.NIL_UUID);
+                source.sendSuccess(new TranslatableComponent("commands.primalmagick.attunements.set.success", target.getName(), typeText, sourceText, value), true);
+                target.sendMessage(new TranslatableComponent("commands.primalmagick.attunements.set.target", target.getName(), typeText, sourceText, value), Util.NIL_UUID);
             }
         }
         return 0;
@@ -554,12 +554,12 @@ public class PrimalMagicCommand {
     private static int resetRecipes(CommandSourceStack source, ServerPlayer target) {
         IPlayerArcaneRecipeBook recipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(target).orElse(null);
         if (recipeBook == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
             recipeBook.get().clear();
             ArcaneRecipeBookManager.scheduleSync(target);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.recipes.reset", target.getName()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.recipes.reset.target", source.getTextName()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.recipes.reset", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.recipes.reset.target", source.getTextName()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -567,7 +567,7 @@ public class PrimalMagicCommand {
     private static int listArcaneRecipes(CommandSourceStack source, ServerPlayer target) {
         IPlayerArcaneRecipeBook recipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(target).orElse(null);
         if (recipeBook == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
             // List all known arcane research book entries for the target player
             Set<ResourceLocation> knownSet = recipeBook.get().getKnown();
@@ -576,7 +576,7 @@ public class PrimalMagicCommand {
                                         .collect(Collectors.toSet())
                                         .toArray(new String[knownSet.size()]);
             String knownOutput = String.join(", ", knownList);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.recipes.list.known", target.getName(), knownOutput), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.recipes.list.known", target.getName(), knownOutput), true);
 
             // List all highlighted arcane research book entries for the target player
             Set<ResourceLocation> highlightSet = recipeBook.get().getHighlight();
@@ -585,17 +585,17 @@ public class PrimalMagicCommand {
                                         .collect(Collectors.toSet())
                                         .toArray(new String[highlightSet.size()]);
             String highlightOutput = String.join(", ", highlightList);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.recipes.list.highlight", target.getName(), highlightOutput), true);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.recipes.list.highlight", target.getName(), highlightOutput), true);
         }
         return 0;
     }
     
     private static int syncArcaneRecipes(CommandSourceStack source, ServerPlayer target) {
         if (!ArcaneRecipeBookManager.syncRecipesWithResearch(target)) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else {
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.recipes.sync", target.getName()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.recipes.sync.target", source.getTextName()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.recipes.sync", target.getName()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.recipes.sync.target", source.getTextName()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -603,13 +603,13 @@ public class PrimalMagicCommand {
     private static int addArcaneRecipe(CommandSourceStack source, ServerPlayer target, Recipe<?> recipe) {
         IPlayerArcaneRecipeBook recipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(target).orElse(null);
         if (recipeBook == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (!(recipe instanceof IArcaneRecipeBookItem)) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.recipes.recipe_not_arcane"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.recipes.recipe_not_arcane"));
         } else {
             ArcaneRecipeBookManager.addRecipes(Collections.singletonList(recipe), target);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.recipes.add", target.getName(), recipe.getId().toString()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.recipes.add.target", source.getTextName(), recipe.getId().toString()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.recipes.add", target.getName(), recipe.getId().toString()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.recipes.add.target", source.getTextName(), recipe.getId().toString()), Util.NIL_UUID);
         }
         return 0;
     }
@@ -617,13 +617,13 @@ public class PrimalMagicCommand {
     private static int removeArcaneRecipe(CommandSourceStack source, ServerPlayer target, Recipe<?> recipe) {
         IPlayerArcaneRecipeBook recipeBook = PrimalMagicCapabilities.getArcaneRecipeBook(target).orElse(null);
         if (recipeBook == null) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.error"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.error"));
         } else if (!(recipe instanceof IArcaneRecipeBookItem)) {
-            source.sendFailure(new TranslatableComponent("commands.primalmagic.recipes.recipe_not_arcane"));
+            source.sendFailure(new TranslatableComponent("commands.primalmagick.recipes.recipe_not_arcane"));
         } else {
             ArcaneRecipeBookManager.removeRecipes(Collections.singletonList(recipe), target);
-            source.sendSuccess(new TranslatableComponent("commands.primalmagic.recipes.remove", target.getName(), recipe.getId().toString()), true);
-            target.sendMessage(new TranslatableComponent("commands.primalmagic.recipes.remove.target", source.getTextName(), recipe.getId().toString()), Util.NIL_UUID);
+            source.sendSuccess(new TranslatableComponent("commands.primalmagick.recipes.remove", target.getName(), recipe.getId().toString()), true);
+            target.sendMessage(new TranslatableComponent("commands.primalmagick.recipes.remove.target", source.getTextName(), recipe.getId().toString()), Util.NIL_UUID);
         }
         return 0;
     }

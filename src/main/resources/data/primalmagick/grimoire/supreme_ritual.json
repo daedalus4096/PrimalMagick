@@ -1,6 +1,6 @@
 {
   "key": "SUPREME_RITUAL",
-  "name": "primalmagic.research.supreme_ritual.title",
+  "name": "primalmagick.research.supreme_ritual.title",
   "discipline": "RITUAL",
   "parents": [
     "BLOODLETTER",
@@ -8,14 +8,14 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.supreme_ritual.text.stage.1",
+      "text": "primalmagick.research.supreme_ritual.text.stage.1",
       "required_research": [
         "t_discover_hallowed",
         "t_rituals_completed_supreme"
       ]
     },
     {
-      "text": "primalmagic.research.supreme_ritual.text.stage.2"
+      "text": "primalmagick.research.supreme_ritual.text.stage.2"
     }
   ],
   "addenda": []

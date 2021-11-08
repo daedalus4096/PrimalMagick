@@ -437,7 +437,7 @@ public class ResearchManager {
                         if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key) && addendum.getRequiredResearch().isKnownByStrict(player)) {
                             // Announce completion of the addendum
                             Component nameComp = new TranslatableComponent(searchEntry.getNameTranslationKey());
-                            player.sendMessage(new TranslatableComponent("event.primalmagic.add_addendum", nameComp), Util.NIL_UUID);
+                            player.sendMessage(new TranslatableComponent("event.primalmagick.add_addendum", nameComp), Util.NIL_UUID);
                             knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
                             
                             // Process attunement grants

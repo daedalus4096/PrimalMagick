@@ -7,11 +7,11 @@
   ],
   "key": {
     "W": {
-      "item": "primalmagic:stripped_moonwood_log"
+      "item": "primalmagick:stripped_moonwood_log"
     }
   },
   "result": {
-    "item": "primalmagic:stripped_moonwood_wood",
+    "item": "primalmagick:stripped_moonwood_wood",
     "count": 3
   }
 }

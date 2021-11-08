@@ -1,21 +1,21 @@
 {
   "key": "RUNE_CREATURE",
-  "name": "primalmagic.research.rune_creature.title",
+  "name": "primalmagick.research.rune_creature.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "EXPERT_RUNEWORKING"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rune_creature.text.stage.1",
+      "text": "primalmagick.research.rune_creature.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.rune_creature.text.stage.2",
+      "text": "primalmagick.research.rune_creature.text.stage.2",
       "recipes": [
-        "primalmagic:rune_creature"
+        "primalmagick:rune_creature"
       ]
     }
   ],

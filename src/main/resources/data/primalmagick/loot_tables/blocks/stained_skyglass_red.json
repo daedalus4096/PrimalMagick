@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:stained_skyglass_red"
+          "name": "primalmagick:stained_skyglass_red"
         }
       ],
       "conditions": [

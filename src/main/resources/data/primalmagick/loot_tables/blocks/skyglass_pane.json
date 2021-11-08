@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:skyglass_pane"
+          "name": "primalmagick:skyglass_pane"
         }
       ],
       "conditions": [

@@ -71,7 +71,7 @@ public class WandGem implements IWandComponent {
     
     @Override
     public String getNameTranslationKey() {
-        return "primalmagic.wand_gem." + this.tag + ".name";
+        return "primalmagick.wand_gem." + this.tag + ".name";
     }
     
     @Nonnull

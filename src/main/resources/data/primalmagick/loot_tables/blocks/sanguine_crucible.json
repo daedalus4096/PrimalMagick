@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:sanguine_crucible"
+          "name": "primalmagick:sanguine_crucible"
         }
       ],
       "conditions": [

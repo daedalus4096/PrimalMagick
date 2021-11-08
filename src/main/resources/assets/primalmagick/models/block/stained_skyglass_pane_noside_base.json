@@ -1,7 +1,7 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "primalmagic:block/stained_skyglass_unconnected"
+        "particle": "primalmagick:block/stained_skyglass_unconnected"
     },
     "elements": [
         {   "from": [ 7, 0, 7 ],

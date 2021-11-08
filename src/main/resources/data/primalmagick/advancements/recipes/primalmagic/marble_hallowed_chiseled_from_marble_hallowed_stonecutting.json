@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:marble_hallowed_chiseled_from_marble_hallowed_stonecutting"
+      "primalmagick:marble_hallowed_chiseled_from_marble_hallowed_stonecutting"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:marble_hallowed"
+              "primalmagick:marble_hallowed"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:marble_hallowed_chiseled_from_marble_hallowed_stonecutting"
+        "recipe": "primalmagick:marble_hallowed_chiseled_from_marble_hallowed_stonecutting"
       }
     }
   },

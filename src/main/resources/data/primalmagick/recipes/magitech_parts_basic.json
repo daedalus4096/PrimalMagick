@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "magitech_parts",
   "research": "BASIC_MAGITECH",
   "mana": {
@@ -16,7 +16,7 @@
   ],
   "key": {
     "S": {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     },
     "I": {
       "tag": "forge:ingots/iron"
@@ -26,6 +26,6 @@
     }
   },
   "result": {
-    "item": "primalmagic:magitech_parts_basic"
+    "item": "primalmagick:magitech_parts_basic"
   }
 }

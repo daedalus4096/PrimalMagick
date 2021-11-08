@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/primal_wand_core"
+            "model": "primalmagick:item/primal_wand_core"
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:mana_salts",
+  "target": "primalmagick:mana_salts",
   "set": {
     "earth": 5,
     "sea": 5,

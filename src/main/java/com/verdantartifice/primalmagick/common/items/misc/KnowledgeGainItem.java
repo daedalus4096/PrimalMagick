@@ -42,7 +42,7 @@ public class KnowledgeGainItem extends Item {
         if (!level.isClientSide) {
             if (SimpleResearchKey.FIRST_STEPS.isKnownByStrict(player)) {
                 ResearchManager.addKnowledge(player, this.knowledgeType, this.knowledgePoints);
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.knowledge_item.success").withStyle(ChatFormatting.GREEN), true);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagick.knowledge_item.success").withStyle(ChatFormatting.GREEN), true);
                 if (player instanceof ServerPlayer serverPlayer) {
                     PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                 }
@@ -51,7 +51,7 @@ public class KnowledgeGainItem extends Item {
                 }
             } else {
                 // Players who haven't started mod progression get no benefit
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.knowledge_item.failure").withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagick.knowledge_item.failure").withStyle(ChatFormatting.RED), true);
             }
         }
         return super.use(level, player, hand);

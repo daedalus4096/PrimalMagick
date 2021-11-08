@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_crystal_earth",
+  "target": "primalmagick:essence_crystal_earth",
   "set": {
     "earth": 50
   }

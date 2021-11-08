@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "MANAFRUIT",
   "mana": {
     "earth": 5,
@@ -17,15 +17,15 @@
       "item": "minecraft:honey_bottle"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     }
   ],
   "props": [
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     }
   ],
   "result": {
-    "item": "primalmagic:manafruit"
+    "item": "primalmagick:manafruit"
   }
 }

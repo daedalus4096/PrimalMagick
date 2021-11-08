@@ -29,6 +29,6 @@ public class ShapelessArcaneRecipePage extends AbstractShapelessRecipePage<Shape
 
     @Override
     protected String getRecipeTypeTranslationKey() {
-        return "primalmagic.grimoire.shapeless_arcane_recipe_header";
+        return "primalmagick.grimoire.shapeless_arcane_recipe_header";
     }
 }

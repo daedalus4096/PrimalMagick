@@ -1,6 +1,6 @@
 {
   "type": "entity_type",
-  "target": "primalmagic:pixie_grand_sea",
+  "target": "primalmagick:pixie_grand_sea",
   "values": {
     "sea": 10,
     "sky": 10,

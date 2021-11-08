@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:hallowood_stairs"
+          "name": "primalmagick:hallowood_stairs"
         }
       ],
       "conditions": [

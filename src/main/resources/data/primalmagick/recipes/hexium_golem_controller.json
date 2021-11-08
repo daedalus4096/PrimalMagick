@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HEXIUM_GOLEM",
   "mana": {
     "blood": 50,
@@ -13,16 +13,16 @@
   ],
   "key": {
     "P": {
-      "item": "primalmagic:magitech_parts_forbidden"
+      "item": "primalmagick:magitech_parts_forbidden"
     },
     "I": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     },
     "R": {
       "tag": "forge:storage_blocks/redstone"
     }
   },
   "result": {
-    "item": "primalmagic:hexium_golem_controller"
+    "item": "primalmagick:hexium_golem_controller"
   }
 }

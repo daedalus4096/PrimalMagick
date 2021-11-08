@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/hallowsteel_block"
+        "all": "primalmagick:block/hallowsteel_block"
     }
 }

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:gold_grit_from_ore"
+      "primalmagick:gold_grit_from_ore"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:earthshatter_hammer"
+              "primalmagick:earthshatter_hammer"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:gold_grit_from_ore"
+        "recipe": "primalmagick:gold_grit_from_ore"
       }
     }
   },

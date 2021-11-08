@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "runescribing_altar",
   "research": "SUPREME_RUNEWORKING",
   "mana": {
@@ -12,19 +12,19 @@
   ],
   "key": {
     "R": {
-      "item": "primalmagic:rune_unattuned"
+      "item": "primalmagick:rune_unattuned"
     },
     "D": {
       "tag": "forge:gems/diamond"
     },
     "A": {
-      "item": "primalmagic:runescribing_altar_forbidden"
+      "item": "primalmagick:runescribing_altar_forbidden"
     },
     "M": {
-      "item": "primalmagic:marble_hallowed"
+      "item": "primalmagick:marble_hallowed"
     }
   },
   "result": {
-    "item": "primalmagic:runescribing_altar_heavenly"
+    "item": "primalmagick:runescribing_altar_heavenly"
   }
 }

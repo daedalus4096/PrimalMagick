@@ -7,10 +7,10 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     }
   },
   "result": {
-    "item": "primalmagic:hexium_block"
+    "item": "primalmagick:hexium_block"
   }
 }

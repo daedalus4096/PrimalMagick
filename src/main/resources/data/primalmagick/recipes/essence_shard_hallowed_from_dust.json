@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "essence_shard",
   "research": "SHARD_SYNTHESIS\u0026\u0026t_discover_hallowed",
   "pattern": [
@@ -9,13 +9,13 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:essence_dust_hallowed"
+      "item": "primalmagick:essence_dust_hallowed"
     },
     "Q": {
-      "item": "primalmagic:quartz_nugget"
+      "item": "primalmagick:quartz_nugget"
     }
   },
   "result": {
-    "item": "primalmagic:essence_shard_hallowed"
+    "item": "primalmagick:essence_shard_hallowed"
   }
 }

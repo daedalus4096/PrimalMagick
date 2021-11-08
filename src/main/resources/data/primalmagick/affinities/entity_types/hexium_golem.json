@@ -1,6 +1,6 @@
 {
   "type": "entity_type",
-  "target": "primalmagic:hexium_golem",
+  "target": "primalmagick:hexium_golem",
   "values": {
     "earth": 20,
     "blood": 10,

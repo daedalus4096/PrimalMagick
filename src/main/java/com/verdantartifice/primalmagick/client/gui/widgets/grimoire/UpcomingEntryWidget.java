@@ -59,12 +59,12 @@ public class UpcomingEntryWidget extends AbstractWidget {
         // When hovering, show a tooltip with the missing requirements
         if (this.isHovered()) {
             List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagic.grimoire.upcoming_tooltip_header"));
+            tooltip.add(new TranslatableComponent("primalmagick.grimoire.upcoming_tooltip_header"));
             
             for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
                 ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
                 if (parentEntry == null) {
-                    tooltip.add(new TranslatableComponent("primalmagic.research." + parent.getRootKey() + ".text"));
+                    tooltip.add(new TranslatableComponent("primalmagick.research." + parent.getRootKey() + ".text"));
                 } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
                     MutableComponent comp = new TranslatableComponent(parentEntry.getNameTranslationKey());
                     if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {

@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "primalmagic:stripped_hallowood_wood",
-  "base": "primalmagic:hallowood_log"
+  "target": "primalmagick:stripped_hallowood_wood",
+  "base": "primalmagick:hallowood_log"
 }

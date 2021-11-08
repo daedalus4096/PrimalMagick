@@ -8,10 +8,10 @@
   ],
   "key": {
     "N": {
-      "tag": "primalmagic:nuggets/hexium"
+      "tag": "primalmagick:nuggets/hexium"
     }
   },
   "result": {
-    "item": "primalmagic:hexium_ingot"
+    "item": "primalmagick:hexium_ingot"
   }
 }

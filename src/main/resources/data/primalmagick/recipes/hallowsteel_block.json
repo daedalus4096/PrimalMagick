@@ -7,10 +7,10 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/hallowsteel"
+      "tag": "primalmagick:ingots/hallowsteel"
     }
   },
   "result": {
-    "item": "primalmagic:hallowsteel_block"
+    "item": "primalmagick:hallowsteel_block"
   }
 }

@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:item/flying_carpet",
+    "parent": "primalmagick:item/flying_carpet",
     "textures": {
-        "layer0": "primalmagic:item/flying_carpet_white"
+        "layer0": "primalmagick:item/flying_carpet_white"
     }
 }

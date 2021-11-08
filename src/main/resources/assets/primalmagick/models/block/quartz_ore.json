@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/quartz_ore"
+        "all": "primalmagick:block/quartz_ore"
     }
 }

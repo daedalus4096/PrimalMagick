@@ -1,6 +1,6 @@
 {
   "key": "STAVES",
-  "name": "primalmagic.research.staves.title",
+  "name": "primalmagick.research.staves.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "EXPERT_MANAWEAVING",
@@ -10,13 +10,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.staves.text.stage.1",
+      "text": "primalmagick.research.staves.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.staves.text.stage.2"
+      "text": "primalmagick.research.staves.text.stage.2"
     }
   ],
   "addenda": []

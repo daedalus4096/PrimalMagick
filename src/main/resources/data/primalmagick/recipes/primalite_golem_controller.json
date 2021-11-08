@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "PRIMALITE_GOLEM",
   "mana": {
     "earth": 20,
@@ -15,16 +15,16 @@
   ],
   "key": {
     "P": {
-      "item": "primalmagic:magitech_parts_enchanted"
+      "item": "primalmagick:magitech_parts_enchanted"
     },
     "I": {
-      "tag": "primalmagic:ingots/primalite"
+      "tag": "primalmagick:ingots/primalite"
     },
     "R": {
       "tag": "forge:storage_blocks/redstone"
     }
   },
   "result": {
-    "item": "primalmagic:primalite_golem_controller"
+    "item": "primalmagick:primalite_golem_controller"
   }
 }

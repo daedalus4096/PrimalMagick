@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "FORBIDDEN_SWORD",
   "mana": {
     "void": 40
@@ -7,34 +7,34 @@
   "instability": 3,
   "ingredients": [
     {
-      "item": "primalmagic:hexium_sword"
+      "item": "primalmagick:hexium_sword"
     },
     {
-      "item": "primalmagic:essence_shard_void"
+      "item": "primalmagick:essence_shard_void"
     },
     {
-      "item": "primalmagic:essence_shard_void"
+      "item": "primalmagick:essence_shard_void"
     },
     {
-      "item": "primalmagic:rune_void"
+      "item": "primalmagick:rune_void"
     },
     {
-      "item": "primalmagic:mana_prism"
+      "item": "primalmagick:mana_prism"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:bloodletter"
+      "block": "primalmagick:bloodletter"
     },
     {
-      "block": "primalmagic:soul_anvil"
+      "block": "primalmagick:soul_anvil"
     }
   ],
   "result": {
-    "item": "primalmagic:forbidden_sword",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:essence_thief\",lvl:2s}]}"
+    "item": "primalmagick:forbidden_sword",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:essence_thief\",lvl:2s}]}"
   }
 }

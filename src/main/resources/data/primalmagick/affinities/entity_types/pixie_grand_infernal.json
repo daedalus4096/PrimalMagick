@@ -1,6 +1,6 @@
 {
   "type": "entity_type",
-  "target": "primalmagic:pixie_grand_infernal",
+  "target": "primalmagick:pixie_grand_infernal",
   "values": {
     "sky": 10,
     "blood": 5,

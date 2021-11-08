@@ -1,13 +1,13 @@
 {
   "key": "IMBUED_WOOL",
-  "name": "primalmagic.research.imbued_wool.title",
+  "name": "primalmagick.research.imbued_wool.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "MANA_ARROWS"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.imbued_wool.text.stage.1",
+      "text": "primalmagick.research.imbued_wool.text.stage.1",
       "required_item": [
         "tag:minecraft:wool"
       ],
@@ -16,12 +16,12 @@
       ]
     },
     {
-      "text": "primalmagic.research.imbued_wool.text.stage.2",
+      "text": "primalmagick.research.imbued_wool.text.stage.2",
       "recipes": [
-        "primalmagic:imbued_wool_head",
-        "primalmagic:imbued_wool_chest",
-        "primalmagic:imbued_wool_legs",
-        "primalmagic:imbued_wool_feet"
+        "primalmagick:imbued_wool_head",
+        "primalmagick:imbued_wool_chest",
+        "primalmagick:imbued_wool_legs",
+        "primalmagick:imbued_wool_feet"
       ]
     }
   ],

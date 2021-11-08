@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "STAVES\u0026\u0026WAND_CORE_OBSIDIAN",
   "mana": {
     "earth": 15,
@@ -15,13 +15,13 @@
   ],
   "key": {
     "D": {
-      "item": "primalmagic:essence_shard_earth"
+      "item": "primalmagick:essence_shard_earth"
     },
     "#": {
       "tag": "forge:obsidian"
     }
   },
   "result": {
-    "item": "primalmagic:obsidian_staff_core_item"
+    "item": "primalmagick:obsidian_staff_core_item"
   }
 }

@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/base_wood_grain",
+		"0": "primalmagick:block/base_wood_grain",
 		"1": "block/gold_block",
-		"2": "primalmagic:block/ash",
+		"2": "primalmagick:block/ash",
 		"particle": "block/gold_block"
 	},
 	"elements": [

@@ -33,7 +33,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SpellScrollItem extends Item {
-    protected static final Component TOOLTIP = new TranslatableComponent("tooltip.primalmagic.spell_scroll").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
+    protected static final Component TOOLTIP = new TranslatableComponent("tooltip.primalmagick.spell_scroll").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
     
     public SpellScrollItem() {
         super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP));
@@ -58,7 +58,7 @@ public class SpellScrollItem extends Item {
     public Component getName(ItemStack stack) {
         // A scroll's name is determined by that of the spell it holds (e.g. "Scroll of Lightning Bolt")
         SpellPackage spell = this.getSpell(stack);
-        Component spellName = (spell == null) ? new TranslatableComponent("tooltip.primalmagic.none") : spell.getName();
+        Component spellName = (spell == null) ? new TranslatableComponent("tooltip.primalmagick.none") : spell.getName();
         return new TranslatableComponent(this.getDescriptionId(stack), spellName).withStyle(ChatFormatting.ITALIC);
     }
     

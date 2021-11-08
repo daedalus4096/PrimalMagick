@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
   "ingredient": {
-    "item": "primalmagic:marble_enchanted"
+    "item": "primalmagick:marble_enchanted"
   },
-  "result": "primalmagic:marble_enchanted_stairs",
+  "result": "primalmagick:marble_enchanted_stairs",
   "count": 1
 }

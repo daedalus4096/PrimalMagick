@@ -1,5 +1,5 @@
 {
-  "key": "primalmagic:master_essence_analysis",
+  "key": "primalmagick:master_essence_analysis",
   "required_research": "CLUSTER_SYNTHESIS",
   "reward_multiplier": 1.0,
   "aid_blocks": [],
@@ -12,42 +12,42 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_earth",
+      "stack": "primalmagick:essence_crystal_earth",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_sea",
+      "stack": "primalmagick:essence_crystal_sea",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_sky",
+      "stack": "primalmagick:essence_crystal_sky",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_sun",
+      "stack": "primalmagick:essence_crystal_sun",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_moon",
+      "stack": "primalmagick:essence_crystal_moon",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_blood",
+      "stack": "primalmagick:essence_crystal_blood",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
@@ -56,7 +56,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_infernal",
+      "stack": "primalmagick:essence_crystal_infernal",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
@@ -65,7 +65,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_void",
+      "stack": "primalmagick:essence_crystal_void",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
@@ -74,7 +74,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_crystal_hallowed",
+      "stack": "primalmagick:essence_crystal_hallowed",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
@@ -83,7 +83,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_earth",
+      "stack": "primalmagick:essence_cluster_earth",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -92,7 +92,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_sea",
+      "stack": "primalmagick:essence_cluster_sea",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -101,7 +101,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_sky",
+      "stack": "primalmagick:essence_cluster_sky",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -110,7 +110,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_sun",
+      "stack": "primalmagick:essence_cluster_sun",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -119,7 +119,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_moon",
+      "stack": "primalmagick:essence_cluster_moon",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -128,7 +128,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_blood",
+      "stack": "primalmagick:essence_cluster_blood",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -138,7 +138,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_infernal",
+      "stack": "primalmagick:essence_cluster_infernal",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -148,7 +148,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_void",
+      "stack": "primalmagick:essence_cluster_void",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -158,7 +158,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_cluster_hallowed",
+      "stack": "primalmagick:essence_cluster_hallowed",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,

@@ -25,7 +25,7 @@
                   }
                 }
               ],
-              "name": "primalmagic:infused_stone_sea"
+              "name": "primalmagick:infused_stone_sea"
             },
             {
               "type": "minecraft:item",
@@ -34,7 +34,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "name": "primalmagic:essence_dust_sea"
+              "name": "primalmagick:essence_dust_sea"
             }
           ]
         }

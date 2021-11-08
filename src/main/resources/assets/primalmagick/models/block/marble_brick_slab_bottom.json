@@ -1,8 +1,8 @@
 {
     "parent": "block/slab",
     "textures": {
-        "bottom": "primalmagic:block/marble_bricks",
-        "top": "primalmagic:block/marble_bricks",
-        "side": "primalmagic:block/marble_bricks"
+        "bottom": "primalmagick:block/marble_bricks",
+        "top": "primalmagick:block/marble_bricks",
+        "side": "primalmagick:block/marble_bricks"
     }
 }

@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/offering_pedestal"
+            "model": "primalmagick:block/offering_pedestal"
         }
     }
 }

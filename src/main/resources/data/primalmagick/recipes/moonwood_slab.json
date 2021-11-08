@@ -6,11 +6,11 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:moonwood_planks"
+      "item": "primalmagick:moonwood_planks"
     }
   },
   "result": {
-    "item": "primalmagic:moonwood_slab",
+    "item": "primalmagick:moonwood_slab",
     "count": 6
   }
 }

@@ -1,8 +1,8 @@
 {
     "parent": "block/inner_stairs",
     "textures": {
-        "bottom": "primalmagic:block/sunwood_planks_faded",
-        "top": "primalmagic:block/sunwood_planks_faded",
-        "side": "primalmagic:block/sunwood_planks_faded"
+        "bottom": "primalmagick:block/sunwood_planks_faded",
+        "top": "primalmagick:block/sunwood_planks_faded",
+        "side": "primalmagick:block/sunwood_planks_faded"
     }
 }

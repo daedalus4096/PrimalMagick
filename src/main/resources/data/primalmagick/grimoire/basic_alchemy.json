@@ -1,19 +1,19 @@
 {
   "key": "BASIC_ALCHEMY",
-  "name": "primalmagic.research.basic_alchemy.title",
+  "name": "primalmagick.research.basic_alchemy.title",
   "discipline": "ALCHEMY",
   "parents": [
     "UNLOCK_ALCHEMY"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.basic_alchemy.text.stage.1",
+      "text": "primalmagick.research.basic_alchemy.text.stage.1",
       "required_craft": [
-        "primalmagic:essence_furnace"
+        "primalmagick:essence_furnace"
       ]
     },
     {
-      "text": "primalmagic.research.basic_alchemy.text.stage.2"
+      "text": "primalmagick.research.basic_alchemy.text.stage.2"
     }
   ],
   "addenda": []

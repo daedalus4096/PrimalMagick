@@ -57,10 +57,10 @@ public class RecipeMetadataPage extends AbstractPage {
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
         ResearchEntry entry = ResearchManager.getEntryForRecipe(this.recipe.getId());
-        Component noneComponent = new TranslatableComponent("tooltip.primalmagic.none");
+        Component noneComponent = new TranslatableComponent("tooltip.primalmagick.none");
 
         // Render the metadata's discipline header
-        mc.font.draw(matrixStack, new TranslatableComponent("primalmagic.grimoire.recipe_metadata.discipline").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
+        mc.font.draw(matrixStack, new TranslatableComponent("primalmagick.grimoire.recipe_metadata.discipline").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research discipline
@@ -70,7 +70,7 @@ public class RecipeMetadataPage extends AbstractPage {
         y += 2 * mc.font.lineHeight;
         
         // Render the metadata's entry header
-        mc.font.draw(matrixStack, new TranslatableComponent("primalmagic.grimoire.recipe_metadata.entry").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
+        mc.font.draw(matrixStack, new TranslatableComponent("primalmagick.grimoire.recipe_metadata.entry").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research entry

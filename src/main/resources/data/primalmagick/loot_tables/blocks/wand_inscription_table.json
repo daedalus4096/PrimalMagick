@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:wand_inscription_table"
+          "name": "primalmagick:wand_inscription_table"
         }
       ],
       "conditions": [

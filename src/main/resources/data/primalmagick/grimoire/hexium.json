@@ -1,6 +1,6 @@
 {
   "key": "HEXIUM",
-  "name": "primalmagic.research.hexium.title",
+  "name": "primalmagick.research.hexium.title",
   "discipline": "ALCHEMY",
   "parents": [
     "MASTER_ALCHEMY",
@@ -12,45 +12,45 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.hexium.text.stage.1",
+      "text": "primalmagick.research.hexium.text.stage.1",
       "required_item": [
-        "primalmagic:essence_shard_blood",
-        "primalmagic:essence_shard_infernal",
-        "primalmagic:essence_shard_void"
+        "primalmagick:essence_shard_blood",
+        "primalmagick:essence_shard_infernal",
+        "primalmagick:essence_shard_void"
       ],
       "required_craft": [
-        "primalmagic:primalite_ingot"
+        "primalmagick:primalite_ingot"
       ],
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.hexium.text.stage.2",
+      "text": "primalmagick.research.hexium.text.stage.2",
       "attunements": {
         "blood": 2,
         "infernal": 2,
         "void": 2
       },
       "recipes": [
-        "primalmagic:hexium_ingot",
-        "primalmagic:hexium_nugget",
-        "primalmagic:hexium_ingot_from_nuggets",
-        "primalmagic:hexium_block",
-        "primalmagic:hexium_ingots_from_block",
-        "primalmagic:hexium_sword",
-        "primalmagic:hexium_trident",
-        "primalmagic:hexium_bow",
-        "primalmagic:hexium_shovel",
-        "primalmagic:hexium_pickaxe",
-        "primalmagic:hexium_axe",
-        "primalmagic:hexium_hoe",
-        "primalmagic:hexium_fishing_rod",
-        "primalmagic:hexium_head",
-        "primalmagic:hexium_chest",
-        "primalmagic:hexium_legs",
-        "primalmagic:hexium_feet",
-        "primalmagic:hexium_shield"
+        "primalmagick:hexium_ingot",
+        "primalmagick:hexium_nugget",
+        "primalmagick:hexium_ingot_from_nuggets",
+        "primalmagick:hexium_block",
+        "primalmagick:hexium_ingots_from_block",
+        "primalmagick:hexium_sword",
+        "primalmagick:hexium_trident",
+        "primalmagick:hexium_bow",
+        "primalmagick:hexium_shovel",
+        "primalmagick:hexium_pickaxe",
+        "primalmagick:hexium_axe",
+        "primalmagick:hexium_hoe",
+        "primalmagick:hexium_fishing_rod",
+        "primalmagick:hexium_head",
+        "primalmagick:hexium_chest",
+        "primalmagick:hexium_legs",
+        "primalmagick:hexium_feet",
+        "primalmagick:hexium_shield"
       ]
     }
   ],

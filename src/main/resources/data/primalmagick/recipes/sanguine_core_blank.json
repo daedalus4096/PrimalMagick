@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SANGUINE_CRUCIBLE",
   "mana": {
     "blood": 50,
@@ -12,16 +12,16 @@
   ],
   "key": {
     "H": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     },
     "B": {
-      "item": "primalmagic:essence_shard_blood"
+      "item": "primalmagick:essence_shard_blood"
     },
     "I": {
-      "item": "primalmagic:essence_shard_infernal"
+      "item": "primalmagick:essence_shard_infernal"
     }
   },
   "result": {
-    "item": "primalmagic:sanguine_core_blank"
+    "item": "primalmagick:sanguine_core_blank"
   }
 }

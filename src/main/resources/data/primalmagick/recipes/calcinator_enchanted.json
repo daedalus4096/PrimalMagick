@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "calcinators",
   "research": "CALCINATOR_ENCHANTED",
   "mana": {
@@ -16,16 +16,16 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_enchanted"
+      "item": "primalmagick:marble_enchanted"
     },
     "C": {
-      "item": "primalmagic:calcinator_basic"
+      "item": "primalmagick:calcinator_basic"
     },
     "E": {
-      "tag": "primalmagic:essences/terrestrial_shards"
+      "tag": "primalmagick:essences/terrestrial_shards"
     }
   },
   "result": {
-    "item": "primalmagic:calcinator_enchanted"
+    "item": "primalmagick:calcinator_enchanted"
   }
 }

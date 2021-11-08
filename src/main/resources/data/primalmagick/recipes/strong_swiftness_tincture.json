@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:concocting",
+  "type": "primalmagick:concocting",
   "group": "strong_swiftness",
   "research": "CONCOCTING_TINCTURES",
   "mana": {
@@ -8,12 +8,12 @@
   "ingredients": [
     {
       "type": "forge:nbt",
-      "item": "primalmagic:concoction",
+      "item": "primalmagick:concoction",
       "count": 1,
       "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
-      "item": "primalmagic:essence_dust_sky"
+      "item": "primalmagick:essence_dust_sky"
     },
     {
       "tag": "forge:crops/nether_wart"
@@ -26,7 +26,7 @@
     }
   ],
   "result": {
-    "item": "primalmagic:concoction",
+    "item": "primalmagick:concoction",
     "count": 1,
     "nbt": "{ConcoctionDoses:3,ConcoctionType:\"tincture\",Potion:\"minecraft:strong_swiftness\"}"
   }

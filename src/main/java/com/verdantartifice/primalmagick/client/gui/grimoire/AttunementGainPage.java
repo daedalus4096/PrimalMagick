@@ -44,8 +44,8 @@ public class AttunementGainPage extends AbstractPage {
             Component labelText = source.isDiscovered(mc.player) ?
                     new TranslatableComponent(source.getNameTranslationKey()) :
                     new TranslatableComponent(Source.getUnknownTranslationKey());
-            Component amountText = new TranslatableComponent("primalmagic.attunement_gain." + Integer.toString(amount));
-            Component fullText = new TranslatableComponent("primalmagic.attunement_gain.text", labelText, amountText);
+            Component amountText = new TranslatableComponent("primalmagick.attunement_gain." + Integer.toString(amount));
+            Component fullText = new TranslatableComponent("primalmagick.attunement_gain.text", labelText, amountText);
             mc.font.draw(matrixStack, fullText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
         }
@@ -53,7 +53,7 @@ public class AttunementGainPage extends AbstractPage {
 
     @Override
     protected String getTitleTranslationKey() {
-        return "primalmagic.grimoire.attunement_gain_header";
+        return "primalmagick.grimoire.attunement_gain_header";
     }
 
     @Override

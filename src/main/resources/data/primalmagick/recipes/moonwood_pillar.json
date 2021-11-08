@@ -6,11 +6,11 @@
   ],
   "key": {
     "#": {
-      "tag": "primalmagic:moonwood_logs"
+      "tag": "primalmagick:moonwood_logs"
     }
   },
   "result": {
-    "item": "primalmagic:moonwood_pillar",
+    "item": "primalmagick:moonwood_pillar",
     "count": 2
   }
 }

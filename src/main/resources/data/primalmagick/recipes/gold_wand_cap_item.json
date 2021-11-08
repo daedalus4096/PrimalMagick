@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "WAND_CAP_GOLD",
   "mana": {
     "earth": 5,
@@ -18,6 +18,6 @@
     }
   },
   "result": {
-    "item": "primalmagic:gold_wand_cap_item"
+    "item": "primalmagick:gold_wand_cap_item"
   }
 }

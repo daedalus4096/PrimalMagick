@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:soul_gem"
+      "primalmagick:soul_gem"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:soul_gem_sliver"
+              "primalmagick:soul_gem_sliver"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:soul_gem"
+        "recipe": "primalmagick:soul_gem"
       }
     }
   },

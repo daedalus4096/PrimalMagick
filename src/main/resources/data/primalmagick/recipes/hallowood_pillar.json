@@ -6,11 +6,11 @@
   ],
   "key": {
     "#": {
-      "tag": "primalmagic:hallowood_logs"
+      "tag": "primalmagick:hallowood_logs"
     }
   },
   "result": {
-    "item": "primalmagic:hallowood_pillar",
+    "item": "primalmagick:hallowood_pillar",
     "count": 2
   }
 }

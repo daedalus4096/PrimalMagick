@@ -1,7 +1,7 @@
 {
     "parent": "block/cube_column",
     "textures": {
-        "end": "primalmagic:block/moonwood_log_top_full",
-        "side": "primalmagic:block/moonwood_log_full"
+        "end": "primalmagick:block/moonwood_log_top_full",
+        "side": "primalmagick:block/moonwood_log_full"
     }
 }

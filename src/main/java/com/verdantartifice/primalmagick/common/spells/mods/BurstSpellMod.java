@@ -58,8 +58,8 @@ public class BurstSpellMod extends AbstractSpellMod {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("radius", new SpellProperty("radius", "primalmagic.spell.property.radius", 1, 5));
-        propMap.put("power", new SpellProperty("power", "primalmagic.spell.property.power", 0, 5));
+        propMap.put("radius", new SpellProperty("radius", "primalmagick.spell.property.radius", 1, 5));
+        propMap.put("power", new SpellProperty("power", "primalmagick.spell.property.power", 0, 5));
         return propMap;
     }
     
@@ -148,6 +148,6 @@ public class BurstSpellMod extends AbstractSpellMod {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagic.spell.mod.detail_tooltip." + this.getModType(), this.getRadiusBlocks(), this.getBlastPower(spell, spellSource));
+        return new TranslatableComponent("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getRadiusBlocks(), this.getBlastPower(spell, spellSource));
     }
 }

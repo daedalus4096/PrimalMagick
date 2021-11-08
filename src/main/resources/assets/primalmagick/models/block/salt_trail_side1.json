@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:block/salt_trail_side",
+    "parent": "primalmagick:block/salt_trail_side",
     "textures": {
-        "line": "primalmagic:block/salt_trail_line1"
+        "line": "primalmagick:block/salt_trail_line1"
     }
 }

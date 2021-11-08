@@ -1,6 +1,6 @@
 {
   "key": "FORBIDDEN_TRIDENT",
-  "name": "primalmagic.research.forbidden_trident.title",
+  "name": "primalmagick.research.forbidden_trident.title",
   "discipline": "RITUAL",
   "parents": [
     "t_discover_blood",
@@ -13,21 +13,21 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.forbidden_trident.text.stage.1",
+      "text": "primalmagick.research.forbidden_trident.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.forbidden_trident.text.stage.2",
+      "text": "primalmagick.research.forbidden_trident.text.stage.2",
       "recipes": [
-        "primalmagic:forbidden_trident"
+        "primalmagick:forbidden_trident"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.forbidden_trident.text.addenda.1",
+      "text": "primalmagick.research.forbidden_trident.text.addenda.1",
       "required_research": [
         "MASTER_RUNEWORKING",
         "RUNE_PROJECT",

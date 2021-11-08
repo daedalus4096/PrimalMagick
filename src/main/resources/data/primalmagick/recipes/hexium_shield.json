@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HEXIUM",
   "pattern": [
     "PIP",
@@ -11,10 +11,10 @@
       "tag": "minecraft:planks"
     },
     "I": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     }
   },
   "result": {
-    "item": "primalmagic:hexium_shield"
+    "item": "primalmagick:hexium_shield"
   }
 }

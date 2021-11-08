@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "essence_crystal",
   "research": "CRYSTAL_SYNTHESIS\u0026\u0026t_discover_blood",
   "pattern": [
@@ -9,13 +9,13 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:essence_shard_blood"
+      "item": "primalmagick:essence_shard_blood"
     },
     "Q": {
       "item": "minecraft:quartz"
     }
   },
   "result": {
-    "item": "primalmagic:essence_crystal_blood"
+    "item": "primalmagick:essence_crystal_blood"
   }
 }

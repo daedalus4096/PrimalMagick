@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:hallowsteel_block"
+          "name": "primalmagick:hallowsteel_block"
         }
       ],
       "conditions": [

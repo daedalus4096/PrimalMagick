@@ -7,10 +7,10 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/primalite"
+      "tag": "primalmagick:ingots/primalite"
     }
   },
   "result": {
-    "item": "primalmagic:primalite_block"
+    "item": "primalmagick:primalite_block"
   }
 }

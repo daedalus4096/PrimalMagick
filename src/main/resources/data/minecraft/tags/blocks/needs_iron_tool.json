@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:hexium_block",
-    "primalmagic:sanguine_crucible"
+    "primalmagick:hexium_block",
+    "primalmagick:sanguine_crucible"
   ]
 }

@@ -12,11 +12,11 @@ import net.minecraft.world.entity.LivingEntity;
  * @author Daedalus4096
  */
 public class DamageSourcesPM {
-    public static final String HELLISH_CHAIN_TYPE = "primalmagic.hellish_chain";
-    public static final String DIRECT_SORCERY_TYPE = "primalmagic.direct_sorcery";
-    public static final String INDIRECT_SORCERY_TYPE = "primalmagic.indirect_sorcery";
+    public static final String HELLISH_CHAIN_TYPE = "primalmagick.hellish_chain";
+    public static final String DIRECT_SORCERY_TYPE = "primalmagick.direct_sorcery";
+    public static final String INDIRECT_SORCERY_TYPE = "primalmagick.indirect_sorcery";
     
-    public static final DamageSource BLEEDING = (new DamageSource("primalmagic.bleeding")).bypassArmor();
+    public static final DamageSource BLEEDING = (new DamageSource("primalmagick.bleeding")).bypassArmor();
     
     public static DamageSource causeHellishChainDamage(LivingEntity mob) {
         return (new EntityDamageSource(HELLISH_CHAIN_TYPE, mob)).setIsFire();

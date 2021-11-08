@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:calcinator_basic",
+  "target": "primalmagick:calcinator_basic",
   "set": {
     "earth": 46,
     "sea": 5,

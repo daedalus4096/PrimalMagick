@@ -105,7 +105,7 @@ public class WandCore implements IWandComponent {
     
     @Override
     public String getNameTranslationKey() {
-        return "primalmagic.wand_core." + this.tag + ".name";
+        return "primalmagick.wand_core." + this.tag + ".name";
     }
     
     public static Collection<WandCore> getAllWandCores() {

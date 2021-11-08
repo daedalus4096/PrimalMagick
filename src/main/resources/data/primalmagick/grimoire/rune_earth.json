@@ -1,24 +1,24 @@
 {
   "key": "RUNE_EARTH",
-  "name": "primalmagic.research.rune_earth.title",
+  "name": "primalmagick.research.rune_earth.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "BASIC_RUNEWORKING"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rune_earth.text.stage.1",
+      "text": "primalmagick.research.rune_earth.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.rune_earth.text.stage.2",
+      "text": "primalmagick.research.rune_earth.text.stage.2",
       "attunements": {
         "earth": 1
       },
       "recipes": [
-        "primalmagic:rune_earth"
+        "primalmagick:rune_earth"
       ]
     }
   ],

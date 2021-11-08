@@ -50,7 +50,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("duration", new SpellProperty("duration", "primalmagic.spell.property.duration", 1, 5));
+        propMap.put("duration", new SpellProperty("duration", "primalmagick.spell.property.duration", 1, 5));
         return propMap;
     }
     
@@ -93,6 +93,6 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagic.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
+        return new TranslatableComponent("primalmagick.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
     }
 }

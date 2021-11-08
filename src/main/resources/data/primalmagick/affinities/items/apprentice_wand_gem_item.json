@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:apprentice_wand_gem_item",
+  "target": "primalmagick:apprentice_wand_gem_item",
   "base": "minecraft:diamond",
   "add": {
     "earth": 2,

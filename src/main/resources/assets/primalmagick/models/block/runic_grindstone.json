@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"pivot": "primalmagic:block/runic_grindstone_pivot",
-		"round": "primalmagic:block/runic_grindstone_round",
+		"pivot": "primalmagick:block/runic_grindstone_pivot",
+		"round": "primalmagick:block/runic_grindstone_round",
 		"particle": "block/grindstone_side",
 		"side": "block/grindstone_side",
-		"leg": "primalmagic:block/sunwood_log_full"
+		"leg": "primalmagick:block/sunwood_log_full"
 	},
 	"elements": [
 		{

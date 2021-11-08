@@ -1,5 +1,5 @@
 {
-    "parent": "primalmagic:block/runecarving_table",
+    "parent": "primalmagick:block/runecarving_table",
     "display": {
         "thirdperson_righthand": {
             "rotation": [ 75, 135, 0 ],

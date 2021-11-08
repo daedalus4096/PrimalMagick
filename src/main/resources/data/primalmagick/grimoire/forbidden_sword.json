@@ -1,6 +1,6 @@
 {
   "key": "FORBIDDEN_SWORD",
-  "name": "primalmagic.research.forbidden_sword.title",
+  "name": "primalmagick.research.forbidden_sword.title",
   "discipline": "RITUAL",
   "parents": [
     "t_discover_void",
@@ -14,21 +14,21 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.forbidden_sword.text.stage.1",
+      "text": "primalmagick.research.forbidden_sword.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.forbidden_sword.text.stage.2",
+      "text": "primalmagick.research.forbidden_sword.text.stage.2",
       "recipes": [
-        "primalmagic:forbidden_sword"
+        "primalmagick:forbidden_sword"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.forbidden_sword.text.addenda.1",
+      "text": "primalmagick.research.forbidden_sword.text.addenda.1",
       "required_research": [
         "MASTER_RUNEWORKING",
         "RUNE_SUMMON",

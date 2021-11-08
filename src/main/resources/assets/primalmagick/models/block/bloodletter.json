@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/marble_smoked",
-		"1": "primalmagic:block/marble_smoked_pillar",
-		"2": "primalmagic:block/bloodletter_blade",
-		"particle": "primalmagic:block/marble_smoked"
+		"0": "primalmagick:block/marble_smoked",
+		"1": "primalmagick:block/marble_smoked_pillar",
+		"2": "primalmagick:block/bloodletter_blade",
+		"particle": "primalmagick:block/marble_smoked"
 	},
 	"elements": [
 		{

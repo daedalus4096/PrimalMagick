@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:marble_smoked_chiseled"
+          "name": "primalmagick:marble_smoked_chiseled"
         }
       ],
       "conditions": [

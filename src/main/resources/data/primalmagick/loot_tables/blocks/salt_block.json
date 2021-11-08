@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:salt_block"
+          "name": "primalmagick:salt_block"
         }
       ],
       "conditions": [

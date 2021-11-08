@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "DISSOLUTION_CHAMBER",
   "mana": {
     "earth": 100
@@ -14,16 +14,16 @@
       "tag": "forge:gems/diamond"
     },
     "H": {
-      "item": "primalmagic:earthshatter_hammer"
+      "item": "primalmagick:earthshatter_hammer"
     },
     "M": {
-      "item": "primalmagic:marble_smoked_slab"
+      "item": "primalmagick:marble_smoked_slab"
     },
     "P": {
-      "item": "primalmagic:magitech_parts_forbidden"
+      "item": "primalmagick:magitech_parts_forbidden"
     }
   },
   "result": {
-    "item": "primalmagic:dissolution_chamber"
+    "item": "primalmagick:dissolution_chamber"
   }
 }

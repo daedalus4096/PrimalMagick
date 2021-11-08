@@ -3,7 +3,7 @@
     {
       "condition": "minecraft:entity_properties",
       "predicate": {
-        "type": "#primalmagic:drops_bloody_flesh"
+        "type": "#primalmagick:drops_bloody_flesh"
       },
       "entity": "this"
     },
@@ -16,5 +16,5 @@
       "looting_multiplier": 0.1
     }
   ],
-  "type": "primalmagic:bloody_flesh"
+  "type": "primalmagick:bloody_flesh"
 }

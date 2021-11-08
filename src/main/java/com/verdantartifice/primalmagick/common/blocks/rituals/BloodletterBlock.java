@@ -134,7 +134,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
 
     @Override
     public String getPropTranslationKey() {
-        return "primalmagic.ritual.prop.bloodletter";
+        return "primalmagick.ritual.prop.bloodletter";
     }
 
     public float getUsageStabilityBonus() {

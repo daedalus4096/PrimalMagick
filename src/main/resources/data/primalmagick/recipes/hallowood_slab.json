@@ -6,11 +6,11 @@
   ],
   "key": {
     "#": {
-      "item": "primalmagic:hallowood_planks"
+      "item": "primalmagick:hallowood_planks"
     }
   },
   "result": {
-    "item": "primalmagic:hallowood_slab",
+    "item": "primalmagick:hallowood_slab",
     "count": 6
   }
 }

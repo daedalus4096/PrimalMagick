@@ -30,7 +30,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
 
     @Override
     public String getName() {
-        return "Primal Magic Block Tags";
+        return "Primal Magick Block Tags";
     }
 
     @Override

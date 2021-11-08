@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:hallowood_sapling"
+          "name": "primalmagick:hallowood_sapling"
         }
       ],
       "conditions": [

@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/marble_smoked_chiseled"
+            "model": "primalmagick:block/marble_smoked_chiseled"
         }
     }
 }

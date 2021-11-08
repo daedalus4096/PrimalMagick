@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "WAND_CORE_MOONWOOD",
   "mana": {
     "earth": 5,
@@ -14,13 +14,13 @@
   ],
   "key": {
     "D": {
-      "item": "primalmagic:essence_dust_moon"
+      "item": "primalmagick:essence_dust_moon"
     },
     "#": {
-      "item": "primalmagic:moonwood_log"
+      "item": "primalmagick:moonwood_log"
     }
   },
   "result": {
-    "item": "primalmagic:moonwood_wand_core_item"
+    "item": "primalmagick:moonwood_wand_core_item"
   }
 }

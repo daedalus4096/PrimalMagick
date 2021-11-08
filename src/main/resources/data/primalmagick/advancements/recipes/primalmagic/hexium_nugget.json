@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:hexium_nugget"
+      "primalmagick:hexium_nugget"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:ingots/hexium"
+            "tag": "primalmagick:ingots/hexium"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:hexium_nugget"
+        "recipe": "primalmagick:hexium_nugget"
       }
     }
   },

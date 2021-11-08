@@ -1,6 +1,6 @@
 {
   "key": "MASTER_MAGITECH",
-  "name": "primalmagic.research.master_magitech.title",
+  "name": "primalmagick.research.master_magitech.title",
   "discipline": "MAGITECH",
   "parents": [
     "ARCANOMETER",
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.master_magitech.text.stage.1",
+      "text": "primalmagick.research.master_magitech.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "b_crafted_magitech_master",
@@ -16,9 +16,9 @@
       ]
     },
     {
-      "text": "primalmagic.research.master_magitech.text.stage.2",
+      "text": "primalmagick.research.master_magitech.text.stage.2",
       "recipes": [
-        "primalmagic:magitech_parts_forbidden"
+        "primalmagick:magitech_parts_forbidden"
       ]
     }
   ],

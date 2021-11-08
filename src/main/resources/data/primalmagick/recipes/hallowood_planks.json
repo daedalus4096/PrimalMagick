@@ -3,11 +3,11 @@
   "group": "planks",
   "ingredients": [
     {
-      "tag": "primalmagic:hallowood_logs"
+      "tag": "primalmagick:hallowood_logs"
     }
   ],
   "result": {
-    "item": "primalmagic:hallowood_planks",
+    "item": "primalmagick:hallowood_planks",
     "count": 4
   }
 }

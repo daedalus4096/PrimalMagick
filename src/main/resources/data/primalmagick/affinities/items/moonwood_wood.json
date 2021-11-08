@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "primalmagic:moonwood_wood",
-  "base": "primalmagic:moonwood_log"
+  "target": "primalmagick:moonwood_wood",
+  "base": "primalmagick:moonwood_log"
 }

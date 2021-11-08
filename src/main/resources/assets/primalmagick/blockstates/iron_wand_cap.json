@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/iron_wand_cap"
+            "model": "primalmagick:item/iron_wand_cap"
         }
     }
 }

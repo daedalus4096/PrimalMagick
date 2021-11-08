@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:sunwood_planks"
+      "primalmagick:sunwood_planks"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:sunwood_logs"
+            "tag": "primalmagick:sunwood_logs"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:sunwood_planks"
+        "recipe": "primalmagick:sunwood_planks"
       }
     }
   },

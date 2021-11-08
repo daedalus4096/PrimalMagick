@@ -1,16 +1,16 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "group": "source_runes",
   "research": "RUNE_MOON",
   "ingredients": [
     {
-      "item": "primalmagic:rune_unattuned"
+      "item": "primalmagick:rune_unattuned"
     },
     {
-      "item": "primalmagic:essence_dust_moon"
+      "item": "primalmagick:essence_dust_moon"
     }
   ],
   "result": {
-    "item": "primalmagic:rune_moon"
+    "item": "primalmagick:rune_moon"
   }
 }

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:primalite_nugget"
+      "primalmagick:primalite_nugget"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:ingots/primalite"
+            "tag": "primalmagick:ingots/primalite"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:primalite_nugget"
+        "recipe": "primalmagick:primalite_nugget"
       }
     }
   },

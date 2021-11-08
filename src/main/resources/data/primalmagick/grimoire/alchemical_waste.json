@@ -1,6 +1,6 @@
 {
   "key": "ALCHEMICAL_WASTE",
-  "name": "primalmagic.research.alchemical_waste.title",
+  "name": "primalmagick.research.alchemical_waste.title",
   "discipline": "SCANS",
   "hidden": true,
   "parents": [
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.alchemical_waste.text.stage.1"
+      "text": "primalmagick.research.alchemical_waste.text.stage.1"
     }
   ],
   "addenda": []

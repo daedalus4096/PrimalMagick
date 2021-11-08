@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SUPREME_MANAWEAVING",
   "pattern": [
     " M ",
@@ -8,14 +8,14 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_hallowed"
+      "item": "primalmagick:marble_hallowed"
     },
     "C": {
-      "item": "primalmagic:marble_hallowed_chiseled"
+      "item": "primalmagick:marble_hallowed_chiseled"
     }
   },
   "result": {
-    "item": "primalmagic:marble_hallowed_runed",
+    "item": "primalmagick:marble_hallowed_runed",
     "count": 5
   }
 }

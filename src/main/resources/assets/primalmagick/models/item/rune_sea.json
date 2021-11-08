@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/rune_sea"
+        "layer0": "primalmagick:item/rune_sea"
     }
 }

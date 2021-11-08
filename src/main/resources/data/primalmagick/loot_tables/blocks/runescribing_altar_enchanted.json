@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:runescribing_altar_enchanted"
+          "name": "primalmagick:runescribing_altar_enchanted"
         }
       ],
       "conditions": [

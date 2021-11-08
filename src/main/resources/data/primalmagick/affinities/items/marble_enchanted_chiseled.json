@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "primalmagic:marble_enchanted_chiseled",
-  "base": "primalmagic:marble_chiseled",
+  "target": "primalmagick:marble_enchanted_chiseled",
+  "base": "primalmagick:marble_chiseled",
   "add": {
     "earth": 1,
     "sea": 1,

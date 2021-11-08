@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HONEY_EXTRACTOR",
   "mana": {
     "sky": 10
@@ -20,10 +20,10 @@
       "item": "minecraft:glass_bottle"
     },
     "P": {
-      "item": "primalmagic:magitech_parts_basic"
+      "item": "primalmagick:magitech_parts_basic"
     }
   },
   "result": {
-    "item": "primalmagic:honey_extractor"
+    "item": "primalmagick:honey_extractor"
   }
 }

@@ -8,7 +8,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * Main class of the Primal Magic mod.  Most initialization doesn't happen here,
+ * Main class of the Primal Magick mod.  Most initialization doesn't happen here,
  * but rather in response to Forge events.
  * 
  * @see {@link com.verdantartifice.primalmagick.common.events.ModLifecycleEvents}

@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:essence_shard_blood",
-    "primalmagic:essence_shard_infernal",
-    "primalmagic:essence_shard_void"
+    "primalmagick:essence_shard_blood",
+    "primalmagick:essence_shard_infernal",
+    "primalmagick:essence_shard_void"
   ]
 }

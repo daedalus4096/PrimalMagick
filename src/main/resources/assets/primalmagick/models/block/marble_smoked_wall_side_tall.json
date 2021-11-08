@@ -1,6 +1,6 @@
 {
     "parent": "block/template_wall_side_tall",
     "textures": {
-        "wall": "primalmagic:block/marble_smoked"
+        "wall": "primalmagick:block/marble_smoked"
     }
 }

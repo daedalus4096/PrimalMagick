@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:concocting",
+  "type": "primalmagick:concocting",
   "group": "long_invisibility",
   "research": "CONCOCTING_ELIXIRS",
   "mana": {
@@ -8,12 +8,12 @@
   "ingredients": [
     {
       "type": "forge:nbt",
-      "item": "primalmagic:concoction",
+      "item": "primalmagick:concoction",
       "count": 1,
       "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
-      "item": "primalmagic:essence_crystal_moon"
+      "item": "primalmagick:essence_crystal_moon"
     },
     {
       "tag": "forge:crops/nether_wart"
@@ -29,7 +29,7 @@
     }
   ],
   "result": {
-    "item": "primalmagic:concoction",
+    "item": "primalmagick:concoction",
     "count": 1,
     "nbt": "{ConcoctionDoses:9,ConcoctionType:\"elixir\",Potion:\"minecraft:long_invisibility\"}"
   }

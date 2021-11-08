@@ -289,6 +289,6 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
 
     @Override
     public String getName() {
-        return "Primal Magic Block Loot Tables";
+        return "Primal Magick Block Loot Tables";
     }
 }

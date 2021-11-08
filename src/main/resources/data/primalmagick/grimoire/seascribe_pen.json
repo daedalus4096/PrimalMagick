@@ -1,6 +1,6 @@
 {
   "key": "SEASCRIBE_PEN",
-  "name": "primalmagic.research.seascribe_pen.title",
+  "name": "primalmagick.research.seascribe_pen.title",
   "discipline": "MAGITECH",
   "parents": [
     "BASIC_MAGITECH",
@@ -8,9 +8,9 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.seascribe_pen.text.stage.1",
+      "text": "primalmagick.research.seascribe_pen.text.stage.1",
       "required_item": [
-        "primalmagic:enchanted_ink"
+        "primalmagick:enchanted_ink"
       ],
       "required_knowledge": [
         "OBSERVATION;1"
@@ -20,9 +20,9 @@
       ]
     },
     {
-      "text": "primalmagic.research.seascribe_pen.text.stage.2",
+      "text": "primalmagick.research.seascribe_pen.text.stage.2",
       "recipes": [
-        "primalmagic:seascribe_pen"
+        "primalmagick:seascribe_pen"
       ]
     }
   ],

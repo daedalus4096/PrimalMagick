@@ -132,7 +132,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
             this.localWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, manaCost.getAmount(source), this.leftPos + 28, this.topPos + 8)));
         }
         
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagic.spell.vehicle.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagick.spell.vehicle.header"));
         
         // Init spell vehicle type selector
         y += 12;
@@ -150,7 +150,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         }
         
         y = startY + 48;
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagic.spell.payload.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagick.spell.payload.header"));
         
         // Init spell payload type selector
         y += 12;
@@ -170,7 +170,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         // Move to the top of the right-hand column
         x += 110;
         y = startY;
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagic.spell.primary_mod.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagick.spell.primary_mod.header"));
         
         // Init primary spell mod type selector
         y += 12;
@@ -188,7 +188,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         }
         
         y = startY + 48;
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagic.spell.secondary_mod.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagick.spell.secondary_mod.header"));
         
         // Init secondary spell mod type selector
         y += 12;

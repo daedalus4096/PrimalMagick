@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:concocting",
+  "type": "primalmagick:concocting",
   "research": "CONCOCTING_BOMBS",
   "mana": {
     "infernal": 3
@@ -7,12 +7,12 @@
   "ingredients": [
     {
       "type": "forge:nbt",
-      "item": "primalmagic:alchemical_bomb",
+      "item": "primalmagick:alchemical_bomb",
       "count": 1,
       "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
     },
     {
-      "item": "primalmagic:essence_shard_earth"
+      "item": "primalmagick:essence_shard_earth"
     },
     {
       "tag": "forge:crops/nether_wart"
@@ -25,7 +25,7 @@
     }
   ],
   "result": {
-    "item": "primalmagic:alchemical_bomb",
+    "item": "primalmagick:alchemical_bomb",
     "count": 1,
     "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:long_strength\"}"
   }

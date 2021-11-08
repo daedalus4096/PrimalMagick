@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:item/wand_core",
+    "parent": "primalmagick:item/wand_core",
     "textures": {
-        "core": "primalmagic:item/obsidian_wand_core"
+        "core": "primalmagick:item/obsidian_wand_core"
     }
 }

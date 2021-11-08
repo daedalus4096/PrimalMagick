@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "WAND_GEM_ARCHMAGE",
   "mana": {
     "earth": 300,
@@ -13,10 +13,10 @@
       "tag": "forge:gems/diamond"
     },
     {
-      "tag": "primalmagic:essences/terrestrial_clusters"
+      "tag": "primalmagick:essences/terrestrial_clusters"
     }
   ],
   "result": {
-    "item": "primalmagic:archmage_wand_gem_item"
+    "item": "primalmagick:archmage_wand_gem_item"
   }
 }

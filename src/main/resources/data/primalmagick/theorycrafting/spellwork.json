@@ -1,19 +1,19 @@
 {
-  "key": "primalmagic:spellwork",
+  "key": "primalmagick:spellwork",
   "required_research": "BASIC_SORCERY",
   "reward_multiplier": 0.25,
   "aid_blocks": [],
   "material_options": [
     {
       "type": "item",
-      "stack": "primalmagic:spellcrafting_altar",
+      "stack": "primalmagick:spellcrafting_altar",
       "consumed": false,
       "match_nbt": false,
       "weight": 5.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:wand_inscription_table",
+      "stack": "primalmagick:wand_inscription_table",
       "consumed": false,
       "match_nbt": false,
       "weight": 2.0,
@@ -21,7 +21,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:wand_charger",
+      "stack": "primalmagick:wand_charger",
       "consumed": false,
       "match_nbt": false,
       "weight": 2.0,
@@ -29,49 +29,49 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:mundane_wand",
+      "stack": "primalmagick:mundane_wand",
       "consumed": false,
       "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:spell_scroll_blank",
+      "stack": "primalmagick:spell_scroll_blank",
       "consumed": true,
       "match_nbt": false,
       "weight": 5.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_earth",
+      "stack": "primalmagick:essence_dust_earth",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_sea",
+      "stack": "primalmagick:essence_dust_sea",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_sky",
+      "stack": "primalmagick:essence_dust_sky",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_sun",
+      "stack": "primalmagick:essence_dust_sun",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_moon",
+      "stack": "primalmagick:essence_dust_moon",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0

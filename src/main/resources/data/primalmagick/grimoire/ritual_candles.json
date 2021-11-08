@@ -1,52 +1,52 @@
 {
   "key": "RITUAL_CANDLES",
-  "name": "primalmagic.research.ritual_candles.title",
+  "name": "primalmagick.research.ritual_candles.title",
   "discipline": "RITUAL",
   "parents": [
     "BASIC_RITUAL"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.ritual_candles.text.stage.1",
+      "text": "primalmagick.research.ritual_candles.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.ritual_candles.text.stage.2",
+      "text": "primalmagick.research.ritual_candles.text.stage.2",
       "attunements": {
         "sun": 1
       },
       "recipes": [
-        "primalmagic:tallow",
-        "primalmagic:ritual_candle_white_from_tallow",
-        "primalmagic:ritual_candle_black",
-        "primalmagic:ritual_candle_blue",
-        "primalmagic:ritual_candle_brown",
-        "primalmagic:ritual_candle_cyan",
-        "primalmagic:ritual_candle_gray",
-        "primalmagic:ritual_candle_green",
-        "primalmagic:ritual_candle_light_blue",
-        "primalmagic:ritual_candle_light_gray",
-        "primalmagic:ritual_candle_lime",
-        "primalmagic:ritual_candle_magenta",
-        "primalmagic:ritual_candle_orange",
-        "primalmagic:ritual_candle_pink",
-        "primalmagic:ritual_candle_purple",
-        "primalmagic:ritual_candle_red",
-        "primalmagic:ritual_candle_white",
-        "primalmagic:ritual_candle_yellow"
+        "primalmagick:tallow",
+        "primalmagick:ritual_candle_white_from_tallow",
+        "primalmagick:ritual_candle_black",
+        "primalmagick:ritual_candle_blue",
+        "primalmagick:ritual_candle_brown",
+        "primalmagick:ritual_candle_cyan",
+        "primalmagick:ritual_candle_gray",
+        "primalmagick:ritual_candle_green",
+        "primalmagick:ritual_candle_light_blue",
+        "primalmagick:ritual_candle_light_gray",
+        "primalmagick:ritual_candle_lime",
+        "primalmagick:ritual_candle_magenta",
+        "primalmagick:ritual_candle_orange",
+        "primalmagick:ritual_candle_pink",
+        "primalmagick:ritual_candle_purple",
+        "primalmagick:ritual_candle_red",
+        "primalmagick:ritual_candle_white",
+        "primalmagick:ritual_candle_yellow"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.ritual_candles.text.addenda.1",
+      "text": "primalmagick.research.ritual_candles.text.addenda.1",
       "required_research": [
         "HONEY_EXTRACTOR"
       ],
       "recipes": [
-        "primalmagic:ritual_candle_white_from_beeswax"
+        "primalmagick:ritual_candle_white_from_beeswax"
       ]
     }
   ]

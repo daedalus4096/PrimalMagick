@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:primalite_ingots_from_block"
+      "primalmagick:primalite_ingots_from_block"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:storage_blocks/primalite"
+            "tag": "primalmagick:storage_blocks/primalite"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:primalite_ingots_from_block"
+        "recipe": "primalmagick:primalite_ingots_from_block"
       }
     }
   },

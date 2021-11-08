@@ -1,6 +1,6 @@
 {
   "key": "AMBROSIA",
-  "name": "primalmagic.research.ambrosia.title",
+  "name": "primalmagick.research.ambrosia.title",
   "discipline": "RITUAL",
   "parents": [
     "EXPERT_RITUAL",
@@ -13,17 +13,17 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.ambrosia.text.stage.1",
+      "text": "primalmagick.research.ambrosia.text.stage.1",
       "required_item": [
-        "primalmagic:rune_absorb",
-        "primalmagic:rune_self"
+        "primalmagick:rune_absorb",
+        "primalmagick:rune_self"
       ],
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.ambrosia.text.stage.2",
+      "text": "primalmagick.research.ambrosia.text.stage.2",
       "attunements": {
         "earth": 2,
         "sea": 2,
@@ -32,17 +32,17 @@
         "moon": 2
       },
       "recipes": [
-        "primalmagic:ambrosia_basic_earth",
-        "primalmagic:ambrosia_basic_sea",
-        "primalmagic:ambrosia_basic_sky",
-        "primalmagic:ambrosia_basic_sun",
-        "primalmagic:ambrosia_basic_moon"
+        "primalmagick:ambrosia_basic_earth",
+        "primalmagick:ambrosia_basic_sea",
+        "primalmagick:ambrosia_basic_sky",
+        "primalmagick:ambrosia_basic_sun",
+        "primalmagick:ambrosia_basic_moon"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.ambrosia.text.addenda.1",
+      "text": "primalmagick.research.ambrosia.text.addenda.1",
       "required_research": [
         "t_discover_blood"
       ],
@@ -50,11 +50,11 @@
         "blood": 2
       },
       "recipes": [
-        "primalmagic:ambrosia_basic_blood"
+        "primalmagick:ambrosia_basic_blood"
       ]
     },
     {
-      "text": "primalmagic.research.ambrosia.text.addenda.2",
+      "text": "primalmagick.research.ambrosia.text.addenda.2",
       "required_research": [
         "t_discover_infernal"
       ],
@@ -62,11 +62,11 @@
         "infernal": 2
       },
       "recipes": [
-        "primalmagic:ambrosia_basic_infernal"
+        "primalmagick:ambrosia_basic_infernal"
       ]
     },
     {
-      "text": "primalmagic.research.ambrosia.text.addenda.3",
+      "text": "primalmagick.research.ambrosia.text.addenda.3",
       "required_research": [
         "t_discover_void"
       ],
@@ -74,11 +74,11 @@
         "void": 2
       },
       "recipes": [
-        "primalmagic:ambrosia_basic_void"
+        "primalmagick:ambrosia_basic_void"
       ]
     },
     {
-      "text": "primalmagic.research.ambrosia.text.addenda.4",
+      "text": "primalmagick.research.ambrosia.text.addenda.4",
       "required_research": [
         "t_discover_hallowed"
       ],
@@ -86,7 +86,7 @@
         "hallowed": 2
       },
       "recipes": [
-        "primalmagic:ambrosia_basic_hallowed"
+        "primalmagick:ambrosia_basic_hallowed"
       ]
     }
   ]

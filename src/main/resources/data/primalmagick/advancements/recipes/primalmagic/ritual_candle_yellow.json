@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:ritual_candle_yellow"
+      "primalmagick:ritual_candle_yellow"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:ritual_candles"
+            "tag": "primalmagick:ritual_candles"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:ritual_candle_yellow"
+        "recipe": "primalmagick:ritual_candle_yellow"
       }
     }
   },

@@ -51,15 +51,15 @@ public class ManaCostSummaryWidget extends AbstractWidget {
         if (this.isHovered()) {
             List<Component> tooltip = new ArrayList<>();
             if (this.manaCosts.isEmpty()) {
-                tooltip.add(new TranslatableComponent("primalmagic.crafting.no_mana"));
+                tooltip.add(new TranslatableComponent("primalmagick.crafting.no_mana"));
             } else {
-                tooltip.add(new TranslatableComponent("primalmagic.crafting.mana_cost_header"));
+                tooltip.add(new TranslatableComponent("primalmagick.crafting.mana_cost_header"));
                 for (Source source : this.manaCosts.getSourcesSorted()) {
                     boolean discovered = source.isDiscovered(mc.player);
                     Component sourceText = discovered ? 
                             source.getNameText() :
                             new TranslatableComponent(Source.getUnknownTranslationKey());
-                    tooltip.add(new TranslatableComponent("primalmagic.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
+                    tooltip.add(new TranslatableComponent("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
                 }
             }
             GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);

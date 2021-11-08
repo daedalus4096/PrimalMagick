@@ -1,16 +1,16 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "MASTER_MANAWEAVING",
   "pattern": [
     "MMM"
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_smoked"
+      "item": "primalmagick:marble_smoked"
     }
   },
   "result": {
-    "item": "primalmagic:marble_smoked_slab",
+    "item": "primalmagick:marble_smoked_slab",
     "count": 6
   }
 }

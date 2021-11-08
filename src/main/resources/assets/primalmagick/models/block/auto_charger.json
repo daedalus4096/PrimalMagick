@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/auto_charger",
-		"particle": "primalmagic:block/auto_charger"
+		"0": "primalmagick:block/auto_charger",
+		"particle": "primalmagick:block/auto_charger"
 	},
 	"elements": [
 		{

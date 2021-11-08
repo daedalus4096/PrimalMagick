@@ -1,6 +1,6 @@
 {
   "key": "HALLOWOOD_TREES",
-  "name": "primalmagic.research.hallowood_trees.title",
+  "name": "primalmagick.research.hallowood_trees.title",
   "discipline": "SCANS",
   "hidden": true,
   "parents": [
@@ -8,14 +8,14 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.hallowood_trees.text.stage.1",
+      "text": "primalmagick.research.hallowood_trees.text.stage.1",
       "recipes": [
-        "primalmagic:hallowood_wood",
-        "primalmagic:stripped_hallowood_wood",
-        "primalmagic:hallowood_planks",
-        "primalmagic:hallowood_slab",
-        "primalmagic:hallowood_stairs",
-        "primalmagic:hallowood_pillar"
+        "primalmagick:hallowood_wood",
+        "primalmagick:stripped_hallowood_wood",
+        "primalmagick:hallowood_planks",
+        "primalmagick:hallowood_slab",
+        "primalmagick:hallowood_stairs",
+        "primalmagick:hallowood_pillar"
       ]
     }
   ],

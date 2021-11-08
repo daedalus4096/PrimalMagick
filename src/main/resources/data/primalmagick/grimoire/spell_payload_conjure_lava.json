@@ -1,6 +1,6 @@
 {
   "key": "SPELL_PAYLOAD_CONJURE_LAVA",
-  "name": "primalmagic.research.spell_payload_conjure_lava.title",
+  "name": "primalmagick.research.spell_payload_conjure_lava.title",
   "discipline": "SORCERY",
   "parents": [
     "MASTER_SORCERY",
@@ -9,7 +9,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_payload_conjure_lava.text.stage.1",
+      "text": "primalmagick.research.spell_payload_conjure_lava.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ],
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.spell_payload_conjure_lava.text.stage.2",
+      "text": "primalmagick.research.spell_payload_conjure_lava.text.stage.2",
       "attunements": {
         "infernal": 3
       }

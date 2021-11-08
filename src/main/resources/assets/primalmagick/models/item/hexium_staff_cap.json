@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:item/staff_cap",
+    "parent": "primalmagick:item/staff_cap",
     "textures": {
-        "cap": "primalmagic:block/hexium_block"
+        "cap": "primalmagick:block/hexium_block"
     }
 }

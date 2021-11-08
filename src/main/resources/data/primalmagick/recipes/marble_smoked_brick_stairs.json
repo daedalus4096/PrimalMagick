@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "MASTER_MANAWEAVING",
   "pattern": [
     "M  ",
@@ -8,11 +8,11 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_smoked_bricks"
+      "item": "primalmagick:marble_smoked_bricks"
     }
   },
   "result": {
-    "item": "primalmagic:marble_smoked_brick_stairs",
+    "item": "primalmagick:marble_smoked_brick_stairs",
     "count": 4
   }
 }

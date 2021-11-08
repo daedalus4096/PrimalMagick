@@ -1,5 +1,5 @@
 {
-    "parent": "primalmagic:item/wand_gem",
+    "parent": "primalmagick:item/wand_gem",
     "textures": {
         "gem": "block/diamond_block"
     }

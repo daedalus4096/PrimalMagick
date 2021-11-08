@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "heavenly_mana_fonts",
   "research": "HEAVENLY_MANA_FONTS",
   "mana": {
@@ -12,19 +12,19 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/hallowsteel"
+      "tag": "primalmagick:ingots/hallowsteel"
     },
     "M": {
-      "item": "primalmagic:marble_hallowed_slab"
+      "item": "primalmagick:marble_hallowed_slab"
     },
     "E": {
-      "item": "primalmagic:essence_cluster_earth"
+      "item": "primalmagick:essence_cluster_earth"
     },
     "F": {
-      "item": "primalmagic:forbidden_font_earth"
+      "item": "primalmagick:forbidden_font_earth"
     }
   },
   "result": {
-    "item": "primalmagic:heavenly_font_earth"
+    "item": "primalmagick:heavenly_font_earth"
   }
 }

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#primalmagic:dead_coral_plants",
+    "#primalmagick:dead_coral_plants",
     "minecraft:dead_brain_coral_fan",
     "minecraft:dead_bubble_coral_fan",
     "minecraft:dead_fire_coral_fan",

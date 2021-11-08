@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:block/sunwood_sapling"
+        "layer0": "primalmagick:block/sunwood_sapling"
     }
 }

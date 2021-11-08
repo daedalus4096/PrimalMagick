@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:stripped_moonwood_wood"
+          "name": "primalmagick:stripped_moonwood_wood"
         }
       ],
       "conditions": [
@@ -23,13 +23,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:heartwood"
+          "name": "primalmagick:heartwood"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "primalmagic:stripped_moonwood_wood",
+          "block": "primalmagick:stripped_moonwood_wood",
           "properties": {
             "pulsing": "true"
           }

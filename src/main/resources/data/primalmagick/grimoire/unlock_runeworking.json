@@ -1,19 +1,19 @@
 {
   "key": "UNLOCK_RUNEWORKING",
-  "name": "primalmagic.research.unlock_runeworking.title",
+  "name": "primalmagick.research.unlock_runeworking.title",
   "discipline": "BASICS",
   "parents": [
     "CALCINATOR_BASIC"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.unlock_runeworking.text.stage.1",
+      "text": "primalmagick.research.unlock_runeworking.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.unlock_runeworking.text.stage.2"
+      "text": "primalmagick.research.unlock_runeworking.text.stage.2"
     }
   ],
   "addenda": []

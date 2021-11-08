@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:moonwood_planks"
+      "primalmagick:moonwood_planks"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:moonwood_logs"
+            "tag": "primalmagick:moonwood_logs"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:moonwood_planks"
+        "recipe": "primalmagick:moonwood_planks"
       }
     }
   },

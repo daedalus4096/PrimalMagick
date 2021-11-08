@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:marble_enchanted_wall"
+          "name": "primalmagick:marble_enchanted_wall"
         }
       ],
       "conditions": [

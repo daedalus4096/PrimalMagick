@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_dust_infernal",
+  "target": "primalmagick:essence_dust_infernal",
   "set": {
     "infernal": 5
   }

@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "primalmagic:marble_enchanted_runed",
-  "base": "primalmagic:marble_runed",
+  "target": "primalmagick:marble_enchanted_runed",
+  "base": "primalmagick:marble_runed",
   "add": {
     "earth": 1,
     "sea": 1,

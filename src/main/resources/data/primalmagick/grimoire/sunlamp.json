@@ -1,6 +1,6 @@
 {
   "key": "SUNLAMP",
-  "name": "primalmagic.research.sunlamp.title",
+  "name": "primalmagick.research.sunlamp.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "EXPERT_MANAWEAVING",
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.sunlamp.text.stage.1",
+      "text": "primalmagick.research.sunlamp.text.stage.1",
       "required_item": [
         "minecraft:lantern"
       ],
@@ -17,18 +17,18 @@
       ]
     },
     {
-      "text": "primalmagic.research.sunlamp.text.stage.2",
+      "text": "primalmagick.research.sunlamp.text.stage.2",
       "attunements": {
         "sun": 2
       },
       "recipes": [
-        "primalmagic:sunlamp"
+        "primalmagick:sunlamp"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.sunlamp.text.addenda.1",
+      "text": "primalmagick.research.sunlamp.text.addenda.1",
       "required_research": [
         "HEXIUM"
       ],
@@ -36,7 +36,7 @@
         "infernal": 2
       },
       "recipes": [
-        "primalmagic:spirit_lantern"
+        "primalmagick:spirit_lantern"
       ]
     }
   ]

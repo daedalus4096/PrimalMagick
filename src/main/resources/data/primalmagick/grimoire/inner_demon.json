@@ -1,6 +1,6 @@
 {
   "key": "INNER_DEMON",
-  "name": "primalmagic.research.inner_demon.title",
+  "name": "primalmagick.research.inner_demon.title",
   "discipline": "SCANS",
   "hidden": true,
   "parents": [
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.inner_demon.text.stage.1"
+      "text": "primalmagick.research.inner_demon.text.stage.1"
     }
   ],
   "addenda": []

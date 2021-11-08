@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "PIXIES",
   "mana": {
     "sky": 40
@@ -7,27 +7,27 @@
   "instability": 3,
   "ingredients": [
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     },
     {
-      "item": "primalmagic:essence_shard_sky"
+      "item": "primalmagick:essence_shard_sky"
     },
     {
-      "item": "primalmagic:rune_summon"
+      "item": "primalmagick:rune_summon"
     },
     {
-      "item": "primalmagic:rune_creature"
+      "item": "primalmagick:rune_creature"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:incense_brazier"
+      "block": "primalmagick:incense_brazier"
     },
     {
-      "block": "primalmagic:ritual_bell"
+      "block": "primalmagick:ritual_bell"
     }
   ],
   "result": {
-    "item": "primalmagic:pixie_basic_sky"
+    "item": "primalmagick:pixie_basic_sky"
   }
 }

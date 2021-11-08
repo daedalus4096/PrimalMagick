@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:quartz_nugget"
+      "primalmagick:quartz_nugget"
     ]
   },
   "criteria": {
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:quartz_nugget"
+        "recipe": "primalmagick:quartz_nugget"
       }
     }
   },

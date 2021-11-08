@@ -72,7 +72,7 @@ public class ResearchWidget extends AbstractWidget {
         
         if (this.isHovered()) {
             // Render tooltip
-            Component text = new TranslatableComponent("primalmagic.research." + this.key.getRootKey() + ".text");
+            Component text = new TranslatableComponent("primalmagick.research." + this.key.getRootKey() + ".text");
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(text), this.x, this.y);
         }
     }

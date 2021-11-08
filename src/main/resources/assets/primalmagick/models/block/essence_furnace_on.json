@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/essence_furnace_front_on",
-		"1": "primalmagic:block/essence_furnace_side",
-		"2": "primalmagic:block/essence_furnace_top",
-		"3": "primalmagic:block/essence_furnace_bottom",
-		"particle": "primalmagic:block/essence_furnace_bottom"
+		"0": "primalmagick:block/essence_furnace_front_on",
+		"1": "primalmagick:block/essence_furnace_side",
+		"2": "primalmagick:block/essence_furnace_top",
+		"3": "primalmagick:block/essence_furnace_bottom",
+		"particle": "primalmagick:block/essence_furnace_bottom"
 	},
 	"elements": [
 		{

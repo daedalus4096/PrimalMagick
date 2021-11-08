@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "PRIMAL_PICKAXE",
   "mana": {
     "moon": 40
@@ -7,34 +7,34 @@
   "instability": 3,
   "ingredients": [
     {
-      "item": "primalmagic:primalite_pickaxe"
+      "item": "primalmagick:primalite_pickaxe"
     },
     {
-      "item": "primalmagic:essence_shard_moon"
+      "item": "primalmagick:essence_shard_moon"
     },
     {
-      "item": "primalmagic:essence_shard_moon"
+      "item": "primalmagick:essence_shard_moon"
     },
     {
-      "item": "primalmagic:rune_moon"
+      "item": "primalmagick:rune_moon"
     },
     {
-      "item": "primalmagic:mana_prism"
+      "item": "primalmagick:mana_prism"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:ritual_lectern"
+      "block": "primalmagick:ritual_lectern"
     },
     {
-      "block": "primalmagic:incense_brazier"
+      "block": "primalmagick:incense_brazier"
     }
   ],
   "result": {
-    "item": "primalmagic:primal_pickaxe",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:lucky_strike\",lvl:2s}]}"
+    "item": "primalmagick:primal_pickaxe",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:lucky_strike\",lvl:2s}]}"
   }
 }

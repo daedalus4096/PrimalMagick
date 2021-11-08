@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/ambrosia_greater",
-        "layer1": "primalmagic:item/ambrosia_overlay"
+        "layer0": "primalmagick:item/ambrosia_greater",
+        "layer1": "primalmagick:item/ambrosia_overlay"
     }
 }

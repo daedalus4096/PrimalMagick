@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/artificial_font_hallowed"
+            "model": "primalmagick:block/artificial_font_hallowed"
         }
     }
 }

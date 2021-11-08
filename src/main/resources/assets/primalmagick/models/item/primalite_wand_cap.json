@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:item/wand_cap",
+    "parent": "primalmagick:item/wand_cap",
     "textures": {
-        "cap": "primalmagic:block/primalite_block"
+        "cap": "primalmagick:block/primalite_block"
     }
 }

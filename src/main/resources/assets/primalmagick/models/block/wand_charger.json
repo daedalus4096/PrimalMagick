@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/wand_charger",
-		"particle": "primalmagic:block/wand_charger"
+		"0": "primalmagick:block/wand_charger",
+		"particle": "primalmagick:block/wand_charger"
 	},
 	"elements": [
 		{

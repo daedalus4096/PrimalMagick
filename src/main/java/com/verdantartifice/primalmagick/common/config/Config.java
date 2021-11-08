@@ -67,12 +67,12 @@ public class Config {
     public static void register() {
         if (IS_REGISTERED) {
             // Only allow registration once
-            throw new IllegalStateException("Primal Magic config spec is already registered!");
+            throw new IllegalStateException("Primal Magick config spec is already registered!");
         }
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG_SPEC);
-        loadConfig(Config.COMMON_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagic-common.toml"));
-        loadConfig(Config.CLIENT_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagic-client.toml"));
+        loadConfig(Config.COMMON_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagick-common.toml"));
+        loadConfig(Config.CLIENT_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagick-client.toml"));
         IS_REGISTERED = true;
     }
 }

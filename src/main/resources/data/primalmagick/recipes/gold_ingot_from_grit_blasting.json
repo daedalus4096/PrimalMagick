@@ -2,7 +2,7 @@
   "type": "minecraft:blasting",
   "group": "gold_ingot",
   "ingredient": {
-    "item": "primalmagic:gold_grit"
+    "item": "primalmagick:gold_grit"
   },
   "result": "minecraft:gold_ingot",
   "experience": 0.7,

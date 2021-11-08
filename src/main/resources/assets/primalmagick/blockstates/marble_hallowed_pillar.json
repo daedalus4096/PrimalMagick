@@ -1,7 +1,7 @@
 {
     "variants": {
-        "type=base":   { "model": "primalmagic:block/marble_hallowed_pillar" },
-        "type=bottom": { "model": "primalmagic:block/marble_hallowed_pillar_bottom" },
-        "type=top":    { "model": "primalmagic:block/marble_hallowed_pillar_top" }
+        "type=base":   { "model": "primalmagick:block/marble_hallowed_pillar" },
+        "type=bottom": { "model": "primalmagick:block/marble_hallowed_pillar_bottom" },
+        "type=top":    { "model": "primalmagick:block/marble_hallowed_pillar_top" }
     }
 }

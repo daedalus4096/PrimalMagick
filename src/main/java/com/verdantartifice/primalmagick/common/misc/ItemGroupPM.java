@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class ItemGroupPM extends CreativeModeTab {
     public ItemGroupPM() {
-        super("primalmagic");
+        super("primalmagick");
     }
 
     @Override

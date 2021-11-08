@@ -1,18 +1,18 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "FIRST_STEPS@2",
   "ingredients": [
     {
-      "item": "primalmagic:wood_table"
+      "item": "primalmagick:wood_table"
     },
     {
-      "item": "primalmagic:magnifying_glass"
+      "item": "primalmagick:magnifying_glass"
     },
     {
       "item": "minecraft:paper"
     }
   ],
   "result": {
-    "item": "primalmagic:analysis_table"
+    "item": "primalmagick:analysis_table"
   }
 }

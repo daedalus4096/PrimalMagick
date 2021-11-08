@@ -38,8 +38,8 @@ import net.minecraft.world.level.Level;
 public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_table.png");
     private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_button.png");
-    protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = new TranslatableComponent("tooltip.primalmagic.analyze_button.1");
-    protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = new TranslatableComponent("tooltip.primalmagic.analyze_button.2").withStyle(ChatFormatting.RED);
+    protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = new TranslatableComponent("tooltip.primalmagick.analyze_button.1");
+    protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = new TranslatableComponent("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
     
     protected Level world;
 
@@ -69,11 +69,11 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
         
         // Generate text in the case that no item has been analyzed, or the item has no affinities
         if (lastScannedStack == null || lastScannedStack.isEmpty()) {
-            text = new TranslatableComponent("primalmagic.analysis.no_item");
+            text = new TranslatableComponent("primalmagick.analysis.no_item");
         } else {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world);
             if (sources == null || sources.isEmpty()) {
-                text = new TranslatableComponent("primalmagic.analysis.no_affinities");
+                text = new TranslatableComponent("primalmagick.analysis.no_affinities");
             }
         }
         

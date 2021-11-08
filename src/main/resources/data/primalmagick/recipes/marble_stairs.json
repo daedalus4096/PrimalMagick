@@ -7,11 +7,11 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     }
   },
   "result": {
-    "item": "primalmagic:marble_stairs",
+    "item": "primalmagick:marble_stairs",
     "count": 4
   }
 }

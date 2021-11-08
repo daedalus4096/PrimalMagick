@@ -1,19 +1,19 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "group": "attuned_sanguine_cores",
   "research": "SANGUINE_CORE_DEMONS",
   "ingredients": [
     {
-      "item": "primalmagic:sanguine_core_blank"
+      "item": "primalmagick:sanguine_core_blank"
     },
     {
       "item": "minecraft:golden_axe"
     },
     {
-      "item": "primalmagic:essence_dust_infernal"
+      "item": "primalmagick:essence_dust_infernal"
     }
   ],
   "result": {
-    "item": "primalmagic:sanguine_core_piglin_brute"
+    "item": "primalmagick:sanguine_core_piglin_brute"
   }
 }

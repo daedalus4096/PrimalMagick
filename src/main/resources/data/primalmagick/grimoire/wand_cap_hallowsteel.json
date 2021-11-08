@@ -1,6 +1,6 @@
 {
   "key": "WAND_CAP_HALLOWSTEEL",
-  "name": "primalmagic.research.wand_cap_hallowsteel.title",
+  "name": "primalmagick.research.wand_cap_hallowsteel.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "SUPREME_MANAWEAVING",
@@ -9,18 +9,18 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.wand_cap_hallowsteel.text.stage.1",
+      "text": "primalmagick.research.wand_cap_hallowsteel.text.stage.1",
       "required_item": [
-        "tag:primalmagic:ingots/hallowsteel"
+        "tag:primalmagick:ingots/hallowsteel"
       ],
       "required_knowledge": [
         "THEORY;3"
       ]
     },
     {
-      "text": "primalmagic.research.wand_cap_hallowsteel.text.stage.2",
+      "text": "primalmagick.research.wand_cap_hallowsteel.text.stage.2",
       "recipes": [
-        "primalmagic:hallowsteel_wand_cap_item"
+        "primalmagick:hallowsteel_wand_cap_item"
       ]
     }
   ],

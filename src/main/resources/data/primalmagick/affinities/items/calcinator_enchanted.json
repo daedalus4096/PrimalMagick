@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:calcinator_enchanted",
+  "target": "primalmagick:calcinator_enchanted",
   "set": {
     "earth": 77,
     "sea": 26,

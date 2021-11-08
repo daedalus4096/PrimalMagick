@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:wand_assembly_table"
+          "name": "primalmagick:wand_assembly_table"
         }
       ],
       "conditions": [

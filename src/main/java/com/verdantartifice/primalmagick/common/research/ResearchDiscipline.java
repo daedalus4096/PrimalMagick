@@ -45,7 +45,7 @@ public class ResearchDiscipline {
     
     @Nonnull
     public String getNameTranslationKey() {
-        return "primalmagic.research_discipline." + this.key;
+        return "primalmagick.research_discipline." + this.key;
     }
     
     @Nullable

@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "WAND_CORE_DARK_PRIMAL",
   "mana": {
     "earth": 50,
@@ -14,42 +14,42 @@
   "instability": 5,
   "ingredients": [
     {
-      "item": "primalmagic:primal_wand_core_item"
+      "item": "primalmagick:primal_wand_core_item"
     },
     {
-      "item": "primalmagic:bone_wand_core_item"
+      "item": "primalmagick:bone_wand_core_item"
     },
     {
-      "item": "primalmagic:blaze_rod_wand_core_item"
+      "item": "primalmagick:blaze_rod_wand_core_item"
     },
     {
-      "item": "primalmagic:purpur_wand_core_item"
+      "item": "primalmagick:purpur_wand_core_item"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:ritual_bell"
+      "block": "primalmagick:ritual_bell"
     },
     {
-      "block": "primalmagic:ritual_lectern"
+      "block": "primalmagick:ritual_lectern"
     },
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     },
     {
-      "block": "primalmagic:bloodletter"
+      "block": "primalmagick:bloodletter"
     },
     {
-      "block": "primalmagic:soul_anvil"
+      "block": "primalmagick:soul_anvil"
     }
   ],
   "result": {
-    "item": "primalmagic:dark_primal_wand_core_item"
+    "item": "primalmagick:dark_primal_wand_core_item"
   }
 }

@@ -1,6 +1,6 @@
 {
     "parent": "block/template_wall_post",
     "textures": {
-        "wall": "primalmagic:block/marble_raw"
+        "wall": "primalmagick:block/marble_raw"
     }
 }

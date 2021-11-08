@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:artificial_font_blood"
+          "name": "primalmagick:artificial_font_blood"
         }
       ],
       "conditions": [

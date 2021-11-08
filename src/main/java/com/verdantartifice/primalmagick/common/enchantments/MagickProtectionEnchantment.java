@@ -6,12 +6,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
 /**
- * Definition of an enchantment that reduces magic damage taken.
+ * Definition of an enchantment that reduces magick damage taken.
  * 
  * @author Daedalus4096
  */
-public class MagicProtectionEnchantment extends ProtectionEnchantment {
-    public MagicProtectionEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slotTypes) {
+public class MagickProtectionEnchantment extends ProtectionEnchantment {
+    public MagickProtectionEnchantment(Enchantment.Rarity rarity, EquipmentSlot... slotTypes) {
         super(rarity, null, slotTypes);
     }
 
@@ -40,7 +40,7 @@ public class MagicProtectionEnchantment extends ProtectionEnchantment {
     public boolean checkCompatibility(Enchantment other) {
         if (other instanceof ProtectionEnchantment protEnch) {
             // Allow stacking with Feather Fall, but not other protection-type enchantments
-            if (other instanceof MagicProtectionEnchantment) {
+            if (other instanceof MagickProtectionEnchantment) {
                 return false;
             } else {
                 return protEnch.type == ProtectionEnchantment.Type.FALL;

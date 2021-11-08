@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:soul_anvil"
+          "name": "primalmagick:soul_anvil"
         }
       ],
       "conditions": [

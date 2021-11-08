@@ -3,11 +3,11 @@
   "group": "primalite_ingot",
   "ingredients": [
     {
-      "tag": "primalmagic:storage_blocks/primalite"
+      "tag": "primalmagick:storage_blocks/primalite"
     }
   ],
   "result": {
-    "item": "primalmagic:primalite_ingot",
+    "item": "primalmagick:primalite_ingot",
     "count": 9
   }
 }

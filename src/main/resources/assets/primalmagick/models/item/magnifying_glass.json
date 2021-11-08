@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/magnifying_glass"
+        "layer0": "primalmagick:item/magnifying_glass"
     }
 }

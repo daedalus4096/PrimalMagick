@@ -2,7 +2,7 @@
     "parent": "builtin/entity",
     "gui_light": "front",
     "textures": {
-        "particle": "primalmagic:item/hallowsteel_trident"
+        "particle": "primalmagick:item/hallowsteel_trident"
     },
     "display": {
         "thirdperson_righthand": {

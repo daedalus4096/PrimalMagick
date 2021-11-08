@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "WAND_INSCRIPTION",
   "mana": {
     "earth": 5,
@@ -10,13 +10,13 @@
   },
   "ingredients": [
     {
-      "item": "primalmagic:wood_table"
+      "item": "primalmagick:wood_table"
     },
     {
-      "item": "primalmagic:spell_scroll_blank"
+      "item": "primalmagick:spell_scroll_blank"
     }
   ],
   "result": {
-    "item": "primalmagic:wand_inscription_table"
+    "item": "primalmagick:wand_inscription_table"
   }
 }

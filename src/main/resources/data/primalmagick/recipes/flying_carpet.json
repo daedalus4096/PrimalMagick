@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "FLYING_CARPET",
   "mana": {
     "sky": 100
@@ -16,39 +16,39 @@
       "item": "minecraft:feather"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     },
     {
-      "item": "primalmagic:essence_crystal_sky"
+      "item": "primalmagick:essence_crystal_sky"
     },
     {
-      "item": "primalmagic:essence_crystal_sky"
+      "item": "primalmagick:essence_crystal_sky"
     },
     {
-      "item": "primalmagic:rune_project"
+      "item": "primalmagick:rune_project"
     },
     {
-      "item": "primalmagic:rune_item"
+      "item": "primalmagick:rune_item"
     },
     {
-      "item": "primalmagic:rune_power"
+      "item": "primalmagick:rune_power"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:incense_brazier"
+      "block": "primalmagick:incense_brazier"
     },
     {
-      "block": "primalmagic:incense_brazier"
+      "block": "primalmagick:incense_brazier"
     },
     {
-      "block": "primalmagic:ritual_bell"
+      "block": "primalmagick:ritual_bell"
     },
     {
-      "block": "primalmagic:ritual_lectern"
+      "block": "primalmagick:ritual_lectern"
     }
   ],
   "result": {
-    "item": "primalmagic:flying_carpet"
+    "item": "primalmagick:flying_carpet"
   }
 }

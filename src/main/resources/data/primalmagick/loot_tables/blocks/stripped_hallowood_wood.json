@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:stripped_hallowood_wood"
+          "name": "primalmagick:stripped_hallowood_wood"
         }
       ],
       "conditions": [

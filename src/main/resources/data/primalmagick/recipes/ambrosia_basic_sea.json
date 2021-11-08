@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "AMBROSIA",
   "mana": {
     "sea": 40
@@ -7,33 +7,33 @@
   "instability": 4,
   "ingredients": [
     {
-      "item": "primalmagic:manafruit"
+      "item": "primalmagick:manafruit"
     },
     {
-      "item": "primalmagic:mana_prism"
+      "item": "primalmagick:mana_prism"
     },
     {
-      "item": "primalmagic:essence_shard_sea"
+      "item": "primalmagick:essence_shard_sea"
     },
     {
-      "item": "primalmagic:rune_absorb"
+      "item": "primalmagick:rune_absorb"
     },
     {
-      "item": "primalmagic:rune_self"
+      "item": "primalmagick:rune_self"
     }
   ],
   "props": [
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     },
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     },
     {
-      "block": "primalmagic:ritual_lectern"
+      "block": "primalmagick:ritual_lectern"
     }
   ],
   "result": {
-    "item": "primalmagic:ambrosia_basic_sea"
+    "item": "primalmagick:ambrosia_basic_sea"
   }
 }

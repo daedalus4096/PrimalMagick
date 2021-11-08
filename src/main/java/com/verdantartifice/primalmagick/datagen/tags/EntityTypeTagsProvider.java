@@ -26,7 +26,7 @@ public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
 
     @Override
     public String getName() {
-        return "Primal Magic Entity Type Tags";
+        return "Primal Magick Entity Type Tags";
     }
 
     @Override

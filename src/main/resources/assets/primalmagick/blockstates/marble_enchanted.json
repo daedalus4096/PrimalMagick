@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/marble_enchanted"
+            "model": "primalmagick:block/marble_enchanted"
         }
     }
 }

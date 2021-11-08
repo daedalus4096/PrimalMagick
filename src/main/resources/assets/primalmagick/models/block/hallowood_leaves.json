@@ -1,6 +1,6 @@
 {
     "parent": "block/leaves",
     "textures": {
-        "all": "primalmagic:block/hallowood_leaves"
+        "all": "primalmagick:block/hallowood_leaves"
     }
 }

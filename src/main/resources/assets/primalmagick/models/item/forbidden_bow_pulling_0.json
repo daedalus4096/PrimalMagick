@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:item/forbidden_bow",
+    "parent": "primalmagick:item/forbidden_bow",
     "textures": {
-        "layer0": "primalmagic:item/forbidden_bow_pulling_0"
+        "layer0": "primalmagick:item/forbidden_bow_pulling_0"
     }
 }

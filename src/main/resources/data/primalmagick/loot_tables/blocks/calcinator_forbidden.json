@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:calcinator_forbidden"
+          "name": "primalmagick:calcinator_forbidden"
         }
       ],
       "conditions": [

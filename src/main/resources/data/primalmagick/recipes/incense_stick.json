@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "INCENSE_BRAZIER",
   "mana": {
     "sky": 1
@@ -17,6 +17,6 @@
     }
   },
   "result": {
-    "item": "primalmagic:incense_stick"
+    "item": "primalmagick:incense_stick"
   }
 }

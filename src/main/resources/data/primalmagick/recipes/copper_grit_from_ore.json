@@ -3,14 +3,14 @@
   "group": "earthshatter_hammer_grit",
   "ingredients": [
     {
-      "item": "primalmagic:earthshatter_hammer"
+      "item": "primalmagick:earthshatter_hammer"
     },
     {
       "item": "minecraft:copper_ore"
     }
   ],
   "result": {
-    "item": "primalmagic:copper_grit",
+    "item": "primalmagick:copper_grit",
     "count": 2
   }
 }

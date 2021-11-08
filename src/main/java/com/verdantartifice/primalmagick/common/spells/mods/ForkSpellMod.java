@@ -47,8 +47,8 @@ public class ForkSpellMod extends AbstractSpellMod {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("forks", new SpellProperty("forks", "primalmagic.spell.property.forks", 2, 5));
-        propMap.put("precision", new SpellProperty("precision", "primalmagic.spell.property.precision", 0, 5));
+        propMap.put("forks", new SpellProperty("forks", "primalmagick.spell.property.forks", 2, 5));
+        propMap.put("precision", new SpellProperty("precision", "primalmagick.spell.property.precision", 0, 5));
         return propMap;
     }
 
@@ -102,6 +102,6 @@ public class ForkSpellMod extends AbstractSpellMod {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagic.spell.mod.detail_tooltip." + this.getModType(), this.getForkCount(), this.getSpreadDegreesText());
+        return new TranslatableComponent("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getForkCount(), this.getSpreadDegreesText());
     }
 }

@@ -1,5 +1,5 @@
 {
-  "key": "primalmagic:brewing_experiments",
+  "key": "primalmagick:brewing_experiments",
   "required_research": "t_discover_infernal",
   "reward_multiplier": 0.25,
   "aid_blocks": [],

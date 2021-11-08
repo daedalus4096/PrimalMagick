@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "WAND_CORE_OBSIDIAN",
   "mana": {
     "earth": 15,
@@ -14,13 +14,13 @@
   ],
   "key": {
     "D": {
-      "item": "primalmagic:essence_dust_earth"
+      "item": "primalmagick:essence_dust_earth"
     },
     "#": {
       "tag": "forge:obsidian"
     }
   },
   "result": {
-    "item": "primalmagic:obsidian_wand_core_item"
+    "item": "primalmagick:obsidian_wand_core_item"
   }
 }

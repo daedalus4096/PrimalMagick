@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "THEORYCRAFTING@2",
   "ingredients": [
     {
@@ -9,10 +9,10 @@
       "tag": "forge:dyes/black"
     },
     {
-      "tag": "primalmagic:essences/terrestrial_dusts"
+      "tag": "primalmagick:essences/terrestrial_dusts"
     }
   ],
   "result": {
-    "item": "primalmagic:enchanted_ink"
+    "item": "primalmagick:enchanted_ink"
   }
 }

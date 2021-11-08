@@ -1,19 +1,19 @@
 {
   "key": "SHARD_SYNTHESIS",
-  "name": "primalmagic.research.shard_synthesis.title",
+  "name": "primalmagick.research.shard_synthesis.title",
   "discipline": "ALCHEMY",
   "parents": [
     "EXPERT_ALCHEMY"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.shard_synthesis.text.stage.1",
+      "text": "primalmagick.research.shard_synthesis.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.shard_synthesis.text.stage.2",
+      "text": "primalmagick.research.shard_synthesis.text.stage.2",
       "attunements": {
         "earth": 1,
         "sea": 1,
@@ -22,17 +22,17 @@
         "moon": 1
       },
       "recipes": [
-        "primalmagic:essence_shard_earth_from_dust",
-        "primalmagic:essence_shard_sea_from_dust",
-        "primalmagic:essence_shard_sky_from_dust",
-        "primalmagic:essence_shard_sun_from_dust",
-        "primalmagic:essence_shard_moon_from_dust"
+        "primalmagick:essence_shard_earth_from_dust",
+        "primalmagick:essence_shard_sea_from_dust",
+        "primalmagick:essence_shard_sky_from_dust",
+        "primalmagick:essence_shard_sun_from_dust",
+        "primalmagick:essence_shard_moon_from_dust"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.shard_synthesis.text.addenda.1",
+      "text": "primalmagick.research.shard_synthesis.text.addenda.1",
       "required_research": [
         "t_discover_blood"
       ],
@@ -40,11 +40,11 @@
         "blood": 1
       },
       "recipes": [
-        "primalmagic:essence_shard_blood_from_dust"
+        "primalmagick:essence_shard_blood_from_dust"
       ]
     },
     {
-      "text": "primalmagic.research.shard_synthesis.text.addenda.2",
+      "text": "primalmagick.research.shard_synthesis.text.addenda.2",
       "required_research": [
         "t_discover_infernal"
       ],
@@ -52,11 +52,11 @@
         "infernal": 1
       },
       "recipes": [
-        "primalmagic:essence_shard_infernal_from_dust"
+        "primalmagick:essence_shard_infernal_from_dust"
       ]
     },
     {
-      "text": "primalmagic.research.shard_synthesis.text.addenda.3",
+      "text": "primalmagick.research.shard_synthesis.text.addenda.3",
       "required_research": [
         "t_discover_void"
       ],
@@ -64,11 +64,11 @@
         "void": 1
       },
       "recipes": [
-        "primalmagic:essence_shard_void_from_dust"
+        "primalmagick:essence_shard_void_from_dust"
       ]
     },
     {
-      "text": "primalmagic.research.shard_synthesis.text.addenda.4",
+      "text": "primalmagick.research.shard_synthesis.text.addenda.4",
       "required_research": [
         "t_discover_hallowed"
       ],
@@ -76,7 +76,7 @@
         "hallowed": 1
       },
       "recipes": [
-        "primalmagic:essence_shard_hallowed_from_dust"
+        "primalmagick:essence_shard_hallowed_from_dust"
       ]
     }
   ]

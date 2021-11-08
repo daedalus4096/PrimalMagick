@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/wizard_wand_gem"
+            "model": "primalmagick:item/wizard_wand_gem"
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "key": "PRIMAL_PICKAXE",
-  "name": "primalmagic.research.primal_pickaxe.title",
+  "name": "primalmagick.research.primal_pickaxe.title",
   "discipline": "RITUAL",
   "parents": [
     "EXPERT_RITUAL",
@@ -13,21 +13,21 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.primal_pickaxe.text.stage.1",
+      "text": "primalmagick.research.primal_pickaxe.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.primal_pickaxe.text.stage.2",
+      "text": "primalmagick.research.primal_pickaxe.text.stage.2",
       "recipes": [
-        "primalmagic:primal_pickaxe"
+        "primalmagick:primal_pickaxe"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.primal_pickaxe.text.addenda.1",
+      "text": "primalmagick.research.primal_pickaxe.text.addenda.1",
       "required_research": [
         "MASTER_RUNEWORKING",
         "RUNE_SUMMON",

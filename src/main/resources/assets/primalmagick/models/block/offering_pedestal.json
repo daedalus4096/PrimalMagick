@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/marble_raw",
-		"1": "primalmagic:block/marble_pillar_bottom",
-		"particle": "primalmagic:block/marble_raw"
+		"0": "primalmagick:block/marble_raw",
+		"1": "primalmagick:block/marble_pillar_bottom",
+		"particle": "primalmagick:block/marble_raw"
 	},
 	"elements": [
 		{

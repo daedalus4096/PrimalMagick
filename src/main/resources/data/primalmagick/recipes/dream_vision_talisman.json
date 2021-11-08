@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "DREAM_VISION_TALISMAN",
   "mana": {
     "moon": 40
@@ -27,17 +27,17 @@
   ],
   "props": [
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     },
     {
-      "block": "primalmagic:incense_brazier"
+      "block": "primalmagick:incense_brazier"
     },
     {
-      "block": "primalmagic:ritual_lectern"
+      "block": "primalmagick:ritual_lectern"
     }
   ],
   "result": {
-    "item": "primalmagic:dream_vision_talisman",
+    "item": "primalmagick:dream_vision_talisman",
     "nbt": "{Damage:0}"
   }
 }

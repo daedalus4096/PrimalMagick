@@ -80,7 +80,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
-    private static final PageImage IMAGE_LINE = PageImage.parse("primalmagic:textures/gui/grimoire.png:24:184:95:6:1");
+    private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     
     public static final List<Object> HISTORY = new ArrayList<>();
@@ -371,7 +371,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     protected void parseDisciplinePageSection(List<ResearchEntry> researchList, String headerName, ResearchDiscipline discipline, DisciplinePageProperties properties) {
         // Append the section header and spacer
-        Component headerText = new TranslatableComponent("primalmagic.grimoire.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
+        Component headerText = new TranslatableComponent("primalmagick.grimoire.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
         if (properties.heightRemaining < 36 && !properties.page.getContents().isEmpty()) {
             // If there's not room for the spacer, the header, and a first entry, skip to the next page
             properties.heightRemaining = 155;
@@ -477,7 +477,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         int addendumCount = 0;
         for (ResearchAddendum addendum : addenda) {
             if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
-                Component headerText = new TranslatableComponent("primalmagic.grimoire.addendum_header", ++addendumCount);
+                Component headerText = new TranslatableComponent("primalmagick.grimoire.addendum_header", ++addendumCount);
                 Component addendumText = new TranslatableComponent(addendum.getTextTranslationKey());
                 rawText += ("<PAGE>" + headerText.getString() + "<BR>" + addendumText.getString());
             }
@@ -667,7 +667,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         // Add the first page with no contents to show the meter
         this.pages.add(new AttunementPage(source, true));
         
-        String rawText = (new TranslatableComponent("primalmagic.attunement." + source.getTag() + ".text")).getString();
+        String rawText = (new TranslatableComponent("primalmagick.attunement." + source.getTag() + ".text")).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;

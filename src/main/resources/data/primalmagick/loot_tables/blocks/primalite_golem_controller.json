@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:primalite_golem_controller"
+          "name": "primalmagick:primalite_golem_controller"
         }
       ],
       "conditions": [

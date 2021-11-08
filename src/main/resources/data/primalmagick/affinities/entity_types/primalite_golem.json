@@ -1,6 +1,6 @@
 {
   "type": "entity_type",
-  "target": "primalmagic:primalite_golem",
+  "target": "primalmagick:primalite_golem",
   "values": {
     "earth": 30,
     "sea": 10,

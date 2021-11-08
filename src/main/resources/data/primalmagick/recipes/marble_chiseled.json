@@ -6,10 +6,10 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_slab"
+      "item": "primalmagick:marble_slab"
     }
   },
   "result": {
-    "item": "primalmagic:marble_chiseled"
+    "item": "primalmagick:marble_chiseled"
   }
 }

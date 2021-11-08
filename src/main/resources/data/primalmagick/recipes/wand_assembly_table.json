@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "ADVANCED_WANDMAKING",
   "mana": {
     "earth": 5,
@@ -14,10 +14,10 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_runed"
+      "item": "primalmagick:marble_runed"
     }
   },
   "result": {
-    "item": "primalmagic:wand_assembly_table"
+    "item": "primalmagick:wand_assembly_table"
   }
 }

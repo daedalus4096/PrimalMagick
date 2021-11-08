@@ -1,6 +1,6 @@
 {
   "key": "SPELLCLOTH",
-  "name": "primalmagic.research.spellcloth.title",
+  "name": "primalmagick.research.spellcloth.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "EXPERT_MANAWEAVING",
@@ -9,19 +9,19 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spellcloth.text.stage.1",
+      "text": "primalmagick.research.spellcloth.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.spellcloth.text.stage.2",
+      "text": "primalmagick.research.spellcloth.text.stage.2",
       "recipes": [
-        "primalmagic:spellcloth",
-        "primalmagic:spellcloth_head",
-        "primalmagic:spellcloth_chest",
-        "primalmagic:spellcloth_legs",
-        "primalmagic:spellcloth_feet"
+        "primalmagick:spellcloth",
+        "primalmagick:spellcloth_head",
+        "primalmagick:spellcloth_chest",
+        "primalmagick:spellcloth_legs",
+        "primalmagick:spellcloth_feet"
       ]
     }
   ],

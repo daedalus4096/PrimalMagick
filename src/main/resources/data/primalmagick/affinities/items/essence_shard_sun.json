@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_shard_sun",
+  "target": "primalmagick:essence_shard_sun",
   "set": {
     "sun": 20
   }

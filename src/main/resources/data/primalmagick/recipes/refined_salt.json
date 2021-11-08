@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "primalmagic:rock_salt"
+    "item": "primalmagick:rock_salt"
   },
-  "result": "primalmagic:refined_salt",
+  "result": "primalmagick:refined_salt",
   "experience": 0.2,
   "cookingtime": 200
 }

@@ -1,6 +1,6 @@
 {
   "key": "HEXIUM_GOLEM",
-  "name": "primalmagic.research.hexium_golem.title",
+  "name": "primalmagick.research.hexium_golem.title",
   "discipline": "MAGITECH",
   "parents": [
     "MASTER_MAGITECH",
@@ -9,15 +9,15 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.hexium_golem.text.stage.1",
+      "text": "primalmagick.research.hexium_golem.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.hexium_golem.text.stage.2",
+      "text": "primalmagick.research.hexium_golem.text.stage.2",
       "recipes": [
-        "primalmagic:hexium_golem_controller"
+        "primalmagick:hexium_golem_controller"
       ]
     }
   ],

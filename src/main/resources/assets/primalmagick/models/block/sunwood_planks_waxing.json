@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/sunwood_planks_waxing"
+        "all": "primalmagick:block/sunwood_planks_waxing"
     }
 }

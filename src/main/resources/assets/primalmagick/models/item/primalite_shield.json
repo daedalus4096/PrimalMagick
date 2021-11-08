@@ -2,7 +2,7 @@
     "parent": "builtin/entity",
     "gui_light": "front",
     "textures": {
-        "particle": "primalmagic:block/primalite_block"
+        "particle": "primalmagick:block/primalite_block"
     },
     "display": {
         "thirdperson_righthand": {
@@ -46,7 +46,7 @@
             "predicate": {
                 "blocking": 1
             },
-            "model": "primalmagic:item/primalite_shield_blocking"
+            "model": "primalmagick:item/primalite_shield_blocking"
         }
     ]
 }

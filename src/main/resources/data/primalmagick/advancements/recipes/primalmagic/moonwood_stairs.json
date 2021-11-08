@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:moonwood_stairs"
+      "primalmagick:moonwood_stairs"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:moonwood_planks"
+              "primalmagick:moonwood_planks"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:moonwood_stairs"
+        "recipe": "primalmagick:moonwood_stairs"
       }
     }
   },

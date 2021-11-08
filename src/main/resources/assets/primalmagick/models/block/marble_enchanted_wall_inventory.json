@@ -1,6 +1,6 @@
 {
     "parent": "block/wall_inventory",
     "textures": {
-        "wall": "primalmagic:block/marble_enchanted"
+        "wall": "primalmagick:block/marble_enchanted"
     }
 }

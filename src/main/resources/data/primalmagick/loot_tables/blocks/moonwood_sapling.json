@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:moonwood_sapling"
+          "name": "primalmagick:moonwood_sapling"
         }
       ],
       "conditions": [

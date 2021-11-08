@@ -1,6 +1,6 @@
 {
   "key": "WAND_INSCRIPTION",
-  "name": "primalmagic.research.wand_inscription.title",
+  "name": "primalmagick.research.wand_inscription.title",
   "discipline": "SORCERY",
   "parents": [
     "BASIC_SORCERY",
@@ -8,7 +8,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.wand_inscription.text.stage.1",
+      "text": "primalmagick.research.wand_inscription.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ],
@@ -17,9 +17,9 @@
       ]
     },
     {
-      "text": "primalmagic.research.wand_inscription.text.stage.2",
+      "text": "primalmagick.research.wand_inscription.text.stage.2",
       "recipes": [
-        "primalmagic:wand_inscription_table"
+        "primalmagick:wand_inscription_table"
       ]
     }
   ],

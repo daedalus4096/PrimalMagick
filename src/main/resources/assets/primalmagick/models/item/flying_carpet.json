@@ -1,24 +1,24 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/flying_carpet_white"
+        "layer0": "primalmagick:item/flying_carpet_white"
     },
     "overrides": [
-        { "predicate": { "primalmagic:color": 0.0000 }, "model": "primalmagic:item/flying_carpet_white" },
-        { "predicate": { "primalmagic:color": 0.0625 }, "model": "primalmagic:item/flying_carpet_orange" },
-        { "predicate": { "primalmagic:color": 0.1250 }, "model": "primalmagic:item/flying_carpet_magenta" },
-        { "predicate": { "primalmagic:color": 0.1875 }, "model": "primalmagic:item/flying_carpet_light_blue" },
-        { "predicate": { "primalmagic:color": 0.2500 }, "model": "primalmagic:item/flying_carpet_yellow" },
-        { "predicate": { "primalmagic:color": 0.3125 }, "model": "primalmagic:item/flying_carpet_lime" },
-        { "predicate": { "primalmagic:color": 0.3750 }, "model": "primalmagic:item/flying_carpet_pink" },
-        { "predicate": { "primalmagic:color": 0.4375 }, "model": "primalmagic:item/flying_carpet_gray" },
-        { "predicate": { "primalmagic:color": 0.5000 }, "model": "primalmagic:item/flying_carpet_silver" },
-        { "predicate": { "primalmagic:color": 0.5625 }, "model": "primalmagic:item/flying_carpet_cyan" },
-        { "predicate": { "primalmagic:color": 0.6250 }, "model": "primalmagic:item/flying_carpet_purple" },
-        { "predicate": { "primalmagic:color": 0.6875 }, "model": "primalmagic:item/flying_carpet_blue" },
-        { "predicate": { "primalmagic:color": 0.7500 }, "model": "primalmagic:item/flying_carpet_brown" },
-        { "predicate": { "primalmagic:color": 0.8125 }, "model": "primalmagic:item/flying_carpet_green" },
-        { "predicate": { "primalmagic:color": 0.8750 }, "model": "primalmagic:item/flying_carpet_red" },
-        { "predicate": { "primalmagic:color": 0.9375 }, "model": "primalmagic:item/flying_carpet_black" }
+        { "predicate": { "primalmagick:color": 0.0000 }, "model": "primalmagick:item/flying_carpet_white" },
+        { "predicate": { "primalmagick:color": 0.0625 }, "model": "primalmagick:item/flying_carpet_orange" },
+        { "predicate": { "primalmagick:color": 0.1250 }, "model": "primalmagick:item/flying_carpet_magenta" },
+        { "predicate": { "primalmagick:color": 0.1875 }, "model": "primalmagick:item/flying_carpet_light_blue" },
+        { "predicate": { "primalmagick:color": 0.2500 }, "model": "primalmagick:item/flying_carpet_yellow" },
+        { "predicate": { "primalmagick:color": 0.3125 }, "model": "primalmagick:item/flying_carpet_lime" },
+        { "predicate": { "primalmagick:color": 0.3750 }, "model": "primalmagick:item/flying_carpet_pink" },
+        { "predicate": { "primalmagick:color": 0.4375 }, "model": "primalmagick:item/flying_carpet_gray" },
+        { "predicate": { "primalmagick:color": 0.5000 }, "model": "primalmagick:item/flying_carpet_silver" },
+        { "predicate": { "primalmagick:color": 0.5625 }, "model": "primalmagick:item/flying_carpet_cyan" },
+        { "predicate": { "primalmagick:color": 0.6250 }, "model": "primalmagick:item/flying_carpet_purple" },
+        { "predicate": { "primalmagick:color": 0.6875 }, "model": "primalmagick:item/flying_carpet_blue" },
+        { "predicate": { "primalmagick:color": 0.7500 }, "model": "primalmagick:item/flying_carpet_brown" },
+        { "predicate": { "primalmagick:color": 0.8125 }, "model": "primalmagick:item/flying_carpet_green" },
+        { "predicate": { "primalmagick:color": 0.8750 }, "model": "primalmagick:item/flying_carpet_red" },
+        { "predicate": { "primalmagick:color": 0.9375 }, "model": "primalmagick:item/flying_carpet_black" }
     ]
 }

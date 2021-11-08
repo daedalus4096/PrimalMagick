@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "#primalmagic:essences/dusts",
-    "#primalmagic:essences/shards",
-    "#primalmagic:essences/crystals",
-    "#primalmagic:essences/clusters"
+    "#primalmagick:essences/dusts",
+    "#primalmagick:essences/shards",
+    "#primalmagick:essences/crystals",
+    "#primalmagick:essences/clusters"
   ]
 }

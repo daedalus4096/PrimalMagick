@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:moonwood_leaves",
-    "primalmagic:sunwood_leaves",
-    "primalmagic:hallowood_leaves"
+    "primalmagick:moonwood_leaves",
+    "primalmagick:sunwood_leaves",
+    "primalmagick:hallowood_leaves"
   ]
 }

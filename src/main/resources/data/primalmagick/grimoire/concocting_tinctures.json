@@ -1,6 +1,6 @@
 {
   "key": "CONCOCTING_TINCTURES",
-  "name": "primalmagic.research.concocting_tinctures.title",
+  "name": "primalmagick.research.concocting_tinctures.title",
   "discipline": "MAGITECH",
   "parents": [
     "EXPERT_MAGITECH",
@@ -9,61 +9,61 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.concocting_tinctures.text.stage.1",
+      "text": "primalmagick.research.concocting_tinctures.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.concocting_tinctures.text.stage.2",
+      "text": "primalmagick.research.concocting_tinctures.text.stage.2",
       "recipes": [
-        "primalmagic:skyglass_flask",
-        "primalmagic:concocter",
-        "primalmagic:night_vision_tincture",
-        "primalmagic:long_night_vision_tincture",
-        "primalmagic:invisibility_tincture",
-        "primalmagic:long_invisibility_tincture",
-        "primalmagic:leaping_tincture",
-        "primalmagic:long_leaping_tincture",
-        "primalmagic:strong_leaping_tincture",
-        "primalmagic:swiftness_tincture",
-        "primalmagic:long_swiftness_tincture",
-        "primalmagic:strong_swiftness_tincture",
-        "primalmagic:turtle_master_tincture",
-        "primalmagic:long_turtle_master_tincture",
-        "primalmagic:strong_turtle_master_tincture",
-        "primalmagic:water_breathing_tincture",
-        "primalmagic:long_water_breathing_tincture",
-        "primalmagic:strength_tincture",
-        "primalmagic:long_strength_tincture",
-        "primalmagic:strong_strength_tincture",
-        "primalmagic:slow_falling_tincture",
-        "primalmagic:long_slow_falling_tincture"
+        "primalmagick:skyglass_flask",
+        "primalmagick:concocter",
+        "primalmagick:night_vision_tincture",
+        "primalmagick:long_night_vision_tincture",
+        "primalmagick:invisibility_tincture",
+        "primalmagick:long_invisibility_tincture",
+        "primalmagick:leaping_tincture",
+        "primalmagick:long_leaping_tincture",
+        "primalmagick:strong_leaping_tincture",
+        "primalmagick:swiftness_tincture",
+        "primalmagick:long_swiftness_tincture",
+        "primalmagick:strong_swiftness_tincture",
+        "primalmagick:turtle_master_tincture",
+        "primalmagick:long_turtle_master_tincture",
+        "primalmagick:strong_turtle_master_tincture",
+        "primalmagick:water_breathing_tincture",
+        "primalmagick:long_water_breathing_tincture",
+        "primalmagick:strength_tincture",
+        "primalmagick:long_strength_tincture",
+        "primalmagick:strong_strength_tincture",
+        "primalmagick:slow_falling_tincture",
+        "primalmagick:long_slow_falling_tincture"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.concocting_tinctures.text.addenda.1",
+      "text": "primalmagick.research.concocting_tinctures.text.addenda.1",
       "required_research": [
         "t_discover_blood"
       ],
       "recipes": [
-        "primalmagic:healing_tincture",
-        "primalmagic:strong_healing_tincture",
-        "primalmagic:regeneration_tincture",
-        "primalmagic:long_regeneration_tincture",
-        "primalmagic:strong_regeneration_tincture"
+        "primalmagick:healing_tincture",
+        "primalmagick:strong_healing_tincture",
+        "primalmagick:regeneration_tincture",
+        "primalmagick:long_regeneration_tincture",
+        "primalmagick:strong_regeneration_tincture"
       ]
     },
     {
-      "text": "primalmagic.research.concocting_tinctures.text.addenda.2",
+      "text": "primalmagick.research.concocting_tinctures.text.addenda.2",
       "required_research": [
         "t_discover_infernal"
       ],
       "recipes": [
-        "primalmagic:fire_resistance_tincture",
-        "primalmagic:long_fire_resistance_tincture"
+        "primalmagick:fire_resistance_tincture",
+        "primalmagick:long_fire_resistance_tincture"
       ]
     }
   ]

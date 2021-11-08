@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "SACRED_SHIELD",
   "mana": {
     "hallowed": 40
@@ -7,34 +7,34 @@
   "instability": 3,
   "ingredients": [
     {
-      "item": "primalmagic:hallowsteel_shield"
+      "item": "primalmagick:hallowsteel_shield"
     },
     {
-      "item": "primalmagic:essence_shard_hallowed"
+      "item": "primalmagick:essence_shard_hallowed"
     },
     {
-      "item": "primalmagic:essence_shard_hallowed"
+      "item": "primalmagick:essence_shard_hallowed"
     },
     {
-      "item": "primalmagic:rune_hallowed"
+      "item": "primalmagick:rune_hallowed"
     },
     {
-      "item": "primalmagic:mana_prism"
+      "item": "primalmagick:mana_prism"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:celestial_harp"
+      "block": "primalmagick:celestial_harp"
     },
     {
-      "block": "primalmagic:celestial_harp"
+      "block": "primalmagick:celestial_harp"
     }
   ],
   "result": {
-    "item": "primalmagic:sacred_shield",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:bulwark\",lvl:2s}]}"
+    "item": "primalmagick:sacred_shield",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:bulwark\",lvl:2s}]}"
   }
 }

@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_dust_void",
+  "target": "primalmagick:essence_dust_void",
   "set": {
     "void": 5
   }

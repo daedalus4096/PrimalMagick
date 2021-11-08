@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:skyglass",
-    "#primalmagic:stained_skyglass"
+    "primalmagick:skyglass",
+    "#primalmagick:stained_skyglass"
   ]
 }

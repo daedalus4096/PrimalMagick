@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:dissolution",
+  "type": "primalmagick:dissolution",
   "group": "gold_grit_dissolution",
   "mana": {
     "earth": 1
@@ -8,7 +8,7 @@
     "item": "minecraft:raw_gold"
   },
   "result": {
-    "item": "primalmagic:gold_grit",
+    "item": "primalmagick:gold_grit",
     "count": 3
   }
 }

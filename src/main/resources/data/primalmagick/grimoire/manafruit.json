@@ -1,6 +1,6 @@
 {
   "key": "MANAFRUIT",
-  "name": "primalmagic.research.manafruit.title",
+  "name": "primalmagick.research.manafruit.title",
   "discipline": "RITUAL",
   "parents": [
     "BASIC_RITUAL",
@@ -9,15 +9,15 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.manafruit.text.stage.1",
+      "text": "primalmagick.research.manafruit.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.manafruit.text.stage.2",
+      "text": "primalmagick.research.manafruit.text.stage.2",
       "recipes": [
-        "primalmagic:manafruit"
+        "primalmagick:manafruit"
       ]
     }
   ],

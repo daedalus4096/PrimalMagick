@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "primalmagic:marble_enchanted_brick_stairs",
-  "base": "primalmagic:marble_brick_stairs",
+  "target": "primalmagick:marble_enchanted_brick_stairs",
+  "base": "primalmagick:marble_brick_stairs",
   "add": {
     "earth": 1,
     "sea": 1,

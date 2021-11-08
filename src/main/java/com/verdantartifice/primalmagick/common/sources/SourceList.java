@@ -267,7 +267,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
             if (index != 0) {
                 output = output.append(new TextComponent(", "));
             }
-            output = output.append(new TranslatableComponent("primalmagic.spells.details.mana_cost.piece", this.getAmount(source), source.getNameText()));
+            output = output.append(new TranslatableComponent("primalmagick.spells.details.mana_cost.piece", this.getAmount(source), source.getNameText()));
         }
         return output;
     }

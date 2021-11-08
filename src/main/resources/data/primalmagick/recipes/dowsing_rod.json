@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "DOWSING_ROD",
   "mana": {
     "earth": 5,
@@ -18,10 +18,10 @@
       "tag": "forge:rods/wooden"
     },
     "D": {
-      "tag": "primalmagic:essences/terrestrial_dusts"
+      "tag": "primalmagick:essences/terrestrial_dusts"
     }
   },
   "result": {
-    "item": "primalmagic:dowsing_rod"
+    "item": "primalmagick:dowsing_rod"
   }
 }

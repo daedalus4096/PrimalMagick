@@ -1,7 +1,7 @@
 {
   "type": "minecraft:blasting",
   "ingredient": {
-    "item": "primalmagic:quartz_ore"
+    "item": "primalmagick:quartz_ore"
   },
   "result": "minecraft:quartz",
   "experience": 0.2,

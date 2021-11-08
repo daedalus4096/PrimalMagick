@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "mana_arrows",
   "research": "MANA_ARROWS",
   "mana": {
@@ -15,11 +15,11 @@
       "item": "minecraft:arrow"
     },
     "D": {
-      "item": "primalmagic:essence_dust_sky"
+      "item": "primalmagick:essence_dust_sky"
     }
   },
   "result": {
-    "item": "primalmagic:mana_arrow_sky",
+    "item": "primalmagick:mana_arrow_sky",
     "count": 4
   }
 }

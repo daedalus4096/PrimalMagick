@@ -52,7 +52,7 @@ public class HealingSpellPayload extends AbstractSpellPayload {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("power", new SpellProperty("power", "primalmagic.spell.property.power", 1, 5));
+        propMap.put("power", new SpellProperty("power", "primalmagick.spell.property.power", 1, 5));
         return propMap;
     }
     
@@ -124,6 +124,6 @@ public class HealingSpellPayload extends AbstractSpellPayload {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagic.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getBaseAmount(spell, spellSource)));
+        return new TranslatableComponent("primalmagick.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getBaseAmount(spell, spellSource)));
     }
 }

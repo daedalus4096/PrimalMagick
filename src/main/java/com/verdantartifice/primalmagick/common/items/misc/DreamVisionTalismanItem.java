@@ -124,7 +124,7 @@ public class DreamVisionTalismanItem extends Item {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
                 stack.hurtAndBreak(1, player, p -> {
-                    p.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.break").withStyle(ChatFormatting.RED), false);
+                    p.displayClientMessage(new TranslatableComponent("event.primalmagick.dream_vision_talisman.break").withStyle(ChatFormatting.RED), false);
                 });
                 return true;
             }
@@ -135,11 +135,11 @@ public class DreamVisionTalismanItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, level, tooltip, flagIn);
-        tooltip.add(new TranslatableComponent("tooltip.primalmagic.dream_vision_talisman.exp", this.getStoredExp(stack), this.getExpCapacity(stack)));
+        tooltip.add(new TranslatableComponent("tooltip.primalmagick.dream_vision_talisman.exp", this.getStoredExp(stack), this.getExpCapacity(stack)));
         if (this.isActive(stack)) {
-            tooltip.add(new TranslatableComponent("tooltip.primalmagic.dream_vision_talisman.active").withStyle(ChatFormatting.GREEN));
+            tooltip.add(new TranslatableComponent("tooltip.primalmagick.dream_vision_talisman.active").withStyle(ChatFormatting.GREEN));
         } else {
-            tooltip.add(new TranslatableComponent("tooltip.primalmagic.dream_vision_talisman.inactive").withStyle(ChatFormatting.RED));
+            tooltip.add(new TranslatableComponent("tooltip.primalmagick.dream_vision_talisman.inactive").withStyle(ChatFormatting.RED));
         }
     }
 
@@ -154,9 +154,9 @@ public class DreamVisionTalismanItem extends Item {
         boolean active = this.isActive(stack);
         if (level.isClientSide) {
             if (active) {
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.set_inactive"), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagick.dream_vision_talisman.set_inactive"), false);
             } else {
-                player.displayClientMessage(new TranslatableComponent("event.primalmagic.dream_vision_talisman.set_active"), false);
+                player.displayClientMessage(new TranslatableComponent("event.primalmagick.dream_vision_talisman.set_active"), false);
             }
         }
         this.setActive(stack, !active);

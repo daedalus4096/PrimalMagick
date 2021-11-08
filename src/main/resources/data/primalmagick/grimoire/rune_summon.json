@@ -1,21 +1,21 @@
 {
   "key": "RUNE_SUMMON",
-  "name": "primalmagic.research.rune_summon.title",
+  "name": "primalmagick.research.rune_summon.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "RUNE_ABSORB"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rune_summon.text.stage.1",
+      "text": "primalmagick.research.rune_summon.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.rune_summon.text.stage.2",
+      "text": "primalmagick.research.rune_summon.text.stage.2",
       "recipes": [
-        "primalmagic:rune_summon"
+        "primalmagick:rune_summon"
       ]
     }
   ],

@@ -98,7 +98,7 @@ public class EntityLootTables implements DataProvider {
 
     @Override
     public String getName() {
-        return "Primal Magic Entity Loot Tables";
+        return "Primal Magick Entity Loot Tables";
     }
     
     private void registerEmptyLootTable(EntityType<?> type) {

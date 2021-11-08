@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:runecarving",
+  "type": "primalmagick:runecarving",
   "research": "RUNE_PROJECT",
   "ingredient1": {
     "item": "minecraft:stone_slab"
@@ -8,6 +8,6 @@
     "tag": "forge:gems/lapis"
   },
   "result": {
-    "item": "primalmagic:rune_project"
+    "item": "primalmagick:rune_project"
   }
 }

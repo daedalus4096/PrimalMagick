@@ -1,7 +1,7 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "0": "primalmagic:block/marble_raw"
+        "0": "primalmagick:block/marble_raw"
     },
     "elements": [
         {

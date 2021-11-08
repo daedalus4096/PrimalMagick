@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "BASIC_RITUAL",
   "pattern": [
     "S",
@@ -8,13 +8,13 @@
   ],
   "key": {
     "S": {
-      "item": "primalmagic:marble_slab"
+      "item": "primalmagick:marble_slab"
     },
     "P": {
-      "item": "primalmagic:marble_pillar"
+      "item": "primalmagick:marble_pillar"
     }
   },
   "result": {
-    "item": "primalmagic:offering_pedestal"
+    "item": "primalmagick:offering_pedestal"
   }
 }

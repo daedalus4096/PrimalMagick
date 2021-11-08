@@ -14,6 +14,6 @@ public class ManaCostWidget extends AbstractSourceWidget {
 
     @Override
     protected String getTooltipTranslationKey() {
-        return "primalmagic.crafting.mana_tooltip";
+        return "primalmagick.crafting.mana_tooltip";
     }
 }

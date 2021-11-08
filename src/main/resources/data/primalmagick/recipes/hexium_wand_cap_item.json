@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "WAND_CAP_HEXIUM",
   "mana": {
     "earth": 50,
@@ -14,10 +14,10 @@
   ],
   "key": {
     "N": {
-      "tag": "primalmagic:nuggets/hexium"
+      "tag": "primalmagick:nuggets/hexium"
     }
   },
   "result": {
-    "item": "primalmagic:hexium_wand_cap_item"
+    "item": "primalmagick:hexium_wand_cap_item"
   }
 }

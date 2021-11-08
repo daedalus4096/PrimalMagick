@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "STAVES\u0026\u0026WAND_CORE_BLAZE_ROD",
   "mana": {
     "earth": 5,
@@ -16,13 +16,13 @@
   ],
   "key": {
     "D": {
-      "item": "primalmagic:essence_shard_infernal"
+      "item": "primalmagick:essence_shard_infernal"
     },
     "#": {
       "tag": "forge:rods/blaze"
     }
   },
   "result": {
-    "item": "primalmagic:blaze_rod_staff_core_item"
+    "item": "primalmagick:blaze_rod_staff_core_item"
   }
 }

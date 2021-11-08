@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:mundane_wand"
+      "primalmagick:mundane_wand"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "primalmagic:essences/terrestrial_dusts"
+            "tag": "primalmagick:essences/terrestrial_dusts"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:mundane_wand"
+        "recipe": "primalmagick:mundane_wand"
       }
     }
   },

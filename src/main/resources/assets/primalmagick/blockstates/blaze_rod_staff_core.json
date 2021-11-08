@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/blaze_rod_staff_core"
+            "model": "primalmagick:item/blaze_rod_staff_core"
         }
     }
 }

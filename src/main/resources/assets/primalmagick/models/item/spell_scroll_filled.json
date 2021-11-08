@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/spell_scroll_filled"
+        "layer0": "primalmagick:item/spell_scroll_filled"
     }
 }

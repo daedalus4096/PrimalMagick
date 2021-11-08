@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/hallowsteel_block"
+            "model": "primalmagick:block/hallowsteel_block"
         }
     }
 }

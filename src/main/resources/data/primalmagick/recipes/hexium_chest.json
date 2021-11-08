@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HEXIUM",
   "pattern": [
     "I I",
@@ -8,10 +8,10 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     }
   },
   "result": {
-    "item": "primalmagic:hexium_chest"
+    "item": "primalmagick:hexium_chest"
   }
 }

@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/quartz_ore"
+            "model": "primalmagick:block/quartz_ore"
         }
     }
 }

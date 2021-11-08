@@ -1,6 +1,6 @@
 {
   "key": "SAINTSWOOL",
-  "name": "primalmagic.research.saintswool.title",
+  "name": "primalmagick.research.saintswool.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "SUPREME_MANAWEAVING",
@@ -9,19 +9,19 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.saintswool.text.stage.1",
+      "text": "primalmagick.research.saintswool.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
       ]
     },
     {
-      "text": "primalmagic.research.saintswool.text.stage.2",
+      "text": "primalmagick.research.saintswool.text.stage.2",
       "recipes": [
-        "primalmagic:saintswool",
-        "primalmagic:saintswool_head",
-        "primalmagic:saintswool_chest",
-        "primalmagic:saintswool_legs",
-        "primalmagic:saintswool_feet"
+        "primalmagick:saintswool",
+        "primalmagick:saintswool_head",
+        "primalmagick:saintswool_chest",
+        "primalmagick:saintswool_legs",
+        "primalmagick:saintswool_feet"
       ]
     }
   ],

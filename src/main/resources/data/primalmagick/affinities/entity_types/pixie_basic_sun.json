@@ -1,6 +1,6 @@
 {
   "type": "entity_type",
-  "target": "primalmagic:pixie_basic_sun",
+  "target": "primalmagick:pixie_basic_sun",
   "values": {
     "sky": 10,
     "sun": 5,

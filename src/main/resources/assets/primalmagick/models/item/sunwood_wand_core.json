@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:item/wand_core",
+    "parent": "primalmagick:item/wand_core",
     "textures": {
-        "core": "primalmagic:item/sunwood_wand_core"
+        "core": "primalmagick:item/sunwood_wand_core"
     }
 }

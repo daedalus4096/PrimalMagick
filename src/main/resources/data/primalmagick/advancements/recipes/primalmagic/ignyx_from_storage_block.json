@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:ignyx_from_storage_block"
+      "primalmagick:ignyx_from_storage_block"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:ignyx_block"
+              "primalmagick:ignyx_block"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:ignyx_from_storage_block"
+        "recipe": "primalmagick:ignyx_from_storage_block"
       }
     }
   },

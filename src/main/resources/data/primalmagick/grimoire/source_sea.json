@@ -1,15 +1,15 @@
 {
   "key": "SOURCE_SEA",
-  "name": "primalmagic.research.source_sea.title",
+  "name": "primalmagick.research.source_sea.title",
   "discipline": "BASICS",
   "parents": [
     "TERRESTRIAL_MAGIC"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.source_sea.text.stage.1",
+      "text": "primalmagick.research.source_sea.text.stage.1",
       "required_item": [
-        "tag:primalmagic:coral_blocks",
+        "tag:primalmagick:coral_blocks",
         "minecraft:ice"
       ],
       "required_knowledge": [
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.source_sea.text.stage.2",
+      "text": "primalmagick.research.source_sea.text.stage.2",
       "attunements": {
         "sea": 5
       }

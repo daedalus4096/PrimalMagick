@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:sunwood_stairs"
+      "primalmagick:sunwood_stairs"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:sunwood_planks"
+              "primalmagick:sunwood_planks"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:sunwood_stairs"
+        "recipe": "primalmagick:sunwood_stairs"
       }
     }
   },

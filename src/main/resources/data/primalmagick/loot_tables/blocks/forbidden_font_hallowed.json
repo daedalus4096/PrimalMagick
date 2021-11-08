@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:forbidden_font_hallowed"
+          "name": "primalmagick:forbidden_font_hallowed"
         }
       ],
       "conditions": [

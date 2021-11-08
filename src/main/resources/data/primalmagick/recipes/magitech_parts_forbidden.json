@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "magitech_parts",
   "research": "MASTER_MAGITECH",
   "mana": {
@@ -14,16 +14,16 @@
   ],
   "key": {
     "S": {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     },
     "I": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     },
     "P": {
-      "item": "primalmagic:magitech_parts_enchanted"
+      "item": "primalmagick:magitech_parts_enchanted"
     }
   },
   "result": {
-    "item": "primalmagic:magitech_parts_forbidden"
+    "item": "primalmagick:magitech_parts_forbidden"
   }
 }

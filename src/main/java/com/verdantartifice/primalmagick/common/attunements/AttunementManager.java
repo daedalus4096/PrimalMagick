@@ -22,8 +22,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * Primary access point for attunement-related methods.  As players utilize magic, they gain or
- * (sometimes) lose attunement with that magic's source.  Reaching certain thresholds of attunement
+ * Primary access point for attunement-related methods.  As players utilize magick, they gain or
+ * (sometimes) lose attunement with that magick's source.  Reaching certain thresholds of attunement
  * value results in the acquisition of certain passive abilities for as long as the player maintains
  * the attunement.  Attunement values may be permanent, induced, or temporary, but the total value
  * is what determines any bonuses received.
@@ -140,7 +140,7 @@ public class AttunementManager {
                     if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
                         // If gaining a threshold, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.displayClientMessage(new TranslatableComponent("primalmagic.attunement.threshold_gain", sourceText, thresholdText), false);
+                            player.displayClientMessage(new TranslatableComponent("primalmagick.attunement.threshold_gain", sourceText, thresholdText), false);
                         }
                         
                         // Apply any new attribute modifiers from the threshold gain
@@ -153,7 +153,7 @@ public class AttunementManager {
                     if (oldTotal >= thresholdValue && newTotal < thresholdValue) {
                         // If losing a threshold, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.displayClientMessage(new TranslatableComponent("primalmagic.attunement.threshold_loss", sourceText, thresholdText), false);
+                            player.displayClientMessage(new TranslatableComponent("primalmagick.attunement.threshold_loss", sourceText, thresholdText), false);
                         }
                         
                         // Remove any lost attribute modifiers from the threshold loss

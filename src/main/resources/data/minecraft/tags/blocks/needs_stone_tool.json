@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:rock_salt_ore",
-    "primalmagic:quartz_ore",
-    "primalmagic:primalite_block",
-    "primalmagic:salt_block"
+    "primalmagick:rock_salt_ore",
+    "primalmagick:quartz_ore",
+    "primalmagick:primalite_block",
+    "primalmagick:salt_block"
   ]
 }

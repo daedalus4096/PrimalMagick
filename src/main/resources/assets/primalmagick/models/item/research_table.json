@@ -1,5 +1,5 @@
 {
-    "parent": "primalmagic:block/research_table",
+    "parent": "primalmagick:block/research_table",
     "display": {
         "thirdperson_righthand": {
             "rotation": [ 75, 135, 0 ],

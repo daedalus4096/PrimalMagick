@@ -55,7 +55,7 @@ public class AidListWidget extends AbstractWidget {
         if (!this.aidNames.isEmpty()) {
             // Render tooltip
             List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagic.research_table.aid_header"));
+            tooltip.add(new TranslatableComponent("primalmagick.research_table.aid_header"));
             tooltip.addAll(this.aidNames);
             GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
         }

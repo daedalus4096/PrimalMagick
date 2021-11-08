@@ -3,14 +3,14 @@
   "group": "earthshatter_hammer_grit",
   "ingredients": [
     {
-      "item": "primalmagic:earthshatter_hammer"
+      "item": "primalmagick:earthshatter_hammer"
     },
     {
       "tag": "forge:ores/gold"
     }
   ],
   "result": {
-    "item": "primalmagic:gold_grit",
+    "item": "primalmagick:gold_grit",
     "count": 2
   }
 }

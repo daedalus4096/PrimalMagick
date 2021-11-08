@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/handheld",
     "textures": {
-        "layer0": "primalmagic:item/hallowsteel_shovel"
+        "layer0": "primalmagick:item/hallowsteel_shovel"
     }
 }

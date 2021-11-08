@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:moonwood_log",
+  "target": "primalmagick:moonwood_log",
   "base": "minecraft:oak_log",
   "add": {
     "moon": 20

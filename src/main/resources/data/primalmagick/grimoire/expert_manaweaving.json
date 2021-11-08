@@ -1,6 +1,6 @@
 {
   "key": "EXPERT_MANAWEAVING",
-  "name": "primalmagic.research.expert_manaweaving.title",
+  "name": "primalmagick.research.expert_manaweaving.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "MANA_ARROWS",
@@ -8,25 +8,25 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.expert_manaweaving.text.stage.1",
+      "text": "primalmagick.research.expert_manaweaving.text.stage.1",
       "required_research": [
         "b_crafted_manaweaving_expert"
       ]
     },
     {
-      "text": "primalmagic.research.expert_manaweaving.text.stage.2",
+      "text": "primalmagick.research.expert_manaweaving.text.stage.2",
       "recipes": [
-        "primalmagic:marble_enchanted",
-        "primalmagic:marble_enchanted_brick_slab",
-        "primalmagic:marble_enchanted_brick_stairs",
-        "primalmagic:marble_enchanted_brick_wall",
-        "primalmagic:marble_enchanted_bricks",
-        "primalmagic:marble_enchanted_chiseled",
-        "primalmagic:marble_enchanted_pillar",
-        "primalmagic:marble_enchanted_runed",
-        "primalmagic:marble_enchanted_slab",
-        "primalmagic:marble_enchanted_stairs",
-        "primalmagic:marble_enchanted_wall"
+        "primalmagick:marble_enchanted",
+        "primalmagick:marble_enchanted_brick_slab",
+        "primalmagick:marble_enchanted_brick_stairs",
+        "primalmagick:marble_enchanted_brick_wall",
+        "primalmagick:marble_enchanted_bricks",
+        "primalmagick:marble_enchanted_chiseled",
+        "primalmagick:marble_enchanted_pillar",
+        "primalmagick:marble_enchanted_runed",
+        "primalmagick:marble_enchanted_slab",
+        "primalmagick:marble_enchanted_stairs",
+        "primalmagick:marble_enchanted_wall"
       ]
     }
   ],

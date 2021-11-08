@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:mana_prism",
+  "target": "primalmagick:mana_prism",
   "set": {
     "earth": 1,
     "sea": 1,

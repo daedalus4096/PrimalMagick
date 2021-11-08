@@ -1,9 +1,9 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "THEORYCRAFTING@2",
   "ingredients": [
     {
-      "item": "primalmagic:wood_table"
+      "item": "primalmagick:wood_table"
     },
     {
       "item": "minecraft:book"
@@ -13,6 +13,6 @@
     }
   ],
   "result": {
-    "item": "primalmagic:research_table"
+    "item": "primalmagick:research_table"
   }
 }

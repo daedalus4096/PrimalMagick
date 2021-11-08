@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "primalmagic:earthshatter_hammer"
+      "item": "primalmagick:earthshatter_hammer"
     },
     {
       "tag": "forge:stone"

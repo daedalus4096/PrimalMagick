@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Definition of a projectile spell vehicle.  Projectiles are long range vehicles that have a travel
- * time and are affected by gravity.  They're like throwing a magic snowball.
+ * time and are affected by gravity.  They're like throwing a magick snowball.
  * 
  * @author Daedalus4096
  */

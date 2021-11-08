@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/entropy_sink_misc",
-		"1": "primalmagic:block/marble_enchanted",
+		"0": "primalmagick:block/entropy_sink_misc",
+		"1": "primalmagick:block/marble_enchanted",
 		"2": "block/redstone_block",
-		"particle": "primalmagic:block/entropy_sink_misc"
+		"particle": "primalmagick:block/entropy_sink_misc"
 	},
 	"elements": [
 		{

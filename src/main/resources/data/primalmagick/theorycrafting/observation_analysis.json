@@ -1,10 +1,10 @@
 {
-  "key": "primalmagic:observation_analysis",
+  "key": "primalmagick:observation_analysis",
   "required_material_count_override": 1,
   "base_success_chance_override": 0.5,
   "reward_multiplier": 0.5,
   "aid_blocks": [
-    "primalmagic:analysis_table"
+    "primalmagick:analysis_table"
   ],
   "material_options": [
     {

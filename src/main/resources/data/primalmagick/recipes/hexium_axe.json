@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HEXIUM",
   "pattern": [
     "II",
@@ -8,13 +8,13 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     },
     "S": {
       "tag": "forge:rods/wooden"
     }
   },
   "result": {
-    "item": "primalmagic:hexium_axe"
+    "item": "primalmagick:hexium_axe"
   }
 }

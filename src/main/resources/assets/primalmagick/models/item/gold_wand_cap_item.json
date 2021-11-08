@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/gold_wand_cap_item"
+        "layer0": "primalmagick:item/gold_wand_cap_item"
     }
 }

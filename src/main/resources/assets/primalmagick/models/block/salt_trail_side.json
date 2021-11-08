@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "primalmagic:block/salt_trail_dot",
-        "overlay": "primalmagic:block/salt_trail_overlay"
+        "particle": "primalmagick:block/salt_trail_dot",
+        "overlay": "primalmagick:block/salt_trail_overlay"
     },
     "elements": [
         {   "from": [ 0, 0.25, 0 ],

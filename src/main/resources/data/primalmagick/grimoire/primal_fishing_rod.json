@@ -1,6 +1,6 @@
 {
   "key": "PRIMAL_FISHING_ROD",
-  "name": "primalmagic.research.primal_fishing_rod.title",
+  "name": "primalmagick.research.primal_fishing_rod.title",
   "discipline": "RITUAL",
   "parents": [
     "EXPERT_RITUAL",
@@ -13,21 +13,21 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.primal_fishing_rod.text.stage.1",
+      "text": "primalmagick.research.primal_fishing_rod.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.primal_fishing_rod.text.stage.2",
+      "text": "primalmagick.research.primal_fishing_rod.text.stage.2",
       "recipes": [
-        "primalmagic:primal_fishing_rod"
+        "primalmagick:primal_fishing_rod"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.primal_fishing_rod.text.addenda.1",
+      "text": "primalmagick.research.primal_fishing_rod.text.addenda.1",
       "required_research": [
         "MASTER_RUNEWORKING",
         "RUNE_SUMMON",

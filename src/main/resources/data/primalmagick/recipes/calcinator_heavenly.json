@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "calcinators",
   "research": "CALCINATOR_HEAVENLY",
   "mana": {
@@ -12,16 +12,16 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_hallowed"
+      "item": "primalmagick:marble_hallowed"
     },
     "C": {
-      "item": "primalmagic:calcinator_forbidden"
+      "item": "primalmagick:calcinator_forbidden"
     },
     "E": {
-      "item": "primalmagic:essence_cluster_hallowed"
+      "item": "primalmagick:essence_cluster_hallowed"
     }
   },
   "result": {
-    "item": "primalmagic:calcinator_heavenly"
+    "item": "primalmagick:calcinator_heavenly"
   }
 }

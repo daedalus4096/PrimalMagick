@@ -2,34 +2,34 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     },
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     },
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     },
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     },
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     },
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     },
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     },
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     },
     {
-      "item": "primalmagic:mystical_relic_fragment"
+      "item": "primalmagick:mystical_relic_fragment"
     }
   ],
   "result": {
-    "item": "primalmagic:mystical_relic"
+    "item": "primalmagick:mystical_relic"
   }
 }

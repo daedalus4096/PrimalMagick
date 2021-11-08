@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:spellcrafting_altar"
+          "name": "primalmagick:spellcrafting_altar"
         }
       ],
       "conditions": [

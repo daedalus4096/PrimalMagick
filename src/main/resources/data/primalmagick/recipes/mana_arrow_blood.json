@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "mana_arrows",
   "research": "MANA_ARROWS\u0026\u0026t_discover_blood",
   "mana": {
@@ -15,11 +15,11 @@
       "item": "minecraft:arrow"
     },
     "D": {
-      "item": "primalmagic:essence_dust_blood"
+      "item": "primalmagick:essence_dust_blood"
     }
   },
   "result": {
-    "item": "primalmagic:mana_arrow_blood",
+    "item": "primalmagick:mana_arrow_blood",
     "count": 4
   }
 }

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:sunwood_wood"
+      "primalmagick:sunwood_wood"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:sunwood_log"
+              "primalmagick:sunwood_log"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:sunwood_wood"
+        "recipe": "primalmagick:sunwood_wood"
       }
     }
   },

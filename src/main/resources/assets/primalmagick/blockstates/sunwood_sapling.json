@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "primalmagic:block/sunwood_sapling" }
+        "": { "model": "primalmagick:block/sunwood_sapling" }
     }
 }

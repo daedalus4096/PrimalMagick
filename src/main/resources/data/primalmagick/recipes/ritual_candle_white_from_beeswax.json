@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "ritual_candles",
   "research": "RITUAL_CANDLES",
   "pattern": [
@@ -12,10 +12,10 @@
       "tag": "forge:string"
     },
     "W": {
-      "item": "primalmagic:beeswax"
+      "item": "primalmagick:beeswax"
     }
   },
   "result": {
-    "item": "primalmagic:ritual_candle_white"
+    "item": "primalmagick:ritual_candle_white"
   }
 }

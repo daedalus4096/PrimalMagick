@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#primalmagic:colored_shulker_boxes",
+    "#primalmagick:colored_shulker_boxes",
     "minecraft:shulker_box"
   ]
 }

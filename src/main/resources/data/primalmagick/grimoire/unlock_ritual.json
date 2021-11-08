@@ -1,6 +1,6 @@
 {
   "key": "UNLOCK_RITUAL",
-  "name": "primalmagic.research.unlock_ritual.title",
+  "name": "primalmagick.research.unlock_ritual.title",
   "discipline": "BASICS",
   "parents": [
     "WAND_INSCRIPTION",
@@ -8,13 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.unlock_ritual.text.stage.1",
+      "text": "primalmagick.research.unlock_ritual.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.unlock_ritual.text.stage.2"
+      "text": "primalmagick.research.unlock_ritual.text.stage.2"
     }
   ],
   "addenda": []

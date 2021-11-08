@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:refined_salt_from_salt_block"
+      "primalmagick:refined_salt_from_salt_block"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:salt_block"
+              "primalmagick:salt_block"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:refined_salt_from_salt_block"
+        "recipe": "primalmagick:refined_salt_from_salt_block"
       }
     }
   },

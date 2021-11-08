@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/stripped_hallowood_log",
-		"1": "primalmagic:block/celestial_harp_strings",
-		"particle": "primalmagic:block/stripped_hallowood_log"
+		"0": "primalmagick:block/stripped_hallowood_log",
+		"1": "primalmagick:block/celestial_harp_strings",
+		"particle": "primalmagick:block/stripped_hallowood_log"
 	},
 	"elements": [
 		{

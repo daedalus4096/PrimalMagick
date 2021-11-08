@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/marble_raw"
+            "model": "primalmagick:block/marble_raw"
         }
     }
 }

@@ -72,12 +72,12 @@ public class AttunementMeterWidget extends AbstractWidget {
         if (this.isHovered()) {
             // Render tooltip
             List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagic.grimoire.attunement_meter.tooltip.header", this.source.getNameText()));
-            tooltip.add(new TranslatableComponent("primalmagic.grimoire.attunement_meter.tooltip.permanent", p));
+            tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()));
+            tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.permanent", p));
             if (i > 0) {
-                tooltip.add(new TranslatableComponent("primalmagic.grimoire.attunement_meter.tooltip.induced", i));
+                tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
             }
-            tooltip.add(new TranslatableComponent("primalmagic.grimoire.attunement_meter.tooltip.temporary", t));
+            tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
             GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
         }
     }

@@ -2,13 +2,13 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/base_wood_grain",
-		"1": "primalmagic:block/base_iron",
-		"2": "primalmagic:block/base_gold",
+		"0": "primalmagick:block/base_wood_grain",
+		"1": "primalmagick:block/base_iron",
+		"2": "primalmagick:block/base_gold",
 		"4": "block/black_concrete",
-		"5": "primalmagic:item/arcanometer_antenna",
+		"5": "primalmagick:item/arcanometer_antenna",
 		"6": "block/white_concrete",
-		"particle": "primalmagic:block/base_iron"
+		"particle": "primalmagick:block/base_iron"
 	},
 	"elements": [
 		{

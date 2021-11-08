@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/runescribing_altar_enchanted"
+            "model": "primalmagick:block/runescribing_altar_enchanted"
         }
     }
 }

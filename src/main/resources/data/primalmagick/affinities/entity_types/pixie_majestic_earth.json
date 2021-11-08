@@ -1,6 +1,6 @@
 {
   "type": "entity_type",
-  "target": "primalmagic:pixie_majestic_earth",
+  "target": "primalmagick:pixie_majestic_earth",
   "values": {
     "earth": 20,
     "sky": 10,

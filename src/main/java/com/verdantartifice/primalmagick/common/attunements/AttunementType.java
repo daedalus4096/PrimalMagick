@@ -31,6 +31,6 @@ public enum AttunementType {
     
     @Nonnull
     public String getNameTranslationKey() {
-        return "primalmagic.attunement_type." + this.name();
+        return "primalmagick.attunement_type." + this.name();
     }
 }

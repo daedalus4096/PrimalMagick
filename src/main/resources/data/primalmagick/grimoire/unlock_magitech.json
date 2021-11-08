@@ -1,6 +1,6 @@
 {
   "key": "UNLOCK_MAGITECH",
-  "name": "primalmagic.research.unlock_magitech.title",
+  "name": "primalmagick.research.unlock_magitech.title",
   "discipline": "BASICS",
   "parents": [
     "MANAFRUIT",
@@ -8,13 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.unlock_magitech.text.stage.1",
+      "text": "primalmagick.research.unlock_magitech.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.unlock_magitech.text.stage.2"
+      "text": "primalmagick.research.unlock_magitech.text.stage.2"
     }
   ],
   "addenda": []

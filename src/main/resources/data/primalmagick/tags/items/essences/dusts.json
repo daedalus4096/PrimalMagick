@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "#primalmagic:essences/terrestrial_dusts",
-    "#primalmagic:essences/forbidden_dusts",
-    "primalmagic:essence_dust_hallowed"
+    "#primalmagick:essences/terrestrial_dusts",
+    "#primalmagick:essences/forbidden_dusts",
+    "primalmagick:essence_dust_hallowed"
   ]
 }

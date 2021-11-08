@@ -2,34 +2,34 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     },
     {
-      "item": "primalmagic:refined_salt"
+      "item": "primalmagick:refined_salt"
     }
   ],
   "result": {
-    "item": "primalmagic:salt_block"
+    "item": "primalmagick:salt_block"
   }
 }

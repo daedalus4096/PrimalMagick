@@ -1,8 +1,8 @@
 {
     "parent": "block/block",
     "textures": {
-        "particle": "primalmagic:block/sunlamp",
-        "all": "primalmagic:block/sunlamp"
+        "particle": "primalmagick:block/sunlamp",
+        "all": "primalmagick:block/sunlamp"
     },
     "elements": [
         {

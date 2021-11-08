@@ -1,28 +1,28 @@
 {
   "key": "CALCINATOR_BASIC",
-  "name": "primalmagic.research.calcinator_basic.title",
+  "name": "primalmagick.research.calcinator_basic.title",
   "discipline": "ALCHEMY",
   "parents": [
     "BASIC_ALCHEMY"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.calcinator_basic.text.stage.1",
+      "text": "primalmagick.research.calcinator_basic.text.stage.1",
       "required_craft": [
-        "primalmagic:essence_dust_earth",
-        "primalmagic:essence_dust_sea",
-        "primalmagic:essence_dust_sky",
-        "primalmagic:essence_dust_sun",
-        "primalmagic:essence_dust_moon"
+        "primalmagick:essence_dust_earth",
+        "primalmagick:essence_dust_sea",
+        "primalmagick:essence_dust_sky",
+        "primalmagick:essence_dust_sun",
+        "primalmagick:essence_dust_moon"
       ],
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.calcinator_basic.text.stage.2",
+      "text": "primalmagick.research.calcinator_basic.text.stage.2",
       "recipes": [
-        "primalmagic:calcinator_basic"
+        "primalmagick:calcinator_basic"
       ]
     }
   ],

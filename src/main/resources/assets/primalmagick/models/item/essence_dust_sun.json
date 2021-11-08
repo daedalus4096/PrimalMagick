@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/essence_dust_sun"
+        "layer0": "primalmagick:item/essence_dust_sun"
     }
 }

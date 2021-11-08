@@ -56,7 +56,7 @@ public class RuneEnchantmentIndexPage extends AbstractPage {
     
     @Override
     protected String getTitleTranslationKey() {
-        return "primalmagic.grimoire.rune_enchantment_header";
+        return "primalmagick.grimoire.rune_enchantment_header";
     }
 
     @Override

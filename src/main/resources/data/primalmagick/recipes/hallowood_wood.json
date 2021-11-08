@@ -7,11 +7,11 @@
   ],
   "key": {
     "W": {
-      "item": "primalmagic:hallowood_log"
+      "item": "primalmagick:hallowood_log"
     }
   },
   "result": {
-    "item": "primalmagic:hallowood_wood",
+    "item": "primalmagick:hallowood_wood",
     "count": 3
   }
 }

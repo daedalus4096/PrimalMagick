@@ -94,7 +94,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
                 int amount = mana.getAmount(source);
                 if (amount > 0) {
                     Component nameComp = source.getNameText();
-                    Component line = new TranslatableComponent("primalmagic.source.mana_container_tooltip", nameComp, (amount / 100.0D));
+                    Component line = new TranslatableComponent("primalmagick.source.mana_container_tooltip", nameComp, (amount / 100.0D));
                     tooltip.add(line);
                 }
             }

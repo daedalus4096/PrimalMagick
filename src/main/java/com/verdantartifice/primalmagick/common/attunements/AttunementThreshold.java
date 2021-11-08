@@ -30,6 +30,6 @@ public enum AttunementThreshold {
     }
     
     public Component getThresholdText() {
-        return new TranslatableComponent("primalmagic.attunement_threshold." + this.name());
+        return new TranslatableComponent("primalmagick.attunement_threshold." + this.name());
     }
 }

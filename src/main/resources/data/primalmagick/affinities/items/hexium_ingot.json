@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:hexium_ingot",
+  "target": "primalmagick:hexium_ingot",
   "set": {
     "earth": 8,
     "sea": 2,

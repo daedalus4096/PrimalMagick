@@ -1,8 +1,8 @@
 {
     "parent": "block/inner_stairs",
     "textures": {
-        "bottom": "primalmagic:block/moonwood_planks_full",
-        "top": "primalmagic:block/moonwood_planks_full",
-        "side": "primalmagic:block/moonwood_planks_full"
+        "bottom": "primalmagick:block/moonwood_planks_full",
+        "top": "primalmagick:block/moonwood_planks_full",
+        "side": "primalmagick:block/moonwood_planks_full"
     }
 }

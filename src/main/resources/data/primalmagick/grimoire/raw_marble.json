@@ -1,6 +1,6 @@
 {
   "key": "RAW_MARBLE",
-  "name": "primalmagic.research.raw_marble.title",
+  "name": "primalmagick.research.raw_marble.title",
   "discipline": "SCANS",
   "hidden": true,
   "parents": [
@@ -8,18 +8,18 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.raw_marble.text.stage.1",
+      "text": "primalmagick.research.raw_marble.text.stage.1",
       "recipes": [
-        "primalmagic:marble_slab",
-        "primalmagic:marble_stairs",
-        "primalmagic:marble_wall",
-        "primalmagic:marble_bricks",
-        "primalmagic:marble_brick_slab",
-        "primalmagic:marble_brick_stairs",
-        "primalmagic:marble_brick_wall",
-        "primalmagic:marble_pillar",
-        "primalmagic:marble_chiseled",
-        "primalmagic:marble_runed"
+        "primalmagick:marble_slab",
+        "primalmagick:marble_stairs",
+        "primalmagick:marble_wall",
+        "primalmagick:marble_bricks",
+        "primalmagick:marble_brick_slab",
+        "primalmagick:marble_brick_stairs",
+        "primalmagick:marble_brick_wall",
+        "primalmagick:marble_pillar",
+        "primalmagick:marble_chiseled",
+        "primalmagick:marble_runed"
       ]
     }
   ],

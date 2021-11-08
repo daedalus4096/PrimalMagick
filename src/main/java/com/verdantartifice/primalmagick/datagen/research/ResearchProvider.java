@@ -1325,6 +1325,6 @@ public class ResearchProvider implements DataProvider {
     
     @Override
     public String getName() {
-        return "Primal Magic Grimoire Research";
+        return "Primal Magick Grimoire Research";
     }
 }

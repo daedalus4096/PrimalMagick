@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_crystal_moon",
+  "target": "primalmagick:essence_crystal_moon",
   "set": {
     "moon": 50
   }

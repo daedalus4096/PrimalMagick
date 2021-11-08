@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "WAND_CORE_BONE",
   "mana": {
     "earth": 5,
@@ -15,13 +15,13 @@
   ],
   "key": {
     "D": {
-      "item": "primalmagic:essence_dust_blood"
+      "item": "primalmagick:essence_dust_blood"
     },
     "#": {
       "item": "minecraft:bone"
     }
   },
   "result": {
-    "item": "primalmagic:bone_wand_core_item"
+    "item": "primalmagick:bone_wand_core_item"
   }
 }

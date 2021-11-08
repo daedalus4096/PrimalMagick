@@ -43,7 +43,7 @@ public class RitualRecipePage extends AbstractRecipePage {
 
     @Override
     protected String getRecipeTypeTranslationKey() {
-        return "primalmagic.grimoire.ritual_recipe_header";
+        return "primalmagick.grimoire.ritual_recipe_header";
     }
 
     @Override
@@ -115,7 +115,7 @@ public class RitualRecipePage extends AbstractRecipePage {
 
         // Render ingredients section header
         if (!this.recipe.getIngredients().isEmpty()) {
-            Component leadComponent = new TranslatableComponent("primalmagic.grimoire.ritual_offerings_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = new TranslatableComponent("primalmagick.grimoire.ritual_offerings_header").withStyle(ChatFormatting.UNDERLINE);
             mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
             y += 18 * Mth.ceil((double)this.recipe.getIngredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
@@ -124,7 +124,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         
         // Render props section header
         if (!this.recipe.getProps().isEmpty()) {
-            Component leadComponent = new TranslatableComponent("primalmagic.grimoire.ritual_props_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = new TranslatableComponent("primalmagick.grimoire.ritual_props_header").withStyle(ChatFormatting.UNDERLINE);
             mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
             y += 18 * Mth.ceil((double)this.recipe.getProps().size() / (double)ITEMS_PER_ROW);       // Make room for prop widgets
@@ -132,10 +132,10 @@ public class RitualRecipePage extends AbstractRecipePage {
         }
         
         // Render instability rating line
-        Component headerComponent = new TranslatableComponent("primalmagic.ritual.instability.header").withStyle(ChatFormatting.UNDERLINE);
+        Component headerComponent = new TranslatableComponent("primalmagick.ritual.instability.header").withStyle(ChatFormatting.UNDERLINE);
         int rating = Mth.clamp(this.recipe.getInstability() / 2, 0, 5);
-        Component valueComponent = new TranslatableComponent("primalmagic.ritual.instability.rating." + rating);
-        Component lineComponent = new TranslatableComponent("primalmagic.ritual.instability", headerComponent, valueComponent);
+        Component valueComponent = new TranslatableComponent("primalmagick.ritual.instability.rating." + rating);
+        Component lineComponent = new TranslatableComponent("primalmagick.ritual.instability", headerComponent, valueComponent);
         mc.font.draw(matrixStack, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
         y += mc.font.lineHeight;
 

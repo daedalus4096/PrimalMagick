@@ -1,6 +1,6 @@
 {
   "key": "MASTER_MANAWEAVING",
-  "name": "primalmagic.research.master_manaweaving.title",
+  "name": "primalmagick.research.master_manaweaving.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "WAND_CAP_GOLD",
@@ -8,26 +8,26 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.master_manaweaving.text.stage.1",
+      "text": "primalmagick.research.master_manaweaving.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "b_crafted_manaweaving_master"
       ]
     },
     {
-      "text": "primalmagic.research.master_manaweaving.text.stage.2",
+      "text": "primalmagick.research.master_manaweaving.text.stage.2",
       "recipes": [
-        "primalmagic:marble_smoked",
-        "primalmagic:marble_smoked_brick_slab",
-        "primalmagic:marble_smoked_brick_stairs",
-        "primalmagic:marble_smoked_brick_wall",
-        "primalmagic:marble_smoked_bricks",
-        "primalmagic:marble_smoked_chiseled",
-        "primalmagic:marble_smoked_pillar",
-        "primalmagic:marble_smoked_runed",
-        "primalmagic:marble_smoked_slab",
-        "primalmagic:marble_smoked_stairs",
-        "primalmagic:marble_smoked_wall"
+        "primalmagick:marble_smoked",
+        "primalmagick:marble_smoked_brick_slab",
+        "primalmagick:marble_smoked_brick_stairs",
+        "primalmagick:marble_smoked_brick_wall",
+        "primalmagick:marble_smoked_bricks",
+        "primalmagick:marble_smoked_chiseled",
+        "primalmagick:marble_smoked_pillar",
+        "primalmagick:marble_smoked_runed",
+        "primalmagick:marble_smoked_slab",
+        "primalmagick:marble_smoked_stairs",
+        "primalmagick:marble_smoked_wall"
       ]
     }
   ],

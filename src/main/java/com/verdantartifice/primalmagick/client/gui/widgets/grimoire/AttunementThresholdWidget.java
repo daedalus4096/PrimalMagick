@@ -47,7 +47,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
         this.source = source;
         this.threshold = threshold;
         this.texture = new ResourceLocation(PrimalMagick.MODID, "textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
-        this.tooltipText = new TranslatableComponent("primalmagic.attunement.threshold." + source.getTag() + "." + threshold.getTag());
+        this.tooltipText = new TranslatableComponent("primalmagick.attunement.threshold." + source.getTag() + "." + threshold.getTag());
     }
     
     @Override

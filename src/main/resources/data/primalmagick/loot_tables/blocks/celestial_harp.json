@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:celestial_harp"
+          "name": "primalmagick:celestial_harp"
         }
       ],
       "conditions": [

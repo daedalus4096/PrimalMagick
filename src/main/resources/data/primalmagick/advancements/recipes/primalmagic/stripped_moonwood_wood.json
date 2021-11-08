@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:stripped_moonwood_wood"
+      "primalmagick:stripped_moonwood_wood"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:moonwood_log"
+              "primalmagick:moonwood_log"
             ]
           }
         ]
@@ -24,7 +24,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:stripped_moonwood_log"
+              "primalmagick:stripped_moonwood_log"
             ]
           }
         ]
@@ -33,7 +33,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:stripped_moonwood_wood"
+        "recipe": "primalmagick:stripped_moonwood_wood"
       }
     }
   },

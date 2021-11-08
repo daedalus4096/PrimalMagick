@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "primalmagic:ignyx_block"
+      "item": "primalmagick:ignyx_block"
     }
   ],
   "result": {
-    "item": "primalmagic:ignyx",
+    "item": "primalmagick:ignyx",
     "count": 9
   }
 }

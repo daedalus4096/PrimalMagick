@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "EARTHSHATTER_HAMMER",
   "mana": {
     "earth": 20
@@ -14,13 +14,13 @@
       "tag": "forge:ingots/iron"
     },
     "E": {
-      "item": "primalmagic:essence_shard_earth"
+      "item": "primalmagick:essence_shard_earth"
     },
     "S": {
       "tag": "forge:rods/wooden"
     }
   },
   "result": {
-    "item": "primalmagic:earthshatter_hammer"
+    "item": "primalmagick:earthshatter_hammer"
   }
 }

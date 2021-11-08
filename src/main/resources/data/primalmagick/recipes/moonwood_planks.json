@@ -3,11 +3,11 @@
   "group": "planks",
   "ingredients": [
     {
-      "tag": "primalmagic:moonwood_logs"
+      "tag": "primalmagick:moonwood_logs"
     }
   ],
   "result": {
-    "item": "primalmagic:moonwood_planks",
+    "item": "primalmagick:moonwood_planks",
     "count": 4
   }
 }

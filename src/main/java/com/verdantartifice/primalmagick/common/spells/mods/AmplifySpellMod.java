@@ -35,7 +35,7 @@ public class AmplifySpellMod extends AbstractSpellMod {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("power", new SpellProperty("power", "primalmagic.spell.property.power", 1, 5));
+        propMap.put("power", new SpellProperty("power", "primalmagick.spell.property.power", 1, 5));
         return propMap;
     }
     

@@ -1,13 +1,13 @@
 {
   "key": "SOURCE_SKY",
-  "name": "primalmagic.research.source_sky.title",
+  "name": "primalmagick.research.source_sky.title",
   "discipline": "BASICS",
   "parents": [
     "TERRESTRIAL_MAGIC"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.source_sky.text.stage.1",
+      "text": "primalmagick.research.source_sky.text.stage.1",
       "required_item": [
         "minecraft:bamboo",
         "tag:minecraft:leaves"
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.source_sky.text.stage.2",
+      "text": "primalmagick.research.source_sky.text.stage.2",
       "attunements": {
         "sky": 5
       }

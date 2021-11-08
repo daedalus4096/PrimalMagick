@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:hallowood_log",
-    "primalmagic:stripped_hallowood_log",
-    "primalmagic:hallowood_wood",
-    "primalmagic:stripped_hallowood_wood"
+    "primalmagick:hallowood_log",
+    "primalmagick:stripped_hallowood_log",
+    "primalmagick:hallowood_wood",
+    "primalmagick:stripped_hallowood_wood"
   ]
 }

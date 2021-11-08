@@ -102,7 +102,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
         IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe == null || activeArcaneRecipe.getManaCosts() == null || activeArcaneRecipe.getManaCosts().isEmpty()) {
-            Component text = new TranslatableComponent("primalmagic.crafting.no_mana");
+            Component text = new TranslatableComponent("primalmagick.crafting.no_mana");
             int width = this.font.width(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;

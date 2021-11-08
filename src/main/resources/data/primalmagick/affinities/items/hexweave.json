@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:hexweave",
+  "target": "primalmagick:hexweave",
   "set": {
     "earth": 3,
     "sea": 3,

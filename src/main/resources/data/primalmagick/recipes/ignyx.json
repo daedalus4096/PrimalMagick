@@ -1,18 +1,18 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "IGNYX",
   "ingredients": [
     {
       "tag": "minecraft:coals"
     },
     {
-      "item": "primalmagic:essence_dust_earth"
+      "item": "primalmagick:essence_dust_earth"
     },
     {
-      "item": "primalmagic:essence_dust_infernal"
+      "item": "primalmagick:essence_dust_infernal"
     }
   ],
   "result": {
-    "item": "primalmagic:ignyx"
+    "item": "primalmagick:ignyx"
   }
 }

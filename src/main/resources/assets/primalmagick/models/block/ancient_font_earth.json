@@ -1,6 +1,6 @@
 {
-	"parent": "primalmagic:block/template_mana_font",
+	"parent": "primalmagick:block/template_mana_font",
 	"textures": {
-	   "base": "primalmagic:block/marble_raw"
+	   "base": "primalmagick:block/marble_raw"
 	}
 }

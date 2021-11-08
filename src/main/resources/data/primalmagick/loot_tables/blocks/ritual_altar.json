@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:ritual_altar"
+          "name": "primalmagick:ritual_altar"
         }
       ],
       "conditions": [

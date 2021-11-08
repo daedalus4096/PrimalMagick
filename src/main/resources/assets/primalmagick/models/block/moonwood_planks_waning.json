@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/moonwood_planks_waning"
+        "all": "primalmagick:block/moonwood_planks_waning"
     }
 }

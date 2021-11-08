@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/salt_block"
+        "all": "primalmagick:block/salt_block"
     }
 }

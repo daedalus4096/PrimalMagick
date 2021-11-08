@@ -8,10 +8,10 @@
   ],
   "key": {
     "N": {
-      "tag": "primalmagic:nuggets/primalite"
+      "tag": "primalmagick:nuggets/primalite"
     }
   },
   "result": {
-    "item": "primalmagic:primalite_ingot"
+    "item": "primalmagick:primalite_ingot"
   }
 }

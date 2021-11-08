@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:wood_table"
+          "name": "primalmagick:wood_table"
         }
       ],
       "conditions": [

@@ -174,7 +174,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
 
     @Override
     public String getPropTranslationKey() {
-        return "primalmagic.ritual.prop.soul_anvil";
+        return "primalmagick.ritual.prop.soul_anvil";
     }
 
     public float getUsageStabilityBonus() {

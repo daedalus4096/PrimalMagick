@@ -1,6 +1,6 @@
 {
   "key": "PIXIES",
-  "name": "primalmagic.research.pixies.title",
+  "name": "primalmagick.research.pixies.title",
   "discipline": "RITUAL",
   "parents": [
     "EXPERT_RITUAL",
@@ -13,17 +13,17 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.pixies.text.stage.1",
+      "text": "primalmagick.research.pixies.text.stage.1",
       "required_item": [
-        "primalmagic:rune_summon",
-        "primalmagic:rune_creature"
+        "primalmagick:rune_summon",
+        "primalmagick:rune_creature"
       ],
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.pixies.text.stage.2",
+      "text": "primalmagick.research.pixies.text.stage.2",
       "attunements": {
         "earth": 2,
         "sea": 2,
@@ -32,17 +32,17 @@
         "moon": 2
       },
       "recipes": [
-        "primalmagic:pixie_basic_earth",
-        "primalmagic:pixie_basic_sea",
-        "primalmagic:pixie_basic_sky",
-        "primalmagic:pixie_basic_sun",
-        "primalmagic:pixie_basic_moon"
+        "primalmagick:pixie_basic_earth",
+        "primalmagick:pixie_basic_sea",
+        "primalmagick:pixie_basic_sky",
+        "primalmagick:pixie_basic_sun",
+        "primalmagick:pixie_basic_moon"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.pixies.text.addenda.1",
+      "text": "primalmagick.research.pixies.text.addenda.1",
       "required_research": [
         "t_discover_blood"
       ],
@@ -50,11 +50,11 @@
         "blood": 2
       },
       "recipes": [
-        "primalmagic:pixie_basic_blood"
+        "primalmagick:pixie_basic_blood"
       ]
     },
     {
-      "text": "primalmagic.research.pixies.text.addenda.2",
+      "text": "primalmagick.research.pixies.text.addenda.2",
       "required_research": [
         "t_discover_infernal"
       ],
@@ -62,11 +62,11 @@
         "infernal": 2
       },
       "recipes": [
-        "primalmagic:pixie_basic_infernal"
+        "primalmagick:pixie_basic_infernal"
       ]
     },
     {
-      "text": "primalmagic.research.pixies.text.addenda.3",
+      "text": "primalmagick.research.pixies.text.addenda.3",
       "required_research": [
         "t_discover_void"
       ],
@@ -74,11 +74,11 @@
         "void": 2
       },
       "recipes": [
-        "primalmagic:pixie_basic_void"
+        "primalmagick:pixie_basic_void"
       ]
     },
     {
-      "text": "primalmagic.research.pixies.text.addenda.4",
+      "text": "primalmagick.research.pixies.text.addenda.4",
       "required_research": [
         "t_discover_hallowed"
       ],
@@ -86,7 +86,7 @@
         "hallowed": 2
       },
       "recipes": [
-        "primalmagic:pixie_basic_hallowed"
+        "primalmagick:pixie_basic_hallowed"
       ]
     }
   ]

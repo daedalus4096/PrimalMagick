@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:marble_hallowed_stairs"
+          "name": "primalmagick:marble_hallowed_stairs"
         }
       ],
       "conditions": [

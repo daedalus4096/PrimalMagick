@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "calcinators",
   "research": "CALCINATOR_FORBIDDEN",
   "mana": {
@@ -14,22 +14,22 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_smoked"
+      "item": "primalmagick:marble_smoked"
     },
     "C": {
-      "item": "primalmagic:calcinator_enchanted"
+      "item": "primalmagick:calcinator_enchanted"
     },
     "B": {
-      "item": "primalmagic:essence_crystal_blood"
+      "item": "primalmagick:essence_crystal_blood"
     },
     "I": {
-      "item": "primalmagic:essence_crystal_infernal"
+      "item": "primalmagick:essence_crystal_infernal"
     },
     "V": {
-      "item": "primalmagic:essence_crystal_void"
+      "item": "primalmagick:essence_crystal_void"
     }
   },
   "result": {
-    "item": "primalmagic:calcinator_forbidden"
+    "item": "primalmagick:calcinator_forbidden"
   }
 }

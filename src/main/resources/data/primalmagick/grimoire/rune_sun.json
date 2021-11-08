@@ -1,24 +1,24 @@
 {
   "key": "RUNE_SUN",
-  "name": "primalmagic.research.rune_sun.title",
+  "name": "primalmagick.research.rune_sun.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "RUNE_SKY"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rune_sun.text.stage.1",
+      "text": "primalmagick.research.rune_sun.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.rune_sun.text.stage.2",
+      "text": "primalmagick.research.rune_sun.text.stage.2",
       "attunements": {
         "sun": 1
       },
       "recipes": [
-        "primalmagic:rune_sun"
+        "primalmagick:rune_sun"
       ]
     }
   ],

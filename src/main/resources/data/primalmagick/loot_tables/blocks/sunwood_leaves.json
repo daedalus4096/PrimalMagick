@@ -38,7 +38,7 @@
                   ]
                 }
               ],
-              "name": "primalmagic:sunwood_leaves"
+              "name": "primalmagick:sunwood_leaves"
             },
             {
               "type": "minecraft:item",
@@ -57,7 +57,7 @@
                   ]
                 }
               ],
-              "name": "primalmagic:sunwood_sapling"
+              "name": "primalmagick:sunwood_sapling"
             }
           ]
         }

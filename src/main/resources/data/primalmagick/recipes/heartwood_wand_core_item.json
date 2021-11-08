@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "WAND_CORE_HEARTWOOD",
   "mana": {
     "earth": 5,
@@ -14,10 +14,10 @@
   ],
   "key": {
     "H": {
-      "item": "primalmagic:heartwood"
+      "item": "primalmagick:heartwood"
     }
   },
   "result": {
-    "item": "primalmagic:heartwood_wand_core_item"
+    "item": "primalmagick:heartwood_wand_core_item"
   }
 }

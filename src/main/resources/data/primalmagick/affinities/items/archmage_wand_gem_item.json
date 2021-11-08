@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "primalmagic:archmage_wand_gem_item",
-  "base": "primalmagic:wizard_wand_gem_item",
+  "target": "primalmagick:archmage_wand_gem_item",
+  "base": "primalmagick:wizard_wand_gem_item",
   "add": {
     "earth": 2,
     "sea": 2,

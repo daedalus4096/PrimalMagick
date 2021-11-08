@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "WAND_CAP_HALLOWSTEEL",
   "mana": {
     "earth": 150,
@@ -14,10 +14,10 @@
   ],
   "key": {
     "N": {
-      "tag": "primalmagic:nuggets/hallowsteel"
+      "tag": "primalmagick:nuggets/hallowsteel"
     }
   },
   "result": {
-    "item": "primalmagic:hallowsteel_wand_cap_item"
+    "item": "primalmagick:hallowsteel_wand_cap_item"
   }
 }

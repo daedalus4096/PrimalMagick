@@ -1,8 +1,8 @@
 {
     "parent": "block/block",
     "textures": {
-        "particle": "primalmagic:block/spirit_lantern",
-        "all": "primalmagic:block/spirit_lantern"
+        "particle": "primalmagick:block/spirit_lantern",
+        "all": "primalmagick:block/spirit_lantern"
     },
     "elements": [
         {

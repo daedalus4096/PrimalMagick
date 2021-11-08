@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:marble_smoked_bricks"
+          "name": "primalmagick:marble_smoked_bricks"
         }
       ],
       "conditions": [

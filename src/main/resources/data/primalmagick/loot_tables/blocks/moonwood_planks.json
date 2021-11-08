@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:moonwood_planks"
+          "name": "primalmagick:moonwood_planks"
         }
       ],
       "conditions": [

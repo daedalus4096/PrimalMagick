@@ -1,6 +1,6 @@
 {
   "key": "DISSOLUTION_CHAMBER",
-  "name": "primalmagic.research.dissolution_chamber.title",
+  "name": "primalmagick.research.dissolution_chamber.title",
   "discipline": "MAGITECH",
   "parents": [
     "MASTER_MAGITECH",
@@ -9,35 +9,35 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.dissolution_chamber.text.stage.1",
+      "text": "primalmagick.research.dissolution_chamber.text.stage.1",
       "required_item": [
-        "primalmagic:iron_grit;20",
-        "primalmagic:copper_grit;20",
-        "primalmagic:gold_grit;10"
+        "primalmagick:iron_grit;20",
+        "primalmagick:copper_grit;20",
+        "primalmagick:gold_grit;10"
       ],
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.dissolution_chamber.text.stage.2",
+      "text": "primalmagick.research.dissolution_chamber.text.stage.2",
       "attunements": {
         "earth": 3
       },
       "recipes": [
-        "primalmagic:dissolution_chamber",
-        "primalmagic:iron_grit_from_dissolving_ore",
-        "primalmagic:iron_grit_from_dissolving_raw_metal",
-        "primalmagic:gold_grit_from_dissolving_ore",
-        "primalmagic:gold_grit_from_dissolving_raw_metal",
-        "primalmagic:copper_grit_from_dissolving_ore",
-        "primalmagic:copper_grit_from_dissolving_raw_metal",
-        "primalmagic:cobblestone_from_dissolving_stone",
-        "primalmagic:gravel_from_dissolving_cobblestone",
-        "primalmagic:sand_from_dissolving_gravel",
-        "primalmagic:bone_meal_from_dissolving_bone",
-        "primalmagic:blaze_powder_from_dissolving_blaze_rod",
-        "primalmagic:string_from_dissolving_wool"
+        "primalmagick:dissolution_chamber",
+        "primalmagick:iron_grit_from_dissolving_ore",
+        "primalmagick:iron_grit_from_dissolving_raw_metal",
+        "primalmagick:gold_grit_from_dissolving_ore",
+        "primalmagick:gold_grit_from_dissolving_raw_metal",
+        "primalmagick:copper_grit_from_dissolving_ore",
+        "primalmagick:copper_grit_from_dissolving_raw_metal",
+        "primalmagick:cobblestone_from_dissolving_stone",
+        "primalmagick:gravel_from_dissolving_cobblestone",
+        "primalmagick:sand_from_dissolving_gravel",
+        "primalmagick:bone_meal_from_dissolving_bone",
+        "primalmagick:blaze_powder_from_dissolving_blaze_rod",
+        "primalmagick:string_from_dissolving_wool"
       ]
     }
   ],

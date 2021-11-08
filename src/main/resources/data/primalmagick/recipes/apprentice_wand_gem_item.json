@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "WAND_GEM_APPRENTICE",
   "mana": {
     "earth": 10,
@@ -13,10 +13,10 @@
       "tag": "forge:gems/diamond"
     },
     {
-      "tag": "primalmagic:essences/terrestrial_dusts"
+      "tag": "primalmagick:essences/terrestrial_dusts"
     }
   ],
   "result": {
-    "item": "primalmagic:apprentice_wand_gem_item"
+    "item": "primalmagick:apprentice_wand_gem_item"
   }
 }

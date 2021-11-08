@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/hexium_block"
+        "all": "primalmagick:block/hexium_block"
     }
 }

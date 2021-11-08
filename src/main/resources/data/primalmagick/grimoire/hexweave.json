@@ -1,6 +1,6 @@
 {
   "key": "HEXWEAVE",
-  "name": "primalmagic.research.hexweave.title",
+  "name": "primalmagick.research.hexweave.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "MASTER_MANAWEAVING",
@@ -12,19 +12,19 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.hexweave.text.stage.1",
+      "text": "primalmagick.research.hexweave.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.hexweave.text.stage.2",
+      "text": "primalmagick.research.hexweave.text.stage.2",
       "recipes": [
-        "primalmagic:hexweave",
-        "primalmagic:hexweave_head",
-        "primalmagic:hexweave_chest",
-        "primalmagic:hexweave_legs",
-        "primalmagic:hexweave_feet"
+        "primalmagick:hexweave",
+        "primalmagick:hexweave_head",
+        "primalmagick:hexweave_chest",
+        "primalmagick:hexweave_legs",
+        "primalmagick:hexweave_feet"
       ]
     }
   ],

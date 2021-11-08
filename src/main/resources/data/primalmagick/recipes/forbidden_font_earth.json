@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "forbidden_mana_fonts",
   "research": "FORBIDDEN_MANA_FONTS",
   "mana": {
@@ -12,19 +12,19 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/hexium"
+      "tag": "primalmagick:ingots/hexium"
     },
     "M": {
-      "item": "primalmagic:marble_smoked_slab"
+      "item": "primalmagick:marble_smoked_slab"
     },
     "E": {
-      "item": "primalmagic:essence_crystal_earth"
+      "item": "primalmagick:essence_crystal_earth"
     },
     "F": {
-      "item": "primalmagic:artificial_font_earth"
+      "item": "primalmagick:artificial_font_earth"
     }
   },
   "result": {
-    "item": "primalmagic:forbidden_font_earth"
+    "item": "primalmagick:forbidden_font_earth"
   }
 }

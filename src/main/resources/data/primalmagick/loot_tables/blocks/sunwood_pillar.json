@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:sunwood_pillar"
+          "name": "primalmagick:sunwood_pillar"
         }
       ],
       "conditions": [

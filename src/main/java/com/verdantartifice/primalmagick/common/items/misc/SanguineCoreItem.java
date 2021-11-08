@@ -35,8 +35,8 @@ public class SanguineCoreItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslatableComponent("tooltip.primalmagic.sanguine_core.1", this.getMaxDamage(stack) - this.getDamage(stack) + 1));
-        tooltip.add(new TranslatableComponent("tooltip.primalmagic.sanguine_core.2", this.soulsPerSpawn));
+        tooltip.add(new TranslatableComponent("tooltip.primalmagick.sanguine_core.1", this.getMaxDamage(stack) - this.getDamage(stack) + 1));
+        tooltip.add(new TranslatableComponent("tooltip.primalmagick.sanguine_core.2", this.soulsPerSpawn));
     }
 
     public EntityType<?> getEntityType() {

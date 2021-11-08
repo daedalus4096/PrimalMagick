@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "runescribing_altar",
   "research": "BASIC_RUNEWORKING",
   "mana": {
@@ -16,16 +16,16 @@
   ],
   "key": {
     "R": {
-      "item": "primalmagic:rune_unattuned"
+      "item": "primalmagick:rune_unattuned"
     },
     "D": {
       "tag": "forge:gems/diamond"
     },
     "M": {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     }
   },
   "result": {
-    "item": "primalmagic:runescribing_altar_basic"
+    "item": "primalmagick:runescribing_altar_basic"
   }
 }

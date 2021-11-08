@@ -3,12 +3,12 @@
     "parent": "block/block",
 	"ambientocclusion": false,
 	"textures": {
-		"front": "primalmagic:block/sanguine_crucible_front_lit",
-		"top": "primalmagic:block/sanguine_crucible_top",
-		"bottom": "primalmagic:block/sanguine_crucible_bottom",
-		"particle": "primalmagic:block/sanguine_crucible_side",
-		"side": "primalmagic:block/sanguine_crucible_side",
-		"inside": "primalmagic:block/sanguine_crucible_inner"
+		"front": "primalmagick:block/sanguine_crucible_front_lit",
+		"top": "primalmagick:block/sanguine_crucible_top",
+		"bottom": "primalmagick:block/sanguine_crucible_bottom",
+		"particle": "primalmagick:block/sanguine_crucible_side",
+		"side": "primalmagick:block/sanguine_crucible_side",
+		"inside": "primalmagick:block/sanguine_crucible_inner"
 	},
 	"elements": [
 		{

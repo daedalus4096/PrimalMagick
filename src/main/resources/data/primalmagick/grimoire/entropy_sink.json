@@ -1,6 +1,6 @@
 {
   "key": "ENTROPY_SINK",
-  "name": "primalmagic.research.entropy_sink.title",
+  "name": "primalmagick.research.entropy_sink.title",
   "discipline": "MAGITECH",
   "parents": [
     "EXPERT_MAGITECH",
@@ -9,7 +9,7 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.entropy_sink.text.stage.1",
+      "text": "primalmagick.research.entropy_sink.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ],
@@ -18,9 +18,9 @@
       ]
     },
     {
-      "text": "primalmagic.research.entropy_sink.text.stage.2",
+      "text": "primalmagick.research.entropy_sink.text.stage.2",
       "recipes": [
-        "primalmagic:entropy_sink"
+        "primalmagick:entropy_sink"
       ]
     }
   ],

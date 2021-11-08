@@ -37,7 +37,7 @@ public class ResearchToast implements Toast {
         toastGui.blit(matrixStack, 0, 0, 0, 224, 160, 32);
         
         // Render the toast title text
-        Component titleText = new TranslatableComponent("primalmagic.toast.title");
+        Component titleText = new TranslatableComponent("primalmagick.toast.title");
         mc.font.draw(matrixStack, titleText, 6, 7, 0x551A8B);
         
         // Render the description of the completed research

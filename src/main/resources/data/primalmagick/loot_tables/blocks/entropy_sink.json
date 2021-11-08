@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:entropy_sink"
+          "name": "primalmagick:entropy_sink"
         }
       ],
       "conditions": [

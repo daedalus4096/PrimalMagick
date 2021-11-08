@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "RUNIC_GRINDSTONE",
   "mana": {
     "earth": 25
@@ -11,7 +11,7 @@
   ],
   "key": {
     "D": {
-      "item": "primalmagic:rune_dispel"
+      "item": "primalmagick:rune_dispel"
     },
     "S": {
       "tag": "forge:rods/wooden"
@@ -20,10 +20,10 @@
       "item": "minecraft:stone_slab"
     },
     "P": {
-      "item": "primalmagic:sunwood_planks"
+      "item": "primalmagick:sunwood_planks"
     }
   },
   "result": {
-    "item": "primalmagic:runic_grindstone"
+    "item": "primalmagick:runic_grindstone"
   }
 }

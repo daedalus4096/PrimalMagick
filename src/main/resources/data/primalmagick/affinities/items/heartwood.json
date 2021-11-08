@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:heartwood",
+  "target": "primalmagick:heartwood",
   "set": {
     "earth": 15,
     "sea": 5,

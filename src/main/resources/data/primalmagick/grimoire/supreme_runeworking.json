@@ -1,13 +1,13 @@
 {
   "key": "SUPREME_RUNEWORKING",
-  "name": "primalmagic.research.supreme_runeworking.title",
+  "name": "primalmagick.research.supreme_runeworking.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "RUNE_POWER"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.supreme_runeworking.text.stage.1",
+      "text": "primalmagick.research.supreme_runeworking.text.stage.1",
       "required_research": [
         "t_discover_hallowed",
         "b_crafted_runeworking_supreme",
@@ -15,9 +15,9 @@
       ]
     },
     {
-      "text": "primalmagic.research.supreme_runeworking.text.stage.2",
+      "text": "primalmagick.research.supreme_runeworking.text.stage.2",
       "recipes": [
-        "primalmagic:runescribing_altar_heavenly"
+        "primalmagick:runescribing_altar_heavenly"
       ]
     }
   ],

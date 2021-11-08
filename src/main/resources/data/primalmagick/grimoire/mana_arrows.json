@@ -1,13 +1,13 @@
 {
   "key": "MANA_ARROWS",
-  "name": "primalmagic.research.mana_arrows.title",
+  "name": "primalmagick.research.mana_arrows.title",
   "discipline": "MANAWEAVING",
   "parents": [
     "BASIC_MANAWEAVING"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.mana_arrows.text.stage.1",
+      "text": "primalmagick.research.mana_arrows.text.stage.1",
       "required_craft": [
         "minecraft:arrow"
       ],
@@ -16,51 +16,51 @@
       ]
     },
     {
-      "text": "primalmagic.research.mana_arrows.text.stage.2",
+      "text": "primalmagick.research.mana_arrows.text.stage.2",
       "recipes": [
-        "primalmagic:mana_arrow_earth",
-        "primalmagic:mana_arrow_sea",
-        "primalmagic:mana_arrow_sky",
-        "primalmagic:mana_arrow_sun",
-        "primalmagic:mana_arrow_moon"
+        "primalmagick:mana_arrow_earth",
+        "primalmagick:mana_arrow_sea",
+        "primalmagick:mana_arrow_sky",
+        "primalmagick:mana_arrow_sun",
+        "primalmagick:mana_arrow_moon"
       ]
     }
   ],
   "addenda": [
     {
-      "text": "primalmagic.research.mana_arrows.text.addenda.1",
+      "text": "primalmagick.research.mana_arrows.text.addenda.1",
       "required_research": [
         "t_discover_blood"
       ],
       "recipes": [
-        "primalmagic:mana_arrow_blood"
+        "primalmagick:mana_arrow_blood"
       ]
     },
     {
-      "text": "primalmagic.research.mana_arrows.text.addenda.2",
+      "text": "primalmagick.research.mana_arrows.text.addenda.2",
       "required_research": [
         "t_discover_infernal"
       ],
       "recipes": [
-        "primalmagic:mana_arrow_infernal"
+        "primalmagick:mana_arrow_infernal"
       ]
     },
     {
-      "text": "primalmagic.research.mana_arrows.text.addenda.3",
+      "text": "primalmagick.research.mana_arrows.text.addenda.3",
       "required_research": [
         "t_discover_void"
       ],
       "recipes": [
-        "primalmagic:mana_arrow_void"
+        "primalmagick:mana_arrow_void"
       ]
     },
     {
-      "text": "primalmagic.research.mana_arrows.text.addenda.4",
+      "text": "primalmagick.research.mana_arrows.text.addenda.4",
       "required_research": [
         "t_discover_hallowed"
       ],
       "recipes": [
-        "primalmagic:mana_arrow_hallowed"
+        "primalmagick:mana_arrow_hallowed"
       ]
     }
   ]

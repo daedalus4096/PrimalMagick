@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SKYGLASS",
   "pattern": [
     "GGG",
@@ -11,11 +11,11 @@
       "item": "minecraft:glass"
     },
     "D": {
-      "item": "primalmagic:essence_dust_sky"
+      "item": "primalmagick:essence_dust_sky"
     }
   },
   "result": {
-    "item": "primalmagic:skyglass",
+    "item": "primalmagick:skyglass",
     "count": 8
   }
 }

@@ -308,7 +308,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 if (source.isDiscovered(player)) {
                     Component nameComp = source.getNameText();
                     int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source));
-                    Component line = new TranslatableComponent("primalmagic.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
+                    Component line = new TranslatableComponent("primalmagick.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }
             }
@@ -316,17 +316,17 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add inscribed spell listing
             List<SpellPackage> spells = this.getSpells(stack);
             int activeIndex = this.getActiveSpellIndex(stack);
-            tooltip.add(new TranslatableComponent("primalmagic.spells.wand_header", this.getSpellCapacityText(stack)));
+            tooltip.add(new TranslatableComponent("primalmagick.spells.wand_header", this.getSpellCapacityText(stack)));
             if (spells.isEmpty()) {
-                tooltip.add(new TranslatableComponent("primalmagic.spells.none"));
+                tooltip.add(new TranslatableComponent("primalmagick.spells.none"));
             } else {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
-                        tooltip.add(new TranslatableComponent("primalmagic.spells.name_selected", spell.getName()));
+                        tooltip.add(new TranslatableComponent("primalmagick.spells.name_selected", spell.getName()));
                         tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, true));
                     } else {
-                        tooltip.add(new TranslatableComponent("primalmagic.spells.name_unselected", spell.getName()));
+                        tooltip.add(new TranslatableComponent("primalmagick.spells.name_unselected", spell.getName()));
                     }
                 }
             }
@@ -341,7 +341,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     if (first) {
                         summaryText = manaText;
                     } else {
-                        summaryText = new TranslatableComponent("primalmagic.source.mana_summary_fragment", summaryText, manaText);
+                        summaryText = new TranslatableComponent("primalmagick.source.mana_summary_fragment", summaryText, manaText);
                     }
                     first = false;
                 }
@@ -351,12 +351,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add active spell
             SpellPackage activeSpell = this.getActiveSpell(stack);
             Component activeSpellName = (activeSpell == null) ?
-                    new TranslatableComponent("tooltip.primalmagic.none") :
+                    new TranslatableComponent("tooltip.primalmagick.none") :
                     activeSpell.getName();
-            tooltip.add(new TranslatableComponent("primalmagic.spells.short_wand_header", activeSpellName));
+            tooltip.add(new TranslatableComponent("primalmagick.spells.short_wand_header", activeSpellName));
             
             // Add more info tooltip
-            tooltip.add(new TranslatableComponent("tooltip.primalmagic.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            tooltip.add(new TranslatableComponent("tooltip.primalmagick.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         }
     }
     
@@ -498,7 +498,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             for (IWandTransform transform : WandTransforms.getAll()) {
                 if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
                     ResearchManager.completeResearch(player, hintKey);
-                    player.sendMessage(new TranslatableComponent("event.primalmagic.wand_transform_hint").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+                    player.sendMessage(new TranslatableComponent("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
                     break;
                 }
             }

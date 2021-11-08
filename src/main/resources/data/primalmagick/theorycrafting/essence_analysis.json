@@ -1,5 +1,5 @@
 {
-  "key": "primalmagic:essence_analysis",
+  "key": "primalmagick:essence_analysis",
   "required_research": "BASIC_ALCHEMY",
   "reward_multiplier": 0.25,
   "aid_blocks": [],
@@ -12,42 +12,42 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_earth",
+      "stack": "primalmagick:essence_dust_earth",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_sea",
+      "stack": "primalmagick:essence_dust_sea",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_sky",
+      "stack": "primalmagick:essence_dust_sky",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_sun",
+      "stack": "primalmagick:essence_dust_sun",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_moon",
+      "stack": "primalmagick:essence_dust_moon",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_blood",
+      "stack": "primalmagick:essence_dust_blood",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
@@ -56,7 +56,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_infernal",
+      "stack": "primalmagick:essence_dust_infernal",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
@@ -65,7 +65,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_void",
+      "stack": "primalmagick:essence_dust_void",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
@@ -74,7 +74,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_dust_hallowed",
+      "stack": "primalmagick:essence_dust_hallowed",
       "consumed": true,
       "match_nbt": false,
       "weight": 3.0,
@@ -83,7 +83,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_earth",
+      "stack": "primalmagick:essence_shard_earth",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -93,7 +93,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_sea",
+      "stack": "primalmagick:essence_shard_sea",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -103,7 +103,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_sky",
+      "stack": "primalmagick:essence_shard_sky",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -113,7 +113,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_sun",
+      "stack": "primalmagick:essence_shard_sun",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -123,7 +123,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_moon",
+      "stack": "primalmagick:essence_shard_moon",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -133,7 +133,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_blood",
+      "stack": "primalmagick:essence_shard_blood",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -143,7 +143,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_infernal",
+      "stack": "primalmagick:essence_shard_infernal",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -153,7 +153,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_void",
+      "stack": "primalmagick:essence_shard_void",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,
@@ -163,7 +163,7 @@
     },
     {
       "type": "item",
-      "stack": "primalmagic:essence_shard_hallowed",
+      "stack": "primalmagick:essence_shard_hallowed",
       "consumed": true,
       "match_nbt": false,
       "weight": 1.0,

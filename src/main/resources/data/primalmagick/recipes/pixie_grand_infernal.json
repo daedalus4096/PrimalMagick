@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "GRAND_PIXIES\u0026\u0026t_discover_infernal",
   "mana": {
     "infernal": 100
@@ -7,36 +7,36 @@
   "instability": 5,
   "ingredients": [
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     },
     {
-      "item": "primalmagic:essence_shard_infernal"
+      "item": "primalmagick:essence_shard_infernal"
     },
     {
       "tag": "forge:ingots/iron"
     },
     {
-      "item": "primalmagic:rune_summon"
+      "item": "primalmagick:rune_summon"
     },
     {
-      "item": "primalmagic:rune_creature"
+      "item": "primalmagick:rune_creature"
     },
     {
-      "item": "primalmagic:rune_power"
+      "item": "primalmagick:rune_power"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:incense_brazier"
+      "block": "primalmagick:incense_brazier"
     },
     {
-      "block": "primalmagic:ritual_bell"
+      "block": "primalmagick:ritual_bell"
     },
     {
-      "block": "primalmagic:soul_anvil"
+      "block": "primalmagick:soul_anvil"
     }
   ],
   "result": {
-    "item": "primalmagic:pixie_grand_infernal"
+    "item": "primalmagick:pixie_grand_infernal"
   }
 }

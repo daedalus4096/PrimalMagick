@@ -1,6 +1,6 @@
 {
   "key": "RUNE_VOID",
-  "name": "primalmagic.research.rune_void.title",
+  "name": "primalmagick.research.rune_void.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "EXPERT_RUNEWORKING",
@@ -8,18 +8,18 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rune_void.text.stage.1",
+      "text": "primalmagick.research.rune_void.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.rune_void.text.stage.2",
+      "text": "primalmagick.research.rune_void.text.stage.2",
       "attunements": {
         "void": 1
       },
       "recipes": [
-        "primalmagic:rune_void"
+        "primalmagick:rune_void"
       ]
     }
   ],

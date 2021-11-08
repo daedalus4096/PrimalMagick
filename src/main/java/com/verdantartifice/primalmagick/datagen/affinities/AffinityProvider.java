@@ -938,11 +938,11 @@ public class AffinityProvider implements DataProvider {
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.SOULPIERCING.get()).multiplier(Source.INFERNAL).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.ESSENCE_THIEF.get()).multiplier(Source.VOID).build(consumer);
         EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.BULWARK.get()).multiplier(Source.HALLOWED).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.MAGIC_PROTECTION.get()).multiplier(Source.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.MAGICK_PROTECTION.get()).multiplier(Source.VOID).build(consumer);
     }
 
     @Override
     public String getName() {
-        return "Primal Magic Affinities";
+        return "Primal Magick Affinities";
     }
 }

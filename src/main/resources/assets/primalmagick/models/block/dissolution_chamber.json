@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "primalmagic:block/dissolution_chamber_side",
-		"1": "primalmagic:block/dissolution_chamber_top",
-		"2": "primalmagic:block/marble_smoked",
-		"particle": "primalmagic:block/dissolution_chamber_side"
+		"0": "primalmagick:block/dissolution_chamber_side",
+		"1": "primalmagick:block/dissolution_chamber_top",
+		"2": "primalmagick:block/marble_smoked",
+		"particle": "primalmagick:block/dissolution_chamber_side"
 	},
 	"elements": [
 		{

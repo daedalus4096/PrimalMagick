@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:sand_from_earthshatter_hammer"
+      "primalmagick:sand_from_earthshatter_hammer"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:earthshatter_hammer"
+              "primalmagick:earthshatter_hammer"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:sand_from_earthshatter_hammer"
+        "recipe": "primalmagick:sand_from_earthshatter_hammer"
       }
     }
   },

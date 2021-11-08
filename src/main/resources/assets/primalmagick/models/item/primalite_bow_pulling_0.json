@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:item/primalite_bow",
+    "parent": "primalmagick:item/primalite_bow",
     "textures": {
-        "layer0": "primalmagic:item/primalite_bow_pulling_0"
+        "layer0": "primalmagick:item/primalite_bow_pulling_0"
     }
 }

@@ -1,15 +1,15 @@
 {
   "key": "SOURCE_SUN",
-  "name": "primalmagic.research.source_sun.title",
+  "name": "primalmagick.research.source_sun.title",
   "discipline": "BASICS",
   "parents": [
     "TERRESTRIAL_MAGIC"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.source_sun.text.stage.1",
+      "text": "primalmagick.research.source_sun.text.stage.1",
       "required_item": [
-        "tag:primalmagic:sunwood_logs",
+        "tag:primalmagick:sunwood_logs",
         "tag:forge:sandstone"
       ],
       "required_knowledge": [
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.source_sun.text.stage.2",
+      "text": "primalmagick.research.source_sun.text.stage.2",
       "attunements": {
         "sun": 5
       }

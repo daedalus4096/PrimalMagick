@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:ritual",
+  "type": "primalmagick:ritual",
   "research": "FORBIDDEN_BOW",
   "mana": {
     "infernal": 40
@@ -7,34 +7,34 @@
   "instability": 3,
   "ingredients": [
     {
-      "item": "primalmagic:hexium_bow"
+      "item": "primalmagick:hexium_bow"
     },
     {
-      "item": "primalmagic:essence_shard_infernal"
+      "item": "primalmagick:essence_shard_infernal"
     },
     {
-      "item": "primalmagic:essence_shard_infernal"
+      "item": "primalmagick:essence_shard_infernal"
     },
     {
-      "item": "primalmagic:rune_infernal"
+      "item": "primalmagick:rune_infernal"
     },
     {
-      "item": "primalmagic:mana_prism"
+      "item": "primalmagick:mana_prism"
     },
     {
-      "item": "primalmagic:mana_salts"
+      "item": "primalmagick:mana_salts"
     }
   ],
   "props": [
     {
-      "block": "primalmagic:soul_anvil"
+      "block": "primalmagick:soul_anvil"
     },
     {
-      "block": "primalmagic:soul_anvil"
+      "block": "primalmagick:soul_anvil"
     }
   ],
   "result": {
-    "item": "primalmagic:forbidden_bow",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagic:soulpiercing\",lvl:2s}]}"
+    "item": "primalmagick:forbidden_bow",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:soulpiercing\",lvl:2s}]}"
   }
 }

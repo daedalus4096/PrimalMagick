@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/refined_salt"
+        "layer0": "primalmagick:item/refined_salt"
     }
 }

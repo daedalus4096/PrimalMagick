@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "primalmagic:gold_ingot_from_grit_smelting"
+      "primalmagick:gold_ingot_from_grit_smelting"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "primalmagic:gold_grit"
+              "primalmagick:gold_grit"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "primalmagic:gold_ingot_from_grit_smelting"
+        "recipe": "primalmagick:gold_ingot_from_grit_smelting"
       }
     }
   },

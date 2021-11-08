@@ -14,6 +14,6 @@ public class ShapedRecipePage extends AbstractShapedRecipePage<ShapedRecipe> {
 
     @Override
     protected String getRecipeTypeTranslationKey() {
-        return "primalmagic.grimoire.shaped_recipe_header";
+        return "primalmagick.grimoire.shaped_recipe_header";
     }
 }

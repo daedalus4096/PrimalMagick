@@ -1,15 +1,15 @@
 {
   "key": "SOURCE_MOON",
-  "name": "primalmagic.research.source_moon.title",
+  "name": "primalmagick.research.source_moon.title",
   "discipline": "BASICS",
   "parents": [
     "TERRESTRIAL_MAGIC"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.source_moon.text.stage.1",
+      "text": "primalmagick.research.source_moon.text.stage.1",
       "required_item": [
-        "tag:primalmagic:moonwood_logs",
+        "tag:primalmagick:moonwood_logs",
         "tag:forge:mushrooms"
       ],
       "required_knowledge": [
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "text": "primalmagic.research.source_moon.text.stage.2",
+      "text": "primalmagick.research.source_moon.text.stage.2",
       "attunements": {
         "moon": 5
       }

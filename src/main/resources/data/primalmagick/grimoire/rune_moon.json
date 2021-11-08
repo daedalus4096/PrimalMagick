@@ -1,24 +1,24 @@
 {
   "key": "RUNE_MOON",
-  "name": "primalmagic.research.rune_moon.title",
+  "name": "primalmagick.research.rune_moon.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "RUNE_SEA"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rune_moon.text.stage.1",
+      "text": "primalmagick.research.rune_moon.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.rune_moon.text.stage.2",
+      "text": "primalmagick.research.rune_moon.text.stage.2",
       "attunements": {
         "moon": 1
       },
       "recipes": [
-        "primalmagic:rune_moon"
+        "primalmagick:rune_moon"
       ]
     }
   ],

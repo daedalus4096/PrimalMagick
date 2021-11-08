@@ -1,21 +1,21 @@
 {
   "key": "RUNE_PROTECT",
-  "name": "primalmagic.research.rune_protect.title",
+  "name": "primalmagick.research.rune_protect.title",
   "discipline": "RUNEWORKING",
   "parents": [
     "RUNE_PROJECT"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.rune_protect.text.stage.1",
+      "text": "primalmagick.research.rune_protect.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.rune_protect.text.stage.2",
+      "text": "primalmagick.research.rune_protect.text.stage.2",
       "recipes": [
-        "primalmagic:rune_protect"
+        "primalmagick:rune_protect"
       ]
     }
   ],

@@ -1,6 +1,6 @@
 {
   "key": "SPELL_VEHICLE_BOLT",
-  "name": "primalmagic.research.spell_vehicle_bolt.title",
+  "name": "primalmagick.research.spell_vehicle_bolt.title",
   "discipline": "SORCERY",
   "parents": [
     "MASTER_SORCERY",
@@ -8,13 +8,13 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.spell_vehicle_bolt.text.stage.1",
+      "text": "primalmagick.research.spell_vehicle_bolt.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ]
     },
     {
-      "text": "primalmagic.research.spell_vehicle_bolt.text.stage.2"
+      "text": "primalmagick.research.spell_vehicle_bolt.text.stage.2"
     }
   ],
   "addenda": []

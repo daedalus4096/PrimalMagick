@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "primalmagic:block/hallowood_leaves" }
+        "": { "model": "primalmagick:block/hallowood_leaves" }
     }
 }

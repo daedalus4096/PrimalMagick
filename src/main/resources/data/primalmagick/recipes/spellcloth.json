@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SPELLCLOTH",
   "mana": {
     "earth": 5,
@@ -15,7 +15,7 @@
   ],
   "key": {
     "E": {
-      "tag": "primalmagic:essences/terrestrial_dusts"
+      "tag": "primalmagick:essences/terrestrial_dusts"
     },
     "S": {
       "tag": "forge:string"
@@ -25,6 +25,6 @@
     }
   },
   "result": {
-    "item": "primalmagic:spellcloth"
+    "item": "primalmagick:spellcloth"
   }
 }

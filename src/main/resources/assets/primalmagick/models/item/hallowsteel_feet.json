@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/hallowsteel_feet"
+        "layer0": "primalmagick:item/hallowsteel_feet"
     }
 }

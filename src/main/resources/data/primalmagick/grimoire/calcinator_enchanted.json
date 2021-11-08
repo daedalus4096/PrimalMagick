@@ -1,6 +1,6 @@
 {
   "key": "CALCINATOR_ENCHANTED",
-  "name": "primalmagic.research.calcinator_enchanted.title",
+  "name": "primalmagick.research.calcinator_enchanted.title",
   "discipline": "ALCHEMY",
   "parents": [
     "EXPERT_ALCHEMY",
@@ -10,15 +10,15 @@
   ],
   "stages": [
     {
-      "text": "primalmagic.research.calcinator_enchanted.text.stage.1",
+      "text": "primalmagick.research.calcinator_enchanted.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ]
     },
     {
-      "text": "primalmagic.research.calcinator_enchanted.text.stage.2",
+      "text": "primalmagick.research.calcinator_enchanted.text.stage.2",
       "recipes": [
-        "primalmagic:calcinator_enchanted"
+        "primalmagick:calcinator_enchanted"
       ]
     }
   ],

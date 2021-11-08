@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "SUPREME_MANAWEAVING",
   "mana": {
     "hallowed": 5
@@ -11,14 +11,14 @@
   ],
   "key": {
     "M": {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     "D": {
-      "item": "primalmagic:essence_dust_hallowed"
+      "item": "primalmagick:essence_dust_hallowed"
     }
   },
   "result": {
-    "item": "primalmagic:marble_hallowed",
+    "item": "primalmagick:marble_hallowed",
     "count": 8
   }
 }

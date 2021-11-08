@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "HEXWEAVE",
   "mana": {
     "blood": 20,
@@ -13,16 +13,16 @@
   ],
   "key": {
     "E": {
-      "tag": "primalmagic:essences/forbidden_shards"
+      "tag": "primalmagick:essences/forbidden_shards"
     },
     "S": {
       "tag": "forge:string"
     },
     "C": {
-      "item": "primalmagic:spellcloth"
+      "item": "primalmagick:spellcloth"
     }
   },
   "result": {
-    "item": "primalmagic:hexweave"
+    "item": "primalmagick:hexweave"
   }
 }

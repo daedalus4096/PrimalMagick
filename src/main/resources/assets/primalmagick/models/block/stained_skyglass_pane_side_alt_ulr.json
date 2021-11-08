@@ -1,6 +1,6 @@
 {
-    "parent": "primalmagic:block/stained_skyglass_pane_side_alt_base",
+    "parent": "primalmagick:block/stained_skyglass_pane_side_alt_base",
     "textures": {
-        "pane": "primalmagic:block/stained_skyglass_ulr"
+        "pane": "primalmagick:block/stained_skyglass_ulr"
     }
 }

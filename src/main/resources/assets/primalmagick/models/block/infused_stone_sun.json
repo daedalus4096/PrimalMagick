@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "primalmagic:block/infused_stone_sun"
+        "all": "primalmagick:block/infused_stone_sun"
     }
 }

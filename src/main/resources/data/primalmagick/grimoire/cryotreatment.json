@@ -1,28 +1,28 @@
 {
   "key": "CRYOTREATMENT",
-  "name": "primalmagic.research.cryotreatment.title",
+  "name": "primalmagick.research.cryotreatment.title",
   "discipline": "ALCHEMY",
   "parents": [
     "STONEMELDING"
   ],
   "stages": [
     {
-      "text": "primalmagic.research.cryotreatment.text.stage.1",
+      "text": "primalmagick.research.cryotreatment.text.stage.1",
       "required_item": [
-        "primalmagic:essence_dust_sea"
+        "primalmagick:essence_dust_sea"
       ],
       "required_knowledge": [
         "OBSERVATION;1"
       ]
     },
     {
-      "text": "primalmagic.research.cryotreatment.text.stage.2",
+      "text": "primalmagick.research.cryotreatment.text.stage.2",
       "attunements": {
         "sea": 1
       },
       "recipes": [
-        "primalmagic:ice_from_cryotreatment",
-        "primalmagic:obsidian_from_cryotreatment"
+        "primalmagick:ice_from_cryotreatment",
+        "primalmagick:obsidian_from_cryotreatment"
       ]
     }
   ],

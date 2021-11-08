@@ -1,14 +1,14 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "group": "essence_shard",
   "research": "CRYSTAL_DESYNTHESIS\u0026\u0026t_discover_hallowed",
   "ingredients": [
     {
-      "item": "primalmagic:essence_crystal_hallowed"
+      "item": "primalmagick:essence_crystal_hallowed"
     }
   ],
   "result": {
-    "item": "primalmagic:essence_shard_hallowed",
+    "item": "primalmagick:essence_shard_hallowed",
     "count": 4
   }
 }

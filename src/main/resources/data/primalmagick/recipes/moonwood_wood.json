@@ -7,11 +7,11 @@
   ],
   "key": {
     "W": {
-      "item": "primalmagic:moonwood_log"
+      "item": "primalmagick:moonwood_log"
     }
   },
   "result": {
-    "item": "primalmagic:moonwood_wood",
+    "item": "primalmagick:moonwood_wood",
     "count": 3
   }
 }

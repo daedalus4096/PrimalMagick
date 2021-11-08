@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:marble_raw",
+  "target": "primalmagick:marble_raw",
   "set": {
     "earth": 5
   }

@@ -8,10 +8,10 @@
   ],
   "key": {
     "N": {
-      "tag": "primalmagic:nuggets/hallowsteel"
+      "tag": "primalmagick:nuggets/hallowsteel"
     }
   },
   "result": {
-    "item": "primalmagic:hallowsteel_ingot"
+    "item": "primalmagick:hallowsteel_ingot"
   }
 }

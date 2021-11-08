@@ -3,13 +3,13 @@
   "group": "ritual_candles",
   "ingredients": [
     {
-      "tag": "primalmagic:ritual_candles"
+      "tag": "primalmagick:ritual_candles"
     },
     {
       "tag": "forge:dyes/orange"
     }
   ],
   "result": {
-    "item": "primalmagic:ritual_candle_orange"
+    "item": "primalmagick:ritual_candle_orange"
   }
 }

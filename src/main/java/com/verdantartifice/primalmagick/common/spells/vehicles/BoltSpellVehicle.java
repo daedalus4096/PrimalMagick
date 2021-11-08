@@ -43,7 +43,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("range", new SpellProperty("range", "primalmagic.spell.property.range", 1, 5));
+        propMap.put("range", new SpellProperty("range", "primalmagick.spell.property.range", 1, 5));
         return propMap;
     }
     
@@ -70,7 +70,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
 
     @Override
     public Component getDetailTooltip() {
-        return new TranslatableComponent("primalmagic.spell.vehicle.detail_tooltip." + this.getVehicleType(), this.getRangeBlocks());
+        return new TranslatableComponent("primalmagick.spell.vehicle.detail_tooltip." + this.getVehicleType(), this.getRangeBlocks());
     }
 
     @Override

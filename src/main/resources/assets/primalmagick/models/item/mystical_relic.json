@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/mystical_relic"
+        "layer0": "primalmagick:item/mystical_relic"
     }
 }

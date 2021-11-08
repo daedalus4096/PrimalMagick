@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/handheld",
     "textures": {
-        "layer0": "primalmagic:item/hexium_sword"
+        "layer0": "primalmagick:item/hexium_sword"
     }
 }

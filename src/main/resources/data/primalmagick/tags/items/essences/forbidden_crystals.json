@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:essence_crystal_blood",
-    "primalmagic:essence_crystal_infernal",
-    "primalmagic:essence_crystal_void"
+    "primalmagick:essence_crystal_blood",
+    "primalmagick:essence_crystal_infernal",
+    "primalmagick:essence_crystal_void"
   ]
 }

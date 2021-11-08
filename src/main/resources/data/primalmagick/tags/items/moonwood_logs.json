@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:moonwood_log",
-    "primalmagic:stripped_moonwood_log",
-    "primalmagic:moonwood_wood",
-    "primalmagic:stripped_moonwood_wood"
+    "primalmagick:moonwood_log",
+    "primalmagick:stripped_moonwood_log",
+    "primalmagick:moonwood_wood",
+    "primalmagick:stripped_moonwood_wood"
   ]
 }

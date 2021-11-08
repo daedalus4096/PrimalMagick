@@ -1,6 +1,6 @@
 {
     "parent": "block/leaves",
     "textures": {
-        "all": "primalmagic:block/moonwood_leaves_waxing"
+        "all": "primalmagick:block/moonwood_leaves_waxing"
     }
 }

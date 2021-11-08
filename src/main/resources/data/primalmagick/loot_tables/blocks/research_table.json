@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:research_table"
+          "name": "primalmagick:research_table"
         }
       ],
       "conditions": [

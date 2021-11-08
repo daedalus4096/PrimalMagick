@@ -3,11 +3,11 @@
   "group": "planks",
   "ingredients": [
     {
-      "tag": "primalmagic:sunwood_logs"
+      "tag": "primalmagick:sunwood_logs"
     }
   ],
   "result": {
-    "item": "primalmagic:sunwood_planks",
+    "item": "primalmagick:sunwood_planks",
     "count": 4
   }
 }

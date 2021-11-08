@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "primalmagic:item/pixie",
-        "layer1": "primalmagic:item/pixie_overlay"
+        "layer0": "primalmagick:item/pixie",
+        "layer1": "primalmagick:item/pixie_overlay"
     }
 }

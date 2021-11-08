@@ -1,6 +1,6 @@
 {
   "type": "item",
-  "target": "primalmagic:essence_dust_sun",
+  "target": "primalmagick:essence_dust_sun",
   "set": {
     "sun": 5
   }

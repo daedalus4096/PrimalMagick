@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "BASIC_SORCERY",
   "pattern": [
     "  S",
@@ -15,6 +15,6 @@
     }
   },
   "result": {
-    "item": "primalmagic:spell_scroll_blank"
+    "item": "primalmagick:spell_scroll_blank"
   }
 }

@@ -2,7 +2,7 @@
     "parent": "builtin/entity",
     "gui_light": "front",
     "textures": {
-        "particle": "primalmagic:item/hexium_trident"
+        "particle": "primalmagick:item/hexium_trident"
     },
     "display": {
         "thirdperson_righthand": {

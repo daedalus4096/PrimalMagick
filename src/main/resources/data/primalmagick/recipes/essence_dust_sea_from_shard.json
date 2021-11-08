@@ -1,14 +1,14 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "group": "essence_dust",
   "research": "SHARD_DESYNTHESIS",
   "ingredients": [
     {
-      "item": "primalmagic:essence_shard_sea"
+      "item": "primalmagick:essence_shard_sea"
     }
   ],
   "result": {
-    "item": "primalmagic:essence_dust_sea",
+    "item": "primalmagick:essence_dust_sea",
     "count": 4
   }
 }

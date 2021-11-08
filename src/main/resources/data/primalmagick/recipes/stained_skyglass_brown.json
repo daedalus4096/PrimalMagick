@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "group": "stained_skyglass",
   "research": "SKYGLASS",
   "pattern": [
@@ -9,14 +9,14 @@
   ],
   "key": {
     "G": {
-      "tag": "primalmagic:skyglass"
+      "tag": "primalmagick:skyglass"
     },
     "D": {
       "tag": "forge:dyes/brown"
     }
   },
   "result": {
-    "item": "primalmagic:stained_skyglass_brown",
+    "item": "primalmagick:stained_skyglass_brown",
     "count": 8
   }
 }

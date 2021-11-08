@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:block/wand_assembly_table"
+            "model": "primalmagick:block/wand_assembly_table"
         }
     }
 }

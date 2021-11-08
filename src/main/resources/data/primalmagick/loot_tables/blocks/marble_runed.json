@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primalmagic:marble_runed"
+          "name": "primalmagick:marble_runed"
         }
       ],
       "conditions": [

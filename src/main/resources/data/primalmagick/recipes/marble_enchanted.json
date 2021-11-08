@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shapeless",
+  "type": "primalmagick:arcane_crafting_shapeless",
   "research": "EXPERT_MANAWEAVING",
   "mana": {
     "earth": 1,
@@ -10,35 +10,35 @@
   },
   "ingredients": [
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     },
     {
-      "item": "primalmagic:marble_raw"
+      "item": "primalmagick:marble_raw"
     }
   ],
   "result": {
-    "item": "primalmagic:marble_enchanted",
+    "item": "primalmagick:marble_enchanted",
     "count": 9
   }
 }

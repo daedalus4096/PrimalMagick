@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "primalmagic:item/arcanometer_1"
+            "model": "primalmagick:item/arcanometer_1"
         }
     }
 }

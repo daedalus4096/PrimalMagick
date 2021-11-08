@@ -1,5 +1,5 @@
 {
-  "type": "primalmagic:arcane_crafting_shaped",
+  "type": "primalmagick:arcane_crafting_shaped",
   "research": "PRIMALITE",
   "pattern": [
     "I",
@@ -8,13 +8,13 @@
   ],
   "key": {
     "I": {
-      "tag": "primalmagic:ingots/primalite"
+      "tag": "primalmagick:ingots/primalite"
     },
     "S": {
       "tag": "forge:rods/wooden"
     }
   },
   "result": {
-    "item": "primalmagic:primalite_sword"
+    "item": "primalmagick:primalite_sword"
   }
 }

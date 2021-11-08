@@ -1,6 +1,6 @@
 {
     "textures": {
-        "particle": "primalmagic:block/ritual_bell_bottom",
+        "particle": "primalmagick:block/ritual_bell_bottom",
         "bar": "block/dark_oak_planks",
         "post": "block/stone"
     },
