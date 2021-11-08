@@ -128,10 +128,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("TERRESTRIAL_MAGIC", discipline).parent("ATTUNEMENTS")
+        ResearchEntryBuilder.entry("TERRESTRIAL_MAGICK", discipline).parent("ATTUNEMENTS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_EARTH", discipline).parent("TERRESTRIAL_MAGIC")
+        ResearchEntryBuilder.entry("SOURCE_EARTH", discipline).parent("TERRESTRIAL_MAGICK")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.OBSIDIAN).requiredItemTag(Tags.Items.GEMS_DIAMOND)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -139,7 +139,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_SEA", discipline).parent("TERRESTRIAL_MAGIC")
+        ResearchEntryBuilder.entry("SOURCE_SEA", discipline).parent("TERRESTRIAL_MAGICK")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(ItemTagsPM.CORAL_BLOCKS).requiredItemStack(Items.ICE)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -147,7 +147,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_SKY", discipline).parent("TERRESTRIAL_MAGIC")
+        ResearchEntryBuilder.entry("SOURCE_SKY", discipline).parent("TERRESTRIAL_MAGICK")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemStack(Items.BAMBOO).requiredItemTag(ItemTags.LEAVES)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -155,7 +155,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_SUN", discipline).parent("TERRESTRIAL_MAGIC")
+        ResearchEntryBuilder.entry("SOURCE_SUN", discipline).parent("TERRESTRIAL_MAGICK")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(ItemTagsPM.SUNWOOD_LOGS).requiredItemTag(Tags.Items.SANDSTONE)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -163,7 +163,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_MOON", discipline).parent("TERRESTRIAL_MAGIC")
+        ResearchEntryBuilder.entry("SOURCE_MOON", discipline).parent("TERRESTRIAL_MAGICK")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(ItemTagsPM.MOONWOOD_LOGS).requiredItemTag(Tags.Items.MUSHROOMS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -171,10 +171,10 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("FORBIDDEN_MAGIC", discipline).parent("TERRESTRIAL_MAGIC").parent("t_discover_forbidden")
+        ResearchEntryBuilder.entry("FORBIDDEN_MAGICK", discipline).parent("TERRESTRIAL_MAGICK").parent("t_discover_forbidden")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_BLOOD", discipline).parent("FORBIDDEN_MAGIC").parent("t_discover_blood")
+        ResearchEntryBuilder.entry("SOURCE_BLOOD", discipline).parent("FORBIDDEN_MAGICK").parent("t_discover_blood")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.BONES).requiredItemStack(ItemsPM.BLOODY_FLESH.get())
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -182,7 +182,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_INFERNAL", discipline).parent("FORBIDDEN_MAGIC").parent("t_discover_infernal")
+        ResearchEntryBuilder.entry("SOURCE_INFERNAL", discipline).parent("FORBIDDEN_MAGICK").parent("t_discover_infernal")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.RODS_BLAZE).requiredItemStack(Items.SOUL_SAND)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -190,7 +190,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_VOID", discipline).parent("FORBIDDEN_MAGIC").parent("t_discover_void")
+        ResearchEntryBuilder.entry("SOURCE_VOID", discipline).parent("FORBIDDEN_MAGICK").parent("t_discover_void")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.END_STONES).requiredItemTag(Tags.Items.ENDER_PEARLS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -198,10 +198,10 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("HEAVENLY_MAGIC", discipline).parent("FORBIDDEN_MAGIC").parent("t_discover_hallowed")
+        ResearchEntryBuilder.entry("HEAVENLY_MAGICK", discipline).parent("FORBIDDEN_MAGICK").parent("t_discover_hallowed")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_HALLOWED", discipline).parent("HEAVENLY_MAGIC")
+        ResearchEntryBuilder.entry("SOURCE_HALLOWED", discipline).parent("HEAVENLY_MAGICK")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.NETHER_STARS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)

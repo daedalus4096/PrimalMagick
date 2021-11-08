@@ -1,0 +1,15 @@
+{
+  "key": "HEAVENLY_MAGICK",
+  "name": "primalmagick.research.heavenly_magick.title",
+  "discipline": "BASICS",
+  "parents": [
+    "FORBIDDEN_MAGICK",
+    "t_discover_hallowed"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.heavenly_magick.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

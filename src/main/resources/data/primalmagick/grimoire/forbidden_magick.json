@@ -1,0 +1,15 @@
+{
+  "key": "FORBIDDEN_MAGICK",
+  "name": "primalmagick.research.forbidden_magick.title",
+  "discipline": "BASICS",
+  "parents": [
+    "TERRESTRIAL_MAGICK",
+    "t_discover_forbidden"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.forbidden_magick.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

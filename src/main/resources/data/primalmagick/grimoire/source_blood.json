@@ -3,7 +3,7 @@
   "name": "primalmagick.research.source_blood.title",
   "discipline": "BASICS",
   "parents": [
-    "FORBIDDEN_MAGIC",
+    "FORBIDDEN_MAGICK",
     "t_discover_blood"
   ],
   "stages": [
