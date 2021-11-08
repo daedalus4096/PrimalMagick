@@ -1,0 +1,18 @@
+{
+  "key": "MYSTICAL_RELIC",
+  "name": "primalmagick.research.mystical_relic.title",
+  "discipline": "SCANS",
+  "hidden": true,
+  "parents": [
+    "UNLOCK_SCANS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.mystical_relic.text.stage.1",
+      "recipes": [
+        "primalmagick:mystical_relic"
+      ]
+    }
+  ],
+  "addenda": []
+}

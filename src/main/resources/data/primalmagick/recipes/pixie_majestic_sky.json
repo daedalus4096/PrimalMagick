@@ -1,0 +1,48 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "MAJESTIC_PIXIES",
+  "mana": {
+    "sky": 200
+  },
+  "instability": 7,
+  "ingredients": [
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:essence_cluster_sky"
+    },
+    {
+      "tag": "forge:ingots/gold"
+    },
+    {
+      "item": "primalmagick:rune_summon"
+    },
+    {
+      "item": "primalmagick:rune_creature"
+    },
+    {
+      "item": "primalmagick:rune_power"
+    },
+    {
+      "item": "primalmagick:rune_power"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:incense_brazier"
+    },
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:soul_anvil"
+    },
+    {
+      "block": "primalmagick:celestial_harp"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:pixie_majestic_sky"
+  }
+}

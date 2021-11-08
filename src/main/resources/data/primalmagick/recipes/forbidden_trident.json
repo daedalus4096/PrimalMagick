@@ -1,0 +1,40 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "FORBIDDEN_TRIDENT",
+  "mana": {
+    "blood": 40
+  },
+  "instability": 3,
+  "ingredients": [
+    {
+      "item": "primalmagick:hexium_trident"
+    },
+    {
+      "item": "primalmagick:essence_shard_blood"
+    },
+    {
+      "item": "primalmagick:essence_shard_blood"
+    },
+    {
+      "item": "primalmagick:rune_blood"
+    },
+    {
+      "item": "primalmagick:mana_prism"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:bloodletter"
+    },
+    {
+      "block": "primalmagick:bloodletter"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:forbidden_trident",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:rending\",lvl:2s}]}"
+  }
+}

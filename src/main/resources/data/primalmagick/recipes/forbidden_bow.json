@@ -1,0 +1,40 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "FORBIDDEN_BOW",
+  "mana": {
+    "infernal": 40
+  },
+  "instability": 3,
+  "ingredients": [
+    {
+      "item": "primalmagick:hexium_bow"
+    },
+    {
+      "item": "primalmagick:essence_shard_infernal"
+    },
+    {
+      "item": "primalmagick:essence_shard_infernal"
+    },
+    {
+      "item": "primalmagick:rune_infernal"
+    },
+    {
+      "item": "primalmagick:mana_prism"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:soul_anvil"
+    },
+    {
+      "block": "primalmagick:soul_anvil"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:forbidden_bow",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:soulpiercing\",lvl:2s}]}"
+  }
+}

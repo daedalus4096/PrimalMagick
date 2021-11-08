@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "tag": "primalmagick:sunwood_logs"
+    }
+  },
+  "result": {
+    "item": "primalmagick:sunwood_pillar",
+    "count": 2
+  }
+}

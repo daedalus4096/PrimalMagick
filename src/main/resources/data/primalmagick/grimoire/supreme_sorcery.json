@@ -1,0 +1,23 @@
+{
+  "key": "SUPREME_SORCERY",
+  "name": "primalmagick.research.supreme_sorcery.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "SPELL_VEHICLE_BOLT",
+    "SPELL_MOD_QUICKEN"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.supreme_sorcery.text.stage.1",
+      "required_research": [
+        "t_discover_hallowed",
+        "t_spells_cast_supreme",
+        "t_spell_cost_supreme"
+      ]
+    },
+    {
+      "text": "primalmagick.research.supreme_sorcery.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

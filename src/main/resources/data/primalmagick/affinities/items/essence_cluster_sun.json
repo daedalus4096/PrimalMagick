@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "primalmagick:essence_cluster_sun",
+  "set": {
+    "sun": 100
+  }
+}

@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "target": "primalmagic:marble_hallowed",
-  "base": "primalmagic:marble_raw",
-  "add": {
-    "hallowed": 5
-  }
-}

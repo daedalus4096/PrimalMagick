@@ -1,0 +1,49 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "STAVES\u0026\u0026WAND_CORE_PRIMAL",
+  "mana": {
+    "earth": 15,
+    "sea": 15,
+    "sky": 15,
+    "sun": 15,
+    "moon": 15
+  },
+  "instability": 4,
+  "ingredients": [
+    {
+      "item": "primalmagick:obsidian_staff_core_item"
+    },
+    {
+      "item": "primalmagick:coral_staff_core_item"
+    },
+    {
+      "item": "primalmagick:bamboo_staff_core_item"
+    },
+    {
+      "item": "primalmagick:sunwood_staff_core_item"
+    },
+    {
+      "item": "primalmagick:moonwood_staff_core_item"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    },
+    {
+      "tag": "primalmagick:ritual_candles"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:primal_staff_core_item"
+  }
+}

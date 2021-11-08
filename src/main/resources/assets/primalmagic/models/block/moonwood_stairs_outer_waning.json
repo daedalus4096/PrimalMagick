@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "primalmagic:block/moonwood_planks_waning",
-        "top": "primalmagic:block/moonwood_planks_waning",
-        "side": "primalmagic:block/moonwood_planks_waning"
-    }
-}

@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "target": "primalmagic:infused_stone_earth",
-  "base": "minecraft:stone",
-  "add": {
-    "earth": 1
-  }
-}

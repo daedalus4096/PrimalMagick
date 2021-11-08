@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "primalmagick:marble_smoked",
+  "base": "primalmagick:marble_raw",
+  "add": {
+    "moon": 5
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:iron_ingot_from_grit_smelting"
+    ]
+  },
+  "criteria": {
+    "has_grit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:iron_grit"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:iron_ingot_from_grit_smelting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_grit",
+      "has_the_recipe"
+    ]
+  ]
+}

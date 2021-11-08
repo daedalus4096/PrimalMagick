@@ -1,0 +1,44 @@
+{
+  "key": "EARTHSHATTER_HAMMER",
+  "name": "primalmagick.research.earthshatter_hammer.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "EXPERT_MANAWEAVING",
+    "SHARD_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.earthshatter_hammer.text.stage.1",
+      "required_item": [
+        "minecraft:raw_iron",
+        "minecraft:raw_gold",
+        "minecraft:raw_copper"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.earthshatter_hammer.text.stage.2",
+      "attunements": {
+        "earth": 2
+      },
+      "recipes": [
+        "primalmagick:earthshatter_hammer",
+        "primalmagick:iron_grit_from_ore",
+        "primalmagick:iron_grit_from_raw_metal",
+        "primalmagick:gold_grit_from_ore",
+        "primalmagick:gold_grit_from_raw_metal",
+        "primalmagick:copper_grit_from_ore",
+        "primalmagick:copper_grit_from_raw_metal",
+        "primalmagick:iron_ingot_from_grit_smelting",
+        "primalmagick:gold_ingot_from_grit_smelting",
+        "primalmagick:copper_ingot_from_grit_smelting",
+        "primalmagick:cobblestone_from_earthshatter_hammer",
+        "primalmagick:gravel_from_earthshatter_hammer",
+        "primalmagick:sand_from_earthshatter_hammer"
+      ]
+    }
+  ],
+  "addenda": []
+}

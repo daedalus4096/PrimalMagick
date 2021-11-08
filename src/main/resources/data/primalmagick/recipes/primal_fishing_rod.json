@@ -1,0 +1,40 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "PRIMAL_FISHING_ROD",
+  "mana": {
+    "sea": 40
+  },
+  "instability": 3,
+  "ingredients": [
+    {
+      "item": "primalmagick:primalite_fishing_rod"
+    },
+    {
+      "item": "primalmagick:essence_shard_sea"
+    },
+    {
+      "item": "primalmagick:essence_shard_sea"
+    },
+    {
+      "item": "primalmagick:rune_sea"
+    },
+    {
+      "item": "primalmagick:mana_prism"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:primal_fishing_rod",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:bounty\",lvl:2s}]}"
+  }
+}

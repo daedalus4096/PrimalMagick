@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "group": "runescribing_altar",
+  "research": "EXPERT_RUNEWORKING",
+  "mana": {
+    "earth": 20,
+    "sea": 20,
+    "sky": 20,
+    "sun": 20,
+    "moon": 20
+  },
+  "pattern": [
+    " R ",
+    "DAD",
+    "MMM"
+  ],
+  "key": {
+    "R": {
+      "item": "primalmagick:rune_unattuned"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    },
+    "A": {
+      "item": "primalmagick:runescribing_altar_basic"
+    },
+    "M": {
+      "item": "primalmagick:marble_enchanted"
+    }
+  },
+  "result": {
+    "item": "primalmagick:runescribing_altar_enchanted"
+  }
+}

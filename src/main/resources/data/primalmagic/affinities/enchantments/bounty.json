@@ -1,7 +1,0 @@
-{
-  "type": "enchantment_bonus",
-  "target": "primalmagic:bounty",
-  "multiplier": {
-    "sea": 1
-  }
-}

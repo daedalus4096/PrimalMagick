@@ -1,8 +1,0 @@
-{
-    "parent": "block/slab",
-    "textures": {
-        "bottom": "primalmagic:block/sunwood_planks_waxing",
-        "top": "primalmagic:block/sunwood_planks_waxing",
-        "side": "primalmagic:block/sunwood_planks_waxing"
-    }
-}

@@ -1,0 +1,86 @@
+{
+  "key": "primalmagick:spellwork",
+  "required_research": "BASIC_SORCERY",
+  "reward_multiplier": 0.25,
+  "aid_blocks": [],
+  "material_options": [
+    {
+      "type": "item",
+      "stack": "primalmagick:spellcrafting_altar",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 5.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:wand_inscription_table",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 2.0,
+      "required_research": "WAND_INSCRIPTION"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:wand_charger",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 2.0,
+      "required_research": "WAND_CHARGER"
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:mundane_wand",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:spell_scroll_blank",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 5.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:essence_dust_earth",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:essence_dust_sea",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:essence_dust_sky",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:essence_dust_sun",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "primalmagick:essence_dust_moon",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "observation",
+      "count": 1,
+      "consumed": true,
+      "weight": 5.0
+    }
+  ]
+}

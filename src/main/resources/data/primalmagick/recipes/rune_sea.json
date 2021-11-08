@@ -1,0 +1,16 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "group": "source_runes",
+  "research": "RUNE_SEA",
+  "ingredients": [
+    {
+      "item": "primalmagick:rune_unattuned"
+    },
+    {
+      "item": "primalmagick:essence_dust_sea"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:rune_sea"
+  }
+}

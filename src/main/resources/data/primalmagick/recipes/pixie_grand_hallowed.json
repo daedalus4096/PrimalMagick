@@ -1,0 +1,42 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "GRAND_PIXIES\u0026\u0026t_discover_hallowed",
+  "mana": {
+    "hallowed": 100
+  },
+  "instability": 5,
+  "ingredients": [
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:essence_crystal_hallowed"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "item": "primalmagick:rune_summon"
+    },
+    {
+      "item": "primalmagick:rune_creature"
+    },
+    {
+      "item": "primalmagick:rune_power"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:incense_brazier"
+    },
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:soul_anvil"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:pixie_grand_hallowed"
+  }
+}

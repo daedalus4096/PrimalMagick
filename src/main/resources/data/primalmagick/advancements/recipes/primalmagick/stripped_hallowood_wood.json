@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:stripped_hallowood_wood"
+    ]
+  },
+  "criteria": {
+    "has_hallowood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:hallowood_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_stripped_hallowood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:stripped_hallowood_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:stripped_hallowood_wood"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hallowood_log",
+      "has_stripped_hallowood_log",
+      "has_the_recipe"
+    ]
+  ]
+}

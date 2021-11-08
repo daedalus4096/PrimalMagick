@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:stripped_moonwood_wood"
+    ]
+  },
+  "criteria": {
+    "has_moonwood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:moonwood_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_stripped_moonwood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:stripped_moonwood_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:stripped_moonwood_wood"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_moonwood_log",
+      "has_stripped_moonwood_log",
+      "has_the_recipe"
+    ]
+  ]
+}

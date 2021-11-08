@@ -1,0 +1,26 @@
+{
+  "key": "MASTER_MAGITECH",
+  "name": "primalmagick.research.master_magitech.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "ARCANOMETER",
+    "PRIMALITE_GOLEM"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.master_magitech.text.stage.1",
+      "required_research": [
+        "t_discover_forbidden",
+        "b_crafted_magitech_master",
+        "b_scan_hexium"
+      ]
+    },
+    {
+      "text": "primalmagick.research.master_magitech.text.stage.2",
+      "recipes": [
+        "primalmagick:magitech_parts_forbidden"
+      ]
+    }
+  ],
+  "addenda": []
+}

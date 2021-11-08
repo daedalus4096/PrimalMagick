@@ -1,0 +1,18 @@
+{
+  "key": "BASIC_RITUAL",
+  "name": "primalmagick.research.basic_ritual.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "UNLOCK_RITUAL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.basic_ritual.text.stage.1",
+      "recipes": [
+        "primalmagick:ritual_altar",
+        "primalmagick:offering_pedestal"
+      ]
+    }
+  ],
+  "addenda": []
+}

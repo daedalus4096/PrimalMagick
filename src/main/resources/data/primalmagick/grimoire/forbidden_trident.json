@@ -1,0 +1,42 @@
+{
+  "key": "FORBIDDEN_TRIDENT",
+  "name": "primalmagick.research.forbidden_trident.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "t_discover_blood",
+    "MASTER_RITUAL",
+    "HEXIUM",
+    "SHARD_SYNTHESIS",
+    "MANA_SALTS",
+    "RUNE_BLOOD",
+    "BLOODLETTER"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.forbidden_trident.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.forbidden_trident.text.stage.2",
+      "recipes": [
+        "primalmagick:forbidden_trident"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagick.research.forbidden_trident.text.addenda.1",
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_PROJECT",
+        "RUNE_CREATURE",
+        "RUNE_BLOOD"
+      ],
+      "siblings": [
+        "\u0026primalmagick:rending"
+      ]
+    }
+  ]
+}

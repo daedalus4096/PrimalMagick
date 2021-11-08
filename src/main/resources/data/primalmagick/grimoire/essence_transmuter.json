@@ -1,0 +1,24 @@
+{
+  "key": "ESSENCE_TRANSMUTER",
+  "name": "primalmagick.research.essence_transmuter.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "EXPERT_MAGITECH",
+    "EXPERT_MANAWEAVING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.essence_transmuter.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.essence_transmuter.text.stage.2",
+      "recipes": [
+        "primalmagick:essence_transmuter"
+      ]
+    }
+  ],
+  "addenda": []
+}

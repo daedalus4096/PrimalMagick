@@ -1,0 +1,54 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "FLYING_CARPET",
+  "mana": {
+    "sky": 100
+  },
+  "instability": 6,
+  "ingredients": [
+    {
+      "tag": "minecraft:carpets"
+    },
+    {
+      "item": "minecraft:saddle"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:essence_crystal_sky"
+    },
+    {
+      "item": "primalmagick:essence_crystal_sky"
+    },
+    {
+      "item": "primalmagick:rune_project"
+    },
+    {
+      "item": "primalmagick:rune_item"
+    },
+    {
+      "item": "primalmagick:rune_power"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:incense_brazier"
+    },
+    {
+      "block": "primalmagick:incense_brazier"
+    },
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:flying_carpet"
+  }
+}

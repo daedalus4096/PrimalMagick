@@ -1,9 +1,0 @@
-{
-  "type": "item",
-  "target": "primalmagic:quartz_ore",
-  "base": "minecraft:stone",
-  "add": {
-    "earth": 10,
-    "infernal": 5
-  }
-}

@@ -1,0 +1,26 @@
+{
+  "key": "SPELL_PAYLOAD_CONJURE_STONE",
+  "name": "primalmagick.research.spell_payload_conjure_stone.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "EXPERT_SORCERY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.spell_payload_conjure_stone.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "required_research": [
+        "b_place_stone_expert"
+      ]
+    },
+    {
+      "text": "primalmagick.research.spell_payload_conjure_stone.text.stage.2",
+      "attunements": {
+        "earth": 3
+      }
+    }
+  ],
+  "addenda": []
+}

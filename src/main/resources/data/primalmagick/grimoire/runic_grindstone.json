@@ -1,0 +1,23 @@
+{
+  "key": "RUNIC_GRINDSTONE",
+  "name": "primalmagick.research.runic_grindstone.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "RUNE_DISPEL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.runic_grindstone.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.runic_grindstone.text.stage.2",
+      "recipes": [
+        "primalmagick:runic_grindstone"
+      ]
+    }
+  ],
+  "addenda": []
+}

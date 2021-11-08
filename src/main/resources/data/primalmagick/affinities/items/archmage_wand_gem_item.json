@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "primalmagick:archmage_wand_gem_item",
+  "base": "primalmagick:wizard_wand_gem_item",
+  "add": {
+    "earth": 2,
+    "sea": 2,
+    "sky": 2,
+    "sun": 2,
+    "moon": 2
+  }
+}

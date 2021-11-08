@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "primalmagick:sunwood_sapling",
+  "base": "minecraft:oak_sapling",
+  "add": {
+    "sun": 10
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "key": "CONCOCTING_PHILTERS",
+  "name": "primalmagick.research.concocting_philters.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "MASTER_MAGITECH",
+    "CONCOCTING_TINCTURES",
+    "SHARD_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.concocting_philters.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.concocting_philters.text.stage.2",
+      "recipes": [
+        "primalmagick:night_vision_philter",
+        "primalmagick:long_night_vision_philter",
+        "primalmagick:invisibility_philter",
+        "primalmagick:long_invisibility_philter",
+        "primalmagick:leaping_philter",
+        "primalmagick:long_leaping_philter",
+        "primalmagick:strong_leaping_philter",
+        "primalmagick:swiftness_philter",
+        "primalmagick:long_swiftness_philter",
+        "primalmagick:strong_swiftness_philter",
+        "primalmagick:turtle_master_philter",
+        "primalmagick:long_turtle_master_philter",
+        "primalmagick:strong_turtle_master_philter",
+        "primalmagick:water_breathing_philter",
+        "primalmagick:long_water_breathing_philter",
+        "primalmagick:strength_philter",
+        "primalmagick:long_strength_philter",
+        "primalmagick:strong_strength_philter",
+        "primalmagick:slow_falling_philter",
+        "primalmagick:long_slow_falling_philter"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagick.research.concocting_philters.text.addenda.1",
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "recipes": [
+        "primalmagick:healing_philter",
+        "primalmagick:strong_healing_philter",
+        "primalmagick:regeneration_philter",
+        "primalmagick:long_regeneration_philter",
+        "primalmagick:strong_regeneration_philter"
+      ]
+    },
+    {
+      "text": "primalmagick.research.concocting_philters.text.addenda.2",
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "recipes": [
+        "primalmagick:fire_resistance_philter",
+        "primalmagick:long_fire_resistance_philter"
+      ]
+    }
+  ]
+}

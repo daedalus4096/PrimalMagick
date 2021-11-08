@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "WAND_CAP_HEXIUM",
+  "mana": {
+    "earth": 50,
+    "sea": 50,
+    "sky": 50,
+    "sun": 50,
+    "moon": 50
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": {
+      "tag": "primalmagick:nuggets/hexium"
+    }
+  },
+  "result": {
+    "item": "primalmagick:hexium_wand_cap_item"
+  }
+}

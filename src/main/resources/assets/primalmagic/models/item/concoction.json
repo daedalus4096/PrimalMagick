@@ -1,7 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "primalmagic:item/concoction_overlay",
-        "layer1": "primalmagic:item/concoction"
-    }
-}

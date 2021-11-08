@@ -1,0 +1,25 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "group": "mana_arrows",
+  "research": "MANA_ARROWS",
+  "mana": {
+    "moon": 5
+  },
+  "pattern": [
+    " A ",
+    "ADA",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:arrow"
+    },
+    "D": {
+      "item": "primalmagick:essence_dust_moon"
+    }
+  },
+  "result": {
+    "item": "primalmagick:mana_arrow_moon",
+    "count": 4
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "key": "SPELL_PAYLOAD_SOLAR",
+  "name": "primalmagick.research.spell_payload_solar.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "SPELL_PAYLOAD_LIGHTNING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.spell_payload_solar.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.spell_payload_solar.text.stage.2",
+      "attunements": {
+        "sun": 1
+      }
+    }
+  ],
+  "addenda": []
+}

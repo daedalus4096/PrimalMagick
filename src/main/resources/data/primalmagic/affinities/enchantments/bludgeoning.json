@@ -1,7 +1,0 @@
-{
-  "type": "enchantment_bonus",
-  "target": "primalmagic:bludgeoning",
-  "multiplier": {
-    "earth": 1
-  }
-}

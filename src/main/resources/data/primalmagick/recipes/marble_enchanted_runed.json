@@ -1,0 +1,21 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "EXPERT_MANAWEAVING",
+  "pattern": [
+    " M ",
+    "MCM",
+    " M "
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagick:marble_enchanted"
+    },
+    "C": {
+      "item": "primalmagick:marble_enchanted_chiseled"
+    }
+  },
+  "result": {
+    "item": "primalmagick:marble_enchanted_runed",
+    "count": 5
+  }
+}

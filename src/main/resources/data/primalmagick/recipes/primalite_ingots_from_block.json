@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "primalite_ingot",
+  "ingredients": [
+    {
+      "tag": "primalmagick:storage_blocks/primalite"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:primalite_ingot",
+    "count": 9
+  }
+}

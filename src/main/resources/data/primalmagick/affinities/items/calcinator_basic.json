@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "primalmagick:calcinator_basic",
+  "set": {
+    "earth": 46,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5,
+    "infernal": 3
+  }
+}

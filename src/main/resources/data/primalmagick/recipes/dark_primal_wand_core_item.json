@@ -1,0 +1,55 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "WAND_CORE_DARK_PRIMAL",
+  "mana": {
+    "earth": 50,
+    "sea": 50,
+    "sky": 50,
+    "sun": 50,
+    "moon": 50,
+    "blood": 50,
+    "infernal": 50,
+    "void": 50
+  },
+  "instability": 5,
+  "ingredients": [
+    {
+      "item": "primalmagick:primal_wand_core_item"
+    },
+    {
+      "item": "primalmagick:bone_wand_core_item"
+    },
+    {
+      "item": "primalmagick:blaze_rod_wand_core_item"
+    },
+    {
+      "item": "primalmagick:purpur_wand_core_item"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    },
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "block": "primalmagick:bloodletter"
+    },
+    {
+      "block": "primalmagick:soul_anvil"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:dark_primal_wand_core_item"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:soul_gem"
+    ]
+  },
+  "criteria": {
+    "has_sliver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:soul_gem_sliver"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:soul_gem"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sliver",
+      "has_the_recipe"
+    ]
+  ]
+}

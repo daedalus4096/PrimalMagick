@@ -1,0 +1,18 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "group": "stained_skyglass_pane",
+  "research": "SKYGLASS",
+  "pattern": [
+    "GGG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "primalmagick:stained_skyglass_lime"
+    }
+  },
+  "result": {
+    "item": "primalmagick:stained_skyglass_pane_lime",
+    "count": 16
+  }
+}

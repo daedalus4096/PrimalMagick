@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "long_fire_resistance",
+  "research": "CONCOCTING_ELIXIRS\u0026\u0026t_discover_infernal",
+  "mana": {
+    "infernal": 9
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagick:concoction",
+      "count": 1,
+      "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "primalmagick:essence_crystal_infernal"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:magma_cream"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:concoction",
+    "count": 1,
+    "nbt": "{ConcoctionDoses:9,ConcoctionType:\"elixir\",Potion:\"minecraft:long_fire_resistance\"}"
+  }
+}

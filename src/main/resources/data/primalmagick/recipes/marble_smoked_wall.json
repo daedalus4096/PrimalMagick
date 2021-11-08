@@ -1,0 +1,17 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "MASTER_MANAWEAVING",
+  "pattern": [
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagick:marble_smoked"
+    }
+  },
+  "result": {
+    "item": "primalmagick:marble_smoked_wall",
+    "count": 6
+  }
+}

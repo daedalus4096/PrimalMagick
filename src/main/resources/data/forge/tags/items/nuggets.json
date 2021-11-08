@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "#primalmagic:nuggets/primalite",
-    "#primalmagic:nuggets/hexium",
-    "#primalmagic:nuggets/hallowsteel",
+    "#primalmagick:nuggets/primalite",
+    "#primalmagick:nuggets/hexium",
+    "#primalmagick:nuggets/hallowsteel",
     "#forge:nuggets/quartz"
   ]
 }

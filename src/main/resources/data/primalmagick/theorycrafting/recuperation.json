@@ -1,0 +1,71 @@
+{
+  "key": "primalmagick:recuperation",
+  "reward_multiplier": 0.25,
+  "aid_blocks": [],
+  "material_options": [
+    {
+      "type": "tag",
+      "name": "minecraft:beds",
+      "quantity": 1,
+      "consumed": false,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:jukebox",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:book",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:cooked_beef",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:baked_potato",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:milk_bucket",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:cake",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:rose_bush",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:tnt",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 0.5,
+      "bonus_reward": 0.125
+    }
+  ]
+}

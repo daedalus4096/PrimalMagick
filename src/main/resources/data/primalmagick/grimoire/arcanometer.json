@@ -1,0 +1,26 @@
+{
+  "key": "ARCANOMETER",
+  "name": "primalmagick.research.arcanometer.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "EXPERT_MAGITECH"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.arcanometer.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "required_research": [
+        "t_items_analyzed"
+      ]
+    },
+    {
+      "text": "primalmagick.research.arcanometer.text.stage.2",
+      "recipes": [
+        "primalmagick:arcanometer"
+      ]
+    }
+  ],
+  "addenda": []
+}

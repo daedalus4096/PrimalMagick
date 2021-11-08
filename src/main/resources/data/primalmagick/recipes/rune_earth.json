@@ -1,0 +1,16 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "group": "source_runes",
+  "research": "RUNE_EARTH",
+  "ingredients": [
+    {
+      "item": "primalmagick:rune_unattuned"
+    },
+    {
+      "item": "primalmagick:essence_dust_earth"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:rune_earth"
+  }
+}

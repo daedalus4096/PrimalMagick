@@ -1,0 +1,26 @@
+{
+  "key": "RITUAL_LECTERN",
+  "name": "primalmagick.research.ritual_lectern.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "EXPERT_RITUAL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.ritual_lectern.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.ritual_lectern.text.stage.2",
+      "attunements": {
+        "moon": 1
+      },
+      "recipes": [
+        "primalmagick:ritual_lectern"
+      ]
+    }
+  ],
+  "addenda": []
+}

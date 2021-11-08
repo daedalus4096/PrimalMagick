@@ -1,0 +1,17 @@
+{
+  "key": "BASIC_MANAWEAVING",
+  "name": "primalmagick.research.basic_manaweaving.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "UNLOCK_MANAWEAVING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.basic_manaweaving.text.stage.1",
+      "recipes": [
+        "primalmagick:mana_prism"
+      ]
+    }
+  ],
+  "addenda": []
+}

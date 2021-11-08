@@ -1,8 +1,0 @@
-{
-	"parent": "primalmagic:block/pillar_top",
-	"textures": {
-		"inner": "primalmagic:block/moonwood_pillar_inner_waning",
-		"side": "primalmagic:block/moonwood_pillar_top_waning",
-		"top": "primalmagic:block/stripped_moonwood_log_waning"
-	}
-}

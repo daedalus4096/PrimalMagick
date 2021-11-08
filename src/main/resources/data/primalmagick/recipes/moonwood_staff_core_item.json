@@ -1,0 +1,27 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "STAVES\u0026\u0026WAND_CORE_MOONWOOD",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 15
+  },
+  "pattern": [
+    " D#",
+    "D#D",
+    "#D "
+  ],
+  "key": {
+    "D": {
+      "item": "primalmagick:essence_shard_moon"
+    },
+    "#": {
+      "item": "primalmagick:moonwood_log"
+    }
+  },
+  "result": {
+    "item": "primalmagick:moonwood_staff_core_item"
+  }
+}

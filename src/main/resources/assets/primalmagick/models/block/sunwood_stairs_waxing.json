@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "primalmagick:block/sunwood_planks_waxing",
+        "top": "primalmagick:block/sunwood_planks_waxing",
+        "side": "primalmagick:block/sunwood_planks_waxing"
+    }
+}

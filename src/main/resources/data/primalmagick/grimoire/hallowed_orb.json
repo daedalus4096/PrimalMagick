@@ -1,0 +1,18 @@
+{
+  "key": "HALLOWED_ORB",
+  "name": "primalmagick.research.hallowed_orb.title",
+  "discipline": "SCANS",
+  "hidden": true,
+  "parents": [
+    "UNLOCK_SCANS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.hallowed_orb.text.stage.1",
+      "recipes": [
+        "primalmagick:hallowood_sapling"
+      ]
+    }
+  ],
+  "addenda": []
+}

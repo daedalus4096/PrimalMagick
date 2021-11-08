@@ -1,0 +1,14 @@
+{
+  "type": "item",
+  "target": "primalmagick:hexium_ingot",
+  "set": {
+    "earth": 8,
+    "sea": 2,
+    "sky": 2,
+    "sun": 2,
+    "moon": 2,
+    "blood": 15,
+    "infernal": 15,
+    "void": 15
+  }
+}

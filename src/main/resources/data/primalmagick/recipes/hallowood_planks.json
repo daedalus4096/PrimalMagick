@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "primalmagick:hallowood_logs"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:hallowood_planks",
+    "count": 4
+  }
+}

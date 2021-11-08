@@ -1,0 +1,27 @@
+{
+  "key": "CALCINATOR_HEAVENLY",
+  "name": "primalmagick.research.calcinator_heavenly.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "SUPREME_ALCHEMY",
+    "SUPREME_MANAWEAVING",
+    "CLUSTER_SYNTHESIS",
+    "CALCINATOR_FORBIDDEN",
+    "t_discover_hallowed"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.calcinator_heavenly.text.stage.1",
+      "required_knowledge": [
+        "THEORY;3"
+      ]
+    },
+    {
+      "text": "primalmagick.research.calcinator_heavenly.text.stage.2",
+      "recipes": [
+        "primalmagick:calcinator_heavenly"
+      ]
+    }
+  ],
+  "addenda": []
+}

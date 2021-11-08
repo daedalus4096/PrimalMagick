@@ -1,0 +1,25 @@
+{
+  "key": "MANAFRUIT",
+  "name": "primalmagick.research.manafruit.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "BASIC_RITUAL",
+    "MANA_SALTS",
+    "RITUAL_CANDLES"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.manafruit.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.manafruit.text.stage.2",
+      "recipes": [
+        "primalmagick:manafruit"
+      ]
+    }
+  ],
+  "addenda": []
+}

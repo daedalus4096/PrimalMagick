@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "group": "essence_dust",
+  "research": "SHARD_DESYNTHESIS\u0026\u0026t_discover_blood",
+  "ingredients": [
+    {
+      "item": "primalmagick:essence_shard_blood"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:essence_dust_blood",
+    "count": 4
+  }
+}

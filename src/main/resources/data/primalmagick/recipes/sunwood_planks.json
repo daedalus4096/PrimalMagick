@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "primalmagick:sunwood_logs"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:sunwood_planks",
+    "count": 4
+  }
+}

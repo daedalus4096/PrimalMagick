@@ -1,7 +1,0 @@
-{
-  "type": "enchantment_bonus",
-  "target": "primalmagic:judgment",
-  "multiplier": {
-    "hallowed": 1
-  }
-}

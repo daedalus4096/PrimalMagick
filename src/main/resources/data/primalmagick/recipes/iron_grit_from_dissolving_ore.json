@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:dissolution",
+  "group": "iron_grit_dissolution",
+  "mana": {
+    "earth": 1
+  },
+  "ingredient": {
+    "tag": "forge:ores/iron"
+  },
+  "result": {
+    "item": "primalmagick:iron_grit",
+    "count": 3
+  }
+}

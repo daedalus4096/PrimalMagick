@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "lit=false": { "model": "primalmagic:block/incense_brazier" },
-        "lit=true":  { "model": "primalmagic:block/incense_brazier_lit" }
-    }
-}

@@ -1,0 +1,59 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "WAND_CORE_PURE_PRIMAL",
+  "mana": {
+    "earth": 100,
+    "sea": 100,
+    "sky": 100,
+    "sun": 100,
+    "moon": 100,
+    "blood": 100,
+    "infernal": 100,
+    "void": 100,
+    "hallowed": 100
+  },
+  "instability": 7,
+  "ingredients": [
+    {
+      "item": "primalmagick:dark_primal_wand_core_item"
+    },
+    {
+      "item": "primalmagick:hallowood_log"
+    },
+    {
+      "item": "primalmagick:hallowood_log"
+    },
+    {
+      "tag": "forge:nether_stars"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    },
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "block": "primalmagick:bloodletter"
+    },
+    {
+      "block": "primalmagick:soul_anvil"
+    },
+    {
+      "block": "primalmagick:celestial_harp"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:pure_primal_wand_core_item"
+  }
+}

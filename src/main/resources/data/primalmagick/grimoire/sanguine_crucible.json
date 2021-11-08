@@ -1,0 +1,32 @@
+{
+  "key": "SANGUINE_CRUCIBLE",
+  "name": "primalmagick.research.sanguine_crucible.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "MASTER_ALCHEMY",
+    "HEXIUM",
+    "CRYSTAL_SYNTHESIS",
+    "SPELL_PAYLOAD_CONJURE_ANIMAL",
+    "SPELL_PAYLOAD_DRAIN_SOUL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.sanguine_crucible.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.sanguine_crucible.text.stage.2",
+      "attunements": {
+        "blood": 3,
+        "infernal": 3
+      },
+      "recipes": [
+        "primalmagick:sanguine_crucible",
+        "primalmagick:sanguine_core_blank"
+      ]
+    }
+  ],
+  "addenda": []
+}

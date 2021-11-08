@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "primalmagick:pixie_majestic_sea",
+  "values": {
+    "sea": 20,
+    "sky": 10,
+    "blood": 5
+  }
+}

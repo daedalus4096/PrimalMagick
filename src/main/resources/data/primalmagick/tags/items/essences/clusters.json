@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#primalmagick:essences/terrestrial_clusters",
+    "#primalmagick:essences/forbidden_clusters",
+    "primalmagick:essence_cluster_hallowed"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "CELESTIAL_HARP",
+  "mana": {
+    "hallowed": 100
+  },
+  "pattern": [
+    "WWW",
+    "SSW",
+    "SW "
+  ],
+  "key": {
+    "W": {
+      "item": "primalmagick:hallowood_planks"
+    },
+    "S": {
+      "tag": "forge:string"
+    }
+  },
+  "result": {
+    "item": "primalmagick:celestial_harp"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "target": "primalmagick:marble_enchanted_wall",
+  "base": "primalmagick:marble_wall",
+  "add": {
+    "earth": 1,
+    "sea": 1,
+    "sky": 1,
+    "sun": 1,
+    "moon": 1
+  }
+}

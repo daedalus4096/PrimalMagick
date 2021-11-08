@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "M  ",
+    "MM ",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagick:marble_raw"
+    }
+  },
+  "result": {
+    "item": "primalmagick:marble_stairs",
+    "count": 4
+  }
+}

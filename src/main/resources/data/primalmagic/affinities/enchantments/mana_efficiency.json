@@ -1,7 +1,0 @@
-{
-  "type": "enchantment_bonus",
-  "target": "primalmagic:mana_efficiency",
-  "multiplier": {
-    "void": 1
-  }
-}

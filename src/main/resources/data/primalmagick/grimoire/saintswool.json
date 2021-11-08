@@ -1,0 +1,29 @@
+{
+  "key": "SAINTSWOOL",
+  "name": "primalmagick.research.saintswool.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "SUPREME_MANAWEAVING",
+    "HEXWEAVE",
+    "CRYSTAL_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.saintswool.text.stage.1",
+      "required_knowledge": [
+        "THEORY;3"
+      ]
+    },
+    {
+      "text": "primalmagick.research.saintswool.text.stage.2",
+      "recipes": [
+        "primalmagick:saintswool",
+        "primalmagick:saintswool_head",
+        "primalmagick:saintswool_chest",
+        "primalmagick:saintswool_legs",
+        "primalmagick:saintswool_feet"
+      ]
+    }
+  ],
+  "addenda": []
+}

@@ -1,0 +1,42 @@
+{
+  "key": "PRIMAL_HOE",
+  "name": "primalmagick.research.primal_hoe.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "EXPERT_RITUAL",
+    "PRIMALITE",
+    "SHARD_SYNTHESIS",
+    "MANA_SALTS",
+    "RUNE_SUN",
+    "RITUAL_CANDLES",
+    "INCENSE_BRAZIER"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.primal_hoe.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.primal_hoe.text.stage.2",
+      "recipes": [
+        "primalmagick:primal_hoe"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagick.research.primal_hoe.text.addenda.1",
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_SUMMON",
+        "RUNE_CREATURE",
+        "RUNE_SUN"
+      ],
+      "siblings": [
+        "\u0026primalmagick:verdant"
+      ]
+    }
+  ]
+}

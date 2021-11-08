@@ -1,6 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "primalmagic:item/creative_wand_gem_item"
-    }
-}

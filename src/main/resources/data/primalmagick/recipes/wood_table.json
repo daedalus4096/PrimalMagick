@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "FIRST_STEPS@2",
+  "pattern": [
+    "SSS",
+    " P ",
+    "SPS"
+  ],
+  "key": {
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "primalmagick:wood_table"
+  }
+}

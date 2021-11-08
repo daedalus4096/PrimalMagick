@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:salted_rabbit_stew"
+    ]
+  },
+  "criteria": {
+    "has_salt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:refined_salt"
+            ]
+          }
+        ]
+      }
+    },
+    "has_rabbit_stew": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:rabbit_stew"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:salted_rabbit_stew"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_salt",
+      "has_rabbit_stew",
+      "has_the_recipe"
+    ]
+  ]
+}

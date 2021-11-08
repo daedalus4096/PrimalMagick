@@ -1,0 +1,29 @@
+{
+  "key": "CALCINATOR_FORBIDDEN",
+  "name": "primalmagick.research.calcinator_forbidden.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "MASTER_ALCHEMY",
+    "MASTER_MANAWEAVING",
+    "CRYSTAL_SYNTHESIS",
+    "CALCINATOR_ENCHANTED",
+    "t_discover_blood",
+    "t_discover_infernal",
+    "t_discover_void"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.calcinator_forbidden.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.calcinator_forbidden.text.stage.2",
+      "recipes": [
+        "primalmagick:calcinator_forbidden"
+      ]
+    }
+  ],
+  "addenda": []
+}

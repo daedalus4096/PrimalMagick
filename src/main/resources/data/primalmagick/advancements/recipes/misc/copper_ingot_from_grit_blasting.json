@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:copper_ingot_from_grit_blasting"
+    ]
+  },
+  "criteria": {
+    "has_grit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:copper_grit"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:copper_ingot_from_grit_blasting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_grit",
+      "has_the_recipe"
+    ]
+  ]
+}

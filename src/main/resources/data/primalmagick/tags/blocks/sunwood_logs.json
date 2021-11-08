@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "primalmagick:sunwood_log",
+    "primalmagick:stripped_sunwood_log",
+    "primalmagick:sunwood_wood",
+    "primalmagick:stripped_sunwood_wood"
+  ]
+}

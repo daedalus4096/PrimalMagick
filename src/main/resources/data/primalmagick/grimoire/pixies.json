@@ -1,0 +1,93 @@
+{
+  "key": "PIXIES",
+  "name": "primalmagick.research.pixies.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "EXPERT_RITUAL",
+    "MANA_SALTS",
+    "SHARD_SYNTHESIS",
+    "RUNE_SUMMON",
+    "RUNE_CREATURE",
+    "INCENSE_BRAZIER",
+    "RITUAL_BELL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.pixies.text.stage.1",
+      "required_item": [
+        "primalmagick:rune_summon",
+        "primalmagick:rune_creature"
+      ],
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.pixies.text.stage.2",
+      "attunements": {
+        "earth": 2,
+        "sea": 2,
+        "sky": 2,
+        "sun": 2,
+        "moon": 2
+      },
+      "recipes": [
+        "primalmagick:pixie_basic_earth",
+        "primalmagick:pixie_basic_sea",
+        "primalmagick:pixie_basic_sky",
+        "primalmagick:pixie_basic_sun",
+        "primalmagick:pixie_basic_moon"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagick.research.pixies.text.addenda.1",
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "attunements": {
+        "blood": 2
+      },
+      "recipes": [
+        "primalmagick:pixie_basic_blood"
+      ]
+    },
+    {
+      "text": "primalmagick.research.pixies.text.addenda.2",
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "attunements": {
+        "infernal": 2
+      },
+      "recipes": [
+        "primalmagick:pixie_basic_infernal"
+      ]
+    },
+    {
+      "text": "primalmagick.research.pixies.text.addenda.3",
+      "required_research": [
+        "t_discover_void"
+      ],
+      "attunements": {
+        "void": 2
+      },
+      "recipes": [
+        "primalmagick:pixie_basic_void"
+      ]
+    },
+    {
+      "text": "primalmagick.research.pixies.text.addenda.4",
+      "required_research": [
+        "t_discover_hallowed"
+      ],
+      "attunements": {
+        "hallowed": 2
+      },
+      "recipes": [
+        "primalmagick:pixie_basic_hallowed"
+      ]
+    }
+  ]
+}

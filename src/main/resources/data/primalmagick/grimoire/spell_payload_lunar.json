@@ -1,0 +1,23 @@
+{
+  "key": "SPELL_PAYLOAD_LUNAR",
+  "name": "primalmagick.research.spell_payload_lunar.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "SPELL_PAYLOAD_FROST"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.spell_payload_lunar.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.spell_payload_lunar.text.stage.2",
+      "attunements": {
+        "moon": 1
+      }
+    }
+  ],
+  "addenda": []
+}

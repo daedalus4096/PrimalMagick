@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "PIXIES\u0026\u0026t_discover_void",
+  "mana": {
+    "void": 40
+  },
+  "instability": 3,
+  "ingredients": [
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:essence_shard_void"
+    },
+    {
+      "item": "primalmagick:rune_summon"
+    },
+    {
+      "item": "primalmagick:rune_creature"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:incense_brazier"
+    },
+    {
+      "block": "primalmagick:ritual_bell"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:pixie_basic_void"
+  }
+}

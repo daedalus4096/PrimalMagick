@@ -1,0 +1,6 @@
+{
+    "parent": "block/leaves",
+    "textures": {
+        "all": "primalmagick:block/moonwood_leaves_waning"
+    }
+}

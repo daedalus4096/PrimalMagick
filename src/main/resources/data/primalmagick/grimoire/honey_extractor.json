@@ -1,0 +1,27 @@
+{
+  "key": "HONEY_EXTRACTOR",
+  "name": "primalmagick.research.honey_extractor.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "BASIC_MAGITECH"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.honey_extractor.text.stage.1",
+      "required_item": [
+        "minecraft:honeycomb",
+        "minecraft:honey_bottle"
+      ],
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.honey_extractor.text.stage.2",
+      "recipes": [
+        "primalmagick:honey_extractor"
+      ]
+    }
+  ],
+  "addenda": []
+}

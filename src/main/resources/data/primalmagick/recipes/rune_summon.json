@@ -1,0 +1,13 @@
+{
+  "type": "primalmagick:runecarving",
+  "research": "RUNE_SUMMON",
+  "ingredient1": {
+    "item": "minecraft:stone_slab"
+  },
+  "ingredient2": {
+    "tag": "forge:gems/lapis"
+  },
+  "result": {
+    "item": "primalmagick:rune_summon"
+  }
+}

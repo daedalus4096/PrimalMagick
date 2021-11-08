@@ -1,19 +1,19 @@
 modLoader="javafml"
 loaderVersion="[34,)"
-issueTrackerURL="https://github.com/daedalus4096/PrimalMagic/issues"
+issueTrackerURL="https://github.com/daedalus4096/PrimalMagick/issues"
 license="MIT License"
 
 [[mods]]
-modId="primalmagic"
+modId="primalmagick"
 version="${file.jarVersion}"
-displayName="Primal Magic"
+displayName="Primal Magick"
 #updateJSONURL=""
 #displayURL=""
 credits="Thanks to Lorelli, Quinloki, and DaRetroThaumaturge for the art!"
 authors="Daedalus4096"
-description='''Harness the magic of the primal sources of the land.'''
+description='''Harness the magick of the primal sources of the land.'''
 
-[[dependencies.primalmagic]]
+[[dependencies.primalmagick]]
     modId="forge"
     mandatory=true
     versionRange="[37,)"

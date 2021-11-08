@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:concocting",
+  "research": "CONCOCTING_BOMBS\u0026\u0026t_discover_blood",
+  "mana": {
+    "infernal": 3
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagick:alchemical_bomb",
+      "count": 1,
+      "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "primalmagick:essence_shard_sun"
+    },
+    {
+      "item": "primalmagick:essence_shard_blood"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:alchemical_bomb",
+    "count": 1,
+    "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:regeneration\"}"
+  }
+}

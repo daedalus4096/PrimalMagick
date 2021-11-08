@@ -1,0 +1,29 @@
+{
+  "key": "SPELLCLOTH",
+  "name": "primalmagick.research.spellcloth.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "EXPERT_MANAWEAVING",
+    "IMBUED_WOOL",
+    "EARTHSHATTER_HAMMER"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.spellcloth.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.spellcloth.text.stage.2",
+      "recipes": [
+        "primalmagick:spellcloth",
+        "primalmagick:spellcloth_head",
+        "primalmagick:spellcloth_chest",
+        "primalmagick:spellcloth_legs",
+        "primalmagick:spellcloth_feet"
+      ]
+    }
+  ],
+  "addenda": []
+}

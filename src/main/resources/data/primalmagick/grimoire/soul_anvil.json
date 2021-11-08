@@ -1,0 +1,28 @@
+{
+  "key": "SOUL_ANVIL",
+  "name": "primalmagick.research.soul_anvil.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "MASTER_RITUAL",
+    "HEXIUM",
+    "SPELL_PAYLOAD_DRAIN_SOUL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.soul_anvil.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.soul_anvil.text.stage.2",
+      "attunements": {
+        "infernal": 1
+      },
+      "recipes": [
+        "primalmagick:soul_anvil"
+      ]
+    }
+  ],
+  "addenda": []
+}

@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:concocting",
+  "research": "CONCOCTING_BOMBS",
+  "mana": {
+    "infernal": 3
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagick:alchemical_bomb",
+      "count": 1,
+      "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "primalmagick:essence_shard_sky"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:rabbit_foot"
+    },
+    {
+      "tag": "forge:dusts/glowstone"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:alchemical_bomb",
+    "count": 1,
+    "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:strong_leaping\"}"
+  }
+}

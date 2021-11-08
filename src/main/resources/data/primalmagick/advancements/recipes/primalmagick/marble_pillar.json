@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:marble_pillar"
+    ]
+  },
+  "criteria": {
+    "has_marble_raw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:marble_raw"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:marble_pillar"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_marble_raw",
+      "has_the_recipe"
+    ]
+  ]
+}

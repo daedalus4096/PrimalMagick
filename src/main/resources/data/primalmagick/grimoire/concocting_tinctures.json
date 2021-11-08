@@ -1,0 +1,70 @@
+{
+  "key": "CONCOCTING_TINCTURES",
+  "name": "primalmagick.research.concocting_tinctures.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "EXPERT_MAGITECH",
+    "SKYGLASS",
+    "t_discover_infernal"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.concocting_tinctures.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.concocting_tinctures.text.stage.2",
+      "recipes": [
+        "primalmagick:skyglass_flask",
+        "primalmagick:concocter",
+        "primalmagick:night_vision_tincture",
+        "primalmagick:long_night_vision_tincture",
+        "primalmagick:invisibility_tincture",
+        "primalmagick:long_invisibility_tincture",
+        "primalmagick:leaping_tincture",
+        "primalmagick:long_leaping_tincture",
+        "primalmagick:strong_leaping_tincture",
+        "primalmagick:swiftness_tincture",
+        "primalmagick:long_swiftness_tincture",
+        "primalmagick:strong_swiftness_tincture",
+        "primalmagick:turtle_master_tincture",
+        "primalmagick:long_turtle_master_tincture",
+        "primalmagick:strong_turtle_master_tincture",
+        "primalmagick:water_breathing_tincture",
+        "primalmagick:long_water_breathing_tincture",
+        "primalmagick:strength_tincture",
+        "primalmagick:long_strength_tincture",
+        "primalmagick:strong_strength_tincture",
+        "primalmagick:slow_falling_tincture",
+        "primalmagick:long_slow_falling_tincture"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagick.research.concocting_tinctures.text.addenda.1",
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "recipes": [
+        "primalmagick:healing_tincture",
+        "primalmagick:strong_healing_tincture",
+        "primalmagick:regeneration_tincture",
+        "primalmagick:long_regeneration_tincture",
+        "primalmagick:strong_regeneration_tincture"
+      ]
+    },
+    {
+      "text": "primalmagick.research.concocting_tinctures.text.addenda.2",
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "recipes": [
+        "primalmagick:fire_resistance_tincture",
+        "primalmagick:long_fire_resistance_tincture"
+      ]
+    }
+  ]
+}

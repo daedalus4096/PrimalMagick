@@ -1,0 +1,29 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "particle": "primalmagick:block/sunlamp",
+        "all": "primalmagick:block/sunlamp"
+    },
+    "elements": [
+        {
+            "from": [ 6.5, 10, 8 ],
+            "to": [ 9.5, 12, 8 ],
+            "rotation": { "origin": [ 8, 8, 8 ], "axis": "y", "angle": 45 },
+            "shade": false,
+            "faces": {
+                "north": { "uv": [ 11, 1, 14, 3 ], "texture": "#all" },
+                "south": { "uv": [ 11, 1, 14, 3 ], "texture": "#all" }
+            }
+        },
+        {
+            "from": [ 8, 10, 6.5 ],
+            "to": [ 8, 12, 9.5 ],
+            "rotation": { "origin": [ 8, 8, 8 ], "axis": "y", "angle": 45 },
+            "shade": false,
+            "faces": {
+                "west": { "uv": [ 11, 10, 14, 12 ], "texture": "#all" },
+                "east": { "uv": [ 11, 10, 14, 12 ], "texture": "#all" }
+            }
+        }
+    ]
+}

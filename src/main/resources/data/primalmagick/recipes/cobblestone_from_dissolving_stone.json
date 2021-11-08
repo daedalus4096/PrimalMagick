@@ -1,0 +1,13 @@
+{
+  "type": "primalmagick:dissolution",
+  "mana": {
+    "earth": 1
+  },
+  "ingredient": {
+    "tag": "forge:stone"
+  },
+  "result": {
+    "item": "minecraft:cobblestone",
+    "count": 2
+  }
+}

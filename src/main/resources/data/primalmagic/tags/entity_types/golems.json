@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#primalmagic:enchanted_golems",
-    "minecraft:iron_golem",
-    "minecraft:snow_golem"
-  ]
-}

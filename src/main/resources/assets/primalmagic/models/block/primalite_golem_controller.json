@@ -1,8 +1,0 @@
-{
-    "parent": "minecraft:block/orientable",
-    "textures": {
-        "top": "primalmagic:block/primalite_block",
-        "front": "primalmagic:block/primalite_golem_controller_front",
-        "side": "primalmagic:block/primalite_golem_controller_side"
-    }
-}

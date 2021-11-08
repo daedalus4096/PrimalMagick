@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "primalmagick:essence_cluster_blood",
+  "set": {
+    "blood": 100
+  }
+}

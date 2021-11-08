@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "fire_resistance",
+  "research": "CONCOCTING_TINCTURES\u0026\u0026t_discover_infernal",
+  "mana": {
+    "infernal": 1
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagick:concoction",
+      "count": 1,
+      "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "primalmagick:essence_dust_infernal"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:magma_cream"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:concoction",
+    "count": 1,
+    "nbt": "{ConcoctionDoses:3,ConcoctionType:\"tincture\",Potion:\"minecraft:fire_resistance\"}"
+  }
+}

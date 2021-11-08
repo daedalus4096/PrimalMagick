@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagick:item/staff_cap",
+    "textures": {
+        "cap": "block/gold_block"
+    }
+}

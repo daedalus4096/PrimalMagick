@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "primalmagick:arcane_workbench",
+  "base": "minecraft:crafting_table"
+}

@@ -1,0 +1,18 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "EXPERT_MANAWEAVING",
+  "pattern": [
+    "M  ",
+    "MM ",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagick:marble_enchanted"
+    }
+  },
+  "result": {
+    "item": "primalmagick:marble_enchanted_stairs",
+    "count": 4
+  }
+}

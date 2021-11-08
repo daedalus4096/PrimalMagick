@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "target": "primalmagick:sunwood_planks",
+  "base": "minecraft:oak_planks",
+  "add": {
+    "sun": 2
+  }
+}

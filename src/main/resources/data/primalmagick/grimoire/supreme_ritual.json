@@ -1,0 +1,22 @@
+{
+  "key": "SUPREME_RITUAL",
+  "name": "primalmagick.research.supreme_ritual.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "BLOODLETTER",
+    "SOUL_ANVIL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.supreme_ritual.text.stage.1",
+      "required_research": [
+        "t_discover_hallowed",
+        "t_rituals_completed_supreme"
+      ]
+    },
+    {
+      "text": "primalmagick.research.supreme_ritual.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

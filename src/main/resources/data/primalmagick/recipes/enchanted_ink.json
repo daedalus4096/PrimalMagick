@@ -1,0 +1,18 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "research": "THEORYCRAFTING@2",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "tag": "forge:dyes/black"
+    },
+    {
+      "tag": "primalmagick:essences/terrestrial_dusts"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:enchanted_ink"
+  }
+}

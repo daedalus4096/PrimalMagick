@@ -1,0 +1,31 @@
+{
+  "key": "CELESTIAL_HARP",
+  "name": "primalmagick.research.celestial_harp.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "SUPREME_RITUAL",
+    "t_discover_hallowed"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.celestial_harp.text.stage.1",
+      "required_item": [
+        "minecraft:note_block",
+        "minecraft:jukebox"
+      ],
+      "required_knowledge": [
+        "THEORY;3"
+      ]
+    },
+    {
+      "text": "primalmagick.research.celestial_harp.text.stage.2",
+      "attunements": {
+        "hallowed": 1
+      },
+      "recipes": [
+        "primalmagick:celestial_harp"
+      ]
+    }
+  ],
+  "addenda": []
+}

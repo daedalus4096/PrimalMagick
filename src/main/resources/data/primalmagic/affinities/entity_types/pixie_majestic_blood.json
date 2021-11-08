@@ -1,8 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "primalmagic:pixie_majestic_blood",
-  "values": {
-    "sky": 10,
-    "blood": 25
-  }
-}

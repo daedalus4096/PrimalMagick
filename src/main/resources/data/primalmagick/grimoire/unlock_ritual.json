@@ -1,0 +1,21 @@
+{
+  "key": "UNLOCK_RITUAL",
+  "name": "primalmagick.research.unlock_ritual.title",
+  "discipline": "BASICS",
+  "parents": [
+    "WAND_INSCRIPTION",
+    "RUNE_PROJECT"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.unlock_ritual.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.unlock_ritual.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "primalmagick:skyglass_pane",
+  "base": "minecraft:glass_pane"
+}

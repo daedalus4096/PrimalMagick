@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " M ",
+    "MCM",
+    " M "
+  ],
+  "key": {
+    "M": {
+      "item": "primalmagick:marble_raw"
+    },
+    "C": {
+      "item": "primalmagick:marble_chiseled"
+    }
+  },
+  "result": {
+    "item": "primalmagick:marble_runed",
+    "count": 5
+  }
+}

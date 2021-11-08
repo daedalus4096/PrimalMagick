@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "primalmagic:block/marble_raw",
-        "top": "primalmagic:block/marble_raw",
-        "side": "primalmagic:block/marble_raw"
-    }
-}

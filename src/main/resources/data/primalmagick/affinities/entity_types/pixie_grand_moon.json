@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "primalmagick:pixie_grand_moon",
+  "values": {
+    "sky": 10,
+    "moon": 10,
+    "blood": 5
+  }
+}

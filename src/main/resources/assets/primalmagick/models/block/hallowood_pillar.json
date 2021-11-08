@@ -1,0 +1,7 @@
+{
+	"parent": "primalmagick:block/pillar",
+	"textures": {
+		"side": "primalmagick:block/hallowood_pillar",
+		"inner": "primalmagick:block/hallowood_pillar_inner"
+	}
+}

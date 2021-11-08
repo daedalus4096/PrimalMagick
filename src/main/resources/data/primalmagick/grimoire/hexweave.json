@@ -1,0 +1,32 @@
+{
+  "key": "HEXWEAVE",
+  "name": "primalmagick.research.hexweave.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "MASTER_MANAWEAVING",
+    "SPELLCLOTH",
+    "SHARD_SYNTHESIS",
+    "t_discover_blood",
+    "t_discover_infernal",
+    "t_discover_void"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.hexweave.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.hexweave.text.stage.2",
+      "recipes": [
+        "primalmagick:hexweave",
+        "primalmagick:hexweave_head",
+        "primalmagick:hexweave_chest",
+        "primalmagick:hexweave_legs",
+        "primalmagick:hexweave_feet"
+      ]
+    }
+  ],
+  "addenda": []
+}

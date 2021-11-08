@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:marble_brick_stairs_from_marble_raw_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_marble_raw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:marble_raw"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:marble_brick_stairs_from_marble_raw_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_marble_raw",
+      "has_the_recipe"
+    ]
+  ]
+}

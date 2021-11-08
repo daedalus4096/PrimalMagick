@@ -1,6 +1,0 @@
-{
-    "parent": "primalmagic:item/staff_cap",
-    "textures": {
-        "cap": "primalmagic:block/hallowsteel_block"
-    }
-}

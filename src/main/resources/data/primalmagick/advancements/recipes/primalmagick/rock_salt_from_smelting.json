@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:rock_salt_from_smelting"
+    ]
+  },
+  "criteria": {
+    "has_rock_salt_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:rock_salt_ore"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:rock_salt_from_smelting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_rock_salt_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

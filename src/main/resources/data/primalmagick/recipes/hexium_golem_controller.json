@@ -1,0 +1,28 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "HEXIUM_GOLEM",
+  "mana": {
+    "blood": 50,
+    "infernal": 50,
+    "void": 50
+  },
+  "pattern": [
+    "PIP",
+    "IRI",
+    "PIP"
+  ],
+  "key": {
+    "P": {
+      "item": "primalmagick:magitech_parts_forbidden"
+    },
+    "I": {
+      "tag": "primalmagick:ingots/hexium"
+    },
+    "R": {
+      "tag": "forge:storage_blocks/redstone"
+    }
+  },
+  "result": {
+    "item": "primalmagick:hexium_golem_controller"
+  }
+}

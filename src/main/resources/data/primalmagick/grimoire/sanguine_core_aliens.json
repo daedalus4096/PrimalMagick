@@ -1,0 +1,28 @@
+{
+  "key": "SANGUINE_CORE_ALIENS",
+  "name": "primalmagick.research.sanguine_core_aliens.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "SANGUINE_CRUCIBLE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.sanguine_core_aliens.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.sanguine_core_aliens.text.stage.2",
+      "attunements": {
+        "void": 2
+      },
+      "recipes": [
+        "primalmagick:sanguine_core_enderman",
+        "primalmagick:sanguine_core_endermite",
+        "primalmagick:sanguine_core_shulker"
+      ]
+    }
+  ],
+  "addenda": []
+}

@@ -1,0 +1,28 @@
+{
+  "key": "ENTROPY_SINK",
+  "name": "primalmagick.research.entropy_sink.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "EXPERT_MAGITECH",
+    "EXPERT_MANAWEAVING",
+    "MANAFRUIT"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.entropy_sink.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "required_research": [
+        "t_ritual_mishaps_basic"
+      ]
+    },
+    {
+      "text": "primalmagick.research.entropy_sink.text.stage.2",
+      "recipes": [
+        "primalmagick:entropy_sink"
+      ]
+    }
+  ],
+  "addenda": []
+}

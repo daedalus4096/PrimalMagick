@@ -1,6 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "primalmagic:item/enchanted_ink_and_quill"
-    }
-}

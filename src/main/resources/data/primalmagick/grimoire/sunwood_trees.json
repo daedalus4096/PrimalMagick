@@ -1,0 +1,23 @@
+{
+  "key": "SUNWOOD_TREES",
+  "name": "primalmagick.research.sunwood_trees.title",
+  "discipline": "SCANS",
+  "hidden": true,
+  "parents": [
+    "UNLOCK_SCANS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.sunwood_trees.text.stage.1",
+      "recipes": [
+        "primalmagick:sunwood_wood",
+        "primalmagick:stripped_sunwood_wood",
+        "primalmagick:sunwood_planks",
+        "primalmagick:sunwood_slab",
+        "primalmagick:sunwood_stairs",
+        "primalmagick:sunwood_pillar"
+      ]
+    }
+  ],
+  "addenda": []
+}

@@ -1,0 +1,23 @@
+{
+  "key": "RUNE_ABSORB",
+  "name": "primalmagick.research.rune_absorb.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "EXPERT_RUNEWORKING"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.rune_absorb.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.rune_absorb.text.stage.2",
+      "recipes": [
+        "primalmagick:rune_absorb"
+      ]
+    }
+  ],
+  "addenda": []
+}

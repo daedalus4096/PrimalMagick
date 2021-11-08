@@ -1,0 +1,40 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "PRIMAL_PICKAXE",
+  "mana": {
+    "moon": 40
+  },
+  "instability": 3,
+  "ingredients": [
+    {
+      "item": "primalmagick:primalite_pickaxe"
+    },
+    {
+      "item": "primalmagick:essence_shard_moon"
+    },
+    {
+      "item": "primalmagick:essence_shard_moon"
+    },
+    {
+      "item": "primalmagick:rune_moon"
+    },
+    {
+      "item": "primalmagick:mana_prism"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "block": "primalmagick:ritual_lectern"
+    },
+    {
+      "block": "primalmagick:incense_brazier"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:primal_pickaxe",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:lucky_strike\",lvl:2s}]}"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "condition": "primalmagick:match_block_tag",
+      "tag": "forge:ores/iron"
+    },
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "enchantments": [
+          {
+            "enchantment": "primalmagick:lucky_strike",
+            "levels": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "chance": 0.5,
+  "nugget": "minecraft:iron_nugget",
+  "type": "primalmagick:bonus_nugget"
+}

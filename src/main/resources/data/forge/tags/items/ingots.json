@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "#primalmagic:ingots/primalite",
-    "#primalmagic:ingots/hexium",
-    "#primalmagic:ingots/hallowsteel"
+    "#primalmagick:ingots/primalite",
+    "#primalmagick:ingots/hexium",
+    "#primalmagick:ingots/hallowsteel"
   ]
 }

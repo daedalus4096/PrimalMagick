@@ -1,0 +1,19 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "primalmagick:block/stained_skyglass_unconnected",
+        "edge": "primalmagick:block/skyglass_pane_edge"
+    },
+    "elements": [
+        {   "from": [ 7, 0, 0 ],
+            "to": [ 9, 16, 7 ],
+            "faces": {
+                "down":  { "uv": [  7, 0,  9,  7 ], "texture": "#edge", "cullface": "down", "tintindex": 0 },
+                "up":    { "uv": [  7, 0,  9,  7 ], "texture": "#edge", "cullface": "up", "tintindex": 0 },
+                "north": { "uv": [  7, 0,  9, 16 ], "texture": "#edge", "cullface": "north", "tintindex": 0 },
+                "west":  { "uv": [ 16, 0,  9, 16 ], "texture": "#pane", "tintindex": 0 },
+                "east":  { "uv": [  9, 0, 16, 16 ], "texture": "#pane", "tintindex": 0 }
+            }
+        }
+    ]
+}

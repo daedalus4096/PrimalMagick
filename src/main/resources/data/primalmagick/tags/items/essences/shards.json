@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#primalmagick:essences/terrestrial_shards",
+    "#primalmagick:essences/forbidden_shards",
+    "primalmagick:essence_shard_hallowed"
+  ]
+}

@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "primalmagic:block/hallowsteel_golem_controller" },
-        "facing=south": { "model": "primalmagic:block/hallowsteel_golem_controller", "y": 180 },
-        "facing=west":  { "model": "primalmagic:block/hallowsteel_golem_controller", "y": 270 },
-        "facing=east":  { "model": "primalmagic:block/hallowsteel_golem_controller", "y": 90 }
-    }
-}

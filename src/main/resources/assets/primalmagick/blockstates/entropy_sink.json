@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "primalmagick:block/entropy_sink" },
+        "facing=south": { "model": "primalmagick:block/entropy_sink", "y": 180 },
+        "facing=west":  { "model": "primalmagick:block/entropy_sink", "y": 270 },
+        "facing=east":  { "model": "primalmagick:block/entropy_sink", "y": 90 }
+    }
+}

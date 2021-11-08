@@ -1,0 +1,24 @@
+{
+  "key": "RUNE_HALLOWED",
+  "name": "primalmagick.research.rune_hallowed.title",
+  "discipline": "RUNEWORKING",
+  "parents": [
+    "MASTER_RUNEWORKING",
+    "t_discover_hallowed"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.rune_hallowed.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.rune_hallowed.text.stage.2",
+      "recipes": [
+        "primalmagick:rune_hallowed"
+      ]
+    }
+  ],
+  "addenda": []
+}

@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "SPELLCLOTH",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5
+  },
+  "pattern": [
+    "ESE",
+    " C ",
+    "ESE"
+  ],
+  "key": {
+    "E": {
+      "tag": "primalmagick:essences/terrestrial_dusts"
+    },
+    "S": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "primalmagick:spellcloth"
+  }
+}

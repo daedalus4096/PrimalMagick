@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "target": "primalmagick:hallowed_orb",
+  "set": {
+    "hallowed": 25
+  }
+}

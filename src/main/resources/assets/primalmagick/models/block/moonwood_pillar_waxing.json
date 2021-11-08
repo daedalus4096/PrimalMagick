@@ -1,0 +1,7 @@
+{
+	"parent": "primalmagick:block/pillar",
+	"textures": {
+		"side": "primalmagick:block/moonwood_pillar_waxing",
+		"inner": "primalmagick:block/moonwood_pillar_inner_waxing"
+	}
+}

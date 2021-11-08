@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "HEXIUM",
+  "pattern": [
+    "PIP",
+    "PPP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "I": {
+      "tag": "primalmagick:ingots/hexium"
+    }
+  },
+  "result": {
+    "item": "primalmagick:hexium_shield"
+  }
+}

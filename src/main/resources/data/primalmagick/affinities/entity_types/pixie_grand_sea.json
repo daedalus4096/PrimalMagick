@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "primalmagick:pixie_grand_sea",
+  "values": {
+    "sea": 10,
+    "sky": 10,
+    "blood": 5
+  }
+}

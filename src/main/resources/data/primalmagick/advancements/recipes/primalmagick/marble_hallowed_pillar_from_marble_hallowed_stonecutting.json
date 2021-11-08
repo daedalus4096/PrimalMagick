@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:marble_hallowed_pillar_from_marble_hallowed_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_marble_hallowed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:marble_hallowed"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:marble_hallowed_pillar_from_marble_hallowed_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_marble_hallowed",
+      "has_the_recipe"
+    ]
+  ]
+}

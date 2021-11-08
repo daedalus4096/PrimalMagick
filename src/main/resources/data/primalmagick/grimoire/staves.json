@@ -1,0 +1,23 @@
+{
+  "key": "STAVES",
+  "name": "primalmagick.research.staves.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "EXPERT_MANAWEAVING",
+    "WAND_GEM_ADEPT",
+    "WAND_INSCRIPTION",
+    "SHARD_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.staves.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.staves.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

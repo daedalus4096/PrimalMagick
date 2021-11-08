@@ -1,0 +1,20 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "primalmagick:item/forbidden_trident"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "throwing": 0
+            },
+            "model": "primalmagick:item/forbidden_trident_in_hand"
+        },
+        {
+            "predicate": {
+                "throwing": 1
+            },
+            "model": "primalmagick:item/forbidden_trident_throwing"
+        }
+    ]
+}

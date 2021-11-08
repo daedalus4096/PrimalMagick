@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:marble_smoked_pillar_from_marble_smoked_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_marble_smoked": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:marble_smoked"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:marble_smoked_pillar_from_marble_smoked_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_marble_smoked",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "primalmagick:item/wand_gem",
+    "textures": {
+        "gem": "primalmagick:block/creative_gem_block"
+    }
+}

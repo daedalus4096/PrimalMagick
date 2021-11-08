@@ -1,7 +1,0 @@
-{
-  "type": "enchantment_bonus",
-  "target": "primalmagic:verdant",
-  "multiplier": {
-    "sun": 1
-  }
-}

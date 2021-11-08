@@ -1,0 +1,40 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "PRIMAL_SHOVEL",
+  "mana": {
+    "earth": 40
+  },
+  "instability": 3,
+  "ingredients": [
+    {
+      "item": "primalmagick:primalite_shovel"
+    },
+    {
+      "item": "primalmagick:essence_shard_earth"
+    },
+    {
+      "item": "primalmagick:essence_shard_earth"
+    },
+    {
+      "item": "primalmagick:rune_earth"
+    },
+    {
+      "item": "primalmagick:mana_prism"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "props": [
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "block": "primalmagick:ritual_bell"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:primal_shovel",
+    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:reverberation\",lvl:2s}]}"
+  }
+}

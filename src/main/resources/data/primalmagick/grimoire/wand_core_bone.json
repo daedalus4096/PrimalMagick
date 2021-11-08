@@ -1,0 +1,41 @@
+{
+  "key": "WAND_CORE_BONE",
+  "name": "primalmagick.research.wand_core_bone.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "MASTER_MANAWEAVING",
+    "WAND_CORE_HEARTWOOD",
+    "t_discover_blood"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.wand_core_bone.text.stage.1",
+      "required_item": [
+        "minecraft:bone"
+      ],
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.wand_core_bone.text.stage.2",
+      "attunements": {
+        "blood": 3
+      },
+      "recipes": [
+        "primalmagick:bone_wand_core_item"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagick.research.wand_core_bone.text.addenda.1",
+      "required_research": [
+        "STAVES"
+      ],
+      "recipes": [
+        "primalmagick:bone_staff_core_item"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "key": "SPELL_PAYLOAD_LIGHTNING",
+  "name": "primalmagick.research.spell_payload_lightning.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "BASIC_SORCERY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.spell_payload_lightning.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.spell_payload_lightning.text.stage.2",
+      "attunements": {
+        "sky": 1
+      }
+    }
+  ],
+  "addenda": []
+}

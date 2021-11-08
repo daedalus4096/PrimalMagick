@@ -1,0 +1,27 @@
+{
+  "key": "SPELL_PAYLOAD_TELEPORT",
+  "name": "primalmagick.research.spell_payload_teleport.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "MASTER_SORCERY",
+    "SPELL_PAYLOAD_VOID"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.spell_payload_teleport.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ],
+      "required_research": [
+        "m_teleport_a_lot"
+      ]
+    },
+    {
+      "text": "primalmagick.research.spell_payload_teleport.text.stage.2",
+      "attunements": {
+        "void": 3
+      }
+    }
+  ],
+  "addenda": []
+}

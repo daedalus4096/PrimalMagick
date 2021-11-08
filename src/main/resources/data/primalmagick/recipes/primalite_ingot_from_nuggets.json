@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "primalite_ingot",
+  "pattern": [
+    "NNN",
+    "NNN",
+    "NNN"
+  ],
+  "key": {
+    "N": {
+      "tag": "primalmagick:nuggets/primalite"
+    }
+  },
+  "result": {
+    "item": "primalmagick:primalite_ingot"
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "primalmagic:rock_salt_ore"
-  },
-  "result": "primalmagic:rock_salt",
-  "experience": 0.0,
-  "cookingtime": 200
-}

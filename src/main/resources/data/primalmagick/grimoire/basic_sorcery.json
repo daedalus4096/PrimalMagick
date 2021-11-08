@@ -1,0 +1,21 @@
+{
+  "key": "BASIC_SORCERY",
+  "name": "primalmagick.research.basic_sorcery.title",
+  "discipline": "SORCERY",
+  "parents": [
+    "UNLOCK_SORCERY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.basic_sorcery.text.stage.1",
+      "attunements": {
+        "earth": 1
+      },
+      "recipes": [
+        "primalmagick:spell_scroll_blank",
+        "primalmagick:spellcrafting_altar"
+      ]
+    }
+  ],
+  "addenda": []
+}

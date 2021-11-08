@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "hexium_ingot",
+  "pattern": [
+    "NNN",
+    "NNN",
+    "NNN"
+  ],
+  "key": {
+    "N": {
+      "tag": "primalmagick:nuggets/hexium"
+    }
+  },
+  "result": {
+    "item": "primalmagick:hexium_ingot"
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "block/leaves",
+    "textures": {
+        "all": "primalmagick:block/sunwood_leaves_waxing"
+    }
+}

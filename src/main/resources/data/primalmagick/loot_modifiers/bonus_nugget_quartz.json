@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "condition": "primalmagick:match_block_tag",
+      "tag": "forge:ores/quartz"
+    },
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "enchantments": [
+          {
+            "enchantment": "primalmagick:lucky_strike",
+            "levels": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "chance": 0.5,
+  "nugget": "primalmagick:quartz_nugget",
+  "type": "primalmagick:bonus_nugget"
+}

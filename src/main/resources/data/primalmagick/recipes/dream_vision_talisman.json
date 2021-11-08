@@ -1,0 +1,43 @@
+{
+  "type": "primalmagick:ritual",
+  "research": "DREAM_VISION_TALISMAN",
+  "mana": {
+    "moon": 40
+  },
+  "instability": 4,
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "tag": "forge:ingots/gold"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "minecraft:sand"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    }
+  ],
+  "props": [
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "block": "primalmagick:incense_brazier"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:dream_vision_talisman",
+    "nbt": "{Damage:0}"
+  }
+}

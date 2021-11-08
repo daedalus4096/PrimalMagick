@@ -1,0 +1,37 @@
+{
+  "key": "SANGUINE_CORE_UNDEAD",
+  "name": "primalmagick.research.sanguine_core_undead.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "SANGUINE_CRUCIBLE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.sanguine_core_undead.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.sanguine_core_undead.text.stage.2",
+      "attunements": {
+        "moon": 2
+      },
+      "recipes": [
+        "primalmagick:sanguine_core_drowned",
+        "primalmagick:sanguine_core_husk",
+        "primalmagick:sanguine_core_phantom",
+        "primalmagick:sanguine_core_skeleton",
+        "primalmagick:sanguine_core_skeleton_horse",
+        "primalmagick:sanguine_core_stray",
+        "primalmagick:sanguine_core_wither_skeleton",
+        "primalmagick:sanguine_core_zoglin",
+        "primalmagick:sanguine_core_zombie",
+        "primalmagick:sanguine_core_zombie_horse",
+        "primalmagick:sanguine_core_zombie_villager",
+        "primalmagick:sanguine_core_zombified_piglin"
+      ]
+    }
+  ],
+  "addenda": []
+}

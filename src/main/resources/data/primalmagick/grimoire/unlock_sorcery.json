@@ -1,0 +1,20 @@
+{
+  "key": "UNLOCK_SORCERY",
+  "name": "primalmagick.research.unlock_sorcery.title",
+  "discipline": "BASICS",
+  "parents": [
+    "WAND_CHARGER"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.unlock_sorcery.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.unlock_sorcery.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

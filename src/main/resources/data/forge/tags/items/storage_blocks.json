@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "primalmagic:ignyx_block",
-    "#primalmagic:storage_blocks/primalite",
-    "#primalmagic:storage_blocks/hexium",
-    "#primalmagic:storage_blocks/hallowsteel"
+    "primalmagick:ignyx_block",
+    "#primalmagick:storage_blocks/primalite",
+    "#primalmagick:storage_blocks/hexium",
+    "#primalmagick:storage_blocks/hallowsteel"
   ]
 }

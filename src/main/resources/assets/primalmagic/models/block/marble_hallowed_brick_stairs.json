@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "primalmagic:block/marble_hallowed_bricks",
-        "top": "primalmagic:block/marble_hallowed_bricks",
-        "side": "primalmagic:block/marble_hallowed_bricks"
-    }
-}

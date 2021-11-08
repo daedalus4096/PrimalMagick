@@ -1,6 +1,0 @@
-{
-    "parent": "primalmagic:block/skyglass_pane_side_base",
-    "textures": {
-        "pane": "primalmagic:block/skyglass_ud"
-    }
-}

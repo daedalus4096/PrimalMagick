@@ -1,0 +1,27 @@
+{
+  "key": "PRIMALITE_GOLEM",
+  "name": "primalmagick.research.primalite_golem.title",
+  "discipline": "MAGITECH",
+  "parents": [
+    "EXPERT_MAGITECH",
+    "PRIMALITE"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.primalite_golem.text.stage.1",
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "required_research": [
+        "t_golem"
+      ]
+    },
+    {
+      "text": "primalmagick.research.primalite_golem.text.stage.2",
+      "recipes": [
+        "primalmagick:primalite_golem_controller"
+      ]
+    }
+  ],
+  "addenda": []
+}

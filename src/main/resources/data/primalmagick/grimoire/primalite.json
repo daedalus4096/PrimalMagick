@@ -1,0 +1,54 @@
+{
+  "key": "PRIMALITE",
+  "name": "primalmagick.research.primalite.title",
+  "discipline": "ALCHEMY",
+  "parents": [
+    "EXPERT_ALCHEMY"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.primalite.text.stage.1",
+      "required_item": [
+        "primalmagick:essence_dust_earth",
+        "primalmagick:essence_dust_sea",
+        "primalmagick:essence_dust_sky",
+        "primalmagick:essence_dust_sun",
+        "primalmagick:essence_dust_moon"
+      ],
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.primalite.text.stage.2",
+      "attunements": {
+        "earth": 1,
+        "sea": 1,
+        "sky": 1,
+        "sun": 1,
+        "moon": 1
+      },
+      "recipes": [
+        "primalmagick:primalite_ingot",
+        "primalmagick:primalite_nugget",
+        "primalmagick:primalite_ingot_from_nuggets",
+        "primalmagick:primalite_block",
+        "primalmagick:primalite_ingots_from_block",
+        "primalmagick:primalite_sword",
+        "primalmagick:primalite_trident",
+        "primalmagick:primalite_bow",
+        "primalmagick:primalite_shovel",
+        "primalmagick:primalite_pickaxe",
+        "primalmagick:primalite_axe",
+        "primalmagick:primalite_hoe",
+        "primalmagick:primalite_fishing_rod",
+        "primalmagick:primalite_head",
+        "primalmagick:primalite_chest",
+        "primalmagick:primalite_legs",
+        "primalmagick:primalite_feet",
+        "primalmagick:primalite_shield"
+      ]
+    }
+  ],
+  "addenda": []
+}

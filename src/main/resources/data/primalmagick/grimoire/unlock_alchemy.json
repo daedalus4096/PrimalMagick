@@ -1,0 +1,20 @@
+{
+  "key": "UNLOCK_ALCHEMY",
+  "name": "primalmagick.research.unlock_alchemy.title",
+  "discipline": "BASICS",
+  "parents": [
+    "MANA_ARROWS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.unlock_alchemy.text.stage.1",
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.unlock_alchemy.text.stage.2"
+    }
+  ],
+  "addenda": []
+}

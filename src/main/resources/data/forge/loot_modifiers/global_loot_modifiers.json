@@ -1,15 +1,15 @@
 {
   "replace": false,
   "entries": [
-    "primalmagic:bloody_flesh",
-    "primalmagic:blood_notes_high",
-    "primalmagic:bonus_nugget_gold",
-    "primalmagic:blood_notes_low",
-    "primalmagic:relic_fragments_high",
-    "primalmagic:bonus_nugget_quartz",
-    "primalmagic:relic_fragments_low",
-    "primalmagic:bounty_farming",
-    "primalmagic:bounty_fishing",
-    "primalmagic:bonus_nugget_iron"
+    "primalmagick:bloody_flesh",
+    "primalmagick:blood_notes_high",
+    "primalmagick:bonus_nugget_gold",
+    "primalmagick:blood_notes_low",
+    "primalmagick:relic_fragments_high",
+    "primalmagick:bonus_nugget_quartz",
+    "primalmagick:relic_fragments_low",
+    "primalmagick:bounty_farming",
+    "primalmagick:bounty_fishing",
+    "primalmagick:bonus_nugget_iron"
   ]
 }

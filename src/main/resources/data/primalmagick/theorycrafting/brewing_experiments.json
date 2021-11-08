@@ -1,0 +1,129 @@
+{
+  "key": "primalmagick:brewing_experiments",
+  "required_research": "t_discover_infernal",
+  "reward_multiplier": 0.25,
+  "aid_blocks": [],
+  "material_options": [
+    {
+      "type": "item",
+      "stack": "minecraft:brewing_stand",
+      "consumed": false,
+      "match_nbt": false,
+      "weight": 3.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:crops/nether_wart",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:fermented_spider_eye",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:dusts/glowstone",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "name": "forge:dusts/redstone",
+      "quantity": 1,
+      "consumed": true,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:sugar",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:rabbit_foot",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 0.5,
+      "bonus_reward": 0.125
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:blaze_powder",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:glistering_melon_slice",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:spider_eye",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:ghast_tear",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:magma_cream",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:pufferfish",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:golden_carrot",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:turtle_helmet;1;{Damage:0}",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 0.5,
+      "bonus_reward": 0.125
+    },
+    {
+      "type": "item",
+      "stack": "minecraft:phantom_membrane",
+      "consumed": true,
+      "match_nbt": false,
+      "weight": 0.5,
+      "bonus_reward": 0.125
+    },
+    {
+      "type": "observation",
+      "count": 1,
+      "consumed": true,
+      "weight": 3.0
+    }
+  ]
+}

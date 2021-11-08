@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:ignyx_block"
+    ]
+  },
+  "criteria": {
+    "has_ignyx": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:ignyx"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:ignyx_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ignyx",
+      "has_the_recipe"
+    ]
+  ]
+}

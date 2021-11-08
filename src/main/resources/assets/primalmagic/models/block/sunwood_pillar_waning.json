@@ -1,7 +1,0 @@
-{
-	"parent": "primalmagic:block/pillar",
-	"textures": {
-		"side": "primalmagic:block/sunwood_pillar_waning",
-		"inner": "primalmagic:block/sunwood_pillar_inner_waning"
-	}
-}

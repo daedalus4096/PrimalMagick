@@ -1,0 +1,22 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "research": "WAND_GEM_APPRENTICE",
+  "mana": {
+    "earth": 10,
+    "sea": 10,
+    "sky": 10,
+    "sun": 10,
+    "moon": 10
+  },
+  "ingredients": [
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "primalmagick:essences/terrestrial_dusts"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:apprentice_wand_gem_item"
+  }
+}

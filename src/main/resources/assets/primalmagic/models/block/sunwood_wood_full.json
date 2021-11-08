@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "primalmagic:block/sunwood_log_full",
-        "side": "primalmagic:block/sunwood_log_full"
-    }
-}

@@ -1,6 +1,0 @@
-{
-    "parent": "primalmagic:item/wand_core",
-    "textures": {
-        "core": "primalmagic:item/heartwood_wand_core"
-    }
-}

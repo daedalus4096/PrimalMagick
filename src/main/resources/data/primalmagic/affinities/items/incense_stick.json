@@ -1,9 +1,0 @@
-{
-  "type": "item",
-  "target": "primalmagic:incense_stick",
-  "set": {
-    "earth": 4,
-    "sky": 5,
-    "sun": 4
-  }
-}

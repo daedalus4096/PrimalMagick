@@ -1,0 +1,28 @@
+{
+  "key": "WAND_GEM_WIZARD",
+  "name": "primalmagick.research.wand_gem_wizard.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "MASTER_MANAWEAVING",
+    "WAND_GEM_ADEPT",
+    "CRYSTAL_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.wand_gem_wizard.text.stage.1",
+      "required_item": [
+        "tag:forge:gems/diamond"
+      ],
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.wand_gem_wizard.text.stage.2",
+      "recipes": [
+        "primalmagick:wizard_wand_gem_item"
+      ]
+    }
+  ],
+  "addenda": []
+}

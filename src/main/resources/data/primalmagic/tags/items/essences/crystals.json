@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#primalmagic:essences/terrestrial_crystals",
-    "#primalmagic:essences/forbidden_crystals",
-    "primalmagic:essence_crystal_hallowed"
-  ]
-}

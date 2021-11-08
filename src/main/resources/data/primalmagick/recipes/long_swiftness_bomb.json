@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:concocting",
+  "research": "CONCOCTING_BOMBS",
+  "mana": {
+    "infernal": 3
+  },
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "primalmagick:alchemical_bomb",
+      "count": 1,
+      "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "primalmagick:essence_shard_sky"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:alchemical_bomb",
+    "count": 1,
+    "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:long_swiftness\"}"
+  }
+}

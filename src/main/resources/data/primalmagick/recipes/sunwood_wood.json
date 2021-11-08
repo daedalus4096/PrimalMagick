@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bark",
+  "pattern": [
+    "WW",
+    "WW"
+  ],
+  "key": {
+    "W": {
+      "item": "primalmagick:sunwood_log"
+    }
+  },
+  "result": {
+    "item": "primalmagick:sunwood_wood",
+    "count": 3
+  }
+}

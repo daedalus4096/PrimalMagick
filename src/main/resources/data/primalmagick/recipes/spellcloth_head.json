@@ -1,0 +1,16 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "SPELLCLOTH",
+  "pattern": [
+    "###",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "item": "primalmagick:spellcloth"
+    }
+  },
+  "result": {
+    "item": "primalmagick:spellcloth_head"
+  }
+}

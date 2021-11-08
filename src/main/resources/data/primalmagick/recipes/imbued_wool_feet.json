@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "research": "IMBUED_WOOL",
+  "mana": {
+    "earth": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5,
+    "moon": 5
+  },
+  "pattern": [
+    "# #",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "primalmagick:imbued_wool_feet"
+  }
+}

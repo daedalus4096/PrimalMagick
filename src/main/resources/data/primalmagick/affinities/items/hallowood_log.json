@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "target": "primalmagick:hallowood_log",
+  "base": "minecraft:oak_log",
+  "add": {
+    "hallowed": 10
+  },
+  "remove": {
+    "sun": 10
+  }
+}

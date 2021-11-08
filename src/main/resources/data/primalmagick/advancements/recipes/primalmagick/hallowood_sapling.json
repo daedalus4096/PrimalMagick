@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:hallowood_sapling"
+    ]
+  },
+  "criteria": {
+    "has_hallowed_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:hallowed_orb"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:hallowood_sapling"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hallowed_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

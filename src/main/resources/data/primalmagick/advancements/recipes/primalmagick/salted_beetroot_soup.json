@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:salted_beetroot_soup"
+    ]
+  },
+  "criteria": {
+    "has_salt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:refined_salt"
+            ]
+          }
+        ]
+      }
+    },
+    "has_beetroot_soup": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:beetroot_soup"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:salted_beetroot_soup"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_salt",
+      "has_beetroot_soup",
+      "has_the_recipe"
+    ]
+  ]
+}

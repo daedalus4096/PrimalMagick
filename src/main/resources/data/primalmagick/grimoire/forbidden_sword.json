@@ -1,0 +1,43 @@
+{
+  "key": "FORBIDDEN_SWORD",
+  "name": "primalmagick.research.forbidden_sword.title",
+  "discipline": "RITUAL",
+  "parents": [
+    "t_discover_void",
+    "MASTER_RITUAL",
+    "HEXIUM",
+    "SHARD_SYNTHESIS",
+    "MANA_SALTS",
+    "RUNE_VOID",
+    "BLOODLETTER",
+    "SOUL_ANVIL"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.forbidden_sword.text.stage.1",
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.forbidden_sword.text.stage.2",
+      "recipes": [
+        "primalmagick:forbidden_sword"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagick.research.forbidden_sword.text.addenda.1",
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_SUMMON",
+        "RUNE_ITEM",
+        "RUNE_VOID"
+      ],
+      "siblings": [
+        "\u0026primalmagick:essence_thief"
+      ]
+    }
+  ]
+}

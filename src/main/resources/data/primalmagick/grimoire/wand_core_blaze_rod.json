@@ -1,0 +1,41 @@
+{
+  "key": "WAND_CORE_BLAZE_ROD",
+  "name": "primalmagick.research.wand_core_blaze_rod.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "MASTER_MANAWEAVING",
+    "WAND_CORE_HEARTWOOD",
+    "t_discover_infernal"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.wand_core_blaze_rod.text.stage.1",
+      "required_item": [
+        "tag:forge:rods/blaze"
+      ],
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.wand_core_blaze_rod.text.stage.2",
+      "attunements": {
+        "infernal": 3
+      },
+      "recipes": [
+        "primalmagick:blaze_rod_wand_core_item"
+      ]
+    }
+  ],
+  "addenda": [
+    {
+      "text": "primalmagick.research.wand_core_blaze_rod.text.addenda.1",
+      "required_research": [
+        "STAVES"
+      ],
+      "recipes": [
+        "primalmagick:blaze_rod_staff_core_item"
+      ]
+    }
+  ]
+}

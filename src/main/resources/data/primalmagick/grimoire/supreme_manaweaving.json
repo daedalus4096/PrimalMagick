@@ -1,0 +1,35 @@
+{
+  "key": "SUPREME_MANAWEAVING",
+  "name": "primalmagick.research.supreme_manaweaving.title",
+  "discipline": "MANAWEAVING",
+  "parents": [
+    "WAND_CAP_HEXIUM",
+    "WAND_GEM_WIZARD"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.supreme_manaweaving.text.stage.1",
+      "required_research": [
+        "t_discover_hallowed",
+        "b_crafted_manaweaving_supreme"
+      ]
+    },
+    {
+      "text": "primalmagick.research.supreme_manaweaving.text.stage.2",
+      "recipes": [
+        "primalmagick:marble_hallowed",
+        "primalmagick:marble_hallowed_brick_slab",
+        "primalmagick:marble_hallowed_brick_stairs",
+        "primalmagick:marble_hallowed_brick_wall",
+        "primalmagick:marble_hallowed_bricks",
+        "primalmagick:marble_hallowed_chiseled",
+        "primalmagick:marble_hallowed_pillar",
+        "primalmagick:marble_hallowed_runed",
+        "primalmagick:marble_hallowed_slab",
+        "primalmagick:marble_hallowed_stairs",
+        "primalmagick:marble_hallowed_wall"
+      ]
+    }
+  ],
+  "addenda": []
+}

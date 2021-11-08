@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "primalmagick:stripped_sunwood_wood"
+    ]
+  },
+  "criteria": {
+    "has_sunwood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:sunwood_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_stripped_sunwood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:stripped_sunwood_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "primalmagick:stripped_sunwood_wood"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sunwood_log",
+      "has_stripped_sunwood_log",
+      "has_the_recipe"
+    ]
+  ]
+}
