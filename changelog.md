@@ -1,6 +1,7 @@
 v0.1.0-beta
 -----------
 * Rename mod to Primal Magick
+* Add update check URL
 
 v0.0.22-alpha
 -------------
