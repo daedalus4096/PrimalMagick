@@ -16,8 +16,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.palantir.git-version'
 
 version = gitVersion()
-group = 'com.verdantartifice.primalmagic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'primalmagic'
+group = 'com.verdantartifice.primalmagick' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'primalmagick'
 
 // Mojang ships Java 16 to end users in 1.17+ instead of Java 8 in 1.16 or lower, so your mod should target Java 16.
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
@@ -59,7 +59,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                primalmagic {
+                primalmagick {
                     source sourceSets.main
                 }
             }
@@ -81,7 +81,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                primalmagic {
+                primalmagick {
                     source sourceSets.main
                 }
             }
@@ -103,10 +103,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'primalmagic', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'primalmagick', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                primalmagic {
+                primalmagick {
                     source sourceSets.main
                 }
             }
@@ -157,7 +157,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "Primal Magic",
+            "Specification-Title": "Primal Magick",
             "Specification-Vendor": "Verdant Artifice",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
