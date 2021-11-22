@@ -117,4 +117,11 @@ public class AnalysisTableContainer extends AbstractContainerMenu {
             }
         }
     }
+
+    @Override
+    public void removed(Player player) {
+        super.removed(player);
+        this.analysisInventory.setItem(1, ItemStack.EMPTY);
+        this.clearContainer(player, this.analysisInventory);
+    }
 }

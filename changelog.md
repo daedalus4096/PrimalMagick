@@ -1,3 +1,7 @@
+v0.1.1-beta
+-----------
+* Return unscanned items to player when closing Analysis Table GUI
+
 v0.1.0-beta
 -----------
 * Rename mod to Primal Magick
