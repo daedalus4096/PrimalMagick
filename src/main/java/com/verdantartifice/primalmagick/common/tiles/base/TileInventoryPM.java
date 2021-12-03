@@ -12,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.ContainerListener;
@@ -20,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Base class for a tile entity containing an inventory which may be synced to the client.
@@ -210,7 +210,7 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
         super.onMessageFromServer(nbt);
         if (nbt.contains("ItemsSynced")) {
             this.syncedItems = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-            ListTag tagList = nbt.getList("ItemsSynced", Constants.NBT.TAG_COMPOUND);
+            ListTag tagList = nbt.getList("ItemsSynced", Tag.TAG_COMPOUND);
             for (int index = 0; index < tagList.size(); index++) {
                 CompoundTag slotTag = tagList.getCompound(index);
                 byte slotIndex = slotTag.getByte("Slot");

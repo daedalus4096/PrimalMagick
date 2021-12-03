@@ -64,6 +64,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -86,7 +87,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -198,34 +198,34 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         this.nextCheckCount = compound.getInt("NextCheckCount");
         this.stability = Mth.clamp(compound.getFloat("Stability"), MIN_STABILITY, MAX_STABILITY);
         
-        if (compound.contains("ActivePlayer", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("ActivePlayer", Tag.TAG_COMPOUND)) {
             this.activePlayerId = NbtUtils.loadUUID(compound.getCompound("ActivePlayer"));
         } else {
             this.activePlayerId = null;
         }
         
-        this.activeRecipeId = compound.contains("ActiveRecipeId", Constants.NBT.TAG_STRING) ? 
+        this.activeRecipeId = compound.contains("ActiveRecipeId", Tag.TAG_STRING) ? 
                 new ResourceLocation(compound.getString("ActiveRecipeId")) : 
                 null;
         
         this.currentStep = null;
-        if (compound.contains("CurrentStep", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("CurrentStep", Tag.TAG_COMPOUND)) {
             this.currentStep = RitualStepFactory.deserializeNBT(compound.getCompound("CurrentStep"));
         }
                 
         this.remainingSteps.clear();
-        if (compound.contains("RemainingSteps", Constants.NBT.TAG_LIST)) {
-            ListTag stepList = compound.getList("RemainingSteps", Constants.NBT.TAG_COMPOUND);
+        if (compound.contains("RemainingSteps", Tag.TAG_LIST)) {
+            ListTag stepList = compound.getList("RemainingSteps", Tag.TAG_COMPOUND);
             for (int index = 0; index < stepList.size(); index++) {
                 this.remainingSteps.offer(RitualStepFactory.deserializeNBT(stepList.getCompound(index)));
             }
         }
         
-        this.awaitedPropPos = compound.contains("AwaitedPropPos", Constants.NBT.TAG_LONG) ?
+        this.awaitedPropPos = compound.contains("AwaitedPropPos", Tag.TAG_LONG) ?
                 BlockPos.of(compound.getLong("AwaitedPropPos")) :
                 null;
                 
-        this.channeledOfferingPos = compound.contains("ChanneledOfferingPos", Constants.NBT.TAG_LONG) ?
+        this.channeledOfferingPos = compound.contains("ChanneledOfferingPos", Tag.TAG_LONG) ?
                 BlockPos.of(compound.getLong("ChanneledOfferingPos")) :
                 null;
     }

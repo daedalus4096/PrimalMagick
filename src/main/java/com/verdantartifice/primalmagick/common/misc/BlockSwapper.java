@@ -26,7 +26,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.ForgeEventFactory;
 
 /**
@@ -86,7 +85,7 @@ public class BlockSwapper {
                     } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
                         targetState = targetState.setValue(BlockStateProperties.HORIZONTAL_FACING, state.getValue(BlockStateProperties.HORIZONTAL_FACING));
                     }
-                    world.setBlock(this.pos, targetState, Constants.BlockFlags.DEFAULT);
+                    world.setBlock(this.pos, targetState, Block.UPDATE_ALL);
                     
                     // Set the owner of the new block's tile entity, if applicable
                     BlockEntity tile = world.getBlockEntity(this.pos);

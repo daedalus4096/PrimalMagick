@@ -6,10 +6,10 @@ import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a ritual lectern tile entity.  Holds the lectern's inventory.
@@ -27,8 +27,8 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
-        this.isOpen = compound.contains("PropOpen", Constants.NBT.TAG_BYTE) ? compound.getBoolean("PropOpen") : false;
+        this.altarPos = compound.contains("AltarPos", Tag.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
+        this.isOpen = compound.contains("PropOpen", Tag.TAG_BYTE) ? compound.getBoolean("PropOpen") : false;
     }
     
     @Override

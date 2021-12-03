@@ -11,11 +11,11 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.Kno
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -74,7 +74,7 @@ public class Project implements INBTSerializable<CompoundTag> {
         }
         
         this.activeMaterials.clear();
-        ListTag materialList = nbt.getList("Materials", Constants.NBT.TAG_COMPOUND);
+        ListTag materialList = nbt.getList("Materials", Tag.TAG_COMPOUND);
         for (int index = 0; index < materialList.size(); index++) {
             AbstractProjectMaterial material = ProjectFactory.getMaterialFromNBT(materialList.getCompound(index));
             if (material != null) {

@@ -34,7 +34,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for an incense brazier.  Incense braziers serve as props in magickal rituals; placing
@@ -92,7 +91,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
             // If using an incense stick on an unlit brazier, light it
             worldIn.playSound(player, pos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
-                worldIn.setBlock(pos, state.setValue(LIT, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 if (!player.getAbilities().instabuild) {
                     player.getItemInHand(handIn).shrink(1);
                     if (player.getItemInHand(handIn).getCount() <= 0) {
@@ -110,7 +109,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
             // If using an empty hand on a lit brazier, snuff it
             worldIn.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isClientSide) {
-                worldIn.setBlock(pos, state.setValue(LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(LIT, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
             return InteractionResult.SUCCESS;
         } else {

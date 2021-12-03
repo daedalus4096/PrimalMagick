@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -24,7 +25,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
@@ -181,7 +181,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        if (compound.contains("Trident", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("Trident", Tag.TAG_COMPOUND)) {
             this.thrownStack = ItemStack.of(compound.getCompound("Trident"));
         }
         this.dealtDamage = compound.getBoolean("DealtDamage");

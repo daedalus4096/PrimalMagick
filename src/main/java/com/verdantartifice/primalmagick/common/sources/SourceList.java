@@ -14,12 +14,12 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -238,7 +238,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         this.sources.clear();
-        ListTag tagList = nbt.getList("Sources", Constants.NBT.TAG_COMPOUND);
+        ListTag tagList = nbt.getList("Sources", Tag.TAG_COMPOUND);
         for (int index = 0; index < tagList.size(); index++) {
             CompoundTag singleTag = tagList.getCompound(index);
             if (singleTag.contains("key")) {

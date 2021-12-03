@@ -41,7 +41,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for a sanguine crucible.  Uses blood cores and captured souls to summon creatures.
@@ -139,12 +138,12 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
                 crucibleTile.setItem(0, stack.copy());
                 stack.shrink(1);
                 worldIn.playSound(null, pos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON, SoundSource.BLOCKS, 0.3F, 0.6F);
-                worldIn.setBlock(pos, state.setValue(LIT, true), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(LIT, true), Block.UPDATE_ALL_IMMEDIATE);
                 return InteractionResult.SUCCESS;
             } else if (player.isSecondaryUseActive() && stack.isEmpty() && crucibleTile.hasCore()) {
                 popResource(worldIn, pos.relative(hit.getDirection()), crucibleTile.removeItemNoUpdate(0));
                 worldIn.playSound(null, pos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundSource.BLOCKS, 0.3F, 0.5F);
-                worldIn.setBlock(pos, state.setValue(LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(LIT, false), Block.UPDATE_ALL_IMMEDIATE);
                 return InteractionResult.SUCCESS;
             }
         }

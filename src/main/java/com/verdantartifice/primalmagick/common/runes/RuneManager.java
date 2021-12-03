@@ -18,12 +18,12 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Primary access point for rune-related methods.  Also stores registered rune combinations in a
@@ -176,7 +176,7 @@ public class RuneManager {
         if (stack == null || stack.isEmpty() || !stack.hasTag()) {
             return false;
         } else {
-            return !stack.getTag().getList(RUNE_TAG_NAME, Constants.NBT.TAG_STRING).isEmpty();
+            return !stack.getTag().getList(RUNE_TAG_NAME, Tag.TAG_STRING).isEmpty();
         }
     }
     
@@ -193,7 +193,7 @@ public class RuneManager {
         }
         
         List<Rune> retVal = new ArrayList<>();
-        ListTag tagList = stack.getTag().getList(RUNE_TAG_NAME, Constants.NBT.TAG_STRING);
+        ListTag tagList = stack.getTag().getList(RUNE_TAG_NAME, Tag.TAG_STRING);
         for (int index = 0; index < tagList.size(); index++) {
             String tagStr = tagList.getString(index);
             Rune rune = Rune.getRune(new ResourceLocation(tagStr));

@@ -13,8 +13,8 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Default implementation of the tile research cache capability.
@@ -47,7 +47,7 @@ public class TileResearchCache implements ITileResearchCache {
         this.clear();
         
         // Deserialize completed research
-        ListTag researchList = nbt.getList("research", Constants.NBT.TAG_STRING);
+        ListTag researchList = nbt.getList("research", Tag.TAG_STRING);
         for (int index = 0; index < researchList.size(); index++) {
             String str = researchList.getString(index);
             if (str != null && !str.isEmpty()) {

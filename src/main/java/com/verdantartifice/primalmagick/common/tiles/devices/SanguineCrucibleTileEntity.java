@@ -25,8 +25,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a sanguine crucible tile entity.  Holds the crucible's core inventory and souls,
@@ -88,7 +88,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
                     if (!level.isClientSide) {
                         if (!entity.getItem(0).isDamageableItem() || entity.getItem(0).hurt(1, level.random, null)) {
                             entity.getItem(0).shrink(1);
-                            level.setBlock(pos, state.setValue(SanguineCrucibleBlock.LIT, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                            level.setBlock(pos, state.setValue(SanguineCrucibleBlock.LIT, false), Block.UPDATE_ALL_IMMEDIATE);
                         }
                         
                         int attempts = 0;

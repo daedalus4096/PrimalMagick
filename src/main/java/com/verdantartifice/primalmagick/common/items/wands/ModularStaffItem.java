@@ -4,12 +4,12 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
+import com.google.common.collect.Multimap;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularStaffISTER;
 import com.verdantartifice.primalmagick.common.wands.IStaff;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-import com.google.common.collect.Multimap;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;

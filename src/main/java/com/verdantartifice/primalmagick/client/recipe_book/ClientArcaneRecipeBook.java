@@ -12,12 +12,12 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeCollection;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Table;
 
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;

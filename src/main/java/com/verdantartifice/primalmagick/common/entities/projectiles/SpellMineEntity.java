@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
@@ -109,12 +109,12 @@ public class SpellMineEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
-        if (compound.contains("Caster", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("Caster", Tag.TAG_COMPOUND)) {
             this.casterId =  compound.getUUID("Caster");
         }
         
         this.spell = null;
-        if (compound.contains("Spell", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("Spell", Tag.TAG_COMPOUND)) {
             this.spell = new SpellPackage(compound.getCompound("Spell"));
         }
         if (this.spell != null && !this.spell.isValid()) {
@@ -125,7 +125,7 @@ public class SpellMineEntity extends Entity {
         }
         
         this.spellSource = null;
-        if (compound.contains("SpellSource", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("SpellSource", Tag.TAG_COMPOUND)) {
             this.spellSource = ItemStack.of(compound.getCompound("SpellSource"));
         }
         

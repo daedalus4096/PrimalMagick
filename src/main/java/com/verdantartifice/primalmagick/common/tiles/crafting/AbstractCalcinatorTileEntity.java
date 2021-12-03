@@ -41,11 +41,11 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -212,7 +212,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
             if (burningAtStart != entity.isBurning()) {
                 // Update the tile's block state if the calcinator was lit up or went out this tick
                 shouldMarkDirty = true;
-                level.setBlock(pos, state.setValue(AbstractCalcinatorBlock.LIT, Boolean.valueOf(entity.isBurning())), Constants.BlockFlags.DEFAULT);
+                level.setBlock(pos, state.setValue(AbstractCalcinatorBlock.LIT, Boolean.valueOf(entity.isBurning())), Block.UPDATE_ALL);
             }
         }
         if (shouldMarkDirty) {

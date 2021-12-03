@@ -10,11 +10,11 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncCooldown
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -52,7 +52,7 @@ public class PlayerCooldowns implements IPlayerCooldowns {
         
         this.clearCooldowns();
         
-        ListTag cooldownList = nbt.getList("Cooldowns", Constants.NBT.TAG_COMPOUND);
+        ListTag cooldownList = nbt.getList("Cooldowns", Tag.TAG_COMPOUND);
         for (int index = 0; index < cooldownList.size(); index++) {
             CompoundTag tag = cooldownList.getCompound(index);
             CooldownType type = null;

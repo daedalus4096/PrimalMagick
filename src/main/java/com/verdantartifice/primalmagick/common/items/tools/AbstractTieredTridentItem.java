@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagick.common.items.tools;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
-import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.google.common.collect.Multimap;
+import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;

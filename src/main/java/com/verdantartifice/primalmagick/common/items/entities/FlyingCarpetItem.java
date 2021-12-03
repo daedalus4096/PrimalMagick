@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -21,7 +22,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Item definition for a flying carpet.  Spawns a flying carpet entity when used for the player to
@@ -92,9 +92,9 @@ public class FlyingCarpetItem extends Item {
     public DyeColor getDyeColor(ItemStack stack) {
         if (stack.hasTag()) {
             CompoundTag nbt = stack.getTag();
-            if (nbt != null && nbt.contains("display", Constants.NBT.TAG_COMPOUND)) {
+            if (nbt != null && nbt.contains("display", Tag.TAG_COMPOUND)) {
                 CompoundTag displayNbt = nbt.getCompound("display");
-                if (displayNbt != null && displayNbt.contains("color", Constants.NBT.TAG_INT)) {
+                if (displayNbt != null && displayNbt.contains("color", Tag.TAG_INT)) {
                     return DyeColor.byId(displayNbt.getInt("color"));
                 }
             }
@@ -110,7 +110,7 @@ public class FlyingCarpetItem extends Item {
             stack.setTag(new CompoundTag());
         }
         CompoundTag nbt = stack.getTag();
-        if (!nbt.contains("display", Constants.NBT.TAG_COMPOUND)) {
+        if (!nbt.contains("display", Tag.TAG_COMPOUND)) {
             nbt.put("display", new CompoundTag());
         }
         nbt.getCompound("display").putInt("color", color.getId());
@@ -119,9 +119,9 @@ public class FlyingCarpetItem extends Item {
     public void removeDyeColor(ItemStack stack) {
         if (stack.hasTag()) {
             CompoundTag nbt = stack.getTag();
-            if (nbt != null && nbt.contains("display", Constants.NBT.TAG_COMPOUND)) {
+            if (nbt != null && nbt.contains("display", Tag.TAG_COMPOUND)) {
                 CompoundTag displayNbt = nbt.getCompound("display");
-                if (displayNbt != null && displayNbt.contains("color", Constants.NBT.TAG_INT)) {
+                if (displayNbt != null && displayNbt.contains("color", Tag.TAG_INT)) {
                     displayNbt.remove("color");
                 }
             }

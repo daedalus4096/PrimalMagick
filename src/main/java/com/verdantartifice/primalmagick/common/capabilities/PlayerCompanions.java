@@ -14,11 +14,11 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanio
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -49,8 +49,8 @@ public class PlayerCompanions implements IPlayerCompanions {
     public void deserializeNBT(CompoundTag nbt) {
         this.clear();
         for (CompanionType type : CompanionType.values()) {
-            if (nbt.contains(type.getSerializedName(), Constants.NBT.TAG_LIST)) {
-                ListTag list = nbt.getList(type.getSerializedName(), Constants.NBT.TAG_COMPOUND);
+            if (nbt.contains(type.getSerializedName(), Tag.TAG_LIST)) {
+                ListTag list = nbt.getList(type.getSerializedName(), Tag.TAG_COMPOUND);
                 for (int index = 0; index < list.size(); index++) {
                     CompoundTag companionTag = list.getCompound(index);
                     if (companionTag.hasUUID("Id")) {

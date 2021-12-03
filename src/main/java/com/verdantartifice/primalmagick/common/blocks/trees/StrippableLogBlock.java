@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition for a log block that can be stripped with an axe.
@@ -37,7 +36,7 @@ public class StrippableLogBlock extends RotatedPillarBlock {
             // If the player right-clicks on the log with an axe, replace this block with its stripped version
             worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isClientSide) {
-                worldIn.setBlock(pos, this.getDefaultStrippedState(state), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, this.getDefaultStrippedState(state), Block.UPDATE_ALL_IMMEDIATE);
                 player.getItemInHand(handIn).hurtAndBreak(1, player, (p) -> {
                     p.broadcastBreakEvent(handIn);
                 });

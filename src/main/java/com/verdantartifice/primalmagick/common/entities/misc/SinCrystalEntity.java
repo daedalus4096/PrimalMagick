@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -27,7 +28,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 /**
@@ -90,10 +90,10 @@ public class SinCrystalEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
-        if (compound.contains("BeamTarget", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("BeamTarget", Tag.TAG_COMPOUND)) {
             this.setBeamTarget(NbtUtils.readBlockPos(compound.getCompound("BeamTarget")));
         }
-        if (compound.contains("DamageCloudUUID", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("DamageCloudUUID", Tag.TAG_COMPOUND)) {
             this.setDamageCloud(compound.getUUID("DamageCloudUUID"));
         }
     }

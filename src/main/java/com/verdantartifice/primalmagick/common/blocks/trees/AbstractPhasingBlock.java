@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Base definition for basic blocks that phase in and out over time.
@@ -56,7 +55,7 @@ public abstract class AbstractPhasingBlock extends Block {
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.getValue(PHASE)) {
-            worldIn.setBlock(pos, state.setValue(PHASE, newPhase), Constants.BlockFlags.DEFAULT);
+            worldIn.setBlock(pos, state.setValue(PHASE, newPhase), Block.UPDATE_ALL);
         }
     }
     
