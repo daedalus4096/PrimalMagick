@@ -1,3 +1,7 @@
+v0.1.2-beta
+-----------
+* Increment to Forge version 37.1.0
+
 v0.1.1-beta
 -----------
 * Return unscanned items to player when closing Analysis Table GUI
