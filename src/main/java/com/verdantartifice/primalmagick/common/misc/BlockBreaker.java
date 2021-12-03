@@ -30,7 +30,6 @@ import net.minecraft.world.level.block.StructureBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a block breaker data structure.  Processed during server ticks to gradually break blocks
@@ -187,7 +186,7 @@ public class BlockBreaker {
             }
             
             if ((block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !serverPlayer.canUseGameMasterBlocks()) {
-                world.sendBlockUpdated(this.pos, state, state, Constants.BlockFlags.DEFAULT);
+                world.sendBlockUpdated(this.pos, state, state, Block.UPDATE_ALL);
                 return false;
             } else if (serverPlayer.getMainHandItem().onBlockStartBreak(this.pos, serverPlayer)) {
                 return false;

@@ -47,9 +47,9 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
@@ -242,7 +242,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
                 entity.cookTime = Mth.clamp(entity.cookTime - 2, 0, entity.cookTimeTotal);
             }
             
-            level.setBlock(pos, state.setValue(ConcocterBlock.HAS_BOTTLE, entity.showBottle()), Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(pos, state.setValue(ConcocterBlock.HAS_BOTTLE, entity.showBottle()), Block.UPDATE_CLIENTS);
         }
 
         if (shouldMarkDirty) {

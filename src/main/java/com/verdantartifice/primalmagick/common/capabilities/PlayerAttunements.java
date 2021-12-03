@@ -13,12 +13,12 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -63,7 +63,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         this.clear();
         
         // Deserialize attunement values
-        ListTag attunementList = nbt.getList("Attunements", Constants.NBT.TAG_COMPOUND);
+        ListTag attunementList = nbt.getList("Attunements", Tag.TAG_COMPOUND);
         for (int index = 0; index < attunementList.size(); index++) {
             CompoundTag tag = attunementList.getCompound(index);
             Source source = Source.getSource(tag.getString("Source"));

@@ -9,10 +9,10 @@ import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -42,7 +42,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
             return;
         }
         this.swappers.clear();
-        ListTag swapperList = nbt.getList("Swappers", Constants.NBT.TAG_COMPOUND);
+        ListTag swapperList = nbt.getList("Swappers", Tag.TAG_COMPOUND);
         for (int index = 0; index < swapperList.size(); index++) {
             CompoundTag swapperTag = swapperList.getCompound(index);
             EntitySwapper swapper = new EntitySwapper(swapperTag);

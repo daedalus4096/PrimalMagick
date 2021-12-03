@@ -25,7 +25,6 @@ import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a piece of a primal shrine structure.
@@ -63,7 +62,7 @@ public class ShrinePiece extends TemplateStructurePiece {
     @Override
     protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, Random rand, BoundingBox sbb) {
         if ("font".equals(function)) {
-            worldIn.setBlock(pos, this.getFont().defaultBlockState(), Constants.BlockFlags.DEFAULT);
+            worldIn.setBlock(pos, this.getFont().defaultBlockState(), Block.UPDATE_ALL);
         }
     }
 

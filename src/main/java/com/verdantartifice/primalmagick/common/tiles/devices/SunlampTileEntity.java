@@ -11,7 +11,6 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a sunlamp tile entity.  Periodically attempts to spawn glow fields in dark air
@@ -52,7 +51,7 @@ public class SunlampTileEntity extends TilePM {
                      level.getBlockState(bp) != glowBlock.defaultBlockState() &&
                      level.getBrightness(LightLayer.BLOCK, bp) < 11 &&
                      RayTraceUtils.hasLineOfSight(level, pos, bp) ) {
-                    level.setBlock(bp, glowBlock.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                    level.setBlock(bp, glowBlock.defaultBlockState(), Block.UPDATE_ALL);
                 }
             }
         }

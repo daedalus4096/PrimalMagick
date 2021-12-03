@@ -24,7 +24,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Base class for a fluid conjuration spell.  Creates a source block of fluid at the designated point.
@@ -101,7 +100,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
                 }
                 
                 // Set the fluid block into the world
-                world.setBlock(pos, this.fluid.defaultFluidState().createLegacyBlock(), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                world.setBlock(pos, this.fluid.defaultFluidState().createLegacyBlock(), Block.UPDATE_ALL_IMMEDIATE);
             }
         } else if (blockTarget != null) {
             // If we can't place the fluid at the given position, place it instead at the adjacent position defined by the raytrace result

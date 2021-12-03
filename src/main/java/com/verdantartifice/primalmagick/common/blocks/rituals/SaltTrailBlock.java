@@ -34,7 +34,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a salt trail block.  Intended to work similarly to redstone wire, but transmitting
@@ -221,7 +220,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         if (curPower != decrSignal) {
             state = state.setValue(POWER, Integer.valueOf(decrSignal));
             if (world.getBlockState(pos) == stateCopy) {
-                world.setBlock(pos, state, Constants.BlockFlags.BLOCK_UPDATE);
+                world.setBlock(pos, state, Block.UPDATE_CLIENTS);
             }
             this.blocksNeedingUpdate.add(pos);
             for (Direction dir : Direction.values()) {

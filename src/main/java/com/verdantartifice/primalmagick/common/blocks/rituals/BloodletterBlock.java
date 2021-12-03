@@ -34,7 +34,6 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for a bloodletter.  Bloodletters serve as props in magickal rituals; cutting
@@ -72,7 +71,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
             // If using an empty hand on an unfilled bloodletter, cut the player
             if (!worldIn.isClientSide) {
                 player.hurt(DamageSourcesPM.BLEEDING, 2.0F);
-                worldIn.setBlock(pos, state.setValue(FILLED, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
@@ -87,7 +86,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
                 if (!player.getAbilities().instabuild) {
                     player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
                 }
-                worldIn.setBlock(pos, state.setValue(FILLED, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(FILLED, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
             return InteractionResult.SUCCESS;
         } else {

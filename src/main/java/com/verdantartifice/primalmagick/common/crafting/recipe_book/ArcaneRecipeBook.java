@@ -17,10 +17,10 @@ import net.minecraft.ResourceLocationException;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of the arcane recipe book.  Like the vanilla recipe book, but it also supports arcane
@@ -151,8 +151,8 @@ public class ArcaneRecipeBook {
     public void fromNbt(CompoundTag tag, RecipeManager recipeManager) {
         this.clear();
         this.setBookSettings(ArcaneRecipeBookSettings.read(tag));
-        this.loadRecipes(tag.getList("Recipes", Constants.NBT.TAG_STRING), this::add, recipeManager);
-        this.loadRecipes(tag.getList("ToBeDisplayed", Constants.NBT.TAG_STRING), this::addHighlight, recipeManager);
+        this.loadRecipes(tag.getList("Recipes", Tag.TAG_STRING), this::add, recipeManager);
+        this.loadRecipes(tag.getList("ToBeDisplayed", Tag.TAG_STRING), this::addHighlight, recipeManager);
     }
     
     protected void loadRecipes(ListTag tag, Consumer<Recipe<?>> consumer, RecipeManager recipeManager) {

@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
@@ -48,7 +49,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -127,7 +127,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
         this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
-        this.nextOutputSource = compound.contains("NextSource", Constants.NBT.TAG_STRING) ? Source.getSource(compound.getString("NextSource")) : null;
+        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Source.getSource(compound.getString("NextSource")) : null;
         
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {

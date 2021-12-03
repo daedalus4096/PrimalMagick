@@ -33,7 +33,6 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for a ritual candle.  Ritual candles serve as props in magickal rituals; lighting
@@ -105,7 +104,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
             // If using a flint-and-steel on an unlit candle, light it
             worldIn.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
-                worldIn.setBlock(pos, state.setValue(LIT, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 player.getItemInHand(handIn).hurtAndBreak(1, player, (p) -> {
                     p.broadcastBreakEvent(handIn);
                 });
@@ -120,7 +119,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
             // If using an empty hand on a lit candle, snuff it
             worldIn.playSound(player, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isClientSide) {
-                worldIn.setBlock(pos, state.setValue(LIT, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(LIT, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
             return InteractionResult.SUCCESS;
         } else {

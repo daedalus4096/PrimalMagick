@@ -40,7 +40,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for an entropy sink.  Entropy sinks are optional props used in rituals to
@@ -147,7 +146,7 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (!worldIn.isClientSide && tile instanceof EntropySinkTileEntity) {
                 // Start the sink glowing
-                worldIn.setBlock(pos, state.setValue(EntropySinkBlock.LIT, Boolean.TRUE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                worldIn.setBlock(pos, state.setValue(EntropySinkBlock.LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 ((EntropySinkTileEntity)tile).startGlowing();
                 
                 // If this block is awaiting activation for an altar, notify it

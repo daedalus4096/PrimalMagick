@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.common.IForgeShearable;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Base definition for leaf blocks that phase in and out over time.  Not derived from LeavesBlock because
@@ -78,13 +77,13 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
         // Periodically check to see if the block's phase needs to be updated
         TimePhase newPhase = this.getCurrentPhase(worldIn);
         if (newPhase != state.getValue(PHASE)) {
-            worldIn.setBlock(pos, state.setValue(PHASE, newPhase), Constants.BlockFlags.DEFAULT);
+            worldIn.setBlock(pos, state.setValue(PHASE, newPhase), Block.UPDATE_ALL);
         }
     }
     
     @Override
     public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
-        worldIn.setBlock(pos, updateDistance(state, worldIn, pos), Constants.BlockFlags.DEFAULT);
+        worldIn.setBlock(pos, updateDistance(state, worldIn, pos), Block.UPDATE_ALL);
     }
     
     @Override

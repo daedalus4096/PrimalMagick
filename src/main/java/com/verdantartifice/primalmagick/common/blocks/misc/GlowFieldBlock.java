@@ -24,7 +24,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for the glow field.  An invisible, intangible block that provides light which
@@ -75,7 +74,7 @@ public class GlowFieldBlock extends Block implements SimpleWaterloggedBlock {
             if (state.getValue(LIGHT) <= 1) {
                 level.removeBlock(pos, false);
             } else {
-                level.setBlock(pos, state.setValue(LIGHT, state.getValue(LIGHT) - 1), Constants.BlockFlags.BLOCK_UPDATE);
+                level.setBlock(pos, state.setValue(LIGHT, state.getValue(LIGHT) - 1), Block.UPDATE_CLIENTS);
             }
         }
     }

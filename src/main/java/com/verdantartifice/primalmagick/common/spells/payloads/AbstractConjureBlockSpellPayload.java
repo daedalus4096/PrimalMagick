@@ -10,6 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
@@ -20,7 +21,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.ForgeEventFactory;
 
 /**
@@ -98,7 +98,7 @@ public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayl
             if (fluidState.isSourceOfType(Fluids.WATER)) {
                 newState = newState.setValue(BlockStateProperties.WATERLOGGED, Boolean.TRUE);
             }
-            world.setBlock(pos, newState, Constants.BlockFlags.DEFAULT);
+            world.setBlock(pos, newState, Block.UPDATE_ALL);
         }
     }
 }

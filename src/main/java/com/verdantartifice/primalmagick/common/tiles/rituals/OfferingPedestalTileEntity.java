@@ -11,9 +11,9 @@ import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of an offering pedestal tile entity.  Holds the pedestal's inventory.
@@ -49,7 +49,7 @@ public class OfferingPedestalTileEntity extends TileInventoryPM {
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
+        this.altarPos = compound.contains("AltarPos", Tag.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
     }
 
     @Override

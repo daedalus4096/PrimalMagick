@@ -14,11 +14,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -66,7 +66,7 @@ public class PlayerStats implements IPlayerStats {
         this.clear();
         
         // Deserialize recorded stat values
-        ListTag statList = nbt.getList("Stats", Constants.NBT.TAG_COMPOUND);
+        ListTag statList = nbt.getList("Stats", Tag.TAG_COMPOUND);
         for (int index = 0; index < statList.size(); index++) {
             CompoundTag tag = statList.getCompound(index);
             ResourceLocation loc = new ResourceLocation(tag.getString("Key"));

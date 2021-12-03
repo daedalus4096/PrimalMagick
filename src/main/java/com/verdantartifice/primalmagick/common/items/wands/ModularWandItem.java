@@ -24,6 +24,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
@@ -33,7 +34,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Item definition for a modular wand.  Modular wands are made up of cores, caps, and gems, and their
@@ -242,7 +242,7 @@ public class ModularWandItem extends AbstractWandItem {
         // Deserialize the list of inscribed spells from the given wand stack's NBT data
         List<SpellPackage> retVal = new ArrayList<>();
         if (stack != null) {
-            ListTag spellTagsList = stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND);
+            ListTag spellTagsList = stack.getTag().getList("Spells", Tag.TAG_COMPOUND);
             for (int index = 0; index < spellTagsList.size(); index++) {
                 CompoundTag spellTag = spellTagsList.getCompound(index);
                 SpellPackage newSpell = new SpellPackage(spellTag);
@@ -257,7 +257,7 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public int getSpellCount(ItemStack stack) {
         if (stack != null) {
-            return stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND).size();
+            return stack.getTag().getList("Spells", Tag.TAG_COMPOUND).size();
         } else {
             return 0;
         }
@@ -295,7 +295,7 @@ public class ModularWandItem extends AbstractWandItem {
         // Deserialize the active inscribed spell from the given wand stack's NBT data
         SpellPackage retVal = null;
         if (stack != null) {
-            ListTag spellTagsList = stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND);
+            ListTag spellTagsList = stack.getTag().getList("Spells", Tag.TAG_COMPOUND);
             int index = this.getActiveSpellIndex(stack);
             if (index >= 0 && index < spellTagsList.size()) {
                 CompoundTag spellTag = spellTagsList.getCompound(index);
@@ -359,7 +359,7 @@ public class ModularWandItem extends AbstractWandItem {
                 stack.addTagElement("Spells", newList);
                 return true;
             } else {
-                return stack.getTag().getList("Spells", Constants.NBT.TAG_COMPOUND).add(spell.serializeNBT());
+                return stack.getTag().getList("Spells", Tag.TAG_COMPOUND).add(spell.serializeNBT());
             }
         } else {
             return false;

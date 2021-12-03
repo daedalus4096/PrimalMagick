@@ -7,10 +7,10 @@ import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Base class for a ritual prop tile entity.  Holds information about the altar it interacts with.
@@ -51,8 +51,8 @@ public abstract class AbstractRitualPropTileEntity extends TilePM implements IRi
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        this.altarPos = compound.contains("AltarPos", Constants.NBT.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
-        this.isOpen = compound.contains("PropOpen", Constants.NBT.TAG_BYTE) ? compound.getBoolean("PropOpen") : false;
+        this.altarPos = compound.contains("AltarPos", Tag.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
+        this.isOpen = compound.contains("PropOpen", Tag.TAG_BYTE) ? compound.getBoolean("PropOpen") : false;
     }
     
     @Override

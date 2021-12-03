@@ -15,10 +15,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Middleware class for a tile entity for the mod.  Handles things like tile syncing and relevant
@@ -40,9 +40,9 @@ public class TilePM extends BlockEntity {
      */
     public void syncTile(boolean rerender) {
         BlockState state = this.level.getBlockState(this.worldPosition);
-        int flags = Constants.BlockFlags.BLOCK_UPDATE;
+        int flags = Block.UPDATE_CLIENTS;
         if (!rerender) {
-            flags |= Constants.BlockFlags.NO_RERENDER;
+            flags |= Block.UPDATE_INVISIBLE;
         }
         this.level.sendBlockUpdated(this.worldPosition, state, state, flags);
     }

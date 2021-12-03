@@ -31,7 +31,6 @@ import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition for the "head" block of an enchanted golem.  Place it on top of a T shape of
@@ -88,7 +87,7 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
                 for (int i = 0; i < this.getGolemPattern().getWidth(); i++) {
                     for (int j = 0; j < this.getGolemPattern().getHeight(); j++) {
                         BlockInWorld info = helper.getBlock(i, j, 0);
-                        world.setBlock(info.getPos(), Blocks.AIR.defaultBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+                        world.setBlock(info.getPos(), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
                         world.levelEvent(2001, info.getPos(), Block.getId(info.getState()));
                     }
                 }

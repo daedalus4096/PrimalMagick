@@ -44,7 +44,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Block definition for a ritual lectern.  Ritual lecterns serve as props in magickal rituals; placing
@@ -135,7 +134,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                     }
                     player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    worldIn.setBlock(pos, state.setValue(HAS_BOOK, Boolean.TRUE), Constants.BlockFlags.DEFAULT);
+                    worldIn.setBlock(pos, state.setValue(HAS_BOOK, Boolean.TRUE), Block.UPDATE_ALL);
                     
                     // If this block is awaiting activation for an altar, notify it
                     if (this.isPropOpen(state, worldIn, pos)) {
@@ -150,7 +149,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                     player.setItemInHand(handIn, stack);
                     player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
-                    worldIn.setBlock(pos, state.setValue(HAS_BOOK, Boolean.FALSE), Constants.BlockFlags.DEFAULT);
+                    worldIn.setBlock(pos, state.setValue(HAS_BOOK, Boolean.FALSE), Block.UPDATE_ALL);
                     return InteractionResult.SUCCESS;
                 }
             }

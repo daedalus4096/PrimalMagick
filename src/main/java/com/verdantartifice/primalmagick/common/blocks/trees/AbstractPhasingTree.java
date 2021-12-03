@@ -8,13 +8,13 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Definition of a tree which chooses its associated feature based on the current time phase.
@@ -46,11 +46,11 @@ public abstract class AbstractPhasingTree extends AbstractTreeGrower {
         if (configuredFeature == null) {
             return false;
         } else {
-            world.setBlock(pos, Blocks.AIR.defaultBlockState(), Constants.BlockFlags.NO_RERENDER);
+            world.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_INVISIBLE);
             if (configuredFeature.place(world, chunkGenerator, rand, pos)) {
                 return true;
             } else {
-                world.setBlock(pos, state, Constants.BlockFlags.NO_RERENDER);
+                world.setBlock(pos, state, Block.UPDATE_INVISIBLE);
                 return false;
             }
         }

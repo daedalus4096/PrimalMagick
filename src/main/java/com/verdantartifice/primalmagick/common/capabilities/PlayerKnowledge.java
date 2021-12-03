@@ -24,11 +24,11 @@ import com.verdantartifice.primalmagick.common.theorycrafting.ProjectFactory;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 /**
@@ -104,7 +104,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.project = null;
         
         // Deserialize known research, including stage number and attached flags
-        ListTag researchList = nbt.getList("research", Constants.NBT.TAG_COMPOUND);
+        ListTag researchList = nbt.getList("research", Tag.TAG_COMPOUND);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundTag tag = researchList.getCompound(index);
             SimpleResearchKey keyObj = SimpleResearchKey.parse(tag.getString("key"));
@@ -128,7 +128,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
 
         // Deserialize knowledge types, including accrued points
-        ListTag knowledgeList = nbt.getList("knowledge", Constants.NBT.TAG_COMPOUND);
+        ListTag knowledgeList = nbt.getList("knowledge", Tag.TAG_COMPOUND);
         for (int index = 0; index < knowledgeList.size(); index++) {
             CompoundTag tag = knowledgeList.getCompound(index);
             String keyStr = tag.getString("key");

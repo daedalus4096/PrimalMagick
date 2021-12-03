@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.entities.companions.CompanionMana
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -29,6 +30,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -36,7 +38,6 @@ import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Spawn egg that is defined with a lazily-specified entity type.  Necessary for mod use because items
@@ -77,7 +78,7 @@ public class LazySpawnEggItem extends Item {
                     EntityType<?> entitytype1 = this.getType(itemStack.getTag());
                     abstractspawner.setEntityId(entitytype1);
                     tile.setChanged();
-                    world.sendBlockUpdated(blockPos, blockState, blockState, Constants.BlockFlags.DEFAULT);
+                    world.sendBlockUpdated(blockPos, blockState, blockState, Block.UPDATE_ALL);
                     itemStack.shrink(1);
                     return InteractionResult.CONSUME;
                 }
@@ -128,9 +129,9 @@ public class LazySpawnEggItem extends Item {
     }
     
     public EntityType<?> getType(@Nullable CompoundTag nbt) {
-        if (nbt != null && nbt.contains("EntityTag", Constants.NBT.TAG_COMPOUND)) {
+        if (nbt != null && nbt.contains("EntityTag", Tag.TAG_COMPOUND)) {
             CompoundTag tag = nbt.getCompound("EntityTag");
-            if (tag.contains("id", Constants.NBT.TAG_STRING)) {
+            if (tag.contains("id", Tag.TAG_STRING)) {
                 return EntityType.byString(tag.getString("id")).orElseGet(this.typeSupplier);
             }
         }
