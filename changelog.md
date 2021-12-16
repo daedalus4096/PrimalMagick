@@ -1,3 +1,7 @@
+v1.0.0
+------
+* Full release for MC 1.17.1!
+
 v0.1.2-beta
 -----------
 * Increment to Forge version 37.1.0
