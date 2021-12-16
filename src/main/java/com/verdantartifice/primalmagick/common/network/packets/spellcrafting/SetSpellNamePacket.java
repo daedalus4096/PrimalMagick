@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet sent to update a spell package's name on the server in the spellcrafting altar GUI.

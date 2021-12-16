@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet that informs the server of updated settings to the player's arcane recipe book.

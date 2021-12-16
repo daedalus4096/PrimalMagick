@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.affinities.IAffinitySerializer;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet to update affinity JSON data on the client from the server.

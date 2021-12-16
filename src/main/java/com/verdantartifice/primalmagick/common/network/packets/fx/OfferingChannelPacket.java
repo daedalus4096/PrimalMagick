@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet sent from the server to trigger an offering channel particle effect on the client.

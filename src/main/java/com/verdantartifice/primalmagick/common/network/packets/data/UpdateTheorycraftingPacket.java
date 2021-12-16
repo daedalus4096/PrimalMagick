@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet to update theorycrafting project template JSON data on the client from the server.

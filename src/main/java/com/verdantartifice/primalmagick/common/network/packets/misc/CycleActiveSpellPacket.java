@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet sent to trigger an update of an equipped wand's NBT for spell selection on the server.
