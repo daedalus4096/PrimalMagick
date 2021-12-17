@@ -35,7 +35,7 @@ public class TextureStitchEvents {
     @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onPreTextureStitch(TextureStitchEvent.Pre event) {
-        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getMap().location())) {
+        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getAtlas().location())) {
             // Add empty-slot background images to the block atlas texture
             event.addSprite(WandCoreSlot.TEXTURE);
             event.addSprite(WandCapSlot.TEXTURE);

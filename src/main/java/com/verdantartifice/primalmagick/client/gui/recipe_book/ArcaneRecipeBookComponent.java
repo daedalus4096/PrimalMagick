@@ -317,7 +317,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     public void renderTooltip(PoseStack poseStack, int parentLeft, int parentTop, int mouseX, int mouseY) {
         if (this.isVisible()) {
             this.recipeBookPage.renderTooltip(poseStack, mouseX, mouseY);
-            if (this.filterButton.isHovered() && this.mc.screen != null) {
+            if (this.filterButton.isHoveredOrFocused() && this.mc.screen != null) {
                 this.mc.screen.renderTooltip(poseStack, this.getFilterButtonTooltip(), mouseX, mouseY);
             }
             this.renderGhostRecipeTooltip(poseStack, parentLeft, parentTop, mouseX, mouseY);
@@ -409,7 +409,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         } else {
             boolean flag = mouseX < (double)parentLeft || mouseY < (double)parentTop || mouseX >= (double)(parentLeft + parentWidth) || mouseY >= (double)(parentTop + parentHeight);
             boolean flag1 = (double)(parentLeft - IMAGE_WIDTH) < mouseX && mouseX < (double)parentLeft && (double)parentTop < mouseY && mouseY < (double)(parentTop + parentHeight);
-            return flag && !flag1 && !this.selectedTab.isHovered();
+            return flag && !flag1 && !this.selectedTab.isHoveredOrFocused();
         }
     }
 

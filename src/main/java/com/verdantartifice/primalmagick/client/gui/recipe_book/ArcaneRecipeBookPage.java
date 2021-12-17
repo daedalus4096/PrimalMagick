@@ -109,7 +109,7 @@ public class ArcaneRecipeBookPage {
         
         for (ArcaneRecipeButton button : this.buttons) {
             button.render(poseStack, mouseX, mouseY, partialTicks);
-            if (button.visible && button.isHovered()) {
+            if (button.visible && button.isHoveredOrFocused()) {
                 this.hoveredButton = button;
             }
         }

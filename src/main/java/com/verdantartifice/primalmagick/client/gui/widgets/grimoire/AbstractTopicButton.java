@@ -37,7 +37,7 @@ public abstract class AbstractTopicButton extends Button {
         matrixStack.pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             // When hovering, highlight with a transparent grey background
             int alpha = 0x22;
             int color = (alpha << 24);

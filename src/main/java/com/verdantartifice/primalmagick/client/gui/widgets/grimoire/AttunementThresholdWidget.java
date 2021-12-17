@@ -67,7 +67,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
             matrixStack.popPose();
         }
         
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             // Render tooltip
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltipText), this.x, this.y);
         }

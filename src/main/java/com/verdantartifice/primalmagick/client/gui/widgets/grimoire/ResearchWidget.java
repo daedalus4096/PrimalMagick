@@ -70,7 +70,7 @@ public class ResearchWidget extends AbstractWidget {
             matrixStack.popPose();
         }
         
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             // Render tooltip
             Component text = new TranslatableComponent("primalmagick.research." + this.key.getRootKey() + ".text");
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(text), this.x, this.y);

@@ -54,11 +54,11 @@ public class ClientRenderEvents {
         Screen gui = mc.screen;
 
         // Assemble the tooltip components for showing primal affinities on an item stack
-        if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getStack() != null && !event.getStack().isEmpty()) {
-            SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getStack(), mc.level);
+        if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getItemStack() != null && !event.getItemStack().isEmpty()) {
+            SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getItemStack(), mc.level);
             if (sources == null || sources.isEmpty()) {
                 event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.none")));
-            } else if (!ResearchManager.isScanned(event.getStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
+            } else if (!ResearchManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
                 event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.unknown")));
             } else {
                 event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.label")));
@@ -79,7 +79,7 @@ public class ClientRenderEvents {
                 double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));
                 double interpolatedEntityY = entity.yo + (partialTicks * (entity.getY() - entity.yo));
                 double interpolatedEntityZ = entity.zo + (partialTicks * (entity.getZ() - entity.zo));
-                GuiUtils.renderSourcesBillboard(event.getMatrix(), event.getBuffers(), interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
+                GuiUtils.renderSourcesBillboard(event.getPoseStack(), event.getMultiBufferSource(), interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
             }
         }
     }

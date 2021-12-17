@@ -66,7 +66,7 @@ public class KnowledgeWidget extends AbstractWidget {
             matrixStack.popPose();
         }
         
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             // Render tooltip
             Component knowledgeText = new TranslatableComponent(this.knowledge.getType().getNameTranslationKey());
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), this.x, this.y);

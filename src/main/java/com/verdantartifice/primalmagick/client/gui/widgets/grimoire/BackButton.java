@@ -40,7 +40,7 @@ public class BackButton extends Button {
         matrixStack.pushPose();
         
         // When hovered, scale the button up and down to create a pulsing effect
-        float scaleMod = this.isHovered() ? Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F : 0.0F;
+        float scaleMod = this.isHoveredOrFocused() ? Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F : 0.0F;
         int dx = this.width / 2;
         int dy = this.height / 2;
         matrixStack.translate(this.x + dx, this.y + dy, 0.0F);

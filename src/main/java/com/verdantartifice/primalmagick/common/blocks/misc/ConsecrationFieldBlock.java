@@ -67,10 +67,9 @@ public class ConsecrationFieldBlock extends Block implements SimpleWaterloggedBl
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         // The field should only have a collision box for living, non-player entities; everything else can pass through it
-        if (context instanceof EntityCollisionContext) {
-            EntityCollisionContext ecc = (EntityCollisionContext)context;
-            if (ecc.getEntity().isPresent()) {
-                Entity entity = ecc.getEntity().get();
+        if (context instanceof EntityCollisionContext ecc) {
+            if (ecc.getEntity() != null) {
+                Entity entity = ecc.getEntity();
                 if (entity instanceof Player || !(entity instanceof LivingEntity)) {
                     return Shapes.empty();
                 }
@@ -85,7 +84,7 @@ public class ConsecrationFieldBlock extends Block implements SimpleWaterloggedBl
     }
     
     @Override
-    public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         // Don't work with the creative pick-block feature, as this block has no corresponding item block
         return ItemStack.EMPTY;
     }
@@ -104,7 +103,7 @@ public class ConsecrationFieldBlock extends Block implements SimpleWaterloggedBl
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         if (stateIn.getValue(WATERLOGGED)) {
-            worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+            worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
         }
         return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }

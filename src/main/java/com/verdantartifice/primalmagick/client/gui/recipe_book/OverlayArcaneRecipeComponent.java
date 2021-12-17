@@ -237,7 +237,7 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
             }
             
             int texY = OverlayArcaneRecipeComponent.this.useFurnaceStyle ? 130 : 78;
-            if (this.isHovered()) {
+            if (this.isHoveredOrFocused()) {
                 texY += 26;
             }
             

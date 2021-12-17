@@ -73,7 +73,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         if (this.isStateTriggered) {
             texX += this.xDiffTex;
         }
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             texY += this.yDiffTex;
         }
         

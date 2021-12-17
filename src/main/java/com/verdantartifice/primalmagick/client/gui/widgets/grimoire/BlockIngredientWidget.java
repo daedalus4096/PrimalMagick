@@ -40,7 +40,7 @@ public class BlockIngredientWidget extends AbstractWidget {
                         new ItemStack(block) : 
                         new ItemStack(Blocks.BARRIER).setHoverName(new TranslatableComponent("primalmagick.grimoire.missing_block"));
                 GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
-                if (this.isHovered()) {
+                if (this.isHoveredOrFocused()) {
                     // If hovered, show a tooltip with the display name of the current matching itemstack
                     GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
                 }
