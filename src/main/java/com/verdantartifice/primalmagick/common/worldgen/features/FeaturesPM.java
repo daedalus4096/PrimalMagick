@@ -12,20 +12,17 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.StructureSettings;
-import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.HeightmapConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -53,11 +50,6 @@ public class FeaturesPM {
         STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    // TODO Reorganize into normal/configured structure separation
-    public static ConfiguredFeature<?, ?> ORE_MARBLE_RAW;
-    public static ConfiguredFeature<?, ?> ORE_ROCK_SALT;
-    public static ConfiguredFeature<?, ?> ORE_QUARTZ;
-    
     public static ConfiguredFeature<TreeConfiguration, ?> TREE_SUNWOOD_FULL;
     public static ConfiguredFeature<TreeConfiguration, ?> TREE_SUNWOOD_WAXING;
     public static ConfiguredFeature<TreeConfiguration, ?> TREE_SUNWOOD_WANING;
@@ -76,10 +68,6 @@ public class FeaturesPM {
     public static final RegistryObject<StructureFeature<ShrineConfig>> SHRINE = STRUCTURES.register("shrine", () -> new ShrineStructure(ShrineConfig.CODEC));
     
     public static void setupFeatures() {
-        ORE_MARBLE_RAW = registerFeature("ore_marble_raw", Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.MARBLE_RAW.get().defaultBlockState(), 33)).rangeUniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(79)).squared().count(10));
-        ORE_ROCK_SALT = registerFeature("ore_rock_salt", Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.ROCK_SALT_ORE.get().defaultBlockState(), 10)).rangeUniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(127)).squared().count(20));
-        ORE_QUARTZ = registerFeature("ore_quartz", Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.QUARTZ_ORE.get().defaultBlockState(), 3)).rangeUniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(127)).squared().count(20));
-        
         TREE_SUNWOOD_FULL = registerFeature("tree_sunwood_full", Feature.TREE.configured((new TreeConfiguration.TreeConfigurationBuilder(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(FeaturesPM.States.SUNWOOD_LOG_FULL, 39).add(FeaturesPM.States.PULSING_SUNWOOD_LOG_FULL, 1)), new StraightTrunkPlacer(5, 2, 0), new SimpleStateProvider(FeaturesPM.States.SUNWOOD_LEAVES_FULL), new SimpleStateProvider(FeaturesPM.States.SUNWOOD_SAPLING), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1))).ignoreVines().build()));
         TREE_SUNWOOD_WAXING = registerFeature("tree_sunwood_waxing", Feature.TREE.configured((new TreeConfiguration.TreeConfigurationBuilder(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(FeaturesPM.States.SUNWOOD_LOG_WAXING, 39).add(FeaturesPM.States.PULSING_SUNWOOD_LOG_WAXING, 1)), new StraightTrunkPlacer(5, 2, 0), new SimpleStateProvider(FeaturesPM.States.SUNWOOD_LEAVES_WAXING), new SimpleStateProvider(FeaturesPM.States.SUNWOOD_SAPLING), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1))).ignoreVines().build()));
         TREE_SUNWOOD_WANING = registerFeature("tree_sunwood_waning", Feature.TREE.configured((new TreeConfiguration.TreeConfigurationBuilder(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(FeaturesPM.States.SUNWOOD_LOG_WANING, 39).add(FeaturesPM.States.PULSING_SUNWOOD_LOG_WANING, 1)), new StraightTrunkPlacer(5, 2, 0), new SimpleStateProvider(FeaturesPM.States.SUNWOOD_LEAVES_WANING), new SimpleStateProvider(FeaturesPM.States.SUNWOOD_SAPLING), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1))).ignoreVines().build()));

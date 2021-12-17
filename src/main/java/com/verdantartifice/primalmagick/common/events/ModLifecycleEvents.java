@@ -30,6 +30,8 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.OreFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.OrePlacementsPM;
 
 import net.minecraft.Util;
 import net.minecraft.commands.synchronization.ArgumentTypes;
@@ -72,7 +74,9 @@ public class ModLifecycleEvents {
         InitRunes.initRuneEnchantments();
         InitCauldron.initCauldronInteractions();
         
-        FeaturesPM.setupFeatures();
+//        FeaturesPM.setupFeatures();
+        OreFeaturesPM.setupOreFeatures();
+        OrePlacementsPM.setupOrePlacements();
         FeaturesPM.setupStructures();
         ConfiguredFeaturesPM.registerConfiguredStructures();
         LootConditionTypesPM.register();

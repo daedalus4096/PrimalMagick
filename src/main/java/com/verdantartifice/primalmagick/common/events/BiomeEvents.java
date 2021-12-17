@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.OrePlacementsPM;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
@@ -31,9 +32,11 @@ public class BiomeEvents {
         
         // Add raw marble, rock salt, and quartz seams to all non-Nether, non-End biomes
         if (isOverworldBiome(event.getName(), cat)) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_MARBLE_RAW);
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_ROCK_SALT);
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesPM.ORE_QUARTZ);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_MARBLE_RAW_UPPER);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_MARBLE_RAW_LOWER);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_ROCK_SALT_UPPER);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_ROCK_SALT_LOWER);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_QUARTZ);
         }
         
         // Add earth shrines to flatlands
