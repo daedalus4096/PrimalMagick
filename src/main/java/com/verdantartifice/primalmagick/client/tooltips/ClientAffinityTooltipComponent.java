@@ -9,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.TextureManager;
 
 /**
  * Tooltip component renderer for an item's affinities.
@@ -34,7 +33,7 @@ public class ClientAffinityTooltipComponent implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(Font font, int x, int y, PoseStack poseStack, ItemRenderer itemRenderer, int z, TextureManager textureManager) {
+    public void renderImage(Font font, int x, int y, PoseStack poseStack, ItemRenderer itemRenderer, int z) {
         Minecraft mc = Minecraft.getInstance();
         GuiUtils.renderSourcesForPlayer(poseStack, this.affinities, mc.player, x, y);
     }

@@ -33,11 +33,6 @@ public abstract class AbstractTieredShieldItem extends ShieldItem {
         return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
     }
 
-    @Override
-    public boolean isShield(ItemStack stack, LivingEntity entity) {
-        return true;
-    }
-    
     /**
      * Return true if a banner can be applied to this item to decorate it.
      * 
