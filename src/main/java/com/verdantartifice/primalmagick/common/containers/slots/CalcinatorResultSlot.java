@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.containers.slots;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fmllegacy.hooks.BasicEventHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 
 /**
  * Custom GUI slot for calcinator outputs.
@@ -18,6 +18,6 @@ public class CalcinatorResultSlot extends GenericResultSlot {
     @Override
     protected void checkTakeAchievements(ItemStack stack) {
         super.checkTakeAchievements(stack);
-        BasicEventHooks.firePlayerSmeltedEvent(this.player, stack);
+        ForgeEventFactory.firePlayerSmeltedEvent(this.player, stack);
     }
 }

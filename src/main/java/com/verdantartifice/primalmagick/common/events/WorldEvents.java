@@ -36,9 +36,9 @@ public class WorldEvents {
             }
             
             // Add structure spacing to the world's chunk generator
-            Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(chunkProvider.generator.getSettings().structureConfig());
+            Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(chunkProvider.getGenerator().getSettings().structureConfig());
             tempMap.putIfAbsent(FeaturesPM.SHRINE.get(), StructureSettings.DEFAULTS.get(FeaturesPM.SHRINE.get()));
-            chunkProvider.generator.getSettings().structureConfig = tempMap;
+            chunkProvider.getGenerator().getSettings().structureConfig = tempMap;
         }
     }
 }

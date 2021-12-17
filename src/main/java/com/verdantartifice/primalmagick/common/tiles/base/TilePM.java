@@ -54,7 +54,7 @@ public class TilePM extends BlockEntity {
     
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
     
     @Override

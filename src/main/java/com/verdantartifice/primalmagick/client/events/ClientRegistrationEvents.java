@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -54,20 +54,20 @@ public class ClientRegistrationEvents {
      */
     @SubscribeEvent
     public static void onModelRegister(ModelRegistryEvent event) {
-        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "mundane_wand_core"), ""));
+        ForgeModelBakery.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "mundane_wand_core"), ""));
         for (WandCore core : WandCore.getAllWandCores()) {
-            ModelLoader.addSpecialModel(core.getWandModelResourceLocation());
-            ModelLoader.addSpecialModel(core.getStaffModelResourceLocation());
+            ForgeModelBakery.addSpecialModel(core.getWandModelResourceLocation());
+            ForgeModelBakery.addSpecialModel(core.getStaffModelResourceLocation());
         }
         for (WandCap cap : WandCap.getAllWandCaps()) {
-            ModelLoader.addSpecialModel(cap.getWandModelResourceLocation());
-            ModelLoader.addSpecialModel(cap.getStaffModelResourceLocation());
+            ForgeModelBakery.addSpecialModel(cap.getWandModelResourceLocation());
+            ForgeModelBakery.addSpecialModel(cap.getStaffModelResourceLocation());
         }
         for (WandGem gem : WandGem.getAllWandGems()) {
-            ModelLoader.addSpecialModel(gem.getModelResourceLocation());
+            ForgeModelBakery.addSpecialModel(gem.getModelResourceLocation());
         }
         for (int index = 0; index <= 4; index++) {
-            ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_" + index), ""));
+            ForgeModelBakery.addSpecialModel(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_" + index), ""));
         }
     }
     

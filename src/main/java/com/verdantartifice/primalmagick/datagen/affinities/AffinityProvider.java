@@ -179,7 +179,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.ACACIA_LEAVES).base(Items.OAK_LEAVES).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DARK_OAK_LEAVES).base(Items.OAK_LEAVES).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.AZALEA_LEAVES).base(Items.OAK_LEAVES).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.AZALEA_LEAVES_FLOWERS).base(Items.AZALEA_LEAVES).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.FLOWERING_AZALEA_LEAVES).base(Items.AZALEA_LEAVES).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SPONGE).set(Source.SEA, 10).set(Source.VOID, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WET_SPONGE).base(Items.SPONGE).add(Source.SEA, 10).remove(Source.VOID, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SANDSTONE).base(Items.STONE).add(Source.SUN, 5).build(consumer);
@@ -534,7 +534,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.NAUTILUS_SHELL).set(Source.SEA, 10).set(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.HEART_OF_THE_SEA).set(Source.SEA, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SUSPICIOUS_STEW).set(Source.EARTH, 12).set(Source.SUN, 4).set(Source.MOON, 7).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.GLOBE_BANNER_PATTER).base(Items.PAPER).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.GLOBE_BANNER_PATTERN).base(Items.PAPER).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.PIGLIN_BANNER_PATTERN).base(Items.PAPER).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BELL).set(Source.EARTH, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.LANTERN).set(Source.EARTH, 7).set(Source.SUN, 22).build(consumer);   // Add lighting affinity

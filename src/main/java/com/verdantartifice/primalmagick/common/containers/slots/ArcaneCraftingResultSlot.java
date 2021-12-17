@@ -28,7 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fmllegacy.hooks.BasicEventHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 
 /**
  * Custom GUI slot for arcane crafting results.
@@ -77,7 +77,7 @@ public class ArcaneCraftingResultSlot extends Slot {
         // Fire crafting handlers
         if (this.amountCrafted > 0) {
             stack.onCraftedBy(this.player.level, this.player, this.amountCrafted);
-            BasicEventHooks.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
+            ForgeEventFactory.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
             
             // Increment the craft counter for the recipe's discipline
             if (this.container instanceof RecipeHolder recipeHolder && recipeHolder.getRecipeUsed() instanceof IArcaneRecipe arcaneRecipe) {

@@ -67,8 +67,8 @@ public class BiomeEvents {
     }
 
     private static boolean isOverworldBiome(@Nonnull ResourceLocation biomeName, @Nonnull Biome.BiomeCategory biomeCategory) {
-        if (biomeName.equals(Biomes.STONE_SHORE.getRegistryName())) {
-            // Stone Shore has a category of None, but it still exists in the Overworld
+        if (biomeName.equals(Biomes.STONY_SHORE.getRegistryName())) {
+            // Stony Shore has a category of None, but it still exists in the Overworld
             return true;
         } else {
             return !Biome.BiomeCategory.NONE.equals(biomeCategory) && !Biome.BiomeCategory.NETHER.equals(biomeCategory) && !Biome.BiomeCategory.THEEND.equals(biomeCategory);
