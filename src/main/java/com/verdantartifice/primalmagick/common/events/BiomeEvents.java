@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.OrePlacementsPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.VegetationPlacementsPM;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
@@ -63,8 +64,8 @@ public class BiomeEvents {
         if (Biome.BiomeCategory.FOREST.equals(cat)) {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(EntityTypesPM.TREEFOLK.get(), 100, 1, 3));
             // TODO Phase sunwood and moonwood trees appropriately
-            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_SUNWOOD_FULL_SPACED);
-            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FeaturesPM.TREE_MOONWOOD_FULL_SPACED);
+            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacementsPM.TREES_WILD_SUNWOOD);
+            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacementsPM.TREES_WILD_MOONWOOD);
             event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_MOON_SHRINE);
         }
     }
