@@ -27,7 +27,7 @@ public class ConfiguredFeaturesPM {
         registerConfiguredStructure(registry, "configured_sky_shrine", CONFIGURED_SKY_SHRINE);
         registerConfiguredStructure(registry, "configured_sun_shrine", CONFIGURED_SUN_SHRINE);
         registerConfiguredStructure(registry, "configured_moon_shrine", CONFIGURED_MOON_SHRINE);
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(FeaturesPM.SHRINE.get(), CONFIGURED_EARTH_SHRINE);
+//        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(FeaturesPM.SHRINE.get(), CONFIGURED_EARTH_SHRINE);
     }
     
     protected static void registerConfiguredStructure(Registry<ConfiguredStructureFeature<?, ?>> registry, String key, ConfiguredStructureFeature<?, ?> value) {

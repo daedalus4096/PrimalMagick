@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 public class StructurePieceTypesPM {
     public static final StructurePieceType SHRINE = register(ShrinePiece::new, new ResourceLocation(PrimalMagick.MODID, "shrine"));
     
-    private static StructurePieceType register(StructurePieceType spt, ResourceLocation key) {
+    private static StructurePieceType register(StructurePieceType.StructureTemplateType spt, ResourceLocation key) {
         return Registry.register(Registry.STRUCTURE_PIECE, key, spt);
     }
 }

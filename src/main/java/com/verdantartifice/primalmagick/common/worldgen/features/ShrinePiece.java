@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -22,6 +21,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -42,8 +42,8 @@ public class ShrinePiece extends TemplateStructurePiece {
         this.type = type;
     }
 
-    public ShrinePiece(ServerLevel level, CompoundTag nbt) {
-        super(StructurePieceTypesPM.SHRINE, nbt, level, (dummy) -> {
+    public ShrinePiece(StructureManager templateManager, CompoundTag nbt) {
+        super(StructurePieceTypesPM.SHRINE, nbt, templateManager, (dummy) -> {
             return makePlaceSettings();
         });
         this.type = ShrineStructure.Type.byName(nbt.getString("Source"));
@@ -54,8 +54,8 @@ public class ShrinePiece extends TemplateStructurePiece {
     }
     
     @Override
-    protected void addAdditionalSaveData(ServerLevel level, CompoundTag tagCompound) {
-        super.addAdditionalSaveData(level, tagCompound);
+    protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tagCompound) {
+        super.addAdditionalSaveData(context, tagCompound);
         tagCompound.putString("Source", this.type.getSerializedName());
     }
 
@@ -105,12 +105,12 @@ public class ShrinePiece extends TemplateStructurePiece {
     }
     
     @Override
-    public boolean postProcess(WorldGenLevel worldIn, StructureFeatureManager structureManager, ChunkGenerator generator, Random randomIn, BoundingBox structureBoundingBoxIn, ChunkPos chunkPos, BlockPos blockPos) {
+    public void postProcess(WorldGenLevel worldIn, StructureFeatureManager structureManager, ChunkGenerator generator, Random randomIn, BoundingBox structureBoundingBoxIn, ChunkPos chunkPos, BlockPos blockPos) {
         int i = worldIn.getHeight(Heightmap.Types.WORLD_SURFACE_WG, this.templatePosition.getX(), this.templatePosition.getZ());
         this.templatePosition = new BlockPos(this.templatePosition.getX(), i, this.templatePosition.getZ());
         
         // Generate the shrine; must be done first so that the bounding box is updated with the calculated template position
-        boolean success = super.postProcess(worldIn, structureManager, generator, randomIn, structureBoundingBoxIn, chunkPos, blockPos);
+        super.postProcess(worldIn, structureManager, generator, randomIn, structureBoundingBoxIn, chunkPos, blockPos);
         
         // Generate infused stone under the shrine
         BlockState bs = this.getInfusedStone().defaultBlockState();
@@ -129,7 +129,5 @@ public class ShrinePiece extends TemplateStructurePiece {
                 }
             }
         }
-        
-        return success;
     }
 }

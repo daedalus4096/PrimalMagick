@@ -8,17 +8,13 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
 /**
  * Definition of a primal shrine structure.
@@ -28,14 +24,17 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureMana
  */
 public class ShrineStructure extends StructureFeature<ShrineConfig> {
     public ShrineStructure(Codec<ShrineConfig> codec) {
-        super(codec);
-    }
-
-    @Override
-    public StructureFeature.StructureStartFactory<ShrineConfig> getStartFactory() {
-        return ShrineStructure.Start::new;
+        super(codec, PieceGeneratorSupplier.simple(PieceGeneratorSupplier.checkForBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG), ShrineStructure::generatePieces));
     }
     
+    protected static void generatePieces(StructurePiecesBuilder builder, PieceGenerator.Context<ShrineConfig> context) {
+        int x = (context.chunkPos().x << 4) + 7;
+        int z = (context.chunkPos().z << 4) + 7;
+        int surfaceY = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
+        BlockPos pos = new BlockPos(x, surfaceY, z);
+        builder.addPiece(new ShrinePiece(context.structureManager(), context.config().type, pos));
+    }
+
     @Override
     public GenerationStep.Decoration step() {
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
@@ -46,21 +45,6 @@ public class ShrineStructure extends StructureFeature<ShrineConfig> {
         return PrimalMagick.MODID + ":shrine";
     }
 
-    public static class Start extends StructureStart<ShrineConfig> {
-        public Start(StructureFeature<ShrineConfig> structure, ChunkPos chunkPos, int referenceIn, long seed) {
-            super(structure, chunkPos, referenceIn, seed);
-        }
-
-        @Override
-        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator generator, StructureManager templateManagerIn, ChunkPos chunkPos, Biome biomeIn, ShrineConfig config, LevelHeightAccessor levelHeightAccessor) {
-            int x = (chunkPos.x << 4) + 7;
-            int z = (chunkPos.z << 4) + 7;
-            int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
-            BlockPos pos = new BlockPos(x, surfaceY, z);
-            this.addPiece(new ShrinePiece(templateManagerIn, config.type, pos));
-        }
-    }
-    
     public static enum Type implements StringRepresentable {
         EARTH("earth"),
         SEA("sea"),
