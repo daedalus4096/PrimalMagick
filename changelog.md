@@ -1,3 +1,7 @@
+v2.0.0-beta
+-----------
+* Update to MC 1.18.1
+
 v1.0.0
 ------
 * Full release for MC 1.17.1!
