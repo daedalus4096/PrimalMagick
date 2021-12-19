@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "target": "minecraft:music_disc_otherside",
+  "base": "minecraft:music_disc_11"
+}

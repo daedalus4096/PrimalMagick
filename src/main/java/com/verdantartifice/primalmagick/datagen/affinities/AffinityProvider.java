@@ -524,6 +524,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_FAR).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_MALL).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_MELLOHI).base(Items.MUSIC_DISC_11).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_OTHERSIDE).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_PIGSTEP).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_STAL).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_STRAD).base(Items.MUSIC_DISC_11).build(consumer);
