@@ -17,7 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
  * 
  * @author Daedalus4096
  */
-public class FeaturesPM {
+public class StructureFeaturesPM {
     private static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, PrimalMagick.MODID);
     
     public static void init() {

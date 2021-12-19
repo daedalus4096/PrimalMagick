@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.StructureFeaturesPM;
 
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
@@ -37,7 +37,7 @@ public class WorldEvents {
             
             // Add structure spacing to the world's chunk generator
             Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(chunkProvider.getGenerator().getSettings().structureConfig());
-            tempMap.putIfAbsent(FeaturesPM.SHRINE.get(), StructureSettings.DEFAULTS.get(FeaturesPM.SHRINE.get()));
+            tempMap.putIfAbsent(StructureFeaturesPM.SHRINE.get(), StructureSettings.DEFAULTS.get(StructureFeaturesPM.SHRINE.get()));
             chunkProvider.getGenerator().getSettings().structureConfig = tempMap;
         }
     }

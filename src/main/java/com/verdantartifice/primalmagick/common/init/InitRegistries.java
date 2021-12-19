@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.StructureFeaturesPM;
 
 /**
  * Point of initialization for mod deferred registries.
@@ -28,7 +28,7 @@ public class InitRegistries {
         EffectsPM.init();
         RecipeSerializersPM.init();
         SoundsPM.init();
-        FeaturesPM.init();
+        StructureFeaturesPM.init();
         EnchantmentsPM.init();
         LootModifierSerializersPM.init();
         ParticleTypesPM.init();

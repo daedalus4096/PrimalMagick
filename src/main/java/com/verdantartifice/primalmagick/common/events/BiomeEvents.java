@@ -4,8 +4,8 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredStructureFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.StructureFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.OrePlacementsPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.VegetationPlacementsPM;
 
@@ -42,22 +42,22 @@ public class BiomeEvents {
         
         // Add earth shrines to flatlands
         if (Biome.BiomeCategory.PLAINS.equals(cat) || Biome.BiomeCategory.SAVANNA.equals(cat)) {
-            event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_EARTH_SHRINE);
+            event.getGeneration().getStructures().add(() -> ConfiguredStructureFeaturesPM.CONFIGURED_EARTH_SHRINE);
         }
         
         // Add sea shrines to wet biomes
         if (Biome.BiomeCategory.RIVER.equals(cat) || Biome.BiomeCategory.BEACH.equals(cat) || Biome.BiomeCategory.SWAMP.equals(cat) || Biome.BiomeCategory.ICY.equals(cat)) {
-            event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_SEA_SHRINE);
+            event.getGeneration().getStructures().add(() -> ConfiguredStructureFeaturesPM.CONFIGURED_SEA_SHRINE);
         }
         
         // Add sky shrines to mountains
         if (Biome.BiomeCategory.EXTREME_HILLS.equals(cat)) {
-            event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_SKY_SHRINE);
+            event.getGeneration().getStructures().add(() -> ConfiguredStructureFeaturesPM.CONFIGURED_SKY_SHRINE);
         }
         
         // Add sun shrines to deserts
         if (Biome.BiomeCategory.DESERT.equals(cat)) {
-            event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_SUN_SHRINE);
+            event.getGeneration().getStructures().add(() -> ConfiguredStructureFeaturesPM.CONFIGURED_SUN_SHRINE);
         }
         
         // Add moon shrines to forests
@@ -66,7 +66,7 @@ public class BiomeEvents {
             // TODO Phase sunwood and moonwood trees appropriately
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacementsPM.TREES_WILD_SUNWOOD);
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacementsPM.TREES_WILD_MOONWOOD);
-            event.getGeneration().getStructures().add(() -> ConfiguredFeaturesPM.CONFIGURED_MOON_SHRINE);
+            event.getGeneration().getStructures().add(() -> ConfiguredStructureFeaturesPM.CONFIGURED_MOON_SHRINE);
         }
     }
 
