@@ -73,6 +73,7 @@ public class AutoChargerTileEntity extends TileInventoryPM {
         }
     }
     
+    @SuppressWarnings("deprecation")
     protected void scanSurroundings() {
         BlockPos pos = this.getBlockPos();
         if (this.level.isAreaLoaded(pos, 5)) {

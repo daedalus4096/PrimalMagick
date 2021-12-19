@@ -75,8 +75,7 @@ public class VoxelShapeUtils {
         InputStream stream = VoxelShapeUtils.class.getResourceAsStream(locStr);
         if (stream != null) {
             try {
-                JsonParser parser = new JsonParser();
-                JsonObject obj = parser.parse(new InputStreamReader(stream)).getAsJsonObject();
+                JsonObject obj = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
                 if (obj.has("elements")) {
                     // Parse the elements defined in the specified model file
                     List<VoxelShape> shapes = new ArrayList<>();
