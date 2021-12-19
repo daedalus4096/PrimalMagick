@@ -57,7 +57,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
         matrixStack.popPose();
 
         // When hovering, show a tooltip with the missing requirements
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             List<Component> tooltip = new ArrayList<>();
             tooltip.add(new TranslatableComponent("primalmagick.grimoire.upcoming_tooltip_header"));
             

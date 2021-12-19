@@ -28,8 +28,13 @@ import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionType
 import com.verdantartifice.primalmagick.common.misc.DispenseLazySpawnEggBehavior;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
-import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredStructureFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.StructureFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.OreFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.OrePlacementsPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.TreeFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.TreePlacementsPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.VegetationPlacementsPM;
 
 import net.minecraft.Util;
 import net.minecraft.commands.synchronization.ArgumentTypes;
@@ -72,9 +77,13 @@ public class ModLifecycleEvents {
         InitRunes.initRuneEnchantments();
         InitCauldron.initCauldronInteractions();
         
-        FeaturesPM.setupFeatures();
-        FeaturesPM.setupStructures();
-        ConfiguredFeaturesPM.registerConfiguredStructures();
+        OreFeaturesPM.setupOreFeatures();
+        OrePlacementsPM.setupOrePlacements();
+        TreeFeaturesPM.setupTreeFeatures();
+        TreePlacementsPM.setupTreePlacements();
+        VegetationPlacementsPM.setupTreePlacements();
+        StructureFeaturesPM.setupStructures();
+        ConfiguredStructureFeaturesPM.registerConfiguredStructures();
         LootConditionTypesPM.register();
 
         registerCommandArguments(event);

@@ -58,7 +58,7 @@ public class ItemStackWidget extends AbstractWidget {
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();
         }
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             // Render tooltip
             GuiUtils.renderItemTooltip(matrixStack, this.stack, this.x, this.y);
         }

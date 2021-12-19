@@ -18,8 +18,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet sent to trigger a server-side scan of a particular block in the world.  Used by the

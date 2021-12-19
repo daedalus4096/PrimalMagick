@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet sent from the server to trigger a wand poof particle effect on the client.

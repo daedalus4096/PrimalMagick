@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
-import com.verdantartifice.primalmagick.common.worldgen.features.FeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.TreeFeaturesPM;
 
 import net.minecraft.Util;
 import net.minecraft.world.level.LevelAccessor;
@@ -22,10 +22,10 @@ public class SunwoodTree extends AbstractPhasingTree {
     @Override
     protected Map<TimePhase, ConfiguredFeature<TreeConfiguration, ?>> getTreeFeaturesByPhase(Random rand, boolean largeHive) {
         return Util.make(new HashMap<>(), (map) -> {
-            map.put(TimePhase.FULL, FeaturesPM.TREE_SUNWOOD_FULL);
-            map.put(TimePhase.WAXING, FeaturesPM.TREE_SUNWOOD_WAXING);
-            map.put(TimePhase.WANING, FeaturesPM.TREE_SUNWOOD_WANING);
-            map.put(TimePhase.FADED, FeaturesPM.TREE_SUNWOOD_FADED);
+            map.put(TimePhase.FULL, TreeFeaturesPM.TREE_SUNWOOD_FULL);
+            map.put(TimePhase.WAXING, TreeFeaturesPM.TREE_SUNWOOD_WAXING);
+            map.put(TimePhase.WANING, TreeFeaturesPM.TREE_SUNWOOD_WANING);
+            map.put(TimePhase.FADED, TreeFeaturesPM.TREE_SUNWOOD_FADED);
         });
     }
 

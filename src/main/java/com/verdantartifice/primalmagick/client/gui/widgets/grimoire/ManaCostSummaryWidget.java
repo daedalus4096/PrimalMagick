@@ -48,7 +48,7 @@ public class ManaCostSummaryWidget extends AbstractWidget {
         matrixStack.popPose();
 
         // Render tooltip if hovered over
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             List<Component> tooltip = new ArrayList<>();
             if (this.manaCosts.isEmpty()) {
                 tooltip.add(new TranslatableComponent("primalmagick.crafting.no_mana"));

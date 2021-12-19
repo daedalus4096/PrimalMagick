@@ -30,9 +30,9 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.SoulAnvilTileEntity
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Deferred registry for mod tile entity types.

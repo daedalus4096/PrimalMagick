@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.misc;
 
 import java.util.Map;
+import java.util.function.ToIntFunction;
 
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagick.common.blockstates.properties.SkyglassPaneSide;
@@ -102,7 +103,7 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
     }
     
     protected int getShapeIndex(BlockState state) {
-        return this.stateShapeIndices.computeIntIfAbsent(state, (s) -> {
+        ToIntFunction<BlockState> mappingFunction = (s) -> {
             int index = 0;
             if (s.getValue(NORTH) == SkyglassPaneSide.GLASS || s.getValue(NORTH) == SkyglassPaneSide.OTHER) {
                 index |= getDirectionMask(Direction.NORTH);
@@ -117,7 +118,8 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
                 index |= getDirectionMask(Direction.EAST);
             }
             return index;
-        });
+        };
+        return this.stateShapeIndices.computeIfAbsent(state, mappingFunction);
     }
     
     protected static int getDirectionMask(Direction dir) {
@@ -133,7 +135,7 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         if (stateIn.getValue(WATERLOGGED)) {
-            worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+            worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
         }
         
         // Determine the block's connections when one of its neighbors is updated

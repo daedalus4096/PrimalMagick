@@ -97,7 +97,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         this.renderTooltip(matrixStack, mouseX, mouseY);
         
         for (Widget w : this.renderables) {
-            if (w instanceof AbstractWidget widget && widget.isHovered()) {
+            if (w instanceof AbstractWidget widget && widget.isHoveredOrFocused()) {
                 widget.renderToolTip(matrixStack, mouseX, mouseY);
             }
         }

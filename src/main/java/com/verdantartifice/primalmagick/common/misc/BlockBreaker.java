@@ -275,7 +275,7 @@ public class BlockBreaker {
      */
     protected boolean removeBlock(@Nonnull Level world, boolean canHarvest) {
         BlockState state = world.getBlockState(this.pos);
-        boolean removed = state.removedByPlayer(world, this.pos, this.player, canHarvest, world.getFluidState(this.pos));
+        boolean removed = state.onDestroyedByPlayer(world, this.pos, this.player, canHarvest, world.getFluidState(this.pos));
         if (removed) {
             state.getBlock().destroy(world, this.pos, state);
         }

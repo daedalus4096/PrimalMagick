@@ -53,7 +53,7 @@ public class ItemTagWidget extends AbstractWidget {
                 this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
                 matrixStack.popPose();
             }
-            if (this.isHovered()) {
+            if (this.isHoveredOrFocused()) {
                 // If hovered, show a tooltip with the display name of the current matching itemstack
                 GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
             }

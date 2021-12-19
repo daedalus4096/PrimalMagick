@@ -333,7 +333,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         @Override
         public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
             RenderSystem.setShaderTexture(0, TEXTURE);
-            this.blit(matrixStack, this.x, this.y, this.isIncrement ? 230 : 237, this.isHovered() ? 11 : 0, this.width, this.height);
+            this.blit(matrixStack, this.x, this.y, this.isIncrement ? 230 : 237, this.isHoveredOrFocused() ? 11 : 0, this.width, this.height);
         }
         
         public boolean isIncrement() {

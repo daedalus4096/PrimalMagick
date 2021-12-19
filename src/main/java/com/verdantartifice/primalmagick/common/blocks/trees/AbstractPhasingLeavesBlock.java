@@ -96,7 +96,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
         // Determine if the blockstate needs to be updated with a new distance
         int i = getDistance(facingState) + 1;
         if (i != 1 || stateIn.getValue(DISTANCE) != i) {
-            worldIn.getBlockTicks().scheduleTick(currentPos, this, 1);
+            worldIn.scheduleTick(currentPos, this, 1);
         }
 
         // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes

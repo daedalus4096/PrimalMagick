@@ -69,7 +69,7 @@ public class AttunementMeterWidget extends AbstractWidget {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         this.blit(matrixStack, this.x, this.y, 29, 9, 12, 102);
         
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             // Render tooltip
             List<Component> tooltip = new ArrayList<>();
             tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()));

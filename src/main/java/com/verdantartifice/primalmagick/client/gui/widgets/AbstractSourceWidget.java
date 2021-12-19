@@ -72,7 +72,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         matrixStack.popPose();
         
         // Draw the tooltip if applicable
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             Component sourceText = discovered ? 
                     this.source.getNameText() :
                     new TranslatableComponent(Source.getUnknownTranslationKey());

@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet sent to start a research project on the server in the research table GUI.

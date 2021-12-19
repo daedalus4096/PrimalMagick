@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
@@ -33,11 +32,6 @@ public abstract class AbstractTieredShieldItem extends ShieldItem {
         return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
     }
 
-    @Override
-    public boolean isShield(ItemStack stack, LivingEntity entity) {
-        return true;
-    }
-    
     /**
      * Return true if a banner can be applied to this item to decorate it.
      * 

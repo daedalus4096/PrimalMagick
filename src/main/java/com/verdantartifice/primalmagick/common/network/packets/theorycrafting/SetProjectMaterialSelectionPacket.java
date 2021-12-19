@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet sent to update the selection status of a research project's materials in the research table GUI.

@@ -32,7 +32,7 @@ public class RecipeTypeWidget extends AbstractWidget {
         GuiUtils.renderItemStack(matrixStack, this.recipe.getToastSymbol(), this.x, this.y, this.getMessage().getString(), false);
         
         // Draw tooltip if hovered
-        if (this.isHovered()) {
+        if (this.isHoveredOrFocused()) {
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltip), this.x, this.y);
         }
     }
